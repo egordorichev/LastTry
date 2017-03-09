@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 public class Entity {
@@ -14,6 +16,27 @@ public class Entity {
 	protected String name;
 	protected Rectangle rect;
 	protected Image image;
+	protected Animation[] animations;
+	protected State state;
+
+	public enum State {
+		IDLE(0),
+		MOVING(1),
+		JUMPING(2),
+		FALLING(3),
+		FLYING(4),
+		DEAD(5);
+
+		private int id;
+
+		State(int id) {
+			this.id = id;
+		}
+
+		public int getId() {
+			return this.id;
+		}
+	}
 
 	public Entity(String name, boolean friendly, int maxHp, int defense, int damage) {
 		this.name = name;
@@ -24,6 +47,9 @@ public class Entity {
 		this.active = false;
 		this.invulnerable = false;
 		this.rect = new Rectangle(0, 0, 32, 48);
+
+		this.animations = new Animation[State.values().length];
+		this.state = State.IDLE;
 	}
 
 	public Entity(String name, boolean friendly) {
@@ -31,7 +57,7 @@ public class Entity {
 	}
 
 	public void render() {
-		this.image.draw(this.rect.x, this.rect.y);
+		this.animations[this.state.getId()].draw(this.rect.x, this.rect.y);
 	}
 
 	public void update(int dt) {
@@ -40,7 +66,7 @@ public class Entity {
 
 	public void spawn(int x, int y) {
 		this.active = true;
-		this.rect.setPosition(x, y);
+		this.rect.setPosition(x * Block.size, y * Block.size);
 		this.onSpawn();
 	}
 
@@ -100,5 +126,13 @@ public class Entity {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public int getGridX() {
+		return (int) this.rect.x / Block.size;
+	}
+
+	public int getGridY() {
+		return (int) this.rect.y / Block.size;
 	}
 }

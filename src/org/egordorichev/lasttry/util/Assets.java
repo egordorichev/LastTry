@@ -8,6 +8,7 @@ public class Assets {
 	public static Image dirtTileTexture = loadImage("assets/images/DirtTile.png");
 	public static Image dirtWallTexture = loadImage("assets/images/DirtWall.png");
 	public static Image greenSlimeTexture = loadImage("assets/images/GreenSlime.png");
+	public static Image playerTexture = loadImage("assets/images/Player.png");
 
 	@Nullable
 	public static Image loadImage(String path) {

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry;
 
+import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.*;
 
@@ -10,6 +11,7 @@ public class LastTry extends BasicGame {
 
 	public static Input input;
 	public static World world;
+	public static Player player;
 
 	public LastTry() {
 		super("LastTry");
@@ -27,18 +29,21 @@ public class LastTry extends BasicGame {
 
 		world = new World("test");
 
-		world.spawnEnemy("Green Slime", 64, 64);
+		player = new Player("George");
+		player.spawn(10, 10);
 	}
 
 	@Override
 	public void update(GameContainer gameContainer, int dt) throws SlickException {
 		world.update(dt);
+		player.update(dt);
 	}
 
 	@Override
 	public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
 		Camera.set(graphics);
 		world.render();
+		player.render();
 		Camera.unset(graphics);
 	}
 
