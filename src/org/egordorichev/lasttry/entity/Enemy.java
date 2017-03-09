@@ -1,0 +1,40 @@
+package org.egordorichev.lasttry.entity;
+
+public class Enemy extends Entity {
+	protected int currentAi;
+
+	public Enemy(String name, int maxHp, int defense, int damage) {
+		super(name, false, maxHp, defense, damage);
+	}
+
+	public Enemy(String name) {
+		super(name, false);
+	}
+
+	@Override
+	public void render() {
+		this.image.draw(this.rect.x, this.rect.y);
+	}
+
+	@Override
+	public void update(int dt) {
+		this.updateAI();
+	}
+
+	public void updateAI() {
+
+	}
+
+	@Override
+	public void onSpawn() {
+
+	}
+
+	public static Enemy create(String name) {
+		if(name == "Green Slime") {
+			return new GreenSlime();
+		} else {
+			throw new RuntimeException("Entity with name " + name + " is not found.");
+		}
+	}
+}
