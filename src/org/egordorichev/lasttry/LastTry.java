@@ -2,6 +2,7 @@ package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.*;
 
@@ -33,21 +34,11 @@ public class LastTry extends BasicGame {
 		world = new World("test");
 
 		player = new Player("George");
-		player.spawn(10, 10);
+		player.spawn(14, 48);
 	}
 
 	@Override
 	public void update(GameContainer gameContainer, int dt) throws SlickException {
-		if(input.isKeyDown(Input.KEY_W)) {
-			player.moveBy(0, -1);
-		} else if(input.isKeyDown(Input.KEY_A)) {
-			player.moveBy(-1, 0);
-		} else if(input.isKeyDown(Input.KEY_S)) {
-			player.moveBy(0, 1);
-		} else if(input.isKeyDown(Input.KEY_D)) {
-			player.moveBy(1, 0);
-		}
-
 		world.update(dt);
 		player.update(dt);
 

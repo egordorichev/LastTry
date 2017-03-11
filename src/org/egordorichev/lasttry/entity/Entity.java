@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Vector2f;
 import org.newdawn.slick.Animation;
@@ -22,6 +23,7 @@ public class Entity {
 	protected Animation[] animations;
 	protected State state;
 	protected Vector2f velocity;
+	protected Direction direction;
 
 	public enum State {
 		IDLE(0),
@@ -53,6 +55,7 @@ public class Entity {
 		this.rect = new Rectangle(0, 0, 32, 48);
 		this.hitbox = new Rectangle(this.rect.x + 3, this.rect.y + 3, this.rect.width - 6, this.rect.height - 6);
 		this.velocity = new Vector2f(0, 0);
+		this.direction = Direction.RIGHT;
 
 		this.animations = new Animation[State.values().length];
 		this.state = State.IDLE;
@@ -63,7 +66,7 @@ public class Entity {
 	}
 
 	public void render() {
-		this.animations[this.state.getId()].draw(this.rect.x, this.rect.y);
+		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false).draw(this.rect.x, this.rect.y);
 	}
 
 	public void update(int dt) {
@@ -71,33 +74,67 @@ public class Entity {
 			return;
 		}
 
-		if(this.velocity.x != 0 || this.velocity.y != 0) {
+		this.velocity.y += 0.4f;
+
+		if(this.velocity.x != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
-			newHitbox.y += this.velocity.y;
 
 			if(!LastTry.world.isColliding(newHitbox)) {
 				this.hitbox = newHitbox;
 				this.rect.x += this.velocity.x;
-				this.rect.y += this.velocity.y;
 			} else {
 				this.velocity.x = 0;
+			}
+		}
+
+		if(this.velocity.y != 0) {
+			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+
+			newHitbox.y += this.velocity.y;
+
+			if(!LastTry.world.isColliding(newHitbox)) {
+				this.hitbox = newHitbox;
+				this.rect.y += this.velocity.y;
+			} else {
 				this.velocity.y = 0;
 			}
-
-			this.velocity.x *= 0.9;
-			this.velocity.y *= 0.9;
 		}
+
+		if(this.velocity.y > 0) {
+			this.state = State.FALLING;
+		} else if(this.velocity.y == 0 && this.state == State.FALLING) {
+			this.state = State.IDLE;
+		}
+
+		if(this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING && this.state != State.JUMPING) {
+			this.state = State.IDLE; // Does not work
+		}
+
+		this.animations[this.state.getId()].update(dt);
 	}
 
-	public void moveBy(int x, int y) {
+	public void move(Direction direction) {
 		if(!this.active) {
 			return;
 		}
 
-		this.velocity.x += x;
-		this.velocity.y += y;
+		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
+		this.direction = direction;
+
+		if(this.state != State.JUMPING && this.state != State.FALLING) {
+			this.state = State.MOVING;
+		}
+	}
+
+	public void jump() {
+		if(!this.active || this.velocity.y != 0) {
+			return;
+		}
+
+		this.state = State.JUMPING;
+		this.velocity.y -= 10.0f;
 	}
 
 	public void spawn(int x, int y) {

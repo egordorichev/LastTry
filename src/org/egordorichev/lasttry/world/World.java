@@ -1,9 +1,7 @@
 package org.egordorichev.lasttry.world;
 
-import org.egordorichev.lasttry.Camera;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Enemy;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Wall;
@@ -14,7 +12,6 @@ import org.egordorichev.lasttry.world.tile.TileData;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class World {
 	private boolean loaded;
@@ -204,8 +201,8 @@ public class World {
 	}
 
 	private void generate() {
-		this.width = 4200;
-		this.height = 1200;
+		this.width = 500;
+		this.height = 500;
 		this.version = this.CURENT_VERSION;
 
 		int totalSize = this.width * this.height;
@@ -215,7 +212,7 @@ public class World {
 
 		for(int y = 0; y < this.height; y++) {
 			for(int x = 0; x < this.width; x++) {
-				if(y > 100) {
+				if(y > 50) {
 					tiles[x][y] = 1;
 				} else {
 					tiles[x][y] = 0;

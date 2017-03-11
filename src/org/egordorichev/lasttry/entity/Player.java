@@ -3,8 +3,10 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Input;
 
 public class Player extends Entity {
 	public Player(String name) {
@@ -17,10 +19,23 @@ public class Player extends Entity {
 		idleAnimation.setLooping(false);
 
 		Animation movingAnimation = new Animation();
-		movingAnimation.addFrame(this.image.getSubImage(0, 48, 32, 48), 300); // TODO
+		movingAnimation.addFrame(this.image.getSubImage(0, 96, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 144, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 192, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 240, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 288, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 336, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 384, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 432, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 480, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 528, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 576, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 624, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 672, 32, 48), 30);
+		movingAnimation.addFrame(this.image.getSubImage(0, 720, 32, 48), 30);
 
 		Animation jumpingAnimation = new Animation();
-		jumpingAnimation.addFrame(this.image.getSubImage(0, 0, 32, 48), 1000); // TODO
+		jumpingAnimation.addFrame(this.image.getSubImage(0, 48, 32, 48), 1000); // TODO
 
 		Animation deadAnimation = new Animation(false);
 		deadAnimation.addFrame(this.image.getSubImage(0, 0, 32, 48), 1000); // TODO
@@ -36,10 +51,32 @@ public class Player extends Entity {
 
 	@Override
 	public void onSpawn() {
-		for(int y = 0; y < 10; y++) {
-			for(int x = 0; x < 10; x++) {
+		for(int y = 0; y < 3; y++) {
+			for(int x = 0; x < 2; x++) {
 				LastTry.world.setBlock(null, this.getGridX() + x, this.getGridY() + y);
 			}
 		}
+	}
+
+	@Override
+	public void update(int dt) {
+		if(!this.active) {
+			return;
+		}
+
+		if(LastTry.input.isKeyDown(Input.KEY_SPACE)) {
+			this.jump();
+		}
+
+		if(LastTry.input.isKeyDown(Input.KEY_A)) {
+			this.move(Direction.LEFT);
+		}
+
+		if(LastTry.input.isKeyDown(Input.KEY_D)) {
+			this.move(Direction.RIGHT);
+		}
+
+		super.update(dt);
+		this.velocity.x *= 0.8;
 	}
 }
