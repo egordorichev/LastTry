@@ -4,6 +4,8 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
+import org.keplerproject.luajava.LuaState;
+import org.keplerproject.luajava.LuaStateFactory;
 import org.newdawn.slick.*;
 
 public class LastTry extends BasicGame {
@@ -15,6 +17,7 @@ public class LastTry extends BasicGame {
 	public static World world;
 	public static Player player;
 	public static Camera camera;
+	public static LuaState lua;
 
 	public LastTry() {
 		super("LastTry");
@@ -31,8 +34,11 @@ public class LastTry extends BasicGame {
 		windowWidth = this.container.getWidth();
 		windowHeight = this.container.getHeight();
 
-		world = new World("test");
+		lua = LuaStateFactory.newLuaState();
+		lua.openLibs();
+		lua.LdoString("print(\"Lua works!\")");
 
+		world = new World("test");
 		player = new Player("George");
 		player.spawn(14, 48);
 	}
