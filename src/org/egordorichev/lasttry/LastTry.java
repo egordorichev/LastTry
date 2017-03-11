@@ -2,6 +2,7 @@ package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
 import org.keplerproject.luajava.LuaState;
@@ -20,6 +21,7 @@ public class LastTry extends BasicGame {
 	public static Camera camera;
 	public static LuaState lua;
 	public static ModLoader modLoader;
+	public static UiManager ui;
 
 	public LastTry() {
 		super("LastTry");
@@ -36,9 +38,10 @@ public class LastTry extends BasicGame {
 		windowWidth = this.container.getWidth();
 		windowHeight = this.container.getHeight();
 
+		ui = new UiManager();
+
 		lua = LuaStateFactory.newLuaState();
 		lua.openLibs();
-		lua.LdoString("print(\"Lua works!\")");
 
 		world = new World("test");
 		player = new Player("George");

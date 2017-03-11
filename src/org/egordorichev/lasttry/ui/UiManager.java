@@ -11,7 +11,14 @@ public class UiManager {
 	public UiManager() {
 		this.components = new HashMap<String, UiComponent>();
 	}
-	
+
+	public void render() {
+		for(int i = 0; i < components.size(); i++) {
+			UiComponent component = this.components.get(i);
+			component.render();
+		}
+	}
+
 	public void add(String id, UiComponent component) {
 		this.components.put(id, component);
 	}
