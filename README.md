@@ -1,5 +1,5 @@
 # LastTry
-[![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sfml-GUI/Lobby)
+[![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby)
 
 My Terraria clone written in Java + Slick2D library. 
 
