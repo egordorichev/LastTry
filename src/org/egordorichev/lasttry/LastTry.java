@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
+import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 
 public class LastTry extends BasicGame {
@@ -18,6 +19,7 @@ public class LastTry extends BasicGame {
 	public static Player player;
 	public static Camera camera;
 	public static LuaState lua;
+	public static ModLoader modLoader;
 
 	public LastTry() {
 		super("LastTry");
@@ -41,6 +43,8 @@ public class LastTry extends BasicGame {
 		world = new World("test");
 		player = new Player("George");
 		player.spawn(14, 48);
+		
+		modLoader = new ModLoader();
 	}
 
 	@Override
