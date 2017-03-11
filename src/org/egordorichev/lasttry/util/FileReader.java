@@ -6,7 +6,7 @@ public class FileReader {
 	private DataInputStream stream;
 
 	public FileReader(String path) throws FileNotFoundException {
-		this.stream = new DataInputStream(new FileInputStream(path));
+		this.stream = new DataInputStream(new BufferedInputStream(new FileInputStream(path), 32768));
 	}
 
 	public byte readByte() {

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.*;
 
@@ -12,6 +13,7 @@ public class LastTry extends BasicGame {
 	public static Input input;
 	public static World world;
 	public static Player player;
+	public static Camera camera;
 
 	public LastTry() {
 		super("LastTry");
@@ -22,6 +24,7 @@ public class LastTry extends BasicGame {
 		this.container = gameContainer;
 		this.container.getGraphics().setBackground(new Color(129, 207, 224));
 
+		camera = new Camera();
 		input = this.container.getInput();
 
 		windowWidth = this.container.getWidth();
@@ -35,16 +38,29 @@ public class LastTry extends BasicGame {
 
 	@Override
 	public void update(GameContainer gameContainer, int dt) throws SlickException {
+		if(input.isKeyDown(Input.KEY_W)) {
+			player.moveBy(0, -1);
+		} else if(input.isKeyDown(Input.KEY_A)) {
+			player.moveBy(-1, 0);
+		} else if(input.isKeyDown(Input.KEY_S)) {
+			player.moveBy(0, 1);
+		} else if(input.isKeyDown(Input.KEY_D)) {
+			player.moveBy(1, 0);
+		}
+
 		world.update(dt);
 		player.update(dt);
+
+		camera.setPosition(Math.min(world.getWidth() * Block.size - windowWidth, Math.max(0, player.getX() + player.getWidth() / 2 - windowWidth / 2)),
+			Math.min(world.getWidth() * Block.size - windowHeight, Math.max(0, player.getY() + player.getHeight() / 2 - windowHeight / 2)));
 	}
 
 	@Override
 	public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-		Camera.set(graphics);
+		camera.set(graphics);
 		world.render();
 		player.render();
-		Camera.unset(graphics);
+		camera.unset(graphics);
 	}
 
 	@Override

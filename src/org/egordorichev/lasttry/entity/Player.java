@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Animation;
 
 public class Player extends Entity {
@@ -35,8 +36,8 @@ public class Player extends Entity {
 
 	@Override
 	public void onSpawn() {
-		for(int y = 0; y < 3; y++) {
-			for(int x = 0; x < 2; x++) {
+		for(int y = 0; y < 10; y++) {
+			for(int x = 0; x < 10; x++) {
 				LastTry.world.setBlock(null, this.getGridX() + x, this.getGridY() + y);
 			}
 		}

@@ -1,7 +1,9 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Vector2f;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
@@ -15,9 +17,11 @@ public class Entity {
 	protected boolean friendly;
 	protected String name;
 	protected Rectangle rect;
+	protected Rectangle hitbox;
 	protected Image image;
 	protected Animation[] animations;
 	protected State state;
+	protected Vector2f velocity;
 
 	public enum State {
 		IDLE(0),
@@ -47,6 +51,8 @@ public class Entity {
 		this.active = false;
 		this.invulnerable = false;
 		this.rect = new Rectangle(0, 0, 32, 48);
+		this.hitbox = new Rectangle(this.rect.x + 3, this.rect.y + 3, this.rect.width - 6, this.rect.height - 6);
+		this.velocity = new Vector2f(0, 0);
 
 		this.animations = new Animation[State.values().length];
 		this.state = State.IDLE;
@@ -61,12 +67,43 @@ public class Entity {
 	}
 
 	public void update(int dt) {
+		if(!this.active) {
+			return;
+		}
 
+		if(this.velocity.x != 0 || this.velocity.y != 0) {
+			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+
+			newHitbox.x += this.velocity.x;
+			newHitbox.y += this.velocity.y;
+
+			if(!LastTry.world.isColliding(newHitbox)) {
+				this.hitbox = newHitbox;
+				this.rect.x += this.velocity.x;
+				this.rect.y += this.velocity.y;
+			} else {
+				this.velocity.x = 0;
+				this.velocity.y = 0;
+			}
+
+			this.velocity.x *= 0.9;
+			this.velocity.y *= 0.9;
+		}
+	}
+
+	public void moveBy(int x, int y) {
+		if(!this.active) {
+			return;
+		}
+
+		this.velocity.x += x;
+		this.velocity.y += y;
 	}
 
 	public void spawn(int x, int y) {
 		this.active = true;
 		this.rect.setPosition(x * Block.size, y * Block.size);
+		this.hitbox.setPosition(x * Block.size + 3, y * Block.size + 3);
 		this.onSpawn();
 	}
 
@@ -134,5 +171,21 @@ public class Entity {
 
 	public int getGridY() {
 		return (int) this.rect.y / Block.size;
+	}
+
+	public float getX() {
+		return this.rect.x;
+	}
+
+	public float getY() {
+		return this.rect.y;
+	}
+
+	public float getWidth() {
+		return this.rect.width;
+	}
+
+	public float getHeight() {
+		return this.rect.height;
 	}
 }

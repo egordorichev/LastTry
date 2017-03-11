@@ -3,27 +3,27 @@ package org.egordorichev.lasttry;
 import org.newdawn.slick.Graphics;
 
 public class Camera {
-	private static float x = 0;
-	private static float y = 0;
+	private float x = 0;
+	private float y = 0;
 
-	public static void set(Graphics graphics) {
-		graphics.translate(x, y);
+	public void set(Graphics graphics) {
+		graphics.translate(-this.x, -this.y);
 	}
 
-	public static void unset(Graphics graphics) {
-		graphics.translate(-x, -y);
+	public void unset(Graphics graphics) {
+		graphics.translate(this.x, this.y);
 	}
 
-	public static void setPosition(float x, float y) {
-		x = x;
-		y = y;
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
 	}
 
-	public static float getX() {
-		return x;
+	public float getX() {
+		return this.x;
 	}
 
-	public static float getY() {
-		return y;
+	public float getY() {
+		return this.y;
 	}
 }

@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.item;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.tile.TileData;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 import org.newdawn.slick.Image;
 
 public class Wall extends Item {
@@ -52,5 +54,12 @@ public class Wall extends Item {
 		return result;
 	}
 
-	// TODO: use and stuff
+	@Nullable
+	public static Wall getForBlockId(int id) {
+		switch(id) {
+			case 0: return null;
+			case 1: return Wall.dirt;
+			default: return null;
+		}
+	}
 }

@@ -6,15 +6,17 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Block extends Item {
-	public static final Block dirt = new Block(1, "Dirt block", Assets.dirtTileTexture);
+	public static final Block dirt = new Block(1, "Dirt block", true, Assets.dirtTileTexture);
 	public static int size = 16;
 
 	protected Image tiles;
+	protected boolean solid;
 
-	public Block(int id, String name, Image tiles) {
+	public Block(int id, String name, boolean solid, Image tiles) {
 		super(id, name, Item.Type.BLOCK);
 
 		this.tiles = tiles;
+		this.solid = solid;
 	}
 
 	public void renderBlock(TileData data, int x, int y) {
@@ -54,5 +56,7 @@ public class Block extends Item {
 		return result;
 	}
 
-	// TODO: use and stuff
+	public boolean isSolid() {
+		return this.solid;
+	}
 }

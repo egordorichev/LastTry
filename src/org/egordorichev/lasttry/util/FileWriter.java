@@ -10,7 +10,7 @@ public class FileWriter {
 			File file = new File(path);
 			file.createNewFile();
 
-			this.stream = new DataOutputStream(new FileOutputStream(file));
+			this.stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path), 32768));
 		} catch(FileNotFoundException exception) {
 			exception.printStackTrace();
 		} catch(IOException exception) {

@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Wall;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.tile.TileData;
 
 import java.io.FileNotFoundException;
@@ -42,8 +43,8 @@ public class World {
 		int windowHeight = LastTry.getWindowHeight();
 		int tww = windowWidth / Block.size;
 		int twh = windowHeight / Block.size;
-		int tcx = (int) Camera.getX() / Block.size;
-		int tcy = (int) Camera.getY() / Block.size;
+		int tcx = (int) LastTry.camera.getX() / Block.size;
+		int tcy = (int) LastTry.camera.getY() / Block.size;
 
 		for(int y = Math.max(0, tcy - 2); y < Math.min(this.height - 1, tcy + twh + 3); y++) {
 			for(int x = Math.max(0, tcx - 2); x < Math.min(this.width - 1, tcx + tww + 3); x++) {
@@ -147,6 +148,37 @@ public class World {
 		return data.wall.getId();
 	}
 
+	public boolean isColliding(Rectangle rect) {
+		Rectangle gridRect = new Rectangle(rect.x, rect.y, rect.width, rect.height);
+
+		gridRect.x /= Block.size;
+		gridRect.y /= Block.size;
+		gridRect.width /= Block.size;
+		gridRect.height /= Block.size;
+
+		for(int y = (int) gridRect.y - 1; y < gridRect.y + gridRect.height; y++) {
+			for(int x = (int) gridRect.x - 1; x < gridRect.x + gridRect.width; x++) {
+				if(!this.isInside(x, y)) {
+					return true;
+				}
+
+				TileData data = this.getTile(x, y);
+
+				if(data.block == null || !data.block.isSolid()) {
+					continue;
+				}
+
+				Rectangle blockRect = new Rectangle(x * Block.size, y * Block.size, Block.size, Block.size);
+
+				if(blockRect.isColliding(rect)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isLoaded() {
 		return this.loaded;
 	}
@@ -172,20 +204,33 @@ public class World {
 	}
 
 	private void generate() {
-		this.width = 200;
-		this.height = 200;
+		this.width = 4200;
+		this.height = 1200;
 		this.version = this.CURENT_VERSION;
 
 		int totalSize = this.width * this.height;
 		this.tiles = new TileData[totalSize];
 
-		Random random = new Random();
+		int tiles[][] = new int[this.width][this.height];
 
-		for(int i = 0; i < totalSize; i++) {
-			int id = random.nextInt(2);
-
-			this.tiles[i] = new TileData((Block) Item.fromId(id), (Wall) Item.fromId(id == 0 ? 0 : 2));
+		for(int y = 0; y < this.height; y++) {
+			for(int x = 0; x < this.width; x++) {
+				if(y > 100) {
+					tiles[x][y] = 1;
+				} else {
+					tiles[x][y] = 0;
+				}
+			}
 		}
+
+		for(int y = 0; y < this.height; y++) {
+			for(int x = 0; x < this.width; x++) {
+				int id = tiles[x][y];
+				this.tiles[x + y * this.width] = new TileData((Block) Item.fromId(id), Wall.getForBlockId(id));
+			}
+		}
+
+		System.out.println("done generating!");
 
 		this.loaded = true;
 	}
@@ -233,8 +278,10 @@ public class World {
 			// Verification
 		} catch(FileNotFoundException exception) {
 			this.generate();
-			this.save();
+			//this.save();
 		}
+
+		System.out.println("done loading!");
 
 		this.loaded = true;
 	}
@@ -279,5 +326,7 @@ public class World {
 		stream.writeString(this.name);
 
 		stream.close();
+
+		System.out.println("done saving!");
 	}
 }

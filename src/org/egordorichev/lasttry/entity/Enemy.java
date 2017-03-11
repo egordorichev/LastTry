@@ -18,6 +18,7 @@ public class Enemy extends Entity {
 
 	@Override
 	public void update(int dt) {
+		super.update(dt);
 		this.updateAI();
 	}
 
