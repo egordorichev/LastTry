@@ -6,6 +6,6 @@ public class ModException extends Exception {
 	}
 
 	public ModException(String message) {
-        super(message);
-    }
+		super(message);
+	}
 }
