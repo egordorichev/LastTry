@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 
 public class LastTry extends BasicGame {
@@ -15,6 +16,7 @@ public class LastTry extends BasicGame {
 	public static World world;
 	public static Player player;
 	public static Camera camera;
+	public static ModLoader modLoader;
 
 	public LastTry() {
 		super("LastTry");
@@ -35,6 +37,8 @@ public class LastTry extends BasicGame {
 
 		player = new Player("George");
 		player.spawn(14, 48);
+		
+		modLoader = new ModLoader();
 	}
 
 	@Override
