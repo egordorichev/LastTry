@@ -2,13 +2,19 @@ package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+
+import java.util.ArrayList;
 
 public class LastTry extends BasicGame {
 	private static int windowWidth;
@@ -16,6 +22,7 @@ public class LastTry extends BasicGame {
 	private GameContainer container;
 
 	public static Input input;
+	public static Graphics graphics;
 	public static World world;
 	public static Player player;
 	public static Camera camera;
@@ -34,6 +41,7 @@ public class LastTry extends BasicGame {
 
 		camera = new Camera();
 		input = this.container.getInput();
+		graphics = this.container.getGraphics();
 
 		windowWidth = this.container.getWidth();
 		windowHeight = this.container.getHeight();
@@ -46,8 +54,13 @@ public class LastTry extends BasicGame {
 		world = new World("test");
 		player = new Player("George");
 		player.spawn(14, 48);
-		
+
 		modLoader = new ModLoader();
+		modLoader.load();
+
+		//graphics.setFont(Assets.font);
+
+		ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!"));
 	}
 
 	@Override
@@ -65,6 +78,9 @@ public class LastTry extends BasicGame {
 		world.render();
 		player.render();
 		camera.unset(graphics);
+		ui.render();
+
+		graphics.drawString(String.valueOf(gameContainer.getFPS()), 10, this.getWindowHeight() - 30);
 	}
 
 	@Override
@@ -72,16 +88,6 @@ public class LastTry extends BasicGame {
 		world.save();
 		System.exit(0);
 		return false;
-	}
-
-	@Override
-	public void keyPressed(int key, char c) {
-
-	}
-
-	@Override
-	public void keyReleased(int key, char c) {
-
 	}
 
 	public static int getWindowWidth() {
@@ -92,15 +98,20 @@ public class LastTry extends BasicGame {
 		return windowHeight;
 	}
 
+	public static void handleException(Exception exception) {
+		exception.printStackTrace();
+	}
+
 	public static void main(String[] arguments) {
 		try {
 			AppGameContainer app = new AppGameContainer(new LastTry());
 
 			app.setDisplayMode(640, 480, false);
 			app.setVSync(true);
+			app.setShowFPS(false);
 			app.start();
-		} catch(SlickException exception) {
-			exception.printStackTrace();
+		} catch(Exception exception) {
+			LastTry.handleException(exception);
 		}
 	}
 }

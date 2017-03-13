@@ -37,6 +37,9 @@ public class Player extends Entity {
 		Animation jumpingAnimation = new Animation();
 		jumpingAnimation.addFrame(this.image.getSubImage(0, 48, 32, 48), 1000); // TODO
 
+		Animation flyingAnimation = new Animation();
+		flyingAnimation.addFrame(this.image.getSubImage(0, 768, 32, 40), 40);
+
 		Animation deadAnimation = new Animation(false);
 		deadAnimation.addFrame(this.image.getSubImage(0, 0, 32, 48), 1000); // TODO
 		deadAnimation.setLooping(false);
@@ -45,8 +48,18 @@ public class Player extends Entity {
 		this.animations[State.MOVING.getId()] = movingAnimation;
 		this.animations[State.JUMPING.getId()] = jumpingAnimation;
 		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
-		this.animations[State.FLYING.getId()] = null; // Player can't fly
+		this.animations[State.FLYING.getId()] = flyingAnimation;
 		this.animations[State.DEAD.getId()] = deadAnimation;
+	}
+
+	public void setGhostMode(boolean enabled) {
+		this.solid = !enabled;
+
+		if(enabled) {
+			this.state = State.FLYING;
+		} else {
+			this.state = State.IDLE;
+		}
 	}
 
 	@Override
@@ -64,19 +77,36 @@ public class Player extends Entity {
 			return;
 		}
 
-		if(LastTry.input.isKeyDown(Input.KEY_SPACE)) {
-			this.jump();
-		}
+		if(this.state == State.FLYING) {
+			if(LastTry.input.isKeyDown(Input.KEY_SPACE) || LastTry.input.isKeyDown(Input.KEY_W)) {
+				this.velocity.y -= 1;
+			}
 
-		if(LastTry.input.isKeyDown(Input.KEY_A)) {
-			this.move(Direction.LEFT);
-		}
+			if(LastTry.input.isKeyDown(Input.KEY_S)) {
+				this.velocity.y += 1;
+			}
 
-		if(LastTry.input.isKeyDown(Input.KEY_D)) {
-			this.move(Direction.RIGHT);
+			if(LastTry.input.isKeyDown(Input.KEY_A)) {
+				this.move(Direction.LEFT);
+			}
+
+			if(LastTry.input.isKeyDown(Input.KEY_D)) {
+				this.move(Direction.RIGHT);
+			}
+		} else {
+			if(LastTry.input.isKeyDown(Input.KEY_SPACE)) {
+				this.jump();
+			}
+
+			if(LastTry.input.isKeyDown(Input.KEY_A)) {
+				this.move(Direction.LEFT);
+			}
+
+			if(LastTry.input.isKeyDown(Input.KEY_D)) {
+				this.move(Direction.RIGHT);
+			}
 		}
 
 		super.update(dt);
-		this.velocity.x *= 0.8;
 	}
 }

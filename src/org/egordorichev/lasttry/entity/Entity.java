@@ -16,6 +16,7 @@ public class Entity {
 	protected boolean invulnerable;
 	protected boolean active;
 	protected boolean friendly;
+	protected boolean solid;
 	protected String name;
 	protected Rectangle rect;
 	protected Rectangle hitbox;
@@ -53,9 +54,10 @@ public class Entity {
 		this.active = false;
 		this.invulnerable = false;
 		this.rect = new Rectangle(0, 0, 32, 48);
-		this.hitbox = new Rectangle(this.rect.x + 3, this.rect.y + 3, this.rect.width - 6, this.rect.height - 6);
+		this.hitbox = new Rectangle(this.rect.x + 3, this.rect.y + 3, this.rect.width - 6, this.rect.height - 3);
 		this.velocity = new Vector2f(0, 0);
 		this.direction = Direction.RIGHT;
+		this.solid = true;
 
 		this.animations = new Animation[State.values().length];
 		this.state = State.IDLE;
@@ -74,19 +76,23 @@ public class Entity {
 			return;
 		}
 
-		this.velocity.y += 0.4f;
+		if(this.state != State.FLYING) {
+			this.velocity.y += 0.4f;
+		}
 
 		if(this.velocity.x != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
 
-			if(!LastTry.world.isColliding(newHitbox)) {
+			if(!this.solid || !LastTry.world.isColliding(newHitbox)) {
 				this.hitbox = newHitbox;
 				this.rect.x += this.velocity.x;
 			} else {
 				this.velocity.x = 0;
 			}
+
+			this.velocity.x *= 0.8;
 		}
 
 		if(this.velocity.y != 0) {
@@ -94,22 +100,28 @@ public class Entity {
 
 			newHitbox.y += this.velocity.y;
 
-			if(!LastTry.world.isColliding(newHitbox)) {
+			if(!this.solid || !LastTry.world.isColliding(newHitbox)) {
 				this.hitbox = newHitbox;
 				this.rect.y += this.velocity.y;
 			} else {
 				this.velocity.y = 0;
 			}
+
+			if(this.state == State.FLYING) {
+				this.velocity.y *= 0.8;
+			}
 		}
 
-		if(this.velocity.y > 0) {
-			this.state = State.FALLING;
-		} else if(this.velocity.y == 0 && this.state == State.FALLING) {
-			this.state = State.IDLE;
-		}
+		if(this.state != State.FLYING) {
+			if(this.velocity.y > 0) {
+				this.state = State.FALLING;
+			} else if(this.velocity.y == 0 && this.state == State.FALLING) {
+				this.state = State.IDLE;
+			}
 
-		if(this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING && this.state != State.JUMPING) {
-			this.state = State.IDLE; // Does not work
+			if(this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING && this.state != State.JUMPING) {
+				this.state = State.IDLE; // Does not work
+			}
 		}
 
 		this.animations[this.state.getId()].update(dt);
@@ -123,7 +135,7 @@ public class Entity {
 		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
 		this.direction = direction;
 
-		if(this.state != State.JUMPING && this.state != State.FALLING) {
+		if(this.state != State.JUMPING && this.state != State.FALLING && this.state != State.FLYING) {
 			this.state = State.MOVING;
 		}
 	}

@@ -21,6 +21,7 @@ public class UiComponent {
 	public UiComponent(Rectangle rectangle) {
 		this.rect = rectangle;
 		this.state = State.NORMAL;
+		this.hidden = false;
 	}
 
 	public void render() {

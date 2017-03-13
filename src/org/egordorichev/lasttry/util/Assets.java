@@ -1,16 +1,20 @@
 package org.egordorichev.lasttry.util;
 
-import org.jetbrains.annotations.Nullable;
+import org.newdawn.slick.*;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.font.effects.ColorEffect;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class Assets {
 	public static Image dirtTileTexture = loadImage("assets/images/DirtTile.png");
 	public static Image dirtWallTexture = loadImage("assets/images/DirtWall.png");
 	public static Image greenSlimeTexture = loadImage("assets/images/GreenSlime.png");
 	public static Image playerTexture = loadImage("assets/images/Player.png");
+	public static UnicodeFont font = loadFont("assets/fonts/font.ttf");
 
-	@Nullable
 	public static Image loadImage(String path) {
 		try {
 			Image image = new Image(path);
@@ -20,6 +24,22 @@ public class Assets {
 		} catch(SlickException exception) {
 			System.out.println(path + " not found.");
 			System.exit(-1);
+		}
+
+		return null;
+	}
+
+	public static UnicodeFont loadFont(String path) {
+		try {
+			UnicodeFont font = new UnicodeFont(java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, org.newdawn.slick.util.ResourceLoader.getResourceAsStream(path)));
+			font.addAsciiGlyphs();
+			font.getEffects().add(new ColorEffect());
+
+			return font;
+		} catch(FontFormatException exception) {
+			exception.printStackTrace();
+		} catch(IOException exception) {
+			exception.printStackTrace();
 		}
 
 		return null;

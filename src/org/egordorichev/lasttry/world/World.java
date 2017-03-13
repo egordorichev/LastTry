@@ -43,13 +43,13 @@ public class World {
 		int tcx = (int) LastTry.camera.getX() / Block.size;
 		int tcy = (int) LastTry.camera.getY() / Block.size;
 
-		for(int y = Math.max(0, tcy - 2); y < Math.min(this.height - 1, tcy + twh + 3); y++) {
-			for(int x = Math.max(0, tcx - 2); x < Math.min(this.width - 1, tcx + tww + 3); x++) {
+		for(int y = Math.max(0, tcy - 2); y < Math.min(this.height - 1, tcy + twh + 2); y++) {
+			for(int x = Math.max(0, tcx - 2); x < Math.min(this.width - 1, tcx + tww + 2); x++) {
 				TileData tileData = this.getTile(x, y);
 
-				if(tileData.wall != null) {
+				/*if(tileData.wall != null) { // This part slows down all. Why?
 					tileData.wall.renderWall(tileData, x, y);
-				}
+				}*/
 
 				if(tileData.block != null) {
 					tileData.block.renderBlock(tileData, x, y);

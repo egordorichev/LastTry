@@ -2,28 +2,22 @@ package org.egordorichev.lasttry.ui;
 
 import org.egordorichev.lasttry.util.Rectangle;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class UiManager {
-	private Map<String, UiComponent> components;
+	private ArrayList<UiComponent> components;
 
 	public UiManager() {
-		this.components = new HashMap<String, UiComponent>();
+		this.components = new ArrayList<>();
 	}
 
 	public void render() {
-		for(int i = 0; i < components.size(); i++) {
-			UiComponent component = this.components.get(i);
+		for(UiComponent component : this.components) {
 			component.render();
 		}
 	}
 
-	public void add(String id, UiComponent component) {
-		this.components.put(id, component);
-	}
-	
-	public <T extends UiComponent> T get(String id) {
-		return (T) this.components.get(id);
+	public void add(UiComponent component) {
+		this.components.add(component);
 	}
 }
