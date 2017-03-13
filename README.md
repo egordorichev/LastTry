@@ -11,4 +11,5 @@ Please, feel free to join me! Sumbit an issue or open a pull request and become 
 ### Building
 
 Import source code to your IDE. Add all jars from the `lib` folder to project dependencies. 
+
 Add `-Djava.library.path=lib/linux:lib/` to java VM options.
