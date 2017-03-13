@@ -18,7 +18,7 @@ public class Enemy extends Entity {
 
 	@Override
 	public void render() {
-		this.image.draw(this.rect.x, this.rect.y);
+		this.image.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	@Override

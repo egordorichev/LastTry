@@ -27,8 +27,8 @@ public class GreenSlime extends Enemy { // TODO: make Slime class
 		this.animations[State.FLYING.getId()] = null;
 
 
-		this.rect.width = 32;
-		this.rect.height = 24;
+		this.renderBounds.width = 32;
+		this.renderBounds.height = 24;
 	}
 
 	@Override

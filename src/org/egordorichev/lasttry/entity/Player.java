@@ -73,7 +73,7 @@ public class Player extends Entity {
 
 	@Override
 	public void update(int dt) {
-		if(!this.active) {
+		if(!this.shouldUpdate) {
 			return;
 		}
 
@@ -109,4 +109,6 @@ public class Player extends Entity {
 
 		super.update(dt);
 	}
+
+	
 }

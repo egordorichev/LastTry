@@ -56,6 +56,7 @@ public class LastTry extends StateBasedGame {
 
 		ui = new UiManager();
 
+
 		// Commented out due to issues on windows loading dependencies
 		//lua = LuaStateFactory.newLuaState();
 		//lua.openLibs();
@@ -89,7 +90,6 @@ public class LastTry extends StateBasedGame {
 
 	public static void main(String[] arguments) {
 		try {
-			 System.out.println(System.getProperty("java.library.path"));
 			LastTry.app = new AppGameContainer(new ScalableGame(new LastTry(), 800, 600, true));
 
 			LastTry.app.setDisplayMode(800, 600, false);
