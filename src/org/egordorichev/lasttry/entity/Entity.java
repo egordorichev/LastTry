@@ -8,7 +8,12 @@ import org.egordorichev.lasttry.util.Vector2f;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
-public class Entity {
+public abstract class Entity {
+	/**
+	 * Absolute speed below this value is set to 0, which makes comparisons of
+	 * velocity == 0 much simpler.
+	 */
+	private static final float STOP_VELOCITY = 0.1F;
 	/**
 	 * Current hit-points out of the total {@link #maxHp maximum}.
 	 */
@@ -185,6 +190,9 @@ public class Entity {
 			}
 
 			this.velocity.x *= 0.8;
+			if (Math.abs(this.velocity.x) < Entity.STOP_VELOCITY) {
+				this.velocity.x = 0;
+			}
 		}
 		// If the entity is not still on the y-axis, update their position based
 		// on their current velocity.
@@ -202,6 +210,9 @@ public class Entity {
 
 			if (this.state == State.FLYING) {
 				this.velocity.y *= 0.8;
+				if (Math.abs(this.velocity.y) < Entity.STOP_VELOCITY) {
+					this.velocity.y = 0;
+				}
 			}
 		}
 
@@ -212,10 +223,9 @@ public class Entity {
 			} else if (this.velocity.y == 0 && this.state == State.FALLING) {
 				this.state = State.IDLE;
 			}
-
 			if (this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING
 					&& this.state != State.JUMPING) {
-				this.state = State.IDLE; // Does not work
+				this.state = State.IDLE;
 			}
 		}
 		// Update animations
@@ -264,8 +274,8 @@ public class Entity {
 	 */
 	public void spawn(int x, int y) {
 		this.shouldUpdate = true;
-		this.renderBounds.setPosition(x * Block.size, y * Block.size);
-		this.hitbox.setPosition(x * Block.size + 3, y * Block.size + 3);
+		this.renderBounds.setPosition(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		this.hitbox.setPosition(x * Block.TEX_SIZE + 3, y * Block.TEX_SIZE + 3);
 		this.onSpawn();
 	}
 
@@ -413,7 +423,7 @@ public class Entity {
 	 * @return World grid x-position
 	 */
 	public int getGridX() {
-		return (int) this.renderBounds.x / Block.size;
+		return (int) this.renderBounds.x / Block.TEX_SIZE;
 	}
 
 	/**
@@ -423,7 +433,7 @@ public class Entity {
 	 * @return World grid y-position
 	 */
 	public int getGridY() {
-		return (int) this.renderBounds.y / Block.size;
+		return (int) this.renderBounds.y / Block.TEX_SIZE;
 	}
 
 	/**

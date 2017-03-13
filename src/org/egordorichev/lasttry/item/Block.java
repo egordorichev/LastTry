@@ -6,8 +6,8 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Block extends Item {
-	public static final Block dirt = new Block(1, "Dirt block", true, Assets.dirtTileTexture);
-	public static final int size = 16;
+	public static final Block DIRT = new Block(1, "Dirt block", true, Assets.dirtTileTexture);
+	public static final int TEX_SIZE = 16;
 
 	protected Image tiles;
 	protected boolean solid;
@@ -25,7 +25,7 @@ public class Block extends Item {
 		boolean b = LastTry.world.getBlockId(x, y + 1) == this.id;
 		boolean l = LastTry.world.getBlockId(x - 1, y) == this.id;
 
-		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.size, data.variant * Block.size, Block.size, Block.size).draw(x * Block.size, y * Block.size);
+		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
 	public static void preload() {

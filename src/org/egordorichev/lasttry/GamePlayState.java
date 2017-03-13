@@ -50,7 +50,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.world.update(dt);
 		LastTry.player.update(dt);
 
-		LastTry.camera.setPosition(Math.min(LastTry.world.getWidth() * Block.size - LastTry.getWindowWidth(), Math.max(0, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
-			Math.min(LastTry.world.getWidth() * Block.size - LastTry.getWindowHeight(), Math.max(0, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+		LastTry.camera.setPosition(Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowWidth(), Math.max(0, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
+			Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(0, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
 	}
 }

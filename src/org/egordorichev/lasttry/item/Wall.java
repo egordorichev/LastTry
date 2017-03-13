@@ -21,7 +21,7 @@ public class Wall extends Item {
 		boolean b = LastTry.world.getWallId(x, y + 1) == this.id;
 		boolean l = LastTry.world.getWallId(x - 1, y) == this.id;
 
-		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.size, data.variant * Block.size, Block.size, Block.size).draw(x * Block.size, y * Block.size);
+		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
 	public static void preload() {

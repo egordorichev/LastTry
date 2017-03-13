@@ -24,6 +24,7 @@ public class LastTry extends StateBasedGame {
 	public static UiManager ui;
 	public static AppGameContainer app;
 	public final static Random random = new Random();
+	// TODO: Centralized logging with levels (info, warning, error)
 
 	public LastTry() {
 		super(new String[]{

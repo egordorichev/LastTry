@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 	protected int currentAi;
 	protected int maxAi;
 
@@ -30,7 +30,7 @@ public class Enemy extends Entity {
 	public void updateAI() {
 		this.currentAi++;
 
-		if(this.currentAi >= this.maxAi) {
+		if (this.currentAi >= this.maxAi) {
 			this.currentAi = 0;
 		}
 	}
@@ -41,7 +41,9 @@ public class Enemy extends Entity {
 	}
 
 	public static Enemy create(String name) {
-		if(name == "Green Slime") {
+		// TODO: Create a list of constant values for names instead of local
+		// string constants
+		if (name == "Green Slime") {
 			return new GreenSlime();
 		} else {
 			throw new RuntimeException("Entity with name " + name + " is not found.");
