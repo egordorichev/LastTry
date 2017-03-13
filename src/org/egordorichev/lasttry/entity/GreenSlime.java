@@ -7,8 +7,8 @@ public class GreenSlime extends Enemy { // TODO: make Slime class
 	public GreenSlime() {
 		super("Green Slime", 28, 0, 12);
 
+		this.maxAi = 360;
 		this.image = Assets.greenSlimeTexture;
-
 
 		Animation jumpAnimation = new Animation();
 
