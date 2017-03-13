@@ -9,15 +9,16 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Assets {
-	public static Image dirtTileTexture = loadImage("assets/images/DirtTile.png");
-	public static Image dirtWallTexture = loadImage("assets/images/DirtWall.png");
-	public static Image greenSlimeTexture = loadImage("assets/images/GreenSlime.png");
-	public static Image playerTexture = loadImage("assets/images/Player.png");
-	public static UnicodeFont font = loadFont("assets/fonts/font.ttf");
+	public static Image dirtTileTexture = loadImage("DirtTile.png");
+	public static Image dirtWallTexture = loadImage("DirtWall.png");
+	public static Image greenSlimeTexture = loadImage("GreenSlime.png");
+	public static Image playerTexture = loadImage("Player.png");
+
+	public static UnicodeFont font = loadFont("font.ttf");
 
 	public static Image loadImage(String path) {
 		try {
-			Image image = new Image(path);
+			Image image = new Image("assets/images/" + path);
 			image.setFilter(Image.FILTER_NEAREST);
 
 			return image;
@@ -31,7 +32,7 @@ public class Assets {
 
 	public static UnicodeFont loadFont(String path) {
 		try {
-			UnicodeFont font = new UnicodeFont(java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, org.newdawn.slick.util.ResourceLoader.getResourceAsStream(path)));
+			UnicodeFont font = new UnicodeFont(java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, org.newdawn.slick.util.ResourceLoader.getResourceAsStream("assets/fonts/" + path)));
 			font.addAsciiGlyphs();
 			font.getEffects().add(new ColorEffect());
 
@@ -43,5 +44,9 @@ public class Assets {
 		}
 
 		return null;
+	}
+
+	public static void preload() {
+
 	}
 }

@@ -53,6 +53,8 @@ public class World {
 
 				if(tileData.block != null) {
 					tileData.block.renderBlock(tileData, x, y);
+				} else if(tileData.wall != null) {
+					tileData.wall.renderWall(tileData, x, y);
 				}
 			}
 		}

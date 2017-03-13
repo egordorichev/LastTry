@@ -13,13 +13,13 @@ import org.keplerproject.luajava.LuaStateFactory;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class LastTry extends BasicGame {
-	private static int windowWidth;
-	private static int windowHeight;
-	private GameContainer container;
+public class LastTry extends StateBasedGame {
+	private static GameContainer container;
 
 	public static Input input;
 	public static Graphics graphics;
@@ -29,73 +29,64 @@ public class LastTry extends BasicGame {
 	public static LuaState lua;
 	public static ModLoader modLoader;
 	public static UiManager ui;
+	public static AppGameContainer app;
+	public final static Random random = new Random();
 
 	public LastTry() {
-		super("LastTry");
+		super(new String[]{
+			"LastTry: Dig Peon, Dig!",
+			"LastTry: Epic Dirt",
+			"LastTry: Hey Guys!",
+			"LastTry: Sand is Overpowered",
+			"LastTry Part 3: The Return of the Guide",
+			"LastTry: A Bunnies Tale",
+			"LastTry: Dr. Bones and The Temple of Blood Moon",
+			"LastTry: Slimeassic Park",
+			"LastTry: The Grass is Greener on This Side",
+			"LastTry: Small Blocks, Not for Children Under the Age of 5",
+			"LastTry: Digger T' Blocks",
+			"LastTry: There is No Cow Layer",
+			"LastTry: Suspicous Looking Eyeballs",
+			"LastTry: Purple Grass!",
+			"LastTry: Noone Dug Behind!",
+			"LastTry: Shut Up and Dig Gaiden!"
+		}[random.nextInt(16)]);
 	}
 
 	@Override
-	public void init(GameContainer gameContainer) throws SlickException {
-		this.container = gameContainer;
-		this.container.getGraphics().setBackground(new Color(129, 207, 224));
+	public void initStatesList(GameContainer gameContainer) throws SlickException {
+		container = gameContainer;
 
 		camera = new Camera();
-		input = this.container.getInput();
-		graphics = this.container.getGraphics();
-
-		windowWidth = this.container.getWidth();
-		windowHeight = this.container.getHeight();
+		input = gameContainer.getInput();
+		graphics = gameContainer.getGraphics();
 
 		ui = new UiManager();
 
 		lua = LuaStateFactory.newLuaState();
 		lua.openLibs();
 
-		world = new World("test");
-		player = new Player("George");
-		player.spawn(14, 48);
+		graphics.setBackground(new Color(129, 207, 224));
 
-		modLoader = new ModLoader();
-		modLoader.load();
-
-		//graphics.setFont(Assets.font);
-
-		ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!"));
-	}
-
-	@Override
-	public void update(GameContainer gameContainer, int dt) throws SlickException {
-		world.update(dt);
-		player.update(dt);
-
-		camera.setPosition(Math.min(world.getWidth() * Block.size - windowWidth, Math.max(0, player.getX() + player.getWidth() / 2 - windowWidth / 2)),
-			Math.min(world.getWidth() * Block.size - windowHeight, Math.max(0, player.getY() + player.getHeight() / 2 - windowHeight / 2)));
-	}
-
-	@Override
-	public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-		camera.set(graphics);
-		world.render();
-		player.render();
-		camera.unset(graphics);
-		ui.render();
-
-		graphics.drawString(String.valueOf(gameContainer.getFPS()), 10, this.getWindowHeight() - 30);
+		this.addState(new SplashState());
 	}
 
 	@Override
 	public boolean closeRequested() {
-		world.save();
+		if(world != null) {
+			world.save();
+		}
+
 		System.exit(0);
 		return false;
 	}
 
 	public static int getWindowWidth() {
-		return windowWidth;
+		return container.getWidth();
 	}
 
 	public static int getWindowHeight() {
-		return windowHeight;
+		return container.getHeight();
 	}
 
 	public static void handleException(Exception exception) {
@@ -104,12 +95,12 @@ public class LastTry extends BasicGame {
 
 	public static void main(String[] arguments) {
 		try {
-			AppGameContainer app = new AppGameContainer(new LastTry());
+			LastTry.app = new AppGameContainer(new ScalableGame(new LastTry(), 800, 600, true));
 
-			app.setDisplayMode(640, 480, false);
-			app.setVSync(true);
-			app.setShowFPS(false);
-			app.start();
+			LastTry.app.setDisplayMode(800, 600, false);
+			LastTry.app.setVSync(true);
+			LastTry.app.setShowFPS(false);
+			LastTry.app.start();
 		} catch(Exception exception) {
 			LastTry.handleException(exception);
 		}
