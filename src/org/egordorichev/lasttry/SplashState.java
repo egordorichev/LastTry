@@ -20,7 +20,7 @@ public class SplashState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.splash = new Image("assets/images/splash" + LastTry.random.nextInt(6) + ".png");
+		this.splash = new Image("assets/images/splash" + (LastTry.random.nextInt(5) + 1) + ".png");
 		this.loaded = false;
 
 		new Thread() {
