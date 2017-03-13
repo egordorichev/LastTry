@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Animation;
 
-public class GreenSlime extends Enemy {
+public class GreenSlime extends Enemy { // TODO: make Slime class
 	public GreenSlime() {
 		super("Green Slime", 28, 0, 12);
 
