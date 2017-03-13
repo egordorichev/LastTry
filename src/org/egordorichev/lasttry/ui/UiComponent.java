@@ -3,9 +3,6 @@ package org.egordorichev.lasttry.ui;
 import org.egordorichev.lasttry.LastTry;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
-
-import java.util.Objects;
 
 public class UiComponent {
 	public enum State {

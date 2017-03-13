@@ -1,10 +1,8 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Direction;
-import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 

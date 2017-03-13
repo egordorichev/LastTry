@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.ui;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.geom.Rectangle;
 
 public class UiButton extends UiComponent {

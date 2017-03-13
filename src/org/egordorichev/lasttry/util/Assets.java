@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.util;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.font.effects.ColorEffect;
 
