@@ -2,13 +2,18 @@ package org.egordorichev.lasttry.entity;
 
 public class Enemy extends Entity {
 	protected int currentAi;
+	protected int maxAi;
 
 	public Enemy(String name, int maxHp, int defense, int damage) {
 		super(name, false, maxHp, defense, damage);
+
+		this.currentAi = 0;
 	}
 
 	public Enemy(String name) {
 		super(name, false);
+
+		this.currentAi = 0;
 	}
 
 	@Override
@@ -23,7 +28,11 @@ public class Enemy extends Entity {
 	}
 
 	public void updateAI() {
+		this.currentAi++;
 
+		if(this.currentAi >= this.maxAi) {
+			this.currentAi = 0;
+		}
 	}
 
 	@Override
