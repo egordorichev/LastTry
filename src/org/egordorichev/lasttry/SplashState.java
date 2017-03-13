@@ -7,8 +7,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.*;
 
-import java.awt.*;
-
 public class SplashState extends BasicGameState {
 	private Image splash;
 	private boolean loaded;
