@@ -1,21 +1,14 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.ui.UiManager;
-import org.egordorichev.lasttry.util.Assets;
-import org.egordorichev.lasttry.util.Callable;
-import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.world.World;
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class LastTry extends StateBasedGame {
@@ -63,8 +56,9 @@ public class LastTry extends StateBasedGame {
 
 		ui = new UiManager();
 
-		lua = LuaStateFactory.newLuaState();
-		lua.openLibs();
+		// Commented out due to issues on windows loading dependencies
+		//lua = LuaStateFactory.newLuaState();
+		//lua.openLibs();
 
 		graphics.setBackground(new Color(129, 207, 224));
 
@@ -95,6 +89,7 @@ public class LastTry extends StateBasedGame {
 
 	public static void main(String[] arguments) {
 		try {
+			 System.out.println(System.getProperty("java.library.path"));
 			LastTry.app = new AppGameContainer(new ScalableGame(new LastTry(), 800, 600, true));
 
 			LastTry.app.setDisplayMode(800, 600, false);
