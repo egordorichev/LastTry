@@ -45,7 +45,7 @@ public abstract class Enemy extends Entity {
 
 	public static Enemy create(int id) { // TODO: think about better way to do this.
 		switch(id) {
-			case EntityID.none: defaul: return null;
+			case EntityID.none: default: return null;
 			case EntityID.greenSlime: return new GreenSlime();
 			case EntityID.blueSlime: return new BlueSlime();
 		}
