@@ -47,6 +47,11 @@ public abstract class Enemy extends Entity {
 
 	}
 
+	@Override
+	public void onDeath() {
+		// TODO: LastTry.world.addDrop(this.drop);
+	}
+
 	public static Enemy create(int id) { // TODO: think about better way to do this.
 		switch(id) {
 			case EntityID.none: default: return null;

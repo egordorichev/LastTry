@@ -4,9 +4,9 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.egordorichev.lasttry.util.Vector2f;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity {
 	/**
@@ -333,12 +333,20 @@ public abstract class Entity {
 	 */
 	public void die() {
 		this.shouldUpdate = false;
+		this.onDeath();
 	}
 
 	/**
-	 * TODO
+	 * This method is called when entity spawns
 	 */
 	public void onSpawn() {
+
+	}
+
+	/**
+	 * This method is called when entity dies
+	 */
+	public void onDeath() {
 
 	}
 

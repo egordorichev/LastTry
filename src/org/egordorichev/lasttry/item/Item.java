@@ -13,6 +13,9 @@ public class Item {
 	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileTexture);
 	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileTexture);
 	public static Item copperCoin = new Coin(ItemID.copperCoin, "Copper coin", Assets.copperCoinTexture);
+	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Assets.silverCoinTexture);
+	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
+	public static Item platinumCoin = new Coin(ItemID.platinumCoin, "Platinum coin", Assets.platinumCoinTexture);
 
 	/**
 	 * Item identifier.

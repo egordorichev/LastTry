@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.item.Item;
+
 import java.util.ArrayList;
 
 public class Drop {
@@ -31,15 +33,15 @@ public class Drop {
 		CONTAINER
 	}
 
-	private int item;
 	private int minAmount;
 	private int maxAmount;
+	private Item item;
 	private Chance chance;
 	private Type type;
 	private ArrayList<Drop> drops;
 
-	public Drop(int itemID, Chance chance, int minAmount, int maxAmount) {
-		this.item = itemID;
+	public Drop(Item item, Chance chance, int minAmount, int maxAmount) {
+		this.item = item;
 		this.chance = chance;
 		this.minAmount = minAmount;
 		this.maxAmount = maxAmount;
@@ -66,7 +68,7 @@ public class Drop {
 	 * TODO: public ArrayList<ItemHolder> random()
 	 */
 
-	public int getItemID() {
+	public Item getItem() {
 		return this.item;
 	}
 
