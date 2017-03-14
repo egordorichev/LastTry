@@ -43,12 +43,12 @@ public abstract class Entity {
 	/**
 	 * TODO
 	 */
-	protected boolean friendly;
+	protected boolean isFriendly;
 	/**
 	 * Status for if the entity's hitbox should be recognized. Non-solid
 	 * entities can clip through tiles and other entities like a ghost.
 	 */
-	protected boolean solid;
+	protected boolean isSolid;
 	/**
 	 * The name of the entity.
 	 */
@@ -64,7 +64,7 @@ public abstract class Entity {
 	/**
 	 * The image containing the entity's sprite map.
 	 */
-	protected Image image;
+	protected Image texture;
 	/**
 	 * The array of animations the entity has. See {@link #state} for the
 	 * Indices and their associated animations.
@@ -116,7 +116,7 @@ public abstract class Entity {
 
 	public Entity(String name, boolean friendly, int maxHp, int defense, int damage) {
 		this.name = name;
-		this.friendly = friendly;
+		this.isFriendly = friendly;
 		this.defense = defense;
 		this.maxHp = maxHp;
 		this.hp = this.maxHp;
@@ -127,7 +127,7 @@ public abstract class Entity {
 				this.renderBounds.height - 3);
 		this.velocity = new Vector2f(0, 0);
 		this.direction = Direction.RIGHT;
-		this.solid = true;
+		this.isSolid = true;
 
 		this.animations = new Animation[State.values().length];
 		this.state = State.IDLE;
@@ -182,7 +182,7 @@ public abstract class Entity {
 
 			newHitbox.x += this.velocity.x;
 
-			if (!this.solid || !LastTry.world.isColliding(newHitbox)) {
+			if (!this.isSolid || !LastTry.world.isColliding(newHitbox)) {
 				this.hitbox = newHitbox;
 				this.renderBounds.x += this.velocity.x;
 			} else {
@@ -201,7 +201,7 @@ public abstract class Entity {
 
 			newHitbox.y += this.velocity.y;
 
-			if (!this.solid || !LastTry.world.isColliding(newHitbox)) {
+			if (!this.isSolid || !LastTry.world.isColliding(newHitbox)) {
 				this.hitbox = newHitbox;
 				this.renderBounds.y += this.velocity.y;
 			} else {
@@ -408,12 +408,12 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Return the entity's {@link #solid solidity}.
+	 * Return the entity's {@link #isSolid solidity}.
 	 * 
 	 * @return Solid status.
 	 */
 	public boolean isSolid() {
-		return this.solid;
+		return this.isSolid;
 	}
 
 	/**

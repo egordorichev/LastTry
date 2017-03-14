@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class Assets {
 	public static Image dirtTileTexture = loadImage("DirtTile.png");
+	public static Image grassTileTexture = loadImage("GrassTile.png");
 	public static Image dirtWallTexture = loadImage("DirtWall.png");
 	public static Image greenSlimeTexture = loadImage("GreenSlime.png");
 	public static Image playerTexture = loadImage("Player.png");

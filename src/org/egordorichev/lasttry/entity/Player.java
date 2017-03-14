@@ -10,36 +10,36 @@ public class Player extends Entity {
 	public Player(String name) {
 		super(name, true, 100, 0, 0);
 
-		this.image = Assets.playerTexture;
+		this.texture = Assets.playerTexture;
 
 		Animation idleAnimation = new Animation();
-		idleAnimation.addFrame(this.image.getSubImage(0, 0, 32, 48), 1000);
+		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000);
 		idleAnimation.setLooping(false);
 
 		Animation movingAnimation = new Animation();
-		movingAnimation.addFrame(this.image.getSubImage(0, 96, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 144, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 192, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 240, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 288, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 336, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 384, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 432, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 480, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 528, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 576, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 624, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 672, 32, 48), 30);
-		movingAnimation.addFrame(this.image.getSubImage(0, 720, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 96, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 144, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 192, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 240, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 288, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 336, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 384, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 432, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 480, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 528, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 576, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 624, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 672, 32, 48), 30);
+		movingAnimation.addFrame(this.texture.getSubImage(0, 720, 32, 48), 30);
 
 		Animation jumpingAnimation = new Animation();
-		jumpingAnimation.addFrame(this.image.getSubImage(0, 48, 32, 48), 1000); // TODO
+		jumpingAnimation.addFrame(this.texture.getSubImage(0, 48, 32, 48), 1000); // TODO
 
 		Animation flyingAnimation = new Animation();
-		flyingAnimation.addFrame(this.image.getSubImage(0, 768, 32, 40), 40);
+		flyingAnimation.addFrame(this.texture.getSubImage(0, 768, 32, 40), 40);
 
 		Animation deadAnimation = new Animation(false);
-		deadAnimation.addFrame(this.image.getSubImage(0, 0, 32, 48), 1000); // TODO
+		deadAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000); // TODO
 		deadAnimation.setLooping(false);
 
 		this.animations[State.IDLE.getId()] = idleAnimation;
@@ -51,7 +51,7 @@ public class Player extends Entity {
 	}
 
 	public void setGhostMode(boolean enabled) {
-		this.solid = !enabled;
+		this.isSolid = !enabled;
 
 		if(enabled) {
 			this.state = State.FLYING;

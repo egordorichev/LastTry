@@ -8,17 +8,17 @@ public class GreenSlime extends Enemy { // TODO: make Slime class
 		super("Green Slime", 28, 0, 12);
 
 		this.maxAi = 360;
-		this.image = Assets.greenSlimeTexture;
+		this.texture = Assets.greenSlimeTexture;
 
 		Animation jumpAnimation = new Animation();
 
-		jumpAnimation.addFrame(this.image.getSubImage(32, 0, 30, 24), 1);
+		jumpAnimation.addFrame(this.texture.getSubImage(32, 0, 30, 24), 1);
 		jumpAnimation.setLooping(false);
 
 		Animation idleAnimation = new Animation();
 
-		idleAnimation.addFrame(this.image.getSubImage(0, 0, 30, 24), 300);
-		idleAnimation.addFrame(this.image.getSubImage(32, 0, 30, 24), 300);
+		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 30, 24), 300);
+		idleAnimation.addFrame(this.texture.getSubImage(32, 0, 30, 24), 300);
 
 		this.animations[State.JUMPING.getId()] = jumpAnimation;
 		this.animations[State.IDLE.getId()] = idleAnimation;

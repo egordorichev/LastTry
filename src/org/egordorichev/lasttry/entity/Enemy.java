@@ -18,7 +18,7 @@ public abstract class Enemy extends Entity {
 
 	@Override
 	public void render() {
-		this.image.draw(this.renderBounds.x, this.renderBounds.y);
+		this.texture.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	@Override

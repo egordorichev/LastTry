@@ -393,9 +393,9 @@ public class World {
 	 * Generate the world.
 	 */
 	private void generate() {
-		this.width = 1000;
+		this.width = 500;
 		this.height = 500;
-		this.version = this.CURENT_VERSION;
+		this.version = World.CURENT_VERSION;
 
 		int totalSize = this.width * this.height;
 		this.tiles = new TileData[totalSize];
@@ -404,8 +404,10 @@ public class World {
 
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
-				if (y > 120) {
-					tiles[x][y] = 1;
+				if (y == 120) {
+					tiles[x][y] = Item.GRASS_BLOCK;
+				} else if (y > 120) {
+					tiles[x][y] = Item.DIRT_BLOCK;
 				} else {
 					tiles[x][y] = 0;
 				}
@@ -432,7 +434,7 @@ public class World {
 
 			int version = stream.readInt32();
 
-			if (version > this.CURENT_VERSION) {
+			if (version > World.CURENT_VERSION) {
 				throw new RuntimeException("Unsupported version");
 			}
 

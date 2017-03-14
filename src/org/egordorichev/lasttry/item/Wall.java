@@ -6,8 +6,7 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Wall extends Item {
-	public static final Wall dirt = new Wall(2, "Dirt wall", Assets.dirtWallTexture);
-	protected Image texture;
+	public static final Wall dirt = new Wall(Item.DIRT_WALL, "Dirt wall", Assets.dirtWallTexture);
 
 	public Wall(int id, String name, Image texture) {
 		super(id, name, Item.Type.WALL);
@@ -24,9 +23,6 @@ public class Wall extends Item {
 		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
-	public static void preload() {
-
-	}
 
 	private int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		int result = 0;
@@ -57,4 +53,7 @@ public class Wall extends Item {
 			default: return null;
 		}
 	}
+	
+	public static void preload() { }
+
 }
