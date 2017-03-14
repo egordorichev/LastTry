@@ -46,6 +46,8 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.render();
 
 		graphics.drawString(String.valueOf(gameContainer.getFPS()), 10, LastTry.getWindowHeight() - 30);
+		graphics.drawString("X: " + String.format("%.2f", LastTry.player.getX())
+				+ " Y: " + String.format("%.2f", LastTry.player.getY()), 10, 10);
 	}
 
 	@Override
