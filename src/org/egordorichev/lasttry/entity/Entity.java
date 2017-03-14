@@ -41,7 +41,7 @@ public abstract class Entity {
 	 */
 	protected boolean shouldUpdate;
 	/**
-	 * TODO
+	 * If is set to true, this is NPC or Animal
 	 */
 	protected boolean isFriendly;
 	/**
