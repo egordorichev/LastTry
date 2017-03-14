@@ -369,6 +369,10 @@ public abstract class Entity {
 		return this.defense;
 	}
 
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
 	/**
 	 * Set the entity's {@link #hp hit-points}.
 	 * 
@@ -396,6 +400,10 @@ public abstract class Entity {
 	 */
 	public void setMaxHp(int maxHp) {
 		this.maxHp = maxHp;
+	}
+
+	public void modifyMaxHP(int amount) {
+		this.maxHp = Math.max(1, this.maxHp + amount);
 	}
 
 	/**

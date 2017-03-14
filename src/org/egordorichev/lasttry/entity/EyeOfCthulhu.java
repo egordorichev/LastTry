@@ -1,13 +1,14 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Animation;
 
-public class EyeOfCthulhu extends Boss { // TODO: second phase
+public class EyeOfCthulhu extends Boss {
 	public EyeOfCthulhu() {
-		super(EntityID.eyeOfCthulhu, "Eye of Cthulhu", 2800, 12, 15);
+		super(EntityID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpert() ? 3640 : 2800);
 
 		this.texture = Assets.eyeOfCthulhuTexture;
 
@@ -26,13 +27,28 @@ public class EyeOfCthulhu extends Boss { // TODO: second phase
 
 		Animation flyingAnimation = new Animation();
 
-		this.animations[State.FLYING.getId()] = flyingAnimation;
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 0, 110, 166), 300);
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 166, 110, 166), 300);
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 332, 110, 166), 300);
 
+		this.animations[State.FLYING.getId()] = flyingAnimation;
+
 		this.drop.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
 		this.drop.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
+
+		this.phases = new Phase[2];
+		this.phases[0] = new Phase(this, this.maxHp, LastTry.world.isExpert() ? 30 : 15, 12) {
+			@Override
+			public void onEnter() {
+				Animation flyingAnimation = new Animation();
+
+				flyingAnimation.addFrame(texture.getSubImage(0, 498, 110, 166), 300);
+				flyingAnimation.addFrame(texture.getSubImage(0, 664, 110, 166), 300);
+				flyingAnimation.addFrame(texture.getSubImage(0, 830, 110, 166), 300);
+
+				animations[State.FLYING.getId()] = flyingAnimation;
+			}
+		};
 	}
 
 	@Override
