@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Animation;
 
@@ -28,6 +29,8 @@ public class EyeOfCthulhu extends Boss { // TODO: second phase
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 0, 110, 166), 300);
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 166, 110, 166), 300);
 		flyingAnimation.addFrame(this.texture.getSubImage(0, 332, 110, 166), 300);
+
+		this.drop.add(new Drop(ItemID.goldCoin, Drop.Chance.ALWAYS, 5, 5));
 	}
 
 	@Override

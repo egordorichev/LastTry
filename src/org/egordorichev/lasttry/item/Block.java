@@ -7,9 +7,6 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Block extends Item {
-	public static final Block dirt = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileTexture);
-	public static final Block grass = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileTexture);
-	
 	public static final int TEX_SIZE = 16;
 	protected boolean solid;
 
@@ -54,7 +51,4 @@ public class Block extends Item {
 	public boolean isSolid() {
 		return this.solid;
 	}
-	
-	public static void preload() { }
-
 }

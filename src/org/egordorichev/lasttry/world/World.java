@@ -61,8 +61,7 @@ public class World {
 		this.name = name;
 		this.entities = new ArrayList<>();
 
-		Block.preload();
-		Wall.preload();
+		Item.preload();
 
 		this.load();
 	}

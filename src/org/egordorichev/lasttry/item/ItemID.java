@@ -5,4 +5,8 @@ public class ItemID {
 	public final static int dirtBlock = 1;
 	public final static int dirtWall = 2;
 	public final static int grassBlock = 3;
+	public final static int copperCoin = 4;
+	public final static int silverCoin = 5;
+	public final static int goldCoin = 6;
+	public final static int platinumCoin = 7;
 }

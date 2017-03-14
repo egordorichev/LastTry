@@ -15,6 +15,10 @@ public class Assets {
 	public static Image blueSlimeTexture = loadImage("BlueSlime.png");
 	public static Image playerTexture = loadImage("Player.png");
 	public static Image eyeOfCthulhuTexture = loadImage("EyeOfCthulhu.png");
+	public static Image copperCoinTexture = loadImage("CopperCoin.png");
+	public static Image silverCoinTexture = loadImage("SilverCoin.png");
+	public static Image goldCoinTexture = loadImage("GoldCoin.png");
+	public static Image platinumCoinTexture = loadImage("PlatinumCoin.png");
 
 	public static UnicodeFont font = loadFont("font.ttf");
 

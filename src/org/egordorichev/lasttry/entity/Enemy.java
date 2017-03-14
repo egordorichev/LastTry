@@ -5,16 +5,20 @@ import org.egordorichev.lasttry.util.Direction;
 public abstract class Enemy extends Entity {
 	protected int currentAi;
 	protected int maxAi;
+	protected Drop drop;
 
 	public Enemy(int id, int maxHp, int defense, int damage) {
 		super(id, false, maxHp, defense, damage);
 
 		this.currentAi = 0;
+		this.drop = new Drop();
 	}
 
 	public Enemy(int id) {
 		super(id, false);
+
 		this.currentAi = 0;
+		this.drop = new Drop();
 	}
 
 	@Override

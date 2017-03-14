@@ -1,13 +1,18 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.item.blocks.BlockGround;
+import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Image;
 
 public class Item {
 	/**
 	 * Item lookup. Item ID used as the index.
 	 */
-	public static final Item[] ITEM_CACHE = new Item[32];
-
+	public static Item[] ITEM_CACHE = new Item[32];
+	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallTexture);
+	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileTexture);
+	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileTexture);
+	public static Item copperCoin = new Coin(ItemID.copperCoin, "Copper coin", Assets.copperCoinTexture);
 
 	/**
 	 * Item identifier.
@@ -91,6 +96,23 @@ public class Item {
 	}
 
 	/**
+	 * Return the items's {@link #texture}
+	 *
+	 * @return Item texture
+	 */
+	public Image getTexture() {
+		return this.texture;
+	}
+
+	/**
+	 * Returns if player can use {@link #item}
+	 *
+	 * @return True if player can use item
+	 */
+	public boolean canBeUsed() { // This is method, because it can depend on time and stuff
+		return true;
+	}
+	/**
 	 * Retrieve an item instance from an item identifier.
 	 * 
 	 * @param id
@@ -103,5 +125,12 @@ public class Item {
 		}
 
 		return ITEM_CACHE[id];
+	}
+
+	/**
+	 * Loads all fields
+	 */
+	public static void preload() {
+
 	}
 }
