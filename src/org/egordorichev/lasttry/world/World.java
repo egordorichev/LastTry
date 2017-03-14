@@ -474,7 +474,7 @@ public class World {
 
 			int version = stream.readInt32();
 
-			if (version != World.CURRENT_VERSION) {
+			if (version > World.CURRENT_VERSION) {
 				throw new RuntimeException("Unsupported version");
 			}
 
