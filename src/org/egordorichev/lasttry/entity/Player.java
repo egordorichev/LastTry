@@ -7,9 +7,12 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 public class Player extends Entity {
+	protected String name;
+	
 	public Player(String name) {
-		super(name, true, 100, 0, 0);
+		super(EntityID.player, true, 100, 0, 0);
 
+		this.name = name;
 		this.texture = Assets.playerTexture;
 
 		Animation idleAnimation = new Animation();
@@ -108,5 +111,7 @@ public class Player extends Entity {
 		super.update(dt);
 	}
 
-	
+	public String getName() {
+		return this.name;
+	}	
 }
