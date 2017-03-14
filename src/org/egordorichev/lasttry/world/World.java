@@ -1,12 +1,10 @@
 package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Wall;
+import org.egordorichev.lasttry.item.*;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -55,11 +53,16 @@ public class World {
 	 * List of entities in the world.
 	 */
 	private List<Entity> entities;
+	/**
+	 * List of items in the world
+	 */
+	private List<ItemHolder> items;
 
 	public World(String name) {
 		this.loaded = false;
 		this.name = name;
 		this.entities = new ArrayList<>();
+		this.items = new ArrayList<>();
 
 		Item.preload();
 
@@ -81,6 +84,7 @@ public class World {
 		int maxY = Math.min(this.height - 1, tcy + twh + 2);
 		int minX = Math.max(0, tcx - 2);
 		int maxX = Math.min(this.width - 1, tcx + tww + 2);
+
 		// Iterate coordinates, exclude ones not visible to the camera
 		for (int y = minY; y < maxY; y++) {
 			for (int x = minX; x < maxX; x++) {
@@ -93,8 +97,20 @@ public class World {
 		for (Entity entity : this.entities) {
 			int gx = entity.getGridX();
 			int gy = entity.getGridY();
-			if ((gx > minX && gx < maxX) && (gy > minY && gy < maxY)) {
+			int w = entity.getGridWidth();
+			int h = entity.getGridHeight();
+			if ((gx > minX - w && gx < maxX + w) && (gy > minY - h && gy < maxY + h)) {
 				entity.render();
+			}
+		}
+
+		// Render items, exclude ones not visible to the camera
+
+		for(ItemHolder item : this.items) {
+			int gx = item.getGridX();
+			int gy = item.getGridY();
+			if((gx > minX - 5 && gx < maxX + 5) && (gy > minY - 5 && gy < maxY + 5)) { // Make sure, that items is fully un-visible
+				item.render();
 			}
 		}
 	}
@@ -112,7 +128,7 @@ public class World {
 	}
 
 	/**
-	 * Spawn an enemy in the world <i>(Type dictated by the name)</i>
+	 * Spawn an enemy in the world <i>(Type dictated by the id)</i>
 	 * 
 	 * @param name
 	 *            Name of the type of entity to spawn.
@@ -131,6 +147,13 @@ public class World {
 		}
 		
 		return enemy;
+	}
+
+	/**
+	 * Add all items from drop to the world
+	 */
+	public void addDrop(Drop drop) {
+
 	}
 
 	/**

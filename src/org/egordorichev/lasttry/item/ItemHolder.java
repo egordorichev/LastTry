@@ -33,7 +33,7 @@ public class ItemHolder {
 		}
 	}
 
-	public void render(int x, int y) {
+	public void renderAt(int x, int y) {
 		this.item.getTexture().draw(x, y);
 	}
 
@@ -47,6 +47,14 @@ public class ItemHolder {
 
 	public Vector2f getPosition() {
 		return this.position;
+	}
+
+	public int getGridX() {
+		return (int) this.position.x / Block.TEX_SIZE;
+	}
+
+	public int getGridY() {
+		return (int) this.position.y / Block.TEX_SIZE;
 	}
 
 	public Item getItem() {

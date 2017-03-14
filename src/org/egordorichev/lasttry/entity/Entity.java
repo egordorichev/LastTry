@@ -445,6 +445,14 @@ public abstract class Entity {
 		return (int) this.renderBounds.y / Block.TEX_SIZE;
 	}
 
+	public int getGridWidth() {
+		return (int) this.renderBounds.width / Block.TEX_SIZE;
+	}
+
+	public int getGridHeight() {
+		return (int) this.renderBounds.height / Block.TEX_SIZE;
+	}
+
 	/**
 	 * Return the entity's x-position.
 	 * 

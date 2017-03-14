@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemHolder;
 
 import java.util.ArrayList;
 
@@ -30,7 +32,8 @@ public class Drop {
 
 	public enum Type {
 		DROP,
-		CONTAINER
+		CONTAINER,
+		ONE_OF
 	}
 
 	private int minAmount;
@@ -49,6 +52,11 @@ public class Drop {
 		this.type = Type.DROP;
 	}
 
+	public Drop(ArrayList<Drop> drops) {
+		this.drops = drops;
+		this.type = Type.ONE_OF;
+	}
+
 	public Drop() {
 		this.type = Type.CONTAINER;
 		this.drops = new ArrayList<>();
@@ -64,9 +72,29 @@ public class Drop {
 		this.drops.add(drop);
 	}
 
-	/**
-	 * TODO: public ArrayList<ItemHolder> random()
-	 */
+	public ArrayList<ItemHolder> getItems() {
+		ArrayList<ItemHolder> items = new ArrayList<>();
+
+		if(this.type == Type.DROP) {
+			items.add(new ItemHolder(this.item, LastTry.random.nextInt((this.maxAmount - this.minAmount) + 1) + this.maxAmount));
+		} else if(this.type == Type.CONTAINER){
+			for(Drop drop : this.drops) {
+				ArrayList<ItemHolder> dropItems = drop.getItems();
+				items.addAll(dropItems);
+			}
+		} else {
+			ArrayList<ItemHolder> drops = new ArrayList<>();
+
+			for(Drop drop : this.drops) {
+				ArrayList<ItemHolder> dropItems = drop.getItems();
+				drops.addAll(dropItems);
+			}
+
+			items.add(drops.get(LastTry.random.nextInt(drops.size())));
+		}
+
+		return items;
+	}
 
 	public Item getItem() {
 		return this.item;
