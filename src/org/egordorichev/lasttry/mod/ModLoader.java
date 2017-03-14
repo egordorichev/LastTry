@@ -3,8 +3,6 @@ package org.egordorichev.lasttry.mod;
 import org.egordorichev.lasttry.LastTry;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -26,16 +24,12 @@ public class ModLoader {
 			if(!mods[i].getName().endsWith(".jar")) {
 				continue;
 			}
-
-			try {
-				JarFile jarFile = new JarFile(mods[i]);
-				Enumeration enumeration = jarFile.entries();
+			try (JarFile jarFile = new JarFile(mods[i])){
 				URL[] urls = new URL[]{
 						new URL("jar:file:" + mods[i].getAbsolutePath() + "!/")
 				};
-
 				URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
-
+				Enumeration<JarEntry> enumeration = jarFile.entries();
 				while(enumeration.hasMoreElements()) {
 					JarEntry jarEntry = (JarEntry) enumeration.nextElement();
 
@@ -46,7 +40,7 @@ public class ModLoader {
 					String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
 					className = className.replace('/', '.');
 
-					Class aClass = urlClassLoader.loadClass(className);
+					Class<?> aClass = urlClassLoader.loadClass(className);
 
 					if(Mod.class.isAssignableFrom(aClass) && aClass != LuaMod.class && aClass != Mod.class) {
 						Mod mod = (Mod) aClass.newInstance();

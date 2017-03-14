@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.util.Assets;
-import org.lwjgl.util.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.util;
 import org.newdawn.slick.util.FastTrig;
 
 public class Vector2f {
+	
+
 	private float angle;
 
 	public float x;
