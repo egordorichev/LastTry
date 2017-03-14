@@ -3,8 +3,6 @@ package org.egordorichev.lasttry;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.world.World;
-import org.keplerproject.luajava.LuaState;
-import org.keplerproject.luajava.LuaStateFactory;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,7 +17,6 @@ public class LastTry extends StateBasedGame {
 	public static World world;
 	public static Player player;
 	public static Camera camera;
-	public static LuaState lua;
 	public static ModLoader modLoader;
 	public static UiManager ui;
 	public static AppGameContainer app;
@@ -56,11 +53,6 @@ public class LastTry extends StateBasedGame {
 		graphics = gameContainer.getGraphics();
 
 		ui = new UiManager();
-
-
-		// Commented out due to issues on windows loading dependencies
-		//lua = LuaStateFactory.newLuaState();
-		//lua.openLibs();
 
 		graphics.setBackground(new Color(129, 207, 224));
 
