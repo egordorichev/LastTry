@@ -7,11 +7,14 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Block extends Item {
-	public static final Block DIRT = new BlockGround(Item.DIRT_BLOCK, "Dirt block", true, Assets.dirtTileTexture);
-	public static final Block GRASS = new BlockGround(Item.GRASS_BLOCK, "Grass block", true, Assets.grassTileTexture);
+	public static final int GRASS_BLOCK = 3;
+	public static final int DIRT_BLOCK = 1;
+	public static final Block DIRT = new BlockGround(Block.DIRT_BLOCK, "Dirt block", true, Assets.dirtTileTexture);
+	public static final Block GRASS = new BlockGround(Block.GRASS_BLOCK, "Grass block", true, Assets.grassTileTexture);
 	public static final int TEX_SIZE = 16;
 
 	protected boolean solid;
+	
 
 	public Block(int id, String name, boolean solid, Image tiles) {
 		super(id, name, Item.Type.BLOCK);

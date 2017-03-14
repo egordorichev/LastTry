@@ -6,7 +6,8 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Wall extends Item {
-	public static final Wall dirt = new Wall(Item.DIRT_WALL, "Dirt wall", Assets.dirtWallTexture);
+	public static final int DIRT_WALL = 2;
+	public static final Wall dirt = new Wall(Wall.DIRT_WALL, "Dirt wall", Assets.dirtWallTexture);
 
 	public Wall(int id, String name, Image texture) {
 		super(id, name, Item.Type.WALL);

@@ -3,11 +3,6 @@ package org.egordorichev.lasttry.item;
 import org.newdawn.slick.Image;
 
 public class Item {
-	public static final int DIRT_BLOCK = 1;
-	public static final int DIRT_WALL = 2;
-	public static final int GRASS_BLOCK = 3;
-
-
 	/**
 	 * Item lookup. Item ID used as the index.
 	 */
