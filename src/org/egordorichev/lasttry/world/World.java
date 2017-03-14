@@ -399,9 +399,9 @@ public class World {
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
 				if (y == 120) {
-					tiles[x][y] = Block.GRASS_ID;
+					tiles[x][y] = ItemID.grassBlock;
 				} else if (y > 120) {
-					tiles[x][y] = Block.DIRT_ID;
+					tiles[x][y] = ItemID.dirtBlock;
 				} else {
 					tiles[x][y] = 0;
 				}
