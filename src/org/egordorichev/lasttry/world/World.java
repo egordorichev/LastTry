@@ -64,9 +64,6 @@ public class World {
 		Wall.preload();
 
 		this.load();
-		
-		spawnEnemy(Enemy.SLIME_GREEN, 10, 90);
-		spawnEnemy(Enemy.SLIME_BLUE, 40, 90);
 	}
 
 	/**
@@ -125,12 +122,14 @@ public class World {
 	 *            Y-position to spawn entity at.
 	 * @return
 	 */
-	public Enemy spawnEnemy(String name, int x, int y) {
-		Enemy enemy = Enemy.create(name);
-		enemy.spawn(x, y);
-
-		this.entities.add(enemy);
-
+	public Enemy spawnEnemy(int id, int x, int y) {
+		Enemy enemy = Enemy.create(id);
+		
+		if(enemy != null) {
+			enemy.spawn(x, y);
+			this.entities.add(enemy);
+		}
+		
 		return enemy;
 	}
 
