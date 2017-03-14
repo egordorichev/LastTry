@@ -17,6 +17,11 @@ public class Item {
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
 	public static Item platinumCoin = new Coin(ItemID.platinumCoin, "Platinum coin", Assets.platinumCoinTexture);
 
+	// TODO
+
+	// public static Item heart = new Item(ItemID.heart, "Heart", Assets.heartTexture);
+	// public static Item mana = new Item(ItemID.mana, "Heart", Assets.manaTexture);
+
 	/**
 	 * Item identifier.
 	 */

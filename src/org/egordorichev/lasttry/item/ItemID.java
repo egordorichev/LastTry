@@ -9,4 +9,6 @@ public class ItemID {
 	public final static int silverCoin = 5;
 	public final static int goldCoin = 6;
 	public final static int platinumCoin = 7;
+	public final static int heart = 8;
+	public final static int mana = 9;
 }

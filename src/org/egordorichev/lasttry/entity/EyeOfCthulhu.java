@@ -25,13 +25,6 @@ public class EyeOfCthulhu extends Boss {
 		this.state = State.FLYING;
 		this.isSolid = false;
 
-		Animation flyingAnimation = new Animation();
-
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 0, 110, 166), 300);
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 166, 110, 166), 300);
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 332, 110, 166), 300);
-
-		this.animations[State.FLYING.getId()] = flyingAnimation;
 
 		this.drop.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
 		this.drop.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
@@ -41,7 +34,13 @@ public class EyeOfCthulhu extends Boss {
 		this.phases[0] = new Phase(this, this.maxHp, LastTry.world.isExpert() ? 30 : 15, 12) {
 			@Override
 			public void onEnter() {
+				Animation flyingAnimation = new Animation();
 
+				flyingAnimation.addFrame(texture.getSubImage(0, 0, 110, 166), 300);
+				flyingAnimation.addFrame(texture.getSubImage(0, 166, 110, 166), 300);
+				flyingAnimation.addFrame(texture.getSubImage(0, 332, 110, 166), 300);
+
+				animations[State.FLYING.getId()] = flyingAnimation;
 			}
 		};
 
