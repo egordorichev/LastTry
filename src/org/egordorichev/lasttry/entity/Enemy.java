@@ -46,8 +46,10 @@ public abstract class Enemy extends Entity {
 	}
 
 	public static Enemy create(String name) {
-		if (name.equals(Enemy.SLIME_GREEN) || name.equals(SLIME_BLUE)) {
-			return new Slime(name);
+		if (name.equals(Enemy.SLIME_GREEN)) {
+			return new GreenSlime();
+		} else if(name.equals(SLIME_BLUE)) {	
+			return new BlueSlime();
 		} else {
 			throw new RuntimeException("Entity with name " + name + " is not found.");
 		}
