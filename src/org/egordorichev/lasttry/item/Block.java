@@ -9,8 +9,8 @@ import org.newdawn.slick.Image;
 public class Block extends Item {
 	public static final int DIRT_ID = 1;
 	public static final int GRASS_ID = 3;
-	public static final Block DIRT = new BlockGround(Block.DIRT_ID, "Dirt block", true, Assets.dirtTileTexture);
-	public static final Block GRASS = new BlockGround(Block.GRASS_ID, "Grass block", true, Assets.grassTileTexture);
+	public static final Block dirt = new BlockGround(Block.DIRT_ID, "Dirt block", true, Assets.dirtTileTexture);
+	public static final Block grass = new BlockGround(Block.GRASS_ID, "Grass block", true, Assets.grassTileTexture);
 	public static final int TEX_SIZE = 16;
 
 	protected boolean solid;
