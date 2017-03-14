@@ -1,6 +1,10 @@
 package org.egordorichev.lasttry.entity;
 
-public class Enemy extends Entity {
+import org.egordorichev.lasttry.util.Direction;
+
+public abstract class Enemy extends Entity {
+	public static final String SLIME_GREEN = "Green Slime";
+	public static final String SLIME_BLUE = "Blue Slime";
 	protected int currentAi;
 	protected int maxAi;
 
@@ -12,8 +16,14 @@ public class Enemy extends Entity {
 
 	public Enemy(String name) {
 		super(name, false);
-
 		this.currentAi = 0;
+	}
+
+	@Override
+	public void render() {
+		this.animations[this.state.getId()]
+				.getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
+				.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	@Override
@@ -36,8 +46,8 @@ public class Enemy extends Entity {
 	}
 
 	public static Enemy create(String name) {
-		if(name == "Green Slime") {
-			return new GreenSlime();
+		if (name.equals(Enemy.SLIME_GREEN) || name.equals(SLIME_BLUE)) {
+			return new Slime(name);
 		} else {
 			throw new RuntimeException("Entity with name " + name + " is not found.");
 		}

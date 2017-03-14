@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.ui;
 
-import org.egordorichev.lasttry.util.Rectangle;
-
 import java.util.ArrayList;
 
 public class UiManager {

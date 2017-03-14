@@ -4,10 +4,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
-import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.world.World;
-import org.keplerproject.luajava.LuaStateFactory;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -55,7 +52,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.world.update(dt);
 		LastTry.player.update(dt);
 
-		LastTry.camera.setPosition(Math.min(LastTry.world.getWidth() * Block.size - LastTry.getWindowWidth(), Math.max(0, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
-			Math.min(LastTry.world.getWidth() * Block.size - LastTry.getWindowHeight(), Math.max(0, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+		LastTry.camera.setPosition(Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowWidth(), Math.max(0, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
+			Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(0, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
 	}
 }
