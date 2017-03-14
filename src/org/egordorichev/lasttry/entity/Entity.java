@@ -142,7 +142,8 @@ public abstract class Entity {
 	 * flipped based on their {@link #direction}.
 	 */
 	public void render() {
-		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
+		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(
+				this.direction == Direction.RIGHT, false)
 				.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 

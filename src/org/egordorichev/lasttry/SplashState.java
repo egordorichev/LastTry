@@ -23,7 +23,7 @@ public class SplashState extends BasicGameState {
 		new Thread() {
 			@Override
 			public void run() {
-				//Assets.preload();
+				Assets.preload();
 				loaded = true;
 			}
 		}.run();
