@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.entity.EntityID;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
@@ -18,7 +19,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(14, 48);
 
-		LastTry.world.spawnEnemy("Green Slime", 20, 49);
+		LastTry.world.spawnEnemy(EntityID.greenSlime, 20, 49);
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
