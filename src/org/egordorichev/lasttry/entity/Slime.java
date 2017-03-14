@@ -49,7 +49,7 @@ public class Slime extends Enemy {
 	public void updateAI() {
 		super.updateAI();
 		// New cycle -> allow jumping again
-		if (this.currentAi == 0) {
+		if (this.currentAi == 0 && this.velocity.y == 0) {
 			canJump = true;
 		}
 
