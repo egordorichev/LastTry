@@ -56,6 +56,8 @@ public class EyeOfCthulhu extends Boss {
 				animations[State.FLYING.getId()] = flyingAnimation;
 			}
 		};
+		
+		this.phases[0].enter();
 	}
 
 	@Override
