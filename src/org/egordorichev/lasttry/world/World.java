@@ -301,8 +301,8 @@ public class World {
 		gridBounds.width /= Block.TEX_SIZE;
 		gridBounds.height /= Block.TEX_SIZE;
 
-		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height; y++) {
-			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width; x++) {
+		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
+			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
 				if (!this.isInside(x, y)) {
 					return true;
 				}
