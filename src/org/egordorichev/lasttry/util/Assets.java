@@ -14,6 +14,7 @@ public class Assets {
 	public static Image greenSlimeTexture = loadImage("GreenSlime.png");
 	public static Image blueSlimeTexture = loadImage("BlueSlime.png");
 	public static Image playerTexture = loadImage("Player.png");
+	public static Image eyeOfCthulhuTexture = loadImage("EyeOfCthulhu.png");
 
 	public static UnicodeFont font = loadFont("font.ttf");
 

@@ -48,6 +48,7 @@ public abstract class Enemy extends Entity {
 			case EntityID.none: default: return null;
 			case EntityID.greenSlime: return new GreenSlime();
 			case EntityID.blueSlime: return new BlueSlime();
+			case EntityID.eyeOfCthulhu: return new EyeOfCthulhu();
 		}
 	}
 }

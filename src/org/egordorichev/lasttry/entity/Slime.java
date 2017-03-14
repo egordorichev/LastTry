@@ -30,8 +30,8 @@ public class Slime extends Enemy {
 
 		Animation idleAnimation = new Animation();
 
-		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 24), 200);
-		idleAnimation.addFrame(this.texture.getSubImage(32, 0, 32, 24), 200);
+		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 24), 300);
+		idleAnimation.addFrame(this.texture.getSubImage(32, 0, 32, 24), 300);
 
 		this.animations[State.JUMPING.getId()] = jumpAnimation;
 		this.animations[State.MOVING.getId()] = jumpAnimation;
@@ -49,7 +49,7 @@ public class Slime extends Enemy {
 	public void updateAI() {
 		super.updateAI();
 		// New cycle -> allow jumping again
-		if (this.currentAi == 0) {
+		if (this.currentAi == 360 && this.velocity.y == 0) {
 			canJump = true;
 		}
 
