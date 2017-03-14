@@ -31,6 +31,10 @@ public abstract class Entity {
 	 */
 	protected int damage;
 	/**
+	 * Entity id
+	 */
+	protected int id;
+	/**
 	 * Invulnerability status. If enabled the entity will not be able to take
 	 * damage.
 	 */
@@ -49,10 +53,6 @@ public abstract class Entity {
 	 * entities can clip through tiles and other entities like a ghost.
 	 */
 	protected boolean isSolid;
-	/**
-	 * The name of the entity.
-	 */
-	protected String name;
 	/**
 	 * The dimensions that the entity is rendered in.
 	 */
@@ -114,8 +114,8 @@ public abstract class Entity {
 		}
 	}
 
-	public Entity(String name, boolean friendly, int maxHp, int defense, int damage) {
-		this.name = name;
+	public Entity(int id, boolean friendly, int maxHp, int defense, int damage) {
+		this.id = id;
 		this.isFriendly = friendly;
 		this.defense = defense;
 		this.maxHp = maxHp;
@@ -133,8 +133,8 @@ public abstract class Entity {
 		this.state = State.IDLE;
 	}
 
-	public Entity(String name, boolean friendly) {
-		this(name, friendly, 10, 0, 0);
+	public Entity(int id, boolean friendly) {
+		this(id, friendly, 10, 0, 0);
 	}
 
 	/**
@@ -400,12 +400,12 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Return the entity's {@link #name}.
+	 * Return the entity's {@link #id}.
 	 * 
-	 * @return Name.
+	 * @return Na.
 	 */
-	public String getName() {
-		return this.name;
+	public int getId() {
+		return this.id;
 	}
 
 	/**
