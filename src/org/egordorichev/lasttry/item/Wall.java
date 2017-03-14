@@ -6,8 +6,7 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Wall extends Item {
-	public static final int DIRT_ID = 2;
-	public static final Wall dirt = new Wall(Wall.DIRT_ID, "Dirt wall", Assets.dirtWallTexture);
+	public static final Wall dirt = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallTexture);
 
 	public Wall(int id, String name, Image texture) {
 		super(id, name, Item.Type.WALL);
@@ -49,9 +48,8 @@ public class Wall extends Item {
 
 	public static Wall getForBlockId(int id) {
 		switch(id) {
-			case 0: return null;
-			case 1: return Wall.dirt;
-			default: return null;
+			case ItemID.none: default: return null;
+			case ItemID.dirtBlock: return Wall.dirt;
 		}
 	}
 	
