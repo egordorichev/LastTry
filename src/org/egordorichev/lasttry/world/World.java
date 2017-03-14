@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Wall;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
@@ -122,12 +123,14 @@ public class World {
 	 *            Y-position to spawn entity at.
 	 * @return
 	 */
-	public Enemy spawnEnemy(String name, int x, int y) {
-		Enemy enemy = Enemy.create(name);
-		enemy.spawn(x, y);
-
-		this.entities.add(enemy);
-
+	public Enemy spawnEnemy(int id, int x, int y) {
+		Enemy enemy = Enemy.create(id);
+		
+		if(enemy != null) {
+			enemy.spawn(x, y);
+			this.entities.add(enemy);
+		}
+		
 		return enemy;
 	}
 
@@ -298,8 +301,8 @@ public class World {
 		gridBounds.width /= Block.TEX_SIZE;
 		gridBounds.height /= Block.TEX_SIZE;
 
-		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height; y++) {
-			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width; x++) {
+		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
+			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
 				if (!this.isInside(x, y)) {
 					return true;
 				}
@@ -396,9 +399,9 @@ public class World {
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
 				if (y == 120) {
-					tiles[x][y] = Block.GRASS_BLOCK;
+					tiles[x][y] = ItemID.grassBlock;
 				} else if (y > 120) {
-					tiles[x][y] = Block.DIRT_BLOCK;
+					tiles[x][y] = ItemID.dirtBlock;
 				} else {
 					tiles[x][y] = 0;
 				}

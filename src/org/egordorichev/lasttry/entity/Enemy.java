@@ -3,19 +3,17 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.util.Direction;
 
 public abstract class Enemy extends Entity {
-	public static final String SLIME_GREEN = "Green Slime";
-	public static final String SLIME_BLUE = "Blue Slime";
 	protected int currentAi;
 	protected int maxAi;
 
-	public Enemy(String name, int maxHp, int defense, int damage) {
-		super(name, false, maxHp, defense, damage);
+	public Enemy(int id, int maxHp, int defense, int damage) {
+		super(id, false, maxHp, defense, damage);
 
 		this.currentAi = 0;
 	}
 
-	public Enemy(String name) {
-		super(name, false);
+	public Enemy(int id) {
+		super(id, false);
 		this.currentAi = 0;
 	}
 
@@ -45,13 +43,11 @@ public abstract class Enemy extends Entity {
 
 	}
 
-	public static Enemy create(String name) {
-		if (name.equals(Enemy.SLIME_GREEN)) {
-			return new GreenSlime();
-		} else if(name.equals(SLIME_BLUE)) {	
-			return new BlueSlime();
-		} else {
-			throw new RuntimeException("Entity with name " + name + " is not found.");
+	public static Enemy create(int id) { // TODO: think about better way to do this.
+		switch(id) {
+			case EntityID.none: default: return null;
+			case EntityID.greenSlime: return new GreenSlime();
+			case EntityID.blueSlime: return new BlueSlime();
 		}
 	}
 }

@@ -16,8 +16,8 @@ public class ModAPI { // TODO: add more
 		return LastTry.world;
 	}
 
-	public static Enemy createEnemy(String name) {
-		return Enemy.create(name);
+	public static Enemy createEnemy(int id) {
+		return Enemy.create(id);
 	}
 
 	public static void addKeyBinding(int key, Callable callable) {

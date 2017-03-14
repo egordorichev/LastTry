@@ -16,8 +16,8 @@ public class Slime extends Enemy {
 	 */
 	protected boolean canJump;
 
-	public Slime(String name, Image texture) {
-		super(name, 28, 0, 12);
+	public Slime(int id, Image texture) {
+		super(id, 28, 0, 12);
 
 		this.maxAi = 360;
 		this.updateJumpDelay();

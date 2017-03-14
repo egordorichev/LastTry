@@ -4,6 +4,6 @@ import org.egordorichev.lasttry.util.Assets;
 
 public class BlueSlime extends Slime {
 	public BlueSlime() {
-		super("Blue Slime", Assets.blueSlimeTexture);
+		super(EntityID.blueSlime, Assets.blueSlimeTexture);
 	}
 }

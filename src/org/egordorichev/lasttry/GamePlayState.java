@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.entity.EntityID;
 import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
@@ -18,7 +19,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(16, 117);
 
-		LastTry.world.spawnEnemy("Green Slime", 20, 118);
+		LastTry.world.spawnEnemy(EntityID.greenSlime, 20, 49);
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
@@ -52,7 +53,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.world.update(dt);
 		LastTry.player.update(dt);
 
-		LastTry.camera.setPosition(Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowWidth(), Math.max(0, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
-			Math.min(LastTry.world.getWidth() * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(0, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+		LastTry.camera.setPosition(Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(), Math.max(Block.TEX_SIZE, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
+			Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(Block.TEX_SIZE, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
 	}
 }
