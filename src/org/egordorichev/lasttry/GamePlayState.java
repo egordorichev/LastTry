@@ -21,6 +21,8 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(14, 48);
 
+		LastTry.world.spawnEnemy("Green Slime", 20, 49);
+
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
 	}

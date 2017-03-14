@@ -7,8 +7,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.*;
 
-import java.awt.*;
-
 public class SplashState extends BasicGameState {
 	private Image splash;
 	private boolean loaded;
@@ -20,7 +18,7 @@ public class SplashState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.splash = new Image("assets/images/splash" + LastTry.random.nextInt(6) + ".png");
+		this.splash = new Image("assets/images/splash" + (LastTry.random.nextInt(5) + 1) + ".png");
 		this.loaded = false;
 
 		new Thread() {
