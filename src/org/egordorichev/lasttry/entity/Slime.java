@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 public class Slime extends Enemy {
 	/**

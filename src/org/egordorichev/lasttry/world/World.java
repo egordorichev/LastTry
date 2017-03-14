@@ -64,9 +64,6 @@ public class World {
 		Wall.preload();
 
 		this.load();
-		
-		spawnEnemy(Enemy.SLIME_GREEN, 10, 90);
-		spawnEnemy(Enemy.SLIME_BLUE, 40, 90);
 	}
 
 	/**
