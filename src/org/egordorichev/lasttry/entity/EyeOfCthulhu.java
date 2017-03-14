@@ -37,7 +37,15 @@ public class EyeOfCthulhu extends Boss {
 		this.drop.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
 
 		this.phases = new Phase[2];
+
 		this.phases[0] = new Phase(this, this.maxHp, LastTry.world.isExpert() ? 30 : 15, 12) {
+			@Override
+			public void onEnter() {
+
+			}
+		};
+
+		this.phases[1] = new Phase(this, this.maxHp, LastTry.world.isExpert() ? 22 : 45, 0) {
 			@Override
 			public void onEnter() {
 				Animation flyingAnimation = new Animation();

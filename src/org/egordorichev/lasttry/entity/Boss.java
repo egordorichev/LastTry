@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Boss extends Enemy {
 	protected String name;
 
-	public abstract class Phase {
+	public abstract class Phase { // TODO: set when it enter the phase
 		private Boss boss;
 		private int damage;
 		private int maxHp;
