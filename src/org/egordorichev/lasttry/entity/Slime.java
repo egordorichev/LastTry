@@ -15,12 +15,12 @@ public class Slime extends Enemy {
 	 */
 	protected boolean canJump;
 
-	public Slime(String name) {
+	public Slime(String name, Image texture) {
 		super(name, 28, 0, 12);
 
 		this.maxAi = 360;
 		this.updateJumpDelay();
-		this.texture = this.name.equals(Enemy.SLIME_GREEN) ? Assets.greenSlimeTexture : Assets.blueSlimeTexture;
+		this.texture = texture;
 
 		Animation jumpAnimation = new Animation();
 
