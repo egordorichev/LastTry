@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Animation;
@@ -30,10 +30,7 @@ public abstract class Entity {
 	 * Base damage-points.
 	 */
 	protected int damage;
-	/**
-	 * Entity id
-	 */
-	protected int id;
+
 	/**
 	 * Invulnerability status. If enabled the entity will not be able to take
 	 * damage.
@@ -44,10 +41,6 @@ public abstract class Entity {
 	 * the entity is dead and should be removed.
 	 */
 	protected boolean shouldUpdate;
-	/**
-	 * If is set to true, this is NPC or Animal
-	 */
-	protected boolean isFriendly;
 	/**
 	 * Status for if the entity's hitbox should be recognized. Non-solid
 	 * entities can clip through tiles and other entities like a ghost.
@@ -114,9 +107,7 @@ public abstract class Entity {
 		}
 	}
 
-	public Entity(int id, boolean friendly, int maxHp, int defense, int damage) {
-		this.id = id;
-		this.isFriendly = friendly;
+	public Entity(int maxHp, int defense, int damage) {
 		this.defense = defense;
 		this.maxHp = maxHp;
 		this.hp = this.maxHp;
@@ -133,8 +124,8 @@ public abstract class Entity {
 		this.state = State.IDLE;
 	}
 
-	public Entity(int id, boolean friendly) {
-		this(id, friendly, 10, 0, 0);
+	public Entity() {
+		this(10, 0, 0);
 	}
 
 	/**
@@ -414,15 +405,6 @@ public abstract class Entity {
 	 */
 	public int getMaxHp() {
 		return this.maxHp;
-	}
-
-	/**
-	 * Return the entity's {@link #id}.
-	 * 
-	 * @return Na.
-	 */
-	public int getId() {
-		return this.id;
 	}
 
 	/**

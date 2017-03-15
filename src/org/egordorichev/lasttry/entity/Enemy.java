@@ -12,14 +12,19 @@ import org.egordorichev.lasttry.util.Direction;
 public abstract class Enemy extends Entity {
 	protected int currentAi;
 	protected int maxAi;
+	protected int id;
 	protected List<Drop> drops = new ArrayList<>();
 
 	public Enemy(int id, int maxHp, int defense, int damage) {
-		super(id, false, maxHp, defense, damage);
+		super(maxHp, defense, damage);
+
+		this.id = id;
 	}
 
 	public Enemy(int id) {
-		super(id, false);
+		super();
+
+		this.id = id;
 	}
 
 	@Override
@@ -58,18 +63,23 @@ public abstract class Enemy extends Entity {
 		}
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
 	public static Enemy create(int id) {
 		// TODO: think about better way to do this.
-		switch (id) {
-		case EntityID.none:
-		default:
-			return null;
-		case EntityID.greenSlime:
-			return new GreenSlime();
-		case EntityID.blueSlime:
-			return new BlueSlime();
-		case EntityID.eyeOfCthulhu:
-			return new EyeOfCthulhu();
+
+		switch(id) {
+			case EnemyID.none:
+			default:
+				return null;
+			case EnemyID.greenSlime:
+				return new GreenSlime();
+			case EnemyID.blueSlime:
+				return new BlueSlime();
+			case EnemyID.eyeOfCthulhu:
+				return new EyeOfCthulhu();
 		}
 	}
 }

@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.item.blocks.BlockGround;
 import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.blocks.Wall;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Image;
 

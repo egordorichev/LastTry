@@ -2,17 +2,14 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
-import org.egordorichev.lasttry.entity.EntityID;
-import org.egordorichev.lasttry.entity.Drop.Chance;
-import org.egordorichev.lasttry.entity.Entity.State;
+import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Animation;
 
 public class EyeOfCthulhu extends Boss {
 	public EyeOfCthulhu() {
-		super(EntityID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpert() ? 3640 : 2800);
+		super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpert() ? 3640 : 2800);
 
 		this.texture = Assets.eyeOfCthulhuTexture;
 

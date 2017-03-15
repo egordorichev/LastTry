@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.tile;
 
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.item.Wall;
+import org.egordorichev.lasttry.item.blocks.Block;
+import org.egordorichev.lasttry.item.blocks.Wall;
 
 import java.util.Random;
 

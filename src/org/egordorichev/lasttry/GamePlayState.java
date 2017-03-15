@@ -1,17 +1,13 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
-import org.egordorichev.lasttry.entity.enemy.EyeOfCthulhu;
-import org.egordorichev.lasttry.entity.EntityID;
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.mod.ModAPI;
+import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
-import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -23,7 +19,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(16, 117);
 
-		LastTry.world.spawnEnemy(EntityID.eyeOfCthulhu, 20, 118);
+		LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 20, 118);
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();

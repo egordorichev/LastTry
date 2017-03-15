@@ -10,7 +10,7 @@ public class Player extends Entity {
 	protected String name;
 	
 	public Player(String name) {
-		super(EntityID.player, true, 100, 0, 0);
+		super(100, 0, 0);
 
 		this.name = name;
 		this.texture = Assets.playerTexture;

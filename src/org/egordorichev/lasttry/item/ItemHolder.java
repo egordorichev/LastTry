@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.item.blocks.Block;
 import org.newdawn.slick.geom.Vector2f;
 
 /**

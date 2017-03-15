@@ -6,6 +6,8 @@ import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.*;
+import org.egordorichev.lasttry.item.blocks.Block;
+import org.egordorichev.lasttry.item.blocks.Wall;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -149,8 +151,8 @@ public class World {
 	/**
 	 * Spawn an enemy in the world <i>(Type dictated by the id)</i>
 	 * 
-	 * @param name
-	 *            Name of the type of entity to spawn.
+	 * @param id
+	 *            Id of the type of entity to spawn.
 	 * @param x
 	 *            X-position to spawn entity at.
 	 * @param y
@@ -179,16 +181,18 @@ public class World {
 	 *            Y-position to spawn dropped item at.
 	 */
 	public void spawnDrop(Drop drop, float x, float y) {
-		DroppedItem de = new DroppedItem(drop.createHolder());
-		de.spawn(x / Block.TEX_SIZE, y / Block.TEX_SIZE);
-		this.entities.add(de);
+		DroppedItem droppedItem = new DroppedItem(drop.createHolder());
+		droppedItem.spawn(x / Block.TEX_SIZE, y / Block.TEX_SIZE);
+
+		this.entities.add(droppedItem);
 		int vel = 10;
-		de.setVelocity((LastTry.random.nextFloat() * (vel * 2)) - vel, -3);
+
+		droppedItem.setVelocity((LastTry.random.nextFloat() * (vel * 2)) - vel, -3);
 	}
 
 	/**
 	 * Add an entity to the removal list. They will be removed the next tick.
-	 * 
+	 * TODO: blood and gore
 	 * @param entity
 	 *            Entity to remove.
 	 */
