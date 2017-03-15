@@ -1,6 +1,8 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.enemy;
 
 import java.util.ArrayList;
+
+import org.egordorichev.lasttry.entity.Enemy;
 
 public class Boss extends Enemy {
 	protected String name;

@@ -8,7 +8,14 @@ public class FileWriter {
 	public FileWriter(String path) {
 		try {
 			File file = new File(path);
-			file.createNewFile();
+			if (!file.exists()){
+				File parentDir = file.getParentFile();
+				if (parentDir != null && !parentDir.exists()){
+					parentDir.mkdirs();
+				}
+				file.createNewFile();
+			}
+			
 
 			this.stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path), 32768));
 		} catch(FileNotFoundException exception) {

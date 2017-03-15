@@ -1,6 +1,8 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Enemy;
+import org.egordorichev.lasttry.entity.Entity.State;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
