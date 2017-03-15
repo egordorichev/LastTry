@@ -34,7 +34,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void render() {
 		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-				.draw(this.renderBounds.x, this.renderBounds.y);
+			.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	@Override

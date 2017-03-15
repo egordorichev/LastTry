@@ -21,7 +21,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(16, 117);
 
-		LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 20, 118);
+		LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 20, 70);
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();

@@ -160,12 +160,11 @@ public abstract class Entity {
 		// If the entity is not still on the x-axis, update their position based
 		// on their current velocity.
 		if (this.velocity.x != 0) {
-			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(), this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
 
 			if (!this.isSolid || !LastTry.world.isColliding(newHitbox)) {
-				this.hitbox = newHitbox;
 				this.renderBounds.x += this.velocity.x;
 			} else {
 				this.velocity.x = 0;
@@ -179,12 +178,11 @@ public abstract class Entity {
 		// If the entity is not still on the y-axis, update their position based
 		// on their current velocity.
 		if (this.velocity.y != 0) {
-			Rectangle newHitbox = new Rectangle(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height);
+			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(), this.hitbox.width, this.hitbox.height);
 
 			newHitbox.y += this.velocity.y;
 
 			if (!this.isSolid || !LastTry.world.isColliding(newHitbox)) {
-				this.hitbox = newHitbox;
 				this.renderBounds.y += this.velocity.y;
 			} else {
 				this.velocity.y = 0;
@@ -231,6 +229,21 @@ public abstract class Entity {
 		}
 	}
 
+	public void fly(int x, int y) {
+		if(x > 1 || x < -1) {
+			x /= x;
+		}
+
+		if(y > 1 || y < -1) {
+			y /= y;
+		}
+
+		this.velocity.x += x;
+		this.velocity.y += y;
+
+		this.state = State.FLYING;
+	}
+
 	/**
 	 * Update the entity y-axis {@link #velocity} with a upwards boost.
 	 */
@@ -255,7 +268,6 @@ public abstract class Entity {
 	public void spawn(float x, float y) {
 		this.shouldUpdate = true;
 		this.renderBounds.setPosition(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
-		this.hitbox.setPosition(x * Block.TEX_SIZE + 3, y * Block.TEX_SIZE + 3);
 		this.onSpawn();
 	}
 
@@ -490,5 +502,17 @@ public abstract class Entity {
 	 */
 	public float getHeight() {
 		return this.renderBounds.height;
+	}
+
+	public float getCenterX() {
+		return this.getX() + this.getWidth() / 2;
+	}
+
+	public float getCenterY() {
+		return this.getY() + this.getHeight() / 2;
+	}
+
+	public Rectangle getHitbox() {
+		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width, this.hitbox.height);
 	}
 }
