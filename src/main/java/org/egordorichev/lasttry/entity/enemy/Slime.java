@@ -2,8 +2,6 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Enemy;
-import org.egordorichev.lasttry.entity.Entity.State;
-import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Animation;
@@ -89,6 +87,5 @@ public class Slime extends Enemy {
 	private void updateJumpDelay() {
 		this.canJump = false;
 		this.nextJump = (int) ((this.maxAi/2) + (Math.random() * this.maxAi/2));
-		System.err.println(this.nextJump);
 	}
 }

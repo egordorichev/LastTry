@@ -1,13 +1,29 @@
 package org.egordorichev.lasttry.entity.enemy;
 
-import java.util.ArrayList;
-
 import org.egordorichev.lasttry.entity.Enemy;
 
 public class Boss extends Enemy {
 	protected String name;
 
-	public abstract class Phase { // TODO: set when it enter the phase
+	protected Phase[] phases;
+	protected Phase currentPhase;
+
+	public Boss(int id, String name, int maxHp) {
+		super(id);
+		this.name = name;
+	}
+
+	@Override
+	public void updateAI() {
+		super.updateAI();
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	// TODO: set when it enter the phase
+	public abstract class Phase {
 		private Boss boss;
 		private int damage;
 		private int maxHp;
@@ -21,7 +37,7 @@ public class Boss extends Enemy {
 		}
 
 		public void enter() {
-			if(this.boss.getMaxHp() != this.maxHp) {
+			if (this.boss.getMaxHp() != this.maxHp) {
 				this.boss.setMaxHp(this.maxHp);
 				this.boss.setHp(this.maxHp);
 			}
@@ -41,22 +57,5 @@ public class Boss extends Enemy {
 		public int getDefense() {
 			return this.defense;
 		}
-	}
-
-	protected Phase[] phases;
-	protected Phase currentPhase;
-
-	public Boss(int id, String name, int maxHp) {
-		super(id);
-		this.name = name;
-	}
-
-	@Override
-	public void updateAI() {
-		super.updateAI();
-	}
-
-	public String getName() {
-		return this.name;
 	}
 }

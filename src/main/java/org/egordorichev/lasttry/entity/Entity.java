@@ -1,11 +1,9 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.GreenSlime;
 import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 

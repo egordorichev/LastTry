@@ -227,7 +227,7 @@ public class World {
 		TileData data = this.getTile(x, y);
 
 		data.block = block;
-		data.blockHp = data.maxHp;
+		data.blockHp = TileData.maxHp;
 		data.data = 0;
 	}
 
@@ -245,7 +245,7 @@ public class World {
 		TileData data = this.getTile(x, y);
 
 		data.wall = wall;
-		data.wallHp = data.maxHp;
+		data.wallHp = TileData.maxHp;
 		data.data = 0;
 	}
 
