@@ -1,10 +1,5 @@
 language: java
-sudo: true
-
-compiler:
-  - javac
-
-script: mvn compile
-
+sudo: false
+script: mvn clean verify
 notifications:
     email: false
