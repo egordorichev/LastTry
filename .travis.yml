@@ -1,0 +1,10 @@
+language: java
+sudo: true
+
+compiler:
+  - javac
+
+script: mvn compile
+
+notifications:
+    email: false
