@@ -1,4 +1,4 @@
-# LastTry [![Build Status](https://travis-ci.org/egordorichev/tiny-network.svg?branch=master)](https://travis-ci.org/egordorichev/Last-Try) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby)
+# LastTry [![Build Status](https://travis-ci.org/egordorichev/tiny-network.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby)
 
 My Terraria clone written in Java + Slick2D library. 
 
