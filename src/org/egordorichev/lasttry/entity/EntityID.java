@@ -6,4 +6,5 @@ public class EntityID {
 	public static final int greenSlime = 2;
 	public static final int blueSlime = 3;
 	public static final int eyeOfCthulhu = 4;
+	public static final int droppedItem = 5;
 }

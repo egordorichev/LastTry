@@ -1,6 +1,10 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Drop;
+import org.egordorichev.lasttry.entity.EntityID;
+import org.egordorichev.lasttry.entity.Drop.Chance;
+import org.egordorichev.lasttry.entity.Entity.State;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.Assets;
@@ -26,8 +30,8 @@ public class EyeOfCthulhu extends Boss {
 		this.isSolid = false;
 
 
-		this.drop.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
-		this.drop.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
+		this.drops.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
+		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
 
 		this.phases = new Phase[2];
 

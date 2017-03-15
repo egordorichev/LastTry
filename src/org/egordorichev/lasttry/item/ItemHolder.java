@@ -3,12 +3,24 @@ package org.egordorichev.lasttry.item;
 import org.newdawn.slick.geom.Vector2f;
 
 /**
- * Holds dropped items
+ * Holds dropped items.
  */
 public class ItemHolder {
+	/**
+	 * The number of items held.
+	 */
 	private int count;
+	/**
+	 * Value indicating if the holder has been dropped into the world.
+	 */
 	private boolean dropped;
+	/**
+	 * Dropped item position in the world.
+	 */
 	private Vector2f position;
+	/**
+	 * The item type the holder contains.
+	 */
 	private Item item;
 
 	public ItemHolder(Item item, int count) {
@@ -28,7 +40,7 @@ public class ItemHolder {
 	}
 
 	public void render() {
-		if(this.dropped) {
+		if (this.dropped) {
 			this.item.getTexture().draw(this.position.x, this.position.y);
 		}
 	}

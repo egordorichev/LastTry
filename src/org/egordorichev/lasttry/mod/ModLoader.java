@@ -7,15 +7,12 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModLoader {
-	private ArrayList<Mod> mods;
-	
-	public ModLoader() {
-		mods = new ArrayList<>();
-	}
+	private List<Mod> mods = new ArrayList<>();
 
 	public void load() {
 		File[] mods = new File("assets/mods").listFiles();
@@ -56,6 +53,7 @@ public class ModLoader {
 	}
 
 	public Mod getMod(String name) {
+		// TODO: Instead of a iteration use a name lookup map.
 		for(Mod mod : this.mods) {
 			if(mod.getName().equals(name)) {
 				return mod;

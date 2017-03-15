@@ -21,7 +21,8 @@ public class Assets {
 	public static Image platinumCoinTexture = loadImage("PlatinumCoin.png");
 	public static Image heartTexture = loadImage("Heart.png");
 	public static Image manaTexture = loadImage("Mana.png");
-
+	public static Image boxTexture = loadImage("Box.png");
+	
 	public static UnicodeFont font = loadFont("font.ttf");
 
 	public static Image loadImage(String path) {

@@ -1,30 +1,30 @@
 package org.egordorichev.lasttry.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.enemy.BlueSlime;
+import org.egordorichev.lasttry.entity.enemy.EyeOfCthulhu;
+import org.egordorichev.lasttry.entity.enemy.GreenSlime;
 import org.egordorichev.lasttry.util.Direction;
 
 public abstract class Enemy extends Entity {
 	protected int currentAi;
 	protected int maxAi;
-	protected Drop drop;
+	protected List<Drop> drops = new ArrayList<>();
 
 	public Enemy(int id, int maxHp, int defense, int damage) {
 		super(id, false, maxHp, defense, damage);
-
-		this.currentAi = 0;
-		this.drop = new Drop();
 	}
 
 	public Enemy(int id) {
 		super(id, false);
-
-		this.currentAi = 0;
-		this.drop = new Drop();
 	}
 
 	@Override
 	public void render() {
-		this.animations[this.state.getId()]
-				.getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
+		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
 				.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
@@ -37,7 +37,7 @@ public abstract class Enemy extends Entity {
 	public void updateAI() {
 		this.currentAi++;
 
-		if(this.currentAi >= this.maxAi) {
+		if (this.currentAi >= this.maxAi) {
 			this.currentAi = 0;
 		}
 	}
@@ -49,15 +49,27 @@ public abstract class Enemy extends Entity {
 
 	@Override
 	public void onDeath() {
-		// TODO: LastTry.world.addDrop(this.drop);
+		// On death, drop items in world.
+		for (Drop drop : this.drops) {
+			// Some items may not be dropped due to rarity
+			if (drop.getChance().roll()){
+				LastTry.world.spawnDrop(drop, this.hitbox.x, this.hitbox.y);
+			}
+		}
 	}
 
-	public static Enemy create(int id) { // TODO: think about better way to do this.
-		switch(id) {
-			case EntityID.none: default: return null;
-			case EntityID.greenSlime: return new GreenSlime();
-			case EntityID.blueSlime: return new BlueSlime();
-			case EntityID.eyeOfCthulhu: return new EyeOfCthulhu();
+	public static Enemy create(int id) {
+		// TODO: think about better way to do this.
+		switch (id) {
+		case EntityID.none:
+		default:
+			return null;
+		case EntityID.greenSlime:
+			return new GreenSlime();
+		case EntityID.blueSlime:
+			return new BlueSlime();
+		case EntityID.eyeOfCthulhu:
+			return new EyeOfCthulhu();
 		}
 	}
 }

@@ -1,5 +1,6 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.enemy;
 
+import org.egordorichev.lasttry.entity.EntityID;
 import org.egordorichev.lasttry.util.Assets;
 
 public class BlueSlime extends Slime {

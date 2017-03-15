@@ -142,8 +142,7 @@ public abstract class Entity {
 	 * flipped based on their {@link #direction}.
 	 */
 	public void render() {
-		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(
-				this.direction == Direction.RIGHT, false)
+		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
 				.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
@@ -273,7 +272,7 @@ public abstract class Entity {
 	 * @param y
 	 *            Y position to spawn entity at.
 	 */
-	public void spawn(int x, int y) {
+	public void spawn(float x, float y) {
 		this.shouldUpdate = true;
 		this.renderBounds.setPosition(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 		this.hitbox.setPosition(x * Block.TEX_SIZE + 3, y * Block.TEX_SIZE + 3);
@@ -453,12 +452,35 @@ public abstract class Entity {
 		return (int) this.renderBounds.y / Block.TEX_SIZE;
 	}
 
+	/**
+	 * Return the width of the entity based on the render bounds,
+	 * 
+	 * @return World grid width.
+	 */
 	public int getGridWidth() {
 		return (int) this.renderBounds.width / Block.TEX_SIZE;
 	}
 
+	/**
+	 * Return the height of the entity based on the render bounds,
+	 * 
+	 * @return World grid height.
+	 */
 	public int getGridHeight() {
 		return (int) this.renderBounds.height / Block.TEX_SIZE;
+	}
+
+	/**
+	 * Sets the velocity of the entity.
+	 * 
+	 * @param x
+	 *            New x-axis speed.
+	 * @param y
+	 *            New y-axis speed.
+	 */
+	public void setVelocity(float x, float y) {
+		this.velocity.x = x;
+		this.velocity.y = y;
 	}
 
 	/**
