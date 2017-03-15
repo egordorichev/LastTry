@@ -19,6 +19,12 @@ public class ModAPI { // TODO: add more
 	public static Enemy createEnemy(int id) {
 		return Enemy.create(id);
 	}
+	
+	public static Enemy spawnEnemy(int id, int x, int y) {
+		return LastTry.world.spawnEnemy(id, x, y);
+	}
+	
+	// TODO: add methods for creating new enemies
 
 	public static void addKeyBinding(int key, Callable callable) {
 		LastTry.input.addKeyListener(new KeyListener() {
