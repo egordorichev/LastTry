@@ -25,6 +25,13 @@ public class GamePlayState extends BasicGameState {
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
+
+		LastTry.ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!") {
+			@Override
+			public void onClick() {
+				System.out.println("down!");
+			}
+		});
 	}
 
 	@Override
@@ -35,7 +42,6 @@ public class GamePlayState extends BasicGameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		LastTry.graphics.setFont(Assets.font);
-		LastTry.ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!"));
 	}
 
 	@Override
@@ -44,6 +50,12 @@ public class GamePlayState extends BasicGameState {
 		LastTry.world.render();
 		LastTry.player.render();
 		LastTry.camera.unset(graphics);
+
+		int mouseX = LastTry.input.getMouseX();
+		int mouseY = LastTry.input.getMouseY();
+
+		Assets.radialTexture.draw(mouseX - mouseX % Block.TEX_SIZE - 50 - LastTry.camera.getX() % Block.TEX_SIZE, mouseY - mouseY % Block.TEX_SIZE - 50- LastTry.camera.getY() % Block.TEX_SIZE);
+
 		LastTry.ui.render();
 		LastTry.debug.render();
 	}

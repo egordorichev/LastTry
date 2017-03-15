@@ -78,7 +78,7 @@ public class UiComponent {
 		}
 
 		if(this.rect.contains(LastTry.input.getMouseX(), LastTry.input.getMouseY())) {
-			if(this.state != State.MOUSE_DOWN && (LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) || LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON))) {
+			if(this.state != State.MOUSE_DOWN && (LastTry.input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || LastTry.input.isMousePressed(Input.MOUSE_RIGHT_BUTTON))) {
 				this.state = State.MOUSE_DOWN;
 				this.onStateChange();
 			} else if(this.state != State.MOUSE_IN) {

@@ -18,6 +18,11 @@ public class SplashState extends BasicGameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		// this.splash = new Image("assets/images/splash" + (LastTry.random.nextInt(5) + 1) + ".png"); // TODO: draw splashes
+
+		Image cursor = new Image("assets/images/Cursor.png");
+
+		gameContainer.setMouseCursor(cursor, 0, 0);
+
 		this.loaded = false;
 
 		new Thread() {
