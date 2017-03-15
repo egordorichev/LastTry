@@ -26,7 +26,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
 
-		LastTry.ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!") {
+		LastTry.ui.add(new UiButton(new Rectangle(70, 10, 60, 32), "Hello!") {
 			@Override
 			public void onClick() {
 				System.out.println("down!");
@@ -54,7 +54,9 @@ public class GamePlayState extends BasicGameState {
 		int mouseX = LastTry.input.getMouseX();
 		int mouseY = LastTry.input.getMouseY();
 
-		Assets.radialTexture.draw(mouseX - mouseX % Block.TEX_SIZE - 50 - LastTry.camera.getX() % Block.TEX_SIZE, mouseY - mouseY % Block.TEX_SIZE - 50- LastTry.camera.getY() % Block.TEX_SIZE);
+		Assets.radialTexture.draw(mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.getX() % Block.TEX_SIZE, mouseY - mouseY % Block.TEX_SIZE - 48 - LastTry.camera.getY() % Block.TEX_SIZE);
+
+		// TODO: fix it position
 
 		LastTry.ui.render();
 		LastTry.debug.render();

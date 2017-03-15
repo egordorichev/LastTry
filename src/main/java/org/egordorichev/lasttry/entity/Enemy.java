@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.egordorichev.lasttry.LastTry;
@@ -11,11 +12,19 @@ import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
 
 public abstract class Enemy extends Entity {
+	public static HashMap<Integer, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
+
 	protected int currentAi;
 	protected int maxAi;
 	protected int id;
 	protected List<Drop> drops = new ArrayList<>();
 	protected Animation[] animations;
+
+	static {
+		define(EnemyID.greenSlime, GreenSlime.class);
+		define(EnemyID.blueSlime, BlueSlime.class);
+		define(EnemyID.eyeOfCthulhu, EyeOfCthulhu.class);
+	}
 
 	public Enemy(int id, int maxHp, int defense, int damage) {
 		super(maxHp, defense, damage);
@@ -72,19 +81,23 @@ public abstract class Enemy extends Entity {
 		return this.id;
 	}
 
-	public static Enemy create(int id) {
-		// TODO: think about better way to do this.
+	public static void define(int id, Class<? extends Enemy> enemy) { // TODO: handle duplicates
+		System.out.println(id);
+		ENEMY_CACHE.put(id, enemy);
+	}
 
-		switch(id) {
-			case EnemyID.none:
-			default:
+	public static Enemy create(int id) {
+		try {
+			Class<? extends Enemy> aClass = ENEMY_CACHE.get(id);
+
+			if(aClass != null) {
+				return aClass.newInstance();
+			} else {
 				return null;
-			case EnemyID.greenSlime:
-				return new GreenSlime();
-			case EnemyID.blueSlime:
-				return new BlueSlime();
-			case EnemyID.eyeOfCthulhu:
-				return new EyeOfCthulhu();
+			}
+		} catch(Exception exception) {
+			LastTry.handleException(exception);
+			return null;
 		}
 	}
 }
