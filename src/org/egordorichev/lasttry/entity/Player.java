@@ -8,12 +8,16 @@ import org.newdawn.slick.Input;
 
 public class Player extends Entity {
 	protected String name;
-	
+	protected Animation[] animations;
+
+
 	public Player(String name) {
 		super(100, 0, 0);
 
 		this.name = name;
 		this.texture = Assets.playerTexture;
+
+		this.animations = new Animation[State.values().length];
 
 		Animation idleAnimation = new Animation();
 		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000);
@@ -71,6 +75,12 @@ public class Player extends Entity {
 			}
 		}
 	}
+	
+	@Override
+	public void render() {
+		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
+				.draw(this.renderBounds.x, this.renderBounds.y);
+	}
 
 	@Override
 	public void update(int dt) {
@@ -109,6 +119,7 @@ public class Player extends Entity {
 		}
 
 		super.update(dt);
+		this.animations[this.state.getId()].update(dt);
 	}
 
 	public String getName() {

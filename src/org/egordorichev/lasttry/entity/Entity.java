@@ -59,11 +59,6 @@ public abstract class Entity {
 	 */
 	protected Image texture;
 	/**
-	 * The array of animations the entity has. See {@link #state} for the
-	 * Indices and their associated animations.
-	 */
-	protected Animation[] animations;
-	/**
 	 * The animation state of the entity.
 	 */
 	protected State state;
@@ -87,9 +82,7 @@ public abstract class Entity {
 		IDLE(0), MOVING(1), JUMPING(2), FALLING(3), FLYING(4), DEAD(5);
 
 		/**
-		 * State identifier. Used as the key for
-		 * {@link org.egordorichev.lasttry.entity.Entity#animations
-		 * Entity.animations}
+		 * State identifier.
 		 */
 		private int id;
 
@@ -120,7 +113,6 @@ public abstract class Entity {
 		this.direction = Direction.RIGHT;
 		this.isSolid = true;
 
-		this.animations = new Animation[State.values().length];
 		this.state = State.IDLE;
 	}
 
@@ -133,8 +125,7 @@ public abstract class Entity {
 	 * flipped based on their {@link #direction}.
 	 */
 	public void render() {
-		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-				.draw(this.renderBounds.x, this.renderBounds.y);
+		this.texture.getFlippedCopy(this.direction == Direction.RIGHT, false).draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	/**
@@ -219,8 +210,6 @@ public abstract class Entity {
 				this.state = State.IDLE;
 			}
 		}
-		// Update animations
-		this.animations[this.state.getId()].update(dt);
 	}
 
 	/**

@@ -15,18 +15,7 @@ public class DroppedItem extends Entity {
 		this.texture = Assets.boxTexture;
 		this.shouldUpdate = true;
 
-		Animation animation = new Animation();
-		animation.addFrame(this.texture, 1);
-		animation.setLooping(false);
-
-		this.animations[State.JUMPING.getId()] = null;
-		this.animations[State.MOVING.getId()] = null;
-		this.animations[State.IDLE.getId()] = animation;
-		this.animations[State.DEAD.getId()] = null;
-		this.animations[State.FALLING.getId()] = animation;
-		this.animations[State.FLYING.getId()] = animation; // May fly like a soul
-
-		this.renderBounds.width = 14;
+		this.renderBounds.width = 16; // TODO: it can be any
 		this.renderBounds.height = 16;
 		this.hitbox = renderBounds;
 	}

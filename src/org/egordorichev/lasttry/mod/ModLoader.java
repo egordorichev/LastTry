@@ -39,7 +39,7 @@ public class ModLoader {
 
 					Class<?> aClass = urlClassLoader.loadClass(className);
 
-					if(Mod.class.isAssignableFrom(aClass) && aClass != LuaMod.class && aClass != Mod.class) {
+					if(Mod.class.isAssignableFrom(aClass) && aClass != Mod.class) {
 						Mod mod = (Mod) aClass.newInstance();
 						mod.onLoad();
 

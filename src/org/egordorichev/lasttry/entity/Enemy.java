@@ -8,22 +8,26 @@ import org.egordorichev.lasttry.entity.enemy.BlueSlime;
 import org.egordorichev.lasttry.entity.enemy.EyeOfCthulhu;
 import org.egordorichev.lasttry.entity.enemy.GreenSlime;
 import org.egordorichev.lasttry.util.Direction;
+import org.newdawn.slick.Animation;
 
 public abstract class Enemy extends Entity {
 	protected int currentAi;
 	protected int maxAi;
 	protected int id;
 	protected List<Drop> drops = new ArrayList<>();
+	protected Animation[] animations;
 
 	public Enemy(int id, int maxHp, int defense, int damage) {
 		super(maxHp, defense, damage);
 
+		this.animations = new Animation[State.values().length];
 		this.id = id;
 	}
 
 	public Enemy(int id) {
 		super();
 
+		this.animations = new Animation[State.values().length];
 		this.id = id;
 	}
 
@@ -36,6 +40,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
+		this.animations[this.state.getId()].update(dt);
 		this.updateAI();
 	}
 
