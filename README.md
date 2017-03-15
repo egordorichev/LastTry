@@ -9,6 +9,12 @@ Please, feel free to join me! Sumbit an issue or open a pull request and become 
 
 ### Building
 
+###### Using maven
+
+TODO
+
+###### Using default tools
+
 Import source code to your IDE. Add all jars from the `lib` folder to project dependencies. 
 
 Add `-Djava.library.path=lib/`**YOUR_SYSTEM_NAME_HERE (lookup the `lib` folder)**`:lib/` to java VM options.
