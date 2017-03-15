@@ -4,4 +4,3 @@ lib/**
 .classpath
 .project
 .idea
-target
