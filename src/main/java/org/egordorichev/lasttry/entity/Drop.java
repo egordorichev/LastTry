@@ -10,7 +10,7 @@ public class Drop {
 	private Item item;
 	private Chance chance;
 
-	public Drop(Item item, Chance chance, int minAmount, int maxAmount) {
+	public Drop(Item item, Chance chance, int minAmount, int maxAmount) { // TODO: one of
 		this.item = item;
 		this.chance = chance;
 		this.minAmount = minAmount;
