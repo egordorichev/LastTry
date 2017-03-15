@@ -120,7 +120,7 @@ public abstract class Entity {
 		this.defense = defense;
 		this.maxHp = maxHp;
 		this.hp = this.maxHp;
-		this.shouldUpdate = false;
+		this.shouldUpdate = true;
 		this.invulnerable = false;
 		this.renderBounds = new Rectangle(0, 0, 32, 48);
 		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6,
@@ -328,11 +328,13 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Mark the entity as dead, disable entity updates.
+	 * Mark the entity as dead, disable entity updates. The entity is added to
+	 * the current world's removal list.
 	 */
 	public void die() {
 		this.shouldUpdate = false;
 		this.onDeath();
+		LastTry.world.remove(this);
 	}
 
 	/**
