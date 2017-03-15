@@ -7,8 +7,8 @@ public class MultiTileBlock extends Block {
 	protected int width;
 	protected int height;
 
-	public MultiTileBlock(int id, String name, boolean solid, Image tiles, int gridWidth, int gridHeight) {
-		super(id, name, solid, tiles);
+	public MultiTileBlock(int id, String name, boolean solid, Image texture, Image tiles, int gridWidth, int gridHeight) {
+		super(id, name, solid, texture, tiles);
 
 		this.width = gridWidth;
 		this.height = gridHeight;

@@ -11,9 +11,9 @@ public class Item {
 	 * Item lookup. Item ID used as the index.
 	 */
 	public static Item[] ITEM_CACHE = new Item[32];
-	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallTexture);
-	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileTexture);
-	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileTexture);
+	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallIcon, Assets.dirtWallTexture);
+	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileIcon, Assets.dirtTileTexture);
+	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileIcon, Assets.grassTileTexture);
 	public static Item copperCoin = new Coin(ItemID.copperCoin, "Copper coin", Assets.copperCoinTexture);
 	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Assets.silverCoinTexture);
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
@@ -33,42 +33,21 @@ public class Item {
 	 */
 	protected String name;
 	/**
-	 * Type of item. Possible values:
-	 * <ul>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#ITEM Item}</li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#BLOCK Block}</li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#WALL Wall}</li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#TOOL Tool}</li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#CONSUMABLE Consumable}
-	 * </li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#ARMOR Armor}</li>
-	 * <li>{@link org.egordorichev.lasttry.item.Item.Type#ACCESSORY Accessory}
-	 * </li>
-	 * </ul>
-	 */
-	protected Type type;
-
-	/**
 	 * Item texture.
 	 */
 	protected Image texture;
 
-	/**
-	 * Type category enum.
-	 */
-	public enum Type {
-		ITEM, BLOCK, WALL, TOOL, CONSUMABLE, ARMOR, ACCESSORY
-	}
-
-	public Item(int id, String name, Type type) {
+	public Item(int id, String name, Image texture) {
 		if (ITEM_CACHE[id] != null) {
 			System.out.println("Item with id " + id + " already exists.");
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
+
 		ITEM_CACHE[id] = this;
+
+		this.texture = texture;
 		this.id = id;
 		this.name = name;
-		this.type = type;
 	}
 
 	/**
@@ -97,15 +76,6 @@ public class Item {
 	}
 
 	/**
-	 * Return the item's {@link #type}.
-	 * 
-	 * @return Item type.
-	 */
-	public Type getType() {
-		return this.type;
-	}
-
-	/**
 	 * Return the items's {@link #texture}
 	 *
 	 * @return Item texture
@@ -115,7 +85,7 @@ public class Item {
 	}
 
 	/**
-	 * Returns if player can use {@link #item}
+	 * Returns if player can use item
 	 *
 	 * @return True if player can use item
 	 */

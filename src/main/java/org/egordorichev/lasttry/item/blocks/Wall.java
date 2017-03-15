@@ -7,10 +7,12 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class Wall extends Item {
-	public Wall(int id, String name, Image texture) {
-		super(id, name, Item.Type.WALL);
+	protected Image tiles;
 
-		this.texture = texture;
+	public Wall(int id, String name, Image texture, Image tiles) {
+		super(id, name, texture);
+
+		this.tiles = tiles;
 	}
 
 	public void renderWall(TileData data, int x, int y) {
@@ -19,7 +21,7 @@ public class Wall extends Item {
 		boolean b = LastTry.world.getWallId(x, y + 1) == this.id;
 		boolean l = LastTry.world.getWallId(x - 1, y) == this.id;
 
-		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
 

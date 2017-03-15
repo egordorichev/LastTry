@@ -2,6 +2,7 @@ package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
@@ -10,8 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.Random;
 
 public class LastTry extends StateBasedGame {
-	private static GameContainer container;
-
+	public static GameContainer container;
 	public static Input input;
 	public static Graphics graphics;
 	public static World world;
@@ -20,6 +20,7 @@ public class LastTry extends StateBasedGame {
 	public static ModLoader modLoader;
 	public static UiManager ui;
 	public static AppGameContainer app;
+	public static Debug debug;
 	public final static Random random = new Random();
 	// TODO: Centralized logging with levels (info, warning, error)
 
@@ -53,6 +54,7 @@ public class LastTry extends StateBasedGame {
 		graphics = gameContainer.getGraphics();
 
 		ui = new UiManager();
+		debug = new Debug();
 
 		graphics.setBackground(new Color(129, 207, 224));
 

@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -38,17 +39,13 @@ public class GamePlayState extends BasicGameState {
 	}
 
 	@Override
-	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
-			throws SlickException {
+	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 		LastTry.camera.set(graphics);
 		LastTry.world.render();
 		LastTry.player.render();
 		LastTry.camera.unset(graphics);
 		LastTry.ui.render();
-
-		graphics.drawString(String.valueOf(gameContainer.getFPS()), 10, LastTry.getWindowHeight() - 30);
-		graphics.drawString("X: " + String.format("%.2f", LastTry.player.getX())
-				+ " Y: " + String.format("%.2f", LastTry.player.getY()), 10, 10);
+		LastTry.debug.render();
 	}
 
 	@Override
@@ -56,14 +53,14 @@ public class GamePlayState extends BasicGameState {
 		LastTry.world.update(dt);
 		LastTry.player.update(dt);
 
-		LastTry.camera
-				.setPosition(
-						Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),
-								Math.max(Block.TEX_SIZE,
-										LastTry.player.getX() + LastTry.player.getWidth() / 2
-												- LastTry.getWindowWidth() / 2)),
-				Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(
-						Block.TEX_SIZE,
-						LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+		LastTry.camera.setPosition(Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),
+			Math.max(Block.TEX_SIZE, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
+			Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(Block.TEX_SIZE,
+			LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+
+		if(LastTry.input.isKeyPressed(Input.KEY_TAB)) {
+			LastTry.debug.toggle();
+		}
 	}
+
 }

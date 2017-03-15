@@ -9,8 +9,8 @@ public class Block extends Item {
 	public static final int TEX_SIZE = 16;
 	protected boolean solid;
 
-	public Block(int id, String name, boolean solid, Image tiles) {
-		super(id, name, Item.Type.BLOCK);
+	public Block(int id, String name, boolean solid, Image texture, Image tiles) {
+		super(id, name, texture);
 
 		this.texture = tiles;
 		this.solid = solid;
