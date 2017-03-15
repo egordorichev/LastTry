@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
+import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -33,8 +34,7 @@ public class GamePlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		// LastTry.graphics.setFont(Assets.font);
-
+		LastTry.graphics.setFont(Assets.font);
 		LastTry.ui.add(new UiButton(new Rectangle(10, 10, 60, 32), "Hello!"));
 	}
 

@@ -30,7 +30,7 @@ public class LastTry extends StateBasedGame {
 			"LastTry: Epic Dirt",
 			"LastTry: Hey Guys!",
 			"LastTry: Sand is Overpowered",
-			"LastTry Part 3: The Return of the Guide",
+			"LastTry: Part 3: The Return of the Guide",
 			"LastTry: A Bunnies Tale",
 			"LastTry: Dr. Bones and The Temple of Blood Moon",
 			"LastTry: Slimeassic Park",
