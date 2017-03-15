@@ -15,8 +15,6 @@ Add `-Djava.library.path=lib/`**YOUR_SYSTEM_NAME_HERE (lookup the `lib` folder)*
 
 ### Liecense
 
-**All the assets are taken from the original [game](http://terraria.org/) and belongs to Re-Logic.**
-
 ```
 
 MIT License
