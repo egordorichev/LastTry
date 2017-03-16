@@ -32,7 +32,7 @@ public class Log {
 	}
 
 	private void printPath(StackTraceElement[] stackTraceElements) {
-		System.out.print(cdstackTraceElements[1].getClassName());
+		System.out.print(stackTraceElements[1].getClassName());
 	}
 
 	public void enable() {
