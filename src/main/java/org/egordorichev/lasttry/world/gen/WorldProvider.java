@@ -32,21 +32,11 @@ public class WorldProvider {
 		// Create 2D array of tile ID's.
 		// Then populate the array.
 		//
-		// TODO: Create a plugin-like system for world generation
+		// TODO: Create a decent plugin-like system for world generation
 		// allow for users to share their generation systems
-		int tileIDs[][] = new int[width][height];
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				// Temporary basic generation
-				if (y == 120) {
-					tileIDs[x][y] = ItemID.grassBlock;
-				} else if (y > 120) {
-					tileIDs[x][y] = ItemID.dirtBlock;
-				} else {
-					tileIDs[x][y] = 0;
-				}
-			}
-		}
+		IWorldGenerator gen = new SimpleWorldGen();
+		int tileIDs[][] = gen.generate(width, height);
+		
 		// Convert the 2D tile ID array to a 1D array of TileData
 		int totalSize = width * height;
 		TileData[] data = new TileData[totalSize];
@@ -56,6 +46,7 @@ public class WorldProvider {
 				data[x + y * width] = new TileData((Block) Item.fromId(id), Wall.getForBlockId(id));
 			}
 		}
+		
 		// Create the world and return
 		World world = new World(name, width, height, data);
 		LastTry.log("Finished generating!");
@@ -118,6 +109,8 @@ public class WorldProvider {
 			int version = stream.readInt32();
 			if (version > World.CURRENT_VERSION) {
 				throw new RuntimeException("Unsupported version");
+			} else if (version < World.CURRENT_VERSION) {
+				LastTry.log("Warning: Attempting to load outdated world format.");
 			}
 
 			// Basic world info:
