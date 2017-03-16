@@ -101,7 +101,32 @@ public class Modifier {
 	public static final Modifier savage = new Modifier("Savage", Type.MELEE, new Stat(Stat.Type.DAMAGE, +10),
 		new Stat(Stat.Type.SIZE, 10), new Stat(Stat.Type.KNOCKBACK, +10));
 
-	
+	public static final Modifier sharp = new Modifier("Sharp", Type.MELEE, new Stat(Stat.Type.DAMAGE, +15));
+	public static final Modifier pointy = new Modifier("Pointy", Type.MELEE, new Stat(Stat.Type.DAMAGE, +10));
+	public static final Modifier tiny = new Modifier("Size", Type.MELEE, new Stat(Stat.Type.SIZE, -18));
+	public static final Modifier terrible = new Modifier("Terrible", Type.MELEE, new Stat(Stat.Type.DAMAGE, -15),
+		new Stat(Stat.Type.SIZE, -13), new Stat(Stat.Type.KNOCKBACK, -15));
+
+	public static final Modifier small = new Modifier("Small", Type.MELEE, new Stat(Stat.Type.SIZE, -10));
+	public static final Modifier dull = new Modifier("Dull", Type.MELEE, new Stat(Stat.Type.DAMAGE, -15));
+	public static final Modifier unhappy = new Modifier("Unhappy", Type.MELEE, new Stat(Stat.Type.SPEED, -10),
+		new Stat(Stat.Type.SIZE, -10), new Stat(Stat.Type.KNOCKBACK, -10));
+
+	public static final Modifier bulky = new Modifier("Bulky", Type.MELEE, new Stat(Stat.Type.DAMAGE, +5),
+		new Stat(Stat.Type.SPEED, -5), new Stat(Stat.Type.SIZE, 10), new Stat(Stat.Type.KNOCKBACK, +10));
+
+	public static final Modifier shameful = new Modifier("Shameful", Type.MELEE, new Stat(Stat.Type.DAMAGE, -10),
+		new Stat(Stat.Type.SIZE, +10), new Stat(Stat.Type.KNOCKBACK, -20));
+
+	public static final Modifier heavy = new Modifier("Heavy", Type.MELEE, new Stat(Stat.Type.SPEED, -10),
+		new Stat(Stat.Type.KNOCKBACK, +15));
+
+	public static final Modifier light = new Modifier("Light", Type.MELEE, new Stat(Stat.Type.SPEED, +15),
+		new Stat(Stat.Type.KNOCKBACK, -10));
+
+	public static final Modifier legendary = new Modifier("Legendary", Type.MELEE, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.SIZE, +10),
+		new Stat(Stat.Type.KNOCKBACK, +15));
 
 	public enum Type {
 		ACCESSORY,
