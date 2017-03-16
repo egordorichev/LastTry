@@ -43,7 +43,7 @@ public class WorldProvider {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				int id = tileIDs[x][y];
-				data[x + y * width] = new TileData((Block) Item.fromId(id), Wall.getForBlockId(id));
+				data[x + y * width] = new TileData((Block) Item.fromID(id), Wall.getForBlockID(id));
 			}
 		}
 		
