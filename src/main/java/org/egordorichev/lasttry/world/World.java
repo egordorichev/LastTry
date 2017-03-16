@@ -53,10 +53,6 @@ public class World {
 	 */
 	private List<Entity> deadEntities = new ArrayList<>();
 	/**
-	 * List of items in the world
-	 */
-	private List<ItemHolder> items = new ArrayList<>();
-	/**
 	 * The type of terrain generated.
 	 * {@link org.egordorichev.lasttry.world.World.EvilType EvilType}.
 	 */
@@ -111,17 +107,6 @@ public class World {
 			int h = entity.getGridHeight();
 			if ((gx > minX - w && gx < maxX + w) && (gy > minY - h && gy < maxY + h)) {
 				entity.render();
-			}
-		}
-
-		// Render items
-		for (ItemHolder item : this.items) {
-			int gx = item.getGridX();
-			int gy = item.getGridY();
-			// Make sure that items are fully off-screen before skipping
-			// rendering
-			if ((gx > minX - 5 && gx < maxX + 5) && (gy > minY - 5 && gy < maxY + 5)) {
-				item.render();
 			}
 		}
 	}

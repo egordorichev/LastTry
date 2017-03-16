@@ -16,7 +16,21 @@ public class BlockGround extends Block {
 		boolean b = LastTry.world.getBlock(x, y + 1) instanceof BlockGround;
 		boolean l = LastTry.world.getBlock(x - 1, y) instanceof BlockGround;
 
-		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE,
-			Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		int binary = this.calculateBinary(t, r, b, l);
+
+		if(binary == 15) {
+			boolean tr = LastTry.world.getBlock(x + 1, y - 1) instanceof BlockGround;
+			boolean br = LastTry.world.getBlock(x + 1, y + 1) instanceof BlockGround;
+			boolean bl = LastTry.world.getBlock(x - 1, y + 1) instanceof BlockGround;
+			boolean tl = LastTry.world.getBlock(x - 1, y - 1) instanceof BlockGround;
+
+			int corner = this.calculateBinary(tr, br, bl, tl);
+
+			this.texture.getSubImage(corner * Block.TEX_SIZE, 48 + data.variant * Block.TEX_SIZE,
+					Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		} else {
+			this.texture.getSubImage(binary * Block.TEX_SIZE, data.variant * Block.TEX_SIZE,
+				Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		}
 	}
 }

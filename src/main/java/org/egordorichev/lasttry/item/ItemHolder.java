@@ -12,10 +12,6 @@ public class ItemHolder {
 	 */
 	private int count;
 	/**
-	 * Value indicating if the holder has been dropped into the world.
-	 */
-	private boolean dropped;
-	/**
 	 * Dropped item position in the world.
 	 */
 	private Vector2f position;
@@ -27,23 +23,6 @@ public class ItemHolder {
 	public ItemHolder(Item item, int count) {
 		this.item = item;
 		this.count = count;
-		this.dropped = false;
-	}
-
-	public void drop(int x, int y) {
-		this.dropped = true;
-		this.position.x = x;
-		this.position.y = y;
-	}
-
-	public void pickup() {
-		this.dropped = false;
-	}
-
-	public void render() {
-		if (this.dropped) {
-			this.item.getTexture().draw(this.position.x, this.position.y);
-		}
 	}
 
 	public void renderAt(int x, int y) {
@@ -52,10 +31,6 @@ public class ItemHolder {
 
 	public int getCount() {
 		return this.count;
-	}
-
-	public boolean isDropped() {
-		return this.dropped;
 	}
 
 	public Vector2f getPosition() {

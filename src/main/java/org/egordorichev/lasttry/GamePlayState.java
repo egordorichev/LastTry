@@ -67,6 +67,15 @@ public class GamePlayState extends BasicGameState {
 
 		// TODO: fix it position
 
+		int hp = LastTry.player.getHp();
+		int x = LastTry.getWindowWidth() - 260;
+
+		LastTry.graphics.getFont().drawString(x, 4, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()));
+
+		for(int i = 0; i < hp / 20; i++) {
+			Assets.hpTexture.draw(x + i * 22 + i * 2, 28);
+		}
+
 		LastTry.ui.render();
 		LastTry.debug.render();
 	}
