@@ -81,8 +81,9 @@ public abstract class Enemy extends Entity {
 		return this.id;
 	}
 
-	public static void define(int id, Class<? extends Enemy> enemy) { // TODO: handle duplicates
-		System.out.println(id);
+	public static void define(int id, Class<? extends Enemy> enemy) { 
+		// TODO: handle duplicates
+		LastTry.log("Defined [" + id + "] as"+ enemy.getSimpleName());
 		ENEMY_CACHE.put(id, enemy);
 	}
 

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.util;
 
+import org.egordorichev.lasttry.LastTry;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -36,7 +37,7 @@ public class Assets {
 
 			return image;
 		} catch(SlickException exception) {
-			System.out.println(path + " not found.");
+			LastTry.log("Failed to load '" + path + "' (Not found)");
 			System.exit(-1);
 		}
 

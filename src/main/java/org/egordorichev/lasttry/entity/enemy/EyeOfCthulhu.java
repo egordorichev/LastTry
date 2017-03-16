@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Assets;

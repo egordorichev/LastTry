@@ -4,7 +4,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -40,12 +39,12 @@ public abstract class Entity {
 	 * Status declaring if the entity should receive updates. If this is false,
 	 * the entity is dead and should be removed.
 	 */
-	protected boolean shouldUpdate;
+	protected boolean shouldUpdate = true;
 	/**
 	 * Status for if the entity's hitbox should be recognized. Non-solid
 	 * entities can clip through tiles and other entities like a ghost.
 	 */
-	protected boolean isSolid;
+	protected boolean isSolid = true;
 	/**
 	 * The dimensions that the entity is rendered in.
 	 */
@@ -104,15 +103,11 @@ public abstract class Entity {
 		this.defense = defense;
 		this.maxHp = maxHp;
 		this.hp = this.maxHp;
-		this.shouldUpdate = true;
-		this.invulnerable = false;
 		this.renderBounds = new Rectangle(0, 0, 32, 48);
 		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6,
 				this.renderBounds.height - 3);
 		this.velocity = new Vector2f(0, 0);
 		this.direction = Direction.RIGHT;
-		this.isSolid = true;
-
 		this.state = State.IDLE;
 	}
 
@@ -141,6 +136,7 @@ public abstract class Entity {
 		if (!this.shouldUpdate) {
 			return;
 		}
+		
 
 		// Increment velocity downwards.
 		// TODO: Gravity should not be a constant, but instead should be based
@@ -220,7 +216,7 @@ public abstract class Entity {
 		if (!this.shouldUpdate) {
 			return;
 		}
-
+	
 		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
 		this.direction = direction;
 

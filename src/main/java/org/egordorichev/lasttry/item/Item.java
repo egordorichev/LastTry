@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.blocks.BlockGround;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.blocks.Wall;
@@ -39,7 +40,7 @@ public class Item {
 
 	public Item(int id, String name, Image texture) {
 		if (ITEM_CACHE[id] != null) {
-			System.out.println("Item with id " + id + " already exists.");
+			LastTry.log("Item with id " + id + " already exists.");
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
 
