@@ -72,8 +72,36 @@ public class Modifier {
 
 	public static final Modifier zealous = new Modifier("Zealous", Type.UNIVERSAL, new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5));
 
-	// Tools
-	//
+	// Common
+
+	public static final Modifier quick = new Modifier("Quick", Type.COMMON, new Stat(Stat.Type.SPEED, +10));
+	public static final Modifier deady = new Modifier("Deadly", Type.COMMON, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.SPEED, +10));
+
+	public static final Modifier aglie = new Modifier("Aglie", Type.COMMON, new Stat(Stat.Type.SPEED, +10),
+		new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +3));
+
+	public static final Modifier nimble = new Modifier("Nimble", Type.COMMON, new Stat(Stat.Type.SPEED, +5));
+	public static final Modifier murderous = new Modifier("Murderous", Type.COMMON, new Stat(Stat.Type.DAMAGE, +7),
+		new Stat(Stat.Type.SPEED, +6), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +3));
+
+	public static final Modifier slow = new Modifier("Slow", Type.COMMON, new Stat(Stat.Type.SPEED, -15));
+	public static final Modifier sluggish = new Modifier("Sluggish", Type.COMMON, new Stat(Stat.Type.SPEED, -20));
+	public static final Modifier lazy = new Modifier("Lazy", Type.COMMON, new Stat(Stat.Type.SPEED, -8));
+	public static final Modifier annoying = new Modifier("Annoying", Type.COMMON, new Stat(Stat.Type.DAMAGE, -20),
+		new Stat(Stat.Type.SPEED, -15));
+
+	// Melee
+
+	public static final Modifier large = new Modifier("Large", Type.MELEE, new Stat(Stat.Type.SIZE, +12));
+	public static final Modifier massive = new Modifier("Massive", Type.MELEE, new Stat(Stat.Type.SIZE, +18));
+	public static final Modifier dangerous = new Modifier("Dangerous", Type.MELEE, new Stat(Stat.Type.DAMAGE, +5),
+		new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +2), new Stat(Stat.Type.SIZE, +5));
+
+	public static final Modifier savage = new Modifier("Savage", Type.MELEE, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.SIZE, 10), new Stat(Stat.Type.KNOCKBACK, +10));
+
+	
 
 	public enum Type {
 		ACCESSORY,
