@@ -1,8 +1,10 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.Stat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Modifier {
@@ -140,13 +142,11 @@ public class Modifier {
 	protected String name;
 	protected Type type;
 	protected Stat[] stats;
-	protected float value;
 
 	public Modifier(String name, Type type, Stat... stats) {
 		this.name = name;
 		this.type = type;
 		this.stats = stats;
-		this.value = value;
 	}
 
 	public void apply(Player player) {
@@ -169,7 +169,9 @@ public class Modifier {
 		return this.stats;
 	}
 
-	public float getValue() {
-		return this.value;
+	public static Modifier random(Item item) {
+		// TODO: return modifier based on item type
+
+		return null;
 	}
 }

@@ -16,13 +16,18 @@ public class ItemHolder {
 	 */
 	private Vector2f position;
 	/**
-	 * The item type the holder contains.
+	 * The item the holder contains.
 	 */
 	private Item item;
+	/**
+	 * The item modifier
+	 */
+	private Modifier modifier;
 
-	public ItemHolder(Item item, int count) {
+	public ItemHolder(Item item, int count, Modifier modifier) {
 		this.item = item;
 		this.count = count;
+		this.modifier = modifier;
 	}
 
 	public void renderAt(int x, int y) {
@@ -47,5 +52,9 @@ public class ItemHolder {
 
 	public Item getItem() {
 		return this.item;
+	}
+
+	public Modifier getModifier() {
+		return this.modifier;
 	}
 }

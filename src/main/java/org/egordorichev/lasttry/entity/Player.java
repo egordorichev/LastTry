@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
@@ -10,12 +11,15 @@ public class Player extends Entity {
 	protected String name;
 	protected Animation[] animations;
 
+	public static UiInventory inventory;
 
 	public Player(String name) {
 		super(100, 0, 0);
 
 		this.name = name;
 		this.texture = Assets.playerTexture;
+
+		inventory = new UiInventory(89);
 
 		this.animations = new Animation[State.values().length];
 

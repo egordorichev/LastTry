@@ -28,6 +28,7 @@ public class Assets {
 	public static Image boxTexture = loadImage("Box.png");
 	public static Image hpTexture = loadImage("HP.png");
 	public static Image radialTexture = loadImage("Radial.png");
+	public static Image inventorySlotTexture = loadImage("InventorySlot.png");
 
 	public static UnicodeFont font = loadFont("font.ttf");
 

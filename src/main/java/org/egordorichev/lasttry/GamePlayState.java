@@ -33,12 +33,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
 
-		LastTry.ui.add(new UiButton(new Rectangle(70, 10, 60, 32), "Hello!") {
-			@Override
-			public void onClick() {
-				LastTry.log("Button clicked!");
-			}
-		});
+		LastTry.ui.add(LastTry.player.inventory);
 	}
 
 	@Override
