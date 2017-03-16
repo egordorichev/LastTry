@@ -1,22 +1,30 @@
 # LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby)
 
-My Terraria clone written in Java + Slick2D library. 
-
-I'm looking for some people for contributing this project.
-Please, feel free to join me! Sumbit an issue or open a pull request and become a developer! 
+LastTry is open-source Terraria clone in Java, written using Slick2D library.
+Our goal is to recreate original game with better perfomance, and old content.
 
 ###### Project supports [mods](https://github.com/egordorichev/LastTryMods)
 
 ### Building
 
-###### Using maven
+Project is distributed with maven. To compile it, run:
 
-TODO
+```bash
+mvn package
+```
+
+### Contributing
+
+If you want to help the project grow, here is some stuff you can do:
+
+ * **Creating mods** [More info](https://github.com/egordorichev/LastTryMods)
+ * **Writing java-docs** The project is not fully documented yet
+ * **Porting Terraria content** [More info](https://github.com/egordorichev/LastTry/blob/master/portingterrariacontent.md)
+ * **Adding new features to the code** How about implementing secret mob or other easter egg? 
 
 ### Liecense
 
 ```
-
 MIT License
 
 Copyright (c) 2017 Egor Dorichev
