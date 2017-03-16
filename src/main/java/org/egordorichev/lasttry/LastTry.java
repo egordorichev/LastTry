@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.gen.WorldProvider;
 import org.egordorichev.lasttry.mod.*;
@@ -11,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class LastTry extends StateBasedGame {
 	public static GameContainer container;
@@ -24,7 +24,7 @@ public class LastTry extends StateBasedGame {
 	public static UiManager ui;
 	public static AppGameContainer app;
 	public static Debug debug;
-	public static Logger log = Logger.getLogger("LastTry");
+	public final static Log log = new Log();
 	public final static Random random = new Random();
 
 	public LastTry() {
@@ -40,13 +40,13 @@ public class LastTry extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
 		container = gameContainer;
-		log.setLevel(Level.ALL);
 		camera = new Camera();
 		input = gameContainer.getInput();
 		graphics = gameContainer.getGraphics();
 		ui = new UiManager();
 		debug = new Debug();
 		graphics.setBackground(new Color(129, 207, 224));
+
 		this.addState(new SplashState());
 	}
 

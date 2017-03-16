@@ -18,7 +18,7 @@ public class WorldGenerator implements IWorldGenerator {
 		double power = Math.pow(2, Math.ceil(Math.log(width) / (Math.log(2))));
 
 		points[0] = 200 + ((displace) * LastTry.random.nextDouble() * 2) - displace;
-		points[(int) power] = 200 + ((displace) * LastTry.random.nextDouble() * 2) - displace;
+		points[(int) power] = points[0];
 
 		displace *= roughness;
 

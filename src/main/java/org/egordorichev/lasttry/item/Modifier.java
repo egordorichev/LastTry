@@ -130,6 +130,8 @@ public class Modifier {
 		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.SIZE, +10),
 		new Stat(Stat.Type.KNOCKBACK, +15));
 
+	// TODO: randged and magic
+
 	public enum Type {
 		ACCESSORY,
 		UNIVERSAL,

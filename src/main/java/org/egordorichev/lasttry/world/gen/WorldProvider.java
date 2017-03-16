@@ -27,7 +27,7 @@ public class WorldProvider {
 	 * @return New world.
 	 */
 	public static World generate(String name, int width, int height) {
-		LastTry.log("Generating...");
+		LastTry.log.info("Generating...");
 		// Create 2D array of tile ID's.
 		// Then populate the array.
 		//
