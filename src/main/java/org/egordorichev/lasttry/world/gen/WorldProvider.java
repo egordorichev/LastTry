@@ -33,7 +33,7 @@ public class WorldProvider {
 		//
 		// TODO: Create a decent plugin-like system for world generation
 		// allow for users to share their generation systems
-		IWorldGenerator gen = new SimpleWorldGen();
+		IWorldGenerator gen = new WorldGenerator();
 		int tileIDs[][] = gen.generate(width, height);
 		
 		// Convert the 2D tile ID array to a 1D array of TileData

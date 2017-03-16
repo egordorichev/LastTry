@@ -21,7 +21,7 @@ public class GamePlayState extends BasicGameState {
 		if (WorldProvider.exists(worldName)) {
 			LastTry.world = WorldProvider.load(worldName);
 		} else {
-			LastTry.world = WorldProvider.generate(worldName, 500, 500);
+			LastTry.world = WorldProvider.generate(worldName, 512, 512); // Must be power of two
 		}
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(16, 117);
