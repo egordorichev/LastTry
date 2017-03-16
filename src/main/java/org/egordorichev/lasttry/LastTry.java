@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.gen.WorldProvider;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -67,7 +68,7 @@ public class LastTry extends StateBasedGame {
 	@Override
 	public boolean closeRequested() {
 		if(world != null) {
-			world.save();
+			WorldProvider.save(world);
 		}
 
 		System.exit(0);
