@@ -76,7 +76,6 @@ public class Slime extends Enemy {
 		// If the direction to the player changes mid-jump the slime will not be
 		// able to change directions.
 		if (this.state == State.JUMPING || this.state == State.FALLING) {
-			//System.out.println("Mov: " +this.direction.name());
 			this.move(this.direction);
 		}
 	}

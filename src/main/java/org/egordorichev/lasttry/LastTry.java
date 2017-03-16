@@ -9,6 +9,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LastTry extends StateBasedGame {
 	public static GameContainer container;
@@ -21,8 +23,8 @@ public class LastTry extends StateBasedGame {
 	public static UiManager ui;
 	public static AppGameContainer app;
 	public static Debug debug;
+	public static Logger log = Logger.getLogger("LastTry");
 	public final static Random random = new Random();
-	// TODO: Centralized logging with levels (info, warning, error)
 
 	public LastTry() {
 		super(new String[]{
@@ -49,6 +51,7 @@ public class LastTry extends StateBasedGame {
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
 		container = gameContainer;
 
+		log.setLevel(Level.ALL);
 		camera = new Camera();
 		input = gameContainer.getInput();
 		graphics = gameContainer.getGraphics();
@@ -77,6 +80,11 @@ public class LastTry extends StateBasedGame {
 
 	public static int getWindowHeight() {
 		return container.getHeight();
+	}
+	
+	public static void log(String msg){
+		// TODO: Log with levels rather than enforcing all logs to be printed
+		log.info(msg);
 	}
 
 	public static void handleException(Exception exception) {

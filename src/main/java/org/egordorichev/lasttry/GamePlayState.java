@@ -31,7 +31,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.add(new UiButton(new Rectangle(70, 10, 60, 32), "Hello!") {
 			@Override
 			public void onClick() {
-				System.out.println("down!");
+				LastTry.log("Button clicked!");
 			}
 		});
 	}

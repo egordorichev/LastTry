@@ -461,6 +461,7 @@ public class World {
 	 * Generate the world.
 	 */
 	private void generate() {
+		LastTry.log("Generating...");
 		this.width = 500;
 		this.height = 500;
 		this.version = World.CURRENT_VERSION;
@@ -495,14 +496,13 @@ public class World {
 				this.tiles[x + y * this.width] = new TileData((Block) Item.fromId(id), Wall.getForBlockId(id));
 			}
 		}
-
-		System.out.println("done generating!");
-
 		this.loaded = true;
+		LastTry.log("Finished generating!");
 	}
 
 	private void load() {
 		try {
+			LastTry.log("Loading...");
 			FileReader stream = new FileReader(this.getFilePath());
 
 			// Header
@@ -546,11 +546,12 @@ public class World {
 			// this.save();
 		}
 
-		System.out.println("done loading!");
+		LastTry.log("Done loading!");
 		this.loaded = true;
 	}
 
 	public void save() {
+		LastTry.log("Saving...");
 		FileWriter stream = new FileWriter(this.getFilePath());
 
 		// Header
@@ -588,7 +589,7 @@ public class World {
 		stream.writeString(this.name);
 		stream.close();
 
-		System.out.println("done saving!");
+		LastTry.log("Done saving!");
 	}
 
 	/**
