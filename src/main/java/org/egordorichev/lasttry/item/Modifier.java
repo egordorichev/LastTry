@@ -74,7 +74,7 @@ public class Modifier {
 
 	// Common
 
-	public static final Modifier quick = new Modifier("Quick", Type.COMMON, new Stat(Stat.Type.SPEED, +10));
+	public static final Modifier fast = new Modifier("Quick", Type.COMMON, new Stat(Stat.Type.SPEED, +10));
 	public static final Modifier deady = new Modifier("Deadly", Type.COMMON, new Stat(Stat.Type.DAMAGE, +10),
 		new Stat(Stat.Type.SPEED, +10));
 
