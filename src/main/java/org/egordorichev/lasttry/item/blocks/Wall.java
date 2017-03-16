@@ -47,7 +47,7 @@ public class Wall extends Item {
 		return result;
 	}
 
-	public static Wall getForBlockId(int id) {
+	public static Wall getForBlockID(int id) {
 		switch(id) {
 			case ItemID.none: default: return null;
 			case ItemID.dirtBlock: return (Wall) Item.dirtWall;
