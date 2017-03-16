@@ -22,6 +22,10 @@ public abstract class Entity {
 	 */
 	protected int maxHp;
 	/**
+	 * The height <i>(in blocks)</i> the entity can step.
+	 */
+	protected float stepHeight = 1.05F;
+	/**
 	 * Base defense-points.
 	 */
 	protected int defense;
@@ -120,7 +124,8 @@ public abstract class Entity {
 	 * flipped based on their {@link #direction}.
 	 */
 	public void render() {
-		this.texture.getFlippedCopy(this.direction == Direction.RIGHT, false).draw(this.renderBounds.x, this.renderBounds.y);
+		this.texture.getFlippedCopy(this.direction == Direction.RIGHT, false).draw(this.renderBounds.x,
+				this.renderBounds.y);
 	}
 
 	/**
@@ -136,7 +141,6 @@ public abstract class Entity {
 		if (!this.shouldUpdate) {
 			return;
 		}
-		
 
 		// Increment velocity downwards.
 		// TODO: Gravity should not be a constant, but instead should be based
@@ -156,14 +160,33 @@ public abstract class Entity {
 		// If the entity is not still on the x-axis, update their position based
 		// on their current velocity.
 		if (this.velocity.x != 0) {
-			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(), this.hitbox.width, this.hitbox.height);
+			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
+					this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
 
-			if (!this.isSolid || !LastTry.world.isColliding(newHitbox)) {
+			// If the entity is not solid, they can go anywhere
+			if (!this.isSolid) {
 				this.renderBounds.x += this.velocity.x;
 			} else {
-				this.velocity.x = 0;
+				// If they collide with the x-velocity applied...
+				if (LastTry.world.isColliding(newHitbox)) {
+					// If they collide with a block when their Y-position is
+					// shifted up by a block then they are climbing up a wall
+					// that is too steep to climb.
+					float step = Block.TEX_SIZE * stepHeight;
+					if (LastTry.world.isColliding(newHitbox.offset(0, -step))) {
+						// Intersection with a wall too steep to climb
+						this.velocity.x = 0;
+					} else {
+						// Wall isn't steep, can be climbed by entity.
+						this.renderBounds.x += this.velocity.x;
+						this.renderBounds.y -= Block.TEX_SIZE / 2;
+					}
+				} else {
+					// Moving normally
+					this.renderBounds.x += this.velocity.x;
+				}
 			}
 
 			this.velocity.x *= 0.8;
@@ -174,7 +197,8 @@ public abstract class Entity {
 		// If the entity is not still on the y-axis, update their position based
 		// on their current velocity.
 		if (this.velocity.y != 0) {
-			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(), this.hitbox.width, this.hitbox.height);
+			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
+					this.hitbox.width, this.hitbox.height);
 
 			newHitbox.y += this.velocity.y;
 
@@ -216,7 +240,7 @@ public abstract class Entity {
 		if (!this.shouldUpdate) {
 			return;
 		}
-	
+
 		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
 		this.direction = direction;
 
@@ -226,11 +250,11 @@ public abstract class Entity {
 	}
 
 	public void fly(int x, int y) {
-		if(x > 1 || x < -1) {
+		if (x > 1 || x < -1) {
 			x /= x;
 		}
 
-		if(y > 1 || y < -1) {
+		if (y > 1 || y < -1) {
 			y /= y;
 		}
 
@@ -509,6 +533,7 @@ public abstract class Entity {
 	}
 
 	public Rectangle getHitbox() {
-		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width, this.hitbox.height);
+		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
+				this.hitbox.height);
 	}
 }

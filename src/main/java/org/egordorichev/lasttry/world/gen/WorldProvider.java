@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.item.blocks.Wall;
 import org.egordorichev.lasttry.util.FileReader;

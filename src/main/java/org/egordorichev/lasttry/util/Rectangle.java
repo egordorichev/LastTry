@@ -28,7 +28,15 @@ public class Rectangle {
 	}
 
 	public boolean intersects(Rectangle rect) {
-		return (this.x < rect.x + rect.width && this.x + this.width > rect.x &&
-				this.y < rect.y + rect.height && this.y + this.height > rect.y);
+		return (this.x < rect.x + rect.width && this.x + this.width > rect.x && this.y < rect.y + rect.height
+				&& this.y + this.height > rect.y);
+	}
+
+	public Rectangle offset(float x, float y) {
+		return offset(x, y, 0, 0);
+	}
+
+	public Rectangle offset(float x, float y, float width, float height) {
+		return new Rectangle(this.x + x, this.y + y, this.width + width, this.height + height);
 	}
 }
