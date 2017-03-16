@@ -19,7 +19,7 @@ If you want to help the project grow, here is some stuff you can do:
 
  * **Creating mods** [More info](https://github.com/egordorichev/LastTryMods)
  * **Writing java-docs** The project is not fully documented yet
- * **Porting Terraria content** [More info](https://github.com/egordorichev/LastTry/blob/master/portingterrariacontent.md)
+ * **Porting Terraria content** [More info](https://github.com/egordorichev/LastTry/wiki/Porting-Terraria-Content)
  * **Adding new features to the code** How about implementing secret mob or other easter egg? 
 
 ### Liecense
