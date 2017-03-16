@@ -13,6 +13,8 @@ Project is distributed with maven. To compile it, run:
 mvn package
 ```
 
+It will generate an executable jar file in `LastTry` or `targets` folder.
+
 ### Contributing
 
 If you want to help the project grow, here is some stuff you can do:
