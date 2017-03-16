@@ -1,19 +1,23 @@
-# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby)
-
+# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Code Climate](https://codeclimate.com/github/egordorichev/LastTry/badges/gpa.svg)](https://codeclimate.com/github/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) ![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat "")
 LastTry is open-source Terraria clone in Java, written using Slick2D library.
 Our goal is to recreate original game with better perfomance, and old content.
 
-###### Project supports [mods](https://github.com/egordorichev/LastTryMods)
+###### Documentation available at [https://github.com/egordorichev/LastTry/wiki](https://github.com/egordorichev/LastTry/wiki)
 
 ### Building
 
-Project is distributed with maven. To compile it, run:
+Clone the repo
+
+```bash
+git clone https://github.com/egordorichev/LastTry.git
+cd LastTry
+```
+
+Compile project
 
 ```bash
 mvn package
 ```
-
-It will generate an executable jar file in `LastTry` or `targets` folder.
 
 ### Contributing
 
