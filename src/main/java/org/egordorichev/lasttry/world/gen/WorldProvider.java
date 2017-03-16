@@ -125,8 +125,8 @@ public class WorldProvider {
 			int totalSize = width * height;
 			TileData[] tiles = new TileData[totalSize];
 			for (int i = 0; i < totalSize; i++) {
-				tiles[i] = new TileData((Block) Item.fromId(stream.readInt32()),
-						(Wall) Item.fromId(stream.readInt32()));
+				tiles[i] = new TileData((Block) Item.fromID(stream.readInt32()),
+						(Wall) Item.fromID(stream.readInt32()));
 				// TODO: RLE
 			}
 			stream.close();
