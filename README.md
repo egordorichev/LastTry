@@ -7,13 +7,18 @@ Our goal is to recreate original game with better perfomance, and old content.
 
 ### Building
 
-Project is distributed with maven. To compile it, run:
+Clone the repo
+
+```bash
+git clone https://github.com/egordorichev/LastTry.git
+cd LastTry
+```
+
+Compile project
 
 ```bash
 mvn package
 ```
-
-It will generate an executable jar file in `LastTry` or `targets` folder.
 
 ### Contributing
 
