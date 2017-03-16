@@ -3,7 +3,7 @@
 LastTry is open-source Terraria clone in Java, written using Slick2D library.
 Our goal is to recreate original game with better perfomance, and old content.
 
-###### Project supports [mods](https://github.com/egordorichev/LastTryMods)
+###### Documentation available at [wiki](https://github.com/egordorichev/LastTry/wiki)
 
 ### Building
 
