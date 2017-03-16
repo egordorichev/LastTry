@@ -100,7 +100,7 @@ public class Item {
 	 *            Item ID.
 	 * @return Item instance.
 	 */
-	public static Item fromId(int id) {
+	public static Item fromID(int id) {
 		if (id == 0) {
 			return null;
 		}
