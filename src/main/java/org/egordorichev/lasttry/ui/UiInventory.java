@@ -66,8 +66,6 @@ public class UiInventory extends UiComponent {
 			this.slots[i] = new UiItemSlot(new Rectangle(0, 0, 52, 52), UiItemSlot.Type.ANY); // TODO
 			this.slots[i].hide();
 		}
-
-		this.slots[0].setItemHolder(new ItemHolder(Item.goldCoin, 14, null));
 	}
 
 	@Override
@@ -85,6 +83,70 @@ public class UiInventory extends UiComponent {
 				this.slots[i].render();
 			}
 		}
+	}
+
+	public void setItem(ItemHolder holder, int index) {
+		if(index < 0 || index > 88)  {
+			return;
+		}
+
+		this.slots[index].setItemHolder(holder);
+	}
+
+	public ItemHolder getItemHolder(int index) {
+		if(index < 0 || index > 88) {
+			return null;
+		}
+
+		return this.slots[index].getItemHolder();
+	}
+
+	public Item getItem(int index) {
+		ItemHolder holder = this.getItemHolder(index);
+
+		if(holder == null) {
+			return null;
+		}
+
+		return holder.getItem();
+	}
+
+	public boolean add(ItemHolder holder) {
+		UiItemSlot slot = this.getFirstFreeSlot(UiItemSlot.Type.ANY);
+
+		if(slot != null) {
+			slot.setItemHolder(holder);
+			return true;
+		}
+
+		return false;
+	}
+
+	public UiItemSlot getFirstFreeSlot(UiItemSlot.Type type) {
+		switch(type) {
+			case ACCESSORY: return this.getFirstFreeSlot(68, 73);
+			case AMMO: return this.getFirstFreeSlot(54, 58);
+			case ANY: default: return this.getFirstFreeSlot(0, 50); // Main inventory
+			case COIN: return this.getFirstFreeSlot(50, 54);
+			case ARMOR: return this.getFirstFreeSlot(59, 62);
+			case TRASH: return null;
+			case DYE: return this.getFirstFreeSlot(78, 83);
+			case VANITY: return this.getFirstFreeSlot(73, 78);
+		}
+	}
+
+	public UiItemSlot getFirstFreeSlot(int start, int end) {
+		if(start > end || start < 0 || end > 88) {
+			return null;
+		}
+
+		for(int i = start; i < end; i++) {
+			if(this.slots[i].getItemHolder().getItem() == null) {
+				return this.slots[i];
+			}
+		}
+
+		return null;
 	}
 
 	public void open() {

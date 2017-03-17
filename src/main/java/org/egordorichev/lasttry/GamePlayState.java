@@ -2,6 +2,8 @@ package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.blocks.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
@@ -36,6 +38,10 @@ public class GamePlayState extends BasicGameState {
 		LastTry.modLoader.load();
 
 		LastTry.ui.add(LastTry.player.inventory);
+
+		LastTry.player.inventory.add(new ItemHolder(Item.dirtBlock, 1, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.platinumCoin, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.grassBlock, 10, null));
 	}
 
 	@Override

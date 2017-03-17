@@ -13,10 +13,6 @@ public class ItemHolder {
 	 */
 	private int count;
 	/**
-	 * Dropped item position in the world.
-	 */
-	private Vector2f position;
-	/**
 	 * The item the holder contains.
 	 */
 	private Item item;
@@ -50,18 +46,6 @@ public class ItemHolder {
 
 	public int getCount() {
 		return this.count;
-	}
-
-	public Vector2f getPosition() {
-		return this.position;
-	}
-
-	public int getGridX() {
-		return (int) this.position.x / Block.TEX_SIZE;
-	}
-
-	public int getGridY() {
-		return (int) this.position.y / Block.TEX_SIZE;
 	}
 
 	public Item getItem() {

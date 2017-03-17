@@ -8,11 +8,12 @@ import org.newdawn.slick.Image;
 public class Block extends Item {
 	public static final int TEX_SIZE = 16;
 	protected boolean solid;
+	protected Image tiles;
 
 	public Block(int id, String name, boolean solid, Image texture, Image tiles) {
 		super(id, name, texture);
 
-		this.texture = tiles;
+		this.tiles = tiles;
 		this.solid = solid;
 	}
 
@@ -22,7 +23,7 @@ public class Block extends Item {
 		boolean b = LastTry.world.getBlockId(x, y + 1) == this.id;
 		boolean l = LastTry.world.getBlockId(x - 1, y) == this.id;
 
-		this.texture.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
 	protected int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
