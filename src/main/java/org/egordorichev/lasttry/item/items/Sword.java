@@ -1,5 +1,6 @@
-package org.egordorichev.lasttry.item;
+package org.egordorichev.lasttry.item.items;
 
+import org.egordorichev.lasttry.item.DamageType;
 import org.newdawn.slick.Image;
 
 public class Sword extends Weapon { // TODO

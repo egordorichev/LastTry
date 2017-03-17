@@ -1,9 +1,9 @@
 package org.egordorichev.lasttry.world.tile;
 
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.item.Wall;
-
 import java.util.Random;
+
+import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.tiles.Wall;
 
 public class TileData {
 	// TODO: Should this be static?

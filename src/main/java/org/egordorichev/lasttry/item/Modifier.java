@@ -1,11 +1,7 @@
 package org.egordorichev.lasttry.item;
 
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.Stat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Modifier {
 	// Accessories

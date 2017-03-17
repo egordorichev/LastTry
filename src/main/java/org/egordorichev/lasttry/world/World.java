@@ -6,8 +6,8 @@ import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.*;
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.item.Wall;
+import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.tile.TileData;
 

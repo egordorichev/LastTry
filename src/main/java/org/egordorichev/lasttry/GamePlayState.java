@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.gen.WorldProvider;

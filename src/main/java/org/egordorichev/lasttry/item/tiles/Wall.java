@@ -1,6 +1,8 @@
-package org.egordorichev.lasttry.item;
+package org.egordorichev.lasttry.item.tiles;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 

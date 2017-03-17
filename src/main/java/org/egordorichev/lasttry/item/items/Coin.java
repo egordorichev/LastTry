@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.item;
+package org.egordorichev.lasttry.item.items;
 
 import org.egordorichev.lasttry.item.Item;
 import org.newdawn.slick.Image;

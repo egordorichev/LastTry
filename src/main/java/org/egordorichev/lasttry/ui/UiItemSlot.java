@@ -2,6 +2,11 @@ package org.egordorichev.lasttry.ui;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.*;
+import org.egordorichev.lasttry.item.items.Accessory;
+import org.egordorichev.lasttry.item.items.Ammo;
+import org.egordorichev.lasttry.item.items.Armor;
+import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.items.Dye;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
