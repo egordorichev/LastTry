@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import org.newdawn.slick.Image;
 
-public class Weapon extends Item {
+public class Weapon extends Tool {
 	protected DamageType damageType;
 	protected int damage;
 
