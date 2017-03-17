@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Image;
 
 /**
@@ -27,7 +28,16 @@ public class ItemHolder {
 
 	public void renderAt(int x, int y) {
 		if(this.item != null) {
-			this.item.getTexture().draw(x, y);
+			Image texture = this.item.getTexture();
+
+			int tw = texture.getWidth();
+			int th = texture.getHeight();
+
+			texture.draw(x, y);
+
+			if(this.count > 1) {
+				Assets.smallFont.drawString(x - 8, y + th - 8, String.format("%d", this.count));
+			}
 		}
 	}
 
@@ -37,8 +47,13 @@ public class ItemHolder {
 
 			int tw = texture.getWidth();
 			int th = texture.getHeight();
+			int iy = y + (height - th) / 2;
 
-			texture.draw(x + (width - tw) / 2, y + (height - th) / 2);
+			texture.draw(x + (width - tw) / 2, iy);
+
+			if(this.count > 1) {
+				Assets.smallFont.drawString(x + tw / 2, iy + th / 2, String.format("%d", this.count));
+			}
 		}
 	}
 

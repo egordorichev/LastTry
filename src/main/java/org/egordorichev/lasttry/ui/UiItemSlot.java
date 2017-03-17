@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.item.*;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 public class UiItemSlot extends UiComponent {
@@ -140,15 +141,19 @@ public class UiItemSlot extends UiComponent {
 	protected void onStateChange() {
 		if(this.state == State.MOUSE_DOWN) {
 			if(LastTry.player.inventory.isOpen()) {
-				if(LastTry.player.inventory.currentItem != null) {
-					if(this.canHold(LastTry.player.inventory.currentItem)) {
-						ItemHolder tmp = this.itemHolder;
-						this.itemHolder = LastTry.player.inventory.currentItem;
-						LastTry.player.inventory.currentItem = tmp;
+				if(LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+					if(LastTry.player.inventory.currentItem != null) {
+						if(this.canHold(LastTry.player.inventory.currentItem)) {
+							ItemHolder tmp = this.itemHolder;
+							this.itemHolder = LastTry.player.inventory.currentItem;
+							LastTry.player.inventory.currentItem = tmp;
+						}
+					} else {
+						LastTry.player.inventory.currentItem = this.itemHolder;
+						this.itemHolder = null;
 					}
-				} else {
-					LastTry.player.inventory.currentItem = this.itemHolder;
-					this.itemHolder = null;
+				} else if(LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+					// TODO
 				}
 			}
 		}

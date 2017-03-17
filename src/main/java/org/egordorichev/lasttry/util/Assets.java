@@ -34,7 +34,8 @@ public class Assets {
 	public static Image inventoryBackTexture = loadImage("InventoryBack.png");
 	public static Image trashTexture = loadImage("Trash.png");
 
-	public static UnicodeFont font = loadFont("font.ttf");
+	public static UnicodeFont font = loadFont("font.ttf", 22);
+	public static UnicodeFont smallFont = loadFont("font.ttf", 18);
 
 	public static Image loadImage(String path) {
 		try {
@@ -50,12 +51,12 @@ public class Assets {
 		return null;
 	}
 
-	public static UnicodeFont loadFont(String path) {
+	public static UnicodeFont loadFont(String path, int size) {
 		try {
 			java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
 					ResourceLoader.getResourceAsStream("assets/fonts/" + path));
 
-			font = font.deriveFont(java.awt.Font.PLAIN, 22.f);
+			font = font.deriveFont(java.awt.Font.PLAIN, size);
 
 			org.newdawn.slick.UnicodeFont uniFont = new org.newdawn.slick.UnicodeFont(font);
 			uniFont.addAsciiGlyphs();
