@@ -130,6 +130,8 @@ public class Modifier {
 		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.SIZE, +10),
 		new Stat(Stat.Type.KNOCKBACK, +15));
 
+	// Ranged
+
 	public static final Modifier sighted = new Modifier("Sighted", Type.RANGED, new Stat(Stat.Type.DAMAGE, +10),
 		new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +3));
 
@@ -139,7 +141,7 @@ public class Modifier {
 	public static final Modifier hasty = new Modifier("Hasty", Type.RANGED, new Stat(Stat.Type.SPEED, +10),
 		new Stat(Stat.Type.VELOCITY, +15));
 
-	public static final Modifier intimidating = new Modifier("intimidating", Type.RANGED, new Stat(Stat.Type.VELOCITY, +5),
+	public static final Modifier intimidating = new Modifier("Intimidating", Type.RANGED, new Stat(Stat.Type.VELOCITY, +5),
 		new Stat(Stat.Type.KNOCKBACK, +15));
 
 	public static final Modifier deadly = new Modifier("Deadly", Type.RANGED, new Stat(Stat.Type.DAMAGE, +10),
@@ -168,7 +170,40 @@ public class Modifier {
 		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.VELOCITY, +10),
 		new Stat(Stat.Type.KNOCKBACK, +15));
 
-	// TODO: magic
+	// Magic
+
+	public static final Modifier mystic = new Modifier("Mystic", Type.MAGIC, new Stat(Stat.Type.DAMAGE, 10),
+		new Stat(Stat.Type.MANA_COST, -15));
+
+	public static final Modifier adept = new Modifier("Adept", Type.MAGIC, new Stat(Stat.Type.MANA_COST, -15));
+	public static final Modifier masterful = new Modifier("Masterful", Type.MAGIC, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.MANA_COST, -20), new Stat(Stat.Type.KNOCKBACK, +5));
+
+	public static final Modifier inept = new Modifier("Inept", Type.MAGIC, new Stat(Stat.Type.MANA_COST, +10));
+	public static final Modifier ignorant = new Modifier("Ignorant", Type.MAGIC, new Stat(Stat.Type.DAMAGE, -10),
+		new Stat(Stat.Type.MANA_COST, +20));
+
+	public static final Modifier deranged = new Modifier("Deranged", Type.MAGIC, new Stat(Stat.Type.DAMAGE, -10),
+		new Stat(Stat.Type.KNOCKBACK, -10));
+
+	public static final Modifier intense = new Modifier("Intense", Type.MAGIC, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.MANA_COST, +15));
+
+	public static final Modifier taboo = new Modifier("Taboo", Type.MAGIC, new Stat(Stat.Type.SPEED, +10),
+		new Stat(Stat.Type.MANA_COST, +10), new Stat(Stat.Type.KNOCKBACK, +10));
+
+	public static final Modifier celestial = new Modifier("Celestial", Type.MAGIC, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.SPEED, -10), new Stat(Stat.Type.MANA_COST, -10), new Stat(Stat.Type.KNOCKBACK, +10));
+
+	public static final Modifier furious = new Modifier("Furious", Type.MAGIC, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.MANA_COST, +20), new Stat(Stat.Type.KNOCKBACK, +15));
+
+	public static final Modifier manic = new Modifier("Manic", Type.MAGIC, new Stat(Stat.Type.DAMAGE, -10),
+		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.MANA_COST, -10));
+
+	public static final Modifier mythical = new Modifier("Mythical", Type.MAGIC, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.MANA_COST, -10),
+		new Stat(Stat.Type.KNOCKBACK, +15));
 
 	public enum Type {
 		ACCESSORY,
