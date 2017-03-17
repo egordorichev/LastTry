@@ -10,7 +10,7 @@ public class UiInventory extends UiComponent {
 	private UiItemSlot[] slots;
 	private boolean open;
 
-	public static ItemHolder currentItem = null;
+	public ItemHolder currentItem = null;
 
 	public UiInventory(int size) {
 		super(new Rectangle(10, 10, 100, 32)); // TODO: tune

@@ -11,7 +11,7 @@ public class Player extends Entity {
 	protected String name;
 	protected Animation[] animations;
 
-	public static UiInventory inventory;
+	public UiInventory inventory;
 
 	public Player(String name) {
 		super(100, 0, 0);

@@ -26,8 +26,8 @@ public class UiItemSlot extends UiComponent {
 		DYE
 	}
 
+	// What will this be used for and why should it be static?
 	private static Color color;
-
 	private Image texture;
 	private ItemHolder itemHolder;
 	private Type type;
