@@ -1,6 +1,13 @@
 engines:
-  fixme:
+  rubocop:
+    enabled: true
+  golint:
+   	enabled: true
+  eslint:
     enabled: true
 ratings:
-  paths: []
-exclude_paths: []
+  paths:
+  - src/**
+  - "**.java"
+exclude_paths:
+- lib/**
