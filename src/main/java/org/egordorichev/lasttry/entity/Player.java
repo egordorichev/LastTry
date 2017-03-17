@@ -56,7 +56,8 @@ public class Player extends Entity {
 		this.animations[State.IDLE.getId()] = idleAnimation;
 		this.animations[State.MOVING.getId()] = movingAnimation;
 		this.animations[State.JUMPING.getId()] = jumpingAnimation;
-		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
+		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are
+																	// the same
 		this.animations[State.FLYING.getId()] = flyingAnimation;
 		this.animations[State.DEAD.getId()] = deadAnimation;
 	}
@@ -64,7 +65,7 @@ public class Player extends Entity {
 	public void setGhostMode(boolean enabled) {
 		this.isSolid = !enabled;
 
-		if(enabled) {
+		if (enabled) {
 			this.state = State.FLYING;
 		} else {
 			this.state = State.IDLE;
@@ -73,13 +74,13 @@ public class Player extends Entity {
 
 	@Override
 	public void onSpawn() {
-		for(int y = 0; y < 3; y++) {
-			for(int x = 0; x < 2; x++) {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 2; x++) {
 				LastTry.world.setBlock(null, this.getGridX() + x, this.getGridY() + y);
 			}
 		}
 	}
-	
+
 	@Override
 	public void render() {
 		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
@@ -88,40 +89,40 @@ public class Player extends Entity {
 
 	@Override
 	public void update(int dt) {
-		if(!this.shouldUpdate) {
+		if (!this.shouldUpdate) {
 			return;
 		}
 
-		if(this.state == State.FLYING) {
-			if(LastTry.input.isKeyDown(Input.KEY_SPACE) || LastTry.input.isKeyDown(Input.KEY_W)) {
+		if (this.state == State.FLYING) {
+			if (LastTry.input.isKeyDown(Input.KEY_SPACE) || LastTry.input.isKeyDown(Input.KEY_W)) {
 				this.velocity.y -= 1;
 			}
 
-			if(LastTry.input.isKeyDown(Input.KEY_S)) {
+			if (LastTry.input.isKeyDown(Input.KEY_S)) {
 				this.velocity.y += 1;
 			}
 
-			if(LastTry.input.isKeyDown(Input.KEY_A)) {
+			if (LastTry.input.isKeyDown(Input.KEY_A)) {
 				this.move(Direction.LEFT);
 			}
 
-			if(LastTry.input.isKeyDown(Input.KEY_D)) {
+			if (LastTry.input.isKeyDown(Input.KEY_D)) {
 				this.move(Direction.RIGHT);
 			}
 		} else {
-			if(LastTry.input.isKeyDown(Input.KEY_SPACE)) {
+			if (LastTry.input.isKeyDown(Input.KEY_SPACE)) {
 				this.jump();
 			}
 
-			if(LastTry.input.isKeyDown(Input.KEY_A)) {
+			if (LastTry.input.isKeyDown(Input.KEY_A)) {
 				this.move(Direction.LEFT);
 			}
 
-			if(LastTry.input.isKeyDown(Input.KEY_D)) {
+			if (LastTry.input.isKeyDown(Input.KEY_D)) {
 				this.move(Direction.RIGHT);
 			}
 
-			if(LastTry.input.isKeyPressed(Input.KEY_E) || LastTry.input.isKeyPressed(Input.KEY_ESCAPE)) {
+			if (LastTry.input.isKeyPressed(Input.KEY_E) || LastTry.input.isKeyPressed(Input.KEY_ESCAPE)) {
 				inventory.toggle();
 			}
 		}
@@ -130,7 +131,22 @@ public class Player extends Entity {
 		this.animations[this.state.getId()].update(dt);
 	}
 
+	@Override
+	protected void onCollision(Entity ent) {
+		float diffX = Math.abs(ent.renderBounds.x - this.renderBounds.x);
+		if (diffX >= 0) {
+			int direction = ent.renderBounds.x < this.renderBounds.x ? -1 : 1;
+			float pushFactor = 0.02F;
+			// Update diffX to be used as additive velocity
+			diffX *= direction * pushFactor;
+			// Update entity velocities
+			// Push each other away
+			this.velocity.x -= diffX;
+			ent.velocity.x += diffX;
+		}
+	}
+
 	public String getName() {
 		return this.name;
-	}	
+	}
 }

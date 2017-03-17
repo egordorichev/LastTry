@@ -413,6 +413,15 @@ public class World {
 	}
 
 	/**
+	 * Return the list of entities in the world.
+	 * 
+	 * @return
+	 */
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
+	/**
 	 * Return the world version.
 	 * 
 	 * @return World version.

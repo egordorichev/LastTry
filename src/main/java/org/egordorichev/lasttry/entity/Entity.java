@@ -228,6 +228,29 @@ public abstract class Entity {
 				this.state = State.IDLE;
 			}
 		}
+
+		// Damage
+		if (this.isSolid){
+			for (Entity e : LastTry.world.getEntities()) {
+				// Skip self
+				if (e == this || !e.isSolid){
+					continue;
+				}
+				if (e.renderBounds.intersects(this.renderBounds)) {
+					this.onCollision(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Called when the entity collides with another given entity.
+	 * 
+	 * @param ent
+	 *            Entity collided with.
+	 */
+	protected void onCollision(Entity ent) {
+		
 	}
 
 	/**
