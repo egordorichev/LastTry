@@ -233,6 +233,23 @@ public class World {
 	}
 
 	/**
+	 * Find the highest tile in the world at the given x-position.
+	 * 
+	 * @param x
+	 *            X-position to check.
+	 * @return Highest point that is clear.
+	 */
+	public int getHighest(int x) {
+		int y = 0;
+		while (true) {
+			TileData td = getTile(x, y);
+			if (td.block != null)
+				return y - 3;
+			y++;
+		}
+	}
+
+	/**
 	 * Return the TileData for the given position.
 	 * 
 	 * @param x

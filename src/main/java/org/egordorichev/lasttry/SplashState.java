@@ -10,7 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.*;
 
 public class SplashState extends BasicGameState {
-	private final static boolean SKIP_SPLASH = false;
+	private final static boolean SKIP_SPLASH = true;
 	private final static int SPLASH_COUNT = 1;
 	
 	private Image splash;

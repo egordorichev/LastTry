@@ -25,8 +25,10 @@ public class GamePlayState extends BasicGameState {
 		} else {
 			LastTry.world = WorldProvider.generate(worldName, 512, 512); // Must be power of two
 		}
+		int spawnX = LastTry.random.nextInt( LastTry.world.getWidth());
+		int spawnY = LastTry.world.getHighest(spawnX);
 		LastTry.player = new Player("George");
-		LastTry.player.spawn(16, 117);
+		LastTry.player.spawn(spawnX, spawnY);
 
 		// LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 30, 110);
 		LastTry.world.spawnEnemy(EnemyID.greenSlime, 40, 110);
