@@ -39,7 +39,6 @@ public class ItemHolder {
 		if (this.item != null) {
 			Image texture = this.item.getTexture();
 
-			int tw = texture.getWidth();
 			int th = texture.getHeight();
 
 			texture.draw(x, y);
