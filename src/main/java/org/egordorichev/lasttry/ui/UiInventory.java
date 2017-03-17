@@ -10,6 +10,8 @@ public class UiInventory extends UiComponent {
 	private UiItemSlot[] slots;
 	private boolean open;
 
+	public static ItemHolder currentItem = null;
+
 	public UiInventory(int size) {
 		super(new Rectangle(10, 10, 100, 32)); // TODO: tune
 
@@ -83,6 +85,10 @@ public class UiInventory extends UiComponent {
 				this.slots[i].render();
 			}
 		}
+
+		if(currentItem != null) {
+			currentItem.renderAt(LastTry.input.getMouseX() + 16, LastTry.input.getMouseY() + 16);
+		}
 	}
 
 	public void setItem(ItemHolder holder, int index) {
@@ -141,7 +147,7 @@ public class UiInventory extends UiComponent {
 		}
 
 		for(int i = start; i < end; i++) {
-			if(this.slots[i].getItemHolder().getItem() == null) {
+			if(this.slots[i].getItem() == null) {
 				return this.slots[i];
 			}
 		}
