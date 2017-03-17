@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.util.Assets;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -21,10 +23,11 @@ public class SplashState extends BasicGameState {
 		this.splash = new Image("assets/images/splashes/" + (LastTry.random.nextInt(SPLASH_COUNT) + 1) + ".png");
 
 		Image cursor = new Image("assets/images/Cursor.png");
-
 		gameContainer.setMouseCursor(cursor, 0, 0);
 
 		this.loaded = false;
+
+		Display.setResizable(true);
 
 		new Thread() {
 			@Override
@@ -37,6 +40,10 @@ public class SplashState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+		if(Display.wasResized()) {
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, FIXME
+		}
+
 		this.splash.draw(0, 0, 800, 600);
 	}
 

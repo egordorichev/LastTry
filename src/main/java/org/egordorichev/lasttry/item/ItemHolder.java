@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.item.blocks.Block;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 /**
@@ -31,7 +32,20 @@ public class ItemHolder {
 	}
 
 	public void renderAt(int x, int y) {
-		this.item.getTexture().draw(x, y);
+		if(this.item != null) {
+			this.item.getTexture().draw(x, y);
+		}
+	}
+
+	public void renderAt(int x, int y, int width, int height) {
+		if(this.item != null) {
+			Image texture = this.item.getTexture();
+
+			int tw = texture.getWidth();
+			int th = texture.getHeight();
+
+			texture.draw(x + (width - tw) / 2, y + (height - th) / 2);
+		}
 	}
 
 	public int getCount() {

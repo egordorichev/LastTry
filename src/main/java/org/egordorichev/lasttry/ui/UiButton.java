@@ -7,10 +7,14 @@ public class UiButton extends UiComponent {
 	protected String label;
 	protected int textWidth;
 
-	public UiButton(Rectangle rectangle, String label) {
-		super(rectangle);
+	public UiButton(Rectangle rectangle, String label, Origin origin) {
+		super(rectangle, origin);
 
 		this.setLabel(label);
+	}
+
+	public UiButton(Rectangle rectangle, String label) {
+		this(rectangle, label, Origin.TOP_LEFT);
 	}
 
 	public UiButton(Rectangle rectangle) {

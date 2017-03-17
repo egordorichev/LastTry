@@ -16,7 +16,7 @@ public class Debug {
 
 		LastTry.graphics.drawString(String.valueOf(LastTry.container.getFPS()), 10, LastTry.getWindowHeight() - 30);
 		LastTry.graphics.drawString("X: " + String.format("%.2f", LastTry.player.getX())
-				+ " Y: " + String.format("%.2f", LastTry.player.getY()), 10, 10);
+				+ " Y: " + String.format("%.2f", LastTry.player.getY()), 40, LastTry.getWindowHeight() - 30);
 	}
 
 	public void enable() {

@@ -1,12 +1,11 @@
 package org.egordorichev.lasttry.util;
 
 import org.egordorichev.lasttry.LastTry;
-import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-
-import java.awt.*;
-import java.io.IOException;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class Assets {
 	public static Image dirtTileTexture = loadImage("DirtTile.png");
@@ -48,15 +47,21 @@ public class Assets {
 
 	public static UnicodeFont loadFont(String path) {
 		try {
-			UnicodeFont font = new UnicodeFont(java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, org.newdawn.slick.util.ResourceLoader.getResourceAsStream("assets/fonts/" + path)));
-			font.addAsciiGlyphs();
-			font.getEffects().add(new ColorEffect());
+			java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+					ResourceLoader.getResourceAsStream("assets/fonts/" + path));
 
-			return font;
-		} catch(FontFormatException exception) {
-			exception.printStackTrace();
-		} catch(IOException exception) {
-			exception.printStackTrace();
+			font = font.deriveFont(java.awt.Font.PLAIN, 22.f);
+
+			org.newdawn.slick.UnicodeFont uniFont = new org.newdawn.slick.UnicodeFont(font);
+			uniFont.addAsciiGlyphs();
+			ColorEffect a = new org.newdawn.slick.font.effects.ColorEffect();
+
+			uniFont.getEffects().add(a);
+			uniFont.loadGlyphs();
+
+			return uniFont;
+		} catch(Exception exception) {
+			LastTry.handleException(exception);
 		}
 
 		return null;

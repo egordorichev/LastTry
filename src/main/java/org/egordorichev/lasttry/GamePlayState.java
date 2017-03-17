@@ -7,6 +7,8 @@ import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.gen.WorldProvider;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -43,12 +45,17 @@ public class GamePlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		LastTry.graphics.setFont(Assets.font);
+
 	}
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
 			throws SlickException {
+
+		if(Display.wasResized()) {
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, FIXME
+		}
+
 		LastTry.camera.set(graphics);
 		LastTry.world.render();
 		LastTry.player.render();
@@ -65,7 +72,7 @@ public class GamePlayState extends BasicGameState {
 		int hp = LastTry.player.getHp();
 		int x = LastTry.getWindowWidth() - 260;
 
-		LastTry.graphics.getFont().drawString(x, 4, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()));
+		Assets.font.drawString(x, 4, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()));
 
 		for(int i = 0; i < hp / 20; i++) {
 			Assets.hpTexture.draw(x + i * 22 + i * 2, 28);

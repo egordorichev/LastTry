@@ -11,14 +11,27 @@ public class UiComponent {
 		MOUSE_DOWN
 	}
 
+	public enum Origin {
+		TOP_LEFT,
+		TOP_RIGHT,
+		BOTTOM_LEFT,
+		BOTTOM_RIGHT
+	}
+
 	protected Rectangle rect;
 	protected State state;
+	protected Origin origin;
 	protected boolean hidden;
 
-	public UiComponent(Rectangle rectangle) {
+	public UiComponent(Rectangle rectangle, Origin origin) {
 		this.rect = rectangle;
 		this.state = State.NORMAL;
+		this.origin = origin;
 		this.hidden = false;
+	}
+
+	public UiComponent(Rectangle rectangle) {
+		this(rectangle, Origin.TOP_LEFT);
 	}
 
 	public void render() {
@@ -49,11 +62,17 @@ public class UiComponent {
 	}
 
 	public int getX() {
-		return (int) this.rect.getX();
+		switch(this.origin) {
+			case TOP_LEFT: case BOTTOM_LEFT: default: return (int) this.rect.getX();
+			case TOP_RIGHT: case BOTTOM_RIGHT: return (int) (LastTry.getWindowWidth() - this.getWidth() - this.rect.getX());
+		}
 	}
 
 	public int getY() {
-		return (int) this.rect.getY();
+		switch(this.origin) {
+			case TOP_LEFT: case TOP_RIGHT: default: return (int) this.rect.getY();
+			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) (LastTry.getWindowHeight() - this.getHeight() - this.rect.getY());
+		}
 	}
 
 	public int getWidth() {

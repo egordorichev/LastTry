@@ -120,6 +120,10 @@ public class Player extends Entity {
 			if(LastTry.input.isKeyDown(Input.KEY_D)) {
 				this.move(Direction.RIGHT);
 			}
+
+			if(LastTry.input.isKeyPressed(Input.KEY_E) || LastTry.input.isKeyPressed(Input.KEY_ESCAPE)) {
+				inventory.toggle();
+			}
 		}
 
 		super.update(dt);
