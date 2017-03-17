@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.ui;
 
-import org.egordorichev.lasttry.Ammo;
-import org.egordorichev.lasttry.Dye;
+import org.egordorichev.lasttry.item.Ammo;
+import org.egordorichev.lasttry.item.Dye;
 import org.egordorichev.lasttry.item.Accessory;
 import org.egordorichev.lasttry.item.Armor;
 import org.egordorichev.lasttry.item.ItemHolder;
