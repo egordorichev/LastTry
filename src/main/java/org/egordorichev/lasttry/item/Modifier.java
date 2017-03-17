@@ -138,7 +138,7 @@ public class Modifier {
 	public static final Modifier rapid = new Modifier("Rapid", Type.RANGED, new Stat(Stat.Type.SPEED, +15),
 		new Stat(Stat.Type.VELOCITY, +10));
 
-	public static final Modifier hasty = new Modifier("Hasty", Type.RANGED, new Stat(Stat.Type.SPEED, +10),
+	public static final Modifier rangedHasty = new Modifier("Hasty", Type.RANGED, new Stat(Stat.Type.SPEED, +10),
 		new Stat(Stat.Type.VELOCITY, +15));
 
 	public static final Modifier intimidating = new Modifier("Intimidating", Type.RANGED, new Stat(Stat.Type.VELOCITY, +5),
