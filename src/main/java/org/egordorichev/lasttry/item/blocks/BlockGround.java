@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.blocks;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 

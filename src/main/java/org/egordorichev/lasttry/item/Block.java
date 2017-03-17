@@ -1,7 +1,6 @@
-package org.egordorichev.lasttry.item.blocks;
+package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
@@ -50,5 +49,10 @@ public class Block extends Item {
 
 	public boolean isSolid() {
 		return this.solid;
+	}
+
+	@Override
+	public int getMaxInStack() {
+		return 999;
 	}
 }

@@ -5,7 +5,7 @@ import org.egordorichev.lasttry.item.Dye;
 import org.egordorichev.lasttry.item.Accessory;
 import org.egordorichev.lasttry.item.Armor;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.Coin;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;

@@ -1,8 +1,6 @@
-package org.egordorichev.lasttry.item.blocks;
+package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
@@ -24,7 +22,6 @@ public class Wall extends Item {
 		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
-
 	private int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		int result = 0;
 
@@ -45,6 +42,11 @@ public class Wall extends Item {
 		}
 
 		return result;
+	}
+
+	@Override
+	public int getMaxInStack() {
+		return 999;
 	}
 
 	public static Wall getForBlockID(int id) {

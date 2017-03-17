@@ -4,9 +4,8 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.blocks.Block;
+import org.egordorichev.lasttry.item.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
-import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.gen.WorldProvider;
 import org.lwjgl.opengl.Display;
@@ -15,7 +14,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 

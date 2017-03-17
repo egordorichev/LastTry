@@ -2,8 +2,6 @@ package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.blocks.BlockGround;
-import org.egordorichev.lasttry.item.items.Coin;
-import org.egordorichev.lasttry.item.blocks.Wall;
 import org.egordorichev.lasttry.util.Assets;
 import org.newdawn.slick.Image;
 
@@ -108,6 +106,12 @@ public class Item {
 		return ITEM_CACHE[id];
 	}
 
+	/**
+	 * Returns max item in stack
+	 */
+	public int getMaxInStack() {
+		return 1;
+	}
 	/**
 	 * Loads all fields
 	 */

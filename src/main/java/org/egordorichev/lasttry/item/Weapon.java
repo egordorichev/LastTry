@@ -12,4 +12,32 @@ public class Weapon extends Item {
 		this.damage = damage;
 		this.damageType = damageType;
 	}
+
+	public DamageType getDamageType() {
+		return this.damageType;
+	}
+
+	public int getDamage() {
+		return this.damage;
+	}
+
+	public boolean isMagic() {
+		return this.damageType == DamageType.MAGIC;
+	}
+
+	public boolean isMelee() {
+		return this.damageType == DamageType.MELEE;
+	}
+
+	public boolean isThrowing() {
+		return this.damageType == DamageType.THROWING;
+	}
+
+	public boolean isRanged() {
+		return this.damageType == DamageType.RANGED;
+	}
+
+	public boolean isSummoning() {
+		return this.damageType == DamageType.SUMMON;
+	}
 }

@@ -111,7 +111,7 @@ public class UiInventory extends UiComponent {
 		return holder.getItem();
 	}
 
-	public boolean add(ItemHolder holder) {
+	public boolean add(ItemHolder holder) { // TODO: check if item is already in inventory
 		UiItemSlot slot = this.getFirstFreeSlot(UiItemSlot.Type.ANY);
 
 		if(slot != null) {
