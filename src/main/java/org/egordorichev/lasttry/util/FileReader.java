@@ -2,6 +2,9 @@ package org.egordorichev.lasttry.util;
 
 import java.io.*;
 
+/**
+ * A wrapper for DataInputStream.
+ */
 public class FileReader implements AutoCloseable {
 	private DataInputStream stream;
 
@@ -9,79 +12,37 @@ public class FileReader implements AutoCloseable {
 		this.stream = new DataInputStream(new BufferedInputStream(new FileInputStream(path), 32768));
 	}
 
-	public byte readByte() {
-		try {
-			return this.stream.readByte();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
-
-		return 0;
+	public byte readByte() throws IOException {
+		return this.stream.readByte();
 	}
 
-	public boolean readBoolean() {
-		try {
-			return this.stream.readBoolean();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
-
-		return false;
+	public boolean readBoolean() throws IOException {
+		return this.stream.readBoolean();
 	}
 
-	public short readInt16() {
-		try {
-			return this.stream.readShort();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
-
-		return 0;
+	public short readInt16() throws IOException {
+		return this.stream.readShort();
 	}
 
-	public int readInt32() {
-		try {
-			return this.stream.readInt();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
-
-		return 0;
+	public int readInt32() throws IOException {
+		return this.stream.readInt();
 	}
 
-	public String readString() {
-		try {
-			byte length = this.stream.readByte();
-			String result = "";
-
-			for(int i = 0; i < length; i++) {
-				result += this.stream.readChar();
-			}
-
-			return result;
-		} catch(IOException exception) {
-			exception.printStackTrace();
+	public String readString() throws IOException {
+		byte length = this.stream.readByte();
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			result.append(this.stream.readChar());
 		}
-
-		return "";
+		return result.toString();
 	}
 
-	public double readDouble() {
-		try {
-			return this.stream.readDouble();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
-
-		return 0;
+	public double readDouble() throws IOException {
+		return this.stream.readDouble();
 	}
 
 	@Override
-	public void close() {
-		try {
-			this.stream.close();
-		} catch(IOException exception) {
-			exception.printStackTrace();
-		}
+	public void close() throws IOException {
+		this.stream.close();
 	}
 }

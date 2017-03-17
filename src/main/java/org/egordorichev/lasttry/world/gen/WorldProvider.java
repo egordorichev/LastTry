@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.gen;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -89,7 +89,7 @@ public class WorldProvider {
 				// TODO: RLE
 			}
 			LastTry.log("Done saving!");
-		} catch (Exception exception) {
+		} catch (IOException exception) {
 			LastTry.handleException(exception);
 			System.exit(0);
 		}
@@ -133,7 +133,7 @@ public class WorldProvider {
 			LastTry.log("Done loading!");
 			World world = new World(worldName, width, height, evilType, tiles);
 			world.setExpert(expert);
-		} catch (FileNotFoundException exception) {
+		} catch (IOException exception) {
 			// world.save();
 			LastTry.handleException(exception);
 			System.exit(0);
