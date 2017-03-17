@@ -1,4 +1,4 @@
-# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) (https://codeclimate.com/github/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) ![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat "")
+# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) ![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat "")
 LastTry is open-source Terraria clone in Java, written using Slick2D library.
 Our goal is to recreate original game with better perfomance, and old content.
 
