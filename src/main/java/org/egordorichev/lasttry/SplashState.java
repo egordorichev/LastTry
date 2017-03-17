@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry;
 
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Assets;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -11,10 +12,12 @@ import org.newdawn.slick.state.*;
 public class SplashState extends BasicGameState {
 	private final static boolean SKIP_SPLASH = false;
 	private final static int SPLASH_COUNT = 1;
+	
 	private Image splash;
 	private boolean fadeUp = true;
 	private int delay = 60;
-	private boolean loaded;
+	private volatile boolean loaded;
+	private volatile String loadMessage;
 
 	@Override
 	public int getID() {
@@ -36,7 +39,11 @@ public class SplashState extends BasicGameState {
 		new Thread() {
 			@Override
 			public void run() {
+				loadMessage = "Loading assets...";
 				Assets.preload();
+				loadMessage = "Loading items...";
+				Item.preload();
+				loadMessage = "Done!";
 				loaded = true;
 			}
 		}.run();
@@ -46,21 +53,22 @@ public class SplashState extends BasicGameState {
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
 			throws SlickException {
 		if (Display.wasResized()) {
-			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt
-																			// work,
-																			// FIXME
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+			// TODO
+			// Does not work, FIXME
 		}
 
+		// Handle splash opacity
 		float animSpeed = 0.02f;
 		if (fadeUp) {
 			// Fade into splash
 			if (this.splash.getAlpha() < 1.0f) {
 				this.splash.setAlpha(this.splash.getAlpha() + animSpeed);
-			} 
+			}
 			// Stay on splash for roughly a second
 			else if (delay > 0) {
 				delay--;
-			} 
+			}
 			// Begin fade-out
 			else {
 				fadeUp = false;
@@ -70,8 +78,9 @@ public class SplashState extends BasicGameState {
 				this.splash.setAlpha(this.splash.getAlpha() - animSpeed);
 			}
 		}
-
+		// Draw splash
 		this.splash.draw(0, 0, 800, 600);
+		Assets.smallFont.drawString(10, 10, loadMessage);
 	}
 
 	@Override

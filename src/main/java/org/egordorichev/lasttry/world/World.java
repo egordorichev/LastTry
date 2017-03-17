@@ -5,7 +5,6 @@ import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.item.*;
 import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -72,7 +71,6 @@ public class World {
 		this.height = height;
 		this.evilType = evilType;
 		this.tiles = tiles;
-		Item.preload();
 	}
 
 	/**
