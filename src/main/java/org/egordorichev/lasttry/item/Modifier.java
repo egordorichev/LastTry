@@ -130,7 +130,45 @@ public class Modifier {
 		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.SIZE, +10),
 		new Stat(Stat.Type.KNOCKBACK, +15));
 
-	// TODO: randged and magic
+	public static final Modifier sighted = new Modifier("Sighted", Type.RANGED, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +3));
+
+	public static final Modifier rapid = new Modifier("Rapid", Type.RANGED, new Stat(Stat.Type.SPEED, +15),
+		new Stat(Stat.Type.VELOCITY, +10));
+
+	public static final Modifier hasty = new Modifier("Hasty", Type.RANGED, new Stat(Stat.Type.SPEED, +10),
+		new Stat(Stat.Type.VELOCITY, +15));
+
+	public static final Modifier intimidating = new Modifier("intimidating", Type.RANGED, new Stat(Stat.Type.VELOCITY, +5),
+		new Stat(Stat.Type.KNOCKBACK, +15));
+
+	public static final Modifier deadly = new Modifier("Deadly", Type.RANGED, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.SPEED, +5), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +2), new Stat(Stat.Type.VELOCITY, +5),
+		new Stat(Stat.Type.KNOCKBACK, 5));
+
+	public static final Modifier staunch = new Modifier("Staunch", Type.RANGED, new Stat(Stat.Type.DAMAGE, +10),
+		new Stat(Stat.Type.KNOCKBACK, +15));
+
+	public static final Modifier awful = new Modifier("Awful", Type.RANGED, new Stat(Stat.Type.DAMAGE, -15),
+		new Stat(Stat.Type.VELOCITY, -10), new Stat(Stat.Type.KNOCKBACK, -10));
+
+	public static final Modifier lethargic = new Modifier("Lethargic", Type.RANGED, new Stat(Stat.Type.SPEED, -15),
+		new Stat(Stat.Type.VELOCITY, -10));
+
+	public static final Modifier awkward = new Modifier("Awkward", Type.RANGED, new Stat(Stat.Type.SPEED, -10),
+		new Stat(Stat.Type.KNOCKBACK, -20));
+
+	public static final Modifier powerful = new Modifier("Powerful", Type.RANGED, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.SPEED, -10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +1));
+
+	public static final Modifier frenzying = new Modifier("Frenzying", Type.RANGED, new Stat(Stat.Type.DAMAGE, -15),
+		new Stat(Stat.Type.SPEED, +15));
+
+	public static final Modifier unreal = new Modifier("Unreal", Type.RANGED, new Stat(Stat.Type.DAMAGE, +15),
+		new Stat(Stat.Type.SPEED, +10), new Stat(Stat.Type.CRITICAL_STRIKE_CHANCE, +5), new Stat(Stat.Type.VELOCITY, +10),
+		new Stat(Stat.Type.KNOCKBACK, +15));
+
+	// TODO: magic
 
 	public enum Type {
 		ACCESSORY,
