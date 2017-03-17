@@ -21,6 +21,7 @@ public class SplashState extends BasicGameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 		this.splash = new Image("assets/images/splashes/" + (LastTry.random.nextInt(SPLASH_COUNT) + 1) + ".png");
+		this.splash.setAlpha(0.0f);
 
 		Image cursor = new Image("assets/images/Cursor.png");
 		gameContainer.setMouseCursor(cursor, 0, 0);
@@ -44,12 +45,16 @@ public class SplashState extends BasicGameState {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, FIXME
 		}
 
+		if(this.splash.getAlpha() < 1.0f) {
+			this.splash.setAlpha(this.splash.getAlpha() + 0.01f);
+		}
+
 		this.splash.draw(0, 0, 800, 600);
 	}
 
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-		if(this.loaded) {
+		if(this.loaded && this.splash.getAlpha() >= 0.91f) {
 			stateBasedGame.addState(new GamePlayState());
 			stateBasedGame.enterState(1);
 		}
