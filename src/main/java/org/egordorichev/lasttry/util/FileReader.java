@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import java.io.*;
 
-public class FileReader {
+public class FileReader implements AutoCloseable {
 	private DataInputStream stream;
 
 	public FileReader(String path) throws FileNotFoundException {
@@ -76,6 +76,7 @@ public class FileReader {
 		return 0;
 	}
 
+	@Override
 	public void close() {
 		try {
 			this.stream.close();

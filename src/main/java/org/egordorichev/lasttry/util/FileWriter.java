@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import java.io.*;
 
-public class FileWriter {
+public class FileWriter implements AutoCloseable  {
 	private DataOutputStream stream;
 
 	public FileWriter(String path) {
@@ -74,6 +74,7 @@ public class FileWriter {
 		}
 	}
 
+	@Override
 	public void close() {
 		try {
 			this.stream.close();
