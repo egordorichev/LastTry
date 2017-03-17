@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.ui;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.*;
 import org.egordorichev.lasttry.util.Assets;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -10,6 +11,7 @@ public class UiItemSlot extends UiComponent {
 	public enum Type {
 		ANY,
 		ACCESSORY,
+		VANITY_ACCESSORY,
 		ARMOR,
 		COIN,
 		AMMO,
@@ -18,20 +20,44 @@ public class UiItemSlot extends UiComponent {
 		DYE
 	}
 
+	private static Color color;
+
 	private Image texture;
 	private ItemHolder itemHolder;
 	private Type type;
+	private Image back;
 
-	public UiItemSlot(Rectangle rectangle, Type type, Origin origin) {
+	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, Image back) {
 		super(rectangle, origin);
 
-		this.texture = Assets.inventorySlotTexture;
 		this.itemHolder = null;
 		this.type = type;
+		this.back = back;
+
+		switch(this.type) {
+			case ANY: case AMMO: case COIN: case TRASH:
+				this.texture = Assets.inventorySlot1Texture;
+			break;
+			case ACCESSORY: case ARMOR:
+				this.texture = Assets.inventorySlot2Texture;
+			break;
+			case VANITY: case VANITY_ACCESSORY:
+				this.texture = Assets.inventorySlot3Texture;
+			break;
+			case DYE:
+				this.texture = Assets.inventorySlot4Texture;
+			break;
+		}
+
+		this.texture.setAlpha(0.8f);
+
+		if(this.back != null) {
+			this.back.setAlpha(0.7f);
+		}
 	}
 
 	public UiItemSlot(Rectangle rectangle, Type type) {
-		this(rectangle, type, Origin.TOP_LEFT);
+		this(rectangle, type, Origin.TOP_LEFT, null);
 	}
 
 	public boolean setItemHolder(ItemHolder holder) {
@@ -58,8 +84,10 @@ public class UiItemSlot extends UiComponent {
 
 		this.texture.draw(x, y, width, height);
 
-		if(this.itemHolder != null) {
+		if(this.itemHolder != null && this.itemHolder.getItem() != null) {
 			this.itemHolder.renderAt(x, y, width, height);
+		} else if(this.back != null) {
+			this.back.draw(x + (width - this.back.getWidth()) / 2, y + (height - this.back.getHeight()) / 2);
 		}
 	}
 
@@ -78,7 +106,7 @@ public class UiItemSlot extends UiComponent {
 	public boolean canHold(ItemHolder holder) {
 		switch(this.type) {
 			case ANY: case TRASH: default: break;
-			case ACCESSORY:
+			case ACCESSORY: case VANITY_ACCESSORY:
 				if(!(holder.getItem() instanceof Accessory)) {
 					return false;
 				}
@@ -111,15 +139,17 @@ public class UiItemSlot extends UiComponent {
 	@Override
 	protected void onStateChange() {
 		if(this.state == State.MOUSE_DOWN) {
-			if(LastTry.player.inventory.currentItem != null) {
-				if(this.canHold(LastTry.player.inventory.currentItem)) {
-					ItemHolder tmp = this.itemHolder;
-					this.itemHolder = LastTry.player.inventory.currentItem;
-					LastTry.player.inventory.currentItem = tmp;
+			if(LastTry.player.inventory.isOpen()) {
+				if(LastTry.player.inventory.currentItem != null) {
+					if(this.canHold(LastTry.player.inventory.currentItem)) {
+						ItemHolder tmp = this.itemHolder;
+						this.itemHolder = LastTry.player.inventory.currentItem;
+						LastTry.player.inventory.currentItem = tmp;
+					}
+				} else {
+					LastTry.player.inventory.currentItem = this.itemHolder;
+					this.itemHolder = null;
 				}
-			} else {
-				LastTry.player.inventory.currentItem = this.itemHolder;
-				this.itemHolder = null;
 			}
 		}
 	}

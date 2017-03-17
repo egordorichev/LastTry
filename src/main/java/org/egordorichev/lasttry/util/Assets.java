@@ -27,7 +27,12 @@ public class Assets {
 	public static Image boxTexture = loadImage("Box.png");
 	public static Image hpTexture = loadImage("HP.png");
 	public static Image radialTexture = loadImage("Radial.png");
-	public static Image inventorySlotTexture = loadImage("InventorySlot.png");
+	public static Image inventorySlot1Texture = loadImage("InventorySlot1.png");
+	public static Image inventorySlot2Texture = loadImage("InventorySlot2.png");
+	public static Image inventorySlot3Texture = loadImage("InventorySlot3.png");
+	public static Image inventorySlot4Texture = loadImage("InventorySlot4.png");
+	public static Image inventoryBackTexture = loadImage("InventoryBack.png");
+	public static Image trashTexture = loadImage("Trash.png");
 
 	public static UnicodeFont font = loadFont("font.ttf");
 
