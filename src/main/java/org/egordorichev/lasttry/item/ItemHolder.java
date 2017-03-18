@@ -26,23 +26,44 @@ public class ItemHolder {
 		this.modifier = modifier;
 	}
 
+	/**
+	 * Render the contained item + the number of items at the given screen
+	 * coordinates.
+	 * 
+	 * @param x
+	 *            Screen x-position.
+	 * @param y
+	 *            Screen y-position.
+	 */
 	public void renderAt(int x, int y) {
-		if(this.item != null) {
+		if (this.item != null) {
 			Image texture = this.item.getTexture();
 
-			int tw = texture.getWidth();
 			int th = texture.getHeight();
 
 			texture.draw(x, y);
 
-			if(this.count > 1) {
+			if (this.count > 1) {
 				Assets.smallFont.drawString(x - 8, y + th - 8, String.format("%d", this.count));
 			}
 		}
 	}
 
+	/**
+	 * Render the contained item + the number of items at the given screen
+	 * coordinates with the given dimensions.
+	 * 
+	 * @param x
+	 *            Screen x-position.
+	 * @param y
+	 *            Screen y-position.
+	 * @param width
+	 *            Width.
+	 * @param height
+	 *            Height.
+	 */
 	public void renderAt(int x, int y, int width, int height) {
-		if(this.item != null) {
+		if (this.item != null) {
 			Image texture = this.item.getTexture();
 
 			int tw = texture.getWidth();
@@ -51,20 +72,37 @@ public class ItemHolder {
 
 			texture.draw(x + (width - tw) / 2, iy);
 
-			if(this.count > 1) {
+			if (this.count > 1) {
 				Assets.smallFont.drawString(x + tw / 2, iy + th / 2, String.format("%d", this.count));
 			}
 		}
 	}
 
+	/**
+	 * Return the number of items held.
+	 * 
+	 * @return Number of items.
+	 */
 	public int getCount() {
 		return this.count;
 	}
 
+	/**
+	 * Return the {@link org.egordorichev.lasttry.item.Item Item} instance being
+	 * held.
+	 * 
+	 * @return Item instance.
+	 */
 	public Item getItem() {
 		return this.item;
 	}
 
+	/**
+	 * Return the {@link org.egordorichev.lasttry.item.Modifier modifier} for
+	 * the held item.
+	 * 
+	 * @return Item modifier.
+	 */
 	public Modifier getModifier() {
 		return this.modifier;
 	}

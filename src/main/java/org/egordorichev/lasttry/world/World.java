@@ -5,9 +5,8 @@ import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.item.*;
-import org.egordorichev.lasttry.item.Block;
-import org.egordorichev.lasttry.item.Wall;
+import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.tile.TileData;
 
@@ -72,7 +71,6 @@ public class World {
 		this.height = height;
 		this.evilType = evilType;
 		this.tiles = tiles;
-		Item.preload();
 	}
 
 	/**
@@ -232,6 +230,23 @@ public class World {
 	 */
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.width && y >= 0 && y < this.height);
+	}
+
+	/**
+	 * Find the highest tile in the world at the given x-position.
+	 * 
+	 * @param x
+	 *            X-position to check.
+	 * @return Highest point that is clear.
+	 */
+	public int getHighest(int x) {
+		int y = 0;
+		while (true) {
+			TileData td = getTile(x, y);
+			if (td.block != null)
+				return y - 3;
+			y++;
+		}
 	}
 
 	/**
@@ -395,6 +410,15 @@ public class World {
 	 */
 	public TileData getTileData(int index) {
 		return this.tiles[index];
+	}
+
+	/**
+	 * Return the list of entities in the world.
+	 * 
+	 * @return
+	 */
+	public List<Entity> getEntities() {
+		return entities;
 	}
 
 	/**

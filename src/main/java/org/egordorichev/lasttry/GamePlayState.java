@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.Block;
+import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.world.gen.WorldProvider;
@@ -20,17 +20,22 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GamePlayState extends BasicGameState {
 	public GamePlayState() {
 		String worldName = "test";
+		// Must be powers of two
+		int worldWidth = 512;
+		int worldHeight = 512;
 		if (WorldProvider.exists(worldName)) {
 			LastTry.world = WorldProvider.load(worldName);
 		} else {
-			LastTry.world = WorldProvider.generate(worldName, 512, 512); // Must be power of two
+			LastTry.world = WorldProvider.generate(worldName, worldWidth, worldHeight);
 		}
+		int spawnX = LastTry.random.nextInt(worldWidth);
+		int spawnY = LastTry.world.getHighest(spawnX);
 		LastTry.player = new Player("George");
-		LastTry.player.spawn(16, 117);
+		LastTry.player.spawn(spawnX, spawnY);
 
-		// LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 30, 110);
-		LastTry.world.spawnEnemy(EnemyID.greenSlime, 40, 110);
-		LastTry.world.spawnEnemy(EnemyID.blueSlime, 10, 110);
+		// LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 30, 60);
+		LastTry.world.spawnEnemy(EnemyID.greenSlime, 40, 60);
+		LastTry.world.spawnEnemy(EnemyID.blueSlime, 10, 60);
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
@@ -56,8 +61,10 @@ public class GamePlayState extends BasicGameState {
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
 			throws SlickException {
 
-		if(Display.wasResized()) {
-			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, FIXME
+		if (Display.wasResized()) {
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt
+																			// work,
+																			// FIXME
 		}
 
 		LastTry.camera.set(graphics);
@@ -78,7 +85,7 @@ public class GamePlayState extends BasicGameState {
 
 		Assets.font.drawString(x, 4, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()));
 
-		for(int i = 0; i < hp / 20; i++) {
+		for (int i = 0; i < hp / 20; i++) {
 			Assets.hpTexture.draw(x + i * 22 + i * 2, 28);
 		}
 

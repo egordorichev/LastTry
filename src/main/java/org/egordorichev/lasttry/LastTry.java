@@ -11,7 +11,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.Random;
-import java.util.logging.Level;
 
 public class LastTry extends StateBasedGame {
 	public static GameContainer container;
