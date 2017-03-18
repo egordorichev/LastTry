@@ -18,7 +18,7 @@ public class DroppedItem extends Entity {
 		this.texture = this.holder.getItem().getTexture();
 		this.renderBounds.width = this.texture.getWidth();
 		this.renderBounds.height = this.texture.getHeight();
-		this.hitbox = new Rectangle(this.renderBounds.x, this.renderBounds.y, this.renderBounds.width, this.renderBounds.height); // TODO: copy method
+		this.hitbox = this.renderBounds.copy();
 		this.shouldUpdate = true;
 		this.isSolid = true;
 	}

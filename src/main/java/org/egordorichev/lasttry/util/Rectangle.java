@@ -39,4 +39,8 @@ public class Rectangle {
 	public Rectangle offset(float x, float y, float width, float height) {
 		return new Rectangle(this.x + x, this.y + y, this.width + width, this.height + height);
 	}
+
+	public Rectangle copy() {
+		return new Rectangle(this.x, this.y, this.width, this.height);
+	}
 }
