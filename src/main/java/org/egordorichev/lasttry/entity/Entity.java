@@ -230,6 +230,7 @@ public abstract class Entity {
 		}
 	}
 
+
 	/**
 	 * Update the entity x-axis velocity based on the given direction.
 	 * 
