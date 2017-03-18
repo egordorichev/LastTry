@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.gen;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.util.Noise;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class WorldGenerator {
 		this.height = height;
 		this.tiles = new int[this.width][this.height];
 
-		this.tasks.add(0, new GeneratorTask() {
+		this.tasks.add(0, new GeneratorTask() { // Terrain
 			@Override
 			public void run(WorldGenerator generator) {
 				int width = generator.getWorldWidth();
@@ -62,6 +63,24 @@ public class WorldGenerator {
 						} else if (y > yMax) {
 							generator.setTile(ItemID.dirtBlock, x, y);
 						} else {
+							generator.setTile(ItemID.none, x, y);
+						}
+					}
+				}
+			}
+		});
+
+		this.tasks.add(new GeneratorTask() {
+			@Override
+			public void run(WorldGenerator generator) {
+				Noise noise = new Noise(1.0f, generator.getWorldWidth(), generator.getWorldHeight());
+				noise.initialise();
+
+				boolean[][] perlinNoise = noise.toBooleans(0.1f);
+
+				for(int y = 0; y < generator.getWorldHeight(); y++) {
+					for(int x = 0; x < generator.getWorldWidth(); x++) {
+						if(perlinNoise[x][y]) {
 							generator.setTile(ItemID.none, x, y);
 						}
 					}
