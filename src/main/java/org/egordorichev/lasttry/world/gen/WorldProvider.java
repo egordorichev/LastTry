@@ -132,6 +132,8 @@ public class WorldProvider {
 			World world = new World(worldName, width, height, evilType, tiles);
 			world.setExpert(expert);
 			world.addBiomeChecker();
+
+			return world;
 		} catch (IOException exception) {
 			// world.save();
 			LastTry.handleException(exception);
