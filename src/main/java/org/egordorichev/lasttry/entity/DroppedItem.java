@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.util.Assets;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -27,12 +28,13 @@ public class DroppedItem extends Entity {
 	public void update(int dt) {
 		super.update(dt);
 
-		System.out.println(this.velocity.y);
+		if(this.getHitbox().intersects(LastTry.player.getHitbox())) {
+			System.out.println("Add");
 
-		/**
-		 * TODO: On collision with player, destroy this entity, and add the item
-		 * to the player's inventory. But first, finish inventory
-		 */
+			if(LastTry.player.inventory.add(this.holder)) {
+				LastTry.world.remove(this);
+			}
+		}
 	}
 
 	/**

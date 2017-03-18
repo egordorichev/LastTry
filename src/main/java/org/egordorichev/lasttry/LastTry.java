@@ -24,7 +24,7 @@ public class LastTry extends StateBasedGame {
 	public static AppGameContainer app;
 	public static Debug debug;
 	public final static Log log = new Log();
-	public final static Random random = new Random();
+	public final static Random random = new Random(System.currentTimeMillis());
 
 	public LastTry() {
 		super(new String[] { "LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",

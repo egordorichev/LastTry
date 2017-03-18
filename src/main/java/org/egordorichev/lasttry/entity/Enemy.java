@@ -86,7 +86,7 @@ public abstract class Enemy extends Entity {
 	 * Called when the entity collides with player.
 	 */
 	protected void onPlayerCollision(Player player) {
-		System.out.println("onPlayerCollision");
+		// TODO
 	}
 
 	public int getId() {
