@@ -148,7 +148,7 @@ public class WorldProvider {
 	 * @return
 	 */
 	public static boolean exists(String worldName) {
-		File worldFile = new File(worldName);
+		File worldFile = new File("assets/worlds/" + worldName + ".wld");
 		if (!worldFile.exists()) {
 			return false;
 		}
