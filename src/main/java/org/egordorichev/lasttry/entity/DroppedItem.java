@@ -14,8 +14,7 @@ public class DroppedItem extends Entity {
 
 		this.holder = holder;
 		this.state = State.FALLING;
-		// TODO: Change texture based on Item in the holder.
-		this.texture = Assets.boxTexture;
+		this.texture = this.holder.getItem().getTexture();
 		this.shouldUpdate = true;
 
 		// TODO: it can be any

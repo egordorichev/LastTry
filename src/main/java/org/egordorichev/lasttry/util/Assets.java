@@ -25,7 +25,6 @@ public class Assets {
 	public static Image woodenSwordTexture = loadImage("WoodenSword.png");
 	public static Image heartTexture = loadImage("Heart.png");
 	public static Image manaTexture = loadImage("Mana.png");
-	public static Image boxTexture = loadImage("Box.png");
 	public static Image hpTexture = loadImage("HP.png");
 	public static Image radialTexture = loadImage("Radial.png");
 	public static Image inventorySlot1Texture = loadImage("InventorySlot1.png");

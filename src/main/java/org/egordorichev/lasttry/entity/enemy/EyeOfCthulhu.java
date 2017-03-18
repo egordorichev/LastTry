@@ -26,7 +26,6 @@ public class EyeOfCthulhu extends Boss {
 		this.state = State.FLYING;
 		this.isSolid = false;
 
-
 		this.drops.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
 		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
 

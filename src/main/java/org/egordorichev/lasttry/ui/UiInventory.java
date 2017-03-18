@@ -11,6 +11,7 @@ public class UiInventory extends UiComponent {
 	private boolean open;
 
 	public ItemHolder currentItem = null;
+	public UiItemSlot currentSlot = null;
 
 	public UiInventory(int size) {
 		super(new Rectangle(10, 10, 100, 32)); // TODO: tune
@@ -68,6 +69,10 @@ public class UiInventory extends UiComponent {
 			this.slots[i] = new UiItemSlot(new Rectangle(0, 0, 52, 52), UiItemSlot.Type.ANY); // TODO
 			this.slots[i].hide();
 		}
+
+		this.currentSlot = this.slots[0];
+
+		// this.currentSlot.activate();
 	}
 
 	@Override

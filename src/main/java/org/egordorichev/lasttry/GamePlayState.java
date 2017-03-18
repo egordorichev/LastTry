@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry;
 
+import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
@@ -19,6 +20,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GamePlayState extends BasicGameState {
+	private Enemy enemy;
+
 	public GamePlayState() {
 		String worldName = "test";
 		// Must be powers of two
@@ -44,6 +47,8 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.add(LastTry.player.inventory);
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, Modifier.legendary));
+
+		this.enemy = LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, LastTry.player.getGridX(), LastTry.player.getGridY() - 10);
 	}
 
 	@Override
@@ -109,6 +114,7 @@ public class GamePlayState extends BasicGameState {
 
 		if (LastTry.input.isKeyPressed(Input.KEY_TAB)) {
 			LastTry.debug.toggle();
+			this.enemy.die();
 		}
 	}
 
