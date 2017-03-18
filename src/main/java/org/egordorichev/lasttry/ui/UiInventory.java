@@ -174,6 +174,10 @@ public class UiInventory extends UiComponent {
 		return this.slots[index].getItemHolder();
 	}
 
+	public ItemHolder getActiveHolder() {
+		return this.getItemHolder(this.currentSlot);
+	}
+
 	public Item getItem(int index) {
 		ItemHolder holder = this.getItemHolder(index);
 

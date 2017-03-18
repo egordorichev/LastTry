@@ -13,6 +13,9 @@ import org.egordorichev.lasttry.world.tile.TileData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class World {
 	/**
@@ -20,6 +23,10 @@ public class World {
 	 * increment this number.
 	 */
 	public static final int CURRENT_VERSION = 2;
+	/**
+	 * Current biome
+	 */
+	public Biome currentBiome;
 	/**
 	 * World width in tiles.
 	 */
@@ -493,5 +500,26 @@ public class World {
 	 */
 	public enum EvilType {
 		CORRUPTION, CRIMSON
+	}
+
+	private void addBiomeChecker() {
+		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+
+		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				int totalEvilBlocks = 0;
+				int totalEvilSandBlocks = 0;
+				int totalDesertBlocks = 0;
+
+				if(totalEvilBlocks > 200) {
+					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruption : Biome.crimson;
+				} else if(totalEvilSandBlocks > 1000) {
+					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruptDesert : Biome.crimsonDesert;
+				} else if(totalDesertBlocks > 1000) {
+					LastTry.world.currentBiome = Biome.desert;
+				}
+			}
+		}, 0, 3, TimeUnit.SECONDS);
 	}
 }

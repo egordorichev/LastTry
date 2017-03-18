@@ -27,13 +27,16 @@ public class GamePlayState extends BasicGameState {
 		// Must be powers of two
 		int worldWidth = 512;
 		int worldHeight = 512;
+
 		if (WorldProvider.exists(worldName)) {
 			LastTry.world = WorldProvider.load(worldName);
 		} else {
 			LastTry.world = WorldProvider.generate(worldName, worldWidth, worldHeight);
 		}
-		int spawnX = LastTry.random.nextInt(worldWidth);
+
+		int spawnX = LastTry.random.nextInt(worldWidth - 1);
 		int spawnY = LastTry.world.getHighest(spawnX);
+
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
