@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item;
 
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.newdawn.slick.Image;
 
 /**

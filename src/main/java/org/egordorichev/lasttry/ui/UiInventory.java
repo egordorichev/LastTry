@@ -3,7 +3,9 @@ package org.egordorichev.lasttry.ui;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Rectangle;
 
 public class UiInventory extends UiComponent {
@@ -11,7 +13,7 @@ public class UiInventory extends UiComponent {
 	private boolean open;
 
 	public ItemHolder currentItem = null;
-	public UiItemSlot currentSlot = null;
+	public int currentSlot = 0;
 
 	public UiInventory(int size) {
 		super(new Rectangle(10, 10, 100, 32)); // TODO: tune
@@ -70,9 +72,69 @@ public class UiInventory extends UiComponent {
 			this.slots[i].hide();
 		}
 
-		this.currentSlot = this.slots[0];
+		this.currentSlot = 0;
+		this.slots[currentSlot].setActive(true);
 
-		// this.currentSlot.activate();
+		LastTry.input.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseWheelMoved(int i) {
+				slots[currentSlot].setActive(false);
+				currentSlot += (i > 0) ? 1 : -1;
+
+				if(currentSlot > 9) {
+					currentSlot = 0;
+				} else if(currentSlot < 0) {
+					currentSlot = 9;
+				}
+
+				slots[currentSlot].setActive(true);
+			}
+
+			@Override
+			public void mouseClicked(int i, int i1, int i2, int i3) {
+
+			}
+
+			@Override
+			public void mousePressed(int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void mouseReleased(int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void mouseMoved(int i, int i1, int i2, int i3) {
+
+			}
+
+			@Override
+			public void mouseDragged(int i, int i1, int i2, int i3) {
+
+			}
+
+			@Override
+			public void setInput(Input input) {
+
+			}
+
+			@Override
+			public boolean isAcceptingInput() {
+				return true;
+			}
+
+			@Override
+			public void inputEnded() {
+
+			}
+
+			@Override
+			public void inputStarted() {
+
+			}
+		});
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;

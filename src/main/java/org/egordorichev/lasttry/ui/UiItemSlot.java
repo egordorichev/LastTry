@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.items.Ammo;
 import org.egordorichev.lasttry.item.items.Armor;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Dye;
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -26,8 +26,7 @@ public class UiItemSlot extends UiComponent {
 		DYE
 	}
 
-	// What will this be used for and why should it be static?
-	private static Color color;
+	private boolean active;
 	private Image texture;
 	private ItemHolder itemHolder;
 	private Type type;
@@ -60,6 +59,8 @@ public class UiItemSlot extends UiComponent {
 		if(this.back != null) {
 			this.back.setAlpha(0.7f);
 		}
+
+		this.active = false;
 	}
 
 	public UiItemSlot(Rectangle rectangle, Type type) {
@@ -88,7 +89,11 @@ public class UiItemSlot extends UiComponent {
 		int width = this.getWidth();
 		int height = this.getHeight();
 
-		this.texture.draw(x, y, width, height);
+		if(this.active) {
+			Assets.inventorySlot5Texture.draw(x, y, width, height);
+		} else {
+			this.texture.draw(x, y, width, height);
+		}
 
 		if(this.itemHolder != null && this.itemHolder.getItem() != null) {
 			this.itemHolder.renderAt(x, y, width, height);
@@ -99,6 +104,14 @@ public class UiItemSlot extends UiComponent {
 
 	public ItemHolder getItemHolder() {
 		return this.itemHolder;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isActive() {
+		return this.active;
 	}
 
 	public Item getItem() {

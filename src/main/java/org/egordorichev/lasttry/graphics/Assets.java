@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.util;
+package org.egordorichev.lasttry.graphics;
 
 import org.egordorichev.lasttry.LastTry;
 import org.newdawn.slick.Image;
@@ -23,6 +23,7 @@ public class Assets {
 	public static Image goldCoinTexture = loadImage("GoldCoin.png");
 	public static Image platinumCoinTexture = loadImage("PlatinumCoin.png");
 	public static Image woodenSwordTexture = loadImage("WoodenSword.png");
+	public static Image gelTexture = loadImage("Gel.png");
 	public static Image heartTexture = loadImage("Heart.png");
 	public static Image manaTexture = loadImage("Mana.png");
 	public static Image hpTexture = loadImage("HP.png");
@@ -31,6 +32,7 @@ public class Assets {
 	public static Image inventorySlot2Texture = loadImage("InventorySlot2.png");
 	public static Image inventorySlot3Texture = loadImage("InventorySlot3.png");
 	public static Image inventorySlot4Texture = loadImage("InventorySlot4.png");
+	public static Image inventorySlot5Texture = loadImage("InventorySlot5.png");
 	public static Image inventoryBackTexture = loadImage("InventoryBack.png");
 	public static Image trashTexture = loadImage("Trash.png");
 

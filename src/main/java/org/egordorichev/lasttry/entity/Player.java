@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.ui.UiInventory;
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;

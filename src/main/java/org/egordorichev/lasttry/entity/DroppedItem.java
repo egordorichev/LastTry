@@ -2,8 +2,6 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.util.Assets;
-import org.egordorichev.lasttry.util.Rectangle;
 
 public class DroppedItem extends Entity {
 	/**

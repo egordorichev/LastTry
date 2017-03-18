@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Assets;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.newdawn.slick.Animation;
 
 public class EyeOfCthulhu extends Boss {
