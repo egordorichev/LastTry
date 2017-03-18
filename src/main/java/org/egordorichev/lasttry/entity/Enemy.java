@@ -49,6 +49,11 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
+
+		if (LastTry.player.getHitbox().intersects(this.getHitbox())) {
+			this.onPlayerCollision(LastTry.player);
+		}
+
 		this.animations[this.state.getId()].update(dt);
 		this.updateAI();
 	}
@@ -75,6 +80,13 @@ public abstract class Enemy extends Entity {
 				LastTry.world.spawnDrop(drop, this.hitbox.x, this.hitbox.y);
 			}
 		}
+	}
+
+	/**
+	 * Called when the entity collides with player.
+	 */
+	protected void onPlayerCollision(Player player) {
+		System.out.println("onPlayerCollision");
 	}
 
 	public int getId() {

@@ -52,10 +52,18 @@ public class Item {
 	}
 
 	/**
-	 * TODO
+	 * Uses item
 	 */
 	public void use() {
-		// TODO
+
+	}
+
+	/**
+	 * Updates item if it is being used
+	 * @param dt update delta
+	 */
+	public void update(int dt) {
+
 	}
 
 	/**

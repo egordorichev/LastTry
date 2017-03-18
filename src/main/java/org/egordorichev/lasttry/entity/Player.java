@@ -131,21 +131,6 @@ public class Player extends Entity {
 		this.animations[this.state.getId()].update(dt);
 	}
 
-	@Override
-	protected void onCollision(Entity ent) {
-		float diffX = Math.abs(ent.renderBounds.x - this.renderBounds.x);
-		if (diffX >= 0) {
-			int direction = ent.renderBounds.x < this.renderBounds.x ? -1 : 1;
-			float pushFactor = 0.02F;
-			// Update diffX to be used as additive velocity
-			diffX *= direction * pushFactor;
-			// Update entity velocities
-			// Push each other away
-			this.velocity.x -= diffX;
-			ent.velocity.x += diffX;
-		}
-	}
-
 	public String getName() {
 		return this.name;
 	}

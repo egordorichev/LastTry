@@ -7,11 +7,14 @@ public class Weapon extends Tool {
 	protected DamageType damageType;
 	protected int damage;
 
-	public Weapon(int id, String name, Image texture, int damage, DamageType damageType) {
-		super(id, name, texture);
+	public Weapon(int id, String name, Rarity rarity, float baseDamage, DamageType damageType, Image texture) {
+		super(id, name, rarity, baseDamage, texture);
 
-		this.damage = damage;
 		this.damageType = damageType;
+	}
+
+	public Weapon(int id, String name, float baseDamage, DamageType damageType, Image texture) {
+		this(id, name, Rarity.WHITE, baseDamage, damageType, texture);
 	}
 
 	public DamageType getDamageType() {
