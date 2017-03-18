@@ -558,11 +558,11 @@ public class World {
 						}
 					}
 				}
-				if(totalEvilBlocks > 200) {
+				if(totalEvilBlocks >= 200) {
 					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruption : Biome.crimson;
-				} else if(totalEvilDesertBlocks > 1000) {
+				} else if(totalEvilDesertBlocks >= 1000) {
 					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruptDesert : Biome.crimsonDesert;
-				} else if(totalDesertBlocks > 1000) {
+				} else if(totalDesertBlocks >= 1000) {
 					LastTry.world.currentBiome = Biome.desert;
 				} else {
 					LastTry.world.currentBiome = Biome.forest;
