@@ -70,7 +70,7 @@ public class WorldGenerator {
 			}
 		});
 
-		this.tasks.add(new GeneratorTask() {
+		/* this.tasks.add(new GeneratorTask() {
 			@Override
 			public void run(WorldGenerator generator) {
 				Noise noise = new Noise(1.0f, generator.getWorldWidth(), generator.getWorldHeight());
@@ -86,7 +86,7 @@ public class WorldGenerator {
 					}
 				}
 			}
-		});
+		}); */
 
 		for(GeneratorTask task : this.tasks) {
 			task.run(this);

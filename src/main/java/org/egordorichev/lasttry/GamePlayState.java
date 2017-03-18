@@ -34,13 +34,12 @@ public class GamePlayState extends BasicGameState {
 			LastTry.world = WorldProvider.generate(worldName, worldWidth, worldHeight);
 		}
 
-		int spawnX = LastTry.random.nextInt(worldWidth - 1);
+		int spawnX = worldWidth / 2;
 		int spawnY = LastTry.world.getHighest(spawnX);
 
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
-		// LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, 30, 60);
 		LastTry.world.spawnEnemy(EnemyID.greenSlime, 40, 60);
 		LastTry.world.spawnEnemy(EnemyID.blueSlime, 10, 60);
 
