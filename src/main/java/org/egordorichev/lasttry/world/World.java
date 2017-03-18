@@ -88,6 +88,12 @@ public class World {
 	 * Render the world.
 	 */
 	public void render() {
+		if(this.currentBiome == null) {
+			this.currentBiome = Biome.forest;
+		}
+		
+		// TODO: this.currentBiome.renderBackgrounds();
+		
 		int windowWidth = LastTry.getWindowWidth();
 		int windowHeight = LastTry.getWindowHeight();
 		int tww = windowWidth / Block.TEX_SIZE;
