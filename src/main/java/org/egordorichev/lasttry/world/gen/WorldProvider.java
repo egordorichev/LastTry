@@ -30,23 +30,20 @@ public class WorldProvider {
 		LastTry.log.info("Generating...");
 		// Create 2D array of tile ID's.
 		// Then populate the array.
-		//
-		// TODO: Create a decent plugin-like system for world generation
-		// allow for users to share their generation systems
-		IWorldGenerator gen = new WorldGenerator();
-		int tileIDs[][] = gen.generate(width, height);
+		WorldGenerator generator = new WorldGenerator();
+		int tileIDs[][] = generator.generate(width, height);
 
 		// Convert the 2D tile ID array to a 1D array of TileData
 		int totalSize = width * height;
 		TileData[] data = new TileData[totalSize];
-		for (int y = 0; y < height; y++) {
+
+		for(int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				int id = tileIDs[x][y];
 				data[x + y * width] = new TileData((Block) Item.fromID(id), Wall.getForBlockID(id));
 			}
 		}
 
-		// Create the world and return
 		World world = new World(name, width, height, data);
 		LastTry.log("Finished generating!");
 		return world;

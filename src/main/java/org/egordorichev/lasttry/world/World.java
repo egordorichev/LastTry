@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.tile.TileData;
 
 import java.util.ArrayList;
@@ -71,6 +72,8 @@ public class World {
 		this.height = height;
 		this.evilType = evilType;
 		this.tiles = tiles;
+
+		Biome.preload();
 	}
 
 	/**
