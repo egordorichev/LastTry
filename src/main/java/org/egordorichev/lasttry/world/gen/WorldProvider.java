@@ -45,6 +45,7 @@ public class WorldProvider {
 		}
 
 		World world = new World(name, width, height, data);
+		world.addBiomeChecker();
 		LastTry.log("Finished generating!");
 		return world;
 	}
@@ -130,6 +131,7 @@ public class WorldProvider {
 			LastTry.log("Done loading!");
 			World world = new World(worldName, width, height, evilType, tiles);
 			world.setExpert(expert);
+			world.addBiomeChecker();
 		} catch (IOException exception) {
 			// world.save();
 			LastTry.handleException(exception);

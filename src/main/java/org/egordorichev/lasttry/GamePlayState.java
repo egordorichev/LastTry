@@ -50,6 +50,13 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.add(LastTry.player.inventory);
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, Modifier.legendary));
+		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 10, null));
+		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10, null));
 
 		this.enemy = LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, LastTry.player.getGridX(), LastTry.player.getGridY() - 10);
 	}

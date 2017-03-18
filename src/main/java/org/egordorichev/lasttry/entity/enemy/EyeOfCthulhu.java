@@ -28,6 +28,7 @@ public class EyeOfCthulhu extends Boss {
 
 		this.drops.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
 		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
+		this.drops.add(new Drop(Item.heart, Drop.Chance.ALWAYS, 5, 10));
 
 		this.phases = new Phase[2];
 

@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -502,22 +503,63 @@ public class World {
 		CORRUPTION, CRIMSON
 	}
 
-	private void addBiomeChecker() {
+	public void addBiomeChecker() {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
 		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
 				int totalEvilBlocks = 0;
-				int totalEvilSandBlocks = 0;
+				int totalEvilDesertBlocks = 0;
 				int totalDesertBlocks = 0;
 
+				int windowWidth = LastTry.getWindowWidth();
+				int windowHeight = LastTry.getWindowHeight();
+				int tww = windowWidth / Block.TEX_SIZE;
+				int twh = windowHeight / Block.TEX_SIZE;
+				int tcx = (int) LastTry.camera.getX() / Block.TEX_SIZE;
+				int tcy = (int) LastTry.camera.getY() / Block.TEX_SIZE;
+
+				int minY = Math.max(0, tcy - 2);
+				int maxY = Math.min(height - 1, tcy + twh + 2);
+				int minX = Math.max(0, tcx - 2);
+				int maxX = Math.min(width - 1, tcx + tww + 2);
+
+				for (int y = minY; y < maxY; y++) {
+					for (int x = minX; x < maxX; x++) {
+						TileData tileData = getTile(x, y);
+
+						if(tileData.block != null) {
+							switch(tileData.block.getId()) {
+								case ItemID.ebonstoneBlock:
+								case ItemID.purpleIceBlock:
+								case ItemID.corruptThornyBushes:
+								case ItemID.vileMushroom:
+								case ItemID.crimstoneBlock:
+								case ItemID.redIceBlock:
+								case ItemID.viciousMushroom:
+									totalEvilBlocks++;
+								break;
+								case ItemID.sandBlock:
+									totalDesertBlocks++;
+								break;
+								case ItemID.ebonsandBlock:
+								case ItemID.crimsandBlock:
+									totalEvilDesertBlocks++;
+								default: break;
+								// TODO: other biomes
+							}
+						}
+					}
+				}
 				if(totalEvilBlocks > 200) {
 					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruption : Biome.crimson;
-				} else if(totalEvilSandBlocks > 1000) {
+				} else if(totalEvilDesertBlocks > 1000) {
 					LastTry.world.currentBiome = (LastTry.world.getEvilType() == EvilType.CORRUPTION) ? Biome.corruptDesert : Biome.crimsonDesert;
 				} else if(totalDesertBlocks > 1000) {
 					LastTry.world.currentBiome = Biome.desert;
+				} else {
+					LastTry.world.currentBiome = Biome.forest;
 				}
 			}
 		}, 0, 3, TimeUnit.SECONDS);

@@ -5,8 +5,8 @@ import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class BlockGround extends Block {
-	public BlockGround(int id, String name, boolean solid, Image texture, Image tiles) {
-		super(id, name, solid, texture, tiles);
+	public BlockGround(int id, String name, Image texture, Image tiles) {
+		super(id, name, true, texture, tiles);
 	}
 
 	@Override

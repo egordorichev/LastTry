@@ -14,19 +14,27 @@ public class Item {
 	 */
 	public static Item[] ITEM_CACHE = new Item[32];
 	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallIcon, Assets.dirtWallTexture);
-	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", true, Assets.dirtTileIcon, Assets.dirtTileTexture);
-	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", true, Assets.grassTileIcon, Assets.grassTileTexture);
+	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", Assets.dirtIcon, Assets.dirtTexture);
+	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", Assets.grassIcon, Assets.grassTexture);
 	public static Item copperCoin = new Coin(ItemID.copperCoin, "Copper coin", Assets.copperCoinTexture);
 	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Assets.silverCoinTexture);
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
 	public static Item platinumCoin = new Coin(ItemID.platinumCoin, "Platinum coin", Assets.platinumCoinTexture);
 	public static Item woodenSword = new Sword(ItemID.woodenSword, "Wooden Sword", 7.0f, Assets.woodenSwordTexture);
 	public static Item gel = new Item(ItemID.gel, "Gel", Assets.gelTexture);
-
-	// TODO
-
-	// public static Item heart = new Item(ItemID.heart, "Heart", Assets.heartTexture);
-	// public static Item mana = new Item(ItemID.mana, "Heart", Assets.manaTexture);
+	public static Item heart = new Item(ItemID.heart, "Heart", Assets.heartTexture);
+	public static Item mana = new Item(ItemID.mana, "Mana", Assets.manaTexture);
+	public static Item ebonstoneBlock = new BlockGround(ItemID.ebonstoneBlock, "Ebonstone block", Assets.ebonstoneIcon, Assets.ebonstoneTexture);
+	public static Item corruptThornyBushes = new ThornBlock(ItemID.corruptThornyBushes, "Corrupt thorny bushes", Assets.corruptThornyBushesTexture);
+	public static Item purpleIceBlock = new SlippyBlock(ItemID.purpleIceBlock, "Purple ice block", Assets.purpleIceIcon, Assets.purpleIceTexture);
+	public static Item vileMushroom = new Mushroom(ItemID.vileMushroom, "Vile mushroom", Assets.vileMushroomTexture);
+	public static Item crimstoneBlock = new BlockGround(ItemID.crimstoneBlock, "Crimstone block", Assets.crimstoneIcon, Assets.crimstoneTexture);
+	public static Item redIceBlock = new SlippyBlock(ItemID.redIceBlock, "Red ice block", Assets.redIceIcon, Assets.redIceTexture);
+	public static Item viciousMushroom = new Mushroom(ItemID.viciousMushroom, "Vicious mushroom", Assets.viciousMushroomTexture);
+	public static Item sandBlock = new BlockGround(ItemID.sandBlock, "Sand block", Assets.sandBlockIcon, Assets.sandBlockTexture);
+	public static Item ebonsandBlock = new BlockGround(ItemID.ebonsandBlock, "Ebonsand block", Assets.ebonsandIcon, Assets.ebonsandTexture);
+	public static Item crimsandBlock = new BlockGround(ItemID.crimsandBlock, "Crimsand block", Assets.crimsandIcon, Assets.crimsandTexture);
+	public static Item stoneBlock = new BlockGround(ItemID.stoneBlock, "Stone block", Assets.stoneIcon, Assets.stoneTexture);
 
 	/**
 	 * Item identifier.

@@ -8,10 +8,30 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Assets {
-	public static Image dirtTileTexture = loadImage("DirtTile.png");
-	public static Image dirtTileIcon = loadImage("DirtTileIcon.png");
-	public static Image grassTileTexture = loadImage("GrassTile.png");
-	public static Image grassTileIcon = loadImage("GrassTileIcon.png");
+	public static Image dirtTexture = loadImage("DirtTile.png");
+	public static Image dirtIcon = loadImage("DirtIcon.png");
+	public static Image grassTexture = loadImage("GrassTile.png");
+	public static Image grassIcon = loadImage("GrassIcon.png");
+	public static Image ebonstoneIcon = loadImage("EbonstoneIcon.png");
+	public static Image ebonstoneTexture = loadImage("EbonstoneTile.png");
+	public static Image corruptThornyBushesTexture = loadImage("EbonstoneTile.png");
+	public static Image purpleIceIcon = loadImage("PurpleIceIcon.png");
+	public static Image purpleIceTexture = loadImage("PurpleIceTile.png");
+	public static Image vileMushroomTexture = loadImage("VileMushroom.png");
+	public static Image crimstoneIcon = loadImage("CrimstoneIcon.png");
+	public static Image crimstoneTexture = loadImage("CrimstoneTile.png");
+	public static Image redIceIcon = loadImage("RedIceIcon.png");
+	public static Image redIceTexture = loadImage("RedIceTile.png");
+	public static Image viciousMushroomTexture = loadImage("ViciousMushroom.png");
+	public static Image sandBlockIcon = loadImage("SandIcon.png");
+	public static Image sandBlockTexture = loadImage("SandTile.png");
+	public static Image ebonsandIcon = loadImage("EbonsandIcon.png");
+	public static Image ebonsandTexture = loadImage("EbonsandTile.png");
+	public static Image crimsandIcon = loadImage("CrimsandIcon.png");
+	public static Image crimsandTexture = loadImage("CrimsandTile.png");
+	public static Image stoneIcon = loadImage("StoneIcon.png");
+	public static Image stoneTexture = loadImage("StoneTile.png");
+
 	public static Image dirtWallTexture = loadImage("DirtWall.png");
 	public static Image dirtWallIcon = loadImage("DirtWallIcon.png");
 	public static Image greenSlimeTexture = loadImage("GreenSlime.png");

@@ -18,7 +18,7 @@ public class Drop {
 		this.maxAmount = maxAmount;
 	}
 
-	public ItemHolder createHolder() {
+	public ItemHolder createHolder() { // TODO: drop multiple for many items
 		int randBound = (this.maxAmount - this.minAmount) + 1;
 		int count = LastTry.random.nextInt(randBound) + this.maxAmount;
 		return new ItemHolder(this.item, count, Modifier.random(this.item));
