@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.item.Modifier;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Rectangle;
@@ -141,7 +142,19 @@ public class UiInventory extends UiComponent {
 	public void render() {
 		super.render();
 
-		Assets.font.drawString(10, 5, "Inventory");
+		Item item = this.slots[this.currentSlot].getItem();
+
+		if(item == null) {
+			Assets.font.drawString(10, 5, "Inventory");
+		} else {
+			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
+
+			if(modifier != null) {
+				Assets.font.drawString(10, 5, String.format("%s %s", modifier.getName(), item.getName()));
+			} else {
+				Assets.font.drawString(10, 5, item.getName());
+			}
+		}
 
 		for(int i = 0; i < 10; i++) {
 			this.slots[i].render();
