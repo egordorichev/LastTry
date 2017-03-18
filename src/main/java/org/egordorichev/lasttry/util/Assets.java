@@ -22,6 +22,7 @@ public class Assets {
 	public static Image silverCoinTexture = loadImage("SilverCoin.png");
 	public static Image goldCoinTexture = loadImage("GoldCoin.png");
 	public static Image platinumCoinTexture = loadImage("PlatinumCoin.png");
+	public static Image woodenSwordTexture = loadImage("WoodenSword.png");
 	public static Image heartTexture = loadImage("Heart.png");
 	public static Image manaTexture = loadImage("Mana.png");
 	public static Image boxTexture = loadImage("Box.png");

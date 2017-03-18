@@ -11,4 +11,5 @@ public class ItemID {
 	public final static int platinumCoin = 7;
 	public final static int heart = 8;
 	public final static int mana = 9;
+	public final static int woodenSword = 10;
 }

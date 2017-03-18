@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.items.Sword;
 import org.egordorichev.lasttry.item.tiles.BlockGround;
 import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.Assets;
@@ -19,6 +20,7 @@ public class Item {
 	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Assets.silverCoinTexture);
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
 	public static Item platinumCoin = new Coin(ItemID.platinumCoin, "Platinum coin", Assets.platinumCoinTexture);
+	public static Item woodenSword = new Sword(ItemID.woodenSword, "Wooden Sword", 7.0f, Assets.woodenSwordTexture);
 
 	// TODO
 
