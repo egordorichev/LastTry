@@ -6,14 +6,14 @@ Our goal is to recreate original game with better perfomance, and old content.
 
 ### Building
 
-Clone the repo
+Clone the repo:
 
 ```bash
 git clone https://github.com/egordorichev/LastTry.git
 cd LastTry
 ```
 
-Compile project
+Compile project:
 
 ```bash
 mvn package
