@@ -381,7 +381,7 @@ public class World {
 	 *            Y-position of the world.
 	 * @return Block ID in world.
 	 */
-	public int getBlockId(int x, int y) {
+	public int getBlockID(int x, int y) {
 		if (!this.isInside(x, y)) {
 			return 0;
 		}
