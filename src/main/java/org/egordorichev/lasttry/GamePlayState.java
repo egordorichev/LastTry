@@ -40,8 +40,10 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
-		LastTry.world.spawnEnemy(EnemyID.greenSlime, 40, 60);
-		LastTry.world.spawnEnemy(EnemyID.blueSlime, 10, 60);
+		for(int i = 0; i < 10; i++) {
+			LastTry.world.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
+			LastTry.world.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
+		}
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
@@ -49,6 +51,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.add(LastTry.player.inventory);
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, Modifier.legendary));
+		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, Modifier.light));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 10, null));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 10, null));
 		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 10, null));
@@ -57,7 +60,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 10, null));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10, null));
 
-		this.enemy = LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, LastTry.player.getGridX(), LastTry.player.getGridY() - 10);
+		this.enemy = LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, LastTry.player.getGridX(), LastTry.player.getGridY() - 100);
 	}
 
 	@Override

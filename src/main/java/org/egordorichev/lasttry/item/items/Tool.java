@@ -1,61 +1,57 @@
 package org.egordorichev.lasttry.item.items;
 
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Rarity;
 import org.newdawn.slick.Image;
 
 public class Tool extends Item {
-	public enum Rarity {
-		GRAY,
-		WHITE,
-		BLUE,
-		GREEN,
-		ORANGE,
-		LIGHT_RED,
-		PINK,
-		LIGHT_PURPLE,
-		LIME,
-		YELLOW,
-		CYAN,
-		RED,
-		PURPLE,
-		EXPERT,
-		AMBER
-	}
-
 	protected boolean autoSwing;
-	protected float speed;
 	protected float criticalStrikeChance;
-	protected float baseDamage;
+	protected float baseDamage; // All tools have melee damage
 	protected float useDelay;
-	protected Rarity rarity;
 
-	public Tool(int id, String name, Rarity rarity, float baseDamage, Image texture) {
-		super(id, name, texture);
+	protected int useSpeed;
+	protected int pickaxePower;
+	protected int axePower;
+	protected int hammerPower;
 
-		this.rarity = rarity;
+	public Tool(int id, String name, Rarity rarity, float baseDamage, int pickaxePower,
+			int axePower, int hammerPower, int useSpeed, Image texture) {
+
+		super(id, name, rarity, texture);
+
 		this.criticalStrikeChance = 4.0f;
 		this.autoSwing = false;
 		this.useDelay = 0.0f;
 		this.baseDamage = baseDamage;
+
+		this.pickaxePower = pickaxePower;
+		this.axePower = axePower;
+		this.hammerPower = hammerPower;
+		this.useSpeed = useSpeed;
 	}
 
-	public Tool(int id, String name, float baseDamage, Image texture) {
-		this(id, name, Rarity.WHITE, baseDamage, texture);
+	public Tool(int id, String name, float baseDamage, int pickaxePower,
+			int axePower, int hammerPower, int useSpeed, Image texture) {
+
+		this(id, name, Rarity.WHITE, baseDamage, pickaxePower, axePower, hammerPower, useSpeed, texture);
 	}
 
 	@Override
-	public void use() {
-		if(this.isReady()) {
-
-		}
+	public boolean use() {
+		return false;
 	}
 
-	public void render(int x, int y) {
-
+	public int getPickaxePower() {
+		return this.pickaxePower;
 	}
 
-	public void setRarity(Rarity rarity) {
-		this.rarity = rarity;
+	public int getAxePower() {
+		return this.axePower;
+	}
+
+	public int getHammerPower() {
+		return this.hammerPower;
 	}
 
 	public boolean isAutoSwing() {
@@ -64,10 +60,6 @@ public class Tool extends Item {
 
 	public boolean isReady() {
 		return Math.abs(0.0f - this.useDelay) < 0.05f;
-	}
-
-	public float getSpeed() {
-		return this.speed;
 	}
 
 	public float getCriticalStrikeChance() {

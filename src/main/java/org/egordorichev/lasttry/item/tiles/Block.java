@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.item.tiles;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
@@ -46,6 +48,24 @@ public class Block extends Item {
 		}
 
 		return result;
+	}
+
+	@Override
+	public boolean use() {
+		int x = LastTry.world.getMouseXInWorld() / Block.TEX_SIZE;
+		int y = LastTry.world.getMouseYInWorld() / Block.TEX_SIZE;
+
+		if(LastTry.world.getBlockId(x, y) == ItemID.none) {
+			Rectangle rectangle = LastTry.player.getHitbox();
+
+			if(!rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, TEX_SIZE, TEX_SIZE))) {
+				LastTry.world.setBlock(this, x, y);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isSolid() {

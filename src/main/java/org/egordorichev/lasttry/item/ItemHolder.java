@@ -77,6 +77,13 @@ public class ItemHolder {
 			}
 		}
 	}
+	/**
+	 * Sets num item in the slot
+	 * @param count
+	 */
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	/**
 	 * Return the number of items held.

@@ -564,4 +564,18 @@ public class World {
 			}
 		}, 0, 3, TimeUnit.SECONDS);
 	}
+	/**
+	 * Converts mouse X to world based-coordinate
+	 * @return x based coordinate
+	 */
+	public int getMouseXInWorld() {
+		return (int) (LastTry.player.getX() - LastTry.getWindowWidth() / 2 + LastTry.input.getMouseX() + 14);
+	}
+	/**
+	 * Converts mouse Y to world based-coordinate
+	 * @return Y based coordinate
+	 */
+	public int getMouseYInWorld() {
+		return (int) (LastTry.player.getY() - LastTry.getWindowHeight() / 2 + LastTry.input.getMouseY() + 20);
+	}
 }

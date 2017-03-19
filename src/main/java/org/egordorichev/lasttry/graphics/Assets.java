@@ -31,6 +31,7 @@ public class Assets {
 	public static Image crimsandTexture = loadImage("CrimsandTile.png");
 	public static Image stoneIcon = loadImage("StoneIcon.png");
 	public static Image stoneTexture = loadImage("StoneTile.png");
+	public static Image ironPickaxeTexture = loadImage("IronPickaxe.png");
 
 	public static Image dirtWallTexture = loadImage("DirtWall.png");
 	public static Image dirtWallIcon = loadImage("DirtWallIcon.png");

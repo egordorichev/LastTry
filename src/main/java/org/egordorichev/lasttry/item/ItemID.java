@@ -24,4 +24,5 @@ public class ItemID {
 	public final static int ebonsandBlock = 20;
 	public final static int crimsandBlock = 21;
 	public final static int stoneBlock = 22;
+	public final static int ironPickaxe = 23;
 }

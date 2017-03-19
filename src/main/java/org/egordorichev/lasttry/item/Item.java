@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.items.Pickaxe;
 import org.egordorichev.lasttry.item.items.Sword;
 import org.egordorichev.lasttry.item.tiles.BlockGround;
 import org.egordorichev.lasttry.item.tiles.Wall;
@@ -12,7 +13,7 @@ public class Item {
 	/**
 	 * Item lookup. Item ID used as the index.
 	 */
-	public static Item[] ITEM_CACHE = new Item[32];
+	public static Item[] ITEM_CACHE = new Item[64];
 	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallIcon, Assets.dirtWallTexture);
 	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", Assets.dirtIcon, Assets.dirtTexture);
 	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", Assets.grassIcon, Assets.grassTexture);
@@ -20,7 +21,7 @@ public class Item {
 	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Assets.silverCoinTexture);
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Assets.goldCoinTexture);
 	public static Item platinumCoin = new Coin(ItemID.platinumCoin, "Platinum coin", Assets.platinumCoinTexture);
-	public static Item woodenSword = new Sword(ItemID.woodenSword, "Wooden Sword", 7.0f, Assets.woodenSwordTexture);
+	public static Item woodenSword = new Sword(ItemID.woodenSword, "Wooden Sword", 7.0f, 20, Assets.woodenSwordTexture);
 	public static Item gel = new Item(ItemID.gel, "Gel", Assets.gelTexture);
 	public static Item heart = new Item(ItemID.heart, "Heart", Assets.heartTexture);
 	public static Item mana = new Item(ItemID.mana, "Mana", Assets.manaTexture);
@@ -35,6 +36,7 @@ public class Item {
 	public static Item ebonsandBlock = new BlockGround(ItemID.ebonsandBlock, "Ebonsand block", Assets.ebonsandIcon, Assets.ebonsandTexture);
 	public static Item crimsandBlock = new BlockGround(ItemID.crimsandBlock, "Crimsand block", Assets.crimsandIcon, Assets.crimsandTexture);
 	public static Item stoneBlock = new BlockGround(ItemID.stoneBlock, "Stone block", Assets.stoneIcon, Assets.stoneTexture);
+	public static Item ironPickaxe = new Pickaxe(ItemID.ironPickaxe, "Iron pickaxe", 5, 40, 19, Assets.ironPickaxeTexture);
 
 	/**
 	 * Item identifier.
@@ -49,7 +51,12 @@ public class Item {
 	 */
 	protected Image texture;
 
-	public Item(int id, String name, Image texture) {
+	/**
+	 * Item rarity
+	 */
+	protected Rarity rarity;
+
+	public Item(int id, String name, Rarity rarity, Image texture) {
 		if (ITEM_CACHE[id] != null) {
 			LastTry.log("Item with id " + id + " already exists.");
 			throw new RuntimeException("Item with id " + id + " already exists.");
@@ -62,11 +69,16 @@ public class Item {
 		this.name = name;
 	}
 
-	/**
-	 * Uses item
-	 */
-	public void use() {
+	public Item(int id, String name, Image texture) {
+		this(id, name, Rarity.WHITE, texture);
+	}
 
+	/**
+	 * Use item
+	 * @return true if need to remove item from inventory
+	 */
+	public boolean use() {
+		return false;
 	}
 
 	/**
@@ -84,6 +96,14 @@ public class Item {
 	 */
 	public int getId() {
 		return this.id;
+	}
+
+	/**
+	 * Return the item's rarity
+	 * @return Item rarity
+	 */
+	public Rarity getRarity() {
+		return this.rarity;
 	}
 
 	/**

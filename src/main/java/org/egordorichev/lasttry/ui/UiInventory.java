@@ -93,7 +93,24 @@ public class UiInventory extends UiComponent {
 
 			@Override
 			public void mouseClicked(int i, int i1, int i2, int i3) {
+				if(open) {
+					return;
+				}
 
+				ItemHolder holder = getActiveHolder();
+				Item item = holder.getItem();
+
+				if(item != null) {
+					if(item.use()) {
+						int count = holder.getCount();
+
+						if(count == 1) {
+							slots[currentSlot].setItemHolder(new ItemHolder(null, 0, null));
+						} else {
+							holder.setCount(count - 1);
+						}
+					}
+				}
 			}
 
 			@Override
