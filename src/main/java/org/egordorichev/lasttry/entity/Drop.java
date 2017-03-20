@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.Modifier;
+import org.egordorichev.lasttry.item.modifier.Modifier;
 
 public class Drop {
 	private int minAmount;

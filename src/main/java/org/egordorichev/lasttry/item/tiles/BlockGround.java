@@ -30,7 +30,7 @@ public class BlockGround extends Block {
 			*/
 
 			int corner = 15; // TODO
-			
+
 			this.tiles.getSubImage(corner * Block.TEX_SIZE, 48 + data.variant * Block.TEX_SIZE,
 				Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 		} else {

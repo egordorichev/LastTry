@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.item.Modifier;
+import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Rectangle;
@@ -93,6 +93,11 @@ public class UiInventory extends UiComponent {
 
 			@Override
 			public void mouseClicked(int i, int i1, int i2, int i3) {
+
+			}
+
+			@Override
+			public void mousePressed(int i, int i1, int i2) {
 				if(open) {
 					return;
 				}
@@ -111,11 +116,6 @@ public class UiInventory extends UiComponent {
 						}
 					}
 				}
-			}
-
-			@Override
-			public void mousePressed(int i, int i1, int i2) {
-
 			}
 
 			@Override

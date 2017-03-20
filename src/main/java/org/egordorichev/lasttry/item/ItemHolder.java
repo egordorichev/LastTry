@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.newdawn.slick.Image;
 
 /**
@@ -26,10 +27,14 @@ public class ItemHolder {
 		this.modifier = modifier;
 	}
 
+	public ItemHolder(Item item, int count) {
+		this(item, count, null);
+	}
+
 	/**
 	 * Render the contained item + the number of items at the given screen
 	 * coordinates.
-	 * 
+	 *
 	 * @param x
 	 *            Screen x-position.
 	 * @param y
@@ -105,7 +110,7 @@ public class ItemHolder {
 	}
 
 	/**
-	 * Return the {@link org.egordorichev.lasttry.item.Modifier modifier} for
+	 * Return the {@link Modifier modifier} for
 	 * the held item.
 	 * 
 	 * @return Item modifier.
