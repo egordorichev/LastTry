@@ -102,6 +102,14 @@ public class UiItemSlot extends UiComponent {
 		}
 	}
 
+	public void setItemCount(int count) {
+		this.itemHolder.setCount(count);
+	}
+
+	public int getItemCount() {
+		return this.itemHolder.getCount();
+	}
+
 	public ItemHolder getItemHolder() {
 		return this.itemHolder;
 	}
@@ -160,15 +168,26 @@ public class UiItemSlot extends UiComponent {
 		if(this.state == State.MOUSE_DOWN) {
 			if(LastTry.player.inventory.isOpen()) {
 				if(LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					if(LastTry.player.inventory.currentItem != null) {
+					if(LastTry.player.inventory.currentItem != null && this.itemHolder != null
+							&& this.itemHolder.getItem() == LastTry.player.inventory.currentItem.getItem()) {
+
 						if(this.canHold(LastTry.player.inventory.currentItem)) {
-							ItemHolder tmp = this.itemHolder;
-							this.itemHolder = LastTry.player.inventory.currentItem;
-							LastTry.player.inventory.currentItem = tmp;
+							int count = LastTry.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
+							int max = this.itemHolder.getItem().getMaxInStack();
+
+							if(count <= max) {
+								this.itemHolder.setCount(count);
+								LastTry.player.inventory.currentItem = null;
+							} else {
+								ItemHolder tmp = this.itemHolder;
+								this.itemHolder = LastTry.player.inventory.currentItem;
+								LastTry.player.inventory.currentItem = tmp;
+							}
 						}
 					} else {
+						ItemHolder tmp = LastTry.player.inventory.currentItem;
 						LastTry.player.inventory.currentItem = this.itemHolder;
-						this.itemHolder = null;
+						this.itemHolder = tmp;
 					}
 				} else if(LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
 					// TODO

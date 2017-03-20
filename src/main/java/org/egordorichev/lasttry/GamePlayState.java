@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.world.gen.WorldProvider;
+import org.egordorichev.lasttry.world.WorldProvider;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
@@ -57,8 +57,9 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 990));
+		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 100));
+		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
 

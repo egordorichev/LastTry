@@ -219,6 +219,29 @@ public class UiInventory extends UiComponent {
 	}
 
 	public boolean add(ItemHolder holder) { // TODO: check if item is already in inventory
+		for(int i = 0; i < 88; i++) {
+			UiItemSlot slot = this.slots[i];
+
+			if(slot.getItem() == null || slot.getItemCount() >= slot.getItem().getMaxInStack()) {
+				continue;
+			}
+
+			Item item = slot.getItem();
+
+			if(item == holder.getItem()) {
+				int count = slot.getItemCount() + holder.getCount();
+
+				if(count > item.getMaxInStack()) {
+					slot.setItemCount(item.getMaxInStack());
+					this.add(new ItemHolder(item, count - slot.getItem().getMaxInStack()));
+				} else {
+					slot.setItemCount(count);
+				}
+
+				return true;
+			}
+		}
+
 		UiItemSlot slot = this.getFirstFreeSlot(UiItemSlot.Type.ANY);
 
 		if(slot != null) {

@@ -5,7 +5,7 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.gen.WorldProvider;
+import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
