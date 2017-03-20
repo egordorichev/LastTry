@@ -28,7 +28,7 @@ public class Block extends Item {
 		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
-	protected int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
+	public static int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		int result = 0;
 
 		if(top == true) {
