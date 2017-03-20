@@ -36,20 +36,70 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.Random;
 
 public class LastTry extends StateBasedGame {
+	/**
+	 * Holds all slick2d-based stuff
+	 */
 	public static GameContainer container;
+	
+	/**
+	 * Used for input handling
+	 */
 	public static Input input;
+	
+	/**
+	 * Used for drawing
+	 */
 	public static Graphics graphics;
+	
+	/**
+	 * The game world
+	 */
 	public static World world;
+	
+	/**
+	 * Reference to client's player
+	 */
 	public static Player player;
+	
+	/**
+	 * Game camera
+	 */
 	public static Camera camera;
+	
+	/**
+	 * Loads and handles mods
+	 */
 	public static ModLoader modLoader;
+	
+	/**
+	 * User Interface
+	 */
 	public static UiManager ui;
+	
+	/**
+	 * Slick2d app
+	 */
 	public static AppGameContainer app;
+	
+	/**
+	 * Debug helper
+	 */
 	public static Debug debug;
+	
+	/**
+	 * Basic logger
+	 * adds info(), warn() and error() methods
+	 */
 	public final static Log log = new Log();
+	
+	/**
+	 * Random instance. Can be used anywere
+	 */
 	public final static Random random = new Random(System.currentTimeMillis());
 
 	public LastTry() {
+		// Set random window title
+		
 		super(new String[] { "LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
 				"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
 				"LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
@@ -59,6 +109,9 @@ public class LastTry extends StateBasedGame {
 				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!" }[random.nextInt(16)]);
 	}
 
+	/**
+	 * Init's almost all game variables, starts splash state
+	 */
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
 		container = gameContainer;
@@ -72,40 +125,53 @@ public class LastTry extends StateBasedGame {
 		this.addState(new SplashState());
 	}
 
+	/**
+	 * Called, when user is closing the game window
+	 * @return true, if window can be closed 
+	 */
 	@Override
 	public boolean closeRequested() {
 		if (world != null) {
 			WorldProvider.save(world);
 		}
-		System.exit(0);
-		return false;
+		
+		return true;
 	}
 
+	/**
+	 * @return game window width
+	 */
 	public static int getWindowWidth() {
 		return container.getWidth();
 	}
 
+	/**
+	 * @return game window height
+	 */
 	public static int getWindowHeight() {
 		return container.getHeight();
 	}
 
-	public static void log(String msg) {
-		// TODO: Log with levels rather than enforcing all logs to be printed
-		//
-		// Even better, create a more vibrant logging system.
-		//
-		// Ideas:
-		// - Logging shouldn't take TOO much space (messages should be compact)
-		// - Logging should be able to tell what context it is from
-		// - - Ex: "World: Loading..."
-		// - - Ex: "Player: Player died at [X, Y]"
-		log.info(msg);
+	/**
+	 * Simple interface for logging
+	 * @param message message to log
+	 */
+	public static void log(String mesage) {
+		log.info(mesage);
 	}
 
+	/**
+	 * Handles all exceptions in the game
+	 * @param exception exception to handle
+	 */
 	public static void handleException(Exception exception) {
-		exception.printStackTrace();
+		this.log(exception.getMessage());
 	}
 
+	/**
+	 * App main. Creates a new game, setups the window and runs it
+	 * @param arguments command line arguments, never used
+	 */
 	public static void main(String[] arguments) {
 		try {
 			LastTry.app = new AppGameContainer(new ScalableGame(new LastTry(), 800, 600, true));
