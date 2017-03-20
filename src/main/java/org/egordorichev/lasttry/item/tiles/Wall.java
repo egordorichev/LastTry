@@ -21,29 +21,7 @@ public class Wall extends Item {
 		boolean b = LastTry.world.getWallId(x, y + 1) == this.id;
 		boolean l = LastTry.world.getWallId(x - 1, y) == this.id;
 
-		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
-	}
-
-	private int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
-		int result = 0;
-
-		if(top == true) {
-			result += 1;
-		}
-
-		if(right == true) {
-			result += 2;
-		}
-
-		if(bottom == true) {
-			result += 4;
-		}
-
-		if(left == true) {
-			result += 8;
-		}
-
-		return result;
+		this.tiles.getSubImage(Block.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
 	@Override
