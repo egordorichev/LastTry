@@ -7,5 +7,6 @@ public class CorruptionBiome extends Biome {
 		super("Corruption");
 
 		this.texture = Assets.corruptionBackTexture;
+		this.texture.setAlpha(0.0f);
 	}
 }

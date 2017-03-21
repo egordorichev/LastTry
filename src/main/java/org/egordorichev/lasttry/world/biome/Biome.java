@@ -16,6 +16,22 @@ public class Biome {
 	public Biome(String name) {
 		this.name = name;
 	}
+
+	public void fadeIn() {
+		this.texture.setAlpha(Math.min(1, this.texture.getAlpha() + 0.01f));
+	}
+
+	public void fadeOut() {
+		this.texture.setAlpha(Math.max(0, this.texture.getAlpha() - 0.01f));
+	}
+
+	public boolean fadeInIsDone() {
+		return this.texture.getAlpha() >= 0.99f;
+	}
+
+	public boolean fadeOutIsDone() {
+		return this.texture.getAlpha() <= 0.01f;
+	}
 	
 	public String getName() {
 		return this.name;

@@ -7,5 +7,6 @@ public class ForestBiome extends Biome {
 		super("Forest");
 
 		this.texture = Assets.forestBackTexture;
+		this.texture.setAlpha(0.0f);
 	}
 }

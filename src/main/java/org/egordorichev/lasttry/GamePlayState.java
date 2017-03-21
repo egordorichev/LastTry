@@ -89,7 +89,16 @@ public class GamePlayState extends BasicGameState {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, why?																// FIXME
 		}
 
-		LastTry.world.currentBiome.renderBackground();
+		if (!LastTry.world.currentBiome.fadeInIsDone()) {
+			LastTry.world.currentBiome.fadeIn();
+			LastTry.world.currentBiome.renderBackground();
+		}
+
+		if (LastTry.world.lastBiome != null && !LastTry.world.lastBiome.fadeOutIsDone()) {
+			LastTry.world.lastBiome.fadeOut();
+			LastTry.world.lastBiome.renderBackground();
+		}
+
 		LastTry.camera.set();
 		LastTry.world.render();
 		LastTry.player.render();

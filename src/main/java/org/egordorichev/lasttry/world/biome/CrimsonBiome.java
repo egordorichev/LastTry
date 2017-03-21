@@ -7,5 +7,6 @@ public class CrimsonBiome extends Biome {
 		super("Crimson");
 
 		this.texture = Assets.crimsonBackTexture;
+		this.texture.setAlpha(0.0f);
 	}
 }

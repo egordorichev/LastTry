@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.World.EvilType;
+import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.gen.WorldGenerator;
 import org.egordorichev.lasttry.world.tile.TileData;
 
@@ -48,8 +49,11 @@ public class WorldProvider {
 			}
 		}
 
+		Biome.preload();
+
 		World world = new World(name, width, height, data);
 		world.addBiomeChecker();
+
 		LastTry.log("Finished generating!");
 
 		return world;
@@ -155,6 +159,8 @@ public class WorldProvider {
 			}
 
 			LastTry.log("Done loading!");
+
+			Biome.preload();
 
 			World world = new World(worldName, width, height, evilType, tiles);
 

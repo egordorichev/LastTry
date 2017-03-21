@@ -25,6 +25,10 @@ public class World {
 	 */
 	public static final int CURRENT_VERSION = 3;
 	/**
+	 * Last biome
+	 */
+	public Biome lastBiome = Biome.forest;
+	/**
 	 * Current biome
 	 */
 	public Biome currentBiome = Biome.forest;
@@ -82,8 +86,6 @@ public class World {
 		this.height = height;
 		this.evilType = evilType;
 		this.tiles = tiles;
-
-		Biome.preload();
 	}
 
 	/**
@@ -574,6 +576,9 @@ public class World {
 						}
 					}
 				}
+
+				LastTry.world.lastBiome = LastTry.world.currentBiome;
+
 				if (totalCorruptionBlocks >= 200) {
 					LastTry.world.currentBiome = Biome.corruption;
 				} else if (totalCrimsonBlocks >= 200) {
