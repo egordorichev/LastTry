@@ -90,7 +90,7 @@ public class LastTry extends StateBasedGame {
 	 * Basic logger
 	 * adds info(), warn() and error() methods
 	 */
-	public final static Log log = new Log();
+	public static Log log = new Log();
 	
 	/**
 	 * Random instance. Can be used anywere
