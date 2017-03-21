@@ -18,9 +18,24 @@ public class UiComponent {
 		BOTTOM_RIGHT
 	}
 
+	/** 
+	 * Holds element position and size 
+	 */
 	protected Rectangle rect;
+	
+	/**
+	 * Holds element state
+	 */
 	protected State state;
+	
+	/**
+	 * Shows, from witch side of the screen position coordinates are calculated
+	 */
 	protected Origin origin;
+	
+	/**
+	 * Element doen't draw and react to input, if it is hidden
+	 */
 	protected boolean hidden;
 
 	public UiComponent(Rectangle rectangle, Origin origin) {
@@ -40,17 +55,6 @@ public class UiComponent {
 		}
 
 		this.update();
-	}
-
-	public void setPosition(int x, int y) {
-		this.rect.setX(x);
-		this.rect.setY(y);
-		this.applyRect();
-	}
-
-	public void setSize(int width, int height) {
-		this.rect.setSize(width, height);
-		this.applyRect();
 	}
 
 	public void show() {
