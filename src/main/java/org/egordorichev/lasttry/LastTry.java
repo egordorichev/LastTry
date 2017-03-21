@@ -165,7 +165,7 @@ public class LastTry extends StateBasedGame {
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
-		this.log(exception.getMessage());
+		log.warn(exception.getMessage());
 	}
 
 	/**
