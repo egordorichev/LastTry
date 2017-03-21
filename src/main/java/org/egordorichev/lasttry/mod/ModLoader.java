@@ -12,8 +12,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModLoader {
-	private List<Mod> mods = new ArrayList<>();
+	/**
+	 * List of loaded mods
+	 */
+	private ArrayList<Mod> mods = new ArrayList<>();
 
+	/**
+	 * Lookups and loads all mods from "assets/mods" directory
+	 */
 	public void load() {
 		File[] mods = new File("assets/mods").listFiles();
 
@@ -21,42 +27,67 @@ public class ModLoader {
 			if (!mods[i].getName().endsWith(".jar")) {
 				continue;
 			}
+			
+			this.loadMod(mods[i]);
+		}
+	}
+	
+	/**
+	 * Loads single mod
+	 * @param file mod file
+	 */
+	private void loadMod(File file) {
+		try {
+			JarFile jarFile = new JarFile(file);
+				
+			URL[] urls = new URL[]{
+				new URL("jar:file:" + file.getAbsolutePath() + "!/")
+			};
+				
+			URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
+			Enumeration<JarEntry> enumeration = jarFile.entries();
 
-			try (JarFile jarFile = new JarFile(mods[i])){
-				URL[] urls = new URL[]{
-						new URL("jar:file:" + mods[i].getAbsolutePath() + "!/")
-				};
+			while (enumeration.hasMoreElements()) {
+				JarEntry jarEntry = (JarEntry) enumeration.nextElement();
 
-				URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
-				Enumeration<JarEntry> enumeration = jarFile.entries();
-
-				while (enumeration.hasMoreElements()) {
-					JarEntry jarEntry = (JarEntry) enumeration.nextElement();
-
-					if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
-						continue;
-					}
-
-					String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
-					className = className.replace('/', '.');
-
-					Class<?> aClass = urlClassLoader.loadClass(className);
-
-					if (Mod.class.isAssignableFrom(aClass) && aClass != Mod.class) {
-						Mod mod = (Mod) aClass.newInstance();
-						mod.onLoad();
-
-						this.mods.add(mod);
-					}
+				if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
+					continue;
 				}
-			} catch(Exception exception) {
-				LastTry.handleException(exception);
+
+				String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
+				className = className.replace('/', '.');
+
+				Class<?> aClass = urlClassLoader.loadClass(className);
+
+				if (Mod.class.isAssignableFrom(aClass) && aClass != Mod.class) {
+					Mod mod = (Mod) aClass.newInstance();
+					mod.onLoad();
+
+					this.mods.add(mod);
+				}
 			}
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+			LastTry.log.warn("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
+		}
+	}
+	
+	/**
+	 * Unloads all mods
+	 */
+	public void unload() {
+		for(Mod mod : this.mods) {
+			mod.onUnload();	
 		}
 	}
 
+	/**
+	 * @param name mod name to lookup
+	 * @return mod with given name, or null, if it is not found
+	 */
 	public Mod getMod(String name) {
 		// TODO: Instead of a iteration use a name lookup map.
+		
 		for (Mod mod : this.mods) {
 			if (mod.getName().equals(name)) {
 				return mod;
