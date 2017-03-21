@@ -54,7 +54,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 999));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 990));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));

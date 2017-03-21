@@ -9,10 +9,9 @@ import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.item.tiles.Wall;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
-import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.World.EvilType;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.gen.WorldGenerator;
+import org.egordorichev.lasttry.world.generator.WorldGenerator;
 import org.egordorichev.lasttry.world.tile.TileData;
 
 public class WorldProvider {

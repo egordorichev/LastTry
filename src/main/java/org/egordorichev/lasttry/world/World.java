@@ -27,7 +27,7 @@ public class World {
 	/**
 	 * Last biome
 	 */
-	public Biome lastBiome = Biome.forest;
+	public Biome lastBiome = null;
 	/**
 	 * Current biome
 	 */

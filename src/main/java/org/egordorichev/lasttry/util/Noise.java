@@ -3,69 +3,85 @@ package org.egordorichev.lasttry.util;
 import org.egordorichev.lasttry.LastTry;
 
 public class Noise {
-	private float roughness;
-	private float[][] grid;
+	private float persistance = 0.5f;
+	private float amplitude = 0.5f;
+	private int width;
+	private int height;
 
-	public Noise(float roughness, int width, int height) {
-		this.roughness = roughness / width;
-		this.grid = new float[width][height];
+	public Noise(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
-	public void initialise() {
-		int xh = this.grid.length - 1;
-		int yh = this.grid[0].length - 1;
+	public float[][] generateWhiteNoise() {
+		float[][] noise = new float[this.width][this.height];
 
-		this.grid[0][0] = LastTry.random.nextFloat() - 0.5f;
-		this.grid[0][yh] = LastTry.random.nextFloat() - 0.5f;
-		this.grid[xh][0] = LastTry.random.nextFloat() - 0.5f;
-		this.grid[xh][yh] = LastTry.random.nextFloat() - 0.5f;
-
-		this.generate(0, 0, xh, yh);
-	}
-
-	private float roughen(float v, int l, int h) {
-		return v + this.roughness * (float) (LastTry.random.nextGaussian() * (h - l));
-	}
-
-	private void generate(int xl, int yl, int xh, int yh) {
-		int xm = (xl + xh) / 2;
-		int ym = (yl + yh) / 2;
-
-		if ((xl == xm) && (yl == ym)) {
-			return;
-		}
-
-		this.grid[xm][yl] = 0.5f * (this.grid[xl][yl] + this.grid[xh][yl]);
-		this.grid[xm][yh] = 0.5f * (this.grid[xl][yh] + this.grid[xh][yh]);
-		this.grid[xl][ym] = 0.5f * (this.grid[xl][yl] + this.grid[xl][yh]);
-		this.grid[xh][ym] = 0.5f * (this.grid[xh][yl] + this.grid[xh][yh]);
-
-		float v = roughen(0.5f * (this.grid[xm][yl] + this.grid[xm][yh]), xl + yl, yh + xh);
-
-		this.grid[xm][ym] = v;
-		this.grid[xm][yl] = roughen(this.grid[xm][yl], xl, xh);
-		this.grid[xm][yh] = roughen(this.grid[xm][yh], xl, xh);
-		this.grid[xl][ym] = roughen(this.grid[xl][ym], yl, yh);
-		this.grid[xh][ym] = roughen(this.grid[xh][ym], yl, yh);
-
-		this.generate(xl, yl, xm, ym);
-		this.generate(xm, yl, xh, ym);
-		this.generate(xl, ym, xm, yh);
-		this.generate(xm, ym, xh, yh);
-	}
-
-	public boolean[][] toBooleans(float threshold) {
-		int w = this.grid.length;
-		int h = this.grid[0].length;
-
-		boolean[][] bool = new boolean[w][h];
-
-		for (int i = 0; i < w;i++) {
-			for (int j = 0; j < h;j++) {
-				bool[i][j] = this.grid[i][j] < threshold;
+		for(int i = 0; i < width; i++){
+			for(int j = 0; j < height; j++){
+				noise[i][j] = (float) (LastTry.random.nextInt(1001)) / 1000;
 			}
 		}
 
-		return bool;
+		return noise;
+	}
+
+	public float interpolate(float x0, float x1, float alpha) {
+		return x0 * (1 - alpha) + alpha * x1;
+	}
+
+	public float[][] generateSmoothNoise(float[][] baseNoise, int octave) {
+		float[][] noise = new float[this.width][this.height];
+		int period = 1 << octave;
+		float frequency = 1.0f / period;
+
+		for (int i = 0; i < this.width; i++) {
+			int i0 = (i / period) * period;
+			int i1 = (i0 + period) % this.width;
+			float hBlend = (i - i0) * frequency;
+
+			for (int j = 0; j < this.height; j++){
+				int j0 = (j / period) * period;
+				int j1 = (j0 + period) % this.height;
+				float vBlend = (j - j0) * frequency;
+
+				float top = this.interpolate(baseNoise[i0][j0], baseNoise[i1][j0], hBlend);
+				float bottom = this.interpolate(baseNoise[i0][j1], baseNoise[i1][j1], hBlend);
+
+				noise[i][j] = interpolate(top, bottom, vBlend);
+			}
+		}
+
+		return noise;
+	}
+
+	public float[][] generatePerlinNoise(float[][] baseNoise, int octaveCount) {
+		float[][][] noise = new float[this.width][this.height][octaveCount];
+		float[][] perlinNoise = new float[this.width][this.height];
+		float totalAmplitude = 0.0f;
+
+		for(int octave = octaveCount - 1; octave >= 0; octave--){
+			noise[octave] = generateSmoothNoise(baseNoise, octave); // FIXME
+
+			this.amplitude *= this.persistance;
+			totalAmplitude += this.amplitude;
+
+			for(int i = 0; i < this.width; i++){
+				for(int j = 0; j < this.height; j++){
+					perlinNoise[i][j] += noise[octave][i][j] * this.amplitude;
+				}
+			}
+		}
+
+		for(int i = 0; i < this.width; i++){
+			for(int j = 0; j < this.height; j++){
+				perlinNoise[i][j] /= totalAmplitude;
+			}
+		}
+
+		return perlinNoise;
+	}
+
+	public float[][] generatePerlinNoise(int octaveCount) {
+		return this.generatePerlinNoise(this.generateWhiteNoise(), octaveCount);
 	}
 }

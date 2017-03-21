@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.world.gen;
+package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
@@ -70,23 +70,21 @@ public class WorldGenerator {
 			}
 		});
 
-		/* this.tasks.add(new GeneratorTask() {
+		this.tasks.add(new GeneratorTask() {
 			@Override
 			public void run(WorldGenerator generator) {
-				Noise noise = new Noise(1.0f, generator.getWorldWidth(), generator.getWorldHeight());
-				noise.initialise();
-
-				boolean[][] perlinNoise = noise.toBooleans(0.1f);
+				Noise noise = new Noise(generator.getWorldWidth(), generator.getWorldHeight());
+				float[][] perlinNoise = noise.generatePerlinNoise(8);
 
 				for (int y = 0; y < generator.getWorldHeight(); y++) {
 					for (int x = 0; x < generator.getWorldWidth(); x++) {
-						if (perlinNoise[x][y]) {
+						if (perlinNoise[x][y] > 0.7f) {
 							generator.setTile(ItemID.none, x, y);
 						}
 					}
 				}
 			}
-		}); */
+		});
 
 		for (GeneratorTask task : this.tasks) {
 			task.run(this);
