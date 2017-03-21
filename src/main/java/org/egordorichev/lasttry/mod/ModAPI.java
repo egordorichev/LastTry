@@ -32,7 +32,7 @@ public class ModAPI { // TODO: add more
 		LastTry.input.addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(int i, char c) {
-				if(i == key) {
+				if (i == key) {
 					callable.call();
 				}
 			}

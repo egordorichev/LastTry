@@ -35,7 +35,7 @@ public class UiComponent {
 	}
 
 	public void render() {
-		if(this.hidden) {
+		if (this.hidden) {
 			return;
 		}
 
@@ -92,19 +92,19 @@ public class UiComponent {
 	}
 
 	protected void update() {
-		if(this.hidden) {
+		if (this.hidden) {
 			return;
 		}
 
-		if(this.rect.contains(LastTry.input.getMouseX(), LastTry.input.getMouseY())) {
-			if(this.state != State.MOUSE_DOWN && (LastTry.input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || LastTry.input.isMousePressed(Input.MOUSE_RIGHT_BUTTON))) {
+		if (this.rect.contains(LastTry.input.getMouseX(), LastTry.input.getMouseY())) {
+			if (this.state != State.MOUSE_DOWN && (LastTry.input.isMousePressed(Input.MOUSE_LEFT_BUTTON) || LastTry.input.isMousePressed(Input.MOUSE_RIGHT_BUTTON))) {
 				this.state = State.MOUSE_DOWN;
 				this.onStateChange();
-			} else if(this.state != State.MOUSE_IN) {
+			} else if (this.state != State.MOUSE_IN) {
 				this.state = State.MOUSE_IN;
 				this.onStateChange();
 			}
-		} else if(this.state != State.NORMAL) {
+		} else if (this.state != State.NORMAL) {
 			this.state = State.NORMAL;
 			this.onStateChange();
 		}

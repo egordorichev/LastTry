@@ -23,7 +23,7 @@ public class UiButton extends UiComponent {
 
 	@Override
 	public void render() {
-		if(this.hidden) {
+		if (this.hidden) {
 			return;
 		}
 
@@ -42,7 +42,7 @@ public class UiButton extends UiComponent {
 	protected void onStateChange() {
 		super.onStateChange();
 
-		if(this.state == State.MOUSE_DOWN) {
+		if (this.state == State.MOUSE_DOWN) {
 			this.onClick();
 		}
 	}

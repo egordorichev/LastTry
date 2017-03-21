@@ -16,7 +16,7 @@ public class Sword extends MeleeWeapon {
 
 	@Override
 	public boolean use() {
-		if(this.isReady()) {
+		if (this.isReady()) {
 
 		}
 
@@ -25,11 +25,11 @@ public class Sword extends MeleeWeapon {
 
 	@Override
 	public void update(int dt) {
-		if(this.isReady() && this.isAutoSwing() && LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+		if (this.isReady() && this.isAutoSwing() && LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			this.use();
 		}
 
-		if(Math.abs(0.0f - this.useDelay) > 0.05f) {
+		if (Math.abs(0.0f - this.useDelay) > 0.05f) {
 			// TODO: swing
 		} else {
 			this.useDelay = 0.0f;

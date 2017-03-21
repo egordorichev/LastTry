@@ -25,50 +25,50 @@ public class UiInventory extends UiComponent {
 		int x = 10;
 		int y = 30;
 
-		for(int i = 0; i < 10; i++) { // Hot bar
+		for (int i = 0; i < 10; i++) { // Hot bar
 			this.slots[i] = new UiItemSlot(new Rectangle(x + i * 54, y, 52, 52), UiItemSlot.Type.ANY);
 		}
 
-		for(int i = 10; i < 50; i++) { // Main inventory
+		for (int i = 10; i < 50; i++) { // Main inventory
 			this.slots[i] = new UiItemSlot(new Rectangle(x + (i % 10) * 54, y + 54 * (i / 10), 52, 52), UiItemSlot.Type.ANY);
 		}
 
-		for(int i = 50; i < 54; i++) { // Coins
+		for (int i = 50; i < 54; i++) { // Coins
 			this.slots[i] = new UiItemSlot(new Rectangle(x + 542, y + 100 + (i - 50) * 34, 32, 32), UiItemSlot.Type.COIN);
 		}
 
-		for(int i = 54; i < 58; i++) { // Ammo
+		for (int i = 54; i < 58; i++) { // Ammo
 			this.slots[i] = new UiItemSlot(new Rectangle(x + 576, y + 100 + (i - 54) * 34, 32, 32), UiItemSlot.Type.AMMO);
 		}
 
 		// Trash
 		this.slots[58] = new UiItemSlot(new Rectangle(x + 486, y + 270, 52, 52), UiItemSlot.Type.TRASH, Origin.TOP_LEFT, Assets.trashTexture);
 
-		for(int i = 59; i < 62; i++) { // Armor
+		for (int i = 59; i < 62; i++) { // Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 280 + (i - 59) * 54, 52, 52), UiItemSlot.Type.ARMOR, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(0, 68 - (i - 59) * 34, 34, 34));
 		}
 
-		for(int i = 62; i < 65; i++) { // Vanity Armor
+		for (int i = 62; i < 65; i++) { // Vanity Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 280 + (i - 62) * 54, 52, 52), UiItemSlot.Type.VANITY, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(0, 170 - (i - 62) * 34, 34, 34));
 		}
 
-		for(int i = 65; i < 68; i++) { // Armor Dye
+		for (int i = 65; i < 68; i++) { // Armor Dye
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 280 + (i - 65) * 54, 52, 52), UiItemSlot.Type.DYE, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(34, 0, 34, 34));
 		}
 
-		for(int i = 68; i < 73; i++) { // Accessories
+		for (int i = 68; i < 73; i++) { // Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 10 + (i - 68) * 54, 52, 52), UiItemSlot.Type.ACCESSORY, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(68, 34, 34, 34));
 		}
 
-		for(int i = 73; i < 78; i++) { // Vanity Accessories
+		for (int i = 73; i < 78; i++) { // Vanity Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 10 + (i - 73) * 54, 52, 52), UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(68, 0, 34, 34));
 		}
 
-		for(int i = 78; i < 83; i++) { // Accessories Dyes
+		for (int i = 78; i < 83; i++) { // Accessories Dyes
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 10 + (i - 78) * 54, 52, 52), UiItemSlot.Type.DYE, Origin.BOTTOM_RIGHT, Assets.inventoryBackTexture.getSubImage(34, 0, 34, 34));
 		}
 
-		for(int i = 83; i < 88; i++) { // Equipment
+		for (int i = 83; i < 88; i++) { // Equipment
 			this.slots[i] = new UiItemSlot(new Rectangle(0, 0, 52, 52), UiItemSlot.Type.ANY); // TODO
 			this.slots[i].hide();
 		}
@@ -82,9 +82,9 @@ public class UiInventory extends UiComponent {
 				slots[currentSlot].setActive(false);
 				currentSlot += (i > 0) ? 1 : -1;
 
-				if(currentSlot > 9) {
+				if (currentSlot > 9) {
 					currentSlot = 0;
-				} else if(currentSlot < 0) {
+				} else if (currentSlot < 0) {
 					currentSlot = 9;
 				}
 
@@ -98,18 +98,18 @@ public class UiInventory extends UiComponent {
 
 			@Override
 			public void mousePressed(int i, int i1, int i2) {
-				if(open) {
+				if (open) {
 					return;
 				}
 
 				ItemHolder holder = getActiveHolder();
 				Item item = holder.getItem();
 
-				if(item != null) {
-					if(item.use()) {
+				if (item != null) {
+					if (item.use()) {
 						int count = holder.getCount();
 
-						if(count == 1) {
+						if (count == 1) {
 							slots[currentSlot].setItemHolder(new ItemHolder(null, 0, null));
 						} else {
 							holder.setCount(count - 1);
@@ -161,35 +161,35 @@ public class UiInventory extends UiComponent {
 
 		Item item = this.slots[this.currentSlot].getItem();
 
-		if(item == null) {
+		if (item == null) {
 			Assets.font.drawString(10, 5, "Inventory");
 		} else {
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
-			if(modifier != null) {
+			if (modifier != null) {
 				Assets.font.drawString(10, 5, String.format("%s %s", modifier.getName(), item.getName()));
 			} else {
 				Assets.font.drawString(10, 5, item.getName());
 			}
 		}
 
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			this.slots[i].render();
 		}
 
-		if(this.open) {
-			for(int i = 10; i < 88; i++) {
+		if (this.open) {
+			for (int i = 10; i < 88; i++) {
 				this.slots[i].render();
 			}
 		}
 
-		if(currentItem != null) {
+		if (currentItem != null) {
 			currentItem.renderAt(LastTry.input.getMouseX() + 16, LastTry.input.getMouseY() + 16);
 		}
 	}
 
 	public void setItem(ItemHolder holder, int index) {
-		if(index < 0 || index > 88)  {
+		if (index < 0 || index > 88)  {
 			return;
 		}
 
@@ -197,7 +197,7 @@ public class UiInventory extends UiComponent {
 	}
 
 	public ItemHolder getItemHolder(int index) {
-		if(index < 0 || index > 88) {
+		if (index < 0 || index > 88) {
 			return null;
 		}
 
@@ -211,7 +211,7 @@ public class UiInventory extends UiComponent {
 	public Item getItem(int index) {
 		ItemHolder holder = this.getItemHolder(index);
 
-		if(holder == null) {
+		if (holder == null) {
 			return null;
 		}
 
@@ -219,19 +219,19 @@ public class UiInventory extends UiComponent {
 	}
 
 	public boolean add(ItemHolder holder) { // TODO: check if item is already in inventory
-		for(int i = 0; i < 88; i++) {
+		for (int i = 0; i < 88; i++) {
 			UiItemSlot slot = this.slots[i];
 
-			if(slot.getItem() == null || slot.getItemCount() >= slot.getItem().getMaxInStack()) {
+			if (slot.getItem() == null || slot.getItemCount() >= slot.getItem().getMaxInStack()) {
 				continue;
 			}
 
 			Item item = slot.getItem();
 
-			if(item == holder.getItem()) {
+			if (item == holder.getItem()) {
 				int count = slot.getItemCount() + holder.getCount();
 
-				if(count > item.getMaxInStack()) {
+				if (count > item.getMaxInStack()) {
 					slot.setItemCount(item.getMaxInStack());
 					this.add(new ItemHolder(item, count - slot.getItem().getMaxInStack()));
 				} else {
@@ -244,7 +244,7 @@ public class UiInventory extends UiComponent {
 
 		UiItemSlot slot = this.getFirstFreeSlot(UiItemSlot.Type.ANY);
 
-		if(slot != null) {
+		if (slot != null) {
 			slot.setItemHolder(holder);
 			return true;
 		}
@@ -266,12 +266,12 @@ public class UiInventory extends UiComponent {
 	}
 
 	public UiItemSlot getFirstFreeSlot(int start, int end) {
-		if(start > end || start < 0 || end > 88) {
+		if (start > end || start < 0 || end > 88) {
 			return null;
 		}
 
-		for(int i = start; i < end; i++) {
-			if(this.slots[i].getItem() == null) {
+		for (int i = start; i < end; i++) {
+			if (this.slots[i].getItem() == null) {
 				return this.slots[i];
 			}
 		}

@@ -45,8 +45,8 @@ public class WorldGenerator {
 
 				displace *= roughness;
 
-				for(int i = 1; i < power; i *= 2) {
-					for(int j = (int) (power / i) / 2; j < power; j+= power / i){
+				for (int i = 1; i < power; i *= 2) {
+					for (int j = (int) (power / i) / 2; j < power; j+= power / i){
 						points[j] = ((points[j - (int) (power / i) / 2] + points[j + (int) (power / i) / 2]) / 2);
 						points[j] += ((displace) * LastTry.random.nextDouble() * 2) - displace;
 					}
@@ -78,9 +78,9 @@ public class WorldGenerator {
 
 				boolean[][] perlinNoise = noise.toBooleans(0.1f);
 
-				for(int y = 0; y < generator.getWorldHeight(); y++) {
-					for(int x = 0; x < generator.getWorldWidth(); x++) {
-						if(perlinNoise[x][y]) {
+				for (int y = 0; y < generator.getWorldHeight(); y++) {
+					for (int x = 0; x < generator.getWorldWidth(); x++) {
+						if (perlinNoise[x][y]) {
 							generator.setTile(ItemID.none, x, y);
 						}
 					}
@@ -88,7 +88,7 @@ public class WorldGenerator {
 			}
 		}); */
 
-		for(GeneratorTask task : this.tasks) {
+		for (GeneratorTask task : this.tasks) {
 			task.run(this);
 		}
 

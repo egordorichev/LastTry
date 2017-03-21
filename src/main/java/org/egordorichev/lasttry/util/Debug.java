@@ -10,7 +10,7 @@ public class Debug {
 	}
 
 	public void render() {
-		if(!this.enabled) {
+		if (!this.enabled) {
 			return;
 		}
 

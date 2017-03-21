@@ -17,20 +17,23 @@ public class ModLoader {
 	public void load() {
 		File[] mods = new File("assets/mods").listFiles();
 
-		for(int i = 0; i < mods.length; i++) {
-			if(!mods[i].getName().endsWith(".jar")) {
+		for (int i = 0; i < mods.length; i++) {
+			if (!mods[i].getName().endsWith(".jar")) {
 				continue;
 			}
+
 			try (JarFile jarFile = new JarFile(mods[i])){
 				URL[] urls = new URL[]{
 						new URL("jar:file:" + mods[i].getAbsolutePath() + "!/")
 				};
+
 				URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
 				Enumeration<JarEntry> enumeration = jarFile.entries();
-				while(enumeration.hasMoreElements()) {
+
+				while (enumeration.hasMoreElements()) {
 					JarEntry jarEntry = (JarEntry) enumeration.nextElement();
 
-					if(jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
+					if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
 						continue;
 					}
 
@@ -39,7 +42,7 @@ public class ModLoader {
 
 					Class<?> aClass = urlClassLoader.loadClass(className);
 
-					if(Mod.class.isAssignableFrom(aClass) && aClass != Mod.class) {
+					if (Mod.class.isAssignableFrom(aClass) && aClass != Mod.class) {
 						Mod mod = (Mod) aClass.newInstance();
 						mod.onLoad();
 
@@ -54,8 +57,8 @@ public class ModLoader {
 
 	public Mod getMod(String name) {
 		// TODO: Instead of a iteration use a name lookup map.
-		for(Mod mod : this.mods) {
-			if(mod.getName().equals(name)) {
+		for (Mod mod : this.mods) {
+			if (mod.getName().equals(name)) {
 				return mod;
 			}
 		}

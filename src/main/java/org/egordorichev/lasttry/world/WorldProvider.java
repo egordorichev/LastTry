@@ -41,7 +41,7 @@ public class WorldProvider {
 		int totalSize = width * height;
 		TileData[] data = new TileData[totalSize];
 
-		for(int y = 0; y < height; y++) {
+		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				int id = tileIDs[x][y];
 				data[x + y * width] = new TileData((Block) Item.fromID(id), Wall.getForBlockID(id));

@@ -103,7 +103,7 @@ public abstract class Enemy extends Entity {
 		try {
 			Class<? extends Enemy> aClass = ENEMY_CACHE.get(id);
 
-			if(aClass != null) {
+			if (aClass != null) {
 				return aClass.newInstance();
 			} else {
 				return null;

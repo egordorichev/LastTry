@@ -28,22 +28,22 @@ public class Block extends Item {
 		this.tiles.getSubImage(this.calculateBinary(t, r, b, l) * Block.TEX_SIZE, data.variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 	}
 
-	protected int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
+	public static int calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		int result = 0;
 
-		if(top == true) {
+		if (top == true) {
 			result += 1;
 		}
 
-		if(right == true) {
+		if (right == true) {
 			result += 2;
 		}
 
-		if(bottom == true) {
+		if (bottom == true) {
 			result += 4;
 		}
 
-		if(left == true) {
+		if (left == true) {
 			result += 8;
 		}
 
@@ -55,10 +55,10 @@ public class Block extends Item {
 		int x = LastTry.world.getMouseXInWorld() / Block.TEX_SIZE;
 		int y = LastTry.world.getMouseYInWorld() / Block.TEX_SIZE;
 
-		if(LastTry.world.getBlockID(x, y) == ItemID.none) {
+		if (LastTry.world.getBlockID(x, y) == ItemID.none) {
 			Rectangle rectangle = LastTry.player.getHitbox();
 
-			if(!rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, TEX_SIZE, TEX_SIZE))) {
+			if (!rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, TEX_SIZE, TEX_SIZE))) {
 				LastTry.world.setBlock(this, x, y);
 
 				return true;

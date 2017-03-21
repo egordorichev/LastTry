@@ -31,7 +31,7 @@ public class Noise {
 		int xm = (xl + xh) / 2;
 		int ym = (yl + yh) / 2;
 
-		if((xl == xm) && (yl == ym)) {
+		if ((xl == xm) && (yl == ym)) {
 			return;
 		}
 
@@ -60,8 +60,8 @@ public class Noise {
 
 		boolean[][] bool = new boolean[w][h];
 
-		for(int i = 0; i < w;i++) {
-			for(int j = 0; j < h;j++) {
+		for (int i = 0; i < w;i++) {
+			for (int j = 0; j < h;j++) {
 				bool[i][j] = this.grid[i][j] < threshold;
 			}
 		}

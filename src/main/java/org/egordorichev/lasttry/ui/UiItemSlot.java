@@ -56,7 +56,7 @@ public class UiItemSlot extends UiComponent {
 
 		this.texture.setAlpha(0.8f);
 
-		if(this.back != null) {
+		if (this.back != null) {
 			this.back.setAlpha(0.7f);
 		}
 
@@ -68,7 +68,7 @@ public class UiItemSlot extends UiComponent {
 	}
 
 	public boolean setItemHolder(ItemHolder holder) {
-		if(!this.canHold(holder)) {
+		if (!this.canHold(holder)) {
 			return false;
 		}
 
@@ -78,7 +78,7 @@ public class UiItemSlot extends UiComponent {
 
 	@Override
 	public void render() {
-		if(this.hidden) {
+		if (this.hidden) {
 			return;
 		}
 
@@ -89,15 +89,15 @@ public class UiItemSlot extends UiComponent {
 		int width = this.getWidth();
 		int height = this.getHeight();
 
-		if(this.active) {
+		if (this.active) {
 			Assets.inventorySlot5Texture.draw(x, y, width, height);
 		} else {
 			this.texture.draw(x, y, width, height);
 		}
 
-		if(this.itemHolder != null && this.itemHolder.getItem() != null) {
+		if (this.itemHolder != null && this.itemHolder.getItem() != null) {
 			this.itemHolder.renderAt(x, y, width, height);
-		} else if(this.back != null) {
+		} else if (this.back != null) {
 			this.back.draw(x + (width - this.back.getWidth()) / 2, y + (height - this.back.getHeight()) / 2);
 		}
 	}
@@ -123,7 +123,7 @@ public class UiItemSlot extends UiComponent {
 	}
 
 	public Item getItem() {
-		if(this.itemHolder == null) {
+		if (this.itemHolder == null) {
 			return null;
 		}
 
@@ -134,27 +134,27 @@ public class UiItemSlot extends UiComponent {
 		switch(this.type) {
 			case ANY: case TRASH: default: break;
 			case ACCESSORY: case VANITY_ACCESSORY:
-				if(!(holder.getItem() instanceof Accessory)) {
+				if (!(holder.getItem() instanceof Accessory)) {
 					return false;
 				}
 			break;
 			case ARMOR: case VANITY:
-				if(!(holder.getItem() instanceof Armor)) {
+				if (!(holder.getItem() instanceof Armor)) {
 					return false;
 				}
 			break;
 			case COIN:
-				if(!(holder.getItem() instanceof Coin)) {
+				if (!(holder.getItem() instanceof Coin)) {
 					return false;
 				}
 			break;
 			case AMMO:
-				if(!(holder.getItem() instanceof Ammo)) {
+				if (!(holder.getItem() instanceof Ammo)) {
 					return false;
 				}
 			break;
 			case DYE:
-				if(!(holder.getItem() instanceof Dye)) {
+				if (!(holder.getItem() instanceof Dye)) {
 					return false;
 				}
 			break;
@@ -165,17 +165,17 @@ public class UiItemSlot extends UiComponent {
 
 	@Override
 	protected void onStateChange() {
-		if(this.state == State.MOUSE_DOWN) {
-			if(LastTry.player.inventory.isOpen()) {
-				if(LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-					if(LastTry.player.inventory.currentItem != null && this.itemHolder != null
+		if (this.state == State.MOUSE_DOWN) {
+			if (LastTry.player.inventory.isOpen()) {
+				if (LastTry.input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+					if (LastTry.player.inventory.currentItem != null && this.itemHolder != null
 							&& this.itemHolder.getItem() == LastTry.player.inventory.currentItem.getItem()) {
 
-						if(this.canHold(LastTry.player.inventory.currentItem)) {
+						if (this.canHold(LastTry.player.inventory.currentItem)) {
 							int count = LastTry.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
 							int max = this.itemHolder.getItem().getMaxInStack();
 
-							if(count <= max) {
+							if (count <= max) {
 								this.itemHolder.setCount(count);
 								LastTry.player.inventory.currentItem = null;
 							} else {
@@ -189,7 +189,7 @@ public class UiItemSlot extends UiComponent {
 						LastTry.player.inventory.currentItem = this.itemHolder;
 						this.itemHolder = tmp;
 					}
-				} else if(LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+				} else if (LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
 					// TODO
 				}
 			}

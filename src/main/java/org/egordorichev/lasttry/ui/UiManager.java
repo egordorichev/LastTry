@@ -10,7 +10,7 @@ public class UiManager {
 	}
 
 	public void render() {
-		for(UiComponent component : this.components) {
+		for (UiComponent component : this.components) {
 			component.render();
 		}
 	}

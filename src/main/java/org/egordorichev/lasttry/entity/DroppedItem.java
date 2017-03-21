@@ -27,11 +27,11 @@ public class DroppedItem extends Entity {
 	public void update(int dt) {
 		super.update(dt);
 
-		if(this.getHitbox().intersects(LastTry.player.getHitbox())) {
-			if(this.holder.getItem() == Item.heart) {
+		if (this.getHitbox().intersects(LastTry.player.getHitbox())) {
+			if (this.holder.getItem() == Item.heart) {
 				LastTry.player.modifyHp(+20 * this.holder.getCount());
 			} else { // TODO: mana
-				if(LastTry.player.inventory.add(this.holder)) {
+				if (LastTry.player.inventory.add(this.holder)) {
 				}
 			}
 

@@ -20,7 +20,7 @@ public class BlockGround extends Block {
 
 		int binary = this.calculateBinary((t instanceof BlockGround), (r instanceof BlockGround), (b instanceof BlockGround), (l instanceof BlockGround));
 
-		if(binary == 15) {
+		if (binary == 15) {
 			/*boolean tr = LastTry.world.getBlock(x + 1, y - 1) instanceof BlockGround;
 			boolean br = LastTry.world.getBlock(x + 1, y + 1) instanceof BlockGround;
 			boolean bl = LastTry.world.getBlock(x - 1, y + 1) instanceof BlockGround;

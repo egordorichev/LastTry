@@ -20,10 +20,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GamePlayState extends BasicGameState {
-	private Enemy enemy;
-
 	public GamePlayState() {
-		String worldName = "test";
+		String worldName = "test"; // Later will be passed from menu
 		// Must be powers of two
 		int worldWidth = 512;
 		int worldHeight = 512;
@@ -40,7 +38,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			LastTry.world.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
 			LastTry.world.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
 		}
@@ -62,43 +60,46 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
-
-		this.enemy = LastTry.world.spawnEnemy(EnemyID.eyeOfCthulhu, LastTry.player.getGridX(), LastTry.player.getGridY() - 100);
 	}
 
+	/**
+	 * @return state ID, used for switching states
+	 */
 	@Override
 	public int getID() {
 		return 1;
 	}
 
+	/**
+	 * Called on init
+	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
 	}
 
+	/**
+	 * Render game
+	 */
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)
 			throws SlickException {
 
 		if (Display.wasResized()) {
-			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt
-																			// work,
-																			// FIXME
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, why?																// FIXME
 		}
 
 		LastTry.world.currentBiome.renderBackground();
-		LastTry.camera.set(graphics);
+		LastTry.camera.set();
 		LastTry.world.render();
 		LastTry.player.render();
-		LastTry.camera.unset(graphics);
+		LastTry.camera.unset();
 
 		int mouseX = LastTry.input.getMouseX();
 		int mouseY = LastTry.input.getMouseY();
 
 		Assets.radialTexture.draw(mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.getX() % Block.TEX_SIZE,
-				mouseY - mouseY % Block.TEX_SIZE - 48 - LastTry.camera.getY() % Block.TEX_SIZE);
-
-		// TODO: fix it position
+			mouseY - mouseY % Block.TEX_SIZE - 48 - LastTry.camera.getY() % Block.TEX_SIZE); // TODO: fix its position
 
 		int hp = LastTry.player.getHp();
 		int x = LastTry.getWindowWidth() - 260;
@@ -112,25 +113,22 @@ public class GamePlayState extends BasicGameState {
 		LastTry.ui.render();
 		LastTry.debug.render();
 	}
-
+	
+	/**
+	 * Updates game logic
+	 */
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int dt) throws SlickException {
 		LastTry.world.update(dt);
 		LastTry.player.update(dt);
 
-		LastTry.camera
-				.setPosition(
-						Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),
-								Math.max(Block.TEX_SIZE,
-										LastTry.player.getX() + LastTry.player.getWidth() / 2
-												- LastTry.getWindowWidth() / 2)),
-				Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - LastTry.getWindowHeight(), Math.max(
-						Block.TEX_SIZE,
-						LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
+		LastTry.camera.setPosition(Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),
+			Math.max(Block.TEX_SIZE, LastTry.player.getX() + LastTry.player.getWidth() / 2 - LastTry.getWindowWidth() / 2)),
+			Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - LastTry.getWindowHeight(), 
+			Math.max(Block.TEX_SIZE, LastTry.player.getY() + LastTry.player.getHeight() / 2 - LastTry.getWindowHeight() / 2)));
 
 		if (LastTry.input.isKeyPressed(Input.KEY_TAB)) {
 			LastTry.debug.toggle();
-			this.enemy.die();
 		}
 	}
 
