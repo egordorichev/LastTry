@@ -16,11 +16,6 @@ public class SplashState extends BasicGameState {
 	private final static boolean SKIP_SPLASH = true;
 	
 	/**
-	 * Total splashes count, will be selected random with name LastTry.random.nextInt(SPLASH_COUNT) + ".png"
-	 */
-	private final static int SPLASH_COUNT = 1;
-	
-	/**
 	 * Fade in and fade out speed
 	 */
 	private final static float ANIMATION_SPEED = 0.2f;
@@ -50,6 +45,10 @@ public class SplashState extends BasicGameState {
 	 */
 	private volatile String loadMessage;
 
+	public SplashState() {
+		this.loaded = false;
+	} 
+	
 	/**
 	 * @return state id, used for switching to other game states
 	 */
@@ -63,13 +62,11 @@ public class SplashState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.splash = new Image("assets/images/splashes/" + (LastTry.random.nextInt(SPLASH_COUNT) + 1) + ".png");
+		this.splash = new Image("assets/images/splashes/1.png");
 		this.splash.setAlpha(0.1f);
 
 		Image cursor = new Image("assets/images/Cursor.png");
 		gameContainer.setMouseCursor(cursor, 0, 0);
-
-		this.loaded = false;
 
 		Display.setResizable(true);
 
@@ -108,17 +105,9 @@ public class SplashState extends BasicGameState {
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int dt) throws SlickException {
 		if (this.fadeUp) {
-			if (this.splash.getAlpha() < 1.0f) { // Fade into splash
-				this.splash.setAlpha(this.splash.getAlpha() + ANIMATION_SPEED);
-			} else if (this.delay > 0) { // Stay on splash for roughly a second
-				this.delay--;
-			} else { // Begin fade-out
-				this.fadeUp = false;
-			}
+			this.fadeUp();
 		} else {
-			if (this.splash.getAlpha() > 0.1f) {
-				this.splash.setAlpha(this.splash.getAlpha() - ANIMATION_SPEED);
-			}
+			this.fadeOut();
 		}
 		
 		// Skip if not loaded
@@ -126,11 +115,34 @@ public class SplashState extends BasicGameState {
 			return;
 		}
 		
-		boolean animationComplete = !this.fadeUp && this.splash.getAlpha() <= 0.1f;
+		boolean transparent = this.splash.getAlpha() <= 0.1f;
+		boolean animationComplete = !this.fadeUp && transparent;
 		
-		if (SKIP_SPLASH || (animationComplete)) {
+		if (SKIP_SPLASH || animationComplete) {
 			stateBasedGame.addState(new GamePlayState());
 			stateBasedGame.enterState(1);
+		}
+	}
+	
+	/**
+	 * Fade in animation
+	 */
+	private void fadeUp() {
+		if (this.splash.getAlpha() < 1.0f) { // Fade into splash
+			this.splash.setAlpha(this.splash.getAlpha() + ANIMATION_SPEED);
+		} else if (this.delay > 0) { // Stay on splash for roughly a second
+			this.delay--;
+		} else { // Begin fade-out
+			this.fadeUp = false;
+		}
+	}
+	
+	/**
+	 * Fade out animation
+	 */
+	private void fadeOut() {
+		if (this.splash.getAlpha() > 0.1f) {
+			this.splash.setAlpha(this.splash.getAlpha() - ANIMATION_SPEED);
 		}
 	}
 }
