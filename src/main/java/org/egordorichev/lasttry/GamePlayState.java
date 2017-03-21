@@ -86,10 +86,10 @@ public class GamePlayState extends BasicGameState {
 																			// FIXME
 		}
 
-		LastTry.camera.set(graphics);
+		LastTry.camera.set();
 		LastTry.world.render();
 		LastTry.player.render();
-		LastTry.camera.unset(graphics);
+		LastTry.camera.unset();
 
 		int mouseX = LastTry.input.getMouseX();
 		int mouseY = LastTry.input.getMouseY();
