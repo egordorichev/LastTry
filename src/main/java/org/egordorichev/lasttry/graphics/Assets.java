@@ -55,6 +55,9 @@ public class Assets {
 	public static Image inventorySlot4Texture = loadImage("InventorySlot4.png");
 	public static Image inventorySlot5Texture = loadImage("InventorySlot5.png");
 	public static Image inventoryBackTexture = loadImage("InventoryBack.png");
+	public static Image forestBackTexture = loadImage("ForestBackground.png");
+	public static Image corruptionBackTexture = loadImage("CorruptionBackground.png");
+	public static Image crimsonBackTexture = loadImage("CrimsonBackground.png");
 	public static Image trashTexture = loadImage("Trash.png");
 
 	public static UnicodeFont font = loadFont("font.ttf", 22);

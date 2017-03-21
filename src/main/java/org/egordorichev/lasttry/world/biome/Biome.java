@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.world.biome;
 
+import org.newdawn.slick.Image;
+
 public class Biome {
 	public static Biome forest = new ForestBiome();
 	public static Biome desert = new DesertBiome();
@@ -9,7 +11,7 @@ public class Biome {
 	public static Biome crimsonDesert = new CrimsonDesertBiome();
 
 	protected String name;
-	// TODO: protected Image[] backgrounds;
+	protected Image texture;
 	
 	public Biome(String name) {
 		this.name = name;
@@ -17,6 +19,10 @@ public class Biome {
 	
 	public String getName() {
 		return this.name;
+	}
+
+	public void renderBackground() {
+		this.texture.draw(0, 0);
 	}
 
 	public static void preload() {

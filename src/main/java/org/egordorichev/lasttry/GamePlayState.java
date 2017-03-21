@@ -86,6 +86,7 @@ public class GamePlayState extends BasicGameState {
 																			// FIXME
 		}
 
+		LastTry.world.currentBiome.renderBackground();
 		LastTry.camera.set(graphics);
 		LastTry.world.render();
 		LastTry.player.render();

@@ -27,7 +27,7 @@ public class World {
 	/**
 	 * Current biome
 	 */
-	public Biome currentBiome;
+	public Biome currentBiome = Biome.forest;
 	/**
 	 * World width in tiles.
 	 */
@@ -92,12 +92,6 @@ public class World {
 	 * Render the world.
 	 */
 	public void render() {
-		if(this.currentBiome == null) {
-			this.currentBiome = Biome.forest;
-		}
-		
-		// TODO: this.currentBiome.renderBackgrounds();
-		
 		int windowWidth = LastTry.getWindowWidth();
 		int windowHeight = LastTry.getWindowHeight();
 		int tww = windowWidth / Block.TEX_SIZE;
@@ -548,10 +542,10 @@ public class World {
 				int tcx = (int) LastTry.camera.getX() / Block.TEX_SIZE;
 				int tcy = (int) LastTry.camera.getY() / Block.TEX_SIZE;
 
-				int minY = Math.max(0, tcy - 2);
-				int maxY = Math.min(height - 1, tcy + twh + 2);
-				int minX = Math.max(0, tcx - 2);
-				int maxX = Math.min(width - 1, tcx + tww + 2);
+				int minY = Math.max(0, tcy - 10);
+				int maxY = Math.min(height - 1, tcy + twh + 10);
+				int minX = Math.max(0, tcx - 10);
+				int maxX = Math.min(width - 1, tcx + tww + 10);
 
 				for (int y = minY; y < maxY; y++) {
 					for (int x = minX; x < maxX; x++) {
@@ -600,7 +594,7 @@ public class World {
 
 				LastTry.log("Current biome is: " + LastTry.world.currentBiome.getName());
 			}
-		}, 0, 3, TimeUnit.SECONDS);
+		}, 0, 1, TimeUnit.SECONDS);
 	}
 	/**
 	 * Converts mouse X to world based-coordinate
