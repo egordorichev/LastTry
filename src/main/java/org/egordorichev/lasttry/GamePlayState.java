@@ -62,7 +62,7 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
 
-		LastTry.player.addEffect(Buff.lifeforce, 60);
+		//LastTry.player.addEffect(Buff.lifeforce, 60);
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);
 		LastTry.player.addEffect(Buff.honey, 30);

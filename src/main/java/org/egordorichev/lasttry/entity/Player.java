@@ -49,7 +49,10 @@ public class Player extends Entity {
 		jumpingAnimation.addFrame(this.texture.getSubImage(0, 48, 32, 48), 1000); // TODO
 
 		Animation flyingAnimation = new Animation();
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 768, 32, 40), 40);
+		flyingAnimation.addFrame(this.texture.getSubImage(0, 768, 32, 40), 80);
+		flyingAnimation.addFrame(this.texture.getSubImage(0, 808, 32, 40), 80);
+		flyingAnimation.addFrame(this.texture.getSubImage(0, 848, 32, 40), 80);
+		flyingAnimation.addFrame(this.texture.getSubImage(0, 888, 32, 40), 80);
 
 		Animation deadAnimation = new Animation(false);
 		deadAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000); // TODO
@@ -76,7 +79,7 @@ public class Player extends Entity {
 
 	@Override
 	public void onSpawn() {
-		for (int y = 0; y < 3; y++) {
+			for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 2; x++) {
 				LastTry.world.setBlock(null, this.getGridX() + x, this.getGridY() + y);
 			}

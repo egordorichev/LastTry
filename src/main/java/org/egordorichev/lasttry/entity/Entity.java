@@ -135,6 +135,21 @@ public abstract class Entity {
 			effect.update(dt);
 		}
 
+		// Regeneration
+
+		/*
+		boolean still = this.velocity.x == 0 && this.velocity.y == 0;
+
+
+		int buffs = 0; // TODO: count buffs
+		int time = 1; // TODO: time since last hit
+
+		float regen = ((this.maxHp / 400.0f) * 0.85f + 0.15f) * time + buffs * ((still) ? 0.5f : 1.25f)
+			* (LastTry.world.isExpert() ? 1 : 0.5f);
+
+		this.hp = Math.min(this.maxHp, this.hp + (int) regen);
+		*/
+
 		// Increment velocity downwards.
 		// TODO: Gravity should not be a constant, but instead should be based
 		// off of the y-position in the world.

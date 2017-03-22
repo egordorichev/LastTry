@@ -343,7 +343,7 @@ public class World {
 	 *            X-position of the world.
 	 * @param y
 	 *            Y-position of the world.
-	 * @returnd Data tag value.
+	 * @return Data tag value.
 	 */
 	public byte getData(int x, int y) {
 		TileData tileData = this.getTile(x, y);
