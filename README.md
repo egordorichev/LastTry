@@ -6,6 +6,8 @@ Our goal is to recreate original game with better perfomance, and old content.
 
 ###### Documentation is available at [https://github.com/egordorichev/LastTry/wiki](https://github.com/egordorichev/LastTry/wiki)
 
+###### Java Doc is aviable at [https://egordorichev.github.io/](https://egordorichev.github.io/)
+
 ### Building
 
 Clone the repo:
