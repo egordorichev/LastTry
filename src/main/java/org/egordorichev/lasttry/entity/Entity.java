@@ -1,86 +1,75 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.effect.Effect;
+import org.egordorichev.lasttry.effect.EffectData;
 import org.egordorichev.lasttry.item.tiles.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
+import java.util.ArrayList;
+
 public abstract class Entity {
 	/**
 	 * Absolute speed below this value is set to 0, which makes comparisons of
-	 * velocity == 0 much simpler.
+	 * velocity == 0 much simpler
 	 */
 	private static final float STOP_VELOCITY = 0.1F;
-	/**
-	 * Current hit-points out of the total {@link #maxHp maximum}.
-	 */
+
+	/** Current hit-points out of the total {@link #maxHp maximum} */
 	protected int hp;
-	/**
-	 * Maximum hit-points.
-	 */
+
+	/** Maximum hit-points */
 	protected int maxHp;
-	/**
-	 * The height <i>(in blocks)</i> the entity can step.
-	 */
+
+	/** The height in blocks the entity can step */
 	protected float stepHeight = 1.05F;
-	/**
-	 * Base defense-points.
-	 */
+
+	/** Base defense-points */
 	protected int defense;
-	/**
-	 * Base damage-points.
-	 */
+
+	/** Base damage-points */
 	protected int damage;
 
-	/**
-	 * Invulnerability status. If enabled the entity will not be able to take
-	 * damage.
-	 */
+	/** Invulnerability status. If enabled the entity will not be able to take damage */
 	protected boolean invulnerable;
+
 	/**
 	 * Status declaring if the entity should receive updates. If this is false,
 	 * the entity is dead and should be removed.
 	 */
 	protected boolean shouldUpdate = true;
+
 	/**
 	 * Status for if the entity's hitbox should be recognized. Non-solid
 	 * entities can clip through tiles and other entities like a ghost.
 	 */
 	protected boolean isSolid = true;
-	/**
-	 * The dimensions that the entity is rendered in.
-	 */
+
+	/** The dimensions that the entity is rendered in */
 	protected Rectangle renderBounds;
-	/**
-	 * The dimensions that the entity takes up in 2D space.
-	 */
+
+	/** The dimensions that the entity takes up in 2D space */
 	protected Rectangle hitbox;
-	/**
-	 * The image containing the entity's sprite map.
-	 */
+
+	/** The image containing the entity's sprite map */
 	protected Image texture;
-	/**
-	 * The animation state of the entity.
-	 */
+
+	/** The animation state of the entity */
 	protected State state;
-	/**
-	 * The directional motion of the entity.
-	 */
+
+	/** The directional motion of the entity. */
 	protected Vector2f velocity;
-	/**
-	 * The horizontal direction the entity faces. Possible values:
-	 * <ul>
-	 * <li>{@link org.egordorichev.lasttry.util.Direction#LEFT Left}</li>
-	 * <li>{@link org.egordorichev.lasttry.util.Direction#RIGHT Right}</li>
-	 * </ul>
-	 */
+
+	/** The horizontal direction the entity faces */
 	protected Direction direction;
 
-	/**
-	 * Animation state of the entity.
-	 */
+	/** Effects, applyed on entity */
+	protected ArrayList<EffectData> effects;
+
+	/** Animation state of the entity */
 	public enum State {
 		IDLE(0), MOVING(1), JUMPING(2), FALLING(3), FLYING(4), DEAD(5);
 
@@ -108,11 +97,11 @@ public abstract class Entity {
 		this.maxHp = maxHp;
 		this.hp = this.maxHp;
 		this.renderBounds = new Rectangle(0, 0, 32, 48);
-		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6,
-				this.renderBounds.height - 3);
+		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6, this.renderBounds.height - 3);
 		this.velocity = new Vector2f(0, 0);
 		this.direction = Direction.RIGHT;
 		this.state = State.IDLE;
+		this.effects = new ArrayList<>();
 	}
 
 	public Entity() {
@@ -142,6 +131,10 @@ public abstract class Entity {
 			return;
 		}
 
+		for (EffectData effect : this.effects) {
+			effect.update(dt);
+		}
+
 		// Increment velocity downwards.
 		// TODO: Gravity should not be a constant, but instead should be based
 		// off of the y-position in the world.
@@ -151,14 +144,16 @@ public abstract class Entity {
 			this.velocity.y += 0.4f;
 		}
 
-		// TODO: Optimize and handle both X/Y velocity in one pass.
-		// Current issue: If gravity (above) causes collision on
-		// y-axis a combined xy update check will say there is a
-		// collision and prevent motion updates for both x and y velocities
-		// even if there is no x-axis specific collision.
-		//
-		// If the entity is not still on the x-axis, update their position based
-		// on their current velocity.
+		/* TODO: Optimize and handle both X/Y velocity in one pass.
+		 * Current issue: If gravity (above) causes collision on
+		 * y-axis a combined xy update check will say there is a
+		 * collision and prevent motion updates for both x and y velocities
+		 * even if there is no x-axis specific collision.
+		 *
+		 * If the entity is not still on the x-axis, update their position based
+		 * on their current velocity.
+		 */
+
 		if (this.velocity.x != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
 					this.hitbox.width, this.hitbox.height);
@@ -166,20 +161,26 @@ public abstract class Entity {
 			newHitbox.x += this.velocity.x;
 
 			// If the entity is not solid, they can go anywhere
+
 			if (!this.isSolid) {
 				this.renderBounds.x += this.velocity.x;
 			} else {
 				// If they collide with the x-velocity applied...
+
 				if (LastTry.world.isColliding(newHitbox)) {
-					// If they collide with a block when their Y-position is
-					// shifted up by a block then they are climbing up a wall
-					// that is too steep to climb.
+					/* If they collide with a block when their Y-position is
+					 * shifted up by a block then they are climbing up a wall
+					 * that is too steep to climb.
+					 */
+
 					float step = Block.TEX_SIZE * stepHeight;
+
 					if (LastTry.world.isColliding(newHitbox.offset(0, -step))) {
 						// Intersection with a wall too steep to climb
 						this.velocity.x = 0;
 					} else {
 						// Wall isn't steep, can be climbed by entity.
+
 						this.renderBounds.x += this.velocity.x;
 						this.renderBounds.y -= Block.TEX_SIZE / 2;
 					}
@@ -194,8 +195,12 @@ public abstract class Entity {
 				this.velocity.x = 0;
 			}
 		}
-		// If the entity is not still on the y-axis, update their position based
-		// on their current velocity.
+
+		/*
+		 * If the entity is not still on the y-axis, update their position based
+		 * on their current velocity.
+		 */
+
 		if (this.velocity.y != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
 					this.hitbox.width, this.hitbox.height);
@@ -263,6 +268,36 @@ public abstract class Entity {
 		this.velocity.y += y;
 
 		this.state = State.FLYING;
+	}
+
+	/**
+	 * Adds effect to entity, but if it is already applied, updates it's time
+	 * @param effect effect to apply
+	 * @param time time of effect
+	 */
+	public void addEffect(Effect effect, int time) {
+		for(EffectData effectData : this.effects) {
+			if(effectData.getEffect() == effect) {
+				effectData.setTime(time);
+				return;
+			}
+		}
+
+		this.effects.add(new EffectData(this, effect, time));
+	}
+
+	/**
+	 * Removes effect from entity
+	 * @param effect effect to apply
+	 */
+	public void removeEffect(Effect effect) {
+		for(int i = 0; i < this.effects.size(); i++) {
+			EffectData effectData = this.effects.get(i);
+
+			if(effectData.getEffect() == effect) {
+				this.effects.remove(i);
+			}
+		}
 	}
 
 	/**
