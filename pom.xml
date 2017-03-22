@@ -15,7 +15,7 @@
         <slf4j-api.version>1.7.24</slf4j-api.version>
         <logback.version>1.2.1</logback.version>
     </properties>
-
+   
     <dependencies>
 
         <!-- Slick2D -->
@@ -83,18 +83,19 @@
         <!-- Add version data to the manifest file -->
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
+		 <groupId>org.apache.maven.plugins</groupId>
+		 <artifactId>maven-jar-plugin</artifactId>
+		 <version>3.0.2</version>
+		 <configuration>
                     <archive>
                         <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
+
+			    <mainClass>org.egordorichev.lasttry.LastTry</mainClass>
+			</manifest>
                     </archive>
                 </configuration>
             </plugin>
-
+    
             <!-- Enforce Java 8 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
