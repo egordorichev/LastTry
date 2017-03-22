@@ -451,10 +451,6 @@ public abstract class Entity {
 		this.maxHp = maxHp;
 	}
 
-	public void modifyMaxHP(int amount) {
-		this.maxHp = Math.max(1, this.maxHp + amount);
-	}
-
 	/**
 	 * Return the entity's {@link #maxHp maximum hit-points}.
 	 * 

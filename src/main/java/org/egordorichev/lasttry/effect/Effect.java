@@ -10,12 +10,16 @@ public abstract class Effect {
 	/** Effect name */
 	protected String name;
 
+	/** Effect description */
+	protected String description;
+
 	/** Effect icon */
 	protected Image texture;
 
-	public Effect(String name, Image texture) {
+	public Effect(String name, String description, Image texture) {
 		this.name = name;
 		this.canBeRemoved = true;
+		this.description = description;
 		this.texture = texture;
 	}
 
@@ -39,11 +43,20 @@ public abstract class Effect {
 	 */
 	public abstract void remove(Entity entity);
 
-	/** Retuns effect name
+	/**
+	 * Returns effect name
 	 * @return effect name
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * Returns effect description
+	 * @return effect description
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**

@@ -8,6 +8,9 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Assets {
+	public static UnicodeFont font = loadFont("font.ttf", 22);
+	public static UnicodeFont smallFont = loadFont("font.ttf", 18);
+	
 	public static Image dirtTexture = loadImage("DirtTile.png");
 	public static Image dirtIcon = loadImage("DirtIcon.png");
 	public static Image grassTexture = loadImage("GrassTile.png");
@@ -60,8 +63,53 @@ public class Assets {
 	public static Image crimsonBackTexture = loadImage("CrimsonBackground.png");
 	public static Image trashTexture = loadImage("Trash.png");
 
-	public static UnicodeFont font = loadFont("font.ttf", 22);
-	public static UnicodeFont smallFont = loadFont("font.ttf", 18);
+	// Buffs
+
+	public static Image ammoReservationBuffTexture = loadImage("AmmoReservationBuff.png");
+	public static Image archeryBuffTexture = loadImage("ArcheryBuff.png");
+	public static Image battleBuffTexture = loadImage("BattleBuff.png");
+	public static Image builderBuffTexture = loadImage("BuilderBuff.png");
+	public static Image calmBuffTexture = loadImage("CalmBuff.png");
+	public static Image crateBuffTexture = loadImage("CrateBuff.png");
+	public static Image dangersenseBuffTexture = loadImage("DangersenseBuff.png");
+	public static Image enduranceBuffTexture = loadImage("EnduranceBuff.png");
+	public static Image featherfallBuffTexture = loadImage("FeatherfallBuff.png");
+	public static Image fishingBuffTexture = loadImage("FishingBuff.png");
+	public static Image flipperBuffTexture = loadImage("FlipperBuff.png");
+	public static Image gillsBuffTexture = loadImage("GillsBuff.png");
+	public static Image gravityBuffTexture = loadImage("GravityBuff.png");
+	public static Image heartreachBuffTexture = loadImage("HeartreachBuff.png");
+	public static Image hunterBuffTexture = loadImage("HunterBuff.png");
+	public static Image infernoBuffTexture = loadImage("InfernoBuff.png");
+	public static Image invisibilityBuffTexture = loadImage("InvisibilityBuff.png");
+	public static Image ironskinBuffTexture = loadImage("IronskinBuff.png");
+	public static Image lifeforceBuffTexture = loadImage("LifeforceBuff.png");
+	public static Image lovestruckBuffTexture = loadImage("LovestruckBuff.png");
+	public static Image magicPowerBuffTexture = loadImage("MagicPowerBuff.png");
+	public static Image manaRegenerationBuffTexture = loadImage("ManaRegenerationBuff.png");
+	public static Image miningBuffTexture = loadImage("MiningBuff.png");
+	public static Image nightOwlBuffTexture = loadImage("NightOwlBuff.png");
+	public static Image obsidianSkinBuffTexture = loadImage("ObsidianSkinBuff.png");
+	public static Image rageBuffTexture = loadImage("RageBuff.png");
+	public static Image regenerationBuffTexture = loadImage("RegenerationBuff.png");
+	public static Image shineBuffTexture = loadImage("ShineBuff.png");
+	public static Image sonarBuffTexture = loadImage("SonarBuff.png");
+	public static Image spelunkerBuffTexture = loadImage("SpelunkerBuff.png");
+	public static Image summoningBuffTexture = loadImage("SummoningBuff.png");
+	public static Image swiftnessBuffTexture = loadImage("SwiftnessBuff.png");
+	public static Image thornsBuffTexture = loadImage("ThornsBuff.png");
+	public static Image titanBuffTexture = loadImage("TitanBuff.png");
+	public static Image warmthBuffTexture = loadImage("WarmthBuff.png");
+	public static Image waterWalkingBuffTexture = loadImage("WaterWalkingBuff.png");
+	public static Image wrathBuffTexture = loadImage("WrathBuff.png");
+	public static Image wellFedBuffTexture = loadImage("WellFedBuff.png");
+	public static Image cozyFireBuffTexture = loadImage("CozyFireBuff.png");
+	public static Image dryadsBlessingFireBuffTexture = loadImage("DryadsBlessingBuff.png");
+	public static Image happyBuffTexture = loadImage("HappyBuff.png");
+	public static Image heartLampBuffTexture = loadImage("HeartLampBuff.png");
+	public static Image honeyBuffTexture = loadImage("HoneyBuff.png");
+	public static Image peaceCandleBuffTexture = loadImage("PeaceCandleBuff.png");
+	public static Image starInABottleBuffTexture = loadImage("StarInABottleBuff.png");
 
 	public static Image loadImage(String path) {
 		try {
@@ -70,6 +118,7 @@ public class Assets {
 
 			return image;
 		} catch(SlickException exception) {
+			LastTry.handleException(exception);
 			LastTry.log("Failed to load '" + path + "' (Not found)");
 			System.exit(-1);
 		}
