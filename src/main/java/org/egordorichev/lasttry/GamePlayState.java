@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry;
 
+import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.EnemyID;
@@ -60,6 +61,11 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
+
+		LastTry.player.addEffect(Buff.lifeforce, 60);
+		LastTry.player.addEffect(Buff.ironskin, 240);
+		LastTry.player.addEffect(Buff.regeneration, 240);
+		LastTry.player.addEffect(Buff.honey, 30);
 	}
 
 	/**
@@ -120,6 +126,7 @@ public class GamePlayState extends BasicGameState {
 		}
 
 		LastTry.ui.render();
+		LastTry.player.renderBuffs();
 		LastTry.debug.render();
 	}
 	

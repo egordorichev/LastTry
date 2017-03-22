@@ -21,11 +21,18 @@ public class EffectData {
 	public EffectData(Entity entity, Effect effect, int time) {
 		this.effect = effect;
 		this.entity = entity;
-		this.totalTime = time;
-		this.currentTime = time;
 		this.done = false;
 
+		this.setTime(time);
 		this.effect.apply(this.entity);
+	}
+
+	/** Renders effect icon at given position
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 */
+	public void render(int x, int y) {
+		this.effect.render(x, y);
 	}
 
 	/**
@@ -54,8 +61,8 @@ public class EffectData {
 	 * @param time effect time
 	 */
 	public void setTime(int time) {
-		this.currentTime = time;
-		this.totalTime = time;
+		this.currentTime = time * 60;
+		this.totalTime = time * 60;
 	}
 
 	/**

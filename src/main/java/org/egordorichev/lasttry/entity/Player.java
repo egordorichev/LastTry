@@ -92,7 +92,15 @@ public class Player extends Entity {
 	@Override
 	public void render() {
 		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-				.draw(this.renderBounds.x, this.renderBounds.y);
+			.draw(this.renderBounds.x, this.renderBounds.y);
+	}
+
+	public void renderBuffs() {
+		if (!this.inventory.isOpen()) {
+			for (int i = 0; i < this.effects.size(); i++) {
+				this.effects.get(i).render(10 + (i % 11) * 34, 90);
+			}
+		}
 	}
 
 	@Override
