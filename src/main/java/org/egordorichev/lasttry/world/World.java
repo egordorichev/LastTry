@@ -258,11 +258,16 @@ public class World {
 	 */
 	public int getHighest(int x) {
 		int y = 0;
-		
-		while (true) {
+
+		while(true) {
 			TileData td = getTile(x, y);
-			if (td.block != null)
-				return y - 3;
+
+			if(td != null) {
+				if(td.block != null) {
+					return y - 3;
+				}
+			}
+
 			y++;
 		}
 	}

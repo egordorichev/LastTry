@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.util.Noise;
 
 import java.util.ArrayList;
 
@@ -35,23 +34,19 @@ public class WorldGenerator {
 				int width = generator.getWorldWidth();
 				int height = generator.getWorldHeight();
 
-				double displace = height / 4;
-				double roughness = 0.45;
-				double[] points = new double[width + 1];
-				double power = Math.pow(2, Math.ceil(Math.log(width) / (Math.log(2))));
+				double[] points = new double[width];
 
-				points[0] = 200 + ((displace) * LastTry.random.nextDouble() * 2) - displace;
-				points[(int) power] = points[0];
+				int max = height - 100;
+				int min = height - 250;
 
-				displace *= roughness;
+				for (int i = 0; i < width; i++) {
+					points[i] = LastTry.random.nextInt((max - min) + 1) + min;
+				}
 
-				for (int i = 1; i < power; i *= 2) {
-					for (int j = (int) (power / i) / 2; j < power; j+= power / i){
-						points[j] = ((points[j - (int) (power / i) / 2] + points[j + (int) (power / i) / 2]) / 2);
-						points[j] += ((displace) * LastTry.random.nextDouble() * 2) - displace;
+				for (int j = 0; j < 100; j++) {
+					for (int i = 1; i < width - 1; i++) {
+						points[i] = (points[i - 1] + points[i + 1]) / 2;
 					}
-
-					displace *= roughness;
 				}
 
 				for (int x = 0; x < width; x++) {
@@ -73,16 +68,84 @@ public class WorldGenerator {
 		this.tasks.add(new GeneratorTask() {
 			@Override
 			public void run(WorldGenerator generator) {
-				Noise noise = new Noise(generator.getWorldWidth(), generator.getWorldHeight());
-				float[][] perlinNoise = noise.generatePerlinNoise(8);
+				boolean[][] terrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
 
 				for (int y = 0; y < generator.getWorldHeight(); y++) {
 					for (int x = 0; x < generator.getWorldWidth(); x++) {
-						if (perlinNoise[x][y] > 0.7f) {
+						terrain[x][y] = LastTry.random.nextBoolean();
+					}
+				}
+
+				for (int i = 0; i < 8; i++) {
+					terrain = this.nextStep(generator, terrain);
+				}
+
+				for (int y = 0; y < generator.getWorldHeight(); y++) {
+					for (int x = 0; x < generator.getWorldWidth(); x++) {
+						if (generator.getTile(x, y) != ItemID.dirtBlock) {
+							continue;
+						}
+
+						if (!terrain[x][y]) {
 							generator.setTile(ItemID.none, x, y);
+						} else {
+							int neighbors = this.calculateNeighbors(generator, terrain, x, y);
+
+							if (neighbors != 8) {
+								generator.setTile(ItemID.grassBlock, x, y);
+							}
 						}
 					}
 				}
+			}
+
+			private boolean[][] nextStep(WorldGenerator generator, boolean[][] terrain) {
+				boolean[][] newTerrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
+
+				for (int y = 0; y < generator.getWorldHeight(); y++) {
+					for (int x = 0; x < generator.getWorldWidth(); x++) {
+						int neighbors = this.calculateNeighbors(generator, terrain, x, y);
+
+						if (terrain[x][y]) {
+							if (neighbors < 3) {
+								newTerrain[x][y] = false;
+							} else {
+								newTerrain[x][y] = true;
+							}
+						} else {
+							if (neighbors > 4) {
+								newTerrain[x][y] = true;
+							} else {
+								newTerrain[x][y] = false;
+							}
+						}
+					}
+				}
+
+				return newTerrain;
+			}
+
+			private int calculateNeighbors(WorldGenerator generator, boolean[][] terrain, int x, int y) {
+				int neighbors = 0;
+
+				for (int j = y - 1; j < y + 2; j++) {
+					for (int i = x - 1; i < x + 2; i++) {
+						if (i == x && j == y) {
+							continue;
+						}
+
+						if (i < 0 || j < 0 || i >= generator.getWorldWidth() || j >= generator.getWorldHeight()) {
+							neighbors++;
+							continue;
+						}
+
+						if (terrain[i][j]) {
+							neighbors++;
+						}
+					}
+				}
+
+				return neighbors;
 			}
 		});
 
@@ -95,6 +158,10 @@ public class WorldGenerator {
 
 	public void setTile(int tileID, int x, int y) {
 		this.tiles[x][y] = tileID; // TODO: check bounds?
+	}
+
+	public int getTile(int x, int y) {
+		return this.tiles[x][y];
 	}
 
 	public int getWorldWidth() {

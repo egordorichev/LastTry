@@ -156,8 +156,8 @@ public class LastTry extends StateBasedGame {
 	 * Simple interface for logging
 	 * @param message message to log
 	 */
-	public static void log(String mesage) {
-		log.info(mesage);
+	public static void log(String message) {
+		log.info(message);
 	}
 
 	/**

@@ -23,8 +23,8 @@ public class GamePlayState extends BasicGameState {
 	public GamePlayState() {
 		String worldName = "test"; // Later will be passed from menu
 		// Must be powers of two
-		int worldWidth = 512;
-		int worldHeight = 512;
+		int worldWidth = 4096;
+		int worldHeight = 1024;
 
 		if (WorldProvider.exists(worldName)) {
 			LastTry.world = WorldProvider.load(worldName);
