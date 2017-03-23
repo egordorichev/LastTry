@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.entity.*;
 import org.egordorichev.lasttry.*;
+import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.world.World;
 import org.newdawn.slick.Input;
@@ -26,7 +27,7 @@ public class ModAPI {
 	 * @param id enemy id (listed in EntityID class)
 	 * @return new Enemy with given id, or null, if it is not found
 	 */
-	public static Enemy createEnemy(int id) {
+	public static Enemy createEnemy(short id) {
 		return Enemy.create(id);
 	}
 	
@@ -36,10 +37,8 @@ public class ModAPI {
 	 * @param y enemy spawn Y coordinate
 	 * @return new Enemy with given id, spawned on X, Y
 	 */
-	public static Enemy spawnEnemy(int id, int x, int y) {
-		// TODO
-
-		return null;
+	public static Enemy spawnEnemy(short id, int x, int y) {
+		return LastTry.entityManager.spawnEnemy(id, x, y);
 	}
 	
 	/**
@@ -48,7 +47,7 @@ public class ModAPI {
 	 * @param id with witch id the enemy will be defined
 	 * @param enemyClass enemy class
 	 */
-	public static void defineEnemy(int id, Class<? extends Enemy> enemyClass) {
+	public static void defineEnemy(short id, Class<? extends Enemy> enemyClass) {
 		Enemy.define(id, enemyClass);
 	}
 

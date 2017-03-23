@@ -1,18 +1,19 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.enemy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.BlueSlime;
-import org.egordorichev.lasttry.entity.enemy.EyeOfCthulhu;
-import org.egordorichev.lasttry.entity.enemy.GreenSlime;
+import org.egordorichev.lasttry.entity.Drop;
+import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.util.Direction;
 import org.newdawn.slick.Animation;
 
 public abstract class Enemy extends Entity {
-	public static HashMap<Integer, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
+	public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
 
 	protected static int maxAi;
 	protected int currentAi;
@@ -26,14 +27,14 @@ public abstract class Enemy extends Entity {
 		define(EnemyID.eyeOfCthulhu, EyeOfCthulhu.class);
 	}
 
-	public Enemy(int id, int maxHp, int defense, int damage) {
+	public Enemy(short id, int maxHp, int defense, int damage) {
 		super(maxHp, defense, damage);
 
 		this.animations = new Animation[State.values().length];
 		this.id = id;
 	}
 
-	public Enemy(int id) {
+	public Enemy(short id) {
 		super();
 
 		this.animations = new Animation[State.values().length];
@@ -93,19 +94,20 @@ public abstract class Enemy extends Entity {
 		return this.id;
 	}
 
-	public static void define(int id, Class<? extends Enemy> enemy) { 
+	public static void define(short id, Class<? extends Enemy> enemy) {
 		// TODO: handle duplicates
 		LastTry.log("Defined [" + id + "] as " + enemy.getSimpleName());
 		ENEMY_CACHE.put(id, enemy);
 	}
 
-	public static Enemy create(int id) {
+	public static Enemy create(short id) {
 		try {
 			Class<? extends Enemy> aClass = ENEMY_CACHE.get(id);
 
 			if (aClass != null) {
 				return aClass.newInstance();
 			} else {
+				LastTry.log.warn("Enemy with id " + id + " is not found");
 				return null;
 			}
 		} catch(Exception exception) {

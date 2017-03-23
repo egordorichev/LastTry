@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -19,7 +18,7 @@ public class Slime extends Enemy {
 	 */
 	protected boolean canJump;
 
-	public Slime(int id, int hp, int defense, int damage, Image texture) {
+	public Slime(short id, int hp, int defense, int damage, Image texture) {
 		super(id, hp, defense, damage);
 
 		this.drops.add(new Drop(Item.gel, Drop.Chance.ALWAYS, 1, 4));

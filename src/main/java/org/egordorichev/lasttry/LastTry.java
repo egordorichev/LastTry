@@ -23,6 +23,7 @@
 
 package org.egordorichev.lasttry;
 
+import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
@@ -36,65 +37,43 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.Random;
 
 public class LastTry extends StateBasedGame {
-	/**
-	 * Holds all slick2d-based stuff
-	 */
+	/** Holds all slick2d-based stuff */
 	public static GameContainer container;
 	
-	/**
-	 * Used for input handling
-	 */
+	/** Used for input handling */
 	public static Input input;
 	
-	/**
-	 * Used for drawing
-	 */
+	/** Used for drawing */
 	public static Graphics graphics;
 	
-	/**
-	 * The game world
-	 */
+	/** The game world */
 	public static World world;
 	
-	/**
-	 * Reference to client's player
-	 */
+	/** Reference to client's player */
 	public static Player player;
+
+	/** Entity manager */
+	public static EntityManager entityManager;
 	
-	/**
-	 * Game camera
-	 */
+	/** Game camera */
 	public static Camera camera;
 	
-	/**
-	 * Loads and handles mods
-	 */
+	/** Loads and handles mods */
 	public static ModLoader modLoader;
 	
-	/**
-	 * User Interface
-	 */
+	/** User Interface */
 	public static UiManager ui;
 	
-	/**
-	 * Slick2d app
-	 */
+	/** Slick2d app */
 	public static AppGameContainer app;
 	
-	/**
-	 * Debug helper
-	 */
+	/** Debug helper */
 	public static Debug debug;
 	
-	/**
-	 * Basic logger
-	 * adds info(), warn() and error() methods
-	 */
+	/** Basic logger, adds info(), warn() and error() methods */
 	public static Log log = new Log();
 	
-	/**
-	 * Random instance. Can be used anywere
-	 */
+	/** Random instance. Can be used anywhere */
 	public final static Random random = new Random(System.currentTimeMillis());
 
 	public LastTry() {
@@ -109,9 +88,7 @@ public class LastTry extends StateBasedGame {
 				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!" }[random.nextInt(16)]);
 	}
 
-	/**
-	 * Init's almost all game variables, starts splash state
-	 */
+	/** Init's almost all game variables, starts splash state */
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
 		container = gameContainer;

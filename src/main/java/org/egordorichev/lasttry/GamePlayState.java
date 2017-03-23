@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.effect.Buff;
+import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
@@ -36,13 +38,14 @@ public class GamePlayState extends BasicGameState {
 		int spawnX = worldWidth / 2;
 		int spawnY = 3; // TODO: replace
 
+		LastTry.entityManager = new EntityManager();
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
-		/* for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
 			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
-		} */ // TODO
+		}
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
@@ -106,6 +109,7 @@ public class GamePlayState extends BasicGameState {
 
 		LastTry.camera.set();
 		LastTry.world.render();
+		LastTry.entityManager.render();
 		LastTry.player.render();
 		LastTry.camera.unset();
 
@@ -134,7 +138,7 @@ public class GamePlayState extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int dt) throws SlickException {
-		// LastTry.entityManager.update(dt); TODO
+		LastTry.entityManager.update(dt);
 		LastTry.player.update(dt);
 
 		LastTry.camera.setPosition(Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),
