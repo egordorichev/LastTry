@@ -18,43 +18,25 @@ public class Log {
 	}
 
 	public void debug(String message) {
-		if (!this.enabled) {
-			return;
-		}
-
-		System.out.print(ANSI_GREEN + "DEBUG ");
-		this.printPath(Thread.currentThread().getStackTrace());
-		System.out.println(": " + message + ANSI_RESET);
+		this.printMessage(ANSI_GREEN + "DEBUG", message);
 	}
 
 	public void warn(String message) {
-		if (!this.enabled) {
-			return;
-		}
-
-		System.out.print(ANSI_RED + "WARN ");
-		this.printPath(Thread.currentThread().getStackTrace());
-		System.out.println(": " + message + ANSI_RESET);
+		this.printMessage(ANSI_PURPLE + "WARN", message);
 	}
 
 	public void error(String message) {
-		if (!this.enabled) {
-			return;
-		}
-
-		System.out.print(ANSI_RED + "ERROR ");
-		this.printPath(Thread.currentThread().getStackTrace());
-		System.out.println(": " + message + ANSI_RESET);
+		this.printMessage(ANSI_RED + "ERROR", message);
 	}
 
 	public void info(String message) {
-		if (!this.enabled) {
-			return;
-		}
+		this.printMessage(ANSI_BLUE + "INFO", message);
+	}
 
-		System.out.print(ANSI_BLUE + "INFO ");
+	private void printMessage(String start, String message) {
+		System.out.print(start + " ");
 		this.printPath(Thread.currentThread().getStackTrace());
-		System.out.println(": " + message + ANSI_RESET);
+		System.out.println(" " + message + ANSI_RESET);
 	}
 
 	private void printPath(StackTraceElement[] stackTraceElements) {
