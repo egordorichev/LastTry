@@ -31,11 +31,10 @@ public class DroppedItem extends Entity {
 			if (this.holder.getItem() == Item.heart) {
 				LastTry.player.modifyHp(+20 * this.holder.getCount());
 			} else { // TODO: mana
-				if (LastTry.player.inventory.add(this.holder)) {
-				}
+				LastTry.player.inventory.add(this.holder);
 			}
 
-			LastTry.world.remove(this);
+			// LastTry.world.remove(this); : TODO
 		}
 	}
 

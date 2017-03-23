@@ -1,15 +1,14 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.effect.Buff;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.entity.Player;
-import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
-import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -24,25 +23,26 @@ public class GamePlayState extends BasicGameState {
 	public GamePlayState() {
 		String worldName = "test"; // Later will be passed from menu
 		// Must be powers of two
-		int worldWidth = 4096;
-		int worldHeight = 1024;
+		int worldWidth = 512;
+		int worldHeight = 512;
 
 		if (WorldProvider.exists(worldName)) {
 			LastTry.world = WorldProvider.load(worldName);
 		} else {
-			LastTry.world = WorldProvider.generate(worldName, worldWidth, worldHeight);
+			LastTry.world = WorldProvider.generate(worldName, (short) worldWidth, (short) worldHeight,
+				World.CRIMSON | World.EXPERT);
 		}
 
 		int spawnX = worldWidth / 2;
-		int spawnY = LastTry.world.getHighest(spawnX);
+		int spawnY = 3; // TODO: replace
 
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
 
-		for (int i = 0; i < 10; i++) {
-			LastTry.world.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
-			LastTry.world.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
-		}
+		/* for (int i = 0; i < 10; i++) {
+			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
+			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
+		} */ // TODO
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();
@@ -62,7 +62,6 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
 
-		//LastTry.player.addEffect(Buff.lifeforce, 60);
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);
 		LastTry.player.addEffect(Buff.honey, 30);
@@ -95,7 +94,7 @@ public class GamePlayState extends BasicGameState {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, why?																// FIXME
 		}
 
-		if (!LastTry.world.currentBiome.fadeInIsDone()) {
+		/*if (!LastTry.world.currentBiome.fadeInIsDone()) {
 			LastTry.world.currentBiome.fadeIn();
 			LastTry.world.currentBiome.renderBackground();
 		}
@@ -103,7 +102,7 @@ public class GamePlayState extends BasicGameState {
 		if (LastTry.world.lastBiome != null && !LastTry.world.lastBiome.fadeOutIsDone()) {
 			LastTry.world.lastBiome.fadeOut();
 			LastTry.world.lastBiome.renderBackground();
-		}
+		}*/
 
 		LastTry.camera.set();
 		LastTry.world.render();
@@ -135,7 +134,7 @@ public class GamePlayState extends BasicGameState {
 	 */
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int dt) throws SlickException {
-		LastTry.world.update(dt);
+		// LastTry.entityManager.update(dt); TODO
 		LastTry.player.update(dt);
 
 		LastTry.camera.setPosition(Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - LastTry.getWindowWidth(),

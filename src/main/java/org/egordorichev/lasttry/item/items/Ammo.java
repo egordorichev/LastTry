@@ -25,7 +25,7 @@ public class Ammo extends Item {
 	 */
 	protected Type type;
 	
-	public Ammo(int id, String name, int damage, Type type, Image texture) {
+	public Ammo(short id, String name, int damage, Type type, Image texture) {
 		super(id, name, texture);
 		
 		this.damage = damage;

@@ -1,13 +1,12 @@
-package org.egordorichev.lasttry.item.tiles;
+package org.egordorichev.lasttry.item.block;
 
-import org.egordorichev.lasttry.world.tile.TileData;
 import org.newdawn.slick.Image;
 
 public class MultiTileBlock extends Block {
 	protected int width;
 	protected int height;
 
-	public MultiTileBlock(int id, String name, boolean solid, Image texture, Image tiles, int gridWidth, int gridHeight) {
+	public MultiTileBlock(short id, String name, boolean solid, Image texture, Image tiles, int gridWidth, int gridHeight) {
 		super(id, name, solid, texture, tiles);
 
 		this.width = gridWidth;
@@ -15,7 +14,7 @@ public class MultiTileBlock extends Block {
 	}
 
 	@Override
-	public void renderBlock(TileData data, int x, int y) {
+	public void renderBlock(int x, int y) {
 		// TODO
 	}
 

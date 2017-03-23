@@ -37,7 +37,9 @@ public class ModAPI {
 	 * @return new Enemy with given id, spawned on X, Y
 	 */
 	public static Enemy spawnEnemy(int id, int x, int y) {
-		return LastTry.world.spawnEnemy(id, x, y);
+		// TODO
+
+		return null;
 	}
 	
 	/**

@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Effect;
 import org.egordorichev.lasttry.effect.EffectData;
-import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.newdawn.slick.Image;
@@ -44,7 +44,7 @@ public abstract class Entity {
 
 	/**
 	 * Status for if the entity's hitbox should be recognized. Non-solid
-	 * entities can clip through tiles and other entities like a ghost.
+	 * entities can clip through block and other entities like a ghost.
 	 */
 	protected boolean isSolid = true;
 
@@ -397,7 +397,7 @@ public abstract class Entity {
 	public void die() {
 		this.shouldUpdate = false;
 		this.onDeath();
-		LastTry.world.remove(this);
+		// LastTry.world.remove(this); TODO
 	}
 
 	/**

@@ -4,8 +4,8 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Pickaxe;
 import org.egordorichev.lasttry.item.items.Sword;
-import org.egordorichev.lasttry.item.tiles.BlockGround;
-import org.egordorichev.lasttry.item.tiles.Wall;
+import org.egordorichev.lasttry.item.block.BlockGround;
+import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.newdawn.slick.Image;
 
@@ -41,7 +41,7 @@ public class Item {
 	/**
 	 * Item identifier.
 	 */
-	protected int id;
+	protected short id;
 	/**
 	 * Item name.
 	 */
@@ -56,7 +56,7 @@ public class Item {
 	 */
 	protected Rarity rarity;
 
-	public Item(int id, String name, Rarity rarity, Image texture) {
+	public Item(short id, String name, Rarity rarity, Image texture) {
 		if (ITEM_CACHE[id] != null) {
 			LastTry.log("Item with id " + id + " already exists.");
 			throw new RuntimeException("Item with id " + id + " already exists.");
@@ -69,7 +69,7 @@ public class Item {
 		this.name = name;
 	}
 
-	public Item(int id, String name, Image texture) {
+	public Item(short id, String name, Image texture) {
 		this(id, name, Rarity.WHITE, texture);
 	}
 

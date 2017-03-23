@@ -12,7 +12,7 @@ public class Weapon extends Item {
 	protected int useSpeed;
 	protected boolean autoSwing;
 
-	public Weapon(int id, String name, Rarity rarity, float baseDamage, DamageType damageType, int useSpeed, Image texture) {
+	public Weapon(short id, String name, Rarity rarity, float baseDamage, DamageType damageType, int useSpeed, Image texture) {
 		super(id, name, rarity, texture);
 
 		this.baseDamage = baseDamage;
@@ -22,7 +22,7 @@ public class Weapon extends Item {
 		this.useDelay = 0;
 	}
 
-	public Weapon(int id, String name, float baseDamage, DamageType damageType, int useSpeed, Image texture) {
+	public Weapon(short id, String name, float baseDamage, DamageType damageType, int useSpeed, Image texture) {
 		this(id, name, Rarity.WHITE, baseDamage, damageType, useSpeed, texture);
 	}
 

@@ -77,7 +77,7 @@ public abstract class Enemy extends Entity {
 		for (Drop drop : this.drops) {
 			// Some items may not be dropped due to rarity
 			if (drop.getChance().roll()){
-				LastTry.world.spawnDrop(drop, this.getCenterX(), this.getCenterY());
+				// LastTry.world.spawnDrop(drop, this.getCenterX(), this.getCenterY()); TODO
 			}
 		}
 	}

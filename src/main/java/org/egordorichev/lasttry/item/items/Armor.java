@@ -20,7 +20,7 @@ public class Armor extends Item {
 	 */
 	protected Slot slot;
 	
-	public Armor(int id, String name, int defense, Slot slot, Image texture) {
+	public Armor(short id, String name, int defense, Slot slot, Image texture) {
 		super(id, name, texture);
 	
 		this.defense = defense;

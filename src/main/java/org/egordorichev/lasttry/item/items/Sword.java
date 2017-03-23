@@ -6,11 +6,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 public class Sword extends MeleeWeapon {
-	public Sword(int id, String name, Rarity rarity, float baseDamage, int useSpeed, Image texture) {
+	public Sword(short id, String name, Rarity rarity, float baseDamage, int useSpeed, Image texture) {
 		super(id, name, rarity, baseDamage, useSpeed, texture);
 	}
 
-	public Sword(int id, String name, float baseDamage, int useSpeed, Image texture) {
+	public Sword(short id, String name, float baseDamage, int useSpeed, Image texture) {
 		this(id, name, Rarity.WHITE, baseDamage, useSpeed, texture);
 	}
 

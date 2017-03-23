@@ -2,7 +2,8 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.tiles.Block;
+import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.util.Direction;
@@ -81,13 +82,13 @@ public class Player extends Entity {
 	public void onSpawn() {
 			for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 2; x++) {
-				LastTry.world.setBlock(null, this.getGridX() + x, this.getGridY() + y);
+				LastTry.world.setBlock(ItemID.none, this.getGridX() + x, this.getGridY() + y);
 			}
 		}
 
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 25; x++) {
-				LastTry.world.setBlock((Block) Item.crimstoneBlock, this.getGridX() + 3 + x, this.getGridY() + 2 + y);
+				LastTry.world.setBlock(ItemID.crimstoneBlock, this.getGridX() + 3 + x, this.getGridY() + 2 + y);
 			}
 		}
 	}

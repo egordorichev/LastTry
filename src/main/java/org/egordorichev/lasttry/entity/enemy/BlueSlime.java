@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 
 public class BlueSlime extends Slime {
 	public BlueSlime() {
-		super(EnemyID.blueSlime, LastTry.world.isExpert() ? 50 : 25, 2, LastTry.world.isExpert() ? 7 : 14,
+		super(EnemyID.blueSlime, LastTry.world.isExpertMode() ? 50 : 25, 2, LastTry.world.isExpertMode() ? 7 : 14,
 			Assets.blueSlimeTexture);
 
 		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 25, 25));

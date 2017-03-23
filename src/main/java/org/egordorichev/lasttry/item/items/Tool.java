@@ -15,7 +15,7 @@ public class Tool extends Item {
 	protected int axePower;
 	protected int hammerPower;
 
-	public Tool(int id, String name, Rarity rarity, float baseDamage, int pickaxePower,
+	public Tool(short id, String name, Rarity rarity, float baseDamage, int pickaxePower,
 			int axePower, int hammerPower, int useSpeed, Image texture) {
 
 		super(id, name, rarity, texture);
@@ -31,7 +31,7 @@ public class Tool extends Item {
 		this.useSpeed = useSpeed;
 	}
 
-	public Tool(int id, String name, float baseDamage, int pickaxePower,
+	public Tool(short id, String name, float baseDamage, int pickaxePower,
 			int axePower, int hammerPower, int useSpeed, Image texture) {
 
 		this(id, name, Rarity.WHITE, baseDamage, pickaxePower, axePower, hammerPower, useSpeed, texture);

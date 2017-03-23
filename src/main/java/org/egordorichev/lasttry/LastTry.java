@@ -132,7 +132,7 @@ public class LastTry extends StateBasedGame {
 	@Override
 	public boolean closeRequested() {
 		if (world != null) {
-			WorldProvider.save(world);
+			WorldProvider.save("test", world);
 		}
 		
 		return true;
@@ -166,5 +166,22 @@ public class LastTry extends StateBasedGame {
 	 */
 	public static void handleException(Exception exception) {
 		log.warn(exception.getMessage());
+		exception.printStackTrace();
+	}
+
+	/**
+	 * Converts mouse X to world based-coordinate
+	 * @return x based coordinate
+	 */
+	public static int getMouseXInWorld() {
+		return (int) (player.getX() - getWindowWidth() / 2 + input.getMouseX() + 14);
+	}
+
+	/**
+	 * Converts mouse Y to world based-coordinate
+	 * @return Y based coordinate
+	 */
+	public static int getMouseYInWorld() {
+		return (int) (player.getY() - getWindowHeight() / 2 + input.getMouseY() + 20);
 	}
 }
