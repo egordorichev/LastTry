@@ -21,6 +21,14 @@ Compile project:
 mvn package
 ```
 
+And run it:
+
+```bash
+java -jar target/lasttry-1.0.0-SNAPSHOT.jar -Djava.library.path=lib/$(YOUR_OS_NAME)/
+```
+
+Where $(YOUR_OS_NAME) is one of four names: `windows`, `linux`, `macos`, `solaris`
+
 ### Contributing
 
 If you want to help the project grow, here is some stuff you can do:
