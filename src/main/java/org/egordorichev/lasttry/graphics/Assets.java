@@ -6,6 +6,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Assets {
 	public static FontWrapper font = loadFont("font.ttf", java.awt.Font.PLAIN, 22, java.awt.Color.white);
+	public static FontWrapper largeFont = loadFont("font.ttf", java.awt.Font.PLAIN, 26, java.awt.Color.white);
 	public static FontWrapper smallFont = loadFont("font.ttf", java.awt.Font.PLAIN, 18, java.awt.Color.white);
 
 	public static Image dirtTexture = loadImage("DirtTile.png");
@@ -107,6 +108,9 @@ public class Assets {
 	public static Image honeyBuffTexture = loadImage("HoneyBuff.png");
 	public static Image peaceCandleBuffTexture = loadImage("PeaceCandleBuff.png");
 	public static Image starInABottleBuffTexture = loadImage("StarInABottleBuff.png");
+
+	public static Image lightTexture = loadImage("Light.png");
+	public static Image shadowTexture = loadImage("Shadow.png");
 
 	public static Image loadImage(String path) {
 		try {

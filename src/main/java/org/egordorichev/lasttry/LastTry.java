@@ -28,6 +28,7 @@ import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.world.Environment;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.mod.*;
@@ -77,6 +78,9 @@ public class LastTry extends StateBasedGame {
 	/** Random instance. Can be used anywhere */
 	public final static Random random = new Random(System.currentTimeMillis());
 
+	/** Current environment */
+	public static Environment environment;
+
 	/** Game instance */
 	public static LastTry instance;
 
@@ -89,7 +93,8 @@ public class LastTry extends StateBasedGame {
 				"LastTry: The Grass is Greener on This Side",
 				"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
 				"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
-				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!" }[random.nextInt(16)]);
+				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
+		}[random.nextInt(17)]);
 
 		instance = this;
 	}
@@ -119,10 +124,12 @@ public class LastTry extends StateBasedGame {
 	 */
 	@Override
 	public boolean closeRequested() {
-		if (world != null) {
-			WorldProvider.save("test", world);
+		GamePlayState state = (GamePlayState) this.getState(1);
+
+		if (state != null) {
+			state.save();
 		}
-		
+
 		return true;
 	}
 

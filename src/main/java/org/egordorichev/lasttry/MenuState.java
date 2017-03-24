@@ -14,15 +14,40 @@ public class MenuState extends BasicGameState {
 	/** Here all the state gui is placed */
 	private UiPanel panel;
 
+	/** TODO: input it from user */
+	private String worldName = "test";
+
 	public MenuState() {
 		this.panel = new UiPanel(new Rectangle(0, 0, 0, 0)) {
 			@Override
 			public void addComponents() {
-				add(new UiTextButton(new Rectangle(0, 0, 72, 32), Origin.CENTER, "Single Player") {
+				add(new UiTextButton(new Rectangle(0, 0, 100, 32), Origin.CENTER, "Single Player") {
 					@Override
 					public void onClick() {
 						panel.hide();
-						LastTry.setState(new GamePlayState());
+						LastTry.setState(new GamePlayState(worldName));
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 48, 100, 32), Origin.CENTER, "Multiplayer") {
+					@Override
+					public void onClick() {
+						LastTry.log("Multiplayer is not implemented yet");
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 96, 100, 32), Origin.CENTER, "Settings") {
+					@Override
+					public void onClick() {
+						LastTry.log("Settings are not implemented yet");
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 144, 100, 32), Origin.CENTER, "Exit") {
+					@Override
+					public void onClick() {
+						panel.hide();
+						LastTry.container.exit();
 					}
 				});
 			}

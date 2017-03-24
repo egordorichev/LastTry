@@ -53,9 +53,9 @@ public class UiTextButton extends UiComponent {
 	/** Handles state change */
 	protected void onStateChange() {
 		if (this.state == State.MOUSE_IN) {
-
+			this.setFont(Assets.largeFont);
 		} else if (this.state == State.NORMAL) {
-
+			this.setFont(Assets.font);
 		}
 	}
 }
