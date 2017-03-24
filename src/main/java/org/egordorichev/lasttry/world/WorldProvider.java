@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
@@ -12,6 +13,25 @@ import org.egordorichev.lasttry.world.generator.WorldGenerator;
 public class WorldProvider {
 	/** Current supported world version */
 	public static short CURRENT_VERSION = 3;
+
+	/**
+	 * Returns all worlds in the "assets/worlds/" directory
+	 * @return all worlds in the "assets/worlds/" directory
+	 */
+	public static WorldInfo[] getWorlds() {
+		File folder = new File("assets/worlds/");
+		File[] files = folder.listFiles();
+
+		ArrayList<WorldInfo> worlds = new ArrayList<>();
+
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isFile()) {
+				worlds.add(getWorldInfo(files[i].getName()));
+			}
+		}
+
+		return worlds.toArray(new WorldInfo[0]);
+	}
 
 	/**
 	 * Returns world info from given file name
