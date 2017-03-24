@@ -13,7 +13,7 @@ public class SplashState extends BasicGameState {
 	/**
 	 * Indicates if it can skip the splash, after loading content
 	 */
-	private final static boolean SKIP_SPLASH = false;
+	private final static boolean SKIP_SPLASH = true;
 	
 	/**
 	 * Fade in and fade out speed

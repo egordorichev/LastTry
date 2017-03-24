@@ -6,12 +6,14 @@ import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
+import org.egordorichev.lasttry.world.biome.Biome;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
@@ -21,7 +23,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class GamePlayState extends BasicGameState {
+	private Biome lastBiome = null;
+	private Biome currentBiome = null;
+
 	public GamePlayState() {
 		String worldName = "test"; // Later will be passed from menu
 		// Must be powers of two
@@ -68,6 +77,8 @@ public class GamePlayState extends BasicGameState {
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);
 		LastTry.player.addEffect(Buff.honey, 30);
+
+		this.addBiomeChecker();
 	}
 
 	/**
@@ -97,15 +108,16 @@ public class GamePlayState extends BasicGameState {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesnt work, why?																// FIXME
 		}
 
-		/*if (!LastTry.world.currentBiome.fadeInIsDone()) {
-			LastTry.world.currentBiome.fadeIn();
-			LastTry.world.currentBiome.renderBackground();
+		if (!this.currentBiome.fadeInIsDone()) {
+			this.currentBiome.fadeIn();
 		}
 
-		if (LastTry.world.lastBiome != null && !LastTry.world.lastBiome.fadeOutIsDone()) {
-			LastTry.world.lastBiome.fadeOut();
-			LastTry.world.lastBiome.renderBackground();
-		}*/
+		this.currentBiome.renderBackground();
+
+		if (this.lastBiome != null && this.lastBiome != this.currentBiome && !this.lastBiome.fadeOutIsDone()) {
+			this.lastBiome.fadeOut();
+			this.lastBiome.renderBackground();
+		}
 
 		LastTry.camera.set();
 		LastTry.world.render();
@@ -151,4 +163,75 @@ public class GamePlayState extends BasicGameState {
 		}
 	}
 
+	private void addBiomeChecker() {
+		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+
+		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				int totalCorruptionBlocks = 0;
+				int totalCrimsonBlocks = 0;
+				int totalCrimsonDesertBlocks = 0;
+				int totalDesertBlocks = 0;
+
+				int windowWidth = LastTry.getWindowWidth();
+				int windowHeight = LastTry.getWindowHeight();
+				int tww = windowWidth / Block.TEX_SIZE;
+				int twh = windowHeight / Block.TEX_SIZE;
+				int tcx = (int) LastTry.camera.getX() / Block.TEX_SIZE;
+				int tcy = (int) LastTry.camera.getY() / Block.TEX_SIZE;
+
+				int minY = Math.max(0, tcy - 10);
+				int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 10);
+				int minX = Math.max(0, tcx - 10);
+				int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 10);
+
+				for (int y = minY; y < maxY; y++) {
+					for (int x = minX; x < maxX; x++) {
+						switch(LastTry.world.getBlockID(x, y)) {
+							case ItemID.ebonstoneBlock:
+							case ItemID.purpleIceBlock:
+							case ItemID.corruptThornyBushes:
+							case ItemID.vileMushroom:
+								totalCorruptionBlocks++;
+								break;
+							case ItemID.crimstoneBlock:
+							case ItemID.redIceBlock:
+							case ItemID.viciousMushroom:
+								totalCrimsonBlocks++;
+								break;
+							case ItemID.sandBlock:
+								totalDesertBlocks++;
+								break;
+							case ItemID.ebonsandBlock:
+								totalCorruptionBlocks++;
+								break;
+							case ItemID.crimsandBlock:
+								totalCrimsonDesertBlocks++;
+							default: break;
+							// TODO: other biomes
+						}
+					}
+				}
+
+				lastBiome = currentBiome;
+
+				if (totalCorruptionBlocks >= 200) {
+					currentBiome = Biome.corruption;
+				} else if (totalCrimsonBlocks >= 200) {
+					currentBiome = Biome.crimson;
+				} else if (totalCorruptionBlocks >= 1000) {
+					currentBiome = Biome.corruptDesert;
+				} else if (totalCrimsonDesertBlocks >= 1000) {
+					currentBiome = Biome.crimsonDesert;
+				} else if (totalDesertBlocks >= 1000) {
+					currentBiome = Biome.desert;
+				} else {
+					currentBiome = Biome.forest;
+				}
+
+				LastTry.log("Current biome is: " + currentBiome.getName());
+			}
+		}, 0, 1, TimeUnit.SECONDS);
+	}
 }

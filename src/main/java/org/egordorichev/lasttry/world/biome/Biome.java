@@ -30,7 +30,7 @@ public class Biome {
 	}
 
 	public boolean fadeOutIsDone() {
-		return this.texture.getAlpha() <= 0.01f;
+		return this.texture.getAlpha() < 0.01f;
 	}
 	
 	public String getName() {
