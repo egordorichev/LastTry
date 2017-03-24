@@ -25,4 +25,6 @@ public class ItemID {
 	public final static short crimsandBlock = 21;
 	public final static short stoneBlock = 22;
 	public final static short ironPickaxe = 23;
+
+	public final static short count = 24; // Change this, if you add another item!
 }

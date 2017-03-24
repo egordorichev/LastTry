@@ -13,7 +13,7 @@ public class Item {
 	/**
 	 * Item lookup. Item ID used as the index.
 	 */
-	public static Item[] ITEM_CACHE = new Item[64];
+	public static Item[] ITEM_CACHE = new Item[ItemID.count];
 	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Assets.dirtWallIcon, Assets.dirtWallTexture);
 	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", Assets.dirtIcon, Assets.dirtTexture);
 	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", Assets.grassIcon, Assets.grassTexture);

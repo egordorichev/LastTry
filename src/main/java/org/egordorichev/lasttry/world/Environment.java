@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.world.biome.Biome;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,8 +17,12 @@ public class Environment {
 	/** Previous biome */
 	private Biome lastBiome = null;
 
+	public int[] blockCount;
+
 	public Environment() {
 		this.addBiomeChecker();
+
+		this.blockCount = new int[ItemID.count];
 	}
 
 	/** Renders current biome */
@@ -54,11 +59,6 @@ public class Environment {
 		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
-				int totalCorruptionBlocks = 0;
-				int totalCrimsonBlocks = 0;
-				int totalCrimsonDesertBlocks = 0;
-				int totalDesertBlocks = 0;
-
 				int windowWidth = LastTry.getWindowWidth();
 				int windowHeight = LastTry.getWindowHeight();
 				int tww = windowWidth / Block.TEX_SIZE;
@@ -71,45 +71,25 @@ public class Environment {
 				int minX = Math.max(0, tcx - 10);
 				int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 10);
 
+				Arrays.fill(blockCount, 0);
+
 				for (int y = minY; y < maxY; y++) {
 					for (int x = minX; x < maxX; x++) {
-						switch(LastTry.world.getBlockID(x, y)) {
-							case ItemID.ebonstoneBlock:
-							case ItemID.purpleIceBlock:
-							case ItemID.corruptThornyBushes:
-							case ItemID.vileMushroom:
-								totalCorruptionBlocks++;
-								break;
-							case ItemID.crimstoneBlock:
-							case ItemID.redIceBlock:
-							case ItemID.viciousMushroom:
-								totalCrimsonBlocks++;
-								break;
-							case ItemID.sandBlock:
-								totalDesertBlocks++;
-								break;
-							case ItemID.ebonsandBlock:
-								totalCorruptionBlocks++;
-								break;
-							case ItemID.crimsandBlock:
-								totalCrimsonDesertBlocks++;
-							default: break;
-							// TODO: other biomes
-						}
+						blockCount[LastTry.world.getBlockID(x, y)] += 1;
 					}
 				}
 
 				lastBiome = currentBiome;
 
-				if (totalCorruptionBlocks >= 200) {
+				if (blockCount[ItemID.ebonstoneBlock] + blockCount[ItemID.vileMushroom] >= 200) {
 					currentBiome = Biome.corruption;
-				} else if (totalCrimsonBlocks >= 200) {
+				} else if (blockCount[ItemID.crimstoneBlock] + blockCount[ItemID.viciousMushroom] >= 200) {
 					currentBiome = Biome.crimson;
-				} else if (totalCorruptionBlocks >= 1000) {
+				} else if (blockCount[ItemID.ebonsandBlock] >= 1000) {
 					currentBiome = Biome.corruptDesert;
-				} else if (totalCrimsonDesertBlocks >= 1000) {
+				} else if (blockCount[ItemID.crimsandBlock] >= 1000) {
 					currentBiome = Biome.crimsonDesert;
-				} else if (totalDesertBlocks >= 1000) {
+				} else if (blockCount[ItemID.sandBlock] >= 1000) {
 					currentBiome = Biome.desert;
 				} else {
 					currentBiome = Biome.forest;
