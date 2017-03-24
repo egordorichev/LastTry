@@ -59,43 +59,48 @@ public class Environment {
 		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
-				int windowWidth = LastTry.getWindowWidth();
-				int windowHeight = LastTry.getWindowHeight();
-				int tww = windowWidth / Block.TEX_SIZE;
-				int twh = windowHeight / Block.TEX_SIZE;
-				int tcx = (int) LastTry.camera.getX() / Block.TEX_SIZE;
-				int tcy = (int) LastTry.camera.getY() / Block.TEX_SIZE;
-
-				int minY = Math.max(0, tcy - 10);
-				int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 10);
-				int minX = Math.max(0, tcx - 10);
-				int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 10);
-
-				Arrays.fill(blockCount, 0);
-
-				for (int y = minY; y < maxY; y++) {
-					for (int x = minX; x < maxX; x++) {
-						blockCount[LastTry.world.getBlockID(x, y)] += 1;
-					}
-				}
-
-				lastBiome = currentBiome;
-
-				if (blockCount[ItemID.ebonstoneBlock] + blockCount[ItemID.vileMushroom] >= 200) {
-					currentBiome = Biome.corruption;
-				} else if (blockCount[ItemID.crimstoneBlock] + blockCount[ItemID.viciousMushroom] >= 200) {
-					currentBiome = Biome.crimson;
-				} else if (blockCount[ItemID.ebonsandBlock] >= 1000) {
-					currentBiome = Biome.corruptDesert;
-				} else if (blockCount[ItemID.crimsandBlock] >= 1000) {
-					currentBiome = Biome.crimsonDesert;
-				} else if (blockCount[ItemID.sandBlock] >= 1000) {
-					currentBiome = Biome.desert;
-				} else {
-					currentBiome = Biome.forest;
-				}
+				updateBiome();
 			}
 		}, 0, 1, TimeUnit.SECONDS);
+	}
+
+	/** Updates current biome */
+	private void updateBiome() {
+		int windowWidth = LastTry.getWindowWidth();
+		int windowHeight = LastTry.getWindowHeight();
+		int tww = windowWidth / Block.TEX_SIZE;
+		int twh = windowHeight / Block.TEX_SIZE;
+		int tcx = (int) LastTry.camera.getX() / Block.TEX_SIZE;
+		int tcy = (int) LastTry.camera.getY() / Block.TEX_SIZE;
+
+		int minY = Math.max(0, tcy - 10);
+		int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 10);
+		int minX = Math.max(0, tcx - 10);
+		int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 10);
+
+		Arrays.fill(this.blockCount, 0);
+
+		for (int y = minY; y < maxY; y++) {
+			for (int x = minX; x < maxX; x++) {
+				this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
+			}
+		}
+
+		this.lastBiome = this.currentBiome;
+
+		if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
+			this.currentBiome = Biome.corruption;
+		} else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
+			this.currentBiome = Biome.crimson;
+		} else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
+			this.currentBiome = Biome.corruptDesert;
+		} else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
+			this.currentBiome = Biome.crimsonDesert;
+		} else if (this.blockCount[ItemID.sandBlock] >= 1000) {
+			this.currentBiome = Biome.desert;
+		} else {
+			this.currentBiome = Biome.forest;
+		}
 	}
 
 	public Biome getCurrentBiome() {
