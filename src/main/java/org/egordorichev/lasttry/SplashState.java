@@ -13,12 +13,12 @@ public class SplashState extends BasicGameState {
 	/**
 	 * Indicates if it can skip the splash, after loading content
 	 */
-	private final static boolean SKIP_SPLASH = true;
+	private final static boolean SKIP_SPLASH = false;
 	
 	/**
 	 * Fade in and fade out speed
 	 */
-	private final static float ANIMATION_SPEED = 0.2f;
+	private final static float ANIMATION_SPEED = 0.02f;
 	
 	/**
 	 * The splash texture
@@ -46,7 +46,30 @@ public class SplashState extends BasicGameState {
 	private volatile String loadMessage;
 
 	public SplashState() {
-		this.loaded = false;
+		try {
+			this.loaded = false;
+			this.splash = new Image("assets/images/splashes/1.png");
+			this.splash.setAlpha(0.1f);
+
+			Image cursor = new Image("assets/images/Cursor.png");
+			LastTry.container.setMouseCursor(cursor, 0, 0);
+
+			Display.setResizable(true);
+
+			new Thread() {
+				@Override
+				public void run() {
+					loadMessage = "Loading assets...";
+					Assets.preload();
+					loadMessage = "Loading items...";
+					Item.preload();
+					loadMessage = "Done!";
+					loaded = true;
+				}
+			}.run();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+		}
 	} 
 	
 	/**
@@ -62,25 +85,7 @@ public class SplashState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-		this.splash = new Image("assets/images/splashes/1.png");
-		this.splash.setAlpha(0.1f);
-
-		Image cursor = new Image("assets/images/Cursor.png");
-		gameContainer.setMouseCursor(cursor, 0, 0);
-
-		Display.setResizable(true);
-
-		new Thread() {
-			@Override
-			public void run() {
-				loadMessage = "Loading assets...";
-				Assets.preload();
-				loadMessage = "Loading items...";
-				Item.preload();
-				loadMessage = "Done!";
-				loaded = true;
-			}
-		}.run();
+		// Is not called by slick
 	}
 
 	/**
@@ -96,7 +101,7 @@ public class SplashState extends BasicGameState {
 		}
 		
 		this.splash.draw(0, 0, 800, 600);
-		Assets.smallFont.drawString(10, 10, loadMessage);
+		Assets.smallFont.drawString(loadMessage, 10, 10);
 	}
 
 	/** 
@@ -119,8 +124,7 @@ public class SplashState extends BasicGameState {
 		boolean animationComplete = !this.fadeUp && transparent;
 		
 		if (SKIP_SPLASH || animationComplete) {
-			stateBasedGame.addState(new GamePlayState());
-			stateBasedGame.enterState(1);
+			LastTry.setState(new MenuState());
 		}
 	}
 	

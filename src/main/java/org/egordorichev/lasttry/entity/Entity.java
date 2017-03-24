@@ -131,8 +131,12 @@ public abstract class Entity {
 			return;
 		}
 
-		for (EffectData effect : this.effects) {
-			effect.update(dt);
+		for (int i = this.effects.size() - 1; i >= 0; i--) {
+			this.effects.get(i).update(dt);
+
+			if (this.effects.get(i).isDone()) {
+				this.effects.remove(i);
+			}
 		}
 
 		// Regeneration
@@ -397,7 +401,7 @@ public abstract class Entity {
 	public void die() {
 		this.shouldUpdate = false;
 		this.onDeath();
-		// LastTry.world.remove(this); TODO
+		LastTry.entityManager.remove(this);
 	}
 
 	/**

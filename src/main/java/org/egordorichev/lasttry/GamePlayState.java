@@ -83,7 +83,7 @@ public class GamePlayState extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+		// Is not called by Slick
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class GamePlayState extends BasicGameState {
 		int hp = LastTry.player.getHp();
 		int x = LastTry.getWindowWidth() - 260;
 
-		Assets.font.drawString(x, 4, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()));
+		Assets.font.drawString(String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x, 4);
 
 		for (int i = 0; i < hp / 20; i++) {
 			Assets.hpTexture.draw(x + i * 22 + i * 2, 28);

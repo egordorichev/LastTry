@@ -44,6 +44,14 @@ public abstract class Effect {
 	public abstract void remove(Entity entity);
 
 	/**
+	 * Used by some debuff, like poison
+	 * @param dt
+	 */
+	public void update(int dt) {
+
+	}
+
+	/**
 	 * Returns effect name
 	 * @return effect name
 	 */

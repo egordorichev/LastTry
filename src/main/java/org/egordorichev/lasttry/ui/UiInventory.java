@@ -162,14 +162,14 @@ public class UiInventory extends UiComponent {
 		Item item = this.slots[this.currentSlot].getItem();
 
 		if (item == null) {
-			Assets.font.drawString(10, 5, "Inventory");
+			Assets.font.drawString("Inventory", 10, 5);
 		} else {
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
-				Assets.font.drawString(10, 5, String.format("%s %s", modifier.getName(), item.getName()));
+				Assets.font.drawString(String.format("%s %s", modifier.getName(), item.getName()), 10, 5);
 			} else {
-				Assets.font.drawString(10, 5, item.getName());
+				Assets.font.drawString(item.getName(), 10, 5);
 			}
 		}
 

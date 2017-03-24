@@ -10,8 +10,8 @@ public class UiManager {
 	}
 
 	public void render() {
-		for (UiComponent component : this.components) {
-			component.render();
+		for (int i = this.components.size() - 1; i >= 0; i--) {
+			this.components.get(i).render();
 		}
 	}
 

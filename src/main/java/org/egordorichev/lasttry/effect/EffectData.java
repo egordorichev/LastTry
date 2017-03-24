@@ -46,6 +46,7 @@ public class EffectData {
 		}
 
 		this.currentTime--;
+		this.effect.update(dt);
 
 		if(this.currentTime == 0) {
 			this.done = true;
@@ -71,5 +72,13 @@ public class EffectData {
 	 */
 	public Effect getEffect() {
 		return this.effect;
+	}
+
+	/**
+	 * Returns true, if effect has ended
+	 * @return effect has ended
+	 */
+	public boolean isDone() {
+		return this.done;
 	}
 }

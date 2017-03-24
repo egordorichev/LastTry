@@ -32,6 +32,7 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.mod.*;
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.Random;
@@ -76,6 +77,9 @@ public class LastTry extends StateBasedGame {
 	/** Random instance. Can be used anywhere */
 	public final static Random random = new Random(System.currentTimeMillis());
 
+	/** Game instance */
+	public static LastTry instance;
+
 	public LastTry() {
 		// Set random window title
 		
@@ -86,6 +90,8 @@ public class LastTry extends StateBasedGame {
 				"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
 				"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
 				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!" }[random.nextInt(16)]);
+
+		instance = this;
 	}
 
 	/** Init's almost all game variables, starts splash state */
@@ -100,6 +106,11 @@ public class LastTry extends StateBasedGame {
 		graphics.setBackground(new Color(129, 207, 224));
 
 		this.addState(new SplashState());
+	}
+
+	public static void setState(BasicGameState state) {
+		instance.addState(state);
+		instance.enterState(state.getID());
 	}
 
 	/**

@@ -185,9 +185,11 @@ public class UiItemSlot extends UiComponent {
 							}
 						}
 					} else {
-						ItemHolder tmp = LastTry.player.inventory.currentItem;
-						LastTry.player.inventory.currentItem = this.itemHolder;
-						this.itemHolder = tmp;
+						if(this.canHold(LastTry.player.inventory.currentItem)) {
+							ItemHolder tmp = LastTry.player.inventory.currentItem;
+							LastTry.player.inventory.currentItem = this.itemHolder;
+							this.itemHolder = tmp;
+						}
 					}
 				} else if (LastTry.input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
 					// TODO

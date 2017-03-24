@@ -37,17 +37,4 @@ public class UiButton extends UiComponent {
 		this.label = label;
 		this.textWidth = LastTry.graphics.getFont().getWidth(label);
 	}
-
-	@Override
-	protected void onStateChange() {
-		super.onStateChange();
-
-		if (this.state == State.MOUSE_DOWN) {
-			this.onClick();
-		}
-	}
-
-	public void onClick() {
-
-	}
 }

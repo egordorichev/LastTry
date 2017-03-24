@@ -49,7 +49,7 @@ public class ItemHolder {
 			texture.draw(x, y);
 
 			if (this.count > 1) {
-				Assets.smallFont.drawString(x - 8, y + th - 8, String.format("%d", this.count));
+				Assets.smallFont.drawString(String.format("%d", this.count), x - 8, y + th - 8);
 			}
 		}
 	}
@@ -78,7 +78,7 @@ public class ItemHolder {
 			texture.draw(x + (width - tw) / 2, iy);
 
 			if (this.count > 1) {
-				Assets.smallFont.drawString(x + tw / 2, iy + th / 2, String.format("%d", this.count));
+				Assets.smallFont.drawString(String.format("%d", this.count), x + tw / 2, iy + th / 2);
 			}
 		}
 	}
