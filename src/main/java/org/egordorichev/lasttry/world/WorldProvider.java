@@ -10,12 +10,67 @@ import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 public class WorldProvider {
-	/** Supported world version */
+	/** Current supported world version */
 	public static short CURRENT_VERSION = 3;
 
 	/**
+	 * Returns world info from given file name
+	 * @param fileName world file
+	 * @return world info
+	 */
+	public static WorldInfo getWorldInfo(String fileName) {
+		String worldName = fileName.replace("assets/worlds/", "").replace(".wld", "");
+		WorldSize size = WorldSize.SMALL;
+		int version = -1;
+		int flags = 0;
+
+		try {
+			FileReader stream = new FileReader(getFilePath(worldName));
+
+			version = stream.readInt32();
+
+			if (stream.readBoolean()) {
+				flags |= World.HARDMODE;
+			}
+
+			if (stream.readBoolean()) {
+				flags |= World.EXPERT;
+			}
+
+			if (stream.readBoolean()) {
+				flags |= World.HARDMODE;
+			}
+
+			if (stream.readBoolean()) {
+				flags |= World.CRIMSON;
+			}
+
+			short width = stream.readInt16();
+			short height = stream.readInt16();
+
+			if (width == 500 && height == 500) {
+				size = WorldSize.DEV;
+			} else if (width == 4200 && height == 1200) {
+				size = WorldSize.SMALL;
+			} else if (width == 6400 && height == 1800) {
+				size = WorldSize.MEDIUM;
+			} else if (width == 8400 && height == 2400) {
+				size = WorldSize.LARGE;
+			} else {
+				size = WorldSize.CUSTOM;
+			}
+
+			stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+			return null;
+		}
+
+		return new WorldInfo(worldName, size, version, flags);
+	}
+
+	/**
 	 * Generates new world with the given name, width, and height.
-	 * 
 	 * @param name name of the world.
 	 * @param width width of the world.
 	 * @param height height of the workd.
@@ -29,7 +84,6 @@ public class WorldProvider {
 
 		WorldGenerator generator = new WorldGenerator();
 		World world = new World(width, height, flags, generator.generate(width, height));
-		// world.addBiomeChecker(); : TODO
 
 		LastTry.log("Finished generating!");
 
@@ -186,5 +240,4 @@ public class WorldProvider {
 	private static String getFilePath(String worldName) {
 		return "assets/worlds/" + worldName + ".wld";
 	}
-
 }
