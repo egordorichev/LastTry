@@ -9,11 +9,12 @@ import org.newdawn.slick.Image;
 public class Block extends Item {
 	public static final int TEX_SIZE = 16;
 	protected boolean solid;
+	protected EffectiveToolType type;
 	protected Image tiles;
 
-	public Block(short id, String name, boolean solid, Image texture, Image tiles) {
+	public Block(short id, String name, boolean solid, EffectiveToolType type, Image texture, Image tiles) {
 		super(id, name, texture);
-
+		this.type = type;
 		this.tiles = tiles;
 		this.solid = solid;
 	}
@@ -28,31 +29,24 @@ public class Block extends Item {
 		byte binary = this.calculateBinary(t, r, b, l);
 
 		if (binary == 15) {
-			this.tiles.getSubImage(15 * Block.TEX_SIZE, 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+			this.tiles.getSubImage(15 * Block.TEX_SIZE, 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE)
+					.draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 		} else {
-			this.tiles.getSubImage(binary * Block.TEX_SIZE, variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE).draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+			this.tiles.getSubImage(binary * Block.TEX_SIZE, variant * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE)
+					.draw(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
 		}
 	}
 
 	public static byte calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		byte result = 0;
-
-		if (top == true) {
+		if (top) 
 			result += 1;
-		}
-
-		if (right == true) {
+		if (right) 
 			result += 2;
-		}
-
-		if (bottom == true) {
+		if (bottom) 
 			result += 4;
-		}
-
-		if (left == true) {
+		if (left) 
 			result += 8;
-		}
-
 		return result;
 	}
 
@@ -72,6 +66,10 @@ public class Block extends Item {
 		}
 
 		return false;
+	}
+
+	public EffectiveToolType getEffectiveToolType() {
+		return this.type;
 	}
 
 	public boolean isSolid() {
