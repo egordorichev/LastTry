@@ -4,7 +4,7 @@ Our goal is to recreate original game with better perfomance, and old content.
 
 ###### Java Doc is aviable at [https://egordorichev.github.io/](https://egordorichev.github.io/)
 
-###### Warning! This version is currently being ported from Slick2d to LibGDX. You can find working Slick2D version at master branch.
+##### Warning! This version is currently being ported from Slick2d to LibGDX. You can find working Slick2D version at master branch.
 
 ### Building
 
