@@ -3,15 +3,14 @@ package org.egordorichev.lasttry.ui;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UiPanel extends UiComponent {
 	/** Panel children **/
-	private ArrayList<UiComponent> children;
+	private List<UiComponent> children = new ArrayList<>();
 
 	public UiPanel(Rectangle rectangle, Origin origin) {
 		super(rectangle, origin);
-
-		this.children = new ArrayList<>();
 		this.addComponents();
 	}
 
@@ -26,7 +25,9 @@ public class UiPanel extends UiComponent {
 
 	/**
 	 * Adds given component to the panel
-	 * @param component component to add
+	 * 
+	 * @param component
+	 *            component to add
 	 */
 	public void add(UiComponent component) {
 		this.children.add(component);
@@ -34,7 +35,7 @@ public class UiPanel extends UiComponent {
 
 	/** Render children */
 	public void render() {
-		if(this.hidden) {
+		if (this.hidden) {
 			return;
 		}
 

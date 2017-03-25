@@ -21,8 +21,6 @@ public class EffectData {
 	public EffectData(Entity entity, Effect effect, int time) {
 		this.effect = effect;
 		this.entity = entity;
-		this.done = false;
-
 		this.setTime(time);
 		this.effect.apply(this.entity);
 	}

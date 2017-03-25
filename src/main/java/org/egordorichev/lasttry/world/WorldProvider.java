@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
@@ -22,7 +23,7 @@ public class WorldProvider {
 		File folder = new File("assets/worlds/");
 		File[] files = folder.listFiles();
 
-		ArrayList<WorldInfo> worlds = new ArrayList<>();
+		List<WorldInfo> worlds = new ArrayList<>();
 
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].isFile()) {

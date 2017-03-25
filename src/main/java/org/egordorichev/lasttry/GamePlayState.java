@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.modifier.Modifier;
+import org.egordorichev.lasttry.item.modifier.MeleeModifier;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.graphics.Assets;
@@ -54,8 +54,8 @@ public class GamePlayState extends BasicGameState {
 
 		LastTry.ui.add(LastTry.player.inventory);
 
-		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, Modifier.melee.legendary));
-		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, Modifier.melee.light));
+		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, MeleeModifier.legendary));
+		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, MeleeModifier.light));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 10));
@@ -96,7 +96,9 @@ public class GamePlayState extends BasicGameState {
 			throws SlickException {
 
 		if (Display.wasResized()) {
-			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); // Doesn't work, why?																// FIXME
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight()); 
+			// Doesn't work, why?																
+			// FIXME
 		}
 
 		LastTry.environment.render();
