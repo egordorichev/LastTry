@@ -25,6 +25,34 @@ public class Drop {
 	}
 
 	/**
+	 * Create a drop of a single item with 100% drop chance. Then number of
+	 * items dropped will be between 1 and the given maximum.
+	 * 
+	 * @param item
+	 *            Item to drop.
+	 * @param maxAmount
+	 *            Maximum number of items that can drop.
+	 * 
+	 */
+	public Drop(Item item, int maxAmount) {
+		this(item, Chance.ALWAYS, 1, maxAmount);
+	}
+	
+	/**
+	 * Create a drop of a single item with 100% drop chance. Then number of
+	 * items dropped will be between the given min and max.
+	 * 
+	 * @param item
+	 *            Item to drop.
+	 * @param maxAmount
+	 *            Maximum number of items that can drop.
+	 * 
+	 */
+	public Drop(Item item, int minAmount, int maxAmount) {
+		this(item, Chance.ALWAYS, minAmount, maxAmount);
+	}
+
+	/**
 	 * Create a drop of a given item <i>(Number of which is between the two
 	 * values given)</i>, with the given chance.
 	 * 

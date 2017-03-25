@@ -11,6 +11,6 @@ public class BlueSlime extends Slime {
 		super(EnemyID.blueSlime, LastTry.world.isExpertMode() ? 50 : 25, 2, LastTry.world.isExpertMode() ? 7 : 14,
 			Assets.blueSlimeTexture);
 
-		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 25, 25));
+		this.drops.add(new Drop(Item.copperCoin, 25, 25));
 	}
 }

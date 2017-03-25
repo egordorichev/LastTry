@@ -1,9 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.util.Direction;
@@ -80,7 +78,7 @@ public class Player extends Entity {
 
 	@Override
 	public void onSpawn() {
-			for (int y = 0; y < 3; y++) {
+		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 2; x++) {
 				LastTry.world.setBlock(ItemID.none, this.getGridX() + x, this.getGridY() + y);
 			}
@@ -96,7 +94,7 @@ public class Player extends Entity {
 	@Override
 	public void render() {
 		this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-			.draw(this.renderBounds.x, this.renderBounds.y);
+				.draw(this.renderBounds.x, this.renderBounds.y);
 	}
 
 	public void renderBuffs() {

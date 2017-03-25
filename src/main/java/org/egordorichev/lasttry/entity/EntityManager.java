@@ -6,9 +6,12 @@ import java.util.List;
 
 public class EntityManager {
 	/**
-	 * List of active entities
+	 * List of active entities.
 	 */
 	private List<Entity> entities = new ArrayList<>();
+	/**
+	 * List of entities to remove.
+	 */
 	private List<Entity> clearList = new ArrayList<>();
 
 	/**
