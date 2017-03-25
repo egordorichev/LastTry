@@ -32,13 +32,14 @@ public class DroppedItem extends Entity {
 
 		if (this.getHitbox().intersects(LastTry.player.getHitbox())) {
 			if (this.holder.getItem() == Item.heart) {
-				LastTry.player.modifyHp(+20 * this.holder.getCount());
-			} else { // TODO: mana
+				LastTry.player.modifyHp(20 * this.holder.getCount());
+			} else if (this.holder.getItem() == Item.mana) {
+				// TODO: mana
+				LastTry.player.inventory.add(this.holder);
+			} else {
 				LastTry.player.inventory.add(this.holder);
 			}
-
-			//LastTry.entityManager.remove(this);
-			// LastTry.world.remove(this); : TODO
+			LastTry.entityManager.markForRemoval(this);
 		}
 	}
 

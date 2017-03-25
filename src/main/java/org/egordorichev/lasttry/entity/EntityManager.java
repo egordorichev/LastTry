@@ -9,6 +9,7 @@ public class EntityManager {
 	 * List of active entities
 	 */
 	private List<Entity> entities = new ArrayList<>();
+	private List<Entity> clearList = new ArrayList<>();
 
 	/**
 	 * TODO: gore
@@ -39,6 +40,13 @@ public class EntityManager {
 	 *            Time passed in milliseconds since last update.
 	 */
 	public void update(int dt) {
+		// Remove entities marked for deletion
+		for (Entity entity : this.clearList) {
+			this.entities.remove(entity);
+		}
+		this.clearList.clear();
+
+		// Update
 		for (int i = this.entities.size() - 1; i >= 0; i--) {
 			Entity entity = this.entities.get(i);
 			entity.update(dt);
@@ -91,8 +99,8 @@ public class EntityManager {
 	public void remove(Entity entity) {
 		this.entities.remove(entity);
 	}
-	
+
 	public void markForRemoval(Entity entity) {
-		this.entities.remove(entity);
+		this.clearList.add(entity);
 	}
 }
