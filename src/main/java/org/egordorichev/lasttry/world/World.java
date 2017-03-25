@@ -1,14 +1,11 @@
 package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class World {
 	/** Shows, that world has crimson, not corruption biome */

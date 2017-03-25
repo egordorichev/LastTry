@@ -4,6 +4,9 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 
+/**
+ * Entity representing an item dropped in the world.
+ */
 public class DroppedItem extends Entity {
 	/**
 	 * Item holder that this dropped entity represents.
@@ -34,6 +37,7 @@ public class DroppedItem extends Entity {
 				LastTry.player.inventory.add(this.holder);
 			}
 
+			//LastTry.entityManager.remove(this);
 			// LastTry.world.remove(this); : TODO
 		}
 	}
@@ -41,7 +45,7 @@ public class DroppedItem extends Entity {
 	/**
 	 * Return the ItemHolder that this entity represents.
 	 * 
-	 * @return 
+	 * @return
 	 */
 	public ItemHolder getHolder() {
 		return holder;

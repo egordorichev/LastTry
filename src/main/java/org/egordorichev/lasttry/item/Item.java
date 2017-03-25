@@ -86,7 +86,7 @@ public class Item {
 
 	/**
 	 * Updates item if it is being used
-	 * @param dt update delta
+	 * @param dt The milliseconds passed since the last update.
 	 */
 	public void update(int dt) {
 

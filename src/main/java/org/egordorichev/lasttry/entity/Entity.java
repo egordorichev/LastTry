@@ -10,6 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Entity {
 	/**
@@ -33,7 +34,10 @@ public abstract class Entity {
 	/** Base damage-points */
 	protected int damage;
 
-	/** Invulnerability status. If enabled the entity will not be able to take damage */
+	/**
+	 * Invulnerability status. If enabled the entity will not be able to take
+	 * damage
+	 */
 	protected boolean invulnerable;
 
 	/**
@@ -58,16 +62,16 @@ public abstract class Entity {
 	protected Image texture;
 
 	/** The animation state of the entity */
-	protected State state;
+	protected State state = State.IDLE;
 
 	/** The directional motion of the entity. */
 	protected Vector2f velocity;
 
 	/** The horizontal direction the entity faces */
-	protected Direction direction;
+	protected Direction direction = Direction.RIGHT;
 
 	/** Effects, applyed on entity */
-	protected ArrayList<EffectData> effects;
+	protected List<EffectData> effects = new ArrayList<>();
 
 	/** Animation state of the entity */
 	public enum State {
@@ -94,14 +98,11 @@ public abstract class Entity {
 
 	public Entity(int maxHp, int defense, int damage) {
 		this.defense = defense;
-		this.maxHp = maxHp;
-		this.hp = this.maxHp;
+		this.hp = this.maxHp = maxHp;
 		this.renderBounds = new Rectangle(0, 0, 32, 48);
-		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6, this.renderBounds.height - 3);
+		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6,
+				this.renderBounds.height - 3);
 		this.velocity = new Vector2f(0, 0);
-		this.direction = Direction.RIGHT;
-		this.state = State.IDLE;
-		this.effects = new ArrayList<>();
 	}
 
 	public Entity() {
@@ -142,17 +143,17 @@ public abstract class Entity {
 		// Regeneration
 
 		/*
-		boolean still = this.velocity.x == 0 && this.velocity.y == 0;
-
-
-		int buffs = 0; // TODO: count buffs
-		int time = 1; // TODO: time since last hit
-
-		float regen = ((this.maxHp / 400.0f) * 0.85f + 0.15f) * time + buffs * ((still) ? 0.5f : 1.25f)
-			* (LastTry.world.isExpert() ? 1 : 0.5f);
-
-		this.hp = Math.min(this.maxHp, this.hp + (int) regen);
-		*/
+		 * boolean still = this.velocity.x == 0 && this.velocity.y == 0;
+		 * 
+		 * 
+		 * int buffs = 0; // TODO: count buffs int time = 1; // TODO: time since
+		 * last hit
+		 * 
+		 * float regen = ((this.maxHp / 400.0f) * 0.85f + 0.15f) * time + buffs
+		 * * ((still) ? 0.5f : 1.25f) (LastTry.world.isExpert() ? 1 : 0.5f);
+		 * 
+		 * this.hp = Math.min(this.maxHp, this.hp + (int) regen);
+		 */
 
 		// Increment velocity downwards.
 		// TODO: Gravity should not be a constant, but instead should be based
@@ -163,11 +164,12 @@ public abstract class Entity {
 			this.velocity.y += 0.4f;
 		}
 
-		/* TODO: Optimize and handle both X/Y velocity in one pass.
-		 * Current issue: If gravity (above) causes collision on
-		 * y-axis a combined xy update check will say there is a
-		 * collision and prevent motion updates for both x and y velocities
-		 * even if there is no x-axis specific collision.
+		/*
+		 * TODO: Optimize and handle both X/Y velocity in one pass. Current
+		 * issue: If gravity (above) causes collision on y-axis a combined xy
+		 * update check will say there is a collision and prevent motion updates
+		 * for both x and y velocities even if there is no x-axis specific
+		 * collision.
 		 *
 		 * If the entity is not still on the x-axis, update their position based
 		 * on their current velocity.
@@ -187,7 +189,8 @@ public abstract class Entity {
 				// If they collide with the x-velocity applied...
 
 				if (LastTry.world.isColliding(newHitbox)) {
-					/* If they collide with a block when their Y-position is
+					/*
+					 * If they collide with a block when their Y-position is
 					 * shifted up by a block then they are climbing up a wall
 					 * that is too steep to climb.
 					 */
@@ -254,7 +257,6 @@ public abstract class Entity {
 		}
 	}
 
-
 	/**
 	 * Update the entity x-axis velocity based on the given direction.
 	 * 
@@ -291,12 +293,15 @@ public abstract class Entity {
 
 	/**
 	 * Adds effect to entity, but if it is already applied, updates it's time
-	 * @param effect effect to apply
-	 * @param time time of effect
+	 * 
+	 * @param effect
+	 *            effect to apply
+	 * @param time
+	 *            time of effect
 	 */
 	public void addEffect(Effect effect, int time) {
-		for(EffectData effectData : this.effects) {
-			if(effectData.getEffect() == effect) {
+		for (EffectData effectData : this.effects) {
+			if (effectData.getEffect() == effect) {
 				effectData.setTime(time);
 				return;
 			}
@@ -307,13 +312,15 @@ public abstract class Entity {
 
 	/**
 	 * Removes effect from entity
-	 * @param effect effect to apply
+	 * 
+	 * @param effect
+	 *            effect to apply
 	 */
 	public void removeEffect(Effect effect) {
-		for(int i = 0; i < this.effects.size(); i++) {
+		for (int i = 0; i < this.effects.size(); i++) {
 			EffectData effectData = this.effects.get(i);
 
-			if(effectData.getEffect() == effect) {
+			if (effectData.getEffect() == effect) {
 				this.effects.remove(i);
 			}
 		}

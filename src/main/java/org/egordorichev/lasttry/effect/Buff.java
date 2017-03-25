@@ -175,7 +175,8 @@ public abstract class Buff extends Effect {
 		}
 	};
 
-	public static final Buff heartreach = new Buff("Heartreach", "Increased heart pickup range", Assets.heartreachBuffTexture) {
+	public static final Buff heartreach = new Buff("Heartreach", "Increased heart pickup range",
+			Assets.heartreachBuffTexture) {
 		@Override
 		public void apply(Entity entity) {
 			// TODO
@@ -211,7 +212,8 @@ public abstract class Buff extends Effect {
 		}
 	};
 
-	public static final Buff invisibility = new Buff("Invisibility", "Grants invisibility", Assets.invisibilityBuffTexture) {
+	public static final Buff invisibility = new Buff("Invisibility", "Grants invisibility",
+			Assets.invisibilityBuffTexture) {
 		@Override
 		public void apply(Entity entity) {
 			// TODO
@@ -259,7 +261,8 @@ public abstract class Buff extends Effect {
 		}
 	};
 
-	public static final Buff magicPower = new Buff("Magic Power", "20% increased magic damage", Assets.magicPowerBuffTexture) {
+	public static final Buff magicPower = new Buff("Magic Power", "20% increased magic damage",
+			Assets.magicPowerBuffTexture) {
 		@Override
 		public void apply(Entity entity) {
 			// TODO
@@ -309,7 +312,8 @@ public abstract class Buff extends Effect {
 		}
 	};
 
-	public static final Buff obsidianSkin = new Buff("Obsidian Skin", "Immune to lava", Assets.obsidianSkinBuffTexture) {
+	public static final Buff obsidianSkin = new Buff("Obsidian Skin", "Immune to lava",
+			Assets.obsidianSkinBuffTexture) {
 		@Override
 		public void apply(Entity entity) {
 			// TODO
@@ -552,8 +556,7 @@ public abstract class Buff extends Effect {
 		}
 	};
 
-	public static final Buff honey = new Buff("Honey", "Life regeneration is increased",
-			Assets.honeyBuffTexture) {
+	public static final Buff honey = new Buff("Honey", "Life regeneration is increased", Assets.honeyBuffTexture) {
 
 		@Override
 		public void apply(Entity entity) {
@@ -602,13 +605,17 @@ public abstract class Buff extends Effect {
 
 	/**
 	 * Abstact method, called on effect apply
-	 * @param entity Entity, on witch it is applied
+	 * 
+	 * @param entity
+	 *            Entity, on witch it is applied
 	 */
 	public abstract void apply(Entity entity);
 
 	/**
 	 * Abstact method, called on effect remove
-	 * @param entity Entity, from witch it is removed
+	 * 
+	 * @param entity
+	 *            Entity, from witch it is removed
 	 */
 	public abstract void remove(Entity entity);
 }

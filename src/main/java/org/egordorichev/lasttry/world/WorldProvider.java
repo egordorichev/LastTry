@@ -163,8 +163,6 @@ public class WorldProvider {
 		LastTry.log("Loading...");
 
 		try (FileReader stream = new FileReader(getFilePath(worldName))){
-			
-
 			int version = stream.readInt32();
 
 			if (version > CURRENT_VERSION) {
@@ -174,19 +172,15 @@ public class WorldProvider {
 			}
 
 			int flags = 0;
-
 			if (stream.readBoolean()) {
 				flags |= World.HARDMODE;
 			}
-
 			if (stream.readBoolean()) {
 				flags |= World.EXPERT;
 			}
-
 			if (stream.readBoolean()) {
 				flags |= World.HARDMODE;
 			}
-
 			if (stream.readBoolean()) {
 				flags |= World.CRIMSON;
 			}
