@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.mod;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.*;
 import org.egordorichev.lasttry.entity.Player;
@@ -54,7 +53,7 @@ public class ModAPI {
 
 	/**
 	 * Adds new key listner to the game input
-	 * @param key Slick2d Input.Key
+	 * @param key Input.Keys
 	 * @param callable will be called, when key is pressed
 	 */
 	public static void addKeyBinding(int key, Callable callable) {

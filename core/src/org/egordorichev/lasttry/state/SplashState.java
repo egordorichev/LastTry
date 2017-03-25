@@ -18,41 +18,51 @@ public class SplashState implements State {
 		Assets.load();
 	}
 
+	/** Never used */
 	@Override
 	public void show() {
 
 	}
 
+	/**
+	 * Renders and updates the splash
+	 * @param delta delta from last update
+	 */
 	@Override
 	public void render(float delta) {
 		LastTry.batch.draw(this.splash, 0, 0);
 		this.doneLoading = Assets.isLoaded();
 
 		if (this.doneLoading) {
-			LastTry.instance.setScreen(new GamePlayState());
+			LastTry.instance.setScreen(new MenuState());
 		}
 	}
 
+	/** Never used */
 	@Override
 	public void resize(int width, int height) {
 
 	}
 
+	/** Never used */
 	@Override
 	public void pause() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void resume() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void hide() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void dispose() {
 

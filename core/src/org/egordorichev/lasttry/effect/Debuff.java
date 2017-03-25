@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.entity.Entity;
 
 public abstract class Debuff extends Effect {
-	// TODO: add buffs
+	// TODO: add debuffs
 
 	public Debuff(String name, String description, Texture texture) {
 		super(name, description, texture);

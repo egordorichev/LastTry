@@ -71,11 +71,16 @@ public class GamePlayState implements State {
 		LastTry.modLoader.load();
 	}
 
+	/** Never used */
 	@Override
 	public void show() {
 
 	}
 
+	/**
+	 * Renders and updates the splash
+	 * @param delta delta from last update
+	 */
 	@Override
 	public void render(float delta) {
 		LastTry.environment.update((int) delta);
@@ -120,26 +125,31 @@ public class GamePlayState implements State {
 		LastTry.debug.render();
 	}
 
+	/** Never used */
 	@Override
 	public void resize(int width, int height) {
 
 	}
 
+	/** Never used */
 	@Override
 	public void pause() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void resume() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void hide() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void dispose() {
 

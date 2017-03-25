@@ -49,11 +49,16 @@ public class MenuState implements State {
 		LastTry.ui.add(this.panel);
 	}
 
+	/** Never used */
 	@Override
 	public void show() {
 
 	}
 
+	/**
+	 * Renders and updates the splash
+	 * @param delta delta from last update
+	 */
 	@Override
 	public void render(float delta) {
 		Assets.font.draw(LastTry.batch, "Done!", 10, 10);
@@ -61,24 +66,29 @@ public class MenuState implements State {
 	}
 
 	@Override
+	/** Never used */
 	public void resize(int width, int height) {
 
 	}
 
+	/** Never used */
 	@Override
 	public void pause() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void resume() {
 
 	}
 
+	/** Never used */
 	@Override
 	public void hide() {
 	}
 
+	/** Never used */
 	@Override
 	public void dispose() {
 
