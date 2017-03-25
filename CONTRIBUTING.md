@@ -5,7 +5,6 @@ The following is a set of guidelines for contributing to Last Try.
 
 ### Pull Requests
 
- * Fill in the required template
  * Include screenshots and animated GIFs in your pull request whenever possible
  * Avoid platform-dependent code
 
