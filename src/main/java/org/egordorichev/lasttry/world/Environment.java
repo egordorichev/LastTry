@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.world;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
 
 import java.util.Arrays;
@@ -20,9 +22,14 @@ public class Environment {
 	public int[] blockCount;
 
 	public Environment() {
-		this.addBiomeChecker();
-
 		this.blockCount = new int[ItemID.count];
+
+		Util.runInThread(new Callable() {
+			@Override
+			public void call() {
+				updateBiome();
+			}
+		}, 1);
 	}
 
 	/** Renders current biome */
@@ -50,18 +57,6 @@ public class Environment {
 
 			this.lastBiome.fadeOut();
 		}
-	}
-
-	/** Checks in a thread current biome every second */
-	private void addBiomeChecker() {
-		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-
-		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				updateBiome();
-			}
-		}, 0, 1, TimeUnit.SECONDS);
 	}
 
 	/** Updates current biome */

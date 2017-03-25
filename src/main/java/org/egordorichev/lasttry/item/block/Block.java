@@ -8,10 +8,12 @@ import org.newdawn.slick.Image;
 public class Block extends Item {
 	public static final int TEX_SIZE = 16;
 	protected boolean solid;
+
 	/**
 	 * The tool type to use for the block.
 	 */
 	protected EffectiveToolType type;
+
 	/**
 	 * The block spite-sheet.
 	 */
@@ -22,6 +24,23 @@ public class Block extends Item {
 		this.type = type;
 		this.tiles = tiles;
 		this.solid = solid;
+	}
+
+	/**
+	 * Updates the block at given coordinates
+	 *
+	 * @param x
+	 *            X-position in the world.
+	 * @param y
+	 *            Y-position in the world.
+	 */
+	public void updateBlockStyle(int x, int y) {
+		/* TODO: if block has animation, update it */
+	}
+
+	public void updateBlock(int x, int y) {
+		/* TODO: if block is a plant, update it,
+		 * If block is corrupt, spread it */
 	}
 
 	/**
@@ -88,7 +107,7 @@ public class Block extends Item {
 		// TODO: Distance checks from cursor coordinates to player coordinates
 
 		// Check if the block can be placed.
-		if (LastTry.world.canPlaceInWorld(x, y, this)) {
+		if (LastTry.world.canPlaceInWorld(this, x, y)) {
 			// Check if the block intersects the player's hitbox
 			// TODO: Check othter entities in the world
 			Rectangle rectangle = LastTry.player.getHitbox();

@@ -5,7 +5,9 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Util;
 
 public class World {
 	/** Shows, that world has crimson, not corruption biome */
@@ -19,6 +21,9 @@ public class World {
 
 	/** Shows, that world is in hardcode mode */
 	public static final int HARDCORE = 4;
+
+	/** How often the whole world is updated */
+	public static final int UPDATE_DELAY = 5;
 
 	/** Data about all of the blocks and walls in the world */
 	private WorldData data;
@@ -37,6 +42,13 @@ public class World {
 		this.height = height;
 		this.flags = flags;
 		this.data = data;
+
+		Util.runInThread(new Callable() {
+			@Override
+			public void call() {
+				updateWorld();
+			}
+		}, UPDATE_DELAY);
 	}
 
 	/**
@@ -66,6 +78,7 @@ public class World {
 				}
 
 				if (block != null) {
+					block.updateBlockStyle(x, y);
 					block.renderBlock(x, y);
 				}
 			}
@@ -73,26 +86,39 @@ public class World {
 	}
 
 	/**
-	 * Updates the world. Runs once in 10 seconds
+	 * Updates the whole world. Runs once in UPDATE_DELAY seconds
 	 */
 	private void updateWorld() {
-		// TODO
+		for (int y = 0; y < this.height; y++) {
+			for (int x = 0; x < this.width; x++) {
+				Block block = (Block) Item.fromID(this.getBlockID(x, y));
+
+				if (block != null) {
+					block.updateBlock(x, y);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Checks if a block can be placed in the world at the given coordinates.
-	 * 
+	 *
+	 * @param block
+	 *            Block to be placed.
 	 * @param x
 	 *            World x-position.
 	 * @param y
 	 *            World y-position.
-	 * @param block
-	 *            Block to be placed.
 	 * @return If the block can be placed.
 	 */
-	public boolean canPlaceInWorld(int x, int y, Block block) {
-		// TODO: Some blocks should be able to be placed in different situations
-		// For example, you can place dirt on a shrub (Shrub is destroyed)
+	public boolean canPlaceInWorld(Block block, int x, int y) {
+		/*
+		 * TODO: Some blocks should be able to be placed in different situations
+		 * For example, you can place dirt on a shrub (Shrub is destroyed)
+		 *
+		 * Maybe we should move this to the block class?
+		 */
+
 		return this.getBlockID(x, y) == ItemID.none;
 	}
 
