@@ -5,7 +5,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.egordorichev.lasttry.LastTry;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+	/**
+	 * App main
+	 * @param arg never used
+	 */
+	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.width = 800;

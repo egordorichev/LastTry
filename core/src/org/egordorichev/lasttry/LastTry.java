@@ -62,6 +62,7 @@ public class LastTry extends Game {
 	/** Debug helper */
 	public static Debug debug;
 
+	/** Creates first-priority instances */
 	@Override
 	public void create() {
 		instance = this;
@@ -85,6 +86,11 @@ public class LastTry extends Game {
 		this.setScreen(new SplashState());
 	}
 
+	/**
+	 * Handles window resize
+	 * @param width new window width
+	 * @param height new window height
+	 */
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
@@ -93,6 +99,9 @@ public class LastTry extends Game {
 		camera.update();
 	}
 
+	/**
+	 * Renders and updates the game
+	 */
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -105,23 +114,47 @@ public class LastTry extends Game {
 		batch.end();
 	}
 
+	/** Logs a info-level message
+	 * @param message message to log
+	 */
 	public static void log(String message) {
 		log.info(message);
 	}
 
+	/**
+	 * Returns mouse X coordinate, under the world
+	 * @return mouse X coordinate, under the world
+	 */
 	public static int getMouseXInWorld() {
 		return (int) (player.getX() - Gdx.graphics.getWidth() / 2 + Gdx.input.getX() + 14);
 	}
 
+	/**
+	 * Returns mouse Y coordinate, under the world
+	 * @return mouse Y coordinate, under the world
+	 */
 	public static int getMouseYInWorld() {
 		return (int) (player.getY() -  Gdx.graphics.getHeight() / 2 + Gdx.input.getY() + 20);
 	}
 
+	/**
+	 * Handles exception, if it is critical, exits the game
+	 * @param exception exception to handle
+	 */
 	public static void handleException(Exception exception) {
 		log.error(exception.getMessage());
 		exception.printStackTrace();
+
+		if (exception instanceof NullPointerException) {
+			log.warn("Exiting");
+			Gdx.app.exit();
+		}
 	}
 
+	/**
+	 * Returns random title for game the window
+	 * @return random title for game the window
+	 */
 	private String getRandomWindowTitle() {
 		return new String[] { "LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
 				"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
