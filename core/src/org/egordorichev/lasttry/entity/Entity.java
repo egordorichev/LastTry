@@ -6,7 +6,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Effect;
 import org.egordorichev.lasttry.effect.EffectData;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Direction;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.ArrayList;

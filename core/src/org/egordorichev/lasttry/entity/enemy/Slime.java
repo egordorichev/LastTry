@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Direction;
-import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.entity.Direction;
 
 public class Slime extends Enemy {
 	/**

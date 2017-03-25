@@ -10,7 +10,6 @@ import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.Player;
-import org.egordorichev.lasttry.util.Direction;
 
 public abstract class Enemy extends Entity {
 	public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();

@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.ui.UiInventory;
-import org.egordorichev.lasttry.util.Direction;
 
 public class Player extends Entity {
 	protected String name;

@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.util;
+package org.egordorichev.lasttry.entity;
 
 /**
  * Horizontal direction.
