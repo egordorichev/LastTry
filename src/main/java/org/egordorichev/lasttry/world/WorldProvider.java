@@ -162,8 +162,8 @@ public class WorldProvider {
 	public static World load(String worldName) {
 		LastTry.log("Loading...");
 
-		try {
-			FileReader stream = new FileReader(getFilePath(worldName));
+		try (FileReader stream = new FileReader(getFilePath(worldName))){
+			
 
 			int version = stream.readInt32();
 

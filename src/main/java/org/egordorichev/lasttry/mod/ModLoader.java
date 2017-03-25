@@ -37,9 +37,7 @@ public class ModLoader {
 	 * @param file mod file
 	 */
 	private void loadMod(File file) {
-		try {
-			JarFile jarFile = new JarFile(file);
-				
+		try(JarFile jarFile = new JarFile(file)) {
 			URL[] urls = new URL[]{
 				new URL("jar:file:" + file.getAbsolutePath() + "!/")
 			};

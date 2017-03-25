@@ -13,7 +13,7 @@ public class SplashState extends BasicGameState {
 	/**
 	 * Indicates if it can skip the splash, after loading content
 	 */
-	private final static boolean SKIP_SPLASH = true;
+	private final static boolean SKIP_SPLASH = false;
 	
 	/**
 	 * Fade in and fade out speed
@@ -47,7 +47,6 @@ public class SplashState extends BasicGameState {
 
 	public SplashState() {
 		try {
-			this.loaded = false;
 			this.splash = new Image("assets/images/splashes/1.png");
 			this.splash.setAlpha(0.1f);
 
@@ -123,7 +122,7 @@ public class SplashState extends BasicGameState {
 		boolean transparent = this.splash.getAlpha() <= 0.1f;
 		boolean animationComplete = !this.fadeUp && transparent;
 		
-		if (SKIP_SPLASH || animationComplete) {
+		if (animationComplete || SKIP_SPLASH) {
 			LastTry.setState(new MenuState());
 		}
 	}
