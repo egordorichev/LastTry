@@ -1,0 +1,11 @@
+
+language: java
+sudo: true
+
+compiler:
+  - javac
+
+script: ./gradlew build
+
+notifications:
+    email: false
