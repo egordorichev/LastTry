@@ -408,7 +408,7 @@ public abstract class Entity {
 	public void die() {
 		this.shouldUpdate = false;
 		this.onDeath();
-		LastTry.entityManager.remove(this);
+		LastTry.entityManager.markForRemoval(this);
 	}
 
 	/**

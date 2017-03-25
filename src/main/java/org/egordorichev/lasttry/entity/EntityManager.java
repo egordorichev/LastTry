@@ -94,16 +94,31 @@ public class EntityManager {
 	}
 
 	/**
-	 * Removes entity from update list
+	 * Removes entity from update list immediately.
 	 * 
 	 * @param entity
-	 *            entity to remove
+	 *            Entity to remove.
 	 */
 	public void remove(Entity entity) {
 		this.entities.remove(entity);
 	}
 
+	/**
+	 * Marks an entity for removal before the next update occurs.
+	 * 
+	 * @param entity
+	 *            Entity to remove.
+	 */
 	public void markForRemoval(Entity entity) {
 		this.clearList.add(entity);
+	}
+
+	/**
+	 * Returns the list of entities.
+	 * 
+	 * @return List of active entities
+	 */
+	public List<Entity> getEntities() {
+		return entities;
 	}
 }
