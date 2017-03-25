@@ -21,7 +21,7 @@ public class ModLoader {
 	 * Lookups and loads all mods from "assets/mods" directory
 	 */
 	public void load() {
-		File[] mods = new File("assets/mods").listFiles();
+		File[] mods = new File("mods/").listFiles();
 
 		for (int i = 0; i < mods.length; i++) {
 			if (!mods[i].getName().endsWith(".jar")) {

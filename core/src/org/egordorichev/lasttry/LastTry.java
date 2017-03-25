@@ -11,8 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.Environment;
@@ -54,9 +56,17 @@ public class LastTry extends Game {
 	/** Entity manager instance */
 	public static EntityManager entityManager;
 
+	/** Mod loader */
+	public static ModLoader modLoader;
+
+	/** Debug helper */
+	public static Debug debug;
+
 	@Override
 	public void create() {
 		instance = this;
+		log = new Log();
+		debug = new Debug();
 
 		Gdx.input.setInputProcessor(Util.multiplexer);
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
@@ -64,8 +74,8 @@ public class LastTry extends Game {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		camera = new OrthographicCamera();
-		camera.setToOrtho(true, width, height);
+		camera = new OrthographicCamera(width, height);
+		camera.setToOrtho(false, width, height);
 		viewport = new FitViewport(width, height);
 
 		batch = new SpriteBatch();
@@ -89,6 +99,7 @@ public class LastTry extends Game {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
 		batch.enableBlending();
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		super.render();
 		batch.end();

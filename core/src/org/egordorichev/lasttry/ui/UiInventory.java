@@ -92,7 +92,6 @@ public class UiInventory extends UiComponent {
 		this.slots[currentSlot].setActive(true);
 
 		Util.multiplexer.addProcessor(new InputProcessor() {
-
 			@Override
 			public boolean keyDown(int keycode) {
 				return false;
@@ -172,14 +171,14 @@ public class UiInventory extends UiComponent {
 		Item item = this.slots[this.currentSlot].getItem();
 
 		if (item == null) {
-			Assets.font.draw(LastTry.batch, "Inventory", 10, 5);
+			Assets.font.draw(LastTry.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
 		} else {
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
-				Assets.font.draw(LastTry.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, 5);
+				Assets.font.draw(LastTry.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
 			} else {
-				Assets.font.draw(LastTry.batch, item.getName(), 10, 5);
+				Assets.font.draw(LastTry.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
 			}
 		}
 

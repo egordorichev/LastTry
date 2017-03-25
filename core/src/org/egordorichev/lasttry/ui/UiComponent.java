@@ -78,11 +78,19 @@ public class UiComponent {
 		}
 	}
 
-	public int getY() {
+	public int getClickY() {
 		switch(this.origin) {
 			case TOP_LEFT: case TOP_RIGHT: default: return (int) this.rect.getY();
 			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) (Gdx.graphics.getWidth() - this.getHeight() - this.rect.getY());
 			case CENTER: return (int) (this.rect.getY() + (Gdx.graphics.getHeight() - this.getHeight()) / 2);
+		}
+	}
+
+	public int getY() {
+		switch(this.origin) {
+			case TOP_LEFT: case TOP_RIGHT: default: return (int) (Gdx.graphics.getHeight() - this.rect.getY() - this.getHeight());
+			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) ((Gdx.graphics.getWidth() - this.getHeight() - this.rect.getY()));
+			case CENTER: return (int) (Gdx.graphics.getHeight() - (this.rect.getY() + (Gdx.graphics.getHeight() - this.getHeight()) / 2));
 		}
 	}
 
@@ -107,7 +115,7 @@ public class UiComponent {
 			return;
 		}
 
-		Rectangle rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		Rectangle rectangle = new Rectangle(this.getX(), this.getClickY(), this.getWidth(), this.getHeight());
 
 		int x = Gdx.input.getX();
 		int y = Gdx.input.getY();

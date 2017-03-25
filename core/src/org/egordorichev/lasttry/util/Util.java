@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Util {
 	/** Input handler */
-	public static InputMultiplexer multiplexer;
+	public static InputMultiplexer multiplexer = new InputMultiplexer();
 
 	/**
 	 * Runs callable in a thread every time seconds
