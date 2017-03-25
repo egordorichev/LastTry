@@ -26,9 +26,9 @@ public class EyeOfCthulhu extends Boss {
 		this.state = State.FLYING;
 		this.isSolid = false;
 
-		this.drops.add(new Drop(Item.goldCoin, Drop.Chance.ALWAYS, 5, 5));
-		this.drops.add(new Drop(Item.copperCoin, Drop.Chance.ALWAYS, 1, 15));
-		this.drops.add(new Drop(Item.heart, Drop.Chance.ALWAYS, 5, 10));
+		this.drops.add(new Drop(Item.goldCoin, 5, 5));
+		this.drops.add(new Drop(Item.copperCoin, 15));
+		this.drops.add(new Drop(Item.heart, 5, 10));
 
 		this.phases = new Phase[2];
 
@@ -57,7 +57,7 @@ public class EyeOfCthulhu extends Boss {
 				animations[State.FLYING.getId()] = flyingAnimation;
 			}
 		};
-		
+
 		this.phases[0].enter();
 	}
 
@@ -65,7 +65,8 @@ public class EyeOfCthulhu extends Boss {
 	public void updateAI() {
 		super.updateAI();
 
-		this.fly(-Float.compare(this.getCenterX(), LastTry.player.getCenterX()), -Float.compare(this.getCenterY(), LastTry.player.getCenterY()));
+		this.fly(-Float.compare(this.getCenterX(), LastTry.player.getCenterX()),
+				-Float.compare(this.getCenterY(), LastTry.player.getCenterY()));
 
 		if (this.currentAi == 0 || this.currentAi == 120 || this.currentAi == 240) {
 			// TODO

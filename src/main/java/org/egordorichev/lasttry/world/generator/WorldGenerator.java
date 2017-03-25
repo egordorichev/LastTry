@@ -2,10 +2,10 @@ package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WorldGenerator {
 	/** Stores all of the blocks and walls */
@@ -18,7 +18,7 @@ public class WorldGenerator {
 	private int height;
 
 	/** Generation tasks, witch will be runned */
-	private ArrayList<GeneratorTask> tasks = new ArrayList<>();
+	private List<GeneratorTask> tasks = new ArrayList<>();
 
 	public WorldGenerator() {
 		this.addSurfaceGenerator();

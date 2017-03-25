@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry;
 
-import org.egordorichev.lasttry.ui.UiButton;
 import org.egordorichev.lasttry.ui.UiPanel;
 import org.egordorichev.lasttry.ui.UiTextButton;
 import org.newdawn.slick.GameContainer;

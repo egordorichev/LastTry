@@ -38,7 +38,7 @@ public class Environment {
 
 	/**
 	 * Updates biomes and spawns mobs
-	 * @param dt delta from last update
+	 * @param dt The milliseconds passed since the last update.
 	 */
 	public void update(int dt) {
 		if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {

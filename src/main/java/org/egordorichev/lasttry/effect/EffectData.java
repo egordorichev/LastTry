@@ -3,16 +3,16 @@ package org.egordorichev.lasttry.effect;
 import org.egordorichev.lasttry.entity.Entity;
 
 public class EffectData {
-	/** Effect, witch is applied */
+	/** Effect witch is applied */
 	private Effect effect;
 
-	/** Time, left in effect */
+	/** Time left in effect */
 	private int currentTime;
 
 	/** Total effect time */
 	private int totalTime;
 
-	/** Entity, who receives effect */
+	/** Entity who receives effect */
 	private Entity entity;
 
 	/** Shows if effect is done */
@@ -21,15 +21,17 @@ public class EffectData {
 	public EffectData(Entity entity, Effect effect, int time) {
 		this.effect = effect;
 		this.entity = entity;
-		this.done = false;
-
 		this.setTime(time);
 		this.effect.apply(this.entity);
 	}
 
-	/** Renders effect icon at given position
-	 * @param x X coordinate
-	 * @param y Y coordinate
+	/**
+	 * Renders effect icon at given position.
+	 * 
+	 * @param x
+	 *            X-position
+	 * @param y
+	 *            Y-position
 	 */
 	public void render(int x, int y) {
 		this.effect.render(x, y);
@@ -37,18 +39,20 @@ public class EffectData {
 
 	/**
 	 * Updates effect and returns true, if it is done
-	 * @param dt delta from previous update
+	 * 
+	 * @param dt
+	 *            The milliseconds passed since the last update.
 	 * @return true, if it is done
 	 */
 	public boolean update(int dt) {
-		if(this.done) {
+		if (this.done) {
 			return true;
 		}
 
 		this.currentTime--;
 		this.effect.update(dt);
 
-		if(this.currentTime == 0) {
+		if (this.currentTime == 0) {
 			this.done = true;
 			this.effect.remove(this.entity);
 			return true;
@@ -58,8 +62,10 @@ public class EffectData {
 	}
 
 	/**
-	 * Sets effect time
-	 * @param time effect time
+	 * Sets the time it takes for the effect to complete.
+	 * 
+	 * @param time
+	 *            Time to complete effect.
 	 */
 	public void setTime(int time) {
 		this.currentTime = time * 60;
@@ -67,16 +73,18 @@ public class EffectData {
 	}
 
 	/**
-	 * Returns effect
-	 * @return holding effect
+	 * Returns effect.
+	 * 
+	 * @return Held effect.
 	 */
 	public Effect getEffect() {
 		return this.effect;
 	}
 
 	/**
-	 * Returns true, if effect has ended
-	 * @return effect has ended
+	 * Returns true if the effect has ended.
+	 * 
+	 * @return true if the effect has ended.
 	 */
 	public boolean isDone() {
 		return this.done;

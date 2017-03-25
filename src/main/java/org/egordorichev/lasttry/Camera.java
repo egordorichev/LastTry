@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry;
 
-import org.newdawn.slick.Graphics;
-
 public class Camera {
 	private float x = 0;
 	private float y = 0;

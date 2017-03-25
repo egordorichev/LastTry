@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.graphics;
 
 import org.egordorichev.lasttry.LastTry;
 import org.newdawn.slick.*;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class Assets {
 	public static FontWrapper font = loadFont("font.ttf", java.awt.Font.PLAIN, 22, java.awt.Color.white);

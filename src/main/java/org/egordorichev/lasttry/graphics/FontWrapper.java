@@ -27,6 +27,7 @@ public class FontWrapper {
 	 * Changes the font color
 	 * @param color color to be set
 	 */
+	@SuppressWarnings("unchecked")
 	public void setColor(Color color) {
 		this.font.getEffects().clear();
 		this.font.getEffects().add(new ColorEffect(color));

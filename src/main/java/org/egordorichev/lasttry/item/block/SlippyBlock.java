@@ -1,6 +1,5 @@
-package org.egordorichev.lasttry.item;
+package org.egordorichev.lasttry.item.block;
 
-import org.egordorichev.lasttry.item.block.BlockGround;
 import org.newdawn.slick.Image;
 
 public class SlippyBlock extends BlockGround { // TODO

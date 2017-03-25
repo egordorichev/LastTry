@@ -3,9 +3,6 @@ package org.egordorichev.lasttry.effect;
 import org.egordorichev.lasttry.entity.Entity;
 import org.newdawn.slick.Image;
 
-import org.egordorichev.lasttry.entity.Entity;
-import org.newdawn.slick.Image;
-
 public abstract class Debuff extends Effect {
 	// TODO: add buffs
 

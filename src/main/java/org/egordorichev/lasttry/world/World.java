@@ -1,13 +1,11 @@
 package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class World {
 	/** Shows, that world has crimson, not corruption biome */
@@ -63,11 +61,11 @@ public class World {
 				Wall wall = (Wall) Item.fromID(this.getWallID(x, y));
 				Block block = (Block) Item.fromID(this.getBlockID(x, y));
 
-				if(wall != null) {
+				if (wall != null) {
 					wall.renderWall(x, y);
 				}
 
-				if(block != null) {
+				if (block != null) {
 					block.renderBlock(x, y);
 				}
 			}
@@ -75,114 +73,158 @@ public class World {
 	}
 
 	/**
-	 * Updates the whole world. Runs once in 10 seconds
+	 * Updates the world. Runs once in 10 seconds
 	 */
 	private void updateWorld() {
 		// TODO
 	}
 
 	/**
-	 * Sets block to given ID at given position
-	 * @param id block ID
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
+	 * Checks if a block can be placed in the world at the given coordinates.
+	 * 
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
+	 * @param block
+	 *            Block to be placed.
+	 * @return If the block can be placed.
+	 */
+	public boolean canPlaceInWorld(int x, int y, Block block) {
+		// TODO: Some blocks should be able to be placed in different situations
+		// For example, you can place dirt on a shrub (Shrub is destroyed)
+		return this.getBlockID(x, y) == ItemID.none;
+	}
+
+	/**
+	 * Sets the block in the world at the given position based on the given ID.
+	 * 
+	 * @param id
+	 *            Block ID
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
 	 */
 	public void setBlock(short id, int x, int y) {
 		this.data.blocks[x + y * this.width] = id;
 	}
 
 	/**
-	 * Sets wall to given ID at given position
-	 * @param id wall ID
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
+	 * Sets the wall in the world at the given position based on the given ID.
+	 * 
+	 * @param id
+	 *            Wall ID
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
 	 */
 	public void setWall(short id, int x, int y) {
 		this.data.walls[x + y * this.width] = id;
 	}
 
 	/**
-	 * Returns block ID at given position
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
-	 * @return block ID
+	 * Returns the ID of the block at the given position.
+	 * 
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
+	 * @return Block ID
 	 */
 	public short getBlockID(int x, int y) {
 		return this.data.blocks[x + y * this.width];
 	}
 
 	/**
-	 * Returns block hp at given position
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
-	 * @return block hp
+	 * Returns hit-points of the block at the given position.
+	 * 
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
+	 * @return Block hit-points
 	 */
 	public byte getBlockHp(int x, int y) {
 		return this.data.blocksHealth[x + y * this.width];
 	}
 
 	/**
-	 * Returns wall ID at given position
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
-	 * @return wall ID
+	 * Returns the ID of the wall at given position
+	 * 
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
+	 * @return Wall ID
 	 */
 	public short getWallID(int x, int y) {
 		return this.data.walls[x + y * this.width];
 	}
 
 	/**
-	 * Returns wall hp at given position
-	 * @param x position X coordinate
-	 * @param y position Y coordinate
-	 * @return wall hp
+	 * Returns the hit-points of the wall at given position.
+	 * 
+	 * @param x
+	 *            World x-position.
+	 * @param y
+	 *            World y-position.
+	 * @return Wall hp
 	 */
 	public byte getWallHp(int x, int y) {
 		return this.data.wallsHealth[x + y * this.width];
 	}
 
 	/**
-	 * Returns true, if world's evil is corruption
-	 * @return true, if world's evil is corruption
+	 * Returns true if the world's evil type is corruption.
+	 * 
+	 * @return true if world's evil type is corruption.
 	 */
 	public boolean evilIsCorruption() {
 		return !this.evilIsCrimson();
 	}
 
 	/**
-	 * Returns true, if world's evil is crimson
-	 * @return true, if world's evil is crimson
+	 * Returns true if the world's evil type is crimson.
+	 * 
+	 * @return true, if world's evil type is crimson.
 	 */
 	public boolean evilIsCrimson() {
 		return (this.flags & CRIMSON) == CRIMSON;
 	}
 
 	/**
-	 * Returns true, if world is in expert mode
-	 * @return true, if world is in expert mode
+	 * Returns true if the world is in expert mode.
+	 * 
+	 * @return true if the world is in expert mode.
 	 */
 	public boolean isExpertMode() {
 		return (this.flags & EXPERT) == EXPERT;
 	}
 
 	/**
-	 * Returns true, if world is in hardcore mode
-	 * @return true, if world is in hardcore mode
+	 * Returns true if the world is in hardcore mode.
+	 * 
+	 * @return true if the world is in hardcore mode.
 	 */
 	public boolean isHardcore() {
 		return (this.flags & HARDCORE) == HARDCORE;
 	}
 
 	/**
-	 * Returns true, if world is in hardmode
-	 * @return true, if world is in hardmode
+	 * Returns true if the world is in hardmode.
+	 * 
+	 * @return true, if the world is in hardmode.
 	 */
 	public boolean isHardmode() {
 		return (this.flags & HARDMODE) == HARDCORE;
 	}
 
 	/**
-	 * @return world width in blocks
+	 * Returns the world's width.
+	 * 
+	 * @return World width in blocks
 	 */
 	public short getWidth() {
 		return this.width;
@@ -191,38 +233,42 @@ public class World {
 	/**
 	 * Check if the given bounds collide with blocks in the world
 	 *
-	 * @param bounds Bounds to check collision for.
+	 * @param bounds
+	 *            Bounds to check collision for.
 	 * @return If bounds collide with world's blocks.
 	 */
 	public boolean isColliding(Rectangle bounds) {
+		// Create the bounds and fit them to the world's grid.
 		Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
-
 		gridBounds.x /= Block.TEX_SIZE;
 		gridBounds.y /= Block.TEX_SIZE;
 		gridBounds.width /= Block.TEX_SIZE;
 		gridBounds.height /= Block.TEX_SIZE;
 
+		// Iterate blocks and check for conditions
 		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
 			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
+				// Prevent going out-of-bounds.
 				if (!this.isInside(x, y)) {
 					return true;
 				}
 
+				// Skip null/non-solid blocks
 				Block block = (Block) Item.fromID(this.getBlockID(x, y));
-
 				if (block == null || !block.isSolid()) {
 					continue;
 				}
 
+				// Check if the parameter bounds intersect with the block at the
+				// iterated coordiantes.
 				Rectangle blockRect = new Rectangle(x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE,
-					Block.TEX_SIZE);
-
+						Block.TEX_SIZE);
 				if (blockRect.intersects(bounds)) {
 					return true;
 				}
 			}
 		}
-
+		
 		return false;
 	}
 

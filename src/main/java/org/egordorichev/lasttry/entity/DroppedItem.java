@@ -4,6 +4,9 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 
+/**
+ * Entity representing an item dropped in the world.
+ */
 public class DroppedItem extends Entity {
 	/**
 	 * Item holder that this dropped entity represents.
@@ -29,19 +32,21 @@ public class DroppedItem extends Entity {
 
 		if (this.getHitbox().intersects(LastTry.player.getHitbox())) {
 			if (this.holder.getItem() == Item.heart) {
-				LastTry.player.modifyHp(+20 * this.holder.getCount());
-			} else { // TODO: mana
+				LastTry.player.modifyHp(20 * this.holder.getCount());
+			} else if (this.holder.getItem() == Item.mana) {
+				// TODO: mana
+				LastTry.player.inventory.add(this.holder);
+			} else {
 				LastTry.player.inventory.add(this.holder);
 			}
-
-			// LastTry.world.remove(this); : TODO
+			LastTry.entityManager.markForRemoval(this);
 		}
 	}
 
 	/**
 	 * Return the ItemHolder that this entity represents.
 	 * 
-	 * @return 
+	 * @return
 	 */
 	public ItemHolder getHolder() {
 		return holder;

@@ -14,8 +14,7 @@ import org.newdawn.slick.Animation;
 
 public abstract class Enemy extends Entity {
 	public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
-
-	protected static int maxAi;
+	protected int maxAi;
 	protected int currentAi;
 	protected int id;
 	protected List<Drop> drops = new ArrayList<>();

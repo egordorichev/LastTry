@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.item.items.Armor;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Dye;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;

@@ -2,9 +2,12 @@ package org.egordorichev.lasttry.item;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.items.Mushroom;
 import org.egordorichev.lasttry.item.items.Pickaxe;
 import org.egordorichev.lasttry.item.items.Sword;
+import org.egordorichev.lasttry.item.items.ThornBlock;
 import org.egordorichev.lasttry.item.block.BlockGround;
+import org.egordorichev.lasttry.item.block.SlippyBlock;
 import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.newdawn.slick.Image;
@@ -83,7 +86,7 @@ public class Item {
 
 	/**
 	 * Updates item if it is being used
-	 * @param dt update delta
+	 * @param dt The milliseconds passed since the last update.
 	 */
 	public void update(int dt) {
 

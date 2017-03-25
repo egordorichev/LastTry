@@ -15,7 +15,7 @@ public class ModLoader {
 	/**
 	 * List of loaded mods
 	 */
-	private ArrayList<Mod> mods = new ArrayList<>();
+	private List<Mod> mods = new ArrayList<>();
 
 	/**
 	 * Lookups and loads all mods from "assets/mods" directory
@@ -37,9 +37,7 @@ public class ModLoader {
 	 * @param file mod file
 	 */
 	private void loadMod(File file) {
-		try {
-			JarFile jarFile = new JarFile(file);
-				
+		try(JarFile jarFile = new JarFile(file)) {
 			URL[] urls = new URL[]{
 				new URL("jar:file:" + file.getAbsolutePath() + "!/")
 			};

@@ -5,49 +5,55 @@ import org.newdawn.slick.Image;
 
 public class Ammo extends Item {
 	public enum Type {
-		BULLET,
-		ARROW,
-		ROCKET,
+		BULLET, 
+		ARROW, 
+		ROCKET, 
 		DART,
 		SOLUTION, // Used by some tools
-		BAIT,
-		WIRE,
+		BAIT, 
+		WIRE, 
 		OTHER
 	}
-	
+
 	/**
 	 * Ammo damage
 	 */
 	protected int damage;
-	
+
 	/**
 	 * Ammo type
 	 */
 	protected Type type;
-	
+
 	public Ammo(short id, String name, int damage, Type type, Image texture) {
 		super(id, name, texture);
-		
+
 		this.damage = damage;
 		this.type = type;
 	}
 
 	/**
-	 * @return if ammo can damage
+	 * Returns true if the ammo has a damage value of &gt; 1.
+	 * 
+	 * @return if ammo can damage.
 	 */
 	public boolean hasDamage() {
 		return this.damage > 0;
 	}
-	
+
 	/**
-	 * @return ammo damage
+	 * Returns the damage the ammo will inflict.
+	 * 
+	 * @return ammo damage.
 	 */
 	public int getDamage() {
 		return this.damage;
 	}
-	
+
 	/**
-	 * @return ammo type
+	 * Returns the ammo type.
+	 * 
+	 * @return ammo type.
 	 */
 	public Type getType() {
 		return this.type;

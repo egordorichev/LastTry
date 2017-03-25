@@ -1,9 +1,7 @@
 package org.egordorichev.lasttry.ui;
 
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.FontWrapper;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.geom.Rectangle;
 
 public class UiTextButton extends UiComponent {
