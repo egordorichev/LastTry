@@ -60,11 +60,12 @@ public class World {
 		int windowHeight = Gdx.graphics.getHeight();
 		int tww = windowWidth / Block.TEX_SIZE;
 		int twh = windowHeight / Block.TEX_SIZE;
-		int tcx = (int) LastTry.camera.position.x / Block.TEX_SIZE;
-		int tcy = (int) LastTry.camera.position.y / Block.TEX_SIZE;
+		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+		int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
+			/ Block.TEX_SIZE);
 
 		int minY = Math.max(0, tcy - 2);
-		int maxY = Math.min(this.height - 1, tcy + twh + 2);
+		int maxY = Math.min(this.height - 1, tcy + twh + 3);
 		int minX = Math.max(0, tcx - 2);
 		int maxX = Math.min(this.width - 1, tcx + tww + 2);
 
@@ -75,7 +76,7 @@ public class World {
 				Block block = (Block) Item.fromID(this.getBlockID(x, y));
 
 				if (wall != null) {
-					wall.renderWall(x, y);
+				//	wall.renderWall(x, y);
 				}
 
 				if (block != null) {

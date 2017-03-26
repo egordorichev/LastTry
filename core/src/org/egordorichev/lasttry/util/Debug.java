@@ -19,8 +19,8 @@ public class Debug {
 		}
 
 		Assets.font.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
-		Assets.font.draw(LastTry.batch, "X: " + String.format("%.2f", LastTry.player.getGridX())
-			+ " Y: " + String.format("%.2f", LastTry.player.getGridY()), 40, 30);
+		Assets.font.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.getGridX())
+			+ " Y: " + String.format("%d", LastTry.player.getGridY()), 40, 30);
 	}
 
 	/** Enables debug */

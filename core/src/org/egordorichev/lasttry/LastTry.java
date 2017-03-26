@@ -26,6 +26,9 @@ public class LastTry extends Game {
 	/** Camera */
 	public static OrthographicCamera camera;
 
+	/** UI Camera */
+	public static OrthographicCamera uiCamera;
+
 	/** Public sprite batch */
 	public static SpriteBatch batch;
 
@@ -77,6 +80,8 @@ public class LastTry extends Game {
 
 		camera = new OrthographicCamera(width, height);
 		camera.setToOrtho(false, width, height);
+		uiCamera = new OrthographicCamera(width, height);
+		uiCamera.setToOrtho(false, width, height);
 		viewport = new FitViewport(width, height);
 
 		batch = new SpriteBatch();
@@ -97,6 +102,7 @@ public class LastTry extends Game {
 
 		viewport.update(width, height);
 		camera.update();
+		camera.update();
 	}
 
 	/**
@@ -108,7 +114,6 @@ public class LastTry extends Game {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
 		batch.enableBlending();
-		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		super.render();
 		batch.end();

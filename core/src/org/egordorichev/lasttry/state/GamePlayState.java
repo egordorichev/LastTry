@@ -34,8 +34,8 @@ public class GamePlayState implements State {
 				World.CRIMSON | World.EXPERT);
 		}
 
-		int spawnX = worldWidth / 2;
-		int spawnY = 3; // TODO: replace
+		int spawnX = 1;
+		int spawnY = 5; // TODO: replace
 
 		LastTry.environment = new Environment();
 		LastTry.entityManager = new EntityManager();
@@ -92,32 +92,33 @@ public class GamePlayState implements State {
 		}
 
 		LastTry.environment.render();
-		LastTry.camera.position.x = Math.min((LastTry.world.getWidth() - 1) * Block.TEX_SIZE - Gdx.graphics.getWidth(),
-			Math.max(Block.TEX_SIZE, LastTry.player.getX() + LastTry.player.getWidth() / 2 - Gdx.graphics.getWidth() / 2));
 
-		LastTry.camera.position.y = Math.min((LastTry.world.getHeight() - 1) * Block.TEX_SIZE - Gdx.graphics.getHeight(),
-			Math.max(Block.TEX_SIZE, LastTry.player.getY() + LastTry.player.getHeight() / 2 - Gdx.graphics.getHeight() / 2));
+		LastTry.camera.position.x = LastTry.player.getCenterX();
+		LastTry.camera.position.y = LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY();
+		LastTry.camera.update();
+		LastTry.batch.setProjectionMatrix(LastTry.camera.combined);
 
 		LastTry.world.render();
 		LastTry.entityManager.render();
 		LastTry.player.render();
 
-		LastTry.camera.position.x = 0;
-		LastTry.camera.position.y = 0;
+		LastTry.batch.setProjectionMatrix(LastTry.uiCamera.combined);
 
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.input.getY();
 
 		LastTry.batch.draw(Textures.radial, mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.position.x % Block.TEX_SIZE,
-				mouseY - mouseY % Block.TEX_SIZE - 48 - LastTry.camera.position.y % Block.TEX_SIZE); // TODO: fix its position
+			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 48 - LastTry.camera.position.y
+			% Block.TEX_SIZE)); // TODO: fix its position
 
 		int hp = LastTry.player.getHp();
 		int x = Gdx.graphics.getWidth() - 260;
 
-		Assets.font.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x, 4);
+		Assets.font.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
+			Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {
-			LastTry.batch.draw(Textures.hp, x + i * 22 + i * 2, 28);
+			LastTry.batch.draw(Textures.hp, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
 		}
 
 		LastTry.ui.render();
@@ -125,10 +126,11 @@ public class GamePlayState implements State {
 		LastTry.debug.render();
 	}
 
-	/** Never used */
+	/** Updates the view */
 	@Override
 	public void resize(int width, int height) {
-
+		LastTry.viewport.update(width, height);
+		LastTry.camera.update();
 	}
 
 	/** Never used */

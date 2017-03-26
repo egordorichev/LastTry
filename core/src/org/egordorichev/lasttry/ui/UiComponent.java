@@ -89,7 +89,7 @@ public class UiComponent {
 	public int getY() {
 		switch(this.origin) {
 			case TOP_LEFT: case TOP_RIGHT: default: return (int) (Gdx.graphics.getHeight() - this.rect.getY() - this.getHeight());
-			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) ((Gdx.graphics.getWidth() - this.getHeight() - this.rect.getY()));
+			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) ((this.rect.getY()));
 			case CENTER: return (int) (Gdx.graphics.getHeight() - (this.rect.getY() + (Gdx.graphics.getHeight() - this.getHeight()) / 2));
 		}
 	}

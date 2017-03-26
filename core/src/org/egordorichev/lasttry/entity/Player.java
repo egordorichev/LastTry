@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Entity {
@@ -93,6 +94,9 @@ public class Player extends Entity {
 
 	@Override
 	public void render() {
+		LastTry.batch.draw(Textures.shadow, this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+			- this.renderBounds.y);
+
 		// this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
 		//		.draw(this.renderBounds.x, this.renderBounds.y);
 	}
@@ -100,7 +104,7 @@ public class Player extends Entity {
 	public void renderBuffs() {
 		if (!this.inventory.isOpen()) {
 			for (int i = 0; i < this.effects.size(); i++) {
-				this.effects.get(i).render(10 + (i % 11) * 34, 90);
+				this.effects.get(i).render(10 + (i % 11) * 34, Gdx.graphics.getHeight() - 130);
 			}
 		}
 	}

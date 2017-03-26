@@ -193,7 +193,7 @@ public class UiInventory extends UiComponent {
 		}
 
 		if (currentItem != null) {
-			currentItem.renderAt(Gdx.input.getX() + 16, Gdx.input.getY() + 16);
+			currentItem.renderAt(Gdx.input.getX() + 16, Gdx.graphics.getHeight() - Gdx.input.getY() - 16);
 		}
 	}
 

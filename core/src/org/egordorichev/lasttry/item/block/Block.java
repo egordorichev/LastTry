@@ -57,12 +57,15 @@ public class Block extends Item {
 		short variant = 1;
 		byte binary = Block.calculateBinary(t, r, b, l);
 
-		if (binary == 15) {
-			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+		if (false) {
+		// if (binary == 15) {
+			LastTry.batch.draw(this.tiles, (LastTry.world.getWidth() - x) * Block.TEX_SIZE,
+					(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE * (binary) * Block.TEX_SIZE, 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE);
 		} else {
-			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
+					(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE * (binary) * Block.TEX_SIZE, variant * Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE);
 		}
