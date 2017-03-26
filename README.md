@@ -1,10 +1,10 @@
-# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![codebeat badge](https://codebeat.co/badges/c73aeb14-9175-433f-87a0-423bf12d1cc4)](https://codebeat.co/projects/github-com-egordorichev-lasttry-master)
+# LastTry [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![codebeat badge](https://codebeat.co/badges/fdf802d0-8d38-4c7c-91fd-5960b3d8432c)](https://codebeat.co/projects/github-com-egordorichev-lasttry-libgdx)
 LastTry is open-source Terraria clone in Java, written using Slick2D library.
 Our goal is to recreate original game with better perfomance, and old content.
 
-###### Documentation is available at [https://github.com/egordorichev/LastTry/wiki](https://github.com/egordorichev/LastTry/wiki)
-
 ###### Java Doc is aviable at [https://egordorichev.github.io/](https://egordorichev.github.io/)
+
+##### Warning! This version is currently being ported from Slick2d to LibGDX. You can find working Slick2D version at master branch.
 
 ### Building
 
