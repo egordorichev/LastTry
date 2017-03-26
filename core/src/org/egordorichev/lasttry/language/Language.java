@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.language;
 
 public class Language {
-	// TODO
+	public static void load(String locale) {
+
+	}
 }

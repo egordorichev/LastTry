@@ -21,7 +21,7 @@ public class BlockGround extends Block {
 		short variant =  1; 
 		byte binary = Block.calculateBinary(t, r, b, l);
 
-			if (binary == 15) {
+		if (binary == 15) {
 			/*
 			boolean tr = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y - 1)) == this.type;
 			boolean br = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y + 1)) == this.type;
@@ -29,18 +29,19 @@ public class BlockGround extends Block {
 			boolean tl = EffectiveToolType.lookup(LastTry.world.getBlockID(x - 1, y - 1)) == this.type;
 			int corner = Block.calculateBinary(tr, br, bl, tl);
 			*/
-				// TODO: Replace (binary) with (corner)
-				// It's not getting the right texture for some reason.
 
-				LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-						(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-						Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
-						Block.TEX_SIZE, false, false);
-			} else {
-				LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-						(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-						Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
-						Block.TEX_SIZE, false, false);
-			}
+			// TODO: Replace (binary) with (corner)
+			// It's not getting the right texture for some reason.
+
+			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
+				(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+				Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
+				Block.TEX_SIZE, false, false);
+		} else {
+			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
+				(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+				Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
+				Block.TEX_SIZE, false, false);
+		}
 	}
 }

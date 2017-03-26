@@ -24,8 +24,8 @@ public class GamePlayState implements State {
 	private String worldName = "test";
 
 	public GamePlayState() {
-		int worldWidth = 512;
-		int worldHeight = 512;
+		int worldWidth = 500;
+		int worldHeight = 500;
 
 		if (WorldProvider.exists(this.worldName)) {
 			LastTry.world = WorldProvider.load(this.worldName);
@@ -93,8 +93,12 @@ public class GamePlayState implements State {
 
 		LastTry.environment.render();
 
-		LastTry.camera.position.x = LastTry.player.getCenterX();
-		LastTry.camera.position.y = LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY();
+		LastTry.camera.position.x = Math.max(Gdx.graphics.getWidth() / 2,
+			LastTry.player.getCenterX());
+
+		LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
+			LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY());
+
 		LastTry.camera.update();
 		LastTry.batch.setProjectionMatrix(LastTry.camera.combined);
 
@@ -108,8 +112,8 @@ public class GamePlayState implements State {
 		int mouseY = Gdx.input.getY();
 
 		LastTry.batch.draw(Textures.radial, mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.position.x % Block.TEX_SIZE,
-			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 48 - LastTry.camera.position.y
-			% Block.TEX_SIZE)); // TODO: fix its position
+			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 42 - LastTry.camera.position.y
+			% Block.TEX_SIZE));
 
 		int hp = LastTry.player.getHp();
 		int x = Gdx.graphics.getWidth() - 260;

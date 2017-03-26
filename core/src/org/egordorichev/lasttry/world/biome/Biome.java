@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.world.biome;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.LastTry;
 
 public class Biome {
 	public static Biome forest = new ForestBiome();
@@ -10,29 +11,33 @@ public class Biome {
 	public static Biome corruptDesert = new CorruptDesertBiome();
 	public static Biome crimsonDesert = new CrimsonDesertBiome();
 
+	/** Biome name */
 	protected String name;
+
+	/** Background texture */
 	protected Texture texture;
+
+	/** Texture alpha */
+	private float alpha = 0;
 	
 	public Biome(String name) {
 		this.name = name;
 	}
 
 	public void fadeIn() {
-		// this.texture.setAlpha(Math.min(1, this.texture.getAlpha() + 0.01f));
+		this.alpha = (Math.min(1, this.alpha + 0.01f));
 	}
 
 	public void fadeOut() {
-		// this.texture.setAlpha(Math.max(0, this.texture.getAlpha() - 0.01f));
+		this.alpha = (Math.min(1, this.alpha - 0.01f));
 	}
 
 	public boolean fadeInIsDone() {
-		// return this.texture.getAlpha() >= 0.99f;
-		return true;
+		return this.alpha >= 0.99f;
 	}
 
 	public boolean fadeOutIsDone() {
-		// return this.texture.getAlpha() < 0.01f;
-		return true;
+		return this.alpha < 0.01f;
 	}
 	
 	public String getName() {
@@ -40,7 +45,9 @@ public class Biome {
 	}
 
 	public void renderBackground() {
-		// this.texture.draw(0, 0);
+		LastTry.batch.setColor(1, 1, 1, this.alpha);
+		LastTry.batch.draw(this.texture, 0, 0);
+		LastTry.batch.setColor(1, 1, 1, 1);
 	}
 
 	public static void preload() {

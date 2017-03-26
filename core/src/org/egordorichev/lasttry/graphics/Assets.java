@@ -121,6 +121,7 @@ public class Assets {
 			Textures.starInABottleBuff = load("StarInABottleBuff.png");
 			Textures.light = load("Light.png");
 			Textures.shadow = load("Shadow.png");
+			Textures.sky = load("Sky.png");
 
 			loaded = true;
 		}).run();

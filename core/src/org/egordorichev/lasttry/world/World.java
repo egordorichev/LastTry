@@ -76,7 +76,7 @@ public class World {
 				Block block = (Block) Item.fromID(this.getBlockID(x, y));
 
 				if (wall != null) {
-				//	wall.renderWall(x, y);
+					wall.renderWall(x, y);
 				}
 
 				if (block != null) {

@@ -2,8 +2,6 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +17,7 @@ import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.Environment;
 import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvider;
 
 import java.util.Random;
 
@@ -105,9 +104,7 @@ public class LastTry extends Game {
 		camera.update();
 	}
 
-	/**
-	 * Renders and updates the game
-	 */
+	/** Renders and updates the game */
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -117,6 +114,14 @@ public class LastTry extends Game {
 		batch.begin();
 		super.render();
 		batch.end();
+	}
+
+	/** Handles game exit */
+	@Override
+	public void dispose() {
+		if (world != null) {
+			WorldProvider.save("test", world);
+		}
 	}
 
 	/** Logs a info-level message
@@ -131,7 +136,7 @@ public class LastTry extends Game {
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.getX() - Gdx.graphics.getWidth() / 2 + Gdx.input.getX() + 14);
+		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + Gdx.input.getX());
 	}
 
 	/**
@@ -139,7 +144,7 @@ public class LastTry extends Game {
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getY() -  Gdx.graphics.getHeight() / 2 + Gdx.input.getY() + 20);
+		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + Gdx.input.getY() + 16);
 	}
 
 	/**

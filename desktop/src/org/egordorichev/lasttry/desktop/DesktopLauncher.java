@@ -14,7 +14,6 @@ public class DesktopLauncher {
 
 		config.width = 800;
 		config.height = 600;
-		config.forceExit = false;
 
 		new LwjglApplication(new LastTry(), config);
 	}

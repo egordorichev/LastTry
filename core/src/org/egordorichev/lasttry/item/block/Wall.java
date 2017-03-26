@@ -32,9 +32,11 @@ public class Wall extends Item {
 		int variant = 1;
 		int binary = Block.calculateBinary(t, r, b, l);
 
-		LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-				Block.TEX_SIZE * (binary) * Block.TEX_SIZE, 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
-				Block.TEX_SIZE);	}
+		LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
+			(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+			Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
+			Block.TEX_SIZE, false, false);
+	}
 
 	@Override
 	public int getMaxInStack() {

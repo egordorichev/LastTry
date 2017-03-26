@@ -105,4 +105,5 @@ public class Textures {
 	public static Texture starInABottleBuff;
 	public static Texture light;
 	public static Texture shadow;
+	public static Texture sky;
 }

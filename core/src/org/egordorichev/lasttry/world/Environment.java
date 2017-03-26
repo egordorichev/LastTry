@@ -2,16 +2,13 @@ package org.egordorichev.lasttry.world;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
-
 import java.util.Arrays;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Environment {
 	/** Current biome, player is */
@@ -33,8 +30,12 @@ public class Environment {
 		}, 1);
 	}
 
-	/** Renders current biome */
+	/** Renders current biome and the sky */
 	public void render() {
+		for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
+			LastTry.batch.draw(Textures.sky, i * 48, 0);
+		}
+
 		if (this.currentBiome != null) {
 			this.currentBiome.renderBackground();
 		}
@@ -66,13 +67,14 @@ public class Environment {
 		int windowHeight = Gdx.graphics.getHeight();
 		int tww = windowWidth / Block.TEX_SIZE;
 		int twh = windowHeight / Block.TEX_SIZE;
-		int tcx = (int) LastTry.camera.position.x / Block.TEX_SIZE;
-		int tcy = (int) LastTry.camera.position.y / Block.TEX_SIZE;
+		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+		int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
+				/ Block.TEX_SIZE);
 
-		int minY = Math.max(0, tcy - 10);
-		int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 10);
-		int minX = Math.max(0, tcx - 10);
-		int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 10);
+		int minY = Math.max(0, tcy - 20);
+		int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
+		int minX = Math.max(0, tcx - 20);
+		int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 20);
 
 		Arrays.fill(this.blockCount, 0);
 
