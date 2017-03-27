@@ -6,17 +6,25 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Drop;
-import org.egordorichev.lasttry.entity.EnemyID;
-import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.entity.*;
 
 public abstract class Enemy extends Entity {
+	/** Defined enemies */
 	public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
-	protected int maxAi;
+
+	/** Max Ai for this enemy */
+	protected static int maxAi;
+
+	/** Current Ai counter */
 	protected int currentAi;
+
+	/** Enemy id */
 	protected int id;
+
+	/** Enemy drops */
 	protected List<Drop> drops = new ArrayList<>();
+
+	/** Animations */
 	protected Animation[] animations;
 
 	static {
@@ -33,7 +41,7 @@ public abstract class Enemy extends Entity {
 	}
 
 	public Enemy(short id) {
-		super();
+		this(id, 10, 0, 5);
 
 		this.animations = new Animation[State.values().length];
 		this.id = id;
@@ -75,8 +83,12 @@ public abstract class Enemy extends Entity {
 		// On death, drop items in world.
 		for (Drop drop : this.drops) {
 			// Some items may not be dropped due to rarity
+
 			if (drop.getChance().roll()){
-				// LastTry.world.spawnDrop(drop, this.getCenterX(), this.getCenterY()); TODO
+				DroppedItem droppedItem = new DroppedItem(drop.createHolder());
+
+				LastTry.entityManager.spawn(droppedItem, (int) this.getCenterX(),
+					(int) this.getCenterY());
 			}
 		}
 	}

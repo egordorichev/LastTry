@@ -55,7 +55,7 @@ public class LastTry extends Game {
 	/** Environment instance */
 	public static Environment environment;
 
-	/** Entity manager instance */
+	/** PhysicBody manager instance */
 	public static EntityManager entityManager;
 
 	/** Mod loader */

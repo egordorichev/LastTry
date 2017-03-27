@@ -14,13 +14,24 @@ public abstract class Debuff extends Effect {
 
 	/**
 	 * Abstact method, called on effect apply
-	 * @param entity Entity, on witch it is applied
+	 * @param entity PhysicBody, on witch it is applied
 	 */
+	@Override
 	public abstract void apply(Entity entity);
 
 	/**
 	 * Abstact method, called on effect remove
-	 * @param entity Entity, from witch it is removed
+	 * @param entity PhysicBody, from witch it is removed
 	 */
+	@Override
 	public abstract void remove(Entity entity);
+
+	/**
+	 * Used by some debuff, like poison
+	 * @param dt The milliseconds passed since the last update.
+	 */
+	@Override
+	public void update(Entity entity, int dt) {
+		super.update(entity, dt);
+	}
 }

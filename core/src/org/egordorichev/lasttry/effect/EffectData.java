@@ -12,7 +12,7 @@ public class EffectData {
 	/** Total effect time */
 	private int totalTime;
 
-	/** Entity who receives effect */
+	/** PhysicBody who receives effect */
 	private Entity entity;
 
 	/** Shows if effect is done */
@@ -50,7 +50,7 @@ public class EffectData {
 		}
 
 		this.currentTime--;
-		this.effect.update(dt);
+		this.effect.update(this.entity, dt);
 
 		if (this.currentTime == 0) {
 			this.done = true;

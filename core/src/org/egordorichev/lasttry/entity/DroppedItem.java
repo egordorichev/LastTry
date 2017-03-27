@@ -5,9 +5,9 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 
 /**
- * Entity representing an item dropped in the world.
+ * PhysicBody representing an item dropped in the world.
  */
-public class DroppedItem extends Entity {
+public class DroppedItem extends PhysicBody {
 	/**
 	 * Item holder that this dropped entity represents.
 	 */

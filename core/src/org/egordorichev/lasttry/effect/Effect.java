@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.effect;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.PhysicBody;
 
 public abstract class Effect {
 	/** Indicates, if player can remove effect using right-click */
@@ -34,13 +35,13 @@ public abstract class Effect {
 
 	/**
 	 * Abstact method, called on effect apply
-	 * @param entity Entity, on witch it is applied
+	 * @param entity PhysicBody, on witch it is applied
 	 */
 	public abstract void apply(Entity entity);
 
 	/**
 	 * Abstact method, called on effect remove
-	 * @param entity Entity, from witch it is removed
+	 * @param entity PhysicBody, from witch it is removed
 	 */
 	public abstract void remove(Entity entity);
 
@@ -48,7 +49,7 @@ public abstract class Effect {
 	 * Used by some debuff, like poison
 	 * @param dt The milliseconds passed since the last update.
 	 */
-	public void update(int dt) {
+	public void update(Entity entity, int dt) {
 
 	}
 

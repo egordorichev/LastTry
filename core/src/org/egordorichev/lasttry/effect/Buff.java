@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.effect;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.graphics.Textures;
 
 public abstract class Buff extends Effect {
 	public static final Buff ammoReservation = new Buff("Ammo reservation", "Gives 20% chance to not consume ammo",

@@ -8,11 +8,11 @@ public class EntityManager {
 	/**
 	 * List of active entities.
 	 */
-	private List<Entity> entities = new ArrayList<>();
+	private List<PhysicBody> entities = new ArrayList<>();
 	/**
 	 * List of entities to remove.
 	 */
-	private List<Entity> clearList = new ArrayList<>();
+	private List<PhysicBody> clearList = new ArrayList<>();
 
 	/**
 	 * TODO: gore
@@ -31,7 +31,7 @@ public class EntityManager {
 		 * - w && gx < maxX + w) && (gy > minY - h && gy < maxY + h)) {
 		 * entity.render(); }
 		 */
-		for (Entity entity : this.entities) {
+		for (PhysicBody entity : this.entities) {
 			entity.render();
 		}
 	}
@@ -44,14 +44,14 @@ public class EntityManager {
 	 */
 	public void update(int dt) {
 		// Remove entities marked for deletion
-		for (Entity entity : this.clearList) {
+		for (PhysicBody entity : this.clearList) {
 			this.entities.remove(entity);
 		}
 		this.clearList.clear();
 
 		// Update
 		for (int i = this.entities.size() - 1; i >= 0; i--) {
-			Entity entity = this.entities.get(i);
+			PhysicBody entity = this.entities.get(i);
 			entity.update(dt);
 
 			if (!entity.shouldUpdate) {
@@ -70,7 +70,7 @@ public class EntityManager {
 	 * @param y
 	 *            spawn Y coordinate
 	 */
-	public Entity spawn(Entity entity, int x, int y) {
+	public PhysicBody spawn(PhysicBody entity, int x, int y) {
 		entity.spawn(x, y);
 		this.entities.add(entity);
 
@@ -97,9 +97,9 @@ public class EntityManager {
 	 * Removes entity from update list immediately.
 	 * 
 	 * @param entity
-	 *            Entity to remove.
+	 *            PhysicBody to remove.
 	 */
-	public void remove(Entity entity) {
+	public void remove(PhysicBody entity) {
 		this.entities.remove(entity);
 	}
 
@@ -107,9 +107,9 @@ public class EntityManager {
 	 * Marks an entity for removal before the next update occurs.
 	 * 
 	 * @param entity
-	 *            Entity to remove.
+	 *            PhysicBody to remove.
 	 */
-	public void markForRemoval(Entity entity) {
+	public void markForRemoval(PhysicBody entity) {
 		this.clearList.add(entity);
 	}
 
@@ -118,7 +118,7 @@ public class EntityManager {
 	 * 
 	 * @return List of active entities
 	 */
-	public List<Entity> getEntities() {
+	public List<PhysicBody> getEntities() {
 		return entities;
 	}
 }
