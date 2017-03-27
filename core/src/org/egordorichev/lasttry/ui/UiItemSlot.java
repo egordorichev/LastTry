@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -31,9 +32,9 @@ public class UiItemSlot extends UiComponent {
 	private Texture texture;
 	private ItemHolder itemHolder;
 	private Type type;
-	private Texture back;
+	private TextureRegion back;
 
-	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, Texture back) {
+	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back) {
 		super(rectangle, origin);
 
 		this.itemHolder = null;
@@ -53,12 +54,6 @@ public class UiItemSlot extends UiComponent {
 			case DYE:
 				this.texture = Textures.inventorySlot4;
 			break;
-		}
-
-		// this.texture.setAlpha(0.8f);
-
-		if (this.back != null) {
-			// this.back.setAlpha(0.7f);
 		}
 
 		this.active = false;
@@ -90,6 +85,8 @@ public class UiItemSlot extends UiComponent {
 		int width = this.getWidth();
 		int height = this.getHeight();
 
+		LastTry.batch.setColor(1, 1, 1, 0.8f);
+
 		if (this.active) {
 			LastTry.batch.draw(Textures.inventorySlot5, x, y, width, height);
 		} else {
@@ -97,9 +94,13 @@ public class UiItemSlot extends UiComponent {
 		}
 
 		if (this.itemHolder != null && this.itemHolder.getItem() != null) {
+			LastTry.batch.setColor(1, 1, 1, 1);
 			this.itemHolder.renderAt(x, y, width, height);
 		} else if (this.back != null) {
-			LastTry.batch.draw(this.back, x + (width - this.back.getWidth()) / 2, y + (height - this.back.getHeight()) / 2);
+			LastTry.batch.setColor(1, 1, 1, 0.7f);
+			LastTry.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2, y + (height
+				- this.back.getRegionHeight()) / 2);
+			LastTry.batch.setColor(1, 1, 1, 1);
 		}
 	}
 

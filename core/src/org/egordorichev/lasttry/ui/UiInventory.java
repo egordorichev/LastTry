@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Fonts;
@@ -46,42 +47,36 @@ public class UiInventory extends UiComponent {
 
 		// Trash
 		this.slots[58] = new UiItemSlot(new Rectangle(x + 486, y + 270, 52, 52), UiItemSlot.Type.TRASH, Origin.TOP_LEFT,
-			Textures.trash);
+			new TextureRegion(Textures.trash, 0, 0, 32, 32));
 
 		for (int i = 59; i < 62; i++) { // Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 280 + (i - 59) * 54, 52, 52), UiItemSlot.Type.ARMOR,
-				Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(0, 68 - (i - 59) * 34, 34, 34));
+				Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 0, 68 - (i - 59) * 34, 34, 34));
 		}
 
 		for (int i = 62; i < 65; i++) { // Vanity Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 280 + (i - 62) * 54, 52, 52), UiItemSlot.Type.VANITY,
-				Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(0, 170 - (i - 62) * 34, 34, 34));
+				Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 0, 170 - (i - 62) * 34, 34, 34));
 		}
 
 		for (int i = 65; i < 68; i++) { // Armor Dye
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 280 + (i - 65) * 54, 52, 52), UiItemSlot.Type.DYE,
-				Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(34, 0, 34, 34));
+				Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 34, 0, 34, 34));
 		}
 
 		for (int i = 68; i < 73; i++) { // Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 10 + (i - 68) * 54, 52, 52), UiItemSlot.Type.ACCESSORY,
-				Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(68, 34, 34, 34));
+				Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 68, 34, 34, 34));
 		}
 
 		for (int i = 73; i < 78; i++) { // Vanity Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 10 + (i - 73) * 54, 52, 52),
-				UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(68, 0, 34, 34));
+				UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 68, 0, 34, 34));
 		}
 
 		for (int i = 78; i < 83; i++) { // Accessories Dyes
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 10 + (i - 78) * 54, 52, 52), UiItemSlot.Type.DYE,
-				Origin.BOTTOM_RIGHT, Textures.inventoryBack);
-//				Origin.BOTTOM_RIGHT, Textures.inventoryBack.getSubImage(34, 0, 34, 34));
+				Origin.BOTTOM_RIGHT, new TextureRegion(Textures.inventoryBack, 34, 0, 34, 34));
 		}
 
 		for (int i = 83; i < 88; i++) { // Equipment
