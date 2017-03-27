@@ -2,13 +2,11 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
 public class Assets {
 	public Textures textures;
-	public static BitmapFont font;
 	private static boolean loaded = false;
 
 	public static void load() {
@@ -20,10 +18,15 @@ public class Assets {
 				fontConfig.fontParameters.size = 22;
 
 				FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
-				FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-				parameter.size = 22;
+				FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-				font = generator.generateFont(parameter);
+				parameters.size = 22;
+				Fonts.f22 = generator.generateFont(parameters);
+				parameters.size = 24;
+				Fonts.f24 = generator.generateFont(parameters);
+				parameters.size = 18;
+				Fonts.f18 = generator.generateFont(parameters);
+
 				generator.dispose();
 
 				Textures.greenSlime = load("GreenSlime.png");

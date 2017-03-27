@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Fonts;
 
 public class UiButton extends UiComponent {
 	protected String label;
@@ -36,12 +37,12 @@ public class UiButton extends UiComponent {
 
 		// Gdx.graphics.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); TODO: draw texture
 
-		Assets.font.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
-			+ (this.getHeight() - Assets.font.getLineHeight()) / 2);
+		Fonts.f22.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
+			+ (this.getHeight() - Fonts.f22.getLineHeight()) / 2);
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-		this.textWidth = (int) new GlyphLayout(Assets.font, this.label).width;
+		this.textWidth = (int) new GlyphLayout(Fonts.f22, this.label).width;
 	}
 }

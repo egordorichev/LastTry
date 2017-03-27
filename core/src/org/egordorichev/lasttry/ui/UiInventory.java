@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
@@ -171,14 +172,14 @@ public class UiInventory extends UiComponent {
 		Item item = this.slots[this.currentSlot].getItem();
 
 		if (item == null) {
-			Assets.font.draw(LastTry.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
+			Fonts.f22.draw(LastTry.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
 		} else {
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
-				Assets.font.draw(LastTry.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
+				Fonts.f22.draw(LastTry.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
 			} else {
-				Assets.font.draw(LastTry.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
+				Fonts.f22.draw(LastTry.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
 			}
 		}
 

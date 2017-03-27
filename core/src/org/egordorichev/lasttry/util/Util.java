@@ -12,7 +12,7 @@ public class Util {
 	public static InputMultiplexer multiplexer = new InputMultiplexer();
 
 	/** Last pressed mouse button */
-	private static int currentButton;
+	private static int currentButton = -1;
 
 	static {
 		multiplexer.addProcessor(new InputProcessor() {

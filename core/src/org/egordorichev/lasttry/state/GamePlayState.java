@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
 import org.egordorichev.lasttry.entity.enemy.GreenSlime;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
@@ -120,7 +121,7 @@ public class GamePlayState implements State {
 		int hp = LastTry.player.getHp();
 		int x = Gdx.graphics.getWidth() - 260;
 
-		Assets.font.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
+		Fonts.f22.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
 			Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {

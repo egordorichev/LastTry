@@ -33,7 +33,7 @@ public class SplashState implements State {
 		this.doneLoading = Assets.isLoaded();
 
 		if (this.doneLoading) {
-			LastTry.instance.setScreen(new GamePlayState());
+			LastTry.instance.setScreen(new MenuState());
 		}
 	}
 

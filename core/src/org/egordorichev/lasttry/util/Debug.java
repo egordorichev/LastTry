@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.util;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Fonts;
 
 public class Debug {
 	/** Shows, if debug mode is activated */
@@ -18,8 +19,8 @@ public class Debug {
 			return;
 		}
 
-		Assets.font.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
-		Assets.font.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.getGridX())
+		Fonts.f22.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
+		Fonts.f22.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.getGridX())
 			+ " Y: " + String.format("%d", LastTry.player.getGridY()), 40, 30);
 	}
 

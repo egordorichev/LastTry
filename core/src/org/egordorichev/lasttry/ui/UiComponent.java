@@ -75,7 +75,7 @@ public class UiComponent {
 		switch(this.origin) {
 			case TOP_LEFT: case BOTTOM_LEFT: default: return (int) this.rect.getX();
 			case TOP_RIGHT: case BOTTOM_RIGHT: return (int) (Gdx.graphics.getWidth() - this.getWidth() - this.rect.getX());
-			case CENTER: return (int) (this.rect.getX() + (Gdx.graphics.getHeight() - this.getWidth()) / 2);
+			case CENTER: return (int) (this.rect.getX() + (Gdx.graphics.getWidth() - this.getWidth()) / 2);
 		}
 	}
 
@@ -126,7 +126,6 @@ public class UiComponent {
 				rectangle.getY() + rectangle.getHeight() > y) {
 
 			if (this.state != State.MOUSE_DOWN && Util.mouseButtonJustPressed()) {
-
 				this.state = State.MOUSE_DOWN;
 				this.onStateChange();
 				this.onClick();

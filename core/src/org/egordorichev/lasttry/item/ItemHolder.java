@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 /**
@@ -50,8 +51,7 @@ public class ItemHolder {
 			LastTry.batch.draw(texture, x, y);
 
 			if (this.count > 1) {
-				// TODO: replace with small one
-				Assets.font.draw(LastTry.batch, String.format("%d", this.count), x - 8, y + th - 8);
+				Fonts.f18.draw(LastTry.batch, String.format("%d", this.count), x - 8, y + th - 8);
 			}
 		}
 	}
@@ -80,8 +80,7 @@ public class ItemHolder {
 			LastTry.batch.draw(texture, x + (width - tw) / 2, iy);
 
 			if (this.count > 1) {
-				// TODO: replace with small one
-				Assets.font.draw(LastTry.batch, String.format("%d", this.count), x + tw / 2, iy + th / 2);
+				Fonts.f18.draw(LastTry.batch, String.format("%d", this.count), x + tw / 2, iy + th / 2);
 			}
 		}
 	}
