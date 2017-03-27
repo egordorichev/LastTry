@@ -101,17 +101,6 @@ public class Entity extends PhysicBody {
 	}
 
 	/**
-	 * Hurt the entity by subtracting {@link #hp hit-points}. The damage taken
-	 * by the entity will be modified by their {@link #defense}.
-	 *
-	 * @param damage
-	 *            Damage to give, unaffected by entity defense points.
-	 */
-	public void hurt(int damage) {
-		this.modifyHp(Math.max(-1, -damage + defense / 2));
-	}
-
-	/**
 	 * Update the entity's {@link #hp hit-points} if it is not
 	 * {@link #invulnerable}.
 	 *

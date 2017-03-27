@@ -108,6 +108,10 @@ public abstract class PhysicBody {
 			this.velocity.y += 0.4f;
 		}
 
+		this.updatePhysics();
+	}
+
+	private void updatePhysics() {
 		/*
 		 * TODO: Optimize and handle both X/Y velocity in one pass. Current
 		 * issue: If gravity (above) causes collision on y-axis a combined xy
@@ -121,7 +125,7 @@ public abstract class PhysicBody {
 
 		if (this.velocity.x != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
-				this.hitbox.width, this.hitbox.height);
+					this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
 
@@ -169,7 +173,7 @@ public abstract class PhysicBody {
 
 		if (this.velocity.y != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
-				this.hitbox.width, this.hitbox.height);
+					this.hitbox.width, this.hitbox.height);
 
 			newHitbox.y += this.velocity.y;
 
@@ -339,19 +343,6 @@ public abstract class PhysicBody {
 	}
 
 	/**
-	 * Sets the velocity of the entity.
-	 * 
-	 * @param x
-	 *            New x-axis speed.
-	 * @param y
-	 *            New y-axis speed.
-	 */
-	public void setVelocity(float x, float y) {
-		this.velocity.x = x;
-		this.velocity.y = y;
-	}
-
-	/**
 	 * Return the entity's x-position.
 	 * 
 	 * @return Render x-position.
@@ -397,6 +388,6 @@ public abstract class PhysicBody {
 
 	public Rectangle getHitbox() {
 		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
-				this.hitbox.height);
+			this.hitbox.height);
 	}
 }
