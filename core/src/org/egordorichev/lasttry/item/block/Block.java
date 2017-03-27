@@ -106,12 +106,12 @@ public class Block extends Item {
 
 		if (binary == 15) {
 			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-				(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+				(LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE, false, false);
 		} else {
 			LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-				(LastTry.world.getHeight() - y) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+				(LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
 				Block.TEX_SIZE, false, false);
 		}

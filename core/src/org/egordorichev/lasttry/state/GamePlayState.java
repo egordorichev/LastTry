@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.entity.enemy.GreenSlime;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
@@ -34,18 +36,13 @@ public class GamePlayState implements State {
 				World.CRIMSON | World.EXPERT);
 		}
 
-		int spawnX = 1;
-		int spawnY = 5; // TODO: replace
+		int spawnX = LastTry.world.getWidth() / 2;
+		int spawnY = 50;
 
 		LastTry.environment = new Environment();
 		LastTry.entityManager = new EntityManager();
 		LastTry.player = new Player("George");
 		LastTry.player.spawn(spawnX, spawnY);
-
-		for (int i = 0; i < 10; i++) {
-			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
-			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
-		}
 
 		LastTry.ui.add(LastTry.player.inventory);
 
@@ -66,6 +63,11 @@ public class GamePlayState implements State {
 		LastTry.player.addEffect(Buff.regeneration, 240);
 		LastTry.player.addEffect(Buff.honey, 30);
 
+
+		for (int i = 0; i < 10; i++) {
+			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
+			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
+		}
 
 		LastTry.modLoader = new ModLoader();
 		LastTry.modLoader.load();

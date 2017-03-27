@@ -2,8 +2,10 @@ package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Animation;
+import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -23,48 +25,45 @@ public class Player extends Entity {
 
 		inventory = new UiInventory(89);
 
-		/* this.animations = new Animation[State.values().length];
+		this.animations = new Animation[State.values().length];
 
-		Animation idleAnimation = new Animation();
-		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000);
-		idleAnimation.setLooping(false);
+		Animation idleAnimation = new Animation(false);
+		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 32, 48), 0));
 
-		Animation movingAnimation = new Animation();
-		movingAnimation.addFrame(this.texture.getSubImage(0, 96, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 144, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 192, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 240, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 288, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 336, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 384, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 432, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 480, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 528, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 576, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 624, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 672, 32, 48), 30);
-		movingAnimation.addFrame(this.texture.getSubImage(0, 720, 32, 48), 30);
+		Animation movingAnimation = new Animation(true);
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 144, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 192, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 240, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 288, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 336, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 384, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 432, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 480, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 528, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 576, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 624, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 672, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 720, 32, 48), 1));
 
-		Animation jumpingAnimation = new Animation();
-		jumpingAnimation.addFrame(this.texture.getSubImage(0, 48, 32, 48), 1000); // TODO
+		Animation jumpingAnimation = new Animation(false);
+		jumpingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture,0, 48, 32, 48), 0)); // TODO
 
-		Animation flyingAnimation = new Animation();
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 768, 32, 40), 80);
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 808, 32, 40), 80);
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 848, 32, 40), 80);
-		flyingAnimation.addFrame(this.texture.getSubImage(0, 888, 32, 40), 80);
+		Animation flyingAnimation = new Animation(true);
+		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 768, 32, 40), 5));
+		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 808, 32, 40), 5));
+		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 848, 32, 40), 5));
+		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 888, 32, 40), 5));
 
 		Animation deadAnimation = new Animation(false);
-		deadAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 48), 1000); // TODO
-		deadAnimation.setLooping(false);
+		deadAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 32, 48), 0)); // TODO
 
 		this.animations[State.IDLE.getId()] = idleAnimation;
 		this.animations[State.MOVING.getId()] = movingAnimation;
 		this.animations[State.JUMPING.getId()] = jumpingAnimation;
-		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are
-																	// the same
+		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
 		this.animations[State.FLYING.getId()] = flyingAnimation;
-		this.animations[State.DEAD.getId()] = deadAnimation; */
+		this.animations[State.DEAD.getId()] = deadAnimation;
 	}
 
 	public void setGhostMode(boolean enabled) {
@@ -84,21 +83,13 @@ public class Player extends Entity {
 				LastTry.world.setBlock(ItemID.none, this.getGridX() + x, this.getGridY() + y);
 			}
 		}
-
-		for (int y = 0; y < 8; y++) {
-			for (int x = 0; x < 25; x++) {
-				LastTry.world.setBlock(ItemID.crimstoneBlock, this.getGridX() + 3 + x, this.getGridY() + 2 + y);
-			}
-		}
 	}
 
 	@Override
 	public void render() {
-		LastTry.batch.draw(Textures.shadow, this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
-			- this.renderBounds.y);
-
-		// this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-		//		.draw(this.renderBounds.x, this.renderBounds.y);
+		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
+			(this.direction == Direction.RIGHT), false);
 	}
 
 	public void renderBuffs() {
@@ -114,6 +105,8 @@ public class Player extends Entity {
 		if (!this.shouldUpdate) {
 			return;
 		}
+
+		this.animations[this.state.getId()].update();
 
 		if (this.state == State.FLYING) {
 			if (Gdx.input.isKeyPressed(Input.Keys.SPACE) ||  Gdx.input.isKeyPressed(Input.Keys.W)) {

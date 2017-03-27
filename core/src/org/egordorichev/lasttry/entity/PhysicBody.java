@@ -14,7 +14,7 @@ public abstract class PhysicBody {
 	 * Absolute speed below this value is set to 0, which makes comparisons of
 	 * velocity == 0 much simpler
 	 */
-	private static final float STOP_VELOCITY = 0.1F;
+	private static final float STOP_VELOCITY = 0.2F;
 
 	/**
 	 * Status declaring if the entity should receive updates. If this is false,
@@ -177,7 +177,7 @@ public abstract class PhysicBody {
 			}
 
 			this.velocity.x *= 0.8;
-			
+
 			if (Math.abs(this.velocity.x) < PhysicBody.STOP_VELOCITY) {
 				this.velocity.x = 0;
 			}

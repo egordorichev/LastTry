@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.graphics.Animation;
+import org.egordorichev.lasttry.item.block.Block;
 
 public abstract class Enemy extends Entity {
 	/** Defined enemies */
@@ -49,13 +50,16 @@ public abstract class Enemy extends Entity {
 
 	@Override
 	public void render() {
-		// this.animations[this.state.getId()].getCurrentFrame().getFlippedCopy(this.direction == Direction.RIGHT, false)
-		// 	.draw(this.renderBounds.x, this.renderBounds.y);
+		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
+			(this.direction == Direction.RIGHT), false);
 	}
 
 	@Override
 	public void update(int dt) {
 		super.update(dt);
+
+		this.animations[this.state.getId()].update();
 
 		if (LastTry.player.getHitbox().intersects(this.getHitbox())) {
 			this.onPlayerCollision(LastTry.player);

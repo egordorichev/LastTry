@@ -1,10 +1,14 @@
 package org.egordorichev.lasttry.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
+import org.egordorichev.lasttry.graphics.Animation;
+import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.entity.Direction;
+import org.egordorichev.lasttry.util.Rectangle;
 
 public class Slime extends Enemy {
 	/**
@@ -25,15 +29,14 @@ public class Slime extends Enemy {
 		this.updateJumpDelay();
 		this.texture = texture;
 
-		/* Animation jumpAnimation = new Animation();
+		Animation jumpAnimation = new Animation(false);
 
-		jumpAnimation.addFrame(this.texture.getSubImage(32, 0, 32, 24), 1);
-		jumpAnimation.setLooping(false);
+		jumpAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 32, 0, 32, 24), 0));
 
-		Animation idleAnimation = new Animation();
+		Animation idleAnimation = new Animation(true);
 
-		idleAnimation.addFrame(this.texture.getSubImage(0, 0, 32, 24), 300);
-		idleAnimation.addFrame(this.texture.getSubImage(32, 0, 32, 24), 300);
+		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 32, 24), 10));
+		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 32, 0, 32, 24), 10));
 
 		this.animations[State.JUMPING.getId()] = jumpAnimation;
 		this.animations[State.MOVING.getId()] = jumpAnimation;
@@ -42,11 +45,9 @@ public class Slime extends Enemy {
 		this.animations[State.FALLING.getId()] = jumpAnimation;
 		this.animations[State.FLYING.getId()] = null;
 
-		
 		this.renderBounds = new Rectangle(0, 0, 32, 24);
 		this.hitbox = new Rectangle(this.renderBounds.x + 3, this.renderBounds.y + 3, this.renderBounds.width - 6,
-				this.renderBounds.height - 3);
-				*/
+			this.renderBounds.height - 3);
 	}
 
 	@Override
@@ -82,9 +83,7 @@ public class Slime extends Enemy {
 		}
 	}
 
-	/**
-	 * Update the time of the next jump.
-	 */
+	/** Update the time of the next jump. */
 	private void updateJumpDelay() {
 		this.canJump = false;
 		this.nextJump = (int) ((this.maxAi/2) + (Math.random() * this.maxAi/2));

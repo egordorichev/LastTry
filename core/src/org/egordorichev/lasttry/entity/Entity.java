@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Entity extends PhysicBody {
 	/** Stats */
-	protected EntityStats stats;
+	protected EntityStats stats = new EntityStats();;
 
 	/** Invulnerability status. If enabled the entity will not be able to take damage */
 	protected boolean invulnerable;
@@ -26,7 +26,6 @@ public class Entity extends PhysicBody {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
-
 
 		for (int i = this.effects.size() - 1; i >= 0; i--) {
 			this.effects.get(i).update(dt);

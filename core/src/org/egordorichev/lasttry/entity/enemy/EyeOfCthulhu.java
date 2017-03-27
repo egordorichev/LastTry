@@ -1,13 +1,10 @@
 package org.egordorichev.lasttry.entity.enemy;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.graphics.Assets;
 
 public class EyeOfCthulhu extends Boss {
 	public EyeOfCthulhu() {
@@ -34,7 +31,7 @@ public class EyeOfCthulhu extends Boss {
 
 		this.phases = new Phase[2];
 
-		this.phases[0] = new Phase(this, this.maxHp, LastTry.world.isExpertMode() ? 30 : 15, 12) {
+		this.phases[0] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 30 : 15, 12) {
 			@Override
 			public void onEnter() {
 				/*Animation flyingAnimation = new Animation();
@@ -47,7 +44,7 @@ public class EyeOfCthulhu extends Boss {
 			}
 		};
 
-		this.phases[1] = new Phase(this, this.maxHp, LastTry.world.isExpertMode() ? 22 : 45, 0) {
+		this.phases[1] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 22 : 45, 0) {
 			@Override
 			public void onEnter() {
 				/*
