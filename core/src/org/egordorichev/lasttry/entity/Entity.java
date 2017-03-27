@@ -7,22 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Entity extends PhysicBody {
-	/** Current hit-points out of the total {@link #maxHp maximum} */
-	protected int hp;
+	/** Stats */
+	protected EntityStats stats;
 
-	/** Maximum hit-points */
-	protected int maxHp;
-
-	/** Base defense-points */
-	protected int defense;
-
-	/** Base damage-points */
-	protected int damage;
-
-	/**
-	 * Invulnerability status. If enabled the entity will not be able to take
-	 * damage
-	 */
+	/** Invulnerability status. If enabled the entity will not be able to take damage */
 	protected boolean invulnerable;
 
 	/** Effects, applied on entity */
@@ -31,8 +19,8 @@ public class Entity extends PhysicBody {
 	public Entity(int maxHp, int damage, int defense) {
 		super();
 
-		this.defense = defense;
-		this.hp = this.maxHp = maxHp;
+		this.stats.defense = defense;
+		this.stats.hp = this.stats.maxHp = maxHp;
 	}
 
 	@Override
@@ -101,7 +89,7 @@ public class Entity extends PhysicBody {
 	}
 
 	/**
-	 * Update the entity's {@link #hp hit-points} if it is not
+	 * Update the entity's hp if it is not
 	 * {@link #invulnerable}.
 	 *
 	 * @param amount
@@ -109,97 +97,97 @@ public class Entity extends PhysicBody {
 	 */
 	public void modifyHp(int amount) {
 		if (!this.invulnerable) {
-			this.hp = Math.min(Math.max(0, this.hp + amount), this.maxHp);
+			this.stats.hp = Math.min(Math.max(0, this.stats.hp + amount), this.stats.maxHp);
 
-			if (this.hp == 0) {
+			if (this.stats.hp == 0) {
 				this.die();
 			}
 		}
 	}
 
 	/**
-	 * Update the entity's {@link #maxHp maximum hit-points}.
+	 * Update the entity's maximum hit-points.
 	 *
 	 * @param amount
 	 *            Value to increment max health by.
 	 */
 	public void modifyMaxHp(int amount) {
-		this.maxHp = Math.max(0, this.maxHp + amount);
+		this.stats.maxHp = Math.max(0, this.stats.maxHp + amount);
 	}
 
 	/**
-	 * Update the entity's {@link #defense defense-points}.
+	 * Update the entity's defense
 	 *
 	 * @param amount
-	 *            Value to set {@link #defense defense-points} to.
+	 *            Value to set defense-points to
 	 */
 	public void modifyDefense(int amount) {
-		this.defense = Math.max(0, this.defense + amount);
+		this.stats.defense = Math.max(0, this.stats.defense + amount);
 	}
 
 	/**
-	 * Set the entity's {@link #defense defense-points}.
+	 * Set the entity's defense-points.
 	 *
 	 * @param defense
 	 *            Value to set defense to.
 	 */
 	public void setDefense(int defense) {
-		this.defense = defense;
+		this.stats.defense = defense;
 	}
 
 	/**
-	 * Return the entity's {@link #defense defense-points}.
+	 * Return the entity's defense-points.
 	 *
 	 * @return Defense-points.
 	 */
 	public int getDefense() {
-		return this.defense;
+		return this.stats.defense;
 	}
 
 	/**
-	 * Set the entity's {@link #damage damage}.
+	 * Set the entity's damage
 	 *
 	 * @param damage
 	 */
 	public void setDamage(int damage) {
-		this.damage = damage;
+		this.stats.damage = damage;
 	}
 
 	/**
-	 * Set the entity's {@link #hp hit-points}.
+	 * Set the entity's hit-points.
 	 *
 	 * @param hp
 	 *            Value to set hit-points to.
 	 */
 	public void setHp(int hp) {
-		this.hp = hp;
+		this.stats.hp = hp;
 	}
 
 	/**
-	 * Return the entity's {@link #hp hit-points}.
+	 * Return the entity's hit-points.
 	 *
 	 * @return Hit-points.
 	 */
 	public int getHp() {
-		return this.hp;
+		return this.stats.hp;
 	}
 
 	/**
-	 * Set the entity's {@link #maxHp maximum hit-points}.
+	 * Set the entity's maximum hit-points.
 	 *
 	 * @param maxHp
 	 *            Value to set maximum hit-points to.
 	 */
 	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
+		this.stats.maxHp = maxHp;
 	}
 
 	/**
-	 * Return the entity's {@link #maxHp maximum hit-points}.
+	 * Return the entity's maximum hit-points.
 	 *
 	 * @return Maximum hit-points.
 	 */
 	public int getMaxHp() {
-		return this.maxHp;
+		return this.stats.maxHp;
 	}
 }

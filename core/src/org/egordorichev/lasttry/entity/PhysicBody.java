@@ -98,20 +98,16 @@ public abstract class PhysicBody {
 			return;
 		}
 
-		// Increment velocity downwards.
-		// TODO: Gravity should not be a constant, but instead should be based
-		// off of the y-position in the world.
-		// For example: Higher up (such as in outer space) should have a lower
-		// value).
+		/* Increment velocity downwards.
+		 * TODO: Gravity should not be a constant, but instead should be based
+		 * off of the y-position in the world.
+		 * For example: Higher up (such as in outer space) should have a lower
+		 * value). */
 
 		if (this.state != State.FLYING) {
 			this.velocity.y += 0.4f;
 		}
 
-		this.updatePhysics();
-	}
-
-	private void updatePhysics() {
 		/*
 		 * TODO: Optimize and handle both X/Y velocity in one pass. Current
 		 * issue: If gravity (above) causes collision on y-axis a combined xy
@@ -123,9 +119,29 @@ public abstract class PhysicBody {
 		 * on their current velocity.
 		 */
 
+		this.updateXVelocity();
+		this.updateYVelocity();
+
+		if (this.state == State.FLYING) {
+			return;
+		}
+
+		if (this.velocity.y > 0) {
+			this.state = State.FALLING;
+		} else if (this.velocity.y == 0 && this.state == State.FALLING) {
+			this.state = State.IDLE;
+		}
+
+		if (this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING
+				&& this.state != State.JUMPING) {
+			this.state = State.IDLE;
+		}
+	}
+
+	private void updateXVelocity() {
 		if (this.velocity.x != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
-					this.hitbox.width, this.hitbox.height);
+				this.hitbox.width, this.hitbox.height);
 
 			newHitbox.x += this.velocity.x;
 
@@ -161,19 +177,17 @@ public abstract class PhysicBody {
 			}
 
 			this.velocity.x *= 0.8;
+			
 			if (Math.abs(this.velocity.x) < PhysicBody.STOP_VELOCITY) {
 				this.velocity.x = 0;
 			}
 		}
+	}
 
-		/*
-		 * If the entity is not still on the y-axis, update their position based
-		 * on their current velocity.
-		 */
-
+	private void updateYVelocity() {
 		if (this.velocity.y != 0) {
 			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
-					this.hitbox.width, this.hitbox.height);
+				this.hitbox.width, this.hitbox.height);
 
 			newHitbox.y += this.velocity.y;
 
@@ -188,20 +202,6 @@ public abstract class PhysicBody {
 				if (Math.abs(this.velocity.y) < PhysicBody.STOP_VELOCITY) {
 					this.velocity.y = 0;
 				}
-			}
-		}
-
-		// Update state if applicable.
-
-		if (this.state != State.FLYING) {
-			if (this.velocity.y > 0) {
-				this.state = State.FALLING;
-			} else if (this.velocity.y == 0 && this.state == State.FALLING) {
-				this.state = State.IDLE;
-			}
-			if (this.velocity.x == 0 && this.state != State.IDLE && this.state != State.FALLING
-					&& this.state != State.JUMPING) {
-				this.state = State.IDLE;
 			}
 		}
 	}
