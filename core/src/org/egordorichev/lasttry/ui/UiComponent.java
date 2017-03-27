@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.util.Util;
 
 public class UiComponent {
 	public enum State {
@@ -124,8 +125,7 @@ public class UiComponent {
 				rectangle.getX() + rectangle.getWidth() > x  &&
 				rectangle.getY() + rectangle.getHeight() > y) {
 
-			if (this.state != State.MOUSE_DOWN && (Gdx.input.isButtonPressed(Input.Buttons.LEFT) ||
-					Gdx.input.isButtonPressed(Input.Buttons.RIGHT))) {
+			if (this.state != State.MOUSE_DOWN && Util.mouseButtonJustPressed()) {
 
 				this.state = State.MOUSE_DOWN;
 				this.onStateChange();

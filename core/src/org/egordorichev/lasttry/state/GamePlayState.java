@@ -114,7 +114,7 @@ public class GamePlayState implements State {
 		int mouseY = Gdx.input.getY();
 
 		LastTry.batch.draw(Textures.radial, mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.position.x % Block.TEX_SIZE,
-			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 42 - LastTry.camera.position.y
+			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 60 - LastTry.camera.position.y
 			% Block.TEX_SIZE));
 
 		int hp = LastTry.player.getHp();

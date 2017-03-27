@@ -144,7 +144,7 @@ public class LastTry extends Game {
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + Gdx.input.getY() + 16);
+		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + Gdx.input.getY());
 	}
 
 	/**

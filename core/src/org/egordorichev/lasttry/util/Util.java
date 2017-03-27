@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -9,6 +10,66 @@ import java.util.concurrent.TimeUnit;
 public class Util {
 	/** Input handler */
 	public static InputMultiplexer multiplexer = new InputMultiplexer();
+
+	/** Last pressed mouse button */
+	private static int currentButton;
+
+	static {
+		multiplexer.addProcessor(new InputProcessor() {
+			@Override
+			public boolean keyDown(int keycode) {
+				return false;
+			}
+
+			@Override
+			public boolean keyUp(int keycode) {
+				return false;
+			}
+
+			@Override
+			public boolean keyTyped(char character) {
+				return false;
+			}
+
+			@Override
+			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+				currentButton = button;
+
+				return false;
+			}
+
+			@Override
+			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+				currentButton = -1;
+
+				return false;
+			}
+
+			@Override
+			public boolean touchDragged(int screenX, int screenY, int pointer) {
+				return false;
+			}
+
+			@Override
+			public boolean mouseMoved(int screenX, int screenY) {
+				return false;
+			}
+
+			@Override
+			public boolean scrolled(int amount) {
+				return false;
+			}
+		});
+	}
+
+	public static boolean mouseButtonJustPressed() {
+		if (currentButton != -1) {
+			currentButton = -1;
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Runs callable in a thread every time seconds
