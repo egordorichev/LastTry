@@ -50,7 +50,6 @@ public class Block extends Item {
 			Block block = (Block) Item.fromID(LastTry.world.getBlockID(nx, ny));
 
 			if (block != null && Block.canBeCorrupted(block.getId())) {
-				LastTry.log(block.getName());
 				LastTry.world.setBlock(this.id, nx, ny); // TODO: replace with id, based on previous
 			}
 		}

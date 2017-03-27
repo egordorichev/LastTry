@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.mod;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.*;
 import org.egordorichev.lasttry.entity.Player;

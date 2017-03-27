@@ -24,7 +24,7 @@ public class World {
 	public static final int HARDCORE = 4;
 
 	/** How often the whole world is updated */
-	public static final int UPDATE_DELAY = 5;
+	public static final int UPDATE_DELAY = 20;
 
 	/** Data about all of the blocks and walls in the world */
 	private WorldData data;

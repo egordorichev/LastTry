@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 

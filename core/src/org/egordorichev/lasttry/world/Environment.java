@@ -17,10 +17,15 @@ public class Environment {
 	/** Previous biome */
 	private Biome lastBiome = null;
 
+	/** Block count, displayed on the screen */
 	public int[] blockCount;
+
+	/** Time in the world */
+	public WorldTime time;
 
 	public Environment() {
 		this.blockCount = new int[ItemID.count];
+		this.time = new WorldTime((byte) 8, (byte) 15);
 
 		Util.runInThread(new Callable() {
 			@Override
@@ -50,6 +55,8 @@ public class Environment {
 	 * @param dt The milliseconds passed since the last update.
 	 */
 	public void update(int dt) {
+		this.time.update();
+
 		if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {
 			this.currentBiome.fadeIn();
 		}
@@ -63,6 +70,8 @@ public class Environment {
 
 	/** Updates current biome */
 	private void updateBiome() {
+		LastTry.log("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
+
 		int windowWidth = Gdx.graphics.getWidth();
 		int windowHeight = Gdx.graphics.getHeight();
 		int tww = windowWidth / Block.TEX_SIZE;

@@ -19,31 +19,51 @@ public class Biome {
 
 	/** Texture alpha */
 	private float alpha = 0;
+
+	/** Spawn info */
+	private SpawnInfo spawnInfo;
 	
-	public Biome(String name) {
+	public Biome(String name, SpawnInfo spawnInfo, Texture texture) {
 		this.name = name;
+		this.spawnInfo = spawnInfo;
+		this.texture = texture;
 	}
 
+	/** Animates background */
 	public void fadeIn() {
 		this.alpha = (Math.min(1, this.alpha + 0.01f));
 	}
 
+	/** Animates background */
 	public void fadeOut() {
 		this.alpha = (Math.min(1, this.alpha - 0.01f));
 	}
 
+	/**
+	 * Shows, if animation is done
+	 * @return animation is done
+	 */
 	public boolean fadeInIsDone() {
 		return this.alpha >= 0.99f;
 	}
 
+	/**
+	 * Shows, if animation is done
+	 * @return animation is done
+	 */
 	public boolean fadeOutIsDone() {
 		return this.alpha < 0.01f;
 	}
-	
+
+	/**
+	 * Returns biome name
+	 * @return biome name
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/** Renders backgrounds */
 	public void renderBackground() {
 		LastTry.batch.setColor(1, 1, 1, this.alpha);
 		LastTry.batch.draw(this.texture, 0, 0);
