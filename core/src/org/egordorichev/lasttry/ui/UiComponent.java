@@ -64,11 +64,21 @@ public class UiComponent {
 	/** Shows element */
 	public void show() {
 		this.hidden = false;
+		this.onShow();
 	}
 
 	/** Hides element */
 	public void hide() {
 		this.hidden = true;
+		this.onHide();
+	}
+
+	public void onShow() {
+
+	}
+
+	public void onHide() {
+
 	}
 
 	public int getX() {

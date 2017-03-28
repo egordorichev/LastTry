@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.util;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 
+import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -85,5 +86,19 @@ public class Util {
 				callable.call();
 			}
 		}, 0, time, TimeUnit.SECONDS);
+	}
+
+	public static boolean fileExists(String path) {
+		File file = new File(path);
+
+		if (!file.exists()) {
+			return false;
+		}
+
+		if (file.length() == 0) {
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -6,7 +6,6 @@ public class Textures {
 	// Entities
 	public static Texture greenSlime;
 	public static Texture blueSlime;
-	public static Texture player;
 	public static Texture eyeOfCthulhu;
 
 	// Blocks, walls and items

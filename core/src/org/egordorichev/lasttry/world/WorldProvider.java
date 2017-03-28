@@ -13,21 +13,21 @@ import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 public class WorldProvider {
 	/** Current supported world version */
-	public static short CURRENT_VERSION = 3;
+	public static short CURRENT_VERSION = 4;
 
 	/**
-	 * Returns all worlds in the "assets/worlds/" directory
-	 * @return all worlds in the "assets/worlds/" directory
+	 * Returns all worlds in the "worlds/" directory
+	 * @return all worlds in the "worlds/" directory
 	 */
 	public static WorldInfo[] getWorlds() {
-		File folder = new File("assets/worlds/");
+		File folder = new File("worlds/");
 		File[] files = folder.listFiles();
 
 		List<WorldInfo> worlds = new ArrayList<>();
 
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].isFile()) {
-				worlds.add(getWorldInfo(files[i].getName()));
+				worlds.add(getWorldInfo("worlds/" + files[i].getName()));
 			}
 		}
 
@@ -40,13 +40,13 @@ public class WorldProvider {
 	 * @return world info
 	 */
 	public static WorldInfo getWorldInfo(String fileName) {
-		String worldName = fileName.replace("assets/worlds/", "").replace(".wld", "");
+		String worldName = fileName.replace("worlds/", "").replace(".wld", "");
 		WorldSize size = WorldSize.SMALL;
 		int version = -1;
 		int flags = 0;
 
 		try {
-			FileReader stream = new FileReader(getFilePath(worldName));
+			FileReader stream = new FileReader(fileName);
 
 			version = stream.readInt32();
 
@@ -56,10 +56,6 @@ public class WorldProvider {
 
 			if (stream.readBoolean()) {
 				flags |= World.EXPERT;
-			}
-
-			if (stream.readBoolean()) {
-				flags |= World.HARDMODE;
 			}
 
 			if (stream.readBoolean()) {
@@ -99,7 +95,7 @@ public class WorldProvider {
 	 * @return new world.
 	 */
 	public static World generate(String name, short width, short height, int flags) {
-		LastTry.log.info("Generating...");
+		LastTry.log.info("Generating world...");
 
 		Biome.preload();
 
@@ -116,7 +112,7 @@ public class WorldProvider {
 	 * @param world world to save.
 	 */
 	public static void save(String name, World world) {
-		LastTry.log("Saving...");
+		LastTry.log("Saving world...");
 
 		try {
 			FileWriter stream = new FileWriter(getFilePath(name));
@@ -124,7 +120,6 @@ public class WorldProvider {
 			stream.writeInt32(CURRENT_VERSION);
 			stream.writeBoolean(world.isHardmode());
 			stream.writeBoolean(world.isExpertMode());
-			stream.writeBoolean(world.isHardcore());
 			stream.writeBoolean(world.evilIsCrimson());
 
 			short width = world.getWidth();
@@ -161,7 +156,7 @@ public class WorldProvider {
 	 * @return World by name.
 	 */
 	public static World load(String worldName) {
-		LastTry.log("Loading...");
+		LastTry.log("Loading world...");
 
 		try (FileReader stream = new FileReader(getFilePath(worldName))){
 			int version = stream.readInt32();
@@ -173,15 +168,15 @@ public class WorldProvider {
 			}
 
 			int flags = 0;
+
 			if (stream.readBoolean()) {
 				flags |= World.HARDMODE;
 			}
+
 			if (stream.readBoolean()) {
 				flags |= World.EXPERT;
 			}
-			if (stream.readBoolean()) {
-				flags |= World.HARDMODE;
-			}
+
 			if (stream.readBoolean()) {
 				flags |= World.CRIMSON;
 			}
@@ -222,37 +217,13 @@ public class WorldProvider {
 	}
 
 	/**
-	 * Checks if a world by the given name exists and if it is valid to load.
-	 * 
-	 * @param worldName
-	 *            World to load.
-	 * @return
-	 */
-	public static boolean exists(String worldName) {
-		File worldFile = new File("assets/worlds/" + worldName + ".wld");
-		if (!worldFile.exists()) {
-			return false;
-		}
-
-		// TODO: Simple check to see if it exists
-		// TODO: Check if exists but is incompatible (Check world version but
-		// nothing else)
-
-		if (worldFile.length() == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Get the file path of a world by the given name.
 	 * 
 	 * @param worldName
 	 *            World name.
 	 * @return Path to world file.
 	 */
-	private static String getFilePath(String worldName) {
-		return "assets/worlds/" + worldName + ".wld";
+	public static String getFilePath(String worldName) {
+		return "worlds/" + worldName + ".wld";
 	}
 }

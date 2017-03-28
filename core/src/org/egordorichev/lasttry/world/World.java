@@ -20,9 +20,6 @@ public class World {
 	/** Shows, that world is in expert mode */
 	public static final int EXPERT = 3;
 
-	/** Shows, that world is in hardcode mode */
-	public static final int HARDCORE = 4;
-
 	/** How often the whole world is updated */
 	public static final int UPDATE_DELAY = 20;
 
@@ -232,21 +229,12 @@ public class World {
 	}
 
 	/**
-	 * Returns true if the world is in hardcore mode.
-	 * 
-	 * @return true if the world is in hardcore mode.
-	 */
-	public boolean isHardcore() {
-		return (this.flags & HARDCORE) == HARDCORE;
-	}
-
-	/**
 	 * Returns true if the world is in hardmode.
 	 * 
 	 * @return true, if the world is in hardmode.
 	 */
 	public boolean isHardmode() {
-		return (this.flags & HARDMODE) == HARDCORE;
+		return (this.flags & HARDMODE) == HARDMODE;
 	}
 
 	/**

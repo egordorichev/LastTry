@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.mod;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.*;
-import org.egordorichev.lasttry.entity.Player;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Util;

@@ -1,9 +1,12 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.player;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Direction;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -14,6 +17,7 @@ import org.egordorichev.lasttry.ui.UiInventory;
 public class Player extends Entity {
 	protected String name;
 	protected Animation[] animations;
+	protected PlayerRenderInfo renderInfo;
 
 	public UiInventory inventory;
 
@@ -21,42 +25,43 @@ public class Player extends Entity {
 		super(100, 0, 0);
 
 		this.name = name;
-		this.texture = Textures.player;
+		this.renderInfo = new PlayerRenderInfo();
+		this.renderInfo.hairStyle = 3;
+		this.renderInfo.hairColor = Color.GREEN;
+		this.renderInfo.eyesColor = Color.BLUE;
+		this.renderInfo.skinColor = Color.WHITE;
+		this.texture = PlayerRenderer.generateTexture(this.renderInfo);
 
 		inventory = new UiInventory(89);
 
 		this.animations = new Animation[State.values().length];
 
 		Animation idleAnimation = new Animation(false);
-		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 32, 48), 0));
+		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 8, 32, 48), 0));
 
 		Animation movingAnimation = new Animation(true);
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 144, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 192, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 240, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 288, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 336, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 384, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 432, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 480, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 528, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 576, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 624, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 672, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 720, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 342, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 400, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 456, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 512, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 568, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 624, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 680, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 736, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 792, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 848, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 902, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 960, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1016, 32, 48), 1));
+		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1072, 32, 48), 1));
 
 		Animation jumpingAnimation = new Animation(false);
-		jumpingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture,0, 48, 32, 48), 0)); // TODO
+		jumpingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 288, 32, 48), 0));
 
-		Animation flyingAnimation = new Animation(true);
-		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 768, 32, 40), 5));
-		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 808, 32, 40), 5));
-		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 848, 32, 40), 5));
-		flyingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 888, 32, 40), 5));
+		Animation flyingAnimation = new Animation(true); // TODO
 
 		Animation deadAnimation = new Animation(false);
-		deadAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 32, 48), 0)); // TODO
+		deadAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 0, 0), 0)); // TODO
 
 		this.animations[State.IDLE.getId()] = idleAnimation;
 		this.animations[State.MOVING.getId()] = movingAnimation;
@@ -64,6 +69,8 @@ public class Player extends Entity {
 		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
 		this.animations[State.FLYING.getId()] = flyingAnimation;
 		this.animations[State.DEAD.getId()] = deadAnimation;
+
+		this.hitbox.height -= 3;
 	}
 
 	public void setGhostMode(boolean enabled) {
@@ -89,7 +96,7 @@ public class Player extends Entity {
 	public void render() {
 		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
 			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
-			(this.direction == Direction.RIGHT), false);
+			(this.direction == Direction.LEFT), false);
 	}
 
 	public void renderBuffs() {

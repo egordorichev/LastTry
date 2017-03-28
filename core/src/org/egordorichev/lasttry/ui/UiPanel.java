@@ -9,13 +9,13 @@ public class UiPanel extends UiComponent {
 	/** Panel children **/
 	private List<UiComponent> children = new ArrayList<>();
 
-	public UiPanel(Rectangle rectangle, Origin origin) {
-		super(rectangle, origin);
+	public UiPanel(Origin origin) {
+		super(new Rectangle(0, 0, 0, 0), origin);
 		this.addComponents();
 	}
 
-	public UiPanel(Rectangle rectangle) {
-		this(rectangle, Origin.TOP_LEFT);
+	public UiPanel() {
+		this(Origin.TOP_LEFT);
 	}
 
 	/** Used for overriding from instances */
@@ -31,6 +31,11 @@ public class UiPanel extends UiComponent {
 	 */
 	public void add(UiComponent component) {
 		this.children.add(component);
+	}
+
+	/** Clears the children */
+	public void clear() {
+		this.children.clear();
 	}
 
 	/** Render children */

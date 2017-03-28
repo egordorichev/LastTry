@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
 public class Assets {
 	public Textures textures;
+	public Fonts fonts;
 	private static boolean loaded = false;
 
 	public static void load() {
@@ -31,7 +32,6 @@ public class Assets {
 
 				Textures.greenSlime = load("GreenSlime.png");
 				Textures.blueSlime = load("BlueSlime.png");
-				Textures.player = load("Player.png");
 				Textures.eyeOfCthulhu = load("EyeOfCthulhu.png");
 				Textures.dirt = load("DirtTile.png");
 				Textures.dirtIcon = load("DirtIcon.png");

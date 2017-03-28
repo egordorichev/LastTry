@@ -9,7 +9,6 @@ import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.Util;
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.item.block.Block;
 

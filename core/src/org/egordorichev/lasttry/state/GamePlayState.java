@@ -2,15 +2,11 @@ package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.EnemyID;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.Player;
-import org.egordorichev.lasttry.entity.enemy.GreenSlime;
-import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
@@ -18,6 +14,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.modifier.MeleeModifier;
 import org.egordorichev.lasttry.mod.ModLoader;
+import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.Environment;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
@@ -30,7 +27,7 @@ public class GamePlayState implements State {
 		int worldWidth = 500;
 		int worldHeight = 500;
 
-		if (WorldProvider.exists(this.worldName)) {
+		if (Util.fileExists(WorldProvider.getFilePath(this.worldName))) {
 			LastTry.world = WorldProvider.load(this.worldName);
 		} else {
 			LastTry.world = WorldProvider.generate(this.worldName, (short) worldWidth, (short) worldHeight,
@@ -113,10 +110,6 @@ public class GamePlayState implements State {
 
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.input.getY();
-
-		LastTry.batch.draw(Textures.radial, mouseX - mouseX % Block.TEX_SIZE - 48 - LastTry.camera.position.x % Block.TEX_SIZE,
-			Gdx.graphics.getHeight() - (mouseY - mouseY % Block.TEX_SIZE + 60 - LastTry.camera.position.y
-			% Block.TEX_SIZE));
 
 		int hp = LastTry.player.getHp();
 		int x = Gdx.graphics.getWidth() - 260;
