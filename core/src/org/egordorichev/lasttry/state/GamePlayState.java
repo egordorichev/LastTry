@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.player.Player;
+import org.egordorichev.lasttry.entity.player.*;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
@@ -39,7 +39,7 @@ public class GamePlayState implements State {
 
 		LastTry.environment = new Environment();
 		LastTry.entityManager = new EntityManager();
-		LastTry.player = new Player("George");
+		LastTry.player = new Player(new PlayerInfo("George", 100, 20, PlayerType.SOFTCORE, PlayerProvider.CURRENT_VERSION));
 		LastTry.player.spawn(spawnX, spawnY);
 
 		LastTry.ui.add(LastTry.player.inventory);
