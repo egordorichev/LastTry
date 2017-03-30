@@ -15,27 +15,40 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Entity {
-	protected String name;
+	/** Player info */
+	protected PlayerInfo info;
+	
+	/** Player animations */
 	protected Animation[] animations;
+	
+	/** Players render info */
 	protected PlayerRenderInfo renderInfo;
 
+	/** Players inventory */
 	public UiInventory inventory;
 
-	public Player(String name) {
-		super(100, 0, 0);
+	public Player(PlayerInfo info) {
+		super(info.maxHp, 0, 0);
+		
+		this.info = info;
+		this.renderInfo = new PlayerRenderInfo();
+		this.animations = new Animation[State.values().length];
+		this.setupTexture();
 
-		this.name = name;
+		inventory = new UiInventory(89);
+
+		this.hitbox.height -= 3;
+	}
+	
+	/** Creates/updates player texture and animations */
+	private void setupTexture() {
 		this.renderInfo = new PlayerRenderInfo();
 		this.renderInfo.hairStyle = 3;
 		this.renderInfo.hairColor = Color.GREEN;
 		this.renderInfo.eyesColor = Color.BLUE;
 		this.renderInfo.skinColor = Color.WHITE;
 		this.texture = PlayerRenderer.generateTexture(this.renderInfo);
-
-		inventory = new UiInventory(89);
-
-		this.animations = new Animation[State.values().length];
-
+		
 		Animation idleAnimation = new Animation(false);
 		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 8, 32, 48), 0));
 
@@ -69,8 +82,6 @@ public class Player extends Entity {
 		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
 		this.animations[State.FLYING.getId()] = flyingAnimation;
 		this.animations[State.DEAD.getId()] = deadAnimation;
-
-		this.hitbox.height -= 3;
 	}
 
 	public void setGhostMode(boolean enabled) {
@@ -150,10 +161,9 @@ public class Player extends Entity {
 		}
 
 		super.update(dt);
-		// this.animations[this.state.getId()].update(dt);
 	}
 
 	public String getName() {
-		return this.name;
+		return this.info.name;
 	}
 }
