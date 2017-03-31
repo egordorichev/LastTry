@@ -2,9 +2,7 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
@@ -12,13 +10,8 @@ import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
-import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.util.Log;
-import org.egordorichev.lasttry.util.Util;
-import org.egordorichev.lasttry.world.Environment;
-import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.WorldProvider;
-
+import org.egordorichev.lasttry.util.*;
+import org.egordorichev.lasttry.world.*;
 import java.util.Random;
 
 public class LastTry extends Game {
@@ -159,6 +152,8 @@ public class LastTry extends Game {
 			log.warn("Exiting");
 			Gdx.app.exit();
 		}
+		
+		// TODO: handle other exception types
 	}
 
 	/**
@@ -167,12 +162,12 @@ public class LastTry extends Game {
 	 */
 	private String getRandomWindowTitle() {
 		return new String[] { "LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
-				"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
-				"LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
-				"LastTry: The Grass is Greener on This Side",
-				"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
-				"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
-				"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
+			"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
+			"LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
+			"LastTry: The Grass is Greener on This Side",
+			"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
+			"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
+			"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
 		}[random.nextInt(17)];
 	}
 }
