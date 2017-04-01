@@ -14,7 +14,7 @@ public class DayBloom extends Plant {
 		int hp = LastTry.world.getBlockHp(x, y);
 
 		if (hp >= Plant.GROW_THRESHOLD) {
-			if (LastTry.environment.time.isDay()) {
+			if (LastTry.environment.time.isDay() && LastTry.random.nextInt(10) != 0) {
 				LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
 			} else {
 				LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD), x, y);
@@ -22,5 +22,22 @@ public class DayBloom extends Plant {
 		} else {
 			LastTry.world.setBlockHP((byte) (hp + 1), x, y);
 		}
+	}
+
+	@Override
+	public boolean canBeGrownAt(int x, int y) {
+		short id = LastTry.world.getBlockID(x, y);
+
+		if (id != ItemID.none) {
+			return false;
+		}
+
+		id = LastTry.world.getBlockID(x, y + 1);
+
+		if (id != ItemID.grassBlock) {
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -59,6 +59,25 @@ public class Textures {
 	public static Texture iceIcon;
 	public static Texture dayBloom;
 	public static Texture dayBloomIcon;
+	public static Texture blinkRoot;
+	public static Texture blinkRootIcon;
+	public static Texture moonGlow;
+	public static Texture moonGlowIcon;
+	public static Texture deathWeed;
+	public static Texture deathWeedIcon;
+	public static Texture waterLeaf;
+	public static Texture waterLeafIcon;
+	public static Texture fireBlossom;
+	public static Texture fireBlossomIcon;
+	public static Texture silverThorn;
+	public static Texture silverThornIcon;
+	public static Texture dayBloomSeeds;
+	public static Texture blinkRootSeeds;
+	public static Texture moonGlowSeeds;
+	public static Texture deathWeedSeeds;
+	public static Texture waterLeafSeeds;
+	public static Texture fireBlossomSeeds;
+	public static Texture silverThornSeeds;
 
 	// Buffs
 	public static Texture ammoReservationBuff;

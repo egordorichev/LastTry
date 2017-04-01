@@ -17,6 +17,7 @@ public class BlockGround extends Block {
 		boolean r = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y)) == this.type;
 		boolean b = EffectiveToolType.lookup(LastTry.world.getBlockID(x, y + 1)) == this.type;
 		boolean l = EffectiveToolType.lookup(LastTry.world.getBlockID(x - 1, y)) == this.type;
+
 		// TODO: FIXME: replace  with var
 		short variant =  1; 
 		byte binary = Block.calculateBinary(t, r, b, l);

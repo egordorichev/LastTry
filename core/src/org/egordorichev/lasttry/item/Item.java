@@ -2,16 +2,9 @@ package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.block.EvilBlock;
-import org.egordorichev.lasttry.item.block.plant.DayBloom;
-import org.egordorichev.lasttry.item.items.Coin;
-import org.egordorichev.lasttry.item.items.Mushroom;
-import org.egordorichev.lasttry.item.items.Pickaxe;
-import org.egordorichev.lasttry.item.items.Sword;
-import org.egordorichev.lasttry.item.items.ThornBlock;
-import org.egordorichev.lasttry.item.block.BlockGround;
-import org.egordorichev.lasttry.item.block.SlippyBlock;
-import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.item.items.*;
+import org.egordorichev.lasttry.item.block.*;
+import org.egordorichev.lasttry.item.block.plant.*;
 import org.egordorichev.lasttry.graphics.Textures;
 
 public class Item {
@@ -44,6 +37,11 @@ public class Item {
 	public static Item ironPickaxe = new Pickaxe(ItemID.ironPickaxe, "Iron pickaxe", 5, 40, 19, Textures.ironPickaxe);
 	public static Item iceBlock = new SlippyBlock(ItemID.iceBlock, "Ice block", Textures.iceIcon, Textures.ice);
 	public static Item dayBloom = new DayBloom();
+	public static Item blinkRoot = new BlinkRoot();
+
+
+	public static Item dayBloomSeeds = new Seed(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds,
+		(Plant) Item.dayBloom);
 
 	/**
 	 * Item identifier.

@@ -83,6 +83,26 @@ public class Assets {
 				Textures.iceIcon = load("PurpleIceIcon.png"); // FIXME: replace with ice texture
 				Textures.dayBloom = load("DayBloom.png");
 				Textures.dayBloomIcon = load("DayBloomIcon.png");
+				Textures.blinkRoot = load("BlinkRoot.png");
+				Textures.blinkRootIcon = load("BlinkRootIcon.png");
+				Textures.moonGlow = load("MoonGlow.png");
+				Textures.moonGlowIcon = load("MoonGlowIcon.png");
+				Textures.deathWeed = load("DeathWeed.png");
+				Textures.deathWeedIcon = load("DeathWeedIcon.png");
+				Textures.waterLeaf = load("WaterLeaf.png");
+				Textures.waterLeafIcon = load("WaterLeafIcon.png");
+				Textures.fireBlossom = load("FireBlossom.png");
+				Textures.fireBlossomIcon = load("FireBlossomIcon.png");
+				Textures.silverThorn = load("SilverThorn.png");
+				Textures.silverThornIcon = load("SilverThornIcon.png");
+				Textures.dayBloomSeeds = load("DayBloomSeeds.png");
+				Textures.moonGlowSeeds = load("WaterLeafSeeds.png");
+				Textures.blinkRootSeeds = load("BlinkRootSeeds.png");
+				Textures.fireBlossomSeeds = load("FireBlossomSeeds.png");
+				Textures.silverThornSeeds = load("SilverThornSeeds.png");
+				Textures.deathWeedSeeds = load("DeathWeedSeeds.png");
+
+
 				Textures.ammoReservationBuff = load("AmmoReservationBuff.png");
 				Textures.archeryBuff = load("ArcheryBuff.png");
 				Textures.battleBuff = load("BattleBuff.png");

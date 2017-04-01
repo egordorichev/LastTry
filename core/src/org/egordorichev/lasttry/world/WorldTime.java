@@ -56,7 +56,7 @@ public class WorldTime {
 	 * @return if current time is day time
 	 */
 	public boolean isDay() {
-		return (this.hour >= 4 && this.minute >= 30) && (this.hour <= 19 && this.minute < 30);
+		return !(this.hour >= 4 && this.minute >= 30) || !(this.hour <= 19 && this.minute < 30);
 		// < 30 is important!
 	}
 

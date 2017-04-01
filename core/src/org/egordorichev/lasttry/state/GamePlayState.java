@@ -59,6 +59,8 @@ public class GamePlayState implements State {
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
 		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.dayBloom, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.dayBloomSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.blinkRoot, 10));
 
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);
