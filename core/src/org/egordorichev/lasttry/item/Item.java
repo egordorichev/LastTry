@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.block.EvilBlock;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Mushroom;
 import org.egordorichev.lasttry.item.items.Pickaxe;
@@ -28,18 +29,19 @@ public class Item {
 	public static Item gel = new Item(ItemID.gel, "Gel", Textures.gel);
 	public static Item heart = new Item(ItemID.heart, "Heart", Textures.heart);
 	public static Item mana = new Item(ItemID.mana, "Mana", Textures.mana);
-	public static Item ebonstoneBlock = new BlockGround(ItemID.ebonstoneBlock, "Ebonstone block", Textures.ebonstoneIcon, Textures.ebonstone);
+	public static Item ebonstoneBlock = new EvilBlock(ItemID.ebonstoneBlock, "Ebonstone block", Textures.ebonstoneIcon, Textures.ebonstone);
 	public static Item corruptThornyBushes = new ThornBlock(ItemID.corruptThornyBushes, "Corrupt thorny bushes", Textures.corruptThornyBushes);
-	public static Item purpleIceBlock = new SlippyBlock(ItemID.purpleIceBlock, "Purple ice block", Textures.purpleIceIcon, Textures.purpleIce);
+	public static Item purpleIceBlock = new EvilBlock(ItemID.purpleIceBlock, "Purple ice block", Textures.purpleIceIcon, Textures.purpleIce);
 	public static Item vileMushroom = new Mushroom(ItemID.vileMushroom, "Vile mushroom", Textures.vileMushroom);
 	public static Item crimstoneBlock = new BlockGround(ItemID.crimstoneBlock, "Crimstone block", Textures.crimstoneIcon, Textures.crimstone);
-	public static Item redIceBlock = new SlippyBlock(ItemID.redIceBlock, "Red ice block", Textures.redIceIcon, Textures.redIce);
+	public static Item redIceBlock = new EvilBlock(ItemID.redIceBlock, "Red ice block", Textures.redIceIcon, Textures.redIce);
 	public static Item viciousMushroom = new Mushroom(ItemID.viciousMushroom, "Vicious mushroom", Textures.viciousMushroom);
 	public static Item sandBlock = new BlockGround(ItemID.sandBlock, "Sand block", Textures.sandBlockIcon, Textures.sandBlock);
-	public static Item ebonsandBlock = new BlockGround(ItemID.ebonsandBlock, "Ebonsand block", Textures.ebonsandIcon, Textures.ebonsand);
-	public static Item crimsandBlock = new BlockGround(ItemID.crimsandBlock, "Crimsand block", Textures.crimsandIcon, Textures.crimsand);
+	public static Item ebonsandBlock = new EvilBlock(ItemID.ebonsandBlock, "Ebonsand block", Textures.ebonsandIcon, Textures.ebonsand);
+	public static Item crimsandBlock = new EvilBlock(ItemID.crimsandBlock, "Crimsand block", Textures.crimsandIcon, Textures.crimsand);
 	public static Item stoneBlock = new BlockGround(ItemID.stoneBlock, "Stone block", Textures.stoneIcon, Textures.stone);
 	public static Item ironPickaxe = new Pickaxe(ItemID.ironPickaxe, "Iron pickaxe", 5, 40, 19, Textures.ironPickaxe);
+	public static Item iceBlock = new SlippyBlock(ItemID.iceBlock, "Ice block", Textures.iceIcon, Textures.ice);
 
 	/**
 	 * Item identifier.
@@ -97,7 +99,7 @@ public class Item {
 	 * 
 	 * @return Item ID.
 	 */
-	public int getId() {
+	public short getId() {
 		return this.id;
 	}
 

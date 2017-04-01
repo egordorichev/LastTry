@@ -36,54 +36,7 @@ public class Block extends Item {
 	}
 
 	public void updateBlock(int x, int y) {
-		/* TODO: if block is a plant, update it,
-		 * If block is corrupt, spread it */
 
-		if (Block.isCorrupt(this.id)) {
-			int nx = x - 3 + LastTry.random.nextInt(7);
-			int ny = y - 3 + LastTry.random.nextInt(7);
-
-			if (nx == x && ny == y) {
-				return;
-			}
-
-			Block block = (Block) Item.fromID(LastTry.world.getBlockID(nx, ny));
-
-			if (block != null && Block.canBeCorrupted(block.getId())) {
-				LastTry.world.setBlock(this.id, nx, ny); // TODO: replace with id, based on previous
-			}
-		}
-	}
-
-	/**
-	 * Return true, if block is corrupted
-	 * @param id block id
-	 * @return block is corrupted
-	 */
-	public static boolean isCorrupt(int id) {
-		if (id == ItemID.ebonstoneBlock || id == ItemID.crimstoneBlock ||
-			id == ItemID.ebonsandBlock || id == ItemID.crimsandBlock ||
-			id == ItemID.purpleIceBlock || id == ItemID.redIceBlock ||
-			id == ItemID.vileMushroom || id == ItemID.viciousMushroom ||
-			id == ItemID.corruptThornyBushes) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns true, if block can be corrupted
-	 * @param id block id
-	 * @return block can be corrupted
-	 */
-	public static boolean canBeCorrupted(int id) {
-		if (id == ItemID.stoneBlock || id == ItemID.sandBlock) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -140,6 +93,7 @@ public class Block extends Item {
 			result += 4;
 		if (left)
 			result += 8;
+
 		return result;
 	}
 
@@ -164,6 +118,7 @@ public class Block extends Item {
 			LastTry.world.setBlock(this.id, x, y);
 			return true;
 		}
+
 		return false;
 	}
 
