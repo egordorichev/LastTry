@@ -26,6 +26,12 @@ public class ItemID {
 	public final static short stoneBlock = 22;
 	public final static short ironPickaxe = 23;
 	public final static short iceBlock = 24;
+	public final static short dayBloom = 26;
+	public final static short blinkRoot = 27;
+	public final static short moonGlow = 28;
+	public final static short deathWeed = 29;
+	public final static short waterLeaf = 30;
+	public final static short fireBlossom = 31;
 
-	public final static short count = 25; // Change this, if you add another item!
+	public final static short count = 32; // Change this, if you add another item!
 }

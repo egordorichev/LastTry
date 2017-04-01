@@ -49,16 +49,16 @@ public class GamePlayState implements State {
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, MeleeModifier.legendary));
 		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, MeleeModifier.light));
-		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 100));
+		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 100));
+		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 100));
+		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 999));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 990));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
-		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 10));
-		LastTry.player.inventory.add(new ItemHolder(Item.vileMushroom, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 100));
+		LastTry.player.inventory.add(new ItemHolder(Item.dayBloom, 10));
 
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);

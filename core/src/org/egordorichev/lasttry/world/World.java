@@ -135,6 +135,10 @@ public class World {
 		this.data.blocks[x + y * this.width] = id;
 	}
 
+	public void setBlockHP(byte hp, int x, int y) {
+		this.data.blocksHealth[x + y * this.width] = hp;
+	}
+
 	/**
 	 * Sets the wall in the world at the given position based on the given ID.
 	 *

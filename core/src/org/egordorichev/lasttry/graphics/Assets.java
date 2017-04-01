@@ -81,6 +81,8 @@ public class Assets {
 				Textures.trash = load("Trash.png");
 				Textures.ice = load("PurpleIceTile.png"); // FIXME: replace with ice texture
 				Textures.iceIcon = load("PurpleIceIcon.png"); // FIXME: replace with ice texture
+				Textures.dayBloom = load("DayBloom.png");
+				Textures.dayBloomIcon = load("DayBloomIcon.png");
 				Textures.ammoReservationBuff = load("AmmoReservationBuff.png");
 				Textures.archeryBuff = load("ArcheryBuff.png");
 				Textures.battleBuff = load("BattleBuff.png");

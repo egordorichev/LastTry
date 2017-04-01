@@ -57,6 +57,8 @@ public class Textures {
 	public static Texture trash;
 	public static Texture ice;
 	public static Texture iceIcon;
+	public static Texture dayBloom;
+	public static Texture dayBloomIcon;
 
 	// Buffs
 	public static Texture ammoReservationBuff;

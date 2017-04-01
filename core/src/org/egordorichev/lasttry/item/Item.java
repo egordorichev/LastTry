@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.EvilBlock;
+import org.egordorichev.lasttry.item.block.plant.DayBloom;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Mushroom;
 import org.egordorichev.lasttry.item.items.Pickaxe;
@@ -42,6 +43,7 @@ public class Item {
 	public static Item stoneBlock = new BlockGround(ItemID.stoneBlock, "Stone block", Textures.stoneIcon, Textures.stone);
 	public static Item ironPickaxe = new Pickaxe(ItemID.ironPickaxe, "Iron pickaxe", 5, 40, 19, Textures.ironPickaxe);
 	public static Item iceBlock = new SlippyBlock(ItemID.iceBlock, "Ice block", Textures.iceIcon, Textures.ice);
+	public static Item dayBloom = new DayBloom();
 
 	/**
 	 * Item identifier.
