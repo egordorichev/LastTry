@@ -22,6 +22,7 @@ Compile project:
 ### Running
 
 You should end up with a jar. Place it in the `core/assets/` directory and run.
+Or you can run it from current directory with `-Duser.dir=core/assets/'` argument.
 
 ### Contributing
 
