@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.entity.player.PlayerType;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.ui.*;
-import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldInfo;
 import org.egordorichev.lasttry.world.WorldProvider;
 
@@ -185,8 +184,9 @@ public class MenuState implements State {
 
 		this.worldNew = new UiPanel() {
 			@Override
-			public void addComponents() {
-				LastTry.world = WorldProvider.generate("test", (short) 500, (short) 500, World.EXPERT);
+			public void onShow() {
+				LastTry.instance.setScreen(new GamePlayState());
+
 			}
 		};
 

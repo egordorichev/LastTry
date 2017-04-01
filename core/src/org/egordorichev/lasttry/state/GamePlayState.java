@@ -38,7 +38,6 @@ public class GamePlayState implements State {
 		int spawnX = LastTry.world.getWidth() / 2;
 		int spawnY = 50;
 
-		LastTry.environment = new Environment();
 		LastTry.entityManager = new EntityManager();
 
 		LastTry.player = new Player(new PlayerInfo("George", 100, 20, PlayerType.SOFTCORE, PlayerProvider
