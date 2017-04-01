@@ -81,6 +81,18 @@ public class UiComponent {
 
 	}
 
+	public void setPosition(int x, int y) {
+		this.rect.setPosition(x, y);
+	}
+
+	public void setSize(int width, int height) {
+		this.rect.setSize(width, height);
+	}
+
+	public Rectangle getRect() {
+		return this.rect;
+	}
+
 	public int getX() {
 		switch(this.origin) {
 			case TOP_LEFT: case BOTTOM_LEFT: default: return (int) this.rect.getX();
@@ -122,10 +134,6 @@ public class UiComponent {
 	}
 
 	protected void update() {
-		if (this.hidden) {
-			return;
-		}
-
 		Rectangle rectangle = new Rectangle(this.getX(), this.getClickY(), this.getWidth(), this.getHeight());
 
 		int x = Gdx.input.getX();

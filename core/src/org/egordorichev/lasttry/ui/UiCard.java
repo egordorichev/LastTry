@@ -1,13 +1,22 @@
 package org.egordorichev.lasttry.ui;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class UiCard extends UiPanel {
-	public UiCard(Origin origin) {
+	public UiCard(Rectangle rectangle, Origin origin) {
 		super(origin);
+
+		this.rect = rectangle;
 	}
 
-	public UiCard() {
-		this(Origin.TOP_LEFT);
+	public UiCard(Rectangle rectangle) {
+		this(rectangle, Origin.TOP_LEFT);
 	}
-	
-	// TODO
+
+	@Override
+	public void render() {
+		super.render();
+
+		// TODO: render blue rect
+	}
 }

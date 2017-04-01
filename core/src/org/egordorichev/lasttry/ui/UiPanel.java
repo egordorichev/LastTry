@@ -7,7 +7,12 @@ import java.util.List;
 
 public class UiPanel extends UiComponent {
 	/** Panel children **/
-	private List<UiComponent> children = new ArrayList<>();
+	protected List<UiComponent> children = new ArrayList<>();
+
+	public UiPanel(Rectangle rectangle, Origin origin) {
+		super(rectangle, origin);
+		this.addComponents();
+	}
 
 	public UiPanel(Origin origin) {
 		super(new Rectangle(0, 0, 0, 0), origin);

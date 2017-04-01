@@ -1,7 +1,52 @@
 package org.egordorichev.lasttry.ui;
 
-/**
- * Created by egor on 4/1/17.
- */
-public class UiPlayerCard {
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.player.PlayerInfo;
+import org.egordorichev.lasttry.entity.player.PlayerRenderer;
+
+public class UiPlayerCard extends UiCard {
+	/** Where is the all player data is stored */
+	private PlayerInfo info;
+
+	public UiPlayerCard(Rectangle rectangle, Origin origin, PlayerInfo info) {
+		super(rectangle, origin);
+
+		this.info = info;
+	}
+
+	@Override
+	public void addComponents() {
+		if (this.info == null) {
+			return;
+		}
+
+		int x = this.getX();
+		int y = this.getClickY();
+
+		add(new UiTextureRegion(new Rectangle(x, y + 24, 32, 48),
+			new TextureRegion(PlayerRenderer.generateTexture(this.info.renderInfo), 4, 8, 32, 48))); // Player icon
+
+		add(new UiTextButton(new Rectangle(x + 64, y, 0, 0), this.info.name) {
+			@Override
+			public void onClick() {
+				LastTry.log("todo");
+			}
+		}); // Player name
+
+		add(new UiTextLabel(new Rectangle(x + 64, y + 32, 0, 0), "Max HP " + this.info.maxHp
+			+ " Max Mana " + this.info.maxMana)); // Stats
+	}
+
+	@Override
+	protected void onStateChange() {
+		super.onStateChange();
+
+		if (this.state == State.MOUSE_IN) {
+			// TODO
+		} else if (this.state == State.NORMAL) {
+			// TODO
+		}
+	}
 }
