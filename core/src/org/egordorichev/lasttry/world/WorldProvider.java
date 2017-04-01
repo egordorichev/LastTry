@@ -13,7 +13,7 @@ import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 public class WorldProvider {
 	/** Current supported world version */
-	public static short CURRENT_VERSION = 4;
+	public static short CURRENT_VERSION = 5;
 
 	/**
 	 * Returns all worlds in the "worlds/" directory
@@ -61,6 +61,9 @@ public class WorldProvider {
 			if (stream.readBoolean()) {
 				flags |= World.CRIMSON;
 			}
+
+			LastTry.environment.time.setHour(stream.readByte());
+			LastTry.environment.time.setMinute(stream.readByte());
 
 			short width = stream.readInt16();
 			short height = stream.readInt16();
@@ -121,6 +124,9 @@ public class WorldProvider {
 			stream.writeBoolean(world.isHardmode());
 			stream.writeBoolean(world.isExpertMode());
 			stream.writeBoolean(world.evilIsCrimson());
+
+			stream.writeByte(LastTry.environment.time.getHour());
+			stream.writeByte(LastTry.environment.time.getMinute());
 
 			short width = world.getWidth();
 			short height = world.getHeight();
