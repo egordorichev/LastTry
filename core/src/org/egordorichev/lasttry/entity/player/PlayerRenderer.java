@@ -17,15 +17,18 @@ public class PlayerRenderer {
 	public static Texture generateTexture(PlayerRenderInfo info) {
 		Pixmap pixmap = new Pixmap(TEXTURE_WIDTH, TEXTURE_HEIGHT, Pixmap.Format.RGBA8888);
 
-		pixmap.setColor(info.skinColor);
+		playerBody.setColor(info.skinColor);
+		playerHands.setColor(info.skinColor);
+		playerFeet.setColor(info.skinColor);
+		playerHead.setColor(info.skinColor);
 		pixmap.drawPixmap(playerBody, 0, 0);
 		pixmap.drawPixmap(playerHands, 0, 0);
 		pixmap.drawPixmap(playerFeet, 0, 0);
 		pixmap.drawPixmap(playerHead, 0, 0);
-		pixmap.setColor(info.eyesColor);
+		playerEyes.setColor(info.eyesColor);
 		pixmap.drawPixmap(playerEyes, 0, 0);
-		pixmap.setColor(info.hairColor);
 		Pixmap hair = new Pixmap(Gdx.files.internal("PlayerHair" + info.hairStyle + ".png"));
+		hair.setColor(info.hairColor);
 
 		pixmap.drawPixmap(hair, 0, 0);
 		pixmap.drawPixmap(hair, 0, 748);

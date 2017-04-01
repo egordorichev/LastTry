@@ -39,6 +39,7 @@ public class DroppedItem extends PhysicBody {
 			} else {
 				LastTry.player.inventory.add(this.holder);
 			}
+			
 			LastTry.entityManager.markForRemoval(this);
 		}
 	}

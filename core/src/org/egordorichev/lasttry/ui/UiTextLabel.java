@@ -42,7 +42,7 @@ public class UiTextLabel extends UiComponent {
 	}
 
 	/** Sets font and calculates new size */
-	private void setFont(BitmapFont font) {
+	protected void setFont(BitmapFont font) {
 		this.font = font;
 		this.setLabel(this.label);
 	}

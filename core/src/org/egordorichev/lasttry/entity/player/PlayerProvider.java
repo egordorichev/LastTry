@@ -74,7 +74,7 @@ public class PlayerProvider {
 	}
 
 	public static Player load(String playerName) {
-		return new Player(playerName); // TODO
+		return new Player(new PlayerInfo(playerName, 100, 20, PlayerType.SOFTCORE, CURRENT_VERSION)); // TODO
 	}
 
 	public static PlayerInfo create(String name, PlayerType type) {
