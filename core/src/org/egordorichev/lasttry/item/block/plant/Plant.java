@@ -23,9 +23,4 @@ public class Plant extends Block {
 		LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
 			tx * Block.TEX_SIZE, 0, Block.TEX_SIZE, Block.TEX_SIZE);
 	}
-
-	@Override
-	public void updateBlock(int x, int y) {
-		// TODO: grow the plant
-	}
 }
