@@ -55,6 +55,8 @@ public class Textures {
 	public static Texture corruptionBack;
 	public static Texture crimsonBack;
 	public static Texture trash;
+	public static Texture ice;
+	public static Texture iceIcon;
 
 	// Buffs
 	public static Texture ammoReservationBuff;
@@ -105,4 +107,11 @@ public class Textures {
 	public static Texture light;
 	public static Texture shadow;
 	public static Texture sky;
+
+	// UI icons
+
+	public static Texture corruptionWorld;
+	public static Texture crimsonWorld;
+	public static Texture corruptionHardmodeWorld;
+	public static Texture crimsonHardmodeWorld;
 }

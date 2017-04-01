@@ -79,6 +79,8 @@ public class Assets {
 				Textures.corruptionBack = load("CorruptionBack.png");
 				Textures.crimsonBack = load("CrimsonBack.png");
 				Textures.trash = load("Trash.png");
+				Textures.ice = load("PurpleIceTile.png"); // FIXME: replace with ice texture
+				Textures.iceIcon = load("PurpleIceIcon.png"); // FIXME: replace with ice texture
 				Textures.ammoReservationBuff = load("AmmoReservationBuff.png");
 				Textures.archeryBuff = load("ArcheryBuff.png");
 				Textures.battleBuff = load("BattleBuff.png");
@@ -127,6 +129,11 @@ public class Assets {
 				Textures.light = load("Light.png");
 				Textures.shadow = load("Shadow.png");
 				Textures.sky = load("Sky.png");
+
+				Textures.corruptionWorld = load("IconCorruption.png");
+				Textures.crimsonWorld = load("IconCrimson.png");
+				Textures.corruptionHardmodeWorld = load("IconHallowCorruption.png");
+				Textures.crimsonHardmodeWorld = load("IconHallowCrimson.png");
 
 				loaded = true;
 			}

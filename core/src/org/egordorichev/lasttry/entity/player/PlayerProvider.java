@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.player;
 
+import com.badlogic.gdx.graphics.Color;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
@@ -70,15 +71,18 @@ public class PlayerProvider {
 			return null;
 		}
 
-		return new PlayerInfo(playerName, maxHp, maxMana, type, version);
+		return new PlayerInfo(playerName, maxHp, maxMana, type, version, new PlayerRenderInfo(1, Color.GREEN, Color
+			.GRAY, Color.CORAL, 1, true)); // TODO: render info
 	}
 
 	public static Player load(String playerName) {
-		return new Player(new PlayerInfo(playerName, 100, 20, PlayerType.SOFTCORE, CURRENT_VERSION)); // TODO
+		return new Player(new PlayerInfo(playerName, 100, 20, PlayerType.SOFTCORE, CURRENT_VERSION, null)); // TODO
 	}
 
 	public static PlayerInfo create(String name, PlayerType type) {
-		PlayerInfo player = new PlayerInfo(name, 100, 20, type, CURRENT_VERSION);
+		PlayerInfo player = new PlayerInfo(name, 100, 20, type, CURRENT_VERSION, new PlayerRenderInfo(1, Color.GREEN,
+				Color.GRAY, Color.CORAL, 1, true));
+
 		save(player);
 
 		return player;

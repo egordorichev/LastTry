@@ -7,10 +7,9 @@ import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.entity.player.PlayerType;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.ui.UiPanel;
-import org.egordorichev.lasttry.ui.UiTextButton;
-import org.egordorichev.lasttry.ui.UiTextInput;
-import org.egordorichev.lasttry.ui.UiTextLabel;
+import org.egordorichev.lasttry.ui.*;
+import org.egordorichev.lasttry.world.WorldInfo;
+import org.egordorichev.lasttry.world.WorldProvider;
 
 public class MenuState implements State {
 	/** Panel, where the main menu is stored */
@@ -27,6 +26,12 @@ public class MenuState implements State {
 
 	/** Player type */ // TODO: input it
 	private PlayerType playerType = PlayerType.SOFTCORE;
+
+	/** Panel, used for world selection */
+	private UiPanel worldSelect;
+
+	/** Panel, used for generating new world */
+	private UiPanel worldNew;
 
 	public MenuState() {
 		this.mainMenu = new UiPanel() {
@@ -64,20 +69,33 @@ public class MenuState implements State {
 		};
 
 		this.playerSelect = new UiPanel() {
+			private UiCardHolder playerCards;
+			private PlayerInfo[] playerInfos;
+			private PlayerInfo selectedPlayer;
+
 			@Override
 			public void onShow() {
 				clear();
 
-				PlayerInfo[] players = PlayerProvider.getPlayers();
+				playerInfos = PlayerProvider.getPlayers();
 
-				for (int i = 0; i < players.length; i++) {
-					add(new UiTextButton(new Rectangle(0, -48 + i * 48, 0, 0), Origin.CENTER, players[i].name) {
-						@Override
-						public void onClick() {
-							// TODO
+				playerCards = new UiCardHolder(new Rectangle(0, -250, 256, 0), Origin.CENTER) {
+					@Override
+					public void addComponents() {
+						for (int i = 0; i < playerInfos.length; i++) {
+							final int current = i;
+
+							add(new UiPlayerCard(new Rectangle(0, 0, 0, 0), Origin.TOP_LEFT,
+									playerInfos[i]) {
+
+								@Override
+								public void onClick() {
+									selectPlayer(current);
+								}
+							});
 						}
-					});
-				}
+					}
+				};
 
 				add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, "New") {
 					@Override
@@ -94,10 +112,84 @@ public class MenuState implements State {
 						mainMenu.show();
 					}
 				});
+
+				add(playerCards);
+			}
+
+			private void selectPlayer(int player) {
+				selectedPlayer = playerInfos[player];
+				playerSelect.hide();
+				worldSelect.show();
 			}
 		};
 
 		this.playerSelect.hide();
+
+		this.worldSelect = new UiPanel() { // TODO
+			private UiCardHolder worldCards;
+			private WorldInfo[] worldInfos;
+			private WorldInfo selectedWorld;
+
+			@Override
+			public void addComponents() {
+				clear();
+
+				worldInfos = WorldProvider.getWorlds();
+
+				worldCards = new UiCardHolder(new Rectangle(0, -250, 256, 0), Origin.CENTER) {
+					@Override
+					public void addComponents() {
+						for (int i = 0; i < worldInfos.length; i++) {
+							final int current = i;
+
+							add(new UiWorldCard(new Rectangle(0, 0, 0, 0), Origin.TOP_LEFT,
+									worldInfos[i]) {
+
+								@Override
+								public void onClick() {
+									selectWorld(current);
+								}
+							});
+						}
+					}
+				};
+
+				add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, "New") {
+					@Override
+					public void onClick() {
+						worldSelect.hide();
+						worldNew.show();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(32, 144, 100, 32), Origin.CENTER, "Back") {
+					@Override
+					public void onClick() {
+						worldSelect.hide();
+						playerSelect.show();
+					}
+				});
+
+				add(worldCards);
+			}
+
+			private void selectWorld(int world) {
+				this.selectedWorld = this.worldInfos[world];
+				worldSelect.hide();
+				LastTry.instance.setScreen(new GamePlayState()); // TODO: pass the player and the world
+			}
+		};
+
+		this.worldSelect.hide();
+
+		this.worldNew = new UiPanel() {
+			@Override
+			public void addComponents() {
+
+			}
+		};
+
+		this.worldNew.hide();
 
 		this.playerNew = new UiPanel() {
 			@Override
@@ -200,6 +292,8 @@ public class MenuState implements State {
 		LastTry.ui.add(this.playerSelect);
 		LastTry.ui.add(this.playerNew);
 		LastTry.ui.add(this.playerName);
+		LastTry.ui.add(this.worldSelect);
+		LastTry.ui.add(this.worldNew);
 	}
 
 	/** Never used */

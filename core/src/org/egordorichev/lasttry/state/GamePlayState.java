@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.Input;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buff;
@@ -39,9 +40,11 @@ public class GamePlayState implements State {
 
 		LastTry.environment = new Environment();
 		LastTry.entityManager = new EntityManager();
-		LastTry.player = new Player(new PlayerInfo("George", 100, 20, PlayerType.SOFTCORE, PlayerProvider.CURRENT_VERSION));
-		LastTry.player.spawn(spawnX, spawnY);
 
+		LastTry.player = new Player(new PlayerInfo("George", 100, 20, PlayerType.SOFTCORE, PlayerProvider
+			.CURRENT_VERSION, new PlayerRenderInfo(1, Color.GREEN, Color.GRAY, Color.CORAL, 1, true)));
+
+		LastTry.player.spawn(spawnX, spawnY);
 		LastTry.ui.add(LastTry.player.inventory);
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, MeleeModifier.legendary));

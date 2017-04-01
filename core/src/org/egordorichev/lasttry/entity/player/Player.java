@@ -31,7 +31,6 @@ public class Player extends Entity {
 		super(info.maxHp, 0, 0);
 		
 		this.info = info;
-		this.renderInfo = new PlayerRenderInfo();
 		this.animations = new Animation[State.values().length];
 		this.setupTexture();
 
@@ -42,11 +41,7 @@ public class Player extends Entity {
 	
 	/** Creates/updates player texture and animations */
 	private void setupTexture() {
-		this.renderInfo = new PlayerRenderInfo();
-		this.renderInfo.hairStyle = 3;
-		this.renderInfo.hairColor = Color.GREEN;
-		this.renderInfo.eyesColor = Color.BLUE;
-		this.renderInfo.skinColor = Color.WHITE;
+		this.renderInfo = this.info.renderInfo;
 		this.texture = PlayerRenderer.generateTexture(this.renderInfo);
 		
 		Animation idleAnimation = new Animation(false);

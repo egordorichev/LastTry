@@ -16,11 +16,17 @@ public class PlayerInfo {
 	/** Player info file version */
 	public int version;
 
-	public PlayerInfo(String name, int maxHp, int maxMana, PlayerType type, int version) {
+	/** Player render info (textures and colors) */
+	public PlayerRenderInfo renderInfo;
+
+	public PlayerInfo(String name, int maxHp, int maxMana, PlayerType type, int version,
+			PlayerRenderInfo info) {
+
 		this.name = name;
 		this.maxHp = maxHp;
 		this.maxMana = maxMana;
 		this.type = type;
 		this.version = version;
+		this.renderInfo = info;
 	}
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
@@ -58,12 +59,16 @@ public class LastTry extends Game {
 	/** Debug helper */
 	public static Debug debug;
 
+	/** Used for debug */
+	public static ShapeRenderer shapeRenderer;
+
 	/** Creates first-priority instances */
 	@Override
 	public void create() {
 		instance = this;
 		log = new Log();
 		debug = new Debug();
+		shapeRenderer = new ShapeRenderer();
 
 		Gdx.input.setInputProcessor(Util.multiplexer);
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
