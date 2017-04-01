@@ -59,7 +59,7 @@ public class World {
 		int twh = windowHeight / Block.TEX_SIZE;
 		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
 		int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-			/ Block.TEX_SIZE);
+				/ Block.TEX_SIZE);
 
 		int minY = Math.max(0, tcy - 2);
 		int maxY = Math.min(this.height - 1, tcy + twh + 3);
@@ -123,7 +123,7 @@ public class World {
 
 	/**
 	 * Sets the block in the world at the given position based on the given ID.
-	 * 
+	 *
 	 * @param id
 	 *            Block ID
 	 * @param x
@@ -137,7 +137,7 @@ public class World {
 
 	/**
 	 * Sets the wall in the world at the given position based on the given ID.
-	 * 
+	 *
 	 * @param id
 	 *            Wall ID
 	 * @param x
@@ -151,7 +151,7 @@ public class World {
 
 	/**
 	 * Returns the ID of the block at the given position.
-	 * 
+	 *
 	 * @param x
 	 *            World x-position.
 	 * @param y
@@ -164,7 +164,7 @@ public class World {
 
 	/**
 	 * Returns hit-points of the block at the given position.
-	 * 
+	 *
 	 * @param x
 	 *            World x-position.
 	 * @param y
@@ -177,7 +177,7 @@ public class World {
 
 	/**
 	 * Returns the ID of the wall at given position
-	 * 
+	 *
 	 * @param x
 	 *            World x-position.
 	 * @param y
@@ -190,7 +190,7 @@ public class World {
 
 	/**
 	 * Returns the hit-points of the wall at given position.
-	 * 
+	 *
 	 * @param x
 	 *            World x-position.
 	 * @param y
@@ -203,7 +203,7 @@ public class World {
 
 	/**
 	 * Returns true if the world's evil type is corruption.
-	 * 
+	 *
 	 * @return true if world's evil type is corruption.
 	 */
 	public boolean evilIsCorruption() {
@@ -212,7 +212,7 @@ public class World {
 
 	/**
 	 * Returns true if the world's evil type is crimson.
-	 * 
+	 *
 	 * @return true, if world's evil type is crimson.
 	 */
 	public boolean evilIsCrimson() {
@@ -221,7 +221,7 @@ public class World {
 
 	/**
 	 * Returns true if the world is in expert mode.
-	 * 
+	 *
 	 * @return true if the world is in expert mode.
 	 */
 	public boolean isExpertMode() {
@@ -230,7 +230,7 @@ public class World {
 
 	/**
 	 * Returns true if the world is in hardmode.
-	 * 
+	 *
 	 * @return true, if the world is in hardmode.
 	 */
 	public boolean isHardmode() {
@@ -239,7 +239,7 @@ public class World {
 
 	/**
 	 * Returns the world's width.
-	 * 
+	 *
 	 * @return World width in blocks
 	 */
 	public short getWidth() {
@@ -284,7 +284,7 @@ public class World {
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
