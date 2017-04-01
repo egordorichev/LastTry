@@ -187,6 +187,9 @@ public class WorldProvider {
 				flags |= World.CRIMSON;
 			}
 
+			LastTry.environment.time.setHour(stream.readByte());
+			LastTry.environment.time.setMinute(stream.readByte());
+
 			short width = stream.readInt16();
 			short height = stream.readInt16();
 
