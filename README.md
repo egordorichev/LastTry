@@ -19,6 +19,11 @@ Compile project:
 ./gradlew clean build
 ```
 
+### Running
+
+You should end up with a jar. Place it in the `core/assets/` directory and run.
+Or you can run it from current directory with `-Duser.dir=core/assets/'` argument.
+
 ### Contributing
 
 If you want to help the project grow, here is some stuff you can do:
