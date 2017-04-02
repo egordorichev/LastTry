@@ -34,5 +34,6 @@ public class PlayerInfo {
 		this.maxHp = 100;
 		this.maxMana = 20;
 		this.version = PlayerProvider.CURRENT_VERSION;
+		this.type = PlayerType.SOFTCORE;
 	}
 }

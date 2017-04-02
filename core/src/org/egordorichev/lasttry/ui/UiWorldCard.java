@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldInfo;
@@ -26,6 +27,8 @@ public class UiWorldCard extends UiCard {
 			return;
 		}
 
+		clear();
+
 		int x = this.getX();
 		int y = this.getClickY();
 
@@ -47,7 +50,7 @@ public class UiWorldCard extends UiCard {
 		}
 
 		add(new UiImage(new Rectangle(x, y, 60, 58), texture));
-		add(new UiTextButton(new Rectangle(x + 64, y, 0, 0), this.info.name));
-		add(new UiTextLabel(new Rectangle(x + 64, y + 32, 0, 0), this.info.size.name()));
+		add(new UiTextButton(new Rectangle(x + 64, y - 20, 0, 0), this.info.name));
+		add(new UiTextLabel(new Rectangle(x + 64, y, 0, 0), this.info.size.toString()));
 	}
 }

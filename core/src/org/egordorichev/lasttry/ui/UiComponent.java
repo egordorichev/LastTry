@@ -103,8 +103,8 @@ public class UiComponent {
 
 	public int getClickY() {
 		switch(this.origin) {
-			case TOP_LEFT: case TOP_RIGHT: default: return (int) this.rect.getY();
-			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) (Gdx.graphics.getWidth() - this.getHeight() - this.rect.getY());
+			case TOP_LEFT: case TOP_RIGHT: default: return (int) this.rect.getY() + this.getHeight();
+			case BOTTOM_LEFT: case BOTTOM_RIGHT: return (int) (Gdx.graphics.getHeight() - this.getHeight() - this.rect.getY());
 			case CENTER: return (int) (this.rect.getY() + (Gdx.graphics.getHeight() - this.getHeight()) / 2);
 		}
 	}

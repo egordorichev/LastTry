@@ -28,12 +28,7 @@ public class UiPlayerCard extends UiCard {
 		add(new UiTextureRegion(new Rectangle(x, y + 24, 32, 48),
 			new TextureRegion(PlayerRenderer.generateTexture(this.info.renderInfo), 4, 8, 32, 48))); // Player icon
 
-		add(new UiTextButton(new Rectangle(x + 64, y, 0, 0), this.info.name) {
-			@Override
-			public void onClick() {
-				LastTry.log("todo");
-			}
-		}); // Player name
+		add(new UiTextButton(new Rectangle(x + 64, y, 0, 0), this.info.name)); // Player name
 
 		add(new UiTextLabel(new Rectangle(x + 64, y + 32, 0, 0), "Max HP " + this.info.maxHp
 			+ " Max Mana " + this.info.maxMana)); // Stats

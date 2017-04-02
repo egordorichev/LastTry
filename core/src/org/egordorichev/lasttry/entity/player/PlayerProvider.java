@@ -87,10 +87,6 @@ public class PlayerProvider {
 		return LastTry.playerInfo;
 	}
 
-	public static void save(Player player) {
-		// TODO: save(player.getInfo());
-	}
-
 	public static void save() {
 		try {
 			FileWriter stream = new FileWriter(getPath(LastTry.playerInfo.name));
