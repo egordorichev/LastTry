@@ -78,6 +78,11 @@ public class Textures {
 	public static Texture waterLeafSeeds;
 	public static Texture fireBlossomSeeds;
 	public static Texture silverThornSeeds;
+	public static Texture mud;
+	public static Texture mudIcon;
+	public static Texture jungleGrass;
+	public static Texture jungleGrassIcon;
+	public static Texture jungleGrassSeeds;
 
 	// Buffs
 	public static Texture ammoReservationBuff;

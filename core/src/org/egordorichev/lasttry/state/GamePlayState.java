@@ -15,25 +15,13 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.modifier.MeleeModifier;
 import org.egordorichev.lasttry.mod.ModLoader;
-import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.Environment;
-import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldProvider;
 
 public class GamePlayState implements State {
-	/** World name */
-	private String worldName = "test";
-
 	public GamePlayState() {
-		int worldWidth = 500;
-		int worldHeight = 500;
-
-		if (Util.fileExists(WorldProvider.getFilePath(this.worldName))) {
-			LastTry.world = WorldProvider.load(this.worldName);
-		} else {
-			LastTry.world = WorldProvider.generate(this.worldName, (short) worldWidth, (short) worldHeight,
-				World.CRIMSON | World.EXPERT);
-		}
+		LastTry.environment = new Environment();
+		LastTry.world = WorldProvider.load();
 
 		int spawnX = LastTry.world.getWidth() / 2;
 		int spawnY = 50;
@@ -48,18 +36,18 @@ public class GamePlayState implements State {
 
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, MeleeModifier.legendary));
 		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, MeleeModifier.light));
-		LastTry.player.inventory.add(new ItemHolder(Item.crimsandBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 100));
-		LastTry.player.inventory.add(new ItemHolder(Item.redIceBlock, 100));
-		LastTry.player.inventory.add(new ItemHolder(Item.viciousMushroom, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.stoneBlock, 999));
-		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 990));
-		LastTry.player.inventory.add(new ItemHolder(Item.ebonsandBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.ebonstoneBlock, 200));
-		LastTry.player.inventory.add(new ItemHolder(Item.purpleIceBlock, 100));
 		LastTry.player.inventory.add(new ItemHolder(Item.dayBloom, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.dayBloomSeeds, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.blinkRoot, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.blinkRootSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.dirtBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.mudBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.jungleGrassBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.moonGlowSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.jungleGrassSeeds, 10));
 
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);

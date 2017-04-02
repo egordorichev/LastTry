@@ -79,29 +79,28 @@ public class PlayerProvider {
 		return new Player(new PlayerInfo(playerName, 100, 20, PlayerType.SOFTCORE, CURRENT_VERSION, null)); // TODO
 	}
 
-	public static PlayerInfo create(String name, PlayerType type) {
-		PlayerInfo player = new PlayerInfo(name, 100, 20, type, CURRENT_VERSION, new PlayerRenderInfo(1, Color.GREEN,
-				Color.GRAY, Color.CORAL, 1, true));
+	public static PlayerInfo create(PlayerInfo info) {
+		LastTry.playerInfo = info;
 
-		save(player);
+		save();
 
-		return player;
+		return LastTry.playerInfo;
 	}
 
 	public static void save(Player player) {
 		// TODO: save(player.getInfo());
 	}
 
-	public static void save(PlayerInfo player) {
+	public static void save() {
 		try {
-			FileWriter stream = new FileWriter(getPath(player.name));
+			FileWriter stream = new FileWriter(getPath(LastTry.playerInfo.name));
 
 			stream.writeInt32(CURRENT_VERSION);
 
-			stream.writeInt16((short)player.maxHp);
-			stream.writeInt16((short) player.maxMana);
+			stream.writeInt16((short) LastTry.playerInfo.maxHp);
+			stream.writeInt16((short) LastTry.playerInfo.maxMana);
 
-			switch (player.type) {
+			switch (LastTry.playerInfo.type) {
 				case SOFTCORE: default:
 					stream.writeByte((byte) 0);
 				break;

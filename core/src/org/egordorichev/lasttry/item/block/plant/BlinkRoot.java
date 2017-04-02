@@ -15,7 +15,7 @@ public class BlinkRoot extends Plant {
 
 		if (hp >= Plant.GROW_THRESHOLD + 1 && LastTry.random.nextInt(3) == 0) {
 			LastTry.world.setBlockHP(Plant.GROW_THRESHOLD, x, y);
-		} else if (hp == Plant.GROW_THRESHOLD && LastTry.random.nextInt(3) == 0) {
+		} else if (hp == Plant.GROW_THRESHOLD || hp == Plant.GROW_THRESHOLD + 1) {
 			LastTry.world.setBlockHP(Plant.GROW_THRESHOLD, x, y);
 		} else if (hp < Plant.GROW_THRESHOLD) {
 			LastTry.world.setBlockHP((byte) (hp + 1), x, y);

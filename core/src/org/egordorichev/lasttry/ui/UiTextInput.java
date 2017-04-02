@@ -71,5 +71,10 @@ public class UiTextInput extends UiTextLabel {
 		return this.text;
 	}
 
+	public void clear() {
+		this.text = "";
+		this.setLabel(this.text + "|");
+	}
+
 	// TODO: focus
 }

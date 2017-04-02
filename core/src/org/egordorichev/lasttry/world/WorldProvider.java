@@ -41,8 +41,8 @@ public class WorldProvider {
 	 */
 	public static WorldInfo getWorldInfo(String fileName) {
 		String worldName = fileName.replace("worlds/", "").replace(".wld", "");
-		WorldSize size = WorldSize.SMALL;
-		int version = -1;
+		WorldSize size;
+		int version;
 		int flags = 0;
 
 		try {
@@ -62,8 +62,8 @@ public class WorldProvider {
 				flags |= World.CRIMSON;
 			}
 
-			LastTry.environment.time.setHour(stream.readByte());
-			LastTry.environment.time.setMinute(stream.readByte());
+			stream.readByte();
+			stream.readByte();
 
 			short width = stream.readInt16();
 			short height = stream.readInt16();
@@ -91,19 +91,39 @@ public class WorldProvider {
 
 	/**
 	 * Generates new world with the given name, width, and height.
-	 * @param name name of the world.
-	 * @param width width of the world.
-	 * @param height height of the workd.
-	 * @param flags world flags
 	 * @return new world.
 	 */
-	public static World generate(String name, short width, short height, int flags) {
+	public static World generate(WorldInfo info) {
 		LastTry.log.info("Generating world...");
 
 		Biome.preload();
 
+		short width;
+		short height;
+
+		switch (info.size) {
+			case DEV:
+				width = height = 500;
+			break;
+			case SMALL: default:
+				width = 4200;
+				height = 1200;
+			break;
+			case LARGE:
+				width = 8400;
+				height = 2400;
+			break;
+			case MEDIUM:
+				width = 6400;
+				height = 1800;
+			break;
+		}
+
 		WorldGenerator generator = new WorldGenerator();
-		World world = new World(width, height, flags, generator.generate(width, height));
+		World world = new World(width, height, info.flags, generator.generate(width, height));
+
+		LastTry.worldInfo = info;
+		LastTry.world = world;
 
 		LastTry.log("Finished generating!");
 
@@ -114,11 +134,12 @@ public class WorldProvider {
 	 * Saves the given world.
 	 * @param world world to save.
 	 */
-	public static void save(String name, World world) {
+	public static void save(World world) {
 		LastTry.log("Saving world...");
 
 		try {
-			FileWriter stream = new FileWriter(getFilePath(name));
+			LastTry.log(LastTry.worldInfo.name);
+			FileWriter stream = new FileWriter(getFilePath(LastTry.worldInfo.name));
 
 			stream.writeInt32(CURRENT_VERSION);
 			stream.writeBoolean(world.isHardmode());
@@ -149,7 +170,6 @@ public class WorldProvider {
 			LastTry.log("Done saving!");
 		} catch (IOException exception) {
 			LastTry.handleException(exception);
-			System.exit(0);
 		}
 	}
 
@@ -157,14 +177,13 @@ public class WorldProvider {
 	 * Load a world by the given name. Returns null if the world cannot be
 	 * found.
 	 * 
-	 * @param worldName
 	 *            World to load.
 	 * @return World by name.
 	 */
-	public static World load(String worldName) {
+	public static World load() {
 		LastTry.log("Loading world...");
 
-		try (FileReader stream = new FileReader(getFilePath(worldName))){
+		try (FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name))){
 			int version = stream.readInt32();
 
 			if (version > CURRENT_VERSION) {

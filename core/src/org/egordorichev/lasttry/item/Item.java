@@ -6,6 +6,8 @@ import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.block.*;
 import org.egordorichev.lasttry.item.block.plant.*;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.item.items.seeds.GrassSeeds;
+import org.egordorichev.lasttry.item.items.seeds.Seeds;
 
 public class Item {
 	/**
@@ -14,7 +16,7 @@ public class Item {
 	public static Item[] ITEM_CACHE = new Item[ItemID.count];
 	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Textures.dirtWallIcon, Textures.dirtWall);
 	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", Textures.dirtIcon, Textures.dirt);
-	public static Item grassBlock = new BlockGround(ItemID.grassBlock, "Grass block", Textures.grassIcon, Textures.grass);
+	public static Item grassBlock = new Grass(ItemID.grassBlock, "Grass block", Textures.grassIcon, Textures.grass);
 	public static Item copperCoin = new Coin(ItemID.copperCoin, "Copper coin", Textures.copperCoin);
 	public static Item silverCoin = new Coin(ItemID.silverCoin, "Silver coin", Textures.silverCoin);
 	public static Item goldCoin = new Coin(ItemID.goldCoin, "Gold coin", Textures.goldCoin);
@@ -38,27 +40,28 @@ public class Item {
 	public static Item iceBlock = new SlippyBlock(ItemID.iceBlock, "Ice block", Textures.iceIcon, Textures.ice);
 	public static Item dayBloom = new DayBloom();
 	public static Item blinkRoot = new BlinkRoot();
-
-
-	public static Item dayBloomSeeds = new Seed(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds,
+	public static Item moonGlow = new MoonGlow();
+	public static Item dayBloomSeeds = new Seeds(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds,
 		(Plant) Item.dayBloom);
+	public static Item blinkRootSeeds = new Seeds(ItemID.blinkRootSeeds, "Blink Root Seeds", Textures.blinkRootSeeds,
+			(Plant) Item.blinkRoot);
+	public static Item moonGlowSeeds = new Seeds(ItemID.moonGlowSeeds, "Moon Glow Seeds", Textures.moonGlowSeeds,
+			(Plant) Item.moonGlow);
+	public static Item mudBlock = new BlockGround(ItemID.mudBlock, "Mud block", Textures.mudIcon, Textures.mud);
+	public static Item jungleGrassBlock = new JungleGrass();
+	public static Item jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds",
+		Textures.jungleGrassSeeds, (Grass) Item.jungleGrassBlock);
 
-	/**
-	 * Item identifier.
-	 */
+	/** Item identifier */
 	protected short id;
-	/**
-	 * Item name.
-	 */
+
+	/** Item name */
 	protected String name;
-	/**
-	 * Item texture.
-	 */
+
+	/** Item texture */
 	protected Texture texture;
 
-	/**
-	 * Item rarity
-	 */
+	/** Item rarity */
 	protected Rarity rarity;
 
 	public Item(short id, String name, Rarity rarity, Texture texture) {

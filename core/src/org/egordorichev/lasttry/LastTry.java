@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
+import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
@@ -44,8 +45,14 @@ public class LastTry extends Game {
 	/** World instance */
 	public static World world;
 
+	/** World info */
+	public static WorldInfo worldInfo;
+
 	/** Player instance */
 	public static Player player;
+
+	/** Player info */
+	public static PlayerInfo playerInfo;
 
 	/** Environment instance */
 	public static Environment environment;
@@ -119,7 +126,7 @@ public class LastTry extends Game {
 	@Override
 	public void dispose() {
 		if (world != null) {
-			WorldProvider.save("test", world);
+			WorldProvider.save(world);
 		}
 	}
 

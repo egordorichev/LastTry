@@ -8,8 +8,7 @@ import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.entity.player.PlayerType;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.ui.*;
-import org.egordorichev.lasttry.world.WorldInfo;
-import org.egordorichev.lasttry.world.WorldProvider;
+import org.egordorichev.lasttry.world.*;
 
 public class MenuState implements State {
 	/** Panel, where the main menu is stored */
@@ -24,14 +23,23 @@ public class MenuState implements State {
 	/** Panel, for selecting player's name */
 	private UiPanel playerName;
 
-	/** Player type */ // TODO: input it
-	private PlayerType playerType = PlayerType.SOFTCORE;
+	/** Player info */
+	private PlayerInfo playerInfo;
 
 	/** Panel, used for world selection */
 	private UiPanel worldSelect;
 
 	/** Panel, used for generating new world */
 	private UiPanel worldNew;
+
+	/** Panel, used for selecting world evil */
+	private UiPanel worldEvil;
+
+	/** Panel, used for world naming */
+	private UiPanel worldName;
+
+	/** World info */
+	private WorldInfo worldInfo;
 
 	public MenuState() {
 		this.mainMenu = new UiPanel() {
@@ -71,7 +79,6 @@ public class MenuState implements State {
 		this.playerSelect = new UiPanel() {
 			private UiCardHolder playerCards;
 			private PlayerInfo[] playerInfos;
-			private PlayerInfo selectedPlayer;
 
 			@Override
 			public void onShow() {
@@ -117,7 +124,7 @@ public class MenuState implements State {
 			}
 
 			private void selectPlayer(int player) {
-				selectedPlayer = playerInfos[player];
+				LastTry.playerInfo = playerInfos[player];
 				playerSelect.hide();
 				worldSelect.show();
 			}
@@ -128,10 +135,9 @@ public class MenuState implements State {
 		this.worldSelect = new UiPanel() { // TODO
 			private UiCardHolder worldCards;
 			private WorldInfo[] worldInfos;
-			private WorldInfo selectedWorld;
 
 			@Override
-			public void addComponents() {
+			public void onShow() {
 				clear();
 
 				worldInfos = WorldProvider.getWorlds();
@@ -174,7 +180,7 @@ public class MenuState implements State {
 			}
 
 			private void selectWorld(int world) {
-				this.selectedWorld = this.worldInfos[world];
+				LastTry.worldInfo = this.worldInfos[world];
 				worldSelect.hide();
 				LastTry.instance.setScreen(new GamePlayState()); // TODO: pass the player and the world
 			}
@@ -184,17 +190,155 @@ public class MenuState implements State {
 
 		this.worldNew = new UiPanel() {
 			@Override
-			public void onShow() {
-				LastTry.instance.setScreen(new GamePlayState());
+			public void addComponents() {
+				worldInfo = new WorldInfo();
 
+				add(new UiTextLabel(new Rectangle(0, -100, 0, 0), Origin.CENTER, "Select world size:"));
+
+				add(new UiTextButton(new Rectangle(0, 0, 0, 0), Origin.CENTER, "Small") {
+					@Override
+					public void onClick() {
+						worldInfo.size = WorldSize.SMALL;
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 50, 0, 0), Origin.CENTER, "Medium") {
+					@Override
+					public void onClick() {
+						worldInfo.size = WorldSize.MEDIUM;
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 100, 0, 0), Origin.CENTER, "Large") {
+					@Override
+					public void onClick() {
+						worldInfo.size = WorldSize.LARGE;
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, "Back") {
+					@Override
+					public void onClick() {
+						worldNew.hide();
+						worldSelect.show();
+					}
+				});
+			}
+
+			private void next() {
+				worldNew.hide();
+				worldEvil.show();
 			}
 		};
 
 		this.worldNew.hide();
 
+		this.worldEvil = new UiPanel() {
+			@Override
+			public void addComponents() {
+				add(new UiTextLabel(new Rectangle(0, -100, 0, 0), Origin.CENTER, "Select world evil:"));
+
+				add(new UiTextButton(new Rectangle(0, 0, 0, 0), Origin.CENTER, "Corruption") {
+					@Override
+					public void onClick() {
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 50, 0, 0), Origin.CENTER, "Crimson") {
+					@Override
+					public void onClick() {
+						worldInfo.flags |= World.CRIMSON;
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 100, 0, 0), Origin.CENTER, "Random") {
+					@Override
+					public void onClick() {
+						if (LastTry.random.nextBoolean()) {
+							worldInfo.flags |= World.CRIMSON;
+						}
+
+						next();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, "Back") {
+					@Override
+					public void onClick() {
+						worldEvil.hide();
+						worldNew.show();
+					}
+				});
+			}
+
+			private void next() {
+				worldEvil.hide();
+				worldName.show();
+			}
+		};
+
+		this.worldEvil.hide();
+
+		this.worldName = new UiPanel() {
+			private UiTextInput nameInput;
+
+			@Override
+			public void show() {
+				super.show();
+				this.nameInput.clear();
+			}
+
+			@Override
+			public void addComponents() {
+
+				add(new UiTextLabel(new Rectangle(0, -64, 100, 32), Origin.CENTER, "Enter world name:") {
+					@Override
+					public void onClick() {
+						worldName.hide();
+						worldSelect.show();
+					}
+				});
+
+				this.nameInput = new UiTextInput(new Rectangle(0, 0, 100, 32), Origin.CENTER);
+
+				add(nameInput);
+
+				add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, "Back") {
+					@Override
+					public void onClick() {
+						worldName.hide();
+						worldNew.show();
+					}
+				});
+
+				add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, "Create") {
+					@Override
+					public void onClick() {
+						worldInfo.name = nameInput.getText();
+
+						WorldProvider.generate(worldInfo);
+						LastTry.environment = new Environment();
+						WorldProvider.save(LastTry.world);
+
+						worldName.hide();
+						worldSelect.show();
+					}
+				});
+			}
+		};
+
+		this.worldName.hide();
+
 		this.playerNew = new UiPanel() {
 			@Override
 			public void addComponents() {
+				playerInfo = new PlayerInfo();
+
 				add(new UiTextButton(new Rectangle(0, -64, 100, 32), Origin.CENTER, "Hair") {
 					@Override
 					public void onClick() {
@@ -254,6 +398,12 @@ public class MenuState implements State {
 			private UiTextInput nameInput;
 
 			@Override
+			public void show() {
+				super.show();
+				this.nameInput.clear();
+			}
+
+			@Override
 			public void addComponents() {
 				add(new UiTextLabel(new Rectangle(0, -64, 100, 32), Origin.CENTER, "Enter new player name:") {
 					@Override
@@ -278,7 +428,9 @@ public class MenuState implements State {
 				add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, "Create") {
 					@Override
 					public void onClick() {
-						PlayerProvider.create(nameInput.getText(), playerType);
+						playerInfo.name = nameInput.getText();
+
+						PlayerProvider.create(playerInfo);
 
 						playerName.hide();
 						playerSelect.show();
@@ -295,6 +447,8 @@ public class MenuState implements State {
 		LastTry.ui.add(this.playerName);
 		LastTry.ui.add(this.worldSelect);
 		LastTry.ui.add(this.worldNew);
+		LastTry.ui.add(this.worldEvil);
+		LastTry.ui.add(this.worldName);
 	}
 
 	/** Never used */

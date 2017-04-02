@@ -96,12 +96,16 @@ public class Assets {
 				Textures.silverThorn = load("SilverThorn.png");
 				Textures.silverThornIcon = load("SilverThornIcon.png");
 				Textures.dayBloomSeeds = load("DayBloomSeeds.png");
-				Textures.moonGlowSeeds = load("WaterLeafSeeds.png");
+				Textures.moonGlowSeeds = load("MoonGlowSeeds.png");
 				Textures.blinkRootSeeds = load("BlinkRootSeeds.png");
 				Textures.fireBlossomSeeds = load("FireBlossomSeeds.png");
 				Textures.silverThornSeeds = load("SilverThornSeeds.png");
 				Textures.deathWeedSeeds = load("DeathWeedSeeds.png");
-
+				Textures.mud = load("MudTile.png");
+				Textures.mudIcon = load("MudIcon.png");
+				Textures.jungleGrass = load("JungleGrassTile.png");
+				Textures.jungleGrassIcon = load("JungleGrassIcon.png");
+				Textures.jungleGrassSeeds = load("JungleGrassSeeds.png");
 
 				Textures.ammoReservationBuff = load("AmmoReservationBuff.png");
 				Textures.archeryBuff = load("ArcheryBuff.png");

@@ -29,4 +29,10 @@ public class PlayerInfo {
 		this.version = version;
 		this.renderInfo = info;
 	}
+
+	public PlayerInfo() {
+		this.maxHp = 100;
+		this.maxMana = 20;
+		this.version = PlayerProvider.CURRENT_VERSION;
+	}
 }

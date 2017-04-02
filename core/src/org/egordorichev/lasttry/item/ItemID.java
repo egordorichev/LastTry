@@ -40,6 +40,9 @@ public class ItemID {
 	public final static short waterLeafSeeds = 38;
 	public final static short fireBlossomSeeds = 39;
 	public final static short iceThornSeeds = 40;
+	public final static short mudBlock = 41;
+	public final static short jungleGrassBlock = 42;
+	public final static short jungleGrassSeeds = 43;
 
-	public final static short count = 41; // Change this, if you add another item!
+	public final static short count = 44; // Change this, if you add another item!
 }

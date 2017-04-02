@@ -19,4 +19,8 @@ public class WorldInfo {
 		this.version = version;
 		this.flags = flags;
 	}
+
+	public WorldInfo() {
+
+	}
 }

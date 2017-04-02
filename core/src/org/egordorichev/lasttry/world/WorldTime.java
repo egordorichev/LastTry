@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.world;
 
+import org.egordorichev.lasttry.LastTry;
+
 public class WorldTime {
 	/** Indicates hour */
 	private byte hour;
@@ -56,8 +58,7 @@ public class WorldTime {
 	 * @return if current time is day time
 	 */
 	public boolean isDay() {
-		return !(this.hour >= 4 && this.minute >= 30) || !(this.hour <= 19 && this.minute < 30);
-		// < 30 is important!
+		return (this.hour >= 4 && this.hour < 19); // TODO: move half hour
 	}
 
 	public boolean isNight() {

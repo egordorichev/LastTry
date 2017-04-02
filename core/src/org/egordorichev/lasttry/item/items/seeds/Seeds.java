@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.item.items;
+package org.egordorichev.lasttry.item.items.seeds;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
@@ -26,7 +26,7 @@ public class Seeds extends Item {
 		// Check if the plant can be placed.
 		if (this.plant.canBeGrownAt(x, y)) {
 			// Check if the plant intersects the player's hitbox
-			// TODO: Check othter entities in the world
+			// TODO: Check other entities in the world
 			Rectangle rectangle = LastTry.player.getHitbox();
 
 			if (rectangle.intersects(new Rectangle(x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE))) {
