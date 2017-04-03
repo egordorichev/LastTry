@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.mod;
 import org.egordorichev.lasttry.LastTry;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -21,9 +22,18 @@ public class ModLoader {
      * Lookups and loads all mods from "assets/mods" directory
      */
     public void load() {
-        File[] mods = new File("mods/").listFiles();
+        File modDirectory = new File("mods/");
 
-        //TODO: mods were giving me null pointer so i added this little temporary check
+        if (!modDirectory.mkdir()) {
+	        try {
+		        modDirectory.createNewFile();
+	        } catch (Exception exception) {
+		        exception.printStackTrace();
+	        }
+        }
+
+        File[] mods = modDirectory.listFiles();
+
         if (mods == null) {
             return;
         }
