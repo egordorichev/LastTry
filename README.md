@@ -28,9 +28,7 @@ Or you can run it from current directory with `-Duser.dir=core/assets/'` argumen
 
 If you want to help the project grow, here is some stuff you can do:
 
- * **Creating mods** [See the wiki](https://github.com/egordorichev/LastTry/wiki/Modding)
  * **Writing java-docs** The project is not fully documented yet
- * **Porting Terraria content** [See the wiki](https://github.com/egordorichev/LastTry/wiki/Porting-Terraria-Content)
  * **Adding new features to the code** How about implementing secret mob or other easter egg? 
 
 ### Liecense
