@@ -14,168 +14,181 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Environment {
-	/** Current biome, player is */
-	private Biome currentBiome = null;
+    /**
+     * Block count, displayed on the screen
+     */
+    public int[] blockCount;
+    /**
+     * Time in the world
+     */
+    public WorldTime time;
+    /**
+     * Events, that currently happen in the world
+     */
+    public ArrayList<Event> events = new ArrayList<Event>();
+    /**
+     * Current biome, player is
+     */
+    private Biome currentBiome = null;
+    /**
+     * Previous biome
+     */
+    private Biome lastBiome = null;
 
-	/** Previous biome */
-	private Biome lastBiome = null;
+    public Environment() {
+        this.blockCount = new int[ItemID.count];
+        this.time = new WorldTime((byte) 8, (byte) 15);
 
-	/** Block count, displayed on the screen */
-	public int[] blockCount;
+        Util.runInThread(new Callable() {
+            @Override
+            public void call() {
+                updateBiome();
+            }
+        }, 1);
+    }
 
-	/** Time in the world */
-	public WorldTime time;
+    /**
+     * Renders current biome and the sky
+     */
+    public void render() {
+        for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
+            LastTry.batch.draw(Textures.sky, i * 48, 0);
+        }
 
-	/** Events, that currently happen in the world */
-	public ArrayList<Event> events = new ArrayList<Event>();
+        if (this.currentBiome != null) {
+            this.currentBiome.renderBackground();
+        }
 
-	public Environment() {
-		this.blockCount = new int[ItemID.count];
-		this.time = new WorldTime((byte) 8, (byte) 15);
+        if (this.lastBiome != null) {
+            this.lastBiome.renderBackground();
+        }
+    }
 
-		Util.runInThread(new Callable() {
-			@Override
-			public void call() {
-				updateBiome();
-			}
-		}, 1);
-	}
+    /**
+     * Updates biomes and spawns mobs
+     *
+     * @param dt The milliseconds passed since the last update.
+     */
+    public void update(int dt) {
+        this.time.update();
 
-	/** Renders current biome and the sky */
-	public void render() {
-		for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-			LastTry.batch.draw(Textures.sky, i * 48, 0);
-		}
+        if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {
+            this.currentBiome.fadeIn();
+        }
 
-		if (this.currentBiome != null) {
-			this.currentBiome.renderBackground();
-		}
+        if (this.lastBiome != null && this.lastBiome != this.currentBiome &&
+                !this.lastBiome.fadeOutIsDone()) {
 
-		if (this.lastBiome != null) {
-			this.lastBiome.renderBackground();
-		}
-	}
+            this.lastBiome.fadeOut();
+        }
 
-	/**
-	 * Updates biomes and spawns mobs
-	 * @param dt The milliseconds passed since the last update.
-	 */
-	public void update(int dt) {
-		this.time.update();
+        for (int i = this.events.size() - 1; i >= 0; i--) {
+            Event event = this.events.get(i);
 
-		if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {
-			this.currentBiome.fadeIn();
-		}
+            if (!event.isHappening()) {
+                event.end();
+                this.events.remove(i);
+            } else {
+                event.update(dt);
+            }
+        }
+    }
 
-		if (this.lastBiome != null && this.lastBiome != this.currentBiome &&
-				!this.lastBiome.fadeOutIsDone()) {
+    /**
+     * Returns true, if event with given name is happening
+     *
+     * @param event event to lookup
+     * @return if event with given name is happening
+     */
+    public boolean isEventHappening(Event event) {
+        for (Event e : this.events) {
+            if (e == event) {
+                return true;
+            }
+        }
 
-			this.lastBiome.fadeOut();
-		}
+        return false;
+    }
 
-		for (int i = this.events.size() - 1; i >= 0; i--) {
-			Event event = this.events.get(i);
+    /**
+     * @return if blood moon happens
+     */
+    public boolean isBloodMoon() {
+        return this.isEventHappening(Event.bloodMoon);
+    }
 
-			if (!event.isHappening()) {
-				event.end();
-				this.events.remove(i);
-			} else {
-				event.update(dt);
-			}
-		}
-	}
+    /**
+     * @return if it rains
+     */
+    public boolean isRaining() {
+        return this.isEventHappening(Event.rain);
+    }
 
-	/**
-	 * Returns true, if event with given name is happening
-	 * @param event event to lookup
-	 * @return if event with given name is happening
-	 */
-	public boolean isEventHappening(Event event) {
-		for (Event e : this.events) {
-			if (e == event) {
-				return true;
-			}
-		}
+    /**
+     * Try to start an event
+     *
+     * @param event event to start
+     * @return if it is started
+     */
+    public boolean startEvent(Event event) {
+        if (event.start()) {
+            this.events.add(event);
 
-		return false;
-	}
+            return true;
+        }
 
-	/**
-	 * @return if blood moon happens
-	 */
-	public boolean isBloodMoon() {
-		return this.isEventHappening(Event.bloodMoon);
-	}
+        return false;
+    }
 
-	/**
-	 * @return if it rains
-	 */
-	public boolean isRaining() {
-		return this.isEventHappening(Event.rain);
-	}
+    /**
+     * Updates current biome
+     */
+    private void updateBiome() {
+        if (LastTry.world == null) {
+            return;
+        }
 
-	/**
-	 * Try to start an event
-	 * @param event event to start
-	 * @return if it is started
-	 */
-	public boolean startEvent(Event event) {
-		if (event.start()) {
-			this.events.add(event);
+        LastTry.log("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
 
-			return true;
-		}
+        int windowWidth = Gdx.graphics.getWidth();
+        int windowHeight = Gdx.graphics.getHeight();
+        int tww = windowWidth / Block.TEX_SIZE;
+        int twh = windowHeight / Block.TEX_SIZE;
+        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+        int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
+                / Block.TEX_SIZE);
 
-		return false;
-	}
+        int minY = Math.max(0, tcy - 20);
+        int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
+        int minX = Math.max(0, tcx - 20);
+        int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 20);
 
-	/** Updates current biome */
-	private void updateBiome() {
-		if (LastTry.world == null) {
-			return;
-		}
+        Arrays.fill(this.blockCount, 0);
 
-		LastTry.log("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
+        for (int y = minY; y < maxY; y++) {
+            for (int x = minX; x < maxX; x++) {
+                this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
+            }
+        }
 
-		int windowWidth = Gdx.graphics.getWidth();
-		int windowHeight = Gdx.graphics.getHeight();
-		int tww = windowWidth / Block.TEX_SIZE;
-		int twh = windowHeight / Block.TEX_SIZE;
-		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
-		int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-				/ Block.TEX_SIZE);
+        this.lastBiome = this.currentBiome;
 
-		int minY = Math.max(0, tcy - 20);
-		int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
-		int minX = Math.max(0, tcx - 20);
-		int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 20);
+        if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
+            this.currentBiome = Biome.corruption;
+        } else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
+            this.currentBiome = Biome.crimson;
+        } else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
+            this.currentBiome = Biome.corruptDesert;
+        } else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
+            this.currentBiome = Biome.crimsonDesert;
+        } else if (this.blockCount[ItemID.sandBlock] >= 1000) {
+            this.currentBiome = Biome.desert;
+        } else {
+            this.currentBiome = Biome.forest;
+        }
+    }
 
-		Arrays.fill(this.blockCount, 0);
-
-		for (int y = minY; y < maxY; y++) {
-			for (int x = minX; x < maxX; x++) {
-				this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
-			}
-		}
-
-		this.lastBiome = this.currentBiome;
-
-		if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
-			this.currentBiome = Biome.corruption;
-		} else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
-			this.currentBiome = Biome.crimson;
-		} else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
-			this.currentBiome = Biome.corruptDesert;
-		} else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
-			this.currentBiome = Biome.crimsonDesert;
-		} else if (this.blockCount[ItemID.sandBlock] >= 1000) {
-			this.currentBiome = Biome.desert;
-		} else {
-			this.currentBiome = Biome.forest;
-		}
-	}
-
-	public Biome getCurrentBiome() {
-		return this.currentBiome;
-	}
+    public Biome getCurrentBiome() {
+        return this.currentBiome;
+    }
 }

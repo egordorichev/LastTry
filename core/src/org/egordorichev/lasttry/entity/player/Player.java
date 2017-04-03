@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.player;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,157 +8,164 @@ import org.egordorichev.lasttry.entity.Direction;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
-import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Entity {
-	/** Player info */
-	protected PlayerInfo info;
-	
-	/** Player animations */
-	protected Animation[] animations;
-	
-	/** Players render info */
-	protected PlayerRenderInfo renderInfo;
+    /**
+     * Players inventory
+     */
+    public UiInventory inventory;
+    /**
+     * Player info
+     */
+    protected PlayerInfo info;
+    /**
+     * Player animations
+     */
+    protected Animation[] animations;
+    /**
+     * Players render info
+     */
+    protected PlayerRenderInfo renderInfo;
 
-	/** Players inventory */
-	public UiInventory inventory;
+    public Player(PlayerInfo info) {
+        super(info.maxHp, 0, 0);
 
-	public Player(PlayerInfo info) {
-		super(info.maxHp, 0, 0);
-		
-		this.info = info;
-		this.animations = new Animation[State.values().length];
-		this.setupTexture();
+        this.info = info;
+        this.animations = new Animation[State.values().length];
+        this.setupTexture();
 
-		this.inventory = new UiInventory(89);
-		LastTry.ui.add(this.inventory);
+        this.inventory = new UiInventory(89);
+        LastTry.ui.add(this.inventory);
 
-		this.hitbox.height -= 3;
-	}
-	
-	/** Creates/updates player texture and animations */
-	private void setupTexture() {
-		this.renderInfo = this.info.renderInfo;
-		this.texture = PlayerRenderer.generateTexture(this.renderInfo);
-		
-		Animation idleAnimation = new Animation(false);
-		idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 8, 32, 48), 0));
+        this.hitbox.height -= 3;
+    }
 
-		Animation movingAnimation = new Animation(true);
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 342, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 400, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 456, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 512, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 568, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 624, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 680, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 736, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 792, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 848, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 902, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 960, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1016, 32, 48), 1));
-		movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1072, 32, 48), 1));
+    /**
+     * Creates/updates player texture and animations
+     */
+    private void setupTexture() {
+        this.renderInfo = this.info.renderInfo;
+        this.texture = PlayerRenderer.generateTexture(this.renderInfo);
 
-		Animation jumpingAnimation = new Animation(false);
-		jumpingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 288, 32, 48), 0));
+        Animation idleAnimation = new Animation(false);
+        idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 8, 32, 48), 0));
 
-		Animation flyingAnimation = new Animation(true); // TODO
+        Animation movingAnimation = new Animation(true);
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 342, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 400, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 456, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 512, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 568, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 624, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 680, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 736, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 792, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 848, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 902, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 960, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1016, 32, 48), 1));
+        movingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1072, 32, 48), 1));
 
-		Animation deadAnimation = new Animation(false);
-		deadAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 0, 0), 0)); // TODO
+        Animation jumpingAnimation = new Animation(false);
+        jumpingAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 288, 32, 48), 0));
 
-		this.animations[State.IDLE.getId()] = idleAnimation;
-		this.animations[State.MOVING.getId()] = movingAnimation;
-		this.animations[State.JUMPING.getId()] = jumpingAnimation;
-		this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
-		this.animations[State.FLYING.getId()] = flyingAnimation;
-		this.animations[State.DEAD.getId()] = deadAnimation;
-	}
+        Animation flyingAnimation = new Animation(true); // TODO
 
-	public void setGhostMode(boolean enabled) {
-		this.isSolid = !enabled;
+        Animation deadAnimation = new Animation(false);
+        deadAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 0, 0), 0)); // TODO
 
-		if (enabled) {
-			this.state = State.FLYING;
-		} else {
-			this.state = State.IDLE;
-		}
-	}
+        this.animations[State.IDLE.getId()] = idleAnimation;
+        this.animations[State.MOVING.getId()] = movingAnimation;
+        this.animations[State.JUMPING.getId()] = jumpingAnimation;
+        this.animations[State.FALLING.getId()] = jumpingAnimation; // They are the same
+        this.animations[State.FLYING.getId()] = flyingAnimation;
+        this.animations[State.DEAD.getId()] = deadAnimation;
+    }
 
-	@Override
-	public void onSpawn() {
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 2; x++) {
-				LastTry.world.setBlock(ItemID.none, this.getGridX() + x, this.getGridY() + y);
-			}
-		}
-	}
+    public void setGhostMode(boolean enabled) {
+        this.isSolid = !enabled;
 
-	@Override
-	public void render() {
-		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
-			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
-			(this.direction == Direction.LEFT), false);
-	}
+        if (enabled) {
+            this.state = State.FLYING;
+        } else {
+            this.state = State.IDLE;
+        }
+    }
 
-	public void renderBuffs() {
-		if (!this.inventory.isOpen()) {
-			for (int i = 0; i < this.effects.size(); i++) {
-				this.effects.get(i).render(10 + (i % 11) * 34, Gdx.graphics.getHeight() - 130);
-			}
-		}
-	}
+    @Override
+    public void onSpawn() {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 2; x++) {
+                LastTry.world.setBlock(ItemID.none, this.getGridX() + x, this.getGridY() + y);
+            }
+        }
+    }
 
-	@Override
-	public void update(int dt) {
-		if (!this.shouldUpdate) {
-			return;
-		}
+    @Override
+    public void render() {
+        this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+                        - this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
+                (this.direction == Direction.LEFT), false);
+    }
 
-		this.animations[this.state.getId()].update();
+    public void renderBuffs() {
+        if (!this.inventory.isOpen()) {
+            for (int i = 0; i < this.effects.size(); i++) {
+                this.effects.get(i).render(10 + (i % 11) * 34, Gdx.graphics.getHeight() - 130);
+            }
+        }
+    }
 
-		if (this.state == State.FLYING) {
-			if (Gdx.input.isKeyPressed(Input.Keys.SPACE) ||  Gdx.input.isKeyPressed(Input.Keys.W)) {
-				this.velocity.y -= 1;
-			}
+    @Override
+    public void update(int dt) {
+        if (!this.shouldUpdate) {
+            return;
+        }
 
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				this.velocity.y += 1;
-			}
+        this.animations[this.state.getId()].update();
 
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				this.move(Direction.LEFT);
-			}
+        if (this.state == State.FLYING) {
+            if (InputManager.isKeyDown(Input.Keys.SPACE) || InputManager.isKeyDown(Input.Keys.W)) {
+                this.velocity.y -= 1;
+            }
 
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				this.move(Direction.RIGHT);
-			}
-		} else {
-			if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-				this.jump();
-			}
+            if (InputManager.isKeyDown(Input.Keys.S)) {
+                this.velocity.y += 1;
+            }
 
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				this.move(Direction.LEFT);
-			}
+            if (InputManager.isKeyDown(Input.Keys.A)) {
+                this.move(Direction.LEFT);
+            }
 
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				this.move(Direction.RIGHT);
-			}
-		}
+            if (InputManager.isKeyDown(Input.Keys.D)) {
+                this.move(Direction.RIGHT);
+            }
+        } else {
+            if (InputManager.isKeyDown(Input.Keys.SPACE)) {
+                this.jump();
+            }
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.E) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			this.inventory.toggle();
-		}
+            if (InputManager.isKeyDown(Input.Keys.A)) {
+                this.move(Direction.LEFT);
+            }
 
-		super.update(dt);
-	}
+            if (InputManager.isKeyDown(Input.Keys.D)) {
+                this.move(Direction.RIGHT);
+            }
+        }
 
-	public String getName() {
-		return this.info.name;
-	}
+        if (InputManager.isKeyJustDown(Input.Keys.E) || InputManager.isKeyJustDown(Input.Keys.ESCAPE)) {
+            this.inventory.toggle();
+        }
+
+        super.update(dt);
+    }
+
+    public String getName() {
+        return this.info.name;
+    }
 }

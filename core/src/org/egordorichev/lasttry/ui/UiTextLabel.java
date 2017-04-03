@@ -7,55 +7,67 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Fonts;
 
 public class UiTextLabel extends UiComponent {
-	/** Text, to be drawn on the button */
-	protected String label;
+    /**
+     * Text, to be drawn on the button
+     */
+    protected String label;
 
-	/** Label width in pixels */
-	protected int labelWidth;
+    /**
+     * Label width in pixels
+     */
+    protected int labelWidth;
 
-	/** Current font */
-	protected BitmapFont font;
+    /**
+     * Current font
+     */
+    protected BitmapFont font;
 
-	public UiTextLabel(Rectangle rectangle, UiComponent.Origin origin, String label) {
-		super(rectangle, origin);
+    public UiTextLabel(Rectangle rectangle, UiComponent.Origin origin, String label) {
+        super(rectangle, origin);
 
-		this.label = label;
+        this.label = label;
 
-		this.setFont(Fonts.f22);
-	}
+        this.setFont(Fonts.f22);
+    }
 
-	public UiTextLabel(Rectangle rectangle, String label) {
-		this(rectangle, UiComponent.Origin.TOP_LEFT, label);
-	}
+    public UiTextLabel(Rectangle rectangle, String label) {
+        this(rectangle, UiComponent.Origin.TOP_LEFT, label);
+    }
 
-	/** Renders the element */
-	@Override
-	public void render() {
-		if (this.hidden) {
-			return;
-		}
+    /**
+     * Renders the element
+     */
+    @Override
+    public void render() {
+        if (this.hidden) {
+            return;
+        }
 
-		super.render();
+        super.render();
 
-		this.font.draw(LastTry.batch, this.label, this.getX(),
-			this.getY() + (this.getHeight() - this.font.getLineHeight()) / 2);
-	}
+        this.font.draw(LastTry.batch, this.label, this.getX(),
+                this.getY() + (this.getHeight() - this.font.getLineHeight()) / 2);
+    }
 
-	/** Sets font and calculates new size */
-	protected void setFont(BitmapFont font) {
-		this.font = font;
-		this.setLabel(this.label);
-	}
+    /**
+     * Sets font and calculates new size
+     */
+    protected void setFont(BitmapFont font) {
+        this.font = font;
+        this.setLabel(this.label);
+    }
 
-	/** Calculates new size */
-	public void setLabel(String label) {
-		this.label = label;
+    /**
+     * Calculates new size
+     */
+    public void setLabel(String label) {
+        this.label = label;
 
-		GlyphLayout glyphLayout = new GlyphLayout();
-		glyphLayout.setText(this.font, this.label);
+        GlyphLayout glyphLayout = new GlyphLayout();
+        glyphLayout.setText(this.font, this.label);
 
-		this.labelWidth = (int) glyphLayout.width;
-		this.rect.width = this.labelWidth;
-		this.rect.height = this.font.getLineHeight() * 1.f;
-	}
+        this.labelWidth = (int) glyphLayout.width;
+        this.rect.width = this.labelWidth;
+        this.rect.height = this.font.getLineHeight() * 1.f;
+    }
 }

@@ -7,35 +7,35 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.EffectiveToolType;
 
 public class Plant extends Block {
-	public static final byte GROW_THRESHOLD = 20;
+    public static final byte GROW_THRESHOLD = 20;
 
-	public Plant(short id, String name, Texture texture, Texture tiles) {
-		super(id, name, false, EffectiveToolType.PICKAXE, texture, tiles);
-	}
+    public Plant(short id, String name, Texture texture, Texture tiles) {
+        super(id, name, false, EffectiveToolType.PICKAXE, texture, tiles);
+    }
 
-	@Override
-	public void renderBlock(int x, int y) {
-		int hp = LastTry.world.getBlockHp(x, y);
+    @Override
+    public void renderBlock(int x, int y) {
+        int hp = LastTry.world.getBlockHp(x, y);
 
-		int tx = 0;
+        int tx = 0;
 
-		if (hp >= GROW_THRESHOLD + 1) {
-			tx = 32;
-		} else if (hp == GROW_THRESHOLD) {
-			tx = 16;
-		}
+        if (hp >= GROW_THRESHOLD + 1) {
+            tx = 32;
+        } else if (hp == GROW_THRESHOLD) {
+            tx = 16;
+        }
 
-		LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE,
-			tx, 0, Block.TEX_SIZE, Block.TEX_SIZE);
-	}
+        LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE,
+                tx, 0, Block.TEX_SIZE, Block.TEX_SIZE);
+    }
 
-	public boolean canBeGrownAt(int x, int y) {
-		short id = LastTry.world.getBlockID(x, y);
+    public boolean canBeGrownAt(int x, int y) {
+        short id = LastTry.world.getBlockID(x, y);
 
-		if (id != ItemID.none) {
-			return false;
-		}
+        if (id != ItemID.none) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

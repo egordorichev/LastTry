@@ -3,88 +3,88 @@ package org.egordorichev.lasttry.item.modifier;
 import org.egordorichev.lasttry.item.Item;
 
 public class Modifier {
-	public static AccessoryModifier accessory;
-	public static CommonModifier common;
-	public static MeleeModifier melee;
-	public static RangedModifier ranged;
-	public static MagicModifier magic;
-	public static UniversalModifier universal;
+    public static AccessoryModifier accessory;
+    public static CommonModifier common;
+    public static MeleeModifier melee;
+    public static RangedModifier ranged;
+    public static MagicModifier magic;
+    public static UniversalModifier universal;
 
-	protected String name;
-	protected int damage;
-	protected int speed;
-	protected int criticalStrikeChance;
-	protected int manaCost;
-	protected int size;
-	protected int velocity;
-	protected int knockback;
-	protected int mana;
-	protected int movementSpeed;
-	protected int defense;
+    protected String name;
+    protected int damage;
+    protected int speed;
+    protected int criticalStrikeChance;
+    protected int manaCost;
+    protected int size;
+    protected int velocity;
+    protected int knockback;
+    protected int mana;
+    protected int movementSpeed;
+    protected int defense;
 
-	public Modifier(String name, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
-			int velocity, int knockback, int mana, int movementSpeed, int defense) {
+    public Modifier(String name, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
+                    int velocity, int knockback, int mana, int movementSpeed, int defense) {
 
-		this.name = name;
-		this.damage = damage;
-		this.speed = speed;
-		this.criticalStrikeChance = criticalStrikeChance;
-		this.manaCost = manaCost;
-		this.size = size;
-		this.velocity = velocity;
-		this.knockback = knockback;
-		this.mana = mana;
-		this.movementSpeed = movementSpeed;
-		this.defense = defense;
-	}
+        this.name = name;
+        this.damage = damage;
+        this.speed = speed;
+        this.criticalStrikeChance = criticalStrikeChance;
+        this.manaCost = manaCost;
+        this.size = size;
+        this.velocity = velocity;
+        this.knockback = knockback;
+        this.mana = mana;
+        this.movementSpeed = movementSpeed;
+        this.defense = defense;
+    }
 
-	public int getDamage() {
-		return this.damage;
-	}
+    public static Modifier random(Item item) {
+        // TODO: return modifier based on item type
 
-	public int getSpeed() {
-		return this.speed;
-	}
+        return null;
+    }
 
-	public int getCriticalStrikeChance() {
-		return this.criticalStrikeChance;
-	}
+    public int getDamage() {
+        return this.damage;
+    }
 
-	public int getManaCost() {
-		return this.manaCost;
-	}
+    public int getSpeed() {
+        return this.speed;
+    }
 
-	public int getSize() {
-		return this.size;
-	}
+    public int getCriticalStrikeChance() {
+        return this.criticalStrikeChance;
+    }
 
-	public int getVelocity() {
-		return this.velocity;
-	}
+    public int getManaCost() {
+        return this.manaCost;
+    }
 
-	public int getKnockback() {
-		return this.knockback;
-	}
+    public int getSize() {
+        return this.size;
+    }
 
-	public int getMana() {
-		return this.mana;
-	}
+    public int getVelocity() {
+        return this.velocity;
+    }
 
-	public int getMovementSpeed() {
-		return this.movementSpeed;
-	}
+    public int getKnockback() {
+        return this.knockback;
+    }
 
-	public int getDefense() {
-		return this.defense;
-	}
+    public int getMana() {
+        return this.mana;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public int getMovementSpeed() {
+        return this.movementSpeed;
+    }
 
-	public static Modifier random(Item item) {
-		// TODO: return modifier based on item type
+    public int getDefense() {
+        return this.defense;
+    }
 
-		return null;
-	}
+    public String getName() {
+        return this.name;
+    }
 }

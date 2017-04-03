@@ -5,37 +5,37 @@ import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class WaterLeaf extends Plant {
-	public WaterLeaf() {
-		super(ItemID.waterLeaf, "Water Leaf", Textures.waterLeafIcon, Textures.waterLeaf);
-	}
+    public WaterLeaf() {
+        super(ItemID.waterLeaf, "Water Leaf", Textures.waterLeafIcon, Textures.waterLeaf);
+    }
 
-	@Override
-	public boolean canBeGrownAt(int x, int y) {
-		if (!super.canBeGrownAt(x, y)) {
-			return false;
-		}
+    @Override
+    public boolean canBeGrownAt(int x, int y) {
+        if (!super.canBeGrownAt(x, y)) {
+            return false;
+        }
 
-		short id = LastTry.world.getBlockID(x, y + 1);
+        short id = LastTry.world.getBlockID(x, y + 1);
 
-		if (id != ItemID.sandBlock) {
-			return false;
-		}
+        if (id != ItemID.sandBlock) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public void updateBlock(int x, int y) {
-		int hp = LastTry.world.getBlockHp(x, y);
+    @Override
+    public void updateBlock(int x, int y) {
+        int hp = LastTry.world.getBlockHp(x, y);
 
-		if (hp >= Plant.GROW_THRESHOLD) {
-			if (LastTry.environment.isRaining()) {
-				LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
-			} else {
-				LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD), x, y);
-			}
-		} else {
-			LastTry.world.setBlockHP((byte) (hp + 1), x, y);
-		}
-	}
+        if (hp >= Plant.GROW_THRESHOLD) {
+            if (LastTry.environment.isRaining()) {
+                LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
+            } else {
+                LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD), x, y);
+            }
+        } else {
+            LastTry.world.setBlockHP((byte) (hp + 1), x, y);
+        }
+    }
 }

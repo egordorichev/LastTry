@@ -4,42 +4,41 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.item.Item;
 
 public class Armor extends Item {
-	public enum Slot {
-		HEAD, BODY, LEGS
-	}
+    /**
+     * Defense, provided by this armor piece.
+     */
+    protected int defense;
+    /**
+     * The slot that the armor can be placed in.
+     */
+    protected Slot slot;
 
-	/**
-	 * Defense, provided by this armor piece.
-	 */
-	protected int defense;
+    public Armor(short id, String name, int defense, Slot slot, Texture texture) {
+        super(id, name, texture);
 
-	/**
-	 * The slot that the armor can be placed in.
-	 */
-	protected Slot slot;
+        this.defense = defense;
+        this.slot = slot;
+    }
 
-	public Armor(short id, String name, int defense, Slot slot, Texture texture) {
-		super(id, name, texture);
+    /**
+     * Return the total defense points the armor gives.
+     *
+     * @return armor defense
+     */
+    public int getDefense() {
+        return this.defense;
+    }
 
-		this.defense = defense;
-		this.slot = slot;
-	}
+    /**
+     * Return the slot that the armor can be placed in.
+     *
+     * @return armor slot
+     */
+    public Slot getSlot() {
+        return this.slot;
+    }
 
-	/**
-	 * Return the total defense points the armor gives.
-	 * 
-	 * @return armor defense
-	 */
-	public int getDefense() {
-		return this.defense;
-	}
-
-	/**
-	 * Return the slot that the armor can be placed in.
-	 * 
-	 * @return armor slot
-	 */
-	public Slot getSlot() {
-		return this.slot;
-	}
+    public enum Slot {
+        HEAD, BODY, LEGS
+    }
 }
