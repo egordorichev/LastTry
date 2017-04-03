@@ -5,85 +5,106 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 
 public class Tool extends Item {
-    protected boolean autoSwing;
-    protected float criticalStrikeChance;
-    protected float baseDamage; // All tools have melee damage
-    protected float useDelay;
+	protected boolean autoSwing;
+	protected float criticalStrikeChance;
+	protected float baseDamage; // All tools have melee damage
+	protected float useDelay;
 
-    protected int useSpeed;
-    protected int pickaxePower;
-    protected int axePower;
-    protected int hammerPower;
+	protected int useSpeed;
+	protected int pickaxePower;
+	protected int axePower;
+	protected int hammerPower;
 
-    public Tool(short id, String name, Rarity rarity, float baseDamage, int pickaxePower,
-                int axePower, int hammerPower, int useSpeed, Texture texture) {
+	public Tool(short id, String name, Rarity rarity, float baseDamage, int pickaxePower,
+			int axePower, int hammerPower, int useSpeed, Texture texture) {
 
-        super(id, name, rarity, texture);
+		super(id, name, rarity, texture);
 
-        this.criticalStrikeChance = 4.0f;
-        this.autoSwing = false;
-        this.useDelay = 0.0f;
-        this.baseDamage = baseDamage;
-        this.pickaxePower = pickaxePower;
-        this.axePower = axePower;
-        this.hammerPower = hammerPower;
-        this.useSpeed = useSpeed;
-    }
+		this.criticalStrikeChance = 4.0f;
+		this.autoSwing = false;
+		this.useDelay = 0.0f;
+		this.baseDamage = baseDamage;
+		this.pickaxePower = pickaxePower;
+		this.axePower = axePower;
+		this.hammerPower = hammerPower;
+		this.useSpeed = useSpeed;
+	}
 
-    public Tool(short id, String name, float baseDamage, int pickaxePower,
-                int axePower, int hammerPower, int useSpeed, Texture texture) {
+	public Tool(short id, String name, float baseDamage, int pickaxePower,
+			int axePower, int hammerPower, int useSpeed, Texture texture) {
 
-        this(id, name, Rarity.WHITE, baseDamage, pickaxePower, axePower, hammerPower, useSpeed, texture);
-    }
+		this(id, name, Rarity.WHITE, baseDamage, pickaxePower, axePower, hammerPower, useSpeed, texture);
+	}
 
-    @Override
-    public boolean use() {
-        if (!this.isReady()) {
-            return false;
-        }
+	@Override
+	public boolean use() {
+		if (!this.isReady()) {
+			return false;
+		}
 
-        this.useDelay = this.useSpeed;
-        return this.onUse();
-    }
+		this.useDelay = this.useSpeed;
+		return this.onUse();
+	}
 
-    @Override
-    public void update(int dt) {
-        this.useDelay = Math.max(0, this.useDelay - 1);
-    }
+	@Override
+	public void update(int dt) {
+		if (this.isReady()) {
+			return;
+		}
 
-    protected boolean onUse() {
-        return false;
-    }
+		this.useDelay = Math.max(0, this.useDelay - 1);
+		this.onUpdate();
 
-    public int getPickaxePower() {
-        return this.pickaxePower;
-    }
+		if (this.isReady()) {
+			this.onUseEnd();
+		}
+	}
 
-    public int getAxePower() {
-        return this.axePower;
-    }
+	protected boolean onUse() {
+		return false;
+	}
 
-    public int getHammerPower() {
-        return this.hammerPower;
-    }
+	protected void onUpdate() {
 
-    public boolean isAutoSwing() {
-        return this.autoSwing;
-    }
+	}
 
-    public boolean isReady() {
-        return Math.abs(0.0f - this.useDelay) < 0.05f;
-    }
+	protected boolean onUseEnd() {
+		return false;
+	}
 
-    public float getCriticalStrikeChance() {
-        return this.criticalStrikeChance;
-    }
+	public int getPickaxePower() {
+		return this.pickaxePower;
+	}
 
-    public float getBaseDamage() {
-        return this.baseDamage;
-    }
+	public int getAxePower() {
+		return this.axePower;
+	}
 
-    public Rarity getRarity() {
-        return this.rarity;
-    }
+	public int getHammerPower() {
+		return this.hammerPower;
+	}
+
+	public boolean isAutoSwing() {
+		return this.autoSwing;
+	}
+
+	public boolean isReady() {
+		return this.useDelay == 0;
+	}
+
+	public float getCriticalStrikeChance() {
+		return this.criticalStrikeChance;
+	}
+
+	public float getBaseDamage() {
+		return this.baseDamage;
+	}
+
+	protected float getCurrentAngle() {
+		return 0; // TODO;
+	}
+
+	public Rarity getRarity() {
+		return this.rarity;
+	}
 }
