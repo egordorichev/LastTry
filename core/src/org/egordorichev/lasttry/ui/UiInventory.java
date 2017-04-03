@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,7 +11,6 @@ import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
-import org.egordorichev.lasttry.util.Util;
 
 public class UiInventory extends UiComponent {
     public ItemHolder currentItem = null;
@@ -190,7 +188,7 @@ public class UiInventory extends UiComponent {
         }
 
         if (currentItem != null) {
-            currentItem.renderAt((int)InputManager.getMousePosition().x + 16, Gdx.graphics.getHeight() - (int)InputManager.getMousePosition().y - 16);
+            currentItem.renderAt((int) InputManager.getMousePosition().x + 16, Gdx.graphics.getHeight() - (int) InputManager.getMousePosition().y - 16);
         }
     }
 

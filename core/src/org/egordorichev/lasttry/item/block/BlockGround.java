@@ -24,7 +24,7 @@ public class BlockGround extends Block {
 
         if (binary == 15) {
             /*
-			boolean tr = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y - 1)) == this.type;
+            boolean tr = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y - 1)) == this.type;
 			boolean br = EffectiveToolType.lookup(LastTry.world.getBlockID(x + 1, y + 1)) == this.type;
 			boolean bl = EffectiveToolType.lookup(LastTry.world.getBlockID(x - 1, y + 1)) == this.type;
 			boolean tl = EffectiveToolType.lookup(LastTry.world.getBlockID(x - 1, y - 1)) == this.type;

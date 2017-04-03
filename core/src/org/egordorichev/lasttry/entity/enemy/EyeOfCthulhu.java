@@ -47,7 +47,7 @@ public class EyeOfCthulhu extends Boss {
         this.phases[1] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 22 : 45, 0) {
             @Override
             public void onEnter() {
-				/*
+                /*
 				Animation flyingAnimation = new Animation();
 
 				flyingAnimation.addFrame(texture.getSubImage(0, 498, 110, 166), 300);

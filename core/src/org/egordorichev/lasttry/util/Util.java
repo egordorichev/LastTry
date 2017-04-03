@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.util;
 
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.LastTry;
 
 import java.io.File;

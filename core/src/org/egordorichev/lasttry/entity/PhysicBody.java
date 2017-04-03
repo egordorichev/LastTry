@@ -98,7 +98,7 @@ public abstract class PhysicBody {
         }
 
 		/*
-		 * TODO: Optimize and handle both X/Y velocity in one pass. Current
+         * TODO: Optimize and handle both X/Y velocity in one pass. Current
 		 * issue: If gravity (above) causes collision on y-axis a combined xy
 		 * update check will say there is a collision and prevent motion updates
 		 * for both x and y velocities even if there is no x-axis specific
@@ -346,11 +346,11 @@ public abstract class PhysicBody {
      * @return Render width.
      */
 
-    public Size getSize(){
+    public Size getSize() {
         return new Size(renderBounds.width, renderBounds.height);
     }
 
-    public Vector2 getCenter(){
+    public Vector2 getCenter() {
         return new Vector2(getPosition().x + getSize().width / 2, getPosition().y + getSize().height / 2);
     }
 

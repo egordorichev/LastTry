@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.entity.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Direction;
@@ -9,6 +8,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
@@ -129,36 +129,36 @@ public class Player extends Entity {
         this.animations[this.state.getId()].update();
 
         if (this.state == State.FLYING) {
-            if (InputManager.isKeyDown(Input.Keys.SPACE) || InputManager.isKeyDown(Input.Keys.W)) {
+            if (InputManager.isKeyDown(Keys.JUMP) || InputManager.isKeyDown(Keys.MOVE_UP)) {
                 this.velocity.y -= 1;
             }
 
-            if (InputManager.isKeyDown(Input.Keys.S)) {
+            if (InputManager.isKeyDown(Keys.MOVE_DOWN)) {
                 this.velocity.y += 1;
             }
 
-            if (InputManager.isKeyDown(Input.Keys.A)) {
+            if (InputManager.isKeyDown(Keys.MOVE_LEFT)) {
                 this.move(Direction.LEFT);
             }
 
-            if (InputManager.isKeyDown(Input.Keys.D)) {
+            if (InputManager.isKeyDown(Keys.MOVE_RIGHT)) {
                 this.move(Direction.RIGHT);
             }
         } else {
-            if (InputManager.isKeyDown(Input.Keys.SPACE)) {
+            if (InputManager.isKeyDown(Keys.JUMP)) {
                 this.jump();
             }
 
-            if (InputManager.isKeyDown(Input.Keys.A)) {
+            if (InputManager.isKeyDown(Keys.MOVE_LEFT)) {
                 this.move(Direction.LEFT);
             }
 
-            if (InputManager.isKeyDown(Input.Keys.D)) {
+            if (InputManager.isKeyDown(Keys.MOVE_RIGHT)) {
                 this.move(Direction.RIGHT);
             }
         }
 
-        if (InputManager.isKeyJustDown(Input.Keys.E) || InputManager.isKeyJustDown(Input.Keys.ESCAPE)) {
+        if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
             this.inventory.toggle();
         }
 

@@ -1,10 +1,9 @@
 package org.egordorichev.lasttry.ui;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.input.InputManager;
-import org.egordorichev.lasttry.util.Util;
+import org.egordorichev.lasttry.input.Keys;
 
 public class UiTextInput extends UiTextLabel {
     /**
@@ -18,7 +17,7 @@ public class UiTextInput extends UiTextLabel {
         InputManager.multiplexer.addProcessor(new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
-                if (keycode == Input.Keys.BACKSPACE && text.length() > 0) {
+                if (keycode == Keys.ERASE_TEXT && text.length() > 0) {
                     text = text.substring(0, text.length() - 1);
                     setLabel(text + "|");
                 }

@@ -125,7 +125,7 @@ public class World {
      */
     public boolean canPlaceInWorld(Block block, int x, int y) {
         /*
-		 * TODO: Some blocks should be able to be placed in different situations
+         * TODO: Some blocks should be able to be placed in different situations
 		 * For example, you can place dirt on a shrub (Shrub is destroyed)
 		 *
 		 * Maybe we should move this to the block class?
