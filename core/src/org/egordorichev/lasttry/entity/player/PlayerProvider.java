@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,17 @@ public class PlayerProvider {
      */
     public static PlayerInfo[] getPlayers() {
         File folder = new File("players/");
-        File[] files = folder.listFiles();
 
+        if (!folder.exists()) {
+            try {
+	            folder.mkdir();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        File[] files = folder.listFiles();
+	    
         List<PlayerInfo> players = new ArrayList<>();
 
         for (int i = 0; i < files.length; i++) {

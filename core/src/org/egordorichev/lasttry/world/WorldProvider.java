@@ -24,6 +24,15 @@ public class WorldProvider {
      */
     public static WorldInfo[] getWorlds() {
         File folder = new File("worlds/");
+
+        if (!folder.exists()) {
+            try {
+                folder.mkdir();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
         File[] files = folder.listFiles();
 
         List<WorldInfo> worlds = new ArrayList<>();

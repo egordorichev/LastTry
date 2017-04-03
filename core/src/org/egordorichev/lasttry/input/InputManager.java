@@ -86,11 +86,11 @@ public class InputManager {
         return multiplexer.mouseMoved(x, y);
     }
 
-    public static boolean isMouseButtonPressed(int button){
+    public static boolean isMouseButtonPressed(int button) {
         return Gdx.input.isButtonPressed(button);
     }
 
-    public static Vector2 getMousePosition(){
+    public static Vector2 getMousePosition() {
         return new Vector2(Gdx.input.getX(), Gdx.input.getY());
     }
 

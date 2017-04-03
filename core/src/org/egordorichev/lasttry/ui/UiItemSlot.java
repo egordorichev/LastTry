@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +17,7 @@ public class UiItemSlot extends UiComponent {
     private ItemHolder itemHolder;
     private Type type;
     private TextureRegion back;
+
     public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back) {
         super(rectangle, origin);
 

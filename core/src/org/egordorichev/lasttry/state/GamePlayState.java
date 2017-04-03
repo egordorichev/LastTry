@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.EnemyID;
@@ -9,6 +8,7 @@ import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.block.Block;
@@ -81,7 +81,7 @@ public class GamePlayState implements State {
         LastTry.entityManager.update((int) delta);
         LastTry.player.update((int) delta);
 
-        if (InputManager.isKeyJustDown(Input.Keys.TAB)) {
+        if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
             LastTry.debug.toggle();
         }
 

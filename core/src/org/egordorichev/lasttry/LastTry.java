@@ -2,7 +2,6 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,13 +17,11 @@ import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
-import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldInfo;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
 
-import java.util.InputMismatchException;
 import java.util.Random;
 
 public class LastTry extends Game {

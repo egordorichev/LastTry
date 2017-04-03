@@ -27,7 +27,7 @@ public class EntityManager {
         // TODO: Only render on-screen entities.
         // Old code for doing so:
         /*
-		 * int gx = entity.getGridX(); int gy = entity.getGridY(); int w =
+         * int gx = entity.getGridX(); int gy = entity.getGridY(); int w =
 		 * entity.getGridWidth(); int h = entity.getGridHeight(); if ((gx > minX
 		 * - w && gx < maxX + w) && (gy > minY - h && gy < maxY + h)) {
 		 * entity.render(); }
