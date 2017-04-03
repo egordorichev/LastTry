@@ -1,9 +1,10 @@
 package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.state.MenuState;
+import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -24,19 +25,11 @@ public class ModLoader {
     public void load() {
         File modDirectory = new File("mods/");
 
-        if (!modDirectory.mkdir()) {
-	        try {
-		        modDirectory.createNewFile();
-	        } catch (Exception exception) {
-		        exception.printStackTrace();
-	        }
+        if(!Util.fileExists(modDirectory.getPath())){
+			LastTry.logDebug("There is no mod directory so one is being created!");
         }
 
         File[] mods = modDirectory.listFiles();
-
-        if (mods == null) {
-            return;
-        }
 
         for (int i = 0; i < mods.length; i++) {
             if (!mods[i].getName().endsWith(".jar")) {

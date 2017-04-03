@@ -110,8 +110,20 @@ public class LastTry extends Game {
      *
      * @param message message to log
      */
-    public static void log(String message) {
+    public static void logDebug(String message) {
+        log.debug(message);
+    }
+
+    public static void logInfo(String message) {
         log.info(message);
+    }
+
+    public static void logWarning(String message) {
+        log.warn(message);
+    }
+
+    public static void logError(String message) {
+        log.error(message);
     }
 
     /**

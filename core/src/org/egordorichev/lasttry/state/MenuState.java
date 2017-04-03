@@ -79,14 +79,14 @@ public class MenuState implements State {
                 add(new UiTextButton(new Rectangle(0, 48, 150, 32), Origin.CENTER, "Multiplayer") {
                     @Override
                     public void onClick() {
-                        LastTry.log("Multiplayer is not implemented yet");
+                        LastTry.logError("Multiplayer is not implemented yet");
                     }
                 });
 
                 add(new UiTextButton(new Rectangle(0, 96, 120, 32), Origin.CENTER, "Settings") {
                     @Override
                     public void onClick() {
-                        LastTry.log("Settings are not implemented yet");
+                        LastTry.logError("Settings are not implemented yet");
                     }
                 });
 
@@ -365,35 +365,35 @@ public class MenuState implements State {
                 add(new UiTextButton(new Rectangle(0, -64, 100, 32), Origin.CENTER, "Hair") {
                     @Override
                     public void onClick() {
-                        LastTry.log("TODO");
+                        LastTry.logError("TODO");
                     }
                 });
 
                 add(new UiTextButton(new Rectangle(0, -32, 100, 32), Origin.CENTER, "Eyes") {
                     @Override
                     public void onClick() {
-                        LastTry.log("TODO");
+                        LastTry.logError("TODO");
                     }
                 });
 
                 add(new UiTextButton(new Rectangle(0, -0, 100, 32), Origin.CENTER, "Skin") {
                     @Override
                     public void onClick() {
-                        LastTry.log("TODO");
+                        LastTry.logError("TODO");
                     }
                 });
 
                 add(new UiTextButton(new Rectangle(0, 32, 100, 32), Origin.CENTER, "Clothes") {
                     @Override
                     public void onClick() {
-                        LastTry.log("TODO");
+                        LastTry.logError("TODO");
                     }
                 });
 
                 add(new UiTextButton(new Rectangle(0, 64, 100, 32), Origin.CENTER, "Softcore") {
                     @Override
                     public void onClick() {
-                        LastTry.log("TODO");
+                        LastTry.logError("TODO");
                     }
                 });
 

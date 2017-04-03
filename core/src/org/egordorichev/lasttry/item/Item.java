@@ -75,7 +75,6 @@ public class Item {
 
 	public Item(short id, String name, Rarity rarity, Texture texture) {
 		if (ITEM_CACHE[id] != null) {
-			LastTry.log("Item with id " + id + " already exists.");
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
 

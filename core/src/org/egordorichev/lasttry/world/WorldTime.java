@@ -99,13 +99,20 @@ public class WorldTime {
      * @return time string
      */
     public String toString(boolean use12hoursFormat) {
+        Byte minuteByte = minute;
+        String minuteString = minuteByte.toString();
+        StringBuilder minuteBuilder = new StringBuilder(minuteString);
+        if(minuteString.length() != 2){
+            minuteBuilder.insert(0, "0");
+        }
+
         if (use12hoursFormat) {
             String postfix = (this.hour >= 12) ? " pm" : " am";
             int hour = (this.hour > 12) ? this.hour - 12 : this.hour;
 
-            return hour + ":" + this.minute + postfix;
+            return hour + ":" + minuteBuilder + postfix;
         } else {
-            return this.hour + ":" + this.minute;
+            return this.hour + ":" + minuteBuilder;
         }
     }
 }

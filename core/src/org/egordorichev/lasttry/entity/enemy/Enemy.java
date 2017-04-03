@@ -60,7 +60,7 @@ public abstract class Enemy extends Entity {
 
     public static void define(short id, Class<? extends Enemy> enemy) {
         // TODO: handle duplicates
-        LastTry.log("Defined [" + id + "] as " + enemy.getSimpleName());
+        LastTry.logDebug("Defined [" + id + "] as " + enemy.getSimpleName());
         ENEMY_CACHE.put(id, enemy);
     }
 

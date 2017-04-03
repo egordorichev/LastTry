@@ -1,8 +1,10 @@
 package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.state.MenuState;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
@@ -23,17 +25,13 @@ public class WorldProvider {
      * @return all worlds in the "worlds/" directory
      */
     public static WorldInfo[] getWorlds() {
-        File folder = new File("worlds/");
+        File worldsFolder = new File("worlds/");
 
-        if (!folder.exists()) {
-            try {
-                folder.mkdir();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+        if(!Util.fileExists(worldsFolder.getPath())){
+            LastTry.logDebug("There is no worlds directory so one is being created!");
         }
 
-        File[] files = folder.listFiles();
+        File[] files = worldsFolder.listFiles();
 
         List<WorldInfo> worlds = new ArrayList<>();
 
@@ -140,7 +138,7 @@ public class WorldProvider {
         LastTry.worldInfo = info;
         LastTry.world = world;
 
-        LastTry.log("Finished generating!");
+        LastTry.logInfo("Finished generating!");
 
         return world;
     }
@@ -151,10 +149,10 @@ public class WorldProvider {
      * @param world world to save.
      */
     public static void save(World world) {
-        LastTry.log("Saving world...");
+        LastTry.logInfo("Saving world...");
 
         try {
-            LastTry.log(LastTry.worldInfo.name);
+            LastTry.logInfo(LastTry.worldInfo.name);
             FileWriter stream = new FileWriter(getFilePath(LastTry.worldInfo.name));
 
             stream.writeInt32(CURRENT_VERSION);
@@ -183,7 +181,7 @@ public class WorldProvider {
             stream.writeBoolean(true);
             stream.close();
 
-            LastTry.log("Done saving!");
+            LastTry.logInfo("Done saving!");
         } catch (IOException exception) {
             LastTry.handleException(exception);
         }
@@ -198,7 +196,7 @@ public class WorldProvider {
      * @return World by name.
      */
     public static World load() {
-        LastTry.log("Loading world...");
+        LastTry.logInfo("Loading world...");
 
         try (FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name))) {
             int version = stream.readInt32();
@@ -248,7 +246,7 @@ public class WorldProvider {
             Biome.preload();
 
             World world = new World(width, height, flags, data);
-            LastTry.log("Done loading!");
+            LastTry.logInfo("Done loading!");
 
             return world;
         } catch (IOException exception) {

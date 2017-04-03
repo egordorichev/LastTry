@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,17 +23,13 @@ public class PlayerProvider {
      * @return all players in the "players/" directory
      */
     public static PlayerInfo[] getPlayers() {
-        File folder = new File("players/");
+        File playersFolder = new File("players/");
 
-        if (!folder.exists()) {
-            try {
-	            folder.mkdir();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+        if(!Util.fileExists(playersFolder.getPath())){
+            LastTry.logDebug("There is no players directory so one is being created!");
         }
 
-        File[] files = folder.listFiles();
+        File[] files = playersFolder.listFiles();
 	    
         List<PlayerInfo> players = new ArrayList<>();
 

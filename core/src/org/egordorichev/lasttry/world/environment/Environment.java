@@ -148,7 +148,7 @@ public class Environment {
             return;
         }
 
-        LastTry.log("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
+        LastTry.logInfo("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
