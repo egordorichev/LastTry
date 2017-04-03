@@ -8,28 +8,28 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.BlockGround;
 
 public class Grass extends BlockGround {
-	public Grass(short id, String name, Texture texture, Texture tiles) {
-		super(id, name, texture, tiles);
-	}
+    public Grass(short id, String name, Texture texture, Texture tiles) {
+        super(id, name, texture, tiles);
+    }
 
-	@Override
-	public void updateBlock(int x, int y) {
-		// TODO: spread it
-	}
+    @Override
+    public void updateBlock(int x, int y) {
+        // TODO: spread it
+    }
 
-	private void spread(int x, int y) {
-		Block block = (Block) Item.fromID(LastTry.world.getBlockID(x, y));
+    private void spread(int x, int y) {
+        Block block = (Block) Item.fromID(LastTry.world.getBlockID(x, y));
 
-		if (block != null && this.canBeGrownAt(block.getId())) {
-			LastTry.world.setBlock(this.id, x, y);
-		}
-	}
+        if (block != null && this.canBeGrownAt(block.getId())) {
+            LastTry.world.setBlock(this.id, x, y);
+        }
+    }
 
-	public boolean canBeGrownAt(short id) {
-		if (id == ItemID.dirtBlock) {
-			return true;
-		}
+    public boolean canBeGrownAt(short id) {
+        if (id == ItemID.dirtBlock) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

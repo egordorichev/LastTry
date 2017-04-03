@@ -7,46 +7,46 @@ import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Item;
 
 public class EyeOfCthulhu extends Boss {
-	public EyeOfCthulhu() {
-		super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800);
+    public EyeOfCthulhu() {
+        super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800);
 
-		this.texture = Textures.eyeOfCthulhu;
+        this.texture = Textures.eyeOfCthulhu;
 
-		this.renderBounds.width = 110;
-		this.renderBounds.height = 166;
+        this.renderBounds.width = 110;
+        this.renderBounds.height = 166;
 
-		this.maxAi = 600;
+        this.maxAi = 600;
 
-		this.hitbox.x = 8;
-		this.hitbox.y = 58;
-		this.hitbox.width = 94;
-		this.hitbox.height = 104;
+        this.hitbox.x = 8;
+        this.hitbox.y = 58;
+        this.hitbox.width = 94;
+        this.hitbox.height = 104;
 
-		this.state = State.FLYING;
-		this.isSolid = false;
+        this.state = State.FLYING;
+        this.isSolid = false;
 
-		this.drops.add(new Drop(Item.goldCoin, 5, 5));
-		this.drops.add(new Drop(Item.copperCoin, 15));
-		this.drops.add(new Drop(Item.heart, 5, 10));
+        this.drops.add(new Drop(Item.goldCoin, 5, 5));
+        this.drops.add(new Drop(Item.copperCoin, 15));
+        this.drops.add(new Drop(Item.heart, 5, 10));
 
-		this.phases = new Phase[2];
+        this.phases = new Phase[2];
 
-		this.phases[0] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 30 : 15, 12) {
-			@Override
-			public void onEnter() {
-				/*Animation flyingAnimation = new Animation();
+        this.phases[0] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 30 : 15, 12) {
+            @Override
+            public void onEnter() {
+                /*Animation flyingAnimation = new Animation();
 
 				flyingAnimation.addFrame(texture.getSubImage(0, 0, 110, 166), 300);
 				flyingAnimation.addFrame(texture.getSubImage(0, 166, 110, 166), 300);
 				flyingAnimation.addFrame(texture.getSubImage(0, 332, 110, 166), 300);
 
 				animations[State.FLYING.getId()] = flyingAnimation;*/
-			}
-		};
+            }
+        };
 
-		this.phases[1] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 22 : 45, 0) {
-			@Override
-			public void onEnter() {
+        this.phases[1] = new Phase(this, this.stats.maxHp, LastTry.world.isExpertMode() ? 22 : 45, 0) {
+            @Override
+            public void onEnter() {
 				/*
 				Animation flyingAnimation = new Animation();
 
@@ -55,21 +55,21 @@ public class EyeOfCthulhu extends Boss {
 				flyingAnimation.addFrame(texture.getSubImage(0, 830, 110, 166), 300);
 
 				animations[State.FLYING.getId()] = flyingAnimation;*/
-			}
-		};
+            }
+        };
 
-		this.phases[0].enter();
-	}
+        this.phases[0].enter();
+    }
 
-	@Override
-	public void updateAI() {
-		super.updateAI();
+    @Override
+    public void updateAI() {
+        super.updateAI();
 
-		this.fly(-Float.compare(this.getCenterX(), LastTry.player.getCenterX()),
-				-Float.compare(this.getCenterY(), LastTry.player.getCenterY()));
+        this.fly(-Float.compare(this.getCenter().x, LastTry.player.getCenter().x),
+                -Float.compare(this.getCenter().y, LastTry.player.getCenter().y));
 
-		if (this.currentAi == 0 || this.currentAi == 120 || this.currentAi == 240) {
-			// TODO
-		}
-	}
+        if (this.currentAi == 0 || this.currentAi == 120 || this.currentAi == 240) {
+            // TODO
+        }
+    }
 }

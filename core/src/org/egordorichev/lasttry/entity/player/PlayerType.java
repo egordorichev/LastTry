@@ -1,18 +1,18 @@
 package org.egordorichev.lasttry.entity.player;
 
 public enum PlayerType {
-	SOFTCORE("Softcore"),
-	MEDIUMCORE("Mediumcore"),
-	HARDCORE("Hardcore");
+    SOFTCORE("Softcore"),
+    MEDIUMCORE("Mediumcore"),
+    HARDCORE("Hardcore");
 
-	private String name;
+    private String name;
 
-	PlayerType(String name) {
-		this.name = name;
-	}
+    PlayerType(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 }

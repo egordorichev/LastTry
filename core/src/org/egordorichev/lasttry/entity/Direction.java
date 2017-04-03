@@ -1,7 +1,9 @@
 package org.egordorichev.lasttry.entity;
 
-/** Horizontal direction */
+/**
+ * Horizontal direction
+ */
 public enum Direction {
-	LEFT,
-	RIGHT
+    LEFT,
+    RIGHT
 }

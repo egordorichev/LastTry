@@ -2,7 +2,9 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -10,179 +12,227 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
-import org.egordorichev.lasttry.util.*;
-import org.egordorichev.lasttry.world.*;
+import org.egordorichev.lasttry.util.Debug;
+import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.util.Util;
+import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldInfo;
+import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 
 public class LastTry extends Game {
-	/** Camera */
-	public static OrthographicCamera camera;
+    /**
+     * Random instance
+     */
+    public static final Random random = new Random();
+    /**
+     * Camera
+     */
+    public static OrthographicCamera camera;
+    /**
+     * UI Camera
+     */
+    public static OrthographicCamera uiCamera;
+    /**
+     * Public sprite batch
+     */
+    public static SpriteBatch batch;
+    /**
+     * Game viewport
+     */
+    public static Viewport viewport;
+    /**
+     * Last Try instance
+     */
+    public static LastTry instance;
 
-	/** UI Camera */
-	public static OrthographicCamera uiCamera;
+    /**
+     * Static log instance
+     */
+    public static Log log;
 
-	/** Public sprite batch */
-	public static SpriteBatch batch;
+    /**
+     * Ui manager
+     */
+    public static UiManager ui;
 
-	/** Game viewport */
-	public static Viewport viewport;
+    /**
+     * World instance
+     */
+    public static World world;
 
-	/** Random instance */
-	public static final Random random = new Random();
+    /**
+     * World info
+     */
+    public static WorldInfo worldInfo;
 
-	/** Last Try instance */
-	public static LastTry instance;
+    /**
+     * Player instance
+     */
+    public static Player player;
 
-	/** Static log instance */
-	public static Log log;
+    /**
+     * Player info
+     */
+    public static PlayerInfo playerInfo;
 
-	/** Ui manager */
-	public static UiManager ui;
+    /**
+     * Environment instance
+     */
+    public static Environment environment;
 
-	/** World instance */
-	public static World world;
+    /**
+     * PhysicBody manager instance
+     */
+    public static EntityManager entityManager;
 
-	/** World info */
-	public static WorldInfo worldInfo;
+    /**
+     * Mod loader
+     */
+    public static ModLoader modLoader;
 
-	/** Player instance */
-	public static Player player;
+    /**
+     * Debug helper
+     */
+    public static Debug debug;
 
-	/** Player info */
-	public static PlayerInfo playerInfo;
+    /**
+     * Used for debug
+     */
+    public static ShapeRenderer shapeRenderer;
 
-	/** Environment instance */
-	public static Environment environment;
+    /**
+     * Logs a info-level message
+     *
+     * @param message message to log
+     */
+    public static void log(String message) {
+        log.info(message);
+    }
 
-	/** PhysicBody manager instance */
-	public static EntityManager entityManager;
+    /**
+     * Returns mouse X coordinate, under the world
+     *
+     * @return mouse X coordinate, under the world
+     */
+    public static int getMouseXInWorld() {
+        return (int) (player.getCenter().x - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+    }
 
-	/** Mod loader */
-	public static ModLoader modLoader;
+    /**
+     * Returns mouse Y coordinate, under the world
+     *
+     * @return mouse Y coordinate, under the world
+     */
+    public static int getMouseYInWorld() {
+        return (int) (player.getCenter().y - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+    }
 
-	/** Debug helper */
-	public static Debug debug;
+    /**
+     * Handles exception, if it is critical, exits the game
+     *
+     * @param exception exception to handle
+     */
+    public static void handleException(Exception exception) {
+        log.error(exception.getMessage());
+        exception.printStackTrace();
 
-	/** Used for debug */
-	public static ShapeRenderer shapeRenderer;
+        if (exception instanceof NullPointerException) {
+            log.warn("Exiting");
+            Gdx.app.exit();
+        }
 
-	/** Creates first-priority instances */
-	@Override
-	public void create() {
-		instance = this;
-		log = new Log();
-		debug = new Debug();
-		shapeRenderer = new ShapeRenderer();
+        // TODO: handle other exception types
+    }
 
-		Gdx.input.setInputProcessor(Util.multiplexer);
-		Gdx.graphics.setTitle(this.getRandomWindowTitle());
+    /**
+     * Creates first-priority instances
+     */
+    @Override
+    public void create() {
+        instance = this;
+        log = new Log();
+        debug = new Debug();
+        shapeRenderer = new ShapeRenderer();
 
-		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
+        Gdx.input.setInputProcessor(InputManager.multiplexer);
+        Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
-		camera = new OrthographicCamera(width, height);
-		camera.setToOrtho(false, width, height);
-		uiCamera = new OrthographicCamera(width, height);
-		uiCamera.setToOrtho(false, width, height);
-		viewport = new FitViewport(width, height);
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
 
-		batch = new SpriteBatch();
+        camera = new OrthographicCamera(width, height);
+        camera.setToOrtho(false, width, height);
+        uiCamera = new OrthographicCamera(width, height);
+        uiCamera.setToOrtho(false, width, height);
+        viewport = new FitViewport(width, height);
 
-		ui = new UiManager();
+        batch = new SpriteBatch();
 
-		this.setScreen(new SplashState());
-	}
+        ui = new UiManager();
 
-	/**
-	 * Handles window resize
-	 * @param width new window width
-	 * @param height new window height
-	 */
-	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
+        this.setScreen(new SplashState());
+    }
 
-		viewport.update(width, height);
-		camera.update();
-		camera.update();
-	}
+    /**
+     * Handles window resize
+     *
+     * @param width  new window width
+     * @param height new window height
+     */
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
 
-	/** Renders and updates the game */
-	@Override
-	public void render() {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+        viewport.update(width, height);
+        camera.update();
+        camera.update();
+    }
 
-		batch.enableBlending();
-		batch.begin();
-		super.render();
-		batch.end();
-	}
+    /**
+     * Renders and updates the game
+     */
+    @Override
+    public void render() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
 
-	/** Handles game exit */
-	@Override
-	public void dispose() {
-		if (world != null) {
-			WorldProvider.save(world);
-		}
-	}
+        batch.enableBlending();
+        batch.begin();
+        super.render();
+        batch.end();
+    }
 
-	/** Logs a info-level message
-	 * @param message message to log
-	 */
-	public static void log(String message) {
-		log.info(message);
-	}
+    /**
+     * Handles game exit
+     */
+    @Override
+    public void dispose() {
+        if (world != null) {
+            WorldProvider.save(world);
+        }
+    }
 
-	/**
-	 * Returns mouse X coordinate, under the world
-	 * @return mouse X coordinate, under the world
-	 */
-	public static int getMouseXInWorld() {
-		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + Gdx.input.getX());
-	}
-
-	/**
-	 * Returns mouse Y coordinate, under the world
-	 * @return mouse Y coordinate, under the world
-	 */
-	public static int getMouseYInWorld() {
-		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + Gdx.input.getY());
-	}
-
-	/**
-	 * Handles exception, if it is critical, exits the game
-	 * @param exception exception to handle
-	 */
-	public static void handleException(Exception exception) {
-		log.error(exception.getMessage());
-		exception.printStackTrace();
-
-		if (exception instanceof NullPointerException) {
-			log.warn("Exiting");
-			Gdx.app.exit();
-		}
-		
-		// TODO: handle other exception types
-	}
-
-	/**
-	 * Returns random title for game the window
-	 * @return random title for game the window
-	 */
-	private String getRandomWindowTitle() {
-		return new String[] { "LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
-			"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
-			"LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
-			"LastTry: The Grass is Greener on This Side",
-			"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
-			"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
-			"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
-		}[random.nextInt(17)];
-	}
+    /**
+     * Returns random title for game the window
+     *
+     * @return random title for game the window
+     */
+    private String getRandomWindowTitle() {
+        return new String[]{"LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
+                "LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
+                "LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
+                "LastTry: The Grass is Greener on This Side",
+                "LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
+                "LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
+                "LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
+        }[random.nextInt(17)];
+    }
 }

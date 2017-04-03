@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.player;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +8,7 @@ import org.egordorichev.lasttry.entity.Direction;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
@@ -16,6 +16,7 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Entity {
+
 	/** Player info */
 	protected PlayerInfo info;
 	
@@ -134,36 +135,36 @@ public class Player extends Entity {
 		this.animations[this.state.getId()].update();
 
 		if (this.state == State.FLYING) {
-			if (Gdx.input.isKeyPressed(Input.Keys.SPACE) ||  Gdx.input.isKeyPressed(Input.Keys.W)) {
+			if (InputManager.isKeyDown(Input.Keys.SPACE) || InputManager.isKeyDown(Input.Keys.W)) {
 				this.velocity.y -= 1;
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			if (InputManager.isKeyDown(Input.Keys.S)) {
 				this.velocity.y += 1;
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+			if (InputManager.isKeyDown(Input.Keys.A)) {
 				this.move(Direction.LEFT);
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+			if (InputManager.isKeyDown(Input.Keys.D)) {
 				this.move(Direction.RIGHT);
 			}
 		} else {
-			if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			if (InputManager.isKeyDown(Input.Keys.SPACE)) {
 				this.jump();
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+			if (InputManager.isKeyDown(Input.Keys.A)) {
 				this.move(Direction.LEFT);
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+			if (InputManager.isKeyDown(Input.Keys.D)) {
 				this.move(Direction.RIGHT);
 			}
 		}
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.E) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+		if (InputManager.isKeyJustDown(Input.Keys.E) || InputManager.isKeyJustDown(Input.Keys.ESCAPE)) {
 			this.inventory.toggle();
 		}
 

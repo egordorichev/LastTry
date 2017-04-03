@@ -2,11 +2,13 @@ package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.player.Player;
-import org.egordorichev.lasttry.item.items.*;
-import org.egordorichev.lasttry.item.block.*;
-import org.egordorichev.lasttry.item.block.plant.*;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.item.block.BlockGround;
+import org.egordorichev.lasttry.item.block.EvilBlock;
+import org.egordorichev.lasttry.item.block.SlippyBlock;
+import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.item.block.plant.*;
+import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.items.seeds.GrassSeeds;
 import org.egordorichev.lasttry.item.items.seeds.Seeds;
 
