@@ -25,13 +25,19 @@ public class WorldProvider {
      * @return all worlds in the "worlds/" directory
      */
     public static WorldInfo[] getWorlds() {
-        File worldsFolder = new File("worlds/");
+        File worldsDirectory = new File("worlds/");
 
-        if(!Util.fileExists(worldsFolder.getPath())){
-            LastTry.logDebug("There is no worlds directory so one is being created!");
+        if (!worldsDirectory.mkdir()) {
+            try {
+                worldsDirectory.createNewFile();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }else{
+            LastTry.logWarning("There's no worlds directory so one will be created!");
         }
 
-        File[] files = worldsFolder.listFiles();
+        File[] files = worldsDirectory.listFiles();
 
         List<WorldInfo> worlds = new ArrayList<>();
 

@@ -23,13 +23,19 @@ public class PlayerProvider {
      * @return all players in the "players/" directory
      */
     public static PlayerInfo[] getPlayers() {
-        File playersFolder = new File("players/");
+        File playersDirectory = new File("players/");
 
-        if(!Util.fileExists(playersFolder.getPath())){
-            LastTry.logDebug("There is no players directory so one is being created!");
+        if (!playersDirectory.mkdir()) {
+            try {
+                playersDirectory.createNewFile();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }else{
+            LastTry.logWarning("There's no worlds directory so one will be created!");
         }
 
-        File[] files = playersFolder.listFiles();
+        File[] files = playersDirectory.listFiles();
 	    
         List<PlayerInfo> players = new ArrayList<>();
 
