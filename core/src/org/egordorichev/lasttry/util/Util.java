@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.util;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.input.InputManager;
 
 import java.io.File;
 import java.util.concurrent.Executors;
@@ -10,14 +11,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Util {
-	/** Input handler */
-	public static InputMultiplexer multiplexer = new InputMultiplexer();
-
 	/** Last pressed mouse button */
 	private static int currentButton = -1;
 
 	static {
-		multiplexer.addProcessor(new InputProcessor() {
+		InputManager.multiplexer.addProcessor(new InputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
 				return false;
