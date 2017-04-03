@@ -34,7 +34,8 @@ public class Player extends Entity {
 		this.animations = new Animation[State.values().length];
 		this.setupTexture();
 
-		inventory = new UiInventory(89);
+		this.inventory = new UiInventory(89);
+		LastTry.ui.add(this.inventory);
 
 		this.hitbox.height -= 3;
 	}
@@ -152,7 +153,7 @@ public class Player extends Entity {
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.E) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			inventory.toggle();
+			this.inventory.toggle();
 		}
 
 		super.update(dt);

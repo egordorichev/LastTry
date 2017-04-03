@@ -75,9 +75,38 @@ public class PlayerProvider {
 			.GRAY, Color.CORAL, 1, true)); // TODO: render info
 	}
 
-	public static Player load(String playerName) {
-		return new Player(new PlayerInfo(playerName, 100, 20, PlayerType.SOFTCORE, CURRENT_VERSION, null)); // TODO
-	}
+	public static Player load() {
+		try {
+			FileReader stream = new FileReader(getPath(LastTry.playerInfo.name));
+
+			int version = stream.readInt32();
+
+			if (version != CURRENT_VERSION) {
+				throw new RuntimeException("Loading an unknow player version");
+			}
+
+			LastTry.playerInfo.maxHp = stream.readInt16();
+			LastTry.playerInfo.maxMana = stream.readInt16();
+
+			switch (stream.readByte()) {
+				case 0: default:
+					LastTry.playerInfo.type = PlayerType.SOFTCORE;
+				break;
+				case 1:
+					LastTry.playerInfo.type = PlayerType.MEDIUMCORE;
+				break;
+				case 2:
+					LastTry.playerInfo.type = PlayerType.HARDCORE;
+				break;
+			}
+
+			stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+		}
+
+		return new Player(LastTry.playerInfo);
+ 	}
 
 	public static PlayerInfo create(PlayerInfo info) {
 		LastTry.playerInfo = info;

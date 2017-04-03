@@ -13,7 +13,6 @@ import org.egordorichev.lasttry.item.items.Ammo;
 import org.egordorichev.lasttry.item.items.Armor;
 import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Dye;
-import org.egordorichev.lasttry.graphics.Assets;
 
 public class UiItemSlot extends UiComponent {
 	public enum Type {

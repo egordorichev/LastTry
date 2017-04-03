@@ -83,6 +83,10 @@ public class Textures {
 	public static Texture jungleGrass;
 	public static Texture jungleGrassIcon;
 	public static Texture jungleGrassSeeds;
+	public static Texture ashBlockIcon;
+	public static Texture ashBlock;
+	public static Texture snowBlockIcon;
+	public static Texture snowBlock;
 
 	// Buffs
 	public static Texture ammoReservationBuff;

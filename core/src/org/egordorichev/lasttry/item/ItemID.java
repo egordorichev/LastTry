@@ -32,17 +32,19 @@ public class ItemID {
 	public final static short deathWeed = 29;
 	public final static short waterLeaf = 30;
 	public final static short fireBlossom = 31;
-	public final static short iceThorn = 32;
+	public final static short silverThorn = 32;
 	public final static short dayBloomSeeds = 33;
 	public final static short blinkRootSeeds = 35;
 	public final static short moonGlowSeeds = 36;
 	public final static short deathWeedSeeds = 37;
 	public final static short waterLeafSeeds = 38;
 	public final static short fireBlossomSeeds = 39;
-	public final static short iceThornSeeds = 40;
+	public final static short silverThornSeeds = 40;
 	public final static short mudBlock = 41;
 	public final static short jungleGrassBlock = 42;
 	public final static short jungleGrassSeeds = 43;
+	public final static short ashBlock = 44;
+	public final static short snowBlock = 45;
 
-	public final static short count = 44; // Change this, if you add another item!
+	public final static short count = 46; // Change this, if you add another item!
 }

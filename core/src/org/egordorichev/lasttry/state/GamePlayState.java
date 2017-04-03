@@ -15,25 +15,13 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.modifier.MeleeModifier;
 import org.egordorichev.lasttry.mod.ModLoader;
-import org.egordorichev.lasttry.world.Environment;
-import org.egordorichev.lasttry.world.WorldProvider;
 
 public class GamePlayState implements State {
 	public GamePlayState() {
-		LastTry.environment = new Environment();
-		LastTry.world = WorldProvider.load();
-
 		int spawnX = LastTry.world.getWidth() / 2;
 		int spawnY = 50;
 
-		LastTry.entityManager = new EntityManager();
-
-		LastTry.player = new Player(new PlayerInfo("George", 100, 20, PlayerType.SOFTCORE, PlayerProvider
-			.CURRENT_VERSION, new PlayerRenderInfo(1, Color.GREEN, Color.GRAY, Color.CORAL, 1, true)));
-
 		LastTry.player.spawn(spawnX, spawnY);
-		LastTry.ui.add(LastTry.player.inventory);
-
 		LastTry.player.inventory.add(new ItemHolder(Item.woodenSword, 1, MeleeModifier.legendary));
 		LastTry.player.inventory.add(new ItemHolder(Item.ironPickaxe, 1, MeleeModifier.light));
 		LastTry.player.inventory.add(new ItemHolder(Item.crimstoneBlock, 100));
@@ -48,15 +36,27 @@ public class GamePlayState implements State {
 		LastTry.player.inventory.add(new ItemHolder(Item.jungleGrassBlock, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.moonGlowSeeds, 10));
 		LastTry.player.inventory.add(new ItemHolder(Item.jungleGrassSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.deathWeed, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.deathWeedSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.silverThorn, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.silverThornSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.fireBlossom, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.fireBlossomSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.waterLeaf, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.waterLeafSeeds, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.ashBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.snowBlock, 10));
+		LastTry.player.inventory.add(new ItemHolder(Item.sandBlock, 10));
 
 		LastTry.player.addEffect(Buff.ironskin, 240);
 		LastTry.player.addEffect(Buff.regeneration, 240);
 		LastTry.player.addEffect(Buff.honey, 30);
 
+		LastTry.entityManager = new EntityManager();
 
-		for (int i = 0; i < 10; i++) {
-			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, 40 + LastTry.random.nextInt(100), 60);
-			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, 10 + LastTry.random.nextInt(100), 60);
+		for (int i = 0; i < 2; i++) {
+			LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, spawnX, spawnY);
+			LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
 		}
 
 		LastTry.modLoader = new ModLoader();

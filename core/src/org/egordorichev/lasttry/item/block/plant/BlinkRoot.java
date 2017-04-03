@@ -24,13 +24,11 @@ public class BlinkRoot extends Plant {
 
 	@Override
 	public boolean canBeGrownAt(int x, int y) {
-		short id = LastTry.world.getBlockID(x, y);
-
-		if (id != ItemID.none) {
+		if (!super.canBeGrownAt(x, y)) {
 			return false;
 		}
 
-		id = LastTry.world.getBlockID(x, y + 1);
+		short id = LastTry.world.getBlockID(x, y + 1);
 
 		if (id != ItemID.dirtBlock) { // TODO: add mud
 			return false;

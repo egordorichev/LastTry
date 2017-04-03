@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item.block.plant;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.EffectiveToolType;
 
@@ -29,6 +30,12 @@ public class Plant extends Block {
 	}
 
 	public boolean canBeGrownAt(int x, int y) {
-		return false;
+		short id = LastTry.world.getBlockID(x, y);
+
+		if (id != ItemID.none) {
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -15,6 +15,8 @@ import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.*;
 import org.egordorichev.lasttry.world.*;
+import org.egordorichev.lasttry.world.environment.Environment;
+
 import java.util.Random;
 
 public class LastTry extends Game {

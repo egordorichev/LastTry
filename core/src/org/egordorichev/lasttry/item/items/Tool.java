@@ -24,7 +24,6 @@ public class Tool extends Item {
 		this.autoSwing = false;
 		this.useDelay = 0.0f;
 		this.baseDamage = baseDamage;
-
 		this.pickaxePower = pickaxePower;
 		this.axePower = axePower;
 		this.hammerPower = hammerPower;
@@ -39,6 +38,20 @@ public class Tool extends Item {
 
 	@Override
 	public boolean use() {
+		if (!this.isReady()) {
+			return false;
+		}
+
+		this.useDelay = this.useSpeed;
+		return this.onUse();
+	}
+
+	@Override
+	public void update(int dt) {
+		this.useDelay = Math.max(0, this.useDelay - 1);
+	}
+
+	protected boolean onUse() {
 		return false;
 	}
 

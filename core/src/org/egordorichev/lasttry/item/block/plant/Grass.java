@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item.block.plant;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.BlockGround;
 
@@ -13,21 +14,22 @@ public class Grass extends BlockGround {
 
 	@Override
 	public void updateBlock(int x, int y) {
-		int nx = x - 1 + LastTry.random.nextInt(2);
-		int ny = y - 1 + LastTry.random.nextInt(2);
+		// TODO: spread it
+	}
 
-		if (nx == x && ny == y) {
-			return;
-		}
-
-		Block block = (Block) Item.fromID(LastTry.world.getBlockID(nx, ny));
+	private void spread(int x, int y) {
+		Block block = (Block) Item.fromID(LastTry.world.getBlockID(x, y));
 
 		if (block != null && this.canBeGrownAt(block.getId())) {
-			LastTry.world.setBlock(this.id, nx, ny);
+			LastTry.world.setBlock(this.id, x, y);
 		}
 	}
 
 	public boolean canBeGrownAt(short id) {
+		if (id == ItemID.dirtBlock) {
+			return true;
+		}
+
 		return false;
 	}
 }

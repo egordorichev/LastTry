@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import org.egordorichev.lasttry.LastTry;
 
 import java.io.File;
 import java.util.concurrent.Executors;
@@ -61,6 +62,10 @@ public class Util {
 				return false;
 			}
 		});
+	}
+
+	public static int random(int min, int max) {
+		return LastTry.random.nextInt((max - min) + 1) + min;
 	}
 
 	public static boolean mouseButtonJustPressed() {

@@ -17,7 +17,7 @@ public class UiInventory extends UiComponent {
 	private boolean open;
 
 	public ItemHolder currentItem = null;
-	public int currentSlot = 0;
+	public int currentSlot = 1;
 
 	public UiInventory(int size) {
 		super(new Rectangle(0, 0, 0, 0));
@@ -83,7 +83,6 @@ public class UiInventory extends UiComponent {
 			this.slots[i].hide();
 		}
 
-		this.currentSlot = 0;
 		this.slots[currentSlot].setActive(true);
 
 		Util.multiplexer.addProcessor(new InputProcessor() {
@@ -168,6 +167,8 @@ public class UiInventory extends UiComponent {
 		if (item == null) {
 			Fonts.f22.draw(LastTry.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
 		} else {
+			item.update((int) Gdx.graphics.getDeltaTime() * 1000000);
+
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
@@ -202,6 +203,7 @@ public class UiInventory extends UiComponent {
 
 	public ItemHolder getItemHolder(int index) {
 		if (index < 0 || index > 88) {
+			LastTry.log.warn("invalid");
 			return null;
 		}
 

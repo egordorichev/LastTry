@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.world.Environment;
 
 public class SplashState implements State {
 	/** Shows if assets are ready */

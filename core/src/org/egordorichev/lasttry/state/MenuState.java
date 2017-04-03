@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
-import org.egordorichev.lasttry.entity.player.PlayerType;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.ui.*;
 import org.egordorichev.lasttry.world.*;
+import org.egordorichev.lasttry.world.environment.Environment;
 
 public class MenuState implements State {
 	/** Panel, where the main menu is stored */
@@ -182,7 +182,7 @@ public class MenuState implements State {
 			private void selectWorld(int world) {
 				LastTry.worldInfo = this.worldInfos[world];
 				worldSelect.hide();
-				LastTry.instance.setScreen(new GamePlayState()); // TODO: pass the player and the world
+				LastTry.instance.setScreen(new LoadState());
 			}
 		};
 

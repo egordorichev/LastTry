@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.block.*;
 import org.egordorichev.lasttry.item.block.plant.*;
@@ -29,7 +30,7 @@ public class Item {
 	public static Item corruptThornyBushes = new ThornBlock(ItemID.corruptThornyBushes, "Corrupt thorny bushes", Textures.corruptThornyBushes);
 	public static Item purpleIceBlock = new EvilBlock(ItemID.purpleIceBlock, "Purple ice block", Textures.purpleIceIcon, Textures.purpleIce);
 	public static Item vileMushroom = new Mushroom(ItemID.vileMushroom, "Vile mushroom", Textures.vileMushroom);
-	public static Item crimstoneBlock = new BlockGround(ItemID.crimstoneBlock, "Crimstone block", Textures.crimstoneIcon, Textures.crimstone);
+	public static Item crimstoneBlock = new EvilBlock(ItemID.crimstoneBlock, "Crimstone block", Textures.crimstoneIcon, Textures.crimstone);
 	public static Item redIceBlock = new EvilBlock(ItemID.redIceBlock, "Red ice block", Textures.redIceIcon, Textures.redIce);
 	public static Item viciousMushroom = new Mushroom(ItemID.viciousMushroom, "Vicious mushroom", Textures.viciousMushroom);
 	public static Item sandBlock = new BlockGround(ItemID.sandBlock, "Sand block", Textures.sandBlockIcon, Textures.sandBlock);
@@ -41,16 +42,22 @@ public class Item {
 	public static Item dayBloom = new DayBloom();
 	public static Item blinkRoot = new BlinkRoot();
 	public static Item moonGlow = new MoonGlow();
-	public static Item dayBloomSeeds = new Seeds(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds,
-		(Plant) Item.dayBloom);
-	public static Item blinkRootSeeds = new Seeds(ItemID.blinkRootSeeds, "Blink Root Seeds", Textures.blinkRootSeeds,
-			(Plant) Item.blinkRoot);
-	public static Item moonGlowSeeds = new Seeds(ItemID.moonGlowSeeds, "Moon Glow Seeds", Textures.moonGlowSeeds,
-			(Plant) Item.moonGlow);
+	public static Item deathWeed = new DeathWeed();
+	public static Item waterLeaf = new WaterLeaf();
+	public static Item fireBlossom = new FireBlossom();
+	public static Item silverThorn = new SilverThorn();
+	public static Item dayBloomSeeds = new Seeds(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds, (Plant) Item.dayBloom);
+	public static Item blinkRootSeeds = new Seeds(ItemID.blinkRootSeeds, "Blink Root Seeds", Textures.blinkRootSeeds, (Plant) Item.blinkRoot);
+	public static Item moonGlowSeeds = new Seeds(ItemID.moonGlowSeeds, "Moon Glow Seeds", Textures.moonGlowSeeds, (Plant) Item.moonGlow);
+	public static Item deathWeedSeeds = new Seeds(ItemID.deathWeedSeeds, "Death Weed Seeds", Textures.deathWeedSeeds, (Plant) Item.deathWeed);
+	public static Item waterLeafSeeds = new Seeds(ItemID.waterLeafSeeds, "Water Leaf Seeds", Textures.waterLeafSeeds, (Plant) Item.waterLeaf);
+	public static Item fireBlossomSeeds = new Seeds(ItemID.fireBlossomSeeds, "Fire Blossom Seeds", Textures.fireBlossomSeeds, (Plant) Item.fireBlossom);
+	public static Item silverThornSeeds = new Seeds(ItemID.silverThornSeeds, "Silver Thorn Seeds", Textures.silverThornSeeds, (Plant) Item.silverThorn);
 	public static Item mudBlock = new BlockGround(ItemID.mudBlock, "Mud block", Textures.mudIcon, Textures.mud);
 	public static Item jungleGrassBlock = new JungleGrass();
-	public static Item jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds",
-		Textures.jungleGrassSeeds, (Grass) Item.jungleGrassBlock);
+	public static Item jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds", Textures.jungleGrassSeeds, (Grass) Item.jungleGrassBlock);
+	public static Item ashBlock = new BlockGround(ItemID.ashBlock, "Ash Block", Textures.ashBlockIcon, Textures.ashBlock);
+	public static Item snowBlock = new BlockGround(ItemID.snowBlock, "Snow Block", Textures.snowBlockIcon, Textures.snowBlock);
 
 	/** Item identifier */
 	protected short id;
@@ -99,7 +106,7 @@ public class Item {
 
 	/**
 	 * Return the item's {@link #id ID}.
-	 * 
+	 *
 	 * @return Item ID.
 	 */
 	public short getId() {
@@ -116,7 +123,7 @@ public class Item {
 
 	/**
 	 * Return the item's {@link #name}.
-	 * 
+	 *
 	 * @return Item name.
 	 */
 	public String getName() {
@@ -142,7 +149,7 @@ public class Item {
 	}
 	/**
 	 * Retrieve an item instance from an item identifier.
-	 * 
+	 *
 	 * @param id
 	 *            Item ID.
 	 * @return Item instance.

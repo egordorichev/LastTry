@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.item.block;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
