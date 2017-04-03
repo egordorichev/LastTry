@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
 import java.net.URL;
@@ -21,6 +22,11 @@ public class ModLoader {
 	 * Lookups and loads all mods from "assets/mods" directory
 	 */
 	public void load() {
+		if(!Util.fileExists("mods/")){
+			LastTry.log("Creating mods directory");
+			new File("mods/").mkdir();
+		}
+
 		File[] mods = new File("mods/").listFiles();
 
 		for (int i = 0; i < mods.length; i++) {
