@@ -123,8 +123,8 @@ public abstract class Enemy extends Entity {
             if (drop.getChance().roll()) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-                LastTry.entityManager.spawn(droppedItem, (int) this.getCenterX(),
-                        (int) this.getCenterY());
+                LastTry.entityManager.spawn(droppedItem, (int) this.getCenter().x,
+                        (int) this.getCenter().y);
             }
         }
     }

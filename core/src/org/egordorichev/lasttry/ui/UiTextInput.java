@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.ui;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiTextInput extends UiTextLabel {
@@ -14,7 +15,7 @@ public class UiTextInput extends UiTextLabel {
     public UiTextInput(Rectangle rectangle, Origin origin) {
         super(rectangle, origin, "|");
 
-        Util.multiplexer.addProcessor(new InputProcessor() {
+        InputManager.multiplexer.addProcessor(new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.BACKSPACE && text.length() > 0) {

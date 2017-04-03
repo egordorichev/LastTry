@@ -4,8 +4,8 @@ import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.entity.player.Player;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.util.Callable;
-import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 
 public class ModAPI {
@@ -59,7 +59,7 @@ public class ModAPI {
      * @param callable will be called, when key is pressed
      */
     public static void addKeyBinding(int key, Callable callable) {
-        Util.multiplexer.addProcessor(new InputProcessor() {
+        InputManager.multiplexer.addProcessor(new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == key) {

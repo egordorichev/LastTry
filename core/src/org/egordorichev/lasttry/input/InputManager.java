@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class InputManager {
     /**
@@ -54,7 +55,6 @@ public class InputManager {
             }
 
             @Override
-            @Deprecated
             public boolean mouseMoved(int screenX, int screenY) {
                 //TODO: Is this what's meant in here?
                 if (Gdx.input.getX() == screenX && Gdx.input.getY() == screenY) {
@@ -64,7 +64,6 @@ public class InputManager {
             }
 
             @Override
-            @Deprecated
             public boolean scrolled(int amount) {
                 return false;
             }
@@ -85,6 +84,14 @@ public class InputManager {
 
     public static boolean mouseAt(int x, int y) {
         return multiplexer.mouseMoved(x, y);
+    }
+
+    public static boolean isMouseButtonPressed(int button){
+        return Gdx.input.isButtonPressed(button);
+    }
+
+    public static Vector2 getMousePosition(){
+        return new Vector2(Gdx.input.getX(), Gdx.input.getY());
     }
 
 

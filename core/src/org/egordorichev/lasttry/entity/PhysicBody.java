@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Size;
 
 public abstract class PhysicBody {
     /**
@@ -128,7 +129,7 @@ public abstract class PhysicBody {
 
     private void updateXVelocity() {
         if (this.velocity.x != 0) {
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
+            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getPosition().x, this.hitbox.y + this.getPosition().y,
                     this.hitbox.width, this.hitbox.height);
 
             newHitbox.x += this.velocity.x;
@@ -174,7 +175,7 @@ public abstract class PhysicBody {
 
     private void updateYVelocity() {
         if (this.velocity.y != 0) {
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
+            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getPosition().x, this.hitbox.y + this.getPosition().y,
                     this.hitbox.width, this.hitbox.height);
 
             newHitbox.y += this.velocity.y;
@@ -335,17 +336,8 @@ public abstract class PhysicBody {
      *
      * @return Render x-position.
      */
-    public float getX() {
-        return this.renderBounds.x;
-    }
-
-    /**
-     * Return the entity's y-position.
-     *
-     * @return Render y-position.
-     */
-    public float getY() {
-        return this.renderBounds.y;
+    public Vector2 getPosition() {
+        return new Vector2(renderBounds.x, renderBounds.y);
     }
 
     /**
@@ -353,29 +345,17 @@ public abstract class PhysicBody {
      *
      * @return Render width.
      */
-    public float getWidth() {
-        return this.renderBounds.width;
+
+    public Size getSize(){
+        return new Size(renderBounds.width, renderBounds.height);
     }
 
-    /**
-     * Return the entity's height.
-     *
-     * @return Render height.
-     */
-    public float getHeight() {
-        return this.renderBounds.height;
-    }
-
-    public float getCenterX() {
-        return this.getX() + this.getWidth() / 2;
-    }
-
-    public float getCenterY() {
-        return this.getY() + this.getHeight() / 2;
+    public Vector2 getCenter(){
+        return new Vector2(getPosition().x + getSize().width / 2, getPosition().y + getSize().height / 2);
     }
 
     public Rectangle getHitbox() {
-        return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
+        return new Rectangle(getPosition().x + this.hitbox.x, this.getPosition().y + this.hitbox.y, this.hitbox.width,
                 this.hitbox.height);
     }
 

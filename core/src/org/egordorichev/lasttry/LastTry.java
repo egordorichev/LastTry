@@ -2,6 +2,7 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
@@ -22,6 +24,7 @@ import org.egordorichev.lasttry.world.WorldInfo;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 
 public class LastTry extends Game {
@@ -120,7 +123,7 @@ public class LastTry extends Game {
      * @return mouse X coordinate, under the world
      */
     public static int getMouseXInWorld() {
-        return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + Gdx.input.getX());
+        return (int) (player.getCenter().x - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
     }
 
     /**
@@ -129,7 +132,7 @@ public class LastTry extends Game {
      * @return mouse Y coordinate, under the world
      */
     public static int getMouseYInWorld() {
-        return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + Gdx.input.getY());
+        return (int) (player.getCenter().y - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
     }
 
     /**
@@ -159,7 +162,7 @@ public class LastTry extends Game {
         debug = new Debug();
         shapeRenderer = new ShapeRenderer();
 
-        Gdx.input.setInputProcessor(Util.multiplexer);
+        Gdx.input.setInputProcessor(InputManager.multiplexer);
         Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
         int width = Gdx.graphics.getWidth();

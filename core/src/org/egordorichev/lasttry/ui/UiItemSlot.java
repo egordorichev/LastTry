@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.items.*;
@@ -162,7 +163,7 @@ public class UiItemSlot extends UiComponent {
     protected void onStateChange() {
         if (this.state == State.MOUSE_DOWN) {
             if (LastTry.player.inventory.isOpen()) {
-                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
                     if (LastTry.player.inventory.currentItem != null && this.itemHolder != null
                             && this.itemHolder.getItem() == LastTry.player.inventory.currentItem.getItem()) {
 
@@ -186,7 +187,7 @@ public class UiItemSlot extends UiComponent {
                             this.itemHolder = tmp;
                         }
                     }
-                } else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                } else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
                     // TODO
                 }
             }

@@ -65,8 +65,8 @@ public class EyeOfCthulhu extends Boss {
     public void updateAI() {
         super.updateAI();
 
-        this.fly(-Float.compare(this.getCenterX(), LastTry.player.getCenterX()),
-                -Float.compare(this.getCenterY(), LastTry.player.getCenterY()));
+        this.fly(-Float.compare(this.getCenter().x, LastTry.player.getCenter().x),
+                -Float.compare(this.getCenter().y, LastTry.player.getCenter().y));
 
         if (this.currentAi == 0 || this.currentAi == 120 || this.currentAi == 240) {
             // TODO

@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiComponent {
@@ -141,14 +142,14 @@ public class UiComponent {
     protected void update() {
         Rectangle rectangle = new Rectangle(this.getX(), this.getClickY(), this.getWidth(), this.getHeight());
 
-        int x = Gdx.input.getX();
-        int y = Gdx.input.getY();
+        int x = (int)InputManager.getMousePosition().x;
+        int y = (int)InputManager.getMousePosition().y;
 
         if (rectangle.getX() < x && rectangle.getY() < y &&
                 rectangle.getX() + rectangle.getWidth() > x &&
                 rectangle.getY() + rectangle.getHeight() > y) {
 
-            if (this.state != State.MOUSE_DOWN && Util.mouseButtonJustPressed()) {
+            if (this.state != State.MOUSE_DOWN && InputManager.mouseButtonJustPressed()) {
                 this.state = State.MOUSE_DOWN;
                 this.onStateChange();
                 this.onClick();

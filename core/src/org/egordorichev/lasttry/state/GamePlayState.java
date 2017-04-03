@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.block.Block;
@@ -80,17 +81,17 @@ public class GamePlayState implements State {
         LastTry.entityManager.update((int) delta);
         LastTry.player.update((int) delta);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
+        if (InputManager.isKeyJustDown(Input.Keys.TAB)) {
             LastTry.debug.toggle();
         }
 
         LastTry.environment.render();
 
         LastTry.camera.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-                LastTry.player.getCenterX());
+                LastTry.player.getCenter().x);
 
         LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY());
+                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenter().y);
 
         LastTry.camera.update();
         LastTry.batch.setProjectionMatrix(LastTry.camera.combined);
@@ -101,8 +102,8 @@ public class GamePlayState implements State {
 
         LastTry.batch.setProjectionMatrix(LastTry.uiCamera.combined);
 
-        int mouseX = Gdx.input.getX();
-        int mouseY = Gdx.input.getY();
+        int mouseX = (int) InputManager.getMousePosition().x;
+        int mouseY = (int) InputManager.getMousePosition().y;
 
         int hp = LastTry.player.getHp();
         int x = Gdx.graphics.getWidth() - 260;

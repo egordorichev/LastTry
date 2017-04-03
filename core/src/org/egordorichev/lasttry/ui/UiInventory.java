@@ -1,12 +1,14 @@
 package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
@@ -84,7 +86,7 @@ public class UiInventory extends UiComponent {
 
         this.slots[currentSlot].setActive(true);
 
-        Util.multiplexer.addProcessor(new InputProcessor() {
+        InputManager.multiplexer.addProcessor(new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
                 return false;
@@ -188,7 +190,7 @@ public class UiInventory extends UiComponent {
         }
 
         if (currentItem != null) {
-            currentItem.renderAt(Gdx.input.getX() + 16, Gdx.graphics.getHeight() - Gdx.input.getY() - 16);
+            currentItem.renderAt((int)InputManager.getMousePosition().x + 16, Gdx.graphics.getHeight() - (int)InputManager.getMousePosition().y - 16);
         }
     }
 

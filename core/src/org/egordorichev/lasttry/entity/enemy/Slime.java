@@ -61,7 +61,7 @@ public class Slime extends Enemy {
         // If the current AI tick is the jump tick...
         if (canJump && this.currentAi == nextJump) {
             // Set direction so that slime faces the player
-            int dir = Float.compare(LastTry.player.getX(), this.getX());
+            int dir = Float.compare(LastTry.player.getPosition().x, this.getPosition().x);
             if (dir < 0) {
                 this.direction = Direction.LEFT;
             } else if (dir > 0) {
