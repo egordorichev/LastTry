@@ -112,3 +112,9 @@ gradle-app.setting
 ## OS Specific
 .DS_Store
 Thumbs.db
+
+core/assets/players/\.plr
+
+*.plr
+
+*.wld
