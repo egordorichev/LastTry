@@ -64,6 +64,10 @@ public class Util {
 		});
 	}
 
+	public static float map(float value, float inMin, float inMax, float outMin, float outMax) {
+		return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+	}
+
 	public static int random(int min, int max) {
 		return LastTry.random.nextInt((max - min) + 1) + min;
 	}

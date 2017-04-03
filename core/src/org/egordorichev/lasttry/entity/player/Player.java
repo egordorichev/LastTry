@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
@@ -101,9 +102,19 @@ public class Player extends Entity {
 
 	@Override
 	public void render() {
+		ItemHolder holder = this.inventory.getActiveHolder();
+
+		if (holder.getItem() != null) {
+			holder.getItem().renderAnimation();
+		}
+
 		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
 			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
 			(this.direction == Direction.LEFT), false);
+	}
+
+	public boolean isFlipped() {
+		return (this.direction == Direction.LEFT);
 	}
 
 	public void renderBuffs() {

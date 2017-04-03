@@ -48,10 +48,27 @@ public class Tool extends Item {
 
 	@Override
 	public void update(int dt) {
+		if (this.isReady()) {
+			return;
+		}
+
 		this.useDelay = Math.max(0, this.useDelay - 1);
+		this.onUpdate();
+
+		if (this.isReady()) {
+			this.onUseEnd();
+		}
 	}
 
 	protected boolean onUse() {
+		return false;
+	}
+
+	protected void onUpdate() {
+
+	}
+
+	protected boolean onUseEnd() {
 		return false;
 	}
 
@@ -72,7 +89,7 @@ public class Tool extends Item {
 	}
 
 	public boolean isReady() {
-		return Math.abs(0.0f - this.useDelay) < 0.05f;
+		return this.useDelay == 0;
 	}
 
 	public float getCriticalStrikeChance() {
@@ -81,6 +98,10 @@ public class Tool extends Item {
 
 	public float getBaseDamage() {
 		return this.baseDamage;
+	}
+
+	protected float getCurrentAngle() {
+		return 0; // TODO;
 	}
 
 	public Rarity getRarity() {

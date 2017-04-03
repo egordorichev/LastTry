@@ -104,6 +104,11 @@ public class Item {
 
 	}
 
+	/** Renders the item in player hands */
+	public void renderAnimation() {
+
+	}
+
 	/**
 	 * Return the item's {@link #id ID}.
 	 *
