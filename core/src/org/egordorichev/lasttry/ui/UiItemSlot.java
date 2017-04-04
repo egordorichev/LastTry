@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.item.items.*;
 public class UiItemSlot extends UiComponent {
     private boolean active;
     private Texture texture;
-    private ItemHolder itemHolder;
+    public ItemHolder itemHolder;
     private Type type;
     private TextureRegion back;
 

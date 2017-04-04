@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
+import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
@@ -173,6 +174,9 @@ public class LastTry extends Game {
     public void dispose() {
         if (world != null) {
             WorldProvider.save(world);
+        }
+        if(player != null){
+            PlayerProvider.save();
         }
     }
 

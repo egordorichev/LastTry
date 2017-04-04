@@ -17,7 +17,7 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 public class UiInventory extends UiComponent {
     public ItemHolder currentItem = null;
     public int currentSlot = 0;
-    private UiItemSlot[] slots;
+    public UiItemSlot[] slots;
     private boolean open;
 
     public UiInventory(int size) {
@@ -369,4 +369,8 @@ public class UiInventory extends UiComponent {
     public boolean isOpen() {
         return open;
     }
+
+    public UiItemSlot[] getSlots(){
+    	return slots;
+	}
 }
