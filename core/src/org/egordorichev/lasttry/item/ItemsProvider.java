@@ -48,16 +48,16 @@ public class ItemsProvider {
 		Items.waterLeaf = new WaterLeaf();
 		Items.fireBlossom = new FireBlossom();
 		Items.silverThorn = new SilverThorn();
-		Items.dayBloomSeeds = new Seeds(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds, (Plant) dayBloom);
-		Items.blinkRootSeeds = new Seeds(ItemID.blinkRootSeeds, "Blink Root Seeds", Textures.blinkRootSeeds, (Plant) blinkRoot);
-		Items.moonGlowSeeds = new Seeds(ItemID.moonGlowSeeds, "Moon Glow Seeds", Textures.moonGlowSeeds, (Plant) moonGlow);
-		Items.deathWeedSeeds = new Seeds(ItemID.deathWeedSeeds, "Death Weed Seeds", Textures.deathWeedSeeds, (Plant) deathWeed);
-		Items.waterLeafSeeds = new Seeds(ItemID.waterLeafSeeds, "Water Leaf Seeds", Textures.waterLeafSeeds, (Plant) waterLeaf);
-		Items.fireBlossomSeeds = new Seeds(ItemID.fireBlossomSeeds, "Fire Blossom Seeds", Textures.fireBlossomSeeds, (Plant) fireBlossom);
-		Items.silverThornSeeds = new Seeds(ItemID.silverThornSeeds, "Silver Thorn Seeds", Textures.silverThornSeeds, (Plant) silverThorn);
+		Items.dayBloomSeeds = new Seeds(ItemID.dayBloomSeeds, "Day Bloom Seeds", Textures.dayBloomSeeds, (Plant) Items.dayBloom);
+		Items.blinkRootSeeds = new Seeds(ItemID.blinkRootSeeds, "Blink Root Seeds", Textures.blinkRootSeeds, (Plant) Items.blinkRoot);
+		Items.moonGlowSeeds = new Seeds(ItemID.moonGlowSeeds, "Moon Glow Seeds", Textures.moonGlowSeeds, (Plant) Items.moonGlow);
+		Items.deathWeedSeeds = new Seeds(ItemID.deathWeedSeeds, "Death Weed Seeds", Textures.deathWeedSeeds, (Plant) Items.deathWeed);
+		Items.waterLeafSeeds = new Seeds(ItemID.waterLeafSeeds, "Water Leaf Seeds", Textures.waterLeafSeeds, (Plant) Items.waterLeaf);
+		Items.fireBlossomSeeds = new Seeds(ItemID.fireBlossomSeeds, "Fire Blossom Seeds", Textures.fireBlossomSeeds, (Plant) Items.fireBlossom);
+		Items.silverThornSeeds = new Seeds(ItemID.silverThornSeeds, "Silver Thorn Seeds", Textures.silverThornSeeds, (Plant) Items.silverThorn);
 		Items.mudBlock = new BlockGround(ItemID.mudBlock, "Mud block", ToolPower.pickaxe(10), Textures.mudIcon, Textures.mud);
 		Items.jungleGrassBlock = new JungleGrass();
-		Items.jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds", Textures.jungleGrassSeeds, (Grass) jungleGrassBlock);
+		Items.jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds", Textures.jungleGrassSeeds, (Grass) Items.jungleGrassBlock);
 		Items.ashBlock = new BlockGround(ItemID.ashBlock, "Ash Block", ToolPower.pickaxe(10), Textures.ashBlockIcon, Textures.ashBlock);
 		Items.snowBlock = new BlockGround(ItemID.snowBlock, "Snow Block", ToolPower.pickaxe(10), Textures.snowBlockIcon, Textures.snowBlock);
 	}

@@ -5,6 +5,8 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.item.ItemsProvider;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
 
@@ -19,6 +21,7 @@ public class LoadState implements State {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+                    	ItemsProvider.load();
                         loadString = "Loading environment...";
                         LastTry.environment = new Environment();
                         loadString = "Loading world...";
