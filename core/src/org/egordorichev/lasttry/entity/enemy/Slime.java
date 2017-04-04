@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.entity.Direction;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
-import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Slime extends Enemy {
@@ -23,7 +23,7 @@ public class Slime extends Enemy {
     public Slime(short id, int hp, int defense, int damage, Texture texture) {
         super(id, hp, defense, damage);
 
-        this.drops.add(new Drop(Item.gel, Drop.Chance.ALWAYS, 1, 4));
+        this.drops.add(new Drop(Items.gel, Drop.Chance.ALWAYS, 1, 4));
 
         this.maxAi = 90;
         this.updateJumpDelay();

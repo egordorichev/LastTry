@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
@@ -170,6 +171,39 @@ public class UiInventory extends UiComponent {
 			    }
 		    }
 	    }
+
+		switch (InputManager.getCurrentKeyDown()){
+			case Keys.HOTBAR_SLOT_0:
+				setHotbarSlot(0);
+				break;
+			case Keys.HOTBAR_SLOT_1:
+				setHotbarSlot(1);
+				break;
+			case Keys.HOTBAR_SLOT_2:
+				setHotbarSlot(2);
+				break;
+			case Keys.HOTBAR_SLOT_3:
+				setHotbarSlot(3);
+				break;
+			case Keys.HOTBAR_SLOT_4:
+				setHotbarSlot(4);
+				break;
+			case Keys.HOTBAR_SLOT_5:
+				setHotbarSlot(5);
+				break;
+			case Keys.HOTBAR_SLOT_6:
+				setHotbarSlot(6);
+				break;
+			case Keys.HOTBAR_SLOT_7:
+				setHotbarSlot(7);
+				break;
+			case Keys.HOTBAR_SLOT_8:
+				setHotbarSlot(8);
+				break;
+			case Keys.HOTBAR_SLOT_9:
+				setHotbarSlot(9);
+				break;
+		}
     }
 
     @Override
@@ -308,6 +342,16 @@ public class UiInventory extends UiComponent {
 
         return null;
     }
+
+    private void setHotbarSlot(int slot) throws IllegalArgumentException{
+    	if(slot > 10){
+    		throw new IllegalArgumentException("slot is out of range");
+		}
+
+		slots[currentSlot].setActive(false);
+		currentSlot = slot;
+		slots[currentSlot].setActive(true);
+	}
 
     public void open() {
         this.open = true;

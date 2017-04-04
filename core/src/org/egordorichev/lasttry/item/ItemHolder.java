@@ -97,10 +97,10 @@ public class ItemHolder {
     }
 
     /**
-     * Return the {@link org.egordorichev.lasttry.item.Item Item} instance being
+     * Return the {@link org.egordorichev.lasttry.item.Item Items} instance being
      * held.
      *
-     * @return Item instance.
+     * @return Items instance.
      */
     public Item getItem() {
         return this.item;
@@ -110,7 +110,7 @@ public class ItemHolder {
      * Return the {@link Modifier modifier} for
      * the held item.
      *
-     * @return Item modifier.
+     * @return Items modifier.
      */
     public Modifier getModifier() {
         return this.modifier;

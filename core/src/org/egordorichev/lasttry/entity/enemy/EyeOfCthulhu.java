@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Items;
 
 public class EyeOfCthulhu extends Boss {
     public EyeOfCthulhu() {
@@ -25,9 +25,9 @@ public class EyeOfCthulhu extends Boss {
         this.state = State.FLYING;
         this.isSolid = false;
 
-        this.drops.add(new Drop(Item.goldCoin, 5, 5));
-        this.drops.add(new Drop(Item.copperCoin, 15));
-        this.drops.add(new Drop(Item.heart, 5, 10));
+        this.drops.add(new Drop(Items.goldCoin, 5, 5));
+        this.drops.add(new Drop(Items.copperCoin, 15));
+        this.drops.add(new Drop(Items.heart, 5, 10));
 
         this.phases = new Phase[2];
 
