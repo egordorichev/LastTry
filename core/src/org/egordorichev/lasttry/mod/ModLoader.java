@@ -29,7 +29,7 @@ public class ModLoader {
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
-		}else{
+		} else {
 			LastTry.warning("There's no mods directory so one will be created!");
 		}
 

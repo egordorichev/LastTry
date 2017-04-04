@@ -33,7 +33,7 @@ public class WorldProvider {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-        }else{
+        } else {
             LastTry.warning("There's no worlds directory so one will be created!");
         }
 
@@ -159,6 +159,7 @@ public class WorldProvider {
 
         try {
             LastTry.log(LastTry.worldInfo.name);
+
             FileWriter stream = new FileWriter(getFilePath(LastTry.worldInfo.name));
 
             stream.writeInt32(CURRENT_VERSION);
@@ -252,6 +253,7 @@ public class WorldProvider {
             Biome.preload();
 
             World world = new World(width, height, flags, data);
+
             LastTry.log("Done loading!");
 
             return world;

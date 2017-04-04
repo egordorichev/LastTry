@@ -31,7 +31,7 @@ public class PlayerProvider {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-        }else{
+        } else {
             LastTry.warning("There's no worlds directory so one will be created!");
         }
 
