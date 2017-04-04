@@ -47,4 +47,7 @@ public class Items {
 	public static Item jungleGrassSeeds;
 	public static Item ashBlock;
 	public static Item snowBlock;
+	public static Item copperShortSword;
+	public static Item copperPickaxe;
+	public static Item copperAxe;
 }

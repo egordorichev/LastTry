@@ -21,31 +21,9 @@ public class GamePlayState implements State {
         int spawnY = 50;
 
         LastTry.player.spawn(spawnX, spawnY);
-        LastTry.player.inventory.add(new ItemHolder(Items.woodenSword, 1, MeleeModifier.legendary));
-        LastTry.player.inventory.add(new ItemHolder(Items.ironPickaxe, 1, MeleeModifier.light));
-        LastTry.player.inventory.add(new ItemHolder(Items.crimstoneBlock, 100));
-        LastTry.player.inventory.add(new ItemHolder(Items.stoneBlock, 999));
-        LastTry.player.inventory.add(new ItemHolder(Items.ebonstoneBlock, 200));
-        LastTry.player.inventory.add(new ItemHolder(Items.dayBloom, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.dayBloomSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.blinkRoot, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.blinkRootSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.dirtBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.mudBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.jungleGrassBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.moonGlowSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.jungleGrassSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.deathWeed, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.deathWeedSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.silverThorn, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.silverThornSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.fireBlossom, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.fireBlossomSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.waterLeaf, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.waterLeafSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.ashBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.snowBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.sandBlock, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.copperShortSword, 1, null));
+        LastTry.player.inventory.add(new ItemHolder(Items.copperPickaxe, 1, null));
+        LastTry.player.inventory.add(new ItemHolder(Items.copperAxe, 1, null));
 
         LastTry.player.addEffect(Buff.ironskin, 240);
         LastTry.player.addEffect(Buff.regeneration, 240);

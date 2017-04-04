@@ -7,12 +7,14 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
 
 public class Pickaxe extends Tool {
-    public Pickaxe(short id, String name, Rarity rarity, float baseDamage, int pickaxePower, int useSpeed, Texture texture) {
-        super(id, name, rarity, baseDamage, ToolPower.pickaxe(pickaxePower), useSpeed, texture);
+    public Pickaxe(short id, String name, Rarity rarity, float baseDamage, int power, int useSpeed, Texture texture) {
+        super(id, name, rarity, baseDamage, ToolPower.pickaxe(power), useSpeed, texture);
+
+        this.autoSwing = true;
     }
 
-    public Pickaxe(short id, String name, float baseDamage, int pickaxePower, int useSpeed, Texture texture) {
-        this(id, name, Rarity.WHITE, baseDamage, pickaxePower, useSpeed, texture);
+    public Pickaxe(short id, String name, float baseDamage, int power, int useSpeed, Texture texture) {
+        this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
     }
 
 	@Override
@@ -22,7 +24,7 @@ public class Pickaxe extends Tool {
 
 	@Override
 	protected void onUpdate() {
-
+		// TODO: modify hp
 	}
 
 	@Override

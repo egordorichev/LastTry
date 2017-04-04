@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.items.seeds.GrassSeeds;
 import org.egordorichev.lasttry.item.items.seeds.Seeds;
 
-public class ItemsProvider {
+public class ItemProvider {
 	private static boolean loaded = false;
 
 	public static void load() {
@@ -60,5 +60,8 @@ public class ItemsProvider {
 		Items.jungleGrassSeeds = new GrassSeeds(ItemID.jungleGrassSeeds, "Jungle Grass Seeds", Textures.jungleGrassSeeds, (Grass) Items.jungleGrassBlock);
 		Items.ashBlock = new BlockGround(ItemID.ashBlock, "Ash Block", ToolPower.pickaxe(10), Textures.ashBlockIcon, Textures.ashBlock);
 		Items.snowBlock = new BlockGround(ItemID.snowBlock, "Snow Block", ToolPower.pickaxe(10), Textures.snowBlockIcon, Textures.snowBlock);
+		Items.copperShortSword = new ShortSword(ItemID.copperShortSword, "Copper Short Sword", 5, 12, Textures.copperShortSword);
+		Items.copperPickaxe = new Pickaxe(ItemID.copperPickaxe, "Copper Pickaxe", 4, 35, 22, Textures.copperPickaxe);
+		Items.copperAxe = new Axe(ItemID.copperAxe, "Copper Axe", 3, 32, 29, Textures.copperAxe);
 	}
 }

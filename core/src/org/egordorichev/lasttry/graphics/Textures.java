@@ -87,6 +87,9 @@ public class Textures {
     public static Texture ashBlock;
     public static Texture snowBlockIcon;
     public static Texture snowBlock;
+    public static Texture copperShortSword;
+    public static Texture copperPickaxe;
+    public static Texture copperAxe;
 
     public static Texture tileCracks;
 

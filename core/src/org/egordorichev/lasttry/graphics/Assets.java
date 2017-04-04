@@ -122,6 +122,9 @@ public class Assets {
         Textures.ashBlock = load("AshTile.png");
         Textures.snowBlockIcon = load("SnowIcon.png");
         Textures.snowBlock = load("SnowTile.png");
+        Textures.copperShortSword = load("CopperShortSword.png");
+        Textures.copperPickaxe = load("CopperPickaxe.png");
+        Textures.copperAxe = load("CopperAxe.png");
 
         Textures.tileCracks = load("TileCracks.png");
 

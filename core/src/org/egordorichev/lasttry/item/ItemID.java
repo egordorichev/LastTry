@@ -45,6 +45,9 @@ public class ItemID {
     public final static short jungleGrassSeeds = 43;
     public final static short ashBlock = 44;
     public final static short snowBlock = 45;
+	public final static short copperShortSword = 46;
+	public final static short copperPickaxe = 47;
+	public final static short copperAxe = 48;
 
-    public final static short count = 46; // Change this, if you add another item!
+    public final static short count = 49; // Change this, if you add another item!
 }
