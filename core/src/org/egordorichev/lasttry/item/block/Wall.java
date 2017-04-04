@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.Items;
 
 public class Wall extends Item {
     protected Texture tiles;
@@ -20,7 +21,7 @@ public class Wall extends Item {
             default:
                 return null;
             case ItemID.dirtBlock:
-                return (Wall) Item.dirtWall;
+                return (Wall) Items.dirtWall;
         }
     }
 

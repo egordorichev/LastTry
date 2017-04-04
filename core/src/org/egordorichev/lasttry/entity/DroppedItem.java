@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.item.Items;
 
 /**
  * PhysicBody representing an item dropped in the world.
@@ -31,9 +32,9 @@ public class DroppedItem extends PhysicBody {
         super.update(dt);
 
         if (this.getHitbox().intersects(LastTry.player.getHitbox())) {
-            if (this.holder.getItem() == Item.heart) {
+            if (this.holder.getItem() == Items.heart) {
                 LastTry.player.modifyHp(20 * this.holder.getCount());
-            } else if (this.holder.getItem() == Item.mana) {
+            } else if (this.holder.getItem() == Items.mana) {
                 // TODO: mana
                 LastTry.player.inventory.add(this.holder);
             } else {

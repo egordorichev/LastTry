@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -79,6 +80,16 @@ public class InputManager {
     public static boolean isKeyJustDown(int key) {
         return Gdx.input.isKeyJustPressed(key);
     }
+
+    public static int getCurrentKeyDown() {
+    	for(int i = 0; i < 255; i++){
+    		if(Gdx.input.isKeyPressed(i)){
+    			return i;
+			}
+		}
+
+		return -2;
+	}
 
     public static boolean mouseAt(int x, int y) {
         return multiplexer.mouseMoved(x, y);
