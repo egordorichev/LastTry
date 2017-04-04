@@ -13,7 +13,7 @@ public class ItemsProvider {
 
 	public static void load() {
 		if (loaded) {
-			LastTry.warning("Trying to load items second time");
+			LastTry.error("Trying to load items second time");
 			return;
 		}
 

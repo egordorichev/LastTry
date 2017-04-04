@@ -2,168 +2,187 @@ package org.egordorichev.lasttry.entity.player;
 
 import com.badlogic.gdx.graphics.Color;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
-import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerProvider {
-    /**
-     * Current supported player version
-     */
-    public static int CURRENT_VERSION = 0;
+	/**
+	 * Current supported player version
+	 */
+	public static int CURRENT_VERSION = 0;
 
-    /**
-     * Returns all players in the "players/" directory
-     *
-     * @return all players in the "players/" directory
-     */
-    public static PlayerInfo[] getPlayers() {
-        File playersDirectory = new File("players/");
+	/**
+	 * Returns all players in the "players/" directory
+	 *
+	 * @return all players in the "players/" directory
+	 */
+	public static PlayerInfo[] getPlayers() {
+		File playersDirectory = new File("players/");
 
-        if (!playersDirectory.mkdir()) {
-            try {
-                playersDirectory.createNewFile();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        } else {
-            LastTry.warning("There's no worlds directory so one will be created!");
-        }
+		if (!playersDirectory.mkdir()) {
+			try {
+				playersDirectory.createNewFile();
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		} else {
+			LastTry.warning("There's no worlds directory so one will be created!");
+		}
 
-        File[] files = playersDirectory.listFiles();
-	    
-        List<PlayerInfo> players = new ArrayList<>();
+		File[] files = playersDirectory.listFiles();
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isFile()) {
-                players.add(getPlayerInfo("players/" + files[i].getName()));
-            }
-        }
+		List<PlayerInfo> players = new ArrayList<>();
 
-        return players.toArray(new PlayerInfo[0]);
-    }
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isFile()) {
+				players.add(getPlayerInfo("players/" + files[i].getName()));
+			}
+		}
 
-    /**
-     * Returns player info from given file name
-     *
-     * @param fileName player file
-     * @return player info
-     */
-    public static PlayerInfo getPlayerInfo(String fileName) {
-        String playerName = fileName.replace("players/", "").replace(".plr", "");
+		return players.toArray(new PlayerInfo[0]);
+	}
 
-        int version;
-        int maxHp;
-        int maxMana;
-        PlayerType type;
+	/**
+	 * Returns player info from given file name
+	 *
+	 * @param fileName player file
+	 * @return player info
+	 */
+	public static PlayerInfo getPlayerInfo(String fileName) {
+		String playerName = fileName.replace("players/", "").replace(".plr", "");
 
-        try {
-            FileReader stream = new FileReader(fileName);
+		int version;
+		int maxHp;
+		int maxMana;
+		PlayerType type;
 
-            version = stream.readInt32();
+		try {
+			FileReader stream = new FileReader(fileName);
 
-            maxHp = stream.readInt16();
-            maxMana = stream.readInt16();
+			version = stream.readInt32();
 
-            switch (stream.readByte()) {
-                case 0:
-                default:
-                    type = PlayerType.SOFTCORE;
-                    break;
-                case 1:
-                    type = PlayerType.MEDIUMCORE;
-                    break;
-                case 2:
-                    type = PlayerType.HARDCORE;
-                    break;
-            }
+			maxHp = stream.readInt16();
+			maxMana = stream.readInt16();
 
-            stream.close();
-        } catch (Exception exception) {
-            LastTry.handleException(exception);
-            return null;
-        }
+			switch (stream.readByte()) {
+				case 0:
+				default:
+					type = PlayerType.SOFTCORE;
+					break;
+				case 1:
+					type = PlayerType.MEDIUMCORE;
+					break;
+				case 2:
+					type = PlayerType.HARDCORE;
+					break;
+			}
 
-        return new PlayerInfo(playerName, maxHp, maxMana, type, version, new PlayerRenderInfo(1, Color.GREEN, Color
-                .GRAY, Color.CORAL, 1, true)); // TODO: render info
-    }
+			stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+			return null;
+		}
 
-    public static Player load() {
-        try {
-            FileReader stream = new FileReader(getPath(LastTry.playerInfo.name));
+		return new PlayerInfo(playerName, maxHp, maxMana, type, version, new PlayerRenderInfo(1, Color.GREEN, Color
+				.GRAY, Color.CORAL, 1, true)); // TODO: render info
+	}
 
-            int version = stream.readInt32();
+	public static Player load() {
+		Player player = null;
 
-            if (version != CURRENT_VERSION) {
-                throw new RuntimeException("Loading an unknow player version");
-            }
+		try {
+			FileReader stream = new FileReader(getPath(LastTry.playerInfo.name));
 
-            LastTry.playerInfo.maxHp = stream.readInt16();
-            LastTry.playerInfo.maxMana = stream.readInt16();
+			int version = stream.readInt32();
 
-            switch (stream.readByte()) {
-                case 0:
-                default:
-                    LastTry.playerInfo.type = PlayerType.SOFTCORE;
-                    break;
-                case 1:
-                    LastTry.playerInfo.type = PlayerType.MEDIUMCORE;
-                    break;
-                case 2:
-                    LastTry.playerInfo.type = PlayerType.HARDCORE;
-                    break;
-            }
+			if (version != CURRENT_VERSION) {
+				throw new RuntimeException("Loading an unknown player version");
+			}
 
-            stream.close();
-        } catch (Exception exception) {
-            LastTry.handleException(exception);
-        }
+			LastTry.playerInfo.maxHp = stream.readInt16();
+			LastTry.playerInfo.maxMana = stream.readInt16();
 
-        return new Player(LastTry.playerInfo);
-    }
 
-    public static PlayerInfo create(PlayerInfo info) {
-        LastTry.playerInfo = info;
+			switch (stream.readByte()) {
+				case 0:
+				default:
+					LastTry.playerInfo.type = PlayerType.SOFTCORE;
+					break;
+				case 1:
+					LastTry.playerInfo.type = PlayerType.MEDIUMCORE;
+					break;
+				case 2:
+					LastTry.playerInfo.type = PlayerType.HARDCORE;
+					break;
+			}
 
-        save();
+			player = new Player(LastTry.playerInfo);
 
-        return LastTry.playerInfo;
-    }
+			for (int i = 0; i < 88; i++) {
+				player.inventory.slots[i].itemHolder = new ItemHolder(Item.fromID(stream.readInt16()), 1);
+			}
 
-    public static void save() {
-        try {
-            FileWriter stream = new FileWriter(getPath(LastTry.playerInfo.name));
+			stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+		}
 
-            stream.writeInt32(CURRENT_VERSION);
+		return player;
+	}
 
-            stream.writeInt16((short) LastTry.playerInfo.maxHp);
-            stream.writeInt16((short) LastTry.playerInfo.maxMana);
+	public static PlayerInfo create(PlayerInfo info) {
+		LastTry.playerInfo = info;
 
-            switch (LastTry.playerInfo.type) {
-                case SOFTCORE:
-                default:
-                    stream.writeByte((byte) 0);
-                    break;
-                case MEDIUMCORE:
-                    stream.writeByte((byte) 1);
-                    break;
-                case HARDCORE:
-                    stream.writeByte((byte) 3);
-                    break;
-            }
+		save();
 
-            stream.close();
-        } catch (Exception exception) {
-            LastTry.handleException(exception);
-        }
-    }
+		return LastTry.playerInfo;
+	}
 
-    public static String getPath(String playerName) {
-        return "players/" + playerName + ".plr";
-    }
+	public static void save() {
+		try {
+			FileWriter stream = new FileWriter(getPath(LastTry.playerInfo.name));
+
+			stream.writeInt32(CURRENT_VERSION);
+
+			stream.writeInt16((short) LastTry.playerInfo.maxHp);
+			stream.writeInt16((short) LastTry.playerInfo.maxMana);
+
+			if (LastTry.player != null && LastTry.player.inventory != null) {
+				for (int i = 0; i < 88; i++) {
+					stream.writeInt16(LastTry.player.inventory.slots[i].getItem().getId());
+				}
+			}
+
+
+			switch (LastTry.playerInfo.type) {
+				case SOFTCORE:
+				default:
+					stream.writeByte((byte) 0);
+					break;
+				case MEDIUMCORE:
+					stream.writeByte((byte) 1);
+					break;
+				case HARDCORE:
+					stream.writeByte((byte) 3);
+					break;
+			}
+
+			stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+		}
+	}
+
+	public static String getPath(String playerName) {
+		return "players/" + playerName + ".plr";
+	}
 }

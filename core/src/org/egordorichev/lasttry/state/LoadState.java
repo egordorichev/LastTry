@@ -15,25 +15,17 @@ public class LoadState implements State {
     private String loadString = "";
 
     public LoadState() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                    	ItemsProvider.load();
-                        loadString = "Loading environment...";
-                        LastTry.environment = new Environment();
-                        loadString = "Loading world...";
-                        LastTry.world = WorldProvider.load();
-                        loadString = "Loading player...";
-                        LastTry.player = PlayerProvider.load();
+        new Thread(() -> Gdx.app.postRunnable(() -> {
+			ItemsProvider.load();
+			loadString = "Loading environment...";
+			LastTry.environment = new Environment();
+			loadString = "Loading world...";
+			LastTry.world = WorldProvider.load();
+			loadString = "Loading player...";
+			LastTry.player = PlayerProvider.load();
 
-                        loaded = true;
-                    }
-                });
-            }
-        }).start();
+			loaded = true;
+		})).start();
     }
 
     @Override

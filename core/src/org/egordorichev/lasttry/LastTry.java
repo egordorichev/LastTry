@@ -172,12 +172,15 @@ public class LastTry extends Game {
      */
     @Override
     public void dispose() {
-        if (world != null) {
-            WorldProvider.save(world);
-        }
         if(player != null){
             PlayerProvider.save();
         }
+
+        if (world != null) {
+            WorldProvider.save(world);
+        }
+
+
     }
 
     /**
