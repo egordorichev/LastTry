@@ -4,7 +4,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Items;
 
 public class BlueSlime extends Slime {

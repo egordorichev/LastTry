@@ -9,7 +9,6 @@ import org.egordorichev.lasttry.graphics.Fonts;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;

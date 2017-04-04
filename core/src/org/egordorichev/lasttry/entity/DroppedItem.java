@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 
@@ -10,7 +9,7 @@ import org.egordorichev.lasttry.item.Items;
  */
 public class DroppedItem extends PhysicBody {
     /**
-     * Item holder that this dropped entity represents.
+     * Items holder that this dropped entity represents.
      */
     private final ItemHolder holder;
 

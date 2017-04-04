@@ -1,36 +1,29 @@
 package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.block.*;
-import org.egordorichev.lasttry.item.block.plant.*;
-import org.egordorichev.lasttry.item.items.*;
-import org.egordorichev.lasttry.item.items.seeds.GrassSeeds;
-import org.egordorichev.lasttry.item.items.seeds.Seeds;
 
 public class Item {
-
-	/** Item identifier */
+	/** Items identifier */
 	protected short id;
 
-	/** Item name */
+	/** Items name */
 	protected String name;
 
-	/** Item texture */
+	/** Items texture */
 	protected Texture texture;
 
-	/** Item rarity */
+	/** Items rarity */
 	protected Rarity rarity;
 
 	/** Time left for item be ready */
 	protected float useDelay;
 
-	/** Item use speed */
+	/** Items use speed */
 	protected int useSpeed;
 
 	public Item(short id, String name, Rarity rarity, Texture texture) {
 		if (Items.ITEM_CACHE[id] != null) {
-			throw new RuntimeException("Item with id " + id + " already exists.");
+			throw new RuntimeException("Items with id " + id + " already exists.");
 		}
 
 		Items.ITEM_CACHE[id] = this;
@@ -68,7 +61,7 @@ public class Item {
 	/**
 	 * Return the item's {@link #id ID}.
 	 *
-	 * @return Item ID.
+	 * @return Items ID.
 	 */
 	public short getId() {
 		return this.id;
@@ -76,7 +69,7 @@ public class Item {
 
 	/**
 	 * Return the item's rarity
-	 * @return Item rarity
+	 * @return Items rarity
 	 */
 	public Rarity getRarity() {
 		return this.rarity;
@@ -85,7 +78,7 @@ public class Item {
 	/**
 	 * Return the item's {@link #name}.
 	 *
-	 * @return Item name.
+	 * @return Items name.
 	 */
 	public String getName() {
 		return this.name;
@@ -94,7 +87,7 @@ public class Item {
 	/**
 	 * Return the items's {@link #texture}
 	 *
-	 * @return Item texture
+	 * @return Items texture
 	 */
 	public Texture getTexture() {
 		return this.texture;
@@ -129,8 +122,8 @@ public class Item {
 	 * Retrieve an item instance from an item identifier.
 	 *
 	 * @param id
-	 *            Item ID.
-	 * @return Item instance.
+	 *            Items ID.
+	 * @return Items instance.
 	 */
 	public static Item fromID(int id) {
 		if (id == 0) {

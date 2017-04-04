@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Rarity;

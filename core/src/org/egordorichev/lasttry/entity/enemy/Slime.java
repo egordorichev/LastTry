@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.entity.Direction;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Rectangle;
 

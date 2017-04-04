@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 /**
- * Item drop handler.
+ * Items drop handler.
  */
 public class Drop {
     private int minAmount;
@@ -17,7 +17,7 @@ public class Drop {
     /**
      * Create a drop of a single item with 100% drop chance.
      *
-     * @param item Item to drop.
+     * @param item Items to drop.
      */
     public Drop(Item item) {
         this(item, Chance.ALWAYS, 1, 1);
@@ -27,7 +27,7 @@ public class Drop {
      * Create a drop of a single item with 100% drop chance. Then number of
      * items dropped will be between 1 and the given maximum.
      *
-     * @param item      Item to drop.
+     * @param item      Items to drop.
      * @param maxAmount Maximum number of items that can drop.
      */
     public Drop(Item item, int maxAmount) {
@@ -38,7 +38,7 @@ public class Drop {
      * Create a drop of a single item with 100% drop chance. Then number of
      * items dropped will be between the given min and max.
      *
-     * @param item      Item to drop.
+     * @param item      Items to drop.
      * @param maxAmount Maximum number of items that can drop.
      */
     public Drop(Item item, int minAmount, int maxAmount) {
@@ -49,7 +49,7 @@ public class Drop {
      * Create a drop of a given item <i>(Number of which is between the two
      * values given)</i>, with the given chance.
      *
-     * @param item      Item to drop.
+     * @param item      Items to drop.
      * @param chance    Chance item will drop.
      * @param minAmount Minimum number of items that can drop.
      * @param maxAmount Maximum number of items that can drop.
@@ -77,9 +77,9 @@ public class Drop {
     }
 
     /**
-     * Returns the Item that will be dropped.
+     * Returns the Items that will be dropped.
      *
-     * @return Item dropped.
+     * @return Items dropped.
      */
     public Item getItem() {
         return this.item;

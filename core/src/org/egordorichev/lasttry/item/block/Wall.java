@@ -2,11 +2,10 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Items;
 
-public class Wall extends Item {
+public class Wall extends org.egordorichev.lasttry.item.Item {
     protected Texture tiles;
 
     public Wall(short id, String name, Texture texture, Texture tiles) {
