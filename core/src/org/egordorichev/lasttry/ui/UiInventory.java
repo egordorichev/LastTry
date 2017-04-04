@@ -219,7 +219,6 @@ public class UiInventory extends UiComponent {
 
     public ItemHolder getItemHolder(int index) {
         if (index < 0 || index > 88) {
-            LastTry.log.warn("invalid");
             return null;
         }
 

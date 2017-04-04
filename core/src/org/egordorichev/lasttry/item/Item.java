@@ -9,10 +9,9 @@ import org.egordorichev.lasttry.item.items.seeds.GrassSeeds;
 import org.egordorichev.lasttry.item.items.seeds.Seeds;
 
 public class Item {
-	/**
-	 * Item lookup. Item ID used as the index.
-	 */
+	/** Item lookup. Item ID used as the index. */
 	public static Item[] ITEM_CACHE = new Item[ItemID.count];
+
 	public static Item dirtWall = new Wall(ItemID.dirtWall, "Dirt wall", Textures.dirtWallIcon, Textures.dirtWall);
 	public static Item dirtBlock  = new BlockGround(ItemID.dirtBlock, "Dirt block", ToolPower.pickaxe(10), Textures.dirtIcon, Textures.dirt);
 	public static Item grassBlock = new Grass(ItemID.grassBlock, "Grass block", Textures.grassIcon, Textures.grass);
@@ -25,7 +24,7 @@ public class Item {
 	public static Item heart = new Item(ItemID.heart, "Heart", Textures.heart);
 	public static Item mana = new Item(ItemID.mana, "Mana", Textures.mana);
 	public static Item ebonstoneBlock = new EvilBlock(ItemID.ebonstoneBlock, "Ebonstone block", ToolPower.pickaxe(65), Textures.ebonstoneIcon, Textures.ebonstone);
-	public static Item corruptThornyBushes = new ThornBlock(ItemID.corruptThornyBushes, "Corrupt thorny bushes", Textures.corruptThornyBushes);
+	public static Item corruptThornyBushes = new Block(ItemID.corruptThornyBushes, "Corrupt thorny bushes", false, ToolPower.pickaxe(10), null, Textures.corruptThornyBushes);
 	public static Item purpleIceBlock = new EvilBlock(ItemID.purpleIceBlock, "Purple ice block", ToolPower.pickaxe(10), Textures.purpleIceIcon, Textures.purpleIce);
 	public static Item vileMushroom = new Mushroom(ItemID.vileMushroom, "Vile mushroom", Textures.vileMushroom);
 	public static Item crimstoneBlock = new EvilBlock(ItemID.crimstoneBlock, "Crimstone block", ToolPower.pickaxe(65), Textures.crimstoneIcon, Textures.crimstone);
