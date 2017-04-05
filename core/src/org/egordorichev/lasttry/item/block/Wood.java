@@ -5,10 +5,10 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class Wood extends BlockGround {
 	public Wood(short id, String name, int requiredPower, Texture texture, Texture tiles) {
-		super(id, name, ToolPower.pickaxe(requiredPower), texture, tiles);
+		super(id, name, ToolPower.axe(requiredPower), texture, tiles);
 	}
 
 	public Wood(short id, String name, Texture texture, Texture tiles) {
-		super(id, name, ToolPower.pickaxe(10), texture, tiles);
+		super(id, name, ToolPower.axe(10), texture, tiles);
 	}
 }
