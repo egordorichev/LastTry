@@ -12,14 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerProvider {
-	/**
-	 * Current supported player version
-	 */
-	public static int CURRENT_VERSION = 0;
+	/** Current supported player version */
+	public static int CURRENT_VERSION = 1;
 
 	/**
 	 * Returns all players in the "players/" directory
-	 *
 	 * @return all players in the "players/" directory
 	 */
 	public static PlayerInfo[] getPlayers() {
@@ -50,7 +47,6 @@ public class PlayerProvider {
 
 	/**
 	 * Returns player info from given file name
-	 *
 	 * @param fileName player file
 	 * @return player info
 	 */
