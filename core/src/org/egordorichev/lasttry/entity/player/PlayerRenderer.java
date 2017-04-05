@@ -32,7 +32,6 @@ public class PlayerRenderer {
         hair.setColor(info.hairColor);
 
         pixmap.drawPixmap(hair, 0, 0);
-        pixmap.drawPixmap(hair, 0, 748);
 
         return new Texture(pixmap);
     }
