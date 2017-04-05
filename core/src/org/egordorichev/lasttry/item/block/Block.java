@@ -2,13 +2,14 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
     public static final int TEX_SIZE = 16;
-    public static final int MAX_HP = 4;
+    public static final byte MAX_HP = 4;
 
     /** Is the block solid */
     protected boolean solid;
@@ -24,9 +25,15 @@ public class Block extends Item {
         this.power = requiredPower;
         this.tiles = tiles;
         this.solid = solid;
+        this.useSpeed = 30;
     }
 
-    /**
+	@Override
+	public boolean isAutoUse() {
+		return true;
+	}
+
+	/**
      * Calculates a number based on the edges that have blocks of the same type.
      *
      * @param top    Top edge matches current type.
@@ -96,7 +103,7 @@ public class Block extends Item {
 	        byte hp = LastTry.world.getBlockHp(x, y);
 
 	        if (hp < Block.MAX_HP) {
-
+				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE);
 	        }
         }
     }

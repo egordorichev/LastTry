@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.effect.Buff;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Fonts;
@@ -12,7 +11,6 @@ import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.modifier.MeleeModifier;
 import org.egordorichev.lasttry.mod.ModLoader;
 
 public class GamePlayState implements State {
@@ -21,6 +19,9 @@ public class GamePlayState implements State {
         int spawnY = 50;
 
         LastTry.player.spawn(spawnX, spawnY);
+        LastTry.player.inventory.add(new ItemHolder(Items.livingWood, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.wood, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.ebonstoneBlock, 10));
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {

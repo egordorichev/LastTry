@@ -133,8 +133,6 @@ public class LastTry extends Game {
 
 		ui = new UiManager();
 
-		Graphics.load();
-
 		this.setScreen(new SplashState());
 	}
 

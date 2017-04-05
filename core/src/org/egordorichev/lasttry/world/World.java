@@ -143,6 +143,7 @@ public class World {
      */
     public void setBlock(short id, int x, int y) {
         this.data.blocks[x + y * this.width] = id;
+        this.setBlockHP(Block.MAX_HP, x, y);
     }
 
     public void setBlockHP(byte hp, int x, int y) {

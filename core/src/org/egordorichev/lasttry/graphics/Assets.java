@@ -125,6 +125,10 @@ public class Assets {
         Textures.copperShortSword = load("CopperShortSword.png");
         Textures.copperPickaxe = load("CopperPickaxe.png");
         Textures.copperAxe = load("CopperAxe.png");
+        Textures.nullItem = load("NullItem.png");
+        Textures.livingWood = load("LivingWoodTile.png");
+        Textures.wood = load("WoodTile.png");
+        Textures.woodIcon = load("WoodIcon.png");
 
         Textures.tileCracks = load("TileCracks.png");
 

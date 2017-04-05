@@ -90,6 +90,10 @@ public class Textures {
     public static Texture copperShortSword;
     public static Texture copperPickaxe;
     public static Texture copperAxe;
+    public static Texture nullItem;
+    public static Texture wood;
+    public static Texture woodIcon;
+    public static Texture livingWood;
 
     public static Texture tileCracks;
 
