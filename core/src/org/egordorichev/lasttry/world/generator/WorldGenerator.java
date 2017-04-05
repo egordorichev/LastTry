@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.world.WorldData;
 
 import java.util.ArrayList;
@@ -116,6 +117,12 @@ public class WorldGenerator {
         this.width = width;
         this.height = height;
         this.data = new WorldData(width * height);
+
+	    for (int x = 0; x < width; x++) {
+		    for (int y = 0; y < height; y++) {
+			    this.data.blocksHealth[x + y * this.width] = Block.MAX_HP;
+		    }
+	    }
 
         this.runTasks();
 

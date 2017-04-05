@@ -58,6 +58,8 @@ public class Items {
 	public static final Item copperShortSword;
 	public static final Item copperPickaxe;
 	public static final Item copperAxe;
+	public static final Item livingWood;
+	public static final Item wood;
 
 	static {
 		if (!Bootstrap.isLoaded()) {
@@ -110,6 +112,8 @@ public class Items {
 		copperShortSword = new ShortSword(ItemID.copperShortSword, "Copper Short Sword", 5, 12, Textures.copperShortSword);
 		copperPickaxe = new Pickaxe(ItemID.copperPickaxe, "Copper Pickaxe", 4, 35, 22, Textures.copperPickaxe);
 		copperAxe = new Axe(ItemID.copperAxe, "Copper Axe", 3, 32, 29, Textures.copperAxe);
+		livingWood = new LivingWood(ItemID.livingWood, "Living wood", Textures.nullItem, Textures.livingWood);
+		wood = new Wood(ItemID.wood, "Wood", Textures.woodIcon, Textures.wood);
 	}
 
 	public static void load() {
