@@ -187,6 +187,10 @@ public class UiItemSlot extends UiComponent {
 
     @Override
     protected void onStateChange() {
+	if (this.itemHolder == null) {
+	    return;
+	}    
+	    
         if (this.state == State.MOUSE_DOWN) {
             if (LastTry.player.inventory.isOpen()) {
                 if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
