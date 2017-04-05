@@ -3,7 +3,7 @@ apply plugin: "java"
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["src/"]
 
-project.ext.mainClassName = "org.egordorichev.lastty.desktop.DesktopLauncher"
+project.ext.mainClassName = "org.egordorichev.lasttry.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets");
 
 task run(dependsOn: classes, type: JavaExec) {
