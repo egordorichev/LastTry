@@ -21,14 +21,6 @@ public class GamePlayState implements State {
         int spawnY = 50;
 
         LastTry.player.spawn(spawnX, spawnY);
-        LastTry.player.inventory.add(new ItemHolder(Items.copperShortSword, 1, null));
-        LastTry.player.inventory.add(new ItemHolder(Items.copperPickaxe, 1, null));
-        LastTry.player.inventory.add(new ItemHolder(Items.copperAxe, 1, null));
-
-        LastTry.player.addEffect(Buff.ironskin, 240);
-        LastTry.player.addEffect(Buff.regeneration, 240);
-        LastTry.player.addEffect(Buff.honey, 30);
-
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {

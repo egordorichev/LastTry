@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.item.items.*;
 public class UiItemSlot extends UiComponent {
     private boolean active;
     private Texture texture;
-    private ItemHolder itemHolder;
+    public ItemHolder itemHolder;
     private Type type;
     private TextureRegion back;
 
@@ -105,10 +105,6 @@ public class UiItemSlot extends UiComponent {
         }
     }
 
-    public int getItemCount() {
-        return this.itemHolder.getCount();
-    }
-
     public void setItemCount(int count) {
         this.itemHolder.setCount(count);
     }
@@ -133,39 +129,57 @@ public class UiItemSlot extends UiComponent {
         return this.itemHolder.getItem();
     }
 
+    public short getItemID() {
+	    Item item = this.getItem();
+
+	    if (item == null) {
+	    	return 0;
+	    }
+
+	    return item.getId();
+    }
+
+    public int getItemCount() {
+	    if (this.itemHolder == null) {
+		    return 0;
+	    }
+
+	    return this.itemHolder.getCount();
+    }
+
     public boolean canHold(ItemHolder holder) {
         switch (this.type) {
             case ANY:
             case TRASH:
             default:
-                break;
+            break;
             case ACCESSORY:
             case VANITY_ACCESSORY:
                 if (!(holder.getItem() instanceof Accessory)) {
                     return false;
                 }
-                break;
+            break;
             case ARMOR:
             case VANITY:
                 if (!(holder.getItem() instanceof Armor)) {
                     return false;
                 }
-                break;
+            break;
             case COIN:
                 if (!(holder.getItem() instanceof Coin)) {
                     return false;
                 }
-                break;
+            break;
             case AMMO:
                 if (!(holder.getItem() instanceof Ammo)) {
                     return false;
                 }
-                break;
+            break;
             case DYE:
                 if (!(holder.getItem() instanceof Dye)) {
                     return false;
                 }
-                break;
+            break;
         }
 
         return true;

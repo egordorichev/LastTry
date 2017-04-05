@@ -104,7 +104,7 @@ public class Player extends Entity {
 	public void render() {
 		ItemHolder holder = this.inventory.getActiveHolder();
 
-		if (holder.getItem() != null) {
+		if (holder != null && holder.getItem() != null) {
 			holder.getItem().renderAnimation();
 		}
 

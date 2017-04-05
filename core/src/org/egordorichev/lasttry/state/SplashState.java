@@ -6,14 +6,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 
 public class SplashState implements State {
-    /**
-     * Shows if assets are ready
-     */
-    private boolean doneLoading = false;
-
-    /**
-     * Splash texture
-     */
+    /** Splash texture */
     private Texture splash;
 
     public SplashState() {
@@ -37,11 +30,10 @@ public class SplashState implements State {
     @Override
     public void render(float delta) {
         LastTry.batch.draw(this.splash, 0, 0);
-        this.doneLoading = Assets.isLoaded();
 
-        if (this.doneLoading) {
-            LastTry.instance.setScreen(new MenuState());
-        }
+        if (Assets.isLoaded()) {
+		    LastTry.instance.setScreen(new MenuState());
+	    }
     }
 
     /**

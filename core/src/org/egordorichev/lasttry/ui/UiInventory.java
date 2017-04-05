@@ -17,7 +17,7 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 public class UiInventory extends UiComponent {
     public ItemHolder currentItem = null;
     public int currentSlot = 0;
-    private UiItemSlot[] slots;
+    public UiItemSlot[] slots;
     private boolean open;
 
     public UiInventory(int size) {
@@ -126,7 +126,7 @@ public class UiInventory extends UiComponent {
             public boolean scrolled(int amount) {
 				ItemHolder holder = getActiveHolder();
 
-				if (holder.getItem() != null && !holder.getItem().isReady()) {
+				if (holder != null && holder.getItem() != null && !holder.getItem().isReady()) {
 					return false;
 				}
 
@@ -155,18 +155,21 @@ public class UiInventory extends UiComponent {
 		    }
 
 		    ItemHolder holder = getActiveHolder();
-		    Item item = holder.getItem();
 
-		    if(item != null && item.isReady() && (item.isAutoUse()
-				    || InputManager.mouseButtonJustPressed())) {
+		    if (holder != null) {
+			    Item item = holder.getItem();
 
-		    	if(item.use()) {
-				    int count = holder.getCount();
+			    if(item != null && item.isReady() && (item.isAutoUse()
+					    || InputManager.mouseButtonJustPressed())) {
 
-				    if(count == 1) {
-					    slots[currentSlot].setItemHolder(new ItemHolder(null, 0));
-				    } else {
-					    holder.setCount(count - 1);
+			        if(item.use()) {
+					    int count = holder.getCount();
+
+					    if(count == 1) {
+						    slots[currentSlot].setItemHolder(new ItemHolder(null, 0));
+					    } else {
+						    holder.setCount(count - 1);
+					    }
 				    }
 			    }
 		    }
@@ -175,34 +178,34 @@ public class UiInventory extends UiComponent {
 		switch (InputManager.getCurrentKeyDown()){
 			case Keys.HOTBAR_SLOT_0:
 				setHotbarSlot(0);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_1:
 				setHotbarSlot(1);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_2:
 				setHotbarSlot(2);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_3:
 				setHotbarSlot(3);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_4:
 				setHotbarSlot(4);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_5:
 				setHotbarSlot(5);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_6:
 				setHotbarSlot(6);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_7:
 				setHotbarSlot(7);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_8:
 				setHotbarSlot(8);
-				break;
+			break;
 			case Keys.HOTBAR_SLOT_9:
 				setHotbarSlot(9);
-				break;
+			break;
 		}
     }
 
@@ -368,4 +371,8 @@ public class UiInventory extends UiComponent {
     public boolean isOpen() {
         return open;
     }
+
+    public UiItemSlot[] getSlots(){
+    	return slots;
+	}
 }

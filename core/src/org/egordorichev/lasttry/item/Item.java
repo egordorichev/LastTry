@@ -60,7 +60,6 @@ public class Item {
 
 	/**
 	 * Return the item's {@link #id ID}.
-	 *
 	 * @return Items ID.
 	 */
 	public short getId() {
@@ -77,7 +76,6 @@ public class Item {
 
 	/**
 	 * Return the item's {@link #name}.
-	 *
 	 * @return Items name.
 	 */
 	public String getName() {
@@ -86,7 +84,6 @@ public class Item {
 
 	/**
 	 * Return the items's {@link #texture}
-	 *
 	 * @return Items texture
 	 */
 	public Texture getTexture() {
@@ -95,7 +92,6 @@ public class Item {
 
 	/**
 	 * Returns if player can use item
-	 *
 	 * @return True if player can use item
 	 */
 	public boolean canBeUsed() { // This is method, because it can depend on time and stuff
@@ -120,9 +116,7 @@ public class Item {
 
 	/**
 	 * Retrieve an item instance from an item identifier.
-	 *
-	 * @param id
-	 *            Items ID.
+	 * @param id Items ID.
 	 * @return Items instance.
 	 */
 	public static Item fromID(int id) {
@@ -133,17 +127,8 @@ public class Item {
 		return Items.ITEM_CACHE[id];
 	}
 
-	/**
-	 * Returns max item in stack
-	 */
+	/** Returns max item in stack */
 	public int getMaxInStack() {
 		return 1;
-	}
-
-	/**
-	 * Loads all fields
-	 */
-	public static void preload() {
-
 	}
 }

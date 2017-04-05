@@ -107,7 +107,8 @@ public class MenuState implements State {
             public void onShow() {
                 clear();
 
-                playerInfos = PlayerProvider.getPlayers();
+	            playerInfo = new PlayerInfo();
+	            playerInfos = PlayerProvider.getPlayers();
 
                 playerCards = new UiCardHolder(new Rectangle(0, -250, 256, 0), Origin.CENTER) {
                     @Override
@@ -360,8 +361,6 @@ public class MenuState implements State {
         this.playerNew = new UiPanel() {
             @Override
             public void addComponents() {
-                playerInfo = new PlayerInfo();
-
                 add(new UiTextButton(new Rectangle(0, -64, 100, 32), Origin.CENTER, "Hair") {
                     @Override
                     public void onClick() {
