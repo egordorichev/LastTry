@@ -16,13 +16,12 @@ cd LastTry
 Compile project:
 
 ```bash
-./gradlew clean build
+./gradlew clean build dist
 ```
 
 ### Running
 
-You should end up with a jar. Place it in the `core/assets/` directory and run.
-Or you can run it from current directory with `-Duser.dir=core/assets/'` argument.
+You should end up with a jar, placed in `desktop/build/libs/`. Run it.
 
 ### Contributing
 
