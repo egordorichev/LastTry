@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
 
 public class UiTextButton extends UiTextLabel {
     public UiTextButton(Rectangle rectangle, Origin origin, String label) {
@@ -18,9 +18,9 @@ public class UiTextButton extends UiTextLabel {
     @Override
     protected void onStateChange() {
         if (this.state == State.MOUSE_IN) {
-            this.setFont(Fonts.f24);
+            this.setFont(Assets.f24);
         } else if (this.state == State.NORMAL) {
-            this.setFont(Fonts.f22);
+            this.setFont(Assets.f22);
         }
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
@@ -12,7 +13,8 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.items.*;
 
 public class UiItemSlot extends UiComponent {
-    private boolean active;
+    private static Texture inventorySlot5 = Assets.getTexture(Textures.inventorySlot5);
+	private boolean active;
     private Texture texture;
     public ItemHolder itemHolder;
     private Type type;
@@ -42,19 +44,19 @@ public class UiItemSlot extends UiComponent {
             case AMMO:
             case COIN:
             case TRASH:
-                this.texture = Textures.inventorySlot1;
-                break;
+                this.texture = Assets.getTexture(Textures.inventorySlot1);
+            break;
             case ACCESSORY:
             case ARMOR:
-                this.texture = Textures.inventorySlot2;
-                break;
+                this.texture = Assets.getTexture(Textures.inventorySlot2);
+            break;
             case VANITY:
             case VANITY_ACCESSORY:
-                this.texture = Textures.inventorySlot3;
-                break;
+                this.texture = Assets.getTexture(Textures.inventorySlot3);
+            break;
             case DYE:
-                this.texture = Textures.inventorySlot4;
-                break;
+                this.texture = Assets.getTexture(Textures.inventorySlot4);
+            break;
         }
 
         this.active = false;
@@ -89,7 +91,7 @@ public class UiItemSlot extends UiComponent {
         LastTry.batch.setColor(1, 1, 1, 0.8f);
 
         if (this.active) {
-            LastTry.batch.draw(Textures.inventorySlot5, x, y, width, height);
+            LastTry.batch.draw(inventorySlot5, x, y, width, height);
         } else {
             LastTry.batch.draw(this.texture, x, y, width, height);
         }

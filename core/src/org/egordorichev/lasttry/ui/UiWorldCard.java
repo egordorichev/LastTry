@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldInfo;
@@ -36,15 +37,15 @@ public class UiWorldCard extends UiCard {
 
         if ((this.info.flags & World.CRIMSON) == World.CRIMSON) {
             if (hardmode) {
-                texture = Textures.crimsonHardmodeWorld;
+                texture = Assets.getTexture(Textures.crimsonHardmodeWorld);
             } else {
-                texture = Textures.crimsonWorld;
+                texture = Assets.getTexture(Textures.crimsonWorld);
             }
         } else {
             if (hardmode) {
-                texture = Textures.corruptionHardmodeWorld;
+                texture = Assets.getTexture(Textures.corruptionHardmodeWorld);
             } else {
-                texture = Textures.corruptionWorld;
+                texture = Assets.getTexture(Textures.corruptionWorld);
             }
         }
 

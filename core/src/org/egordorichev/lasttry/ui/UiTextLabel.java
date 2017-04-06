@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
 
 public class UiTextLabel extends UiComponent {
     /**
@@ -27,7 +27,7 @@ public class UiTextLabel extends UiComponent {
 
         this.label = label;
 
-        this.setFont(Fonts.f22);
+        this.setFont(Assets.f22);
     }
 
     public UiTextLabel(Rectangle rectangle, String label) {

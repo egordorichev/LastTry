@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
 
 public class Debug {
     /**
@@ -22,9 +22,9 @@ public class Debug {
             return;
         }
 
-        Fonts.f22.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
-        Fonts.f22.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.getGridX())
-                + " Y: " + String.format("%d", LastTry.player.getGridY()), 40, 30);
+	    Assets.f22.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
+	    Assets.f22.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.getGridX())
+            + " Y: " + String.format("%d", LastTry.player.getGridY()), 40, 30);
     }
 
     /**
