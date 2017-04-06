@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.core.logger;
 
-import sun.plugin2.gluegen.runtime.CPU;
 
 import java.util.ArrayList;
 
