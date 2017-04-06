@@ -22,6 +22,9 @@ public class Crash {
 		System.err.println("Java VM version: " +  System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor"));
 		System.err.println("Java VM flags: " + getJavaVMFlags());
 		System.err.println("Memory: " + printMemoryUsage());
+		System.err.print("Exception cause: ");
+		throwable.printStackTrace();
+
 		System.err.println("--- END ERROR REPORT ---");
 		System.err.flush();
 	}
