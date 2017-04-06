@@ -238,7 +238,7 @@ public class LastTry extends Game {
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.getCenter().x - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
 	}
 
 	/**
@@ -247,7 +247,7 @@ public class LastTry extends Game {
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getCenter().y - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
 	}
 
 	/**

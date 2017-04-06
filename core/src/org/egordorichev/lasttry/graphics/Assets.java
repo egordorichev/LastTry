@@ -137,6 +137,7 @@ public class Assets {
 		loadTexture(Textures.woodIcon);
 		loadTexture(Textures.livingWood);
 		loadTexture(Textures.tileCracks);
+		loadTexture(Textures.workBench);
 
 		loadTexture(Textures.ammoReservationBuff);
 		loadTexture(Textures.archeryBuff);

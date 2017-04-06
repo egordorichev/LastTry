@@ -1,11 +1,13 @@
 package org.egordorichev.lasttry.item;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.block.*;
 import org.egordorichev.lasttry.item.block.plant.*;
+import org.egordorichev.lasttry.item.block.workingstation.WorkBench;
 import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.items.seeds.*;
 
@@ -61,6 +63,7 @@ public class Items {
 	public static final Item copperAxe;
 	public static final Item livingWood;
 	public static final Item wood;
+	public static final Item workBench;
 
 	static {
 		if (!Bootstrap.isLoaded()) {
@@ -115,6 +118,7 @@ public class Items {
 		copperAxe = new Axe(ItemID.copperAxe, "Copper Axe", 3, 32, 29, Assets.getTexture(Textures.copperAxe));
 		livingWood = new LivingWood(ItemID.livingWood, "Living wood", Assets.getTexture(Textures.nullItem), Assets.getTexture(Textures.livingWood));
 		wood = new Wood(ItemID.wood, "Wood", Assets.getTexture(Textures.woodIcon), Assets.getTexture(Textures.wood));
+		workBench = new WorkBench(ItemID.workBench, "Work Bench", Assets.getTexture(Textures.workBench), 2, 1);
 	}
 
 	public static void load() {

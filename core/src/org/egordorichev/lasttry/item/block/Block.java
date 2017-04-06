@@ -20,6 +20,12 @@ public class Block extends Item {
     /** The block spite-sheet */
     protected Texture tiles;
 
+	/** Block width in tiles */
+	protected int width = 1;
+
+    /** Block height in tiles */
+    protected int height = 1;
+
     public Block(short id, String name, boolean solid, ToolPower requiredPower, Texture texture, Texture tiles) {
         super(id, name, texture);
         this.power = requiredPower;
@@ -79,6 +85,14 @@ public class Block extends Item {
 
     }
 
+    public boolean canBePlaced(int x, int y) {
+    	return true; // TODO: placement radius
+    }
+
+    public void place(int x, int y) {
+    	LastTry.world.setBlock(this.id, x, y);
+    }
+
     /**
      * Renders the block at the given coordinates.
      *
@@ -126,20 +140,20 @@ public class Block extends Item {
      */
     @Override
     public boolean use() {
-        // Get world position to place block at
         int x = LastTry.getMouseXInWorld() / Block.TEX_SIZE;
         int y = LastTry.getMouseYInWorld() / Block.TEX_SIZE;
-        // TODO: Distance checks from cursor coordinates to player coordinates
 
-        // Check if the block can be placed.
-        if (LastTry.world.canPlaceInWorld(this, x, y)) {
-            // Check if the block intersects the player's hitbox
-            // TODO: Check othter entities in the world
+        if (this.canBePlaced(x, y) && LastTry.world.canPlaceInWorld(this, x, y)) {
             Rectangle rectangle = LastTry.player.getHitbox();
-            if (rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, TEX_SIZE, TEX_SIZE))) {
+
+            if (rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, this.width * TEX_SIZE,
+		            this.height * TEX_SIZE))) {
+
                 return false;
             }
-            LastTry.world.setBlock(this.id, x, y);
+
+            this.place(x, y);
+
             return true;
         }
 

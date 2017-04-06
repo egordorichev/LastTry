@@ -1,12 +1,10 @@
 package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class MultiTileBlock extends Block {
-    protected int width;
-    protected int height;
-
     public MultiTileBlock(short id, String name, boolean solid, ToolPower requiredPower, Texture texture, Texture tiles, int gridWidth, int gridHeight) {
         super(id, name, solid, requiredPower, texture, tiles);
 
@@ -16,7 +14,20 @@ public class MultiTileBlock extends Block {
 
     @Override
     public void renderBlock(int x, int y) {
-        // TODO
+		boolean first = false;
+
+		if (LastTry.world.getBlockID(x - 1, y) == this.id) {
+
+		} else {
+			first = true;
+		}
+
+		if (first) {
+		    short variant = 1;
+
+		    LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
+				(LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE);
+	    }
     }
 
     public int getGridWidth() {
@@ -26,4 +37,13 @@ public class MultiTileBlock extends Block {
     public int getGridHeight() {
         return this.height;
     }
+
+	@Override
+	public void place(int x, int y) {
+		for (int j = y; j < y + this.height; j++) {
+			for (int i = x; i < x + this.width; i++) {
+				LastTry.world.setBlock(this.id, i, j);
+			}
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
@@ -29,8 +30,11 @@ public class DroppedItem extends PhysicBody {
 
 	@Override
 	public void render() {
-		//LastTry.batch.draw(this.holder.getItem().getTexture(), this.getX(),
-		//	LastTry.world.getHeight() * Block.TEX_SIZE - this.getY());
+		Texture texture = this.holder.getItem().getTexture();
+    	float x = this.getX();
+    	float y = LastTry.world.getHeight() * Block.TEX_SIZE - this.renderBounds.y - this.renderBounds.height;
+
+		LastTry.batch.draw(texture, x, y);
 	}
 
 	@Override
@@ -41,8 +45,8 @@ public class DroppedItem extends PhysicBody {
             if (this.holder.getItem() == Items.heart) {
                 LastTry.player.modifyHp(20 * this.holder.getCount());
             } else if (this.holder.getItem() == Items.mana) {
-                // TODO: mana
-                LastTry.player.inventory.add(this.holder);
+                // TODO: player mana
+                // LastTry.player.inventory.add(this.holder);
             } else {
                 LastTry.player.inventory.add(this.holder);
             }

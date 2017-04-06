@@ -118,13 +118,11 @@ public abstract class Enemy extends Entity {
     public void onDeath() {
         // On death, drop items in world.
         for (Drop drop : this.drops) {
-            // Some items may not be dropped due to rarity
-
             if (drop.getChance().roll()) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-                LastTry.entityManager.spawn(droppedItem, (int) this.getCenter().x,
-                        (int) this.getCenter().y);
+                LastTry.entityManager.spawn(droppedItem, (int) this.getCenterX(),
+                    (int) this.getCenterY());
             }
         }
     }

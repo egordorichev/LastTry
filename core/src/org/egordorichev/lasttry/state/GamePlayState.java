@@ -21,15 +21,12 @@ public class GamePlayState implements State {
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
-        int spawnX = LastTry.world.getWidth() / 2;
-        int spawnY = 50;
+        int spawnX = LastTry.world.getWidth() / 2 * Block.TEX_SIZE;
+        int spawnY = 50 * Block.TEX_SIZE;
 
         LastTry.player.spawn(spawnX, spawnY);
-        LastTry.player.inventory.add(new ItemHolder(Items.livingWood, 10));
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.ebonstoneBlock, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.dayBloomSeeds, 10));
-        LastTry.player.inventory.add(new ItemHolder(Items.stoneBlock, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {
@@ -56,10 +53,6 @@ public class GamePlayState implements State {
      */
     @Override
     public void render(float delta) {
-    	if (InputManager.isKeyDown(Keys.DEBUG_MODE)) {
-			LastTry.entityManager.getEntities().get(0).die();
-	    }
-
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
 			 (Gdx.graphics.getBufferFormat().coverageSampling? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
@@ -74,10 +67,10 @@ public class GamePlayState implements State {
         LastTry.environment.render();
 
         LastTry.camera.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-                LastTry.player.getCenter().x);
+                LastTry.player.getCenterX());
 
         LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenter().y);
+                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY());
 
         LastTry.camera.update();
         LastTry.batch.setProjectionMatrix(LastTry.camera.combined);

@@ -259,7 +259,7 @@ public abstract class PhysicBody {
      */
     public void spawn(float x, float y) {
         this.shouldUpdate = true;
-        this.renderBounds.setPosition(x * Block.TEX_SIZE, y * Block.TEX_SIZE);
+        this.renderBounds.setPosition(x, y);
         this.onSpawn();
     }
 
@@ -351,8 +351,12 @@ public abstract class PhysicBody {
 		return renderBounds.height;
 	}
 
-    public Vector2 getCenter() {
-        return new Vector2(getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2);
+    public float getCenterX() {
+        return getX() + this.getWidth() / 2;
+    }
+
+    public float getCenterY() {
+    	return this.getY() + this.getHeight() / 2;
     }
 
     public Rectangle getHitbox() {
