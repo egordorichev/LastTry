@@ -22,6 +22,8 @@ public class GamePlayState implements State {
         LastTry.player.inventory.add(new ItemHolder(Items.livingWood, 10));
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 10));
         LastTry.player.inventory.add(new ItemHolder(Items.ebonstoneBlock, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.dayBloomSeeds, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.stoneBlock, 10));
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {

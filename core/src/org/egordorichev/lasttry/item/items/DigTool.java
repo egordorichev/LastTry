@@ -29,10 +29,8 @@ public class DigTool extends Tool {
 		if (this.power.isEnoughFor(power)) {
 			byte hp = LastTry.world.getBlockHp(x, y);
 
-			if (hp > 1) {
+			if (hp > 0) {
 				LastTry.world.setBlockHP((byte) (hp - 1), x, y);
-			} else {
-				LastTry.world.setBlock(ItemID.none, x, y);
 			}
 		}
 

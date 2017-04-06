@@ -41,4 +41,9 @@ public class Seeds extends Item {
 
         return false;
     }
+
+	@Override
+	public int getMaxInStack() {
+		return 99;
+	}
 }

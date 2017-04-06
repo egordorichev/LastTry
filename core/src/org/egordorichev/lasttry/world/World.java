@@ -29,7 +29,7 @@ public class World {
     /**
      * How often the whole world is updated
      */
-    public static final int UPDATE_DELAY = 20;
+    public static final int UPDATE_DELAY = 1;
 
     /**
      * Data about all of the blocks and walls in the world
@@ -144,10 +144,33 @@ public class World {
     public void setBlock(short id, int x, int y) {
         this.data.blocks[x + y * this.width] = id;
         this.setBlockHP(Block.MAX_HP, x, y);
+
+        for (int ny = y - 1; ny < y + 1; ny++) {
+        	for (int nx = x - 1; nx < x + 1; nx++) {
+        		if (ny == y && nx == x) {
+        			continue;
+		        }
+
+		        Block block = this.getBlock(nx, ny);
+
+        		if (block != null) {
+        			block.onNeighborChange(nx, ny, x, y);
+		        }
+	        }
+        }
     }
 
     public void setBlockHP(byte hp, int x, int y) {
         this.data.blocksHealth[x + y * this.width] = hp;
+
+        if (hp == 0) {
+        	Block block = this.getBlock(x, y);
+
+        	if (block != null) {
+        		this.setBlock(ItemID.none, x, y);
+        		block.die(x, y);
+	        }
+        }
     }
 
     /**

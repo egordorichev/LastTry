@@ -71,6 +71,14 @@ public class Block extends Item {
 
     }
 
+    public void onNeighborChange(int x, int y, int nx, int ny) {
+
+    }
+
+    public void die(int x, int y) {
+
+    }
+
     /**
      * Renders the block at the given coordinates.
      *
