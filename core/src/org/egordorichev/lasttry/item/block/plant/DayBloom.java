@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class DayBloom extends Plant {
     public DayBloom() {
-        super(ItemID.dayBloom, "Day Bloom", Textures.dayBloomIcon, Textures.dayBloom);
+        super(ItemID.dayBloom, "Day Bloom", Assets.getTexture(Textures.dayBloomIcon), Assets.getTexture(Textures.dayBloom));
     }
 
     @Override

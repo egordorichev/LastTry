@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class JungleGrass extends Grass {
     public JungleGrass() {
         super(ItemID.jungleGrassBlock, "Jungle Grass Block",
-                Textures.jungleGrassIcon, Textures.jungleGrass);
+		    Assets.getTexture(Textures.jungleGrassIcon), Assets.getTexture(Textures.jungleGrass));
     }
 
     @Override

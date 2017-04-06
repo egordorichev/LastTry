@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class SilverThorn extends Plant {
     public SilverThorn() {
-        super(ItemID.silverThorn, "Silver Thorn", Textures.silverThornIcon, Textures.silverThorn);
+        super(ItemID.silverThorn, "Silver Thorn", Assets.getTexture(Textures.silverThornIcon), Assets.getTexture(Textures.silverThorn));
     }
 
     @Override

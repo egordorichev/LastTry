@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
-import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Util;
 
 public class Tool extends Item {
 	protected boolean autoSwing;
@@ -27,7 +25,7 @@ public class Tool extends Item {
 	}
 
 	public Tool(short id, String name, float baseDamage, ToolPower power,
-	        int useSpeed, Texture texture) {
+	            int useSpeed, Texture texture) {
 
 		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
 	}
@@ -40,32 +38,6 @@ public class Tool extends Item {
 
 		this.useDelay = this.useSpeed;
 		return this.onUse();
-	}
-
-	@Override
-	public void update(int dt) {
-		if (this.isReady()) {
-			return;
-		}
-
-		this.useDelay = Math.max(0, this.useDelay - 1);
-		this.onUpdate();
-
-		if (this.isReady()) {
-			this.onUseEnd();
-		}
-	}
-
-	protected boolean onUse() {
-		return false;
-	}
-
-	protected void onUpdate() {
-
-	}
-
-	protected boolean onUseEnd() {
-		return false;
 	}
 
 	public int getPickaxePower() {

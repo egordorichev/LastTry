@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class BlinkRoot extends Plant {
     public BlinkRoot() {
-        super(ItemID.blinkRoot, "Blink Root", Textures.blinkRootIcon, Textures.blinkRoot);
+        super(ItemID.blinkRoot, "Blink Root", Assets.getTexture(Textures.blinkRootIcon), Assets.getTexture(Textures.blinkRoot));
     }
 
     @Override

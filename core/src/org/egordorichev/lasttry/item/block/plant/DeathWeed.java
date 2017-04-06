@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class DeathWeed extends Plant {
     public DeathWeed() {
-        super(ItemID.deathWeed, "Death Weed", Textures.deathWeedIcon, Textures.deathWeed);
+        super(ItemID.deathWeed, "Death Weed", Assets.getTexture(Textures.deathWeedIcon), Assets.getTexture(Textures.deathWeed));
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
@@ -47,10 +46,10 @@ public class DigTool extends Tool {
 		float height = this.texture.getHeight();
 		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
 
-		if (LastTry.player.isFlipped()) { // TODO: change the animation
-			LastTry.batch.draw(this.texture, LastTry.player.getCenter().x, LastTry.world.getHeight() * Block.TEX_SIZE -
-				LastTry.player.getCenter().y, 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
-				(int) height, false, false);
+		if (LastTry.player.isFlipped()) {
+			LastTry.batch.draw(this.texture, LastTry.player.getCenter().x - width, LastTry.world.getHeight() * Block.TEX_SIZE -
+				LastTry.player.getCenter().y, width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
+				(int) height, true, false);
 		} else {
 			LastTry.batch.draw(this.texture, LastTry.player.getCenter().x, LastTry.world.getHeight() * Block.TEX_SIZE -
 				LastTry.player.getCenter().y, 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,

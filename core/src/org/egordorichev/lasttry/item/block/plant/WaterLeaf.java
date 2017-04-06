@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class WaterLeaf extends Plant {
     public WaterLeaf() {
-        super(ItemID.waterLeaf, "Water Leaf", Textures.waterLeafIcon, Textures.waterLeaf);
+        super(ItemID.waterLeaf, "Water Leaf", Assets.getTexture(Textures.waterLeafIcon), Assets.getTexture(Textures.waterLeaf));
     }
 
     @Override

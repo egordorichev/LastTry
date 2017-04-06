@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class FireBlossom extends Plant {
     public FireBlossom() {
-        super(ItemID.fireBlossom, "Fire Blossom", Textures.fireBlossomIcon, Textures.fireBlossom);
+        super(ItemID.fireBlossom, "Fire Blossom", Assets.getTexture(Textures.fireBlossomIcon), Assets.getTexture(Textures.fireBlossom));
     }
 
     @Override

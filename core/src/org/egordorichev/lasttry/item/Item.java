@@ -50,7 +50,28 @@ public class Item {
 	 * @param dt The milliseconds passed since the last update.
 	 */
 	public void update(int dt) {
+		if (this.isReady()) {
+			return;
+		}
 
+		this.useDelay = Math.max(0, this.useDelay - 1);
+		this.onUpdate();
+
+		if (this.isReady()) {
+			this.onUseEnd();
+		}
+	}
+
+	protected boolean onUse() {
+		return false;
+	}
+
+	protected void onUpdate() {
+
+	}
+
+	protected boolean onUseEnd() {
+		return false;
 	}
 
 	/** Renders the item in player hands */

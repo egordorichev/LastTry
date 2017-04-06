@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class MoonGlow extends Plant {
     public MoonGlow() {
-        super(ItemID.moonGlow, "Moon Glow", Textures.moonGlowIcon, Textures.moonGlow);
+        super(ItemID.moonGlow, "Moon Glow", Assets.getTexture(Textures.moonGlowIcon), Assets.getTexture(Textures.moonGlow));
     }
 
     @Override
