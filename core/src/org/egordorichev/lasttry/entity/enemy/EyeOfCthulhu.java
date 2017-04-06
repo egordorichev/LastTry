@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity.enemy;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Items;
 
@@ -10,7 +11,7 @@ public class EyeOfCthulhu extends Boss {
     public EyeOfCthulhu() {
         super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800);
 
-        this.texture = Textures.eyeOfCthulhu;
+        this.texture = Assets.getTexture(Textures.eyeOfCthulhu);
 
         this.renderBounds.width = 110;
         this.renderBounds.height = 166;

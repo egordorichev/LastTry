@@ -67,9 +67,7 @@ public abstract class PhysicBody {
         this.velocity = new Vector2(0, 0);
     }
 
-    /**
-     * Renders the entity
-     */
+    /** Renders the entity */
     public void render() {
 
     }
@@ -153,6 +151,7 @@ public abstract class PhysicBody {
                     if (LastTry.world.isColliding(newHitbox.offset(0, -step))) {
                         // Intersection with a wall too steep to climb
                         this.velocity.x = 0;
+	                    this.onBlockHit();
                     } else {
                         // Wall isn't steep, can be climbed by entity.
 
@@ -184,6 +183,7 @@ public abstract class PhysicBody {
                 this.renderBounds.y += this.velocity.y;
             } else {
                 this.velocity.y = 0;
+                this.onBlockHit();
             }
 
             if (this.state == State.FLYING) {
@@ -193,6 +193,10 @@ public abstract class PhysicBody {
                 }
             }
         }
+    }
+
+    protected void onBlockHit() {
+
     }
 
     /**
