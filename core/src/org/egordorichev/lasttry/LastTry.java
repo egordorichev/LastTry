@@ -26,11 +26,18 @@ import org.egordorichev.lasttry.world.environment.Environment;
 
 import java.util.Random;
 
+/*
+    The plan is to try and replace saving everything with just saving the seed for the random number generator
+    And then generating the map from scratch each time it loads.
+    Then save only the blocks that have changed in the file and load them in after the world is generated
+    This should massively reduce file size and impress the other devs
+*/
 public class LastTry extends Game {
     /**
      * Random instance
      */
-    public static final Random random = new Random();
+    public static int seed = (int) System.currentTimeMillis();
+    public static Random random = new Random(seed);
     /**
      * Camera
      */
