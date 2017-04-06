@@ -187,10 +187,6 @@ public class UiItemSlot extends UiComponent {
 
     @Override
     protected void onStateChange() {
-	if (this.itemHolder == null) {
-	    return;
-	}    
-	    
         if (this.state == State.MOUSE_DOWN) {
             if (LastTry.player.inventory.isOpen()) {
                 if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
@@ -211,7 +207,7 @@ public class UiItemSlot extends UiComponent {
                             }
                         }
                     } else {
-                        if (this.canHold(LastTry.player.inventory.currentItem)) {
+	                    if (this.itemHolder == null || this.canHold(LastTry.player.inventory.currentItem)) {
                             ItemHolder tmp = LastTry.player.inventory.currentItem;
                             LastTry.player.inventory.currentItem = this.itemHolder;
                             this.itemHolder = tmp;

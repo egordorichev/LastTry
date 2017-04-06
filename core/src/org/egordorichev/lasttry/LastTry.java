@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.egordorichev.lasttry.core.logger.Log.Severity;
+import org.egordorichev.lasttry.core.logger.LogManager;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
@@ -140,9 +142,16 @@ public class LastTry extends Game {
 
         ui = new UiManager();
 
-	    Graphics.load();
 
-        this.setScreen(new SplashState());
+	    //TODO: This is purely testing
+	    LogManager.init();
+	    LogManager.filter(LogManager.worldLog.getChannel());
+        LogManager.log.log(Severity.INFO, "This is an error");
+        LogManager.errorLog.log(Severity.WARNING, "This won't hopefully show up!");
+		LogManager.worldLog.log(Severity.ERROR, "This won't hopefully show up!");
+		LogManager.worldLog.log(Severity.DEBUG, "This won't hopefully show up!");
+
+		this.setScreen(new SplashState());
     }
 
     /**
@@ -186,8 +195,6 @@ public class LastTry extends Game {
         if (world != null) {
             WorldProvider.save(world);
         }
-
-
     }
 
     /**

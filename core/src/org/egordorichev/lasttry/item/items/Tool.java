@@ -1,8 +1,11 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
+import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Util;
 
 public class Tool extends Item {
 	protected boolean autoSwing;

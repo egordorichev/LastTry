@@ -70,6 +70,10 @@ public class Environment {
      * @param dt The milliseconds passed since the last update.
      */
     public void update(int dt) {
+	    if (LastTry.world == null) {
+		    return;
+	    }
+
         this.time.update();
 
         if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {
@@ -147,8 +151,6 @@ public class Environment {
         if (LastTry.world == null) {
             return;
         }
-
-        LastTry.log("Current time: " + this.time.toString(false) + " or " + this.time.toString(true));
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();

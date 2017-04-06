@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class BlockGround extends Block {
@@ -29,14 +30,22 @@ public class BlockGround extends Block {
             // It's not getting the right texture for some reason.
 
             LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-                    (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-                    Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
-                    Block.TEX_SIZE, false, false);
+                (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+                Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
+                Block.TEX_SIZE, false, false);
         } else {
             LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-                    (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-                    Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
-                    Block.TEX_SIZE, false, false);
+                (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
+                Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
+                Block.TEX_SIZE, false, false);
         }
+
+	    if (this.renderCracks()) {
+		    byte hp = LastTry.world.getBlockHp(x, y);
+
+		    if (hp < Block.MAX_HP) {
+			    LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE);
+		    }
+	    }
     }
 }

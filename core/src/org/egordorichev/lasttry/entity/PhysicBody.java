@@ -129,7 +129,7 @@ public abstract class PhysicBody {
 
     private void updateXVelocity() {
         if (this.velocity.x != 0) {
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getPosition().x, this.hitbox.y + this.getPosition().y,
+            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
                     this.hitbox.width, this.hitbox.height);
 
             newHitbox.x += this.velocity.x;
@@ -175,7 +175,7 @@ public abstract class PhysicBody {
 
     private void updateYVelocity() {
         if (this.velocity.y != 0) {
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getPosition().x, this.hitbox.y + this.getPosition().y,
+            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.getX(), this.hitbox.y + this.getY(),
                     this.hitbox.width, this.hitbox.height);
 
             newHitbox.y += this.velocity.y;
@@ -331,32 +331,29 @@ public abstract class PhysicBody {
         return (int) this.renderBounds.height / Block.TEX_SIZE;
     }
 
-    /**
-     * Return the entity's x-position.
-     *
-     * @return Render x-position.
-     */
-    public Vector2 getPosition() {
-        return new Vector2(renderBounds.x, renderBounds.y);
+    public float getX() {
+        return renderBounds.x;
     }
 
-    /**
-     * Return the entity's width.
-     *
-     * @return Render width.
-     */
+	public float getY() {
+		return renderBounds.y;
+	}
 
-    public Size getSize() {
-        return new Size(renderBounds.width, renderBounds.height);
+    public float getWidth() {
+        return this.renderBounds.width;
     }
+
+	public float getHeight() {
+		return renderBounds.height;
+	}
 
     public Vector2 getCenter() {
-        return new Vector2(getPosition().x + getSize().width / 2, getPosition().y + getSize().height / 2);
+        return new Vector2(getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2);
     }
 
     public Rectangle getHitbox() {
-        return new Rectangle(getPosition().x + this.hitbox.x, this.getPosition().y + this.hitbox.y, this.hitbox.width,
-                this.hitbox.height);
+        return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
+		    this.hitbox.height);
     }
 
     /**

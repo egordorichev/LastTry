@@ -155,7 +155,8 @@ public class World {
     public void setBlock(short id, int x, int y) {
         int position = x + y * this.width;
         this.data.blocks[position] = id;
-
+        this.setBlockHP(Block.MAX_HP, x, y);
+      
         this.changedData.add(position);
     }
 

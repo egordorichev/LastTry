@@ -48,6 +48,8 @@ public class ItemID {
 	public final static short copperShortSword = 46;
 	public final static short copperPickaxe = 47;
 	public final static short copperAxe = 48;
+	public final static short livingWood = 49;
+	public final static short wood = 50;
 
-    public final static short count = 49; // Change this, if you add another item!
+    public final static short count = 51; // Change this, if you add another item!
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class SplashState implements State {
     /** Splash texture */
@@ -32,7 +33,8 @@ public class SplashState implements State {
         LastTry.batch.draw(this.splash, 0, 0);
 
         if (Assets.isLoaded()) {
-		    LastTry.instance.setScreen(new MenuState());
+	        Graphics.load();
+	        LastTry.instance.setScreen(new MenuState());
 	    }
     }
 
