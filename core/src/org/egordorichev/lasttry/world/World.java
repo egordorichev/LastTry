@@ -29,7 +29,7 @@ public class World {
     /**
      * How often the whole world is updated
      */
-    public static final int UPDATE_DELAY = 1;
+    public static final int UPDATE_DELAY = 20;
 
     /**
      * Data about all of the blocks and walls in the world

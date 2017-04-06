@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.environment;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -52,7 +53,7 @@ public class Environment {
      */
     public void render() {
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Textures.sky, i * 48, 0);
+            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
         if (this.currentBiome != null) {
