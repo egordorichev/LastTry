@@ -13,6 +13,7 @@ import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
@@ -186,6 +187,8 @@ public class LastTry extends Game {
 		if (world != null) {
 			WorldProvider.save(world);
 		}
+
+		Assets.dispose();
 	}
 
 	/**
