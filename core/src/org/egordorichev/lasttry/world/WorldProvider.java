@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.world.generator.WorldGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WorldProvider {
@@ -175,21 +176,20 @@ public class WorldProvider {
             stream.writeInt16(height);
             
             stream.writeInt32(LastTry.seed);
+            
+            // Write the number of blocks etc that have changed
+            stream.writeInt32(world.changedData.size());
 
-            
-            /*
-                Instead of saving everything we should just save what has changed so that means storing changes in memory somewhere
-            */
-            
-            /*for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    stream.writeInt16(world.getBlockID(x, y));
-                    stream.writeByte(world.getBlockHp(x, y));
-                    stream.writeInt16(world.getWallID(x, y));
-                    stream.writeByte(world.getWallHp(x, y));
-                }
+            // Iterate over all the positions that have changed and save
+            // the data to file
+            for(int position: world.changedData) {
+                stream.writeInt32(position);
+                stream.writeInt16(world.getWorldData().blocks[position]);
+                stream.writeByte(world.getWorldData().blocksHealth[position]);
+                stream.writeInt16(world.getWorldData().walls[position]);
+                stream.writeByte(world.getWorldData().wallsHealth[position]);
             }
-            */
+
             stream.writeBoolean(true);
             stream.close();
 
@@ -247,28 +247,32 @@ public class WorldProvider {
                 And slot them in
             */
             
-            // WorldData data = new WorldData(width * height);
+            // Generate the original world using the seed
+            WorldGenerator generator = new WorldGenerator();
+            World world = new World(width, height, flags, generator.generate(width, height));
             
-            /*for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    data.blocks[x + y * width] = stream.readInt16();
-                    data.blocksHealth[x + y * width] = stream.readByte();
-                    data.walls[x + y * width] = stream.readInt16();
-                    data.wallsHealth[x + y * width] = stream.readByte();
-                }
-            }*/
+            WorldData data = world.getWorldData();
+            
+            int numberOfIterations  = stream.readInt32();
+            
+            // Read in all the blocks that have changed from the file
+            for (int i = 0; i < numberOfIterations; i++) {
+                int position = stream.readInt32();
+                world.changedData.add(position);
+                data.blocks[position] = stream.readInt16();
+                data.blocksHealth[position] = stream.readByte();
+                data.walls[position] = stream.readInt16();
+                data.wallsHealth[position] = stream.readByte();
+            }
+            
+            world.setWorldData(data);
 
             if (!stream.readBoolean()) {
                 throw new RuntimeException("Verification failed");
             }
             
-            WorldGenerator generator = new WorldGenerator();
-            World world = new World(width, height, flags, generator.generate(width, height));
-        
             stream.close();
             Biome.preload();
-
-            //World world = new World(width, height, flags, data);
 
             LastTry.log("Done loading!");
 
