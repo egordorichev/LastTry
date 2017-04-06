@@ -1,200 +1,194 @@
 package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
 public class Assets {
-    private static boolean loaded = false;
-    public Textures textures;
-    public Fonts fonts;
+	public static AssetManager assetManager = new AssetManager();
+	public static BitmapFont f18;
+	public static BitmapFont f22;
+	public static BitmapFont f24;
 
-    public static void load() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadAssets();
-                    }
-                });
-            }
-        }).start();
-    }
+	public static boolean load() {
+		return assetManager.update();
+	}
 
-    private static void loadAssets() {
-        FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        fontConfig.fontFileName = "font.ttf";
-        fontConfig.fontParameters.size = 22;
+	public static void dispose() {
+		assetManager.dispose();
+	}
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+	public static void loadTexture(String fileName) {
+		assetManager.load(fileName, Texture.class);
+	}
 
-        parameters.size = 22;
-        Fonts.f22 = generator.generateFont(parameters);
-        parameters.size = 24;
-        Fonts.f24 = generator.generateFont(parameters);
-        parameters.size = 18;
-        Fonts.f18 = generator.generateFont(parameters);
+	public static Texture getTexture(String fileName) {
+		return assetManager.get(fileName, Texture.class);
+	}
 
-        generator.dispose();
+	static {
+		FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+		fontConfig.fontFileName = "font.ttf";
+		fontConfig.fontParameters.size = 22;
 
-        Textures.greenSlime = load("GreenSlime.png");
-        Textures.blueSlime = load("BlueSlime.png");
-        Textures.eyeOfCthulhu = load("EyeOfCthulhu.png");
-        Textures.dirt = load("DirtTile.png");
-        Textures.dirtIcon = load("DirtIcon.png");
-        Textures.grass = load("GrassTile.png");
-        Textures.grassIcon = load("GrassIcon.png");
-        Textures.ebonstoneIcon = load("EbonstoneIcon.png");
-        Textures.ebonstone = load("EbonstoneTile.png");
-        Textures.corruptThornyBushes = load("CorruptThornyBushesTile.png");
-        Textures.purpleIceIcon = load("PurpleIceIcon.png");
-        Textures.purpleIce = load("PurpleIceTile.png");
-        Textures.vileMushroom = load("VileMushroom.png");
-        Textures.crimstoneIcon = load("CrimstoneIcon.png");
-        Textures.crimstone = load("CrimstoneTile.png");
-        Textures.redIceIcon = load("RedIceIcon.png");
-        Textures.redIce = load("RedIceTile.png");
-        Textures.viciousMushroom = load("ViciousMushroom.png");
-        Textures.sandBlockIcon = load("SandIcon.png");
-        Textures.sandBlock = load("SandTile.png");
-        Textures.ebonsandIcon = load("EbonsandIcon.png");
-        Textures.ebonsand = load("EbonsandTile.png");
-        Textures.crimsandIcon = load("CrimsandIcon.png");
-        Textures.crimsand = load("CrimsandTile.png");
-        Textures.stoneIcon = load("StoneIcon.png");
-        Textures.stone = load("StoneTile.png");
-        Textures.ironPickaxe = load("IronPickaxe.png");
-        Textures.dirtWall = load("DirtWall.png");
-        Textures.dirtWallIcon = load("DirtWallIcon.png");
-        Textures.copperCoin = load("CopperCoin.png");
-        Textures.silverCoin = load("SilverCoin.png");
-        Textures.goldCoin = load("GoldCoin.png");
-        Textures.platinumCoin = load("PlatinumCoin.png");
-        Textures.woodenSword = load("WoodenSword.png");
-        Textures.gel = load("Gel.png");
-        Textures.heart = load("Heart.png");
-        Textures.mana = load("Mana.png");
-        Textures.hp = load("HP.png");
-        Textures.radial = load("Radial.png");
-        Textures.inventorySlot1 = load("InventorySlot1.png");
-        Textures.inventorySlot2 = load("InventorySlot2.png");
-        Textures.inventorySlot3 = load("InventorySlot3.png");
-        Textures.inventorySlot4 = load("InventorySlot4.png");
-        Textures.inventorySlot5 = load("InventorySlot5.png");
-        Textures.inventoryBack = load("InventoryBack.png");
-        Textures.forestBack = load("ForestBack.png");
-        Textures.corruptionBack = load("CorruptionBack.png");
-        Textures.crimsonBack = load("CrimsonBack.png");
-        Textures.trash = load("Trash.png");
-        Textures.ice = load("PurpleIceTile.png"); // FIXME: replace with ice texture
-        Textures.iceIcon = load("PurpleIceIcon.png"); // FIXME: replace with ice texture
-        Textures.dayBloom = load("DayBloom.png");
-        Textures.dayBloomIcon = load("DayBloomIcon.png");
-        Textures.blinkRoot = load("BlinkRoot.png");
-        Textures.blinkRootIcon = load("BlinkRootIcon.png");
-        Textures.moonGlow = load("MoonGlow.png");
-        Textures.moonGlowIcon = load("MoonGlowIcon.png");
-        Textures.deathWeed = load("DeathWeed.png");
-        Textures.deathWeedIcon = load("DeathWeedIcon.png");
-        Textures.waterLeaf = load("WaterLeaf.png");
-        Textures.waterLeafIcon = load("WaterLeafIcon.png");
-        Textures.fireBlossom = load("FireBlossom.png");
-        Textures.fireBlossomIcon = load("FireBlossomIcon.png");
-        Textures.silverThorn = load("SilverThorn.png");
-        Textures.silverThornIcon = load("SilverThornIcon.png");
-        Textures.dayBloomSeeds = load("DayBloomSeeds.png");
-        Textures.moonGlowSeeds = load("MoonGlowSeeds.png");
-        Textures.blinkRootSeeds = load("BlinkRootSeeds.png");
-        Textures.fireBlossomSeeds = load("FireBlossomSeeds.png");
-        Textures.silverThornSeeds = load("SilverThornSeeds.png");
-        Textures.deathWeedSeeds = load("DeathWeedSeeds.png");
-        Textures.waterLeafSeeds = load("WaterLeafSeeds.png");
-        Textures.mud = load("MudTile.png");
-        Textures.mudIcon = load("MudIcon.png");
-        Textures.jungleGrass = load("JungleGrassTile.png");
-        Textures.jungleGrassIcon = load("JungleGrassIcon.png");
-        Textures.jungleGrassSeeds = load("JungleGrassSeeds.png");
-        Textures.ashBlockIcon = load("AshIcon.png");
-        Textures.ashBlock = load("AshTile.png");
-        Textures.snowBlockIcon = load("SnowIcon.png");
-        Textures.snowBlock = load("SnowTile.png");
-        Textures.copperShortSword = load("CopperShortSword.png");
-        Textures.copperPickaxe = load("CopperPickaxe.png");
-        Textures.copperAxe = load("CopperAxe.png");
-        Textures.nullItem = load("NullItem.png");
-        Textures.livingWood = load("LivingWoodTile.png");
-        Textures.wood = load("WoodTile.png");
-        Textures.woodIcon = load("WoodIcon.png");
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        Textures.tileCracks = load("TileCracks.png");
+		parameters.size = 18;
+		f18 = generator.generateFont(parameters);
+		parameters.size = 22;
+		f22 = generator.generateFont(parameters);
+		parameters.size = 24;
+		f24 = generator.generateFont(parameters);
 
-        Textures.ammoReservationBuff = load("AmmoReservationBuff.png");
-        Textures.archeryBuff = load("ArcheryBuff.png");
-        Textures.battleBuff = load("BattleBuff.png");
-        Textures.builderBuff = load("BuilderBuff.png");
-        Textures.calmBuff = load("CalmBuff.png");
-        Textures.crateBuff = load("CrateBuff.png");
-        Textures.dangersenseBuff = load("DangersenseBuff.png");
-        Textures.enduranceBuff = load("EnduranceBuff.png");
-        Textures.featherfallBuff = load("FeatherfallBuff.png");
-        Textures.fishingBuff = load("FishingBuff.png");
-        Textures.flipperBuff = load("FlipperBuff.png");
-        Textures.gillsBuff = load("GillsBuff.png");
-        Textures.gravityBuff = load("GravityBuff.png");
-        Textures.heartreachBuff = load("HeartreachBuff.png");
-        Textures.hunterBuff = load("HunterBuff.png");
-        Textures.infernoBuff = load("InfernoBuff.png");
-        Textures.invisibilityBuff = load("InvisibilityBuff.png");
-        Textures.ironskinBuff = load("IronskinBuff.png");
-        Textures.lifeforceBuff = load("LifeforceBuff.png");
-        Textures.lovestruckBuff = load("LovestruckBuff.png");
-        Textures.magicPowerBuff = load("MagicPowerBuff.png");
-        Textures.manaRegenerationBuff = load("ManaRegenerationBuff.png");
-        Textures.miningBuff = load("MiningBuff.png");
-        Textures.nightOwlBuff = load("NightOwlBuff.png");
-        Textures.obsidianSkinBuff = load("ObsidianSkinBuff.png");
-        Textures.rageBuff = load("RageBuff.png");
-        Textures.regenerationBuff = load("RegenerationBuff.png");
-        Textures.shineBuff = load("ShineBuff.png");
-        Textures.sonarBuff = load("SonarBuff.png");
-        Textures.spelunkerBuff = load("SpelunkerBuff.png");
-        Textures.summoningBuff = load("SummoningBuff.png");
-        Textures.swiftnessBuff = load("SwiftnessBuff.png");
-        Textures.thornsBuff = load("ThornsBuff.png");
-        Textures.titanBuff = load("TitanBuff.png");
-        Textures.warmthBuff = load("WarmthBuff.png");
-        Textures.waterWalkingBuff = load("WaterWalkingBuff.png");
-        Textures.wrathBuff = load("WrathBuff.png");
-        Textures.wellFedBuff = load("WellFedBuff.png");
-        Textures.cozyFireBuff = load("CozyFireBuff.png");
-        Textures.dryadsBlessingBuff = load("DryadsBlessingBuff.png");
-        Textures.happyBuff = load("HappyBuff.png");
-        Textures.heartLampBuff = load("HeartLampBuff.png");
-        Textures.honeyBuff = load("HoneyBuff.png");
-        Textures.peaceCandleBuff = load("PeaceCandleBuff.png");
-        Textures.starInABottleBuff = load("StarInABottleBuff.png");
+		generator.dispose();
 
-        Textures.light = load("Light.png");
-        Textures.shadow = load("Shadow.png");
-        Textures.sky = load("Sky.png");
+		loadTexture(Textures.greenSlime);
+		loadTexture(Textures.blueSlime);
+		loadTexture(Textures.eyeOfCthulhu);
 
-        Textures.corruptionWorld = load("IconCorruption.png");
-        Textures.crimsonWorld = load("IconCrimson.png");
-        Textures.corruptionHardmodeWorld = load("IconHallowCorruption.png");
-        Textures.crimsonHardmodeWorld = load("IconHallowCrimson.png");
+		loadTexture(Textures.dirt);
+		loadTexture(Textures.dirtIcon);
+		loadTexture(Textures.grass);
+		loadTexture(Textures.grassIcon);
+		loadTexture(Textures.ebonstoneIcon);
+		loadTexture(Textures.ebonstone);
+		loadTexture(Textures.corruptThornyBushes);
+		loadTexture(Textures.purpleIceIcon);
+		loadTexture(Textures.purpleIce);
+		loadTexture(Textures.vileMushroom);
+		loadTexture(Textures.crimstoneIcon);
+		loadTexture(Textures.crimstone);
+		loadTexture(Textures.redIceIcon);
+		loadTexture(Textures.redIce);
+		loadTexture(Textures.viciousMushroom);
+		loadTexture(Textures.sandBlockIcon);
+		loadTexture(Textures.sandBlock);
+		loadTexture(Textures.ebonsandIcon);
+		loadTexture(Textures.ebonsand);
+		loadTexture(Textures.crimsandIcon);
+		loadTexture(Textures.crimsand);
+		loadTexture(Textures.stoneIcon);
+		loadTexture(Textures.stone);
+		loadTexture(Textures.ironPickaxe);
+		loadTexture(Textures.dirtWall);
+		loadTexture(Textures.dirtWallIcon);
+		loadTexture(Textures.copperCoin);
+		loadTexture(Textures.silverCoin);
+		loadTexture(Textures.goldCoin);
+		loadTexture(Textures.platinumCoin);
+		loadTexture(Textures.woodenSword);
+		loadTexture(Textures.gel);
+		loadTexture(Textures.heart);
+		loadTexture(Textures.mana);
+		loadTexture(Textures.hp);
+		loadTexture(Textures.radial);
+		loadTexture(Textures.inventorySlot1);
+		loadTexture(Textures.inventorySlot2);
+		loadTexture(Textures.inventorySlot3);
+		loadTexture(Textures.inventorySlot4);
+		loadTexture(Textures.inventorySlot5);
+		loadTexture(Textures.inventoryBack);
+		loadTexture(Textures.forestBack);
+		loadTexture(Textures.corruptionBack);
+		loadTexture(Textures.crimsonBack);
+		loadTexture(Textures.trash);
+		loadTexture(Textures.ice);
+		loadTexture(Textures.iceIcon);
+		loadTexture(Textures.dayBloom);
+		loadTexture(Textures.dayBloomIcon);
+		loadTexture(Textures.blinkRoot);
+		loadTexture(Textures.blinkRootIcon);
+		loadTexture(Textures.moonGlow);
+		loadTexture(Textures.moonGlowIcon);
+		loadTexture(Textures.deathWeed);
+		loadTexture(Textures.deathWeedIcon);
+		loadTexture(Textures.waterLeaf);
+		loadTexture(Textures.waterLeafIcon);
+		loadTexture(Textures.fireBlossom);
+		loadTexture(Textures.fireBlossomIcon);
+		loadTexture(Textures.silverThorn);
+		loadTexture(Textures.silverThornIcon);
+		loadTexture(Textures.dayBloomSeeds);
+		loadTexture(Textures.blinkRootSeeds);
+		loadTexture(Textures.moonGlowSeeds);
+		loadTexture(Textures.deathWeedSeeds);
+		loadTexture(Textures.waterLeafSeeds);
+		loadTexture(Textures.fireBlossomSeeds);
+		loadTexture(Textures.silverThornSeeds);
+		loadTexture(Textures.mud);
+		loadTexture(Textures.mudIcon);
+		loadTexture(Textures.jungleGrass);
+		loadTexture(Textures.jungleGrassIcon);
+		loadTexture(Textures.jungleGrassSeeds);
+		loadTexture(Textures.ashBlockIcon);
+		loadTexture(Textures.ashBlock);
+		loadTexture(Textures.snowBlockIcon);
+		loadTexture(Textures.snowBlock);
+		loadTexture(Textures.copperShortSword);
+		loadTexture(Textures.copperPickaxe);
+		loadTexture(Textures.copperAxe);
+		loadTexture(Textures.nullItem);
+		loadTexture(Textures.wood);
+		loadTexture(Textures.woodIcon);
+		loadTexture(Textures.livingWood);
+		loadTexture(Textures.tileCracks);
 
-        loaded = true;
-    }
+		loadTexture(Textures.ammoReservationBuff);
+		loadTexture(Textures.archeryBuff);
+		loadTexture(Textures.battleBuff);
+		loadTexture(Textures.builderBuff);
+		loadTexture(Textures.calmBuff);
+		loadTexture(Textures.crateBuff);
+		loadTexture(Textures.dangersenseBuff);
+		loadTexture(Textures.enduranceBuff);
+		loadTexture(Textures.featherfallBuff);
+		loadTexture(Textures.fishingBuff);
+		loadTexture(Textures.flipperBuff);
+		loadTexture(Textures.gillsBuff);
+		loadTexture(Textures.gravityBuff);
+		loadTexture(Textures.heartreachBuff);
+		loadTexture(Textures.hunterBuff);
+		loadTexture(Textures.infernoBuff);
+		loadTexture(Textures.invisibilityBuff);
+		loadTexture(Textures.ironskinBuff);
+		loadTexture(Textures.lifeforceBuff);
+		loadTexture(Textures.lovestruckBuff);
+		loadTexture(Textures.magicPowerBuff);
+		loadTexture(Textures.manaRegenerationBuff);
+		loadTexture(Textures.miningBuff);
+		loadTexture(Textures.nightOwlBuff);
+		loadTexture(Textures.obsidianSkinBuff);
+		loadTexture(Textures.rageBuff);
+		loadTexture(Textures.regenerationBuff);
+		loadTexture(Textures.shineBuff);
+		loadTexture(Textures.sonarBuff);
+		loadTexture(Textures.spelunkerBuff);
+		loadTexture(Textures.summoningBuff);
+		loadTexture(Textures.swiftnessBuff);
+		loadTexture(Textures.thornsBuff);
+		loadTexture(Textures.titanBuff);
+		loadTexture(Textures.warmthBuff);
+		loadTexture(Textures.waterWalkingBuff);
+		loadTexture(Textures.wrathBuff);
+		loadTexture(Textures.wellFedBuff);
+		loadTexture(Textures.cozyFireBuff);
+		loadTexture(Textures.dryadsBlessingBuff);
+		loadTexture(Textures.happyBuff);
+		loadTexture(Textures.heartLampBuff);
+		loadTexture(Textures.honeyBuff);
+		loadTexture(Textures.peaceCandleBuff);
+		loadTexture(Textures.starInABottleBuff);
+		loadTexture(Textures.light);
+		loadTexture(Textures.shadow);
+		loadTexture(Textures.sky);
 
-    private static Texture load(String path) {
-        return new Texture(Gdx.files.internal(path));
-    }
-
-    public static boolean isLoaded() {
-        return loaded;
-    }
+		loadTexture(Textures.corruptionWorld);
+		loadTexture(Textures.crimsonWorld);
+		loadTexture(Textures.corruptionHardmodeWorld);
+		loadTexture(Textures.crimsonHardmodeWorld);
+	}
 }
