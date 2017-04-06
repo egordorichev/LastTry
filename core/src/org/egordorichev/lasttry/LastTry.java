@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
@@ -112,8 +113,17 @@ public class LastTry extends Game {
 	 */
 	@Override
 	public void create() {
-		instance = this;
 		log = new Log();
+
+		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			@Override
+			public void uncaughtException(Thread thread, Throwable throwable) {
+				Crash.report(thread, throwable);
+			}
+		});
+
+		instance = this;
+		debug.disable();
 		debug = new Debug();
 		shapeRenderer = new ShapeRenderer();
 
