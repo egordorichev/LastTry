@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.item.block.Block;
 
 /**
  * PhysicBody representing an item dropped in the world.
@@ -26,7 +27,13 @@ public class DroppedItem extends PhysicBody {
         this.isSolid = true;
     }
 
-    @Override
+	@Override
+	public void render() {
+		//LastTry.batch.draw(this.holder.getItem().getTexture(), this.getX(),
+		//	LastTry.world.getHeight() * Block.TEX_SIZE - this.getY());
+	}
+
+	@Override
     public void update(int dt) {
         super.update(dt);
 

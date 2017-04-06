@@ -12,7 +12,6 @@ public class SplashState implements State {
 
     public SplashState() {
         this.splash = new Texture(Gdx.files.internal("splash.png"));
-        Assets.load();
     }
 
     /**
@@ -25,13 +24,12 @@ public class SplashState implements State {
 
     /**
      * Renders and updates the splash
-     *
      * @param delta delta from last update
      */
     @Override
     public void render(float delta) {
         LastTry.batch.draw(this.splash, 0, 0);
-
+	    
         if (Assets.load()) {
 	        Graphics.load();
 	        LastTry.instance.setScreen(new MenuState());

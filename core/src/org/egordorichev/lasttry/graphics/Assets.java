@@ -2,14 +2,13 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import org.egordorichev.lasttry.LastTry;
 
 public class Assets {
-	private static TextureLoader.TextureParameter textureParameter = new TextureLoader.TextureParameter();
 	public static AssetManager assetManager = new AssetManager();
 	public static BitmapFont f18;
 	public static BitmapFont f22;
@@ -24,7 +23,7 @@ public class Assets {
 	}
 
 	public static void loadTexture(String fileName) {
-		assetManager.load(fileName, Texture.class, textureParameter);
+		assetManager.load(fileName, Texture.class);
 	}
 
 	public static Texture getTexture(String fileName) {
@@ -47,9 +46,6 @@ public class Assets {
 		f24 = generator.generateFont(parameters);
 
 		generator.dispose();
-
-		textureParameter.magFilter = Texture.TextureFilter.Linear;
-		textureParameter.minFilter = Texture.TextureFilter.Linear;
 
 		loadTexture(Textures.greenSlime);
 		loadTexture(Textures.blueSlime);

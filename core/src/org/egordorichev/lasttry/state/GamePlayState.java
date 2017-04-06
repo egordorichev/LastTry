@@ -37,7 +37,7 @@ public class GamePlayState implements State {
             LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
         }
 
-        LastTry.modLoader = new ModLoader();
+	    LastTry.modLoader = new ModLoader();
         LastTry.modLoader.load();
     }
 
@@ -56,6 +56,10 @@ public class GamePlayState implements State {
      */
     @Override
     public void render(float delta) {
+    	if (InputManager.isKeyDown(Keys.DEBUG_MODE)) {
+			LastTry.entityManager.getEntities().get(0).die();
+	    }
+
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
 			 (Gdx.graphics.getBufferFormat().coverageSampling? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
