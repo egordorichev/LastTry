@@ -32,7 +32,7 @@ public class SplashState implements State {
     public void render(float delta) {
         LastTry.batch.draw(this.splash, 0, 0);
 
-        if (Assets.isLoaded()) {
+        if (Assets.load()) {
 	        Graphics.load();
 	        LastTry.instance.setScreen(new MenuState());
 	    }

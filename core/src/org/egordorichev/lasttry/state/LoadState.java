@@ -1,10 +1,12 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
@@ -48,10 +50,10 @@ public class LoadState implements State {
         }
 
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Textures.sky, i * 48, 0);
+            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
-        Fonts.f22.draw(LastTry.batch, this.loadString, 0, 0);
+        Assets.f22.draw(LastTry.batch, this.loadString, 0, 0);
         LastTry.ui.render();
     }
 

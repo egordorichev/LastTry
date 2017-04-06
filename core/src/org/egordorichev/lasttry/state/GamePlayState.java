@@ -1,10 +1,12 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
@@ -14,7 +16,11 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 
 public class GamePlayState implements State {
+	private Texture hpTexture;
+
     public GamePlayState() {
+    	this.hpTexture = Assets.getTexture(Textures.hp);
+
         int spawnX = LastTry.world.getWidth() / 2;
         int spawnY = 50;
 
@@ -50,6 +56,9 @@ public class GamePlayState implements State {
      */
     @Override
     public void render(float delta) {
+	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
+			 (Gdx.graphics.getBufferFormat().coverageSampling? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+
         LastTry.environment.update((int) delta);
         LastTry.entityManager.update((int) delta);
         LastTry.player.update((int) delta);
@@ -81,11 +90,11 @@ public class GamePlayState implements State {
         int hp = LastTry.player.getHp();
         int x = Gdx.graphics.getWidth() - 260;
 
-        Fonts.f22.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
+	    Assets.f22.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
                 Gdx.graphics.getHeight() - 4);
 
         for (int i = 0; i < hp / 20; i++) {
-            LastTry.batch.draw(Textures.hp, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
+            LastTry.batch.draw(this.hpTexture, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
         }
 
         LastTry.ui.render();

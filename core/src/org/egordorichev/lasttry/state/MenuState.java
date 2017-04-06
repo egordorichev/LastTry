@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.ui.*;
 import org.egordorichev.lasttry.world.World;
@@ -489,7 +490,7 @@ public class MenuState implements State {
     @Override
     public void render(float delta) {
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Textures.sky, i * 48, 0);
+            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
         LastTry.ui.render();
