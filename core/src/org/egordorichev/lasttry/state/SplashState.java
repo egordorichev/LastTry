@@ -30,7 +30,7 @@ public class SplashState implements State {
     public void render(float delta) {
         LastTry.batch.draw(this.splash, 0, 0);
 
-	    Assets.assetManager.finishLoading();
+	    Assets.assetManager.finishLoading(); // Comment this line to draw splash
 
 	    if (Assets.load()) {
 	        Graphics.load();
