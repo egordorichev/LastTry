@@ -25,7 +25,7 @@ public class WorldGenerator {
     private int height;
 
     /**
-     * Generation tasks, witch will be runned
+     * Generation tasks, which will be run
      */
     private List<GeneratorTask> tasks = new ArrayList<>();
 

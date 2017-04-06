@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
@@ -33,8 +34,10 @@ public class DigTool extends Tool {
 				LastTry.world.setBlockHP((byte) (hp - 1), x, y);
 			} else {
 				LastTry.world.setBlock(ItemID.none, x, y);
+				LastTry.player.inventory.add(new ItemHolder(block, 1));
 			}
 		}
+
 
 		return false;
 	}

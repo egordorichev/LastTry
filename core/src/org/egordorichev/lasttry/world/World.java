@@ -10,6 +10,9 @@ import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 
+import java.util.HashSet;
+
+
 public class World {
     /**
      * Shows, that world has crimson, not corruption biome
@@ -17,7 +20,7 @@ public class World {
     public static final int CRIMSON = 1;
 
     /**
-     * Shows, that world has entred hardmode
+     * Shows, that world has entered hardmode
      */
     public static final int HARDMODE = 2;
 
@@ -50,12 +53,20 @@ public class World {
      * World flags
      */
     private int flags;
+    
+    /**
+     * Stores block positions that need to be saved in the world file
+     */
+    public HashSet<Integer> changedData;
+
 
     public World(short width, short height, int flags, WorldData data) {
         this.width = width;
         this.height = height;
         this.flags = flags;
         this.data = data;
+        
+        changedData = new HashSet<>();
 
         Util.runInThread(new Callable() {
             @Override
@@ -142,12 +153,18 @@ public class World {
      * @param y  World y-position.
      */
     public void setBlock(short id, int x, int y) {
-        this.data.blocks[x + y * this.width] = id;
+        int position = x + y * this.width;
+        this.data.blocks[position] = id;
         this.setBlockHP(Block.MAX_HP, x, y);
+      
+        this.changedData.add(position);
     }
 
     public void setBlockHP(byte hp, int x, int y) {
-        this.data.blocksHealth[x + y * this.width] = hp;
+        int position = x + y * this.width;
+        this.data.blocksHealth[position] = hp;
+        
+        this.changedData.add(position);
     }
 
     /**
@@ -158,7 +175,10 @@ public class World {
      * @param y  World y-position.
      */
     public void setWall(short id, int x, int y) {
-        this.data.walls[x + y * this.width] = id;
+        int position = x + y * this.width;
+        this.data.walls[position] = id;
+        
+        this.changedData.add(position);
     }
 
     /**
@@ -317,5 +337,13 @@ public class World {
      */
     public short getHeight() {
         return this.height;
+    }
+    
+    public WorldData getWorldData() {
+        return this.data;
+    }
+    
+    public void setWorldData(WorldData d) {
+        this.data = d;
     }
 }
