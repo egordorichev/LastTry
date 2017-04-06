@@ -123,7 +123,6 @@ public class LastTry extends Game {
 		});
 
 		instance = this;
-		debug.disable();
 		debug = new Debug();
 		shapeRenderer = new ShapeRenderer();
 
