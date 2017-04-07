@@ -10,103 +10,74 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.player.Player;
-import org.egordorichev.lasttry.entity.player.PlayerInfo;
-import org.egordorichev.lasttry.entity.player.PlayerProvider;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.entity.player.*;
+import org.egordorichev.lasttry.graphics.*;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
-import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.WorldInfo;
-import org.egordorichev.lasttry.world.WorldProvider;
+import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
+import org.egordorichev.lasttry.Version;
 
 import java.util.Random;
 
 public class LastTry extends Game {
-	/**
-	 * Random instance
-	 */
+	/** LastTry version */
+	public static final Version version = new Version(0, 3);
+	
+	/** Random instance */
 	public static final Random random = new Random();
-	/**
-	 * Camera
-	 */
+	
+	/** Camera */
 	public static OrthographicCamera camera;
-	/**
-	 * UI Camera
-	 */
+	
+	/** UI Camera */
 	public static OrthographicCamera uiCamera;
-	/**
-	 * Public sprite batch
-	 */
+	
+	/** Public sprite batch */
 	public static SpriteBatch batch;
-	/**
-	 * Game viewport
-	 */
+	
+	/** Game viewport */
 	public static Viewport viewport;
-	/**
-	 * Last Try instance
-	 */
+	
+	/** Last Try instance */
 	public static LastTry instance;
 
-	/**
-	 * Static log instance
-	 */
+	/** Static log instance */
 	public static Log log;
 
-	/**
-	 * Ui manager
-	 */
+	/** Ui manager */
 	public static UiManager ui;
 
-	/**
-	 * World instance
-	 */
+	/** World instance */
 	public static World world;
 
-	/**
-	 * World info
+	/** World info
 	 */
 	public static WorldInfo worldInfo;
 
-	/**
-	 * Player instance
-	 */
+	/** Player instance */
 	public static Player player;
 
-	/**
-	 * Player info
-	 */
+	/** Player info */
 	public static PlayerInfo playerInfo;
 
-	/**
-	 * Environment instance
-	 */
+	/** Environment instance*/
 	public static Environment environment;
 
-	/**
-	 * PhysicBody manager instance
-	 */
+	/** PhysicBody manager instance*/
 	public static EntityManager entityManager;
 
-	/**
-	 * Mod loader
-	 */
+	/** Mod loader */
 	public static ModLoader modLoader;
 
-	/**
-	 * Debug helper
-	 */
+	/** Debug helper */
 	public static Debug debug;
 
-	/**
-	 * Used for debug
-	 */
+	/** Used for debug */
 	public static ShapeRenderer shapeRenderer;
 
 	/**
@@ -161,9 +132,7 @@ public class LastTry extends Game {
 		camera.update();
 	}
 
-	/**
-	 * Renders and updates the game
-	 */
+	/** Renders and updates the game */
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -175,9 +144,7 @@ public class LastTry extends Game {
 		batch.end();
 	}
 
-	/**
-	 * Handles game exit
-	 */
+	/** Handles game exit */
 	@Override
 	public void dispose() {
 		if(player != null){
@@ -256,6 +223,8 @@ public class LastTry extends Game {
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
+		// TODO: replace with Crash.report()
+		
 		exception.printStackTrace();
 		Throwable cause = exception;
 
