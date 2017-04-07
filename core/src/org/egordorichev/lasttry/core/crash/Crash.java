@@ -16,7 +16,7 @@ public class Crash {
 		System.err.println(ERROR_MESSAGE);
 
 		System.err.println("--- BEGIN ERROR REPORT ---");
-		System.err.println("LastTry version: " + Version.full);
+		System.err.println("LastTry version: " + LastTry.version.toString());
 		System.err.println("OS: " + System.getProperty("os.name") + " (" + System.getProperty("os.arch") + ") version " + System.getProperty("os.version"));
 		System.err.println("Java version: " +  System.getProperty("java.version") + ", " + System.getProperty("java.vendor"));
 		System.err.println("Java VM version: " +  System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor"));
@@ -31,6 +31,7 @@ public class Crash {
 
 	private static String printMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
+		
 		long i = runtime.maxMemory();
 		long j = runtime.totalMemory();
 		long k = runtime.freeMemory();
