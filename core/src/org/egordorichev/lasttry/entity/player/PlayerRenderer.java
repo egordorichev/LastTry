@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
 
 public class PlayerRenderer {
     public static final int TEXTURE_WIDTH = 40;

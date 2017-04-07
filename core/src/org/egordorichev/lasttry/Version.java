@@ -9,6 +9,7 @@ public class Version {
 		this.minor = minor;
 	}
 	
+        @Override
 	public String toString() {
 		return "v." + this.major + "." + this.minor;	
 	}
