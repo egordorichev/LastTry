@@ -35,11 +35,11 @@ public class UiButton extends UiComponent {
         // Gdx.graphics.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); TODO: draw texture
 
         Assets.f22.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
-                + (this.getHeight() - Fonts.f22.getLineHeight()) / 2);
+                + (this.getHeight() - Assets.f22.getLineHeight()) / 2);
     }
 
     public void setLabel(String label) {
         this.label = label;
-        this.textWidth = (int) new GlyphLayout(Fonts.f22, this.label).width;
+        this.textWidth = (int) new GlyphLayout(Assets.f22, this.label).width;
     }
 }
