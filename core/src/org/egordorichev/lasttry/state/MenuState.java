@@ -129,7 +129,7 @@ public class MenuState implements State {
                     }
                 };
 
-                add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, Language.text.getString("newPlayerButton")) {
+                add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, Language.text.getString("newButton")) {
                     @Override
                     public void onClick() {
                         playerSelect.hide();
@@ -137,7 +137,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(32, 144, 100, 32), Origin.CENTER, Language.text.getString("newPlayerBackButton")) {
+                add(new UiTextButton(new Rectangle(32, 144, 100, 32), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         playerSelect.hide();
@@ -185,7 +185,7 @@ public class MenuState implements State {
                     }
                 };
 
-                add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, Language.text.getString("newWorldButton")) {
+                add(new UiTextButton(new Rectangle(-32, 144, 100, 32), Origin.CENTER, Language.text.getString("newButton")) {
                     @Override
                     public void onClick() {
                         worldSelect.hide();
@@ -193,7 +193,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(32, 144, 100, 32), Origin.CENTER, Language.text.getString("newWorldBackButton")) {
+                add(new UiTextButton(new Rectangle(32, 144, 100, 32), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         worldSelect.hide();
@@ -244,7 +244,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, Language.text.getString("worldSizeBackButton")) {
+                add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         worldNew.hide();
@@ -292,7 +292,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, Language.text.getString("worldEvilBackButton")) {
+                add(new UiTextButton(new Rectangle(0, 200, 0, 0), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         worldEvil.hide();
@@ -333,7 +333,7 @@ public class MenuState implements State {
 
                 add(nameInput);
 
-                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("worldNameBackButton")) {
+                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         worldName.hide();
@@ -341,7 +341,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("worldCreateButton")) {
+                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("createButton")) {
                     @Override
                     public void onClick() {
                         worldInfo.name = nameInput.getText();
@@ -397,7 +397,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("newPlayerCreateButton")) {
+                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("createButton")) {
                     @Override
                     public void onClick() {
                         playerNew.hide();
@@ -405,7 +405,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("newPlayerBackButton")) {
+                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         playerNew.hide();
@@ -440,7 +440,7 @@ public class MenuState implements State {
 
                 add(nameInput);
 
-                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("newPlayerNameBackButton")) {
+                add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.getString("backButton")) {
                     @Override
                     public void onClick() {
                         playerName.hide();
@@ -448,7 +448,7 @@ public class MenuState implements State {
                     }
                 });
 
-                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("newPlayerNameCreateButton")) {
+                add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.getString("createButton")) {
                     @Override
                     public void onClick() {
                         playerInfo.name = nameInput.getText();
