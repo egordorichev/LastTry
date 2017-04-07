@@ -4,9 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.language.Language;
 
 public abstract class Buff extends Effect {
-    public static final Buff ammoReservation = new Buff("Ammo reservation", "Gives 20% chance to not consume ammo",
+    public static final Buff ammoReservation = new Buff(Language.text.getString("ammoBuff"), Language.text.getString("ammoBuffDescription"),
 		    Assets.getTexture(Textures.ammoReservationBuff)) {
 
         @Override
@@ -20,7 +21,7 @@ public abstract class Buff extends Effect {
         }
     };
 
-    public static final Buff archery = new Buff("Archery", "20% increased arrow damage and speed",
+    public static final Buff archery = new Buff(Language.text.getString("archeryBuff"), Language.text.getString("archeryBuffDescription"),
 		    Assets.getTexture(Textures.archeryBuff)) {
 
         @Override
@@ -34,7 +35,7 @@ public abstract class Buff extends Effect {
         }
     };
 
-    public static final Buff battle = new Buff("Battle", "Increased enemy spawn rate",
+    public static final Buff battle = new Buff(Language.text.getString("battleBuff"), Language.text.getString("battleBuffDescription"),
 		    Assets.getTexture(Textures.battleBuff)) {
     	
         @Override
@@ -611,6 +612,7 @@ public abstract class Buff extends Effect {
      *
      * @param entity Entity, on witch it is applied
      */
+    @Override
     public abstract void apply(Entity entity);
 
     /**
@@ -618,5 +620,6 @@ public abstract class Buff extends Effect {
      *
      * @param entity Entity, from witch it is removed
      */
+    @Override
     public abstract void remove(Entity entity);
 }

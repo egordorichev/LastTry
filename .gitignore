@@ -118,3 +118,4 @@ core/assets/players/\.plr
 *.plr
 
 *.wld
+/.nb-gradle/

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.*;
@@ -20,9 +21,10 @@ import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
-import org.egordorichev.lasttry.Version;
+import org.egordorichev.lasttry.language.Language;
 
 import java.util.Random;
+import java.util.Locale;
 
 public class LastTry extends Game {
 	/** LastTry version */
@@ -99,6 +101,10 @@ public class LastTry extends Game {
 		shapeRenderer = new ShapeRenderer();
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
+                
+                Locale en_US = new Locale("en", "US");
+                Language.load(en_US);
+                
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
 		int width = Gdx.graphics.getWidth();
@@ -164,15 +170,8 @@ public class LastTry extends Game {
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-		return new String[] {
-			"LastTry: Dig Peon, Dig!", "LastTry: Epic Dirt", "LastTry: Hey Guys!",
-			"LastTry: Sand is Overpowered", "LastTry: Part 3: The Return of the Guide", "LastTry: A Bunnies Tale",
-			"LastTry: Dr. Bones and The Temple of Blood Moon", "LastTry: Slimeassic Park",
-			"LastTry: The Grass is Greener on This Side",
-			"LastTry: Small Blocks, Not for Children Under the Age of 5", "LastTry: Digger T' Blocks",
-			"LastTry: There is No Cow Layer", "LastTry: Suspicous Looking Eyeballs", "LastTry: Purple Grass!",
-			"LastTry: Noone Dug Behind!", "LastTry: Shut Up and Dig Gaiden!", "LastTry: Java for ever!"
-		}[random.nextInt(17)];
+            String[] split = Language.text.getString("windowTitles").split("//");
+            return split[random.nextInt(split.length)];
 	}
 
 	/**
