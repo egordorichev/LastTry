@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.ui;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Fonts;
+import org.egordorichev.lasttry.graphics.Assets;
 
 public class UiButton extends UiComponent {
     protected String label;
@@ -34,7 +34,7 @@ public class UiButton extends UiComponent {
 
         // Gdx.graphics.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); TODO: draw texture
 
-        Fonts.f22.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
+        Assets.f22.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
                 + (this.getHeight() - Fonts.f22.getLineHeight()) / 2);
     }
 
