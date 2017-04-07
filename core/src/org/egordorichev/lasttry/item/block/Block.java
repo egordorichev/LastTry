@@ -34,10 +34,10 @@ public class Block extends Item {
         this.useSpeed = 30;
     }
 
-	@Override
-	public boolean isAutoUse() {
-		return true;
-	}
+    @Override
+    public boolean isAutoUse() {
+        return true;
+    }
 
 	/**
      * Calculates a number based on the edges that have blocks of the same type.
@@ -82,7 +82,7 @@ public class Block extends Item {
     }
 
     public void die(int x, int y) {
-
+	LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.TEX_SIZE * x, Block.TEX_SIZE * y);
     }
 
     public boolean canBePlaced(int x, int y) {
