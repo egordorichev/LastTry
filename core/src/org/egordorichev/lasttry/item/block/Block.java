@@ -2,8 +2,10 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
