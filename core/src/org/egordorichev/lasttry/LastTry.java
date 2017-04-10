@@ -26,6 +26,7 @@ import org.egordorichev.lasttry.language.Language;
 import java.util.Random;
 import java.util.Locale;
 
+/** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
 	public static final Version version = new Version(0, 3);
