@@ -1,11 +1,10 @@
 package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.state.MenuState;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
-import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.generator.WorldData;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 import java.io.File;
@@ -85,16 +84,12 @@ public class WorldProvider {
             short width = stream.readInt16();
             short height = stream.readInt16();
 
-            if (width == 500 && height == 500) {
-                size = WorldSize.DEV;
-            } else if (width == 4200 && height == 1200) {
+            if (width == 4200 && height == 1200) {
                 size = WorldSize.SMALL;
             } else if (width == 6400 && height == 1800) {
                 size = WorldSize.MEDIUM;
-            } else if (width == 8400 && height == 2400) {
-                size = WorldSize.LARGE;
             } else {
-                size = WorldSize.CUSTOM;
+                size = WorldSize.LARGE;
             }
 
             stream.close();
@@ -120,22 +115,19 @@ public class WorldProvider {
         short height;
 
         switch (info.size) {
-            case DEV:
-                width = height = 500;
-                break;
             case SMALL:
             default:
                 width = 4200;
                 height = 1200;
-                break;
+            break;
             case LARGE:
                 width = 8400;
                 height = 2400;
-                break;
+            break;
             case MEDIUM:
                 width = 6400;
                 height = 1800;
-                break;
+            break;
         }
 
         WorldGenerator generator = new WorldGenerator();
@@ -252,7 +244,7 @@ public class WorldProvider {
             stream.close();
             Biome.preload();
 
-            World world = new World(width, height, flags, data);
+            World world = new World(width, height, flags, data.toChunks(width, height));
 
             LastTry.log("Done loading!");
 
