@@ -163,11 +163,23 @@ public class Player extends Entity {
 		}
 
 		if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
-			this.inventory.toggle();
+                    this.inventory.toggle();
 		}
 
 		super.update(dt);
 	}
+        
+        @Override
+        public void jump() {
+            if (!this.shouldUpdate || this.velocity.y != 0 || LastTry.world.getBlockID(this.getGridX(), this.getGridY() - 1) != ItemID.none 
+                    || LastTry.world.getBlockID(this.getGridX(), this.getGridY()) != ItemID.none) {
+                return;
+            }
+
+            this.state = State.JUMPING;
+            // Note: Jumping up by subtracting velocity seems counter-intuitive.
+            this.velocity.y -= 10.0f;
+        }
 
 	public String getName() {
 		return this.info.name;

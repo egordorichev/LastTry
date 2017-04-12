@@ -16,7 +16,7 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.mod.ModLoader;
 
 public class GamePlayState implements State {
-	private Texture hpTexture;
+	private final Texture hpTexture;
 
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
@@ -25,7 +25,7 @@ public class GamePlayState implements State {
         int spawnY = 50 * Block.TEX_SIZE;
 
         LastTry.player.spawn(spawnX, spawnY);
-        LastTry.player.inventory.add(new ItemHolder(Items.wood, 10));
+        LastTry.player.inventory.add(new ItemHolder(Items.wood, 1000));
         LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));
         LastTry.entityManager = new EntityManager();
 
