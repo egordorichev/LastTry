@@ -4,6 +4,8 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.chunk.Chunk;
+import org.egordorichev.lasttry.world.chunk.ChunkProvider;
 import org.egordorichev.lasttry.world.generator.WorldData;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
@@ -13,14 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldProvider {
-    /**
-     * Current supported world version
-     */
-    public static short CURRENT_VERSION = 5;
+    /** Current supported world version */
+    public static short CURRENT_VERSION = 6;
 
     /**
      * Returns all worlds in the "worlds/" directory
-     *
      * @return all worlds in the "worlds/" directory
      */
     public static WorldInfo[] getWorlds() {
@@ -51,7 +50,6 @@ public class WorldProvider {
 
     /**
      * Returns world info from given file name
-     *
      * @param fileName world file
      * @return world info
      */
@@ -103,7 +101,6 @@ public class WorldProvider {
 
     /**
      * Generates new world with the given name, width, and height.
-     *
      * @return new world.
      */
     public static World generate(WorldInfo info) {
@@ -143,7 +140,6 @@ public class WorldProvider {
 
     /**
      * Saves the given world.
-     *
      * @param world world to save.
      */
     public static void save(World world) {
@@ -162,23 +158,14 @@ public class WorldProvider {
             stream.writeByte(LastTry.environment.time.getHour());
             stream.writeByte(LastTry.environment.time.getMinute());
 
-            short width = world.getWidth();
-            short height = world.getHeight();
+	        stream.writeBoolean(true);
+	        stream.close();
 
-            stream.writeInt16(width);
-            stream.writeInt16(height);
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    stream.writeInt16(world.getBlockID(x, y));
-                    stream.writeByte(world.getBlockHp(x, y));
-                    stream.writeInt16(world.getWallID(x, y));
-                    stream.writeByte(world.getWallHp(x, y));
-                }
+            for (Chunk chunk : world.chunks) {
+	            if (chunk != null) {
+	            	ChunkProvider.save(chunk);
+	            }
             }
-
-            stream.writeBoolean(true);
-            stream.close();
 
             LastTry.log("Done saving!");
         } catch (IOException exception) {
@@ -187,11 +174,7 @@ public class WorldProvider {
     }
 
     /**
-     * Load a world by the given name. Returns null if the world cannot be
-     * found.
-     * <p>
-     * World to load.
-     *
+     * Load a world by the given name. Returns null if the world cannot be found.
      * @return World by name.
      */
     public static World load() {
@@ -226,17 +209,6 @@ public class WorldProvider {
             short width = stream.readInt16();
             short height = stream.readInt16();
 
-            WorldData data = new WorldData(width * height);
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    data.blocks[x + y * width] = stream.readInt16();
-                    data.blocksHealth[x + y * width] = stream.readByte();
-                    data.walls[x + y * width] = stream.readInt16();
-                    data.wallsHealth[x + y * width] = stream.readByte();
-                }
-            }
-
             if (!stream.readBoolean()) {
                 throw new RuntimeException("Verification failed");
             }
@@ -244,16 +216,12 @@ public class WorldProvider {
             stream.close();
             Biome.preload();
 
-            World world = new World(width, height, flags, data.toChunks(width, height));
-
+            World world = new World(width, height, flags);
             LastTry.log("Done loading!");
 
             return world;
         } catch (IOException exception) {
-            // world.save();
-
             LastTry.handleException(exception);
-            System.exit(0);
         }
 
         return null;
@@ -261,7 +229,6 @@ public class WorldProvider {
 
     /**
      * Get the file path of a world by the given name.
-     *
      * @param worldName World name.
      * @return Path to world file.
      */

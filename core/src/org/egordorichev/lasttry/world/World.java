@@ -28,7 +28,7 @@ public class World {
 	public static final int UPDATE_DELAY = 20;
 
 	/** Chunks */
-	private Chunk[] chunks;
+	public Chunk[] chunks;
 
 	/** World width in blocks */
 	private short width;
@@ -39,11 +39,11 @@ public class World {
 	/** World flags */
 	private int flags;
 
-	public World(short width, short height, int flags, Chunk[] chunks) {
+	public World(short width, short height, int flags) {
 		this.width = width;
 		this.height = height;
 		this.flags = flags;
-		this.chunks = chunks;
+		this.chunks = new Chunk[(width / Chunk.SIZE) * (height / Chunk.SIZE)];
 
 		Util.runInThread(new Callable() {
 			@Override
