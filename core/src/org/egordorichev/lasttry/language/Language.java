@@ -7,6 +7,6 @@ public class Language {
     public static ResourceBundle text;
     
     public static void load(Locale locale) {
-        text = ResourceBundle.getBundle("language", locale);
+        text = ResourceBundle.getBundle("languages/language", locale);
     }
 }
