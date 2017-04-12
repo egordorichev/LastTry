@@ -6,9 +6,6 @@ import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkProvider;
-import org.egordorichev.lasttry.world.generator.WorldData;
-import org.egordorichev.lasttry.world.generator.WorldGenerator;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,7 +101,7 @@ public class WorldProvider {
      * @return new world.
      */
     public static World generate(WorldInfo info) {
-        LastTry.log.info("Generating world...");
+        LastTry.log.info("Generating world " + info.name + " ...");
 
         Biome.preload();
 
@@ -127,13 +124,12 @@ public class WorldProvider {
             break;
         }
 
-        WorldGenerator generator = new WorldGenerator();
-        World world = new World(width, height, info.flags, generator.generate(width, height));
+        World world = new World(width, height, info.flags);
 
         LastTry.worldInfo = info;
         LastTry.world = world;
 
-        LastTry.log("Finished generating!");
+	    LastTry.log("Finished generating!");
 
         return world;
     }
@@ -143,7 +139,7 @@ public class WorldProvider {
      * @param world world to save.
      */
     public static void save(World world) {
-        LastTry.log("Saving world...");
+        LastTry.log("Saving world " + LastTry.worldInfo.name + " ...");
 
         try {
             LastTry.log(LastTry.worldInfo.name);
@@ -163,7 +159,7 @@ public class WorldProvider {
 
             for (Chunk chunk : world.chunks) {
 	            if (chunk != null) {
-	            	ChunkProvider.save(chunk);
+	            	ChunkProvider.save(LastTry.worldInfo.name, chunk);
 	            }
             }
 
@@ -180,7 +176,9 @@ public class WorldProvider {
     public static World load() {
         LastTry.log("Loading world...");
 
-        try (FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name))) {
+        try {
+	        FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name));
+
             int version = stream.readInt32();
 
             if (version > CURRENT_VERSION) {

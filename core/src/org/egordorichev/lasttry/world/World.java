@@ -45,12 +45,12 @@ public class World {
 		this.flags = flags;
 		this.chunks = new Chunk[(width / Chunk.SIZE) * (height / Chunk.SIZE)];
 
-		Util.runInThread(new Callable() {
+		/* Util.runInThread(new Callable() {
 			@Override
 			public void call() {
 				updateWorld();
 			}
-		}, UPDATE_DELAY);
+		}, UPDATE_DELAY); */
 	}
 
 	/** Renders all blocks on screen */
@@ -335,7 +335,10 @@ public class World {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				chunks[x + y * (width / Chunk.SIZE)] = ChunkProvider.load(x, y);
+				int index = x + y * (width / Chunk.SIZE);
+
+				chunks[index] = ChunkProvider.load(LastTry.worldInfo.name, x, y);
+				ChunkProvider.save(LastTry.worldInfo.name, chunks[index]);
 			}
 		}).start();
 	}

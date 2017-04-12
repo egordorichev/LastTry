@@ -4,13 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class Chunk {
-	public static final int SIZE = 512;
+	public static final int SIZE = 256;
 
-	private ChunkData data;
+	ChunkData data;
 	private Vector2 position;
 
 	public Chunk(ChunkData data, Vector2 position) {
 		this.data = data;
+		this.position = position;
 	}
 
 	public short getBlock(int globalX, int globalY) {
@@ -110,19 +111,19 @@ public class Chunk {
 	}
 
 	public int getGridX() {
-		return (int) this.position.x * SIZE;
-	}
-
-	public int getGridY() {
-		return (int) this.position.y / SIZE;
-	}
-
-	public int getX() {
 		return (int) this.position.x;
 	}
 
-	public int getY() {
+	public int getGridY() {
 		return (int) this.position.y;
+	}
+
+	public int getX() {
+		return (int) this.position.x * SIZE;
+	}
+
+	public int getY() {
+		return (int) this.position.y * SIZE;
 	}
 
 	private boolean isInside(int x, int y) {
