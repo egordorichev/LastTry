@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.language.Language;
 
 public abstract class Buff extends Effect {
-    public static final Buff ammoReservation = new Buff(Language.text.getString("ammoBuff"), Language.text.getString("ammoBuffDescription"),
+    public static final Buff ammoReservation = new Buff(Language.text.get("ammoBuff"), Language.text.get("ammoBuffDescription"),
 		    Assets.getTexture(Textures.ammoReservationBuff)) {
 
         @Override
@@ -21,7 +21,7 @@ public abstract class Buff extends Effect {
         }
     };
 
-    public static final Buff archery = new Buff(Language.text.getString("archeryBuff"), Language.text.getString("archeryBuffDescription"),
+    public static final Buff archery = new Buff(Language.text.get("archeryBuff"), Language.text.get("archeryBuffDescription"),
 		    Assets.getTexture(Textures.archeryBuff)) {
 
         @Override
@@ -35,7 +35,7 @@ public abstract class Buff extends Effect {
         }
     };
 
-    public static final Buff battle = new Buff(Language.text.getString("battleBuff"), Language.text.getString("battleBuffDescription"),
+    public static final Buff battle = new Buff(Language.text.get("battleBuff"), Language.text.get("battleBuffDescription"),
 		    Assets.getTexture(Textures.battleBuff)) {
     	
         @Override
