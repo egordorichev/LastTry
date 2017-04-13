@@ -451,12 +451,33 @@ public class MenuState implements State {
                 add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.get("createButton")) {
                     @Override
                     public void onClick() {
-                        playerInfo.name = nameInput.getText();
+                        //Retrieve the inputted playerName
+                        final String playerNameInput = nameInput.getText();
 
-                        PlayerProvider.create(playerInfo);
+                        //Get the appropriate state of the player name entered based using the helper class
+                        final MenuInputStateHelper.NameInputStates playerNameInputState = MenuInputStateHelper.getStateOfInputPlayerName(playerNameInput);
 
-                        playerName.hide();
-                        playerSelect.show();
+                        //Switch statement based on the input states.
+                        //TODO Create appropriate actions and alert user appropriately
+                        switch(playerNameInputState)
+                        {
+                            case NAMEISBLANK:
+                                LastTry.warning("Player name input by user is blank");
+                                break;
+                            case NAMEALREADYEXISTS:
+                                LastTry.warning("A player info with the entered player name of "+playerNameInput+" already exists");
+                                break;
+                            case NAMEINPUTVALID:
+                                playerInfo.name = playerNameInput;
+
+                                PlayerProvider.create(playerInfo);
+
+                                playerName.hide();
+                                playerSelect.show();
+                                break;
+                        }
+
+
                     }
                 });
             }
