@@ -135,8 +135,7 @@ public class LastTry extends Game {
 		super.resize(width, height);
 
 		viewport.update(width, height);
-		camera.update();
-		camera.update();
+		// camera.update();
 	}
 
 	/** Renders and updates the game */
