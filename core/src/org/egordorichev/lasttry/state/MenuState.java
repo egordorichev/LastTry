@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.ui.*;
+import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldInfo;
 import org.egordorichev.lasttry.world.WorldProvider;
@@ -344,6 +345,7 @@ public class MenuState implements State {
                     @Override
                     public void onClick() {
                         worldName.hide();
+                        errorPanel.hide();
                         worldNew.show();
                     }
                 });
@@ -351,14 +353,39 @@ public class MenuState implements State {
                 add(new UiTextButton(new Rectangle(-32, 128, 100, 32), Origin.CENTER, Language.text.get("createButton")) {
                     @Override
                     public void onClick() {
-                        worldInfo.name = nameInput.getText();
+                        //Prevents the user from saving a blank world name or a world name that already exists.
+                        //Retrieve the inputted world Name
+                        final String worldNameInput = nameInput.getText();
 
-                        WorldProvider.generate(worldInfo);
-                        LastTry.environment = new Environment();
-                        WorldProvider.save(LastTry.world);
+                        //Get the appropriate state of the world name entered based using the helper class
+                        final MenuInputStateHelper.NameInputStates worldNameInputState = MenuInputStateHelper.getStateOfInputWorldName(worldNameInput);
 
-                        worldName.hide();
-                        worldSelect.show();
+                        //Generic container to hold the world name state
+                        final GenericContainer<MenuInputStateHelper.NameInputStates> inputStateContainer = new GenericContainer<>();
+                        inputStateContainer.set(worldNameInputState);
+
+                        //Switch statement based on the input states.
+                        switch(worldNameInputState) {
+                            case NAMEISBLANK:
+                                LastTry.warning("world name input by user is blank");
+                                errorPanel.show(inputStateContainer);
+                                break;
+                            case NAMEALREADYEXISTS:
+                                LastTry.warning("A world info with the entered world name of "+worldNameInput+" already exists");
+                                errorPanel.show(inputStateContainer);
+                                break;
+                            case NAMEINPUTVALID:
+                                worldInfo.name = worldNameInput;
+
+                                WorldProvider.generate(worldInfo);
+                                LastTry.environment = new Environment();
+                                WorldProvider.save(LastTry.world);
+
+                                errorPanel.hide();
+                                worldName.hide();
+                                worldSelect.show();
+                                break;
+                        }
                     }
                 });
             }
@@ -466,16 +493,19 @@ public class MenuState implements State {
                         //Get the appropriate state of the player name entered based using the helper class
                         final MenuInputStateHelper.NameInputStates playerNameInputState = MenuInputStateHelper.getStateOfInputPlayerName(playerNameInput);
 
+                        //Generic container to hold the player name state
+                        GenericContainer<MenuInputStateHelper.NameInputStates> inputStateContainer = new GenericContainer<>();
+                        inputStateContainer.set(playerNameInputState);
+
                         //Switch statement based on the input states.
-                        //TODO Create appropriate actions and alert user appropriately
                         switch(playerNameInputState) {
                             case NAMEISBLANK:
                                 LastTry.warning("Player name input by user is blank");
-                                errorPanel.show();
+                                errorPanel.show(inputStateContainer);
                                 break;
                             case NAMEALREADYEXISTS:
                                 LastTry.warning("A player info with the entered player name of "+playerNameInput+" already exists");
-                                errorPanel.show();
+                                errorPanel.show(inputStateContainer);
                                 break;
                             case NAMEINPUTVALID:
                                 playerInfo.name = playerNameInput;
@@ -499,27 +529,37 @@ public class MenuState implements State {
             private UiTextLabel errorLabel;
 
             @Override
-            public void show() {
+            public void show(GenericContainer<MenuInputStateHelper.NameInputStates> inputStateBox) {
                 super.show();
-                //I am creating the object as a private variable, to be able to hide & show them indefinitely.
-                errorLabel.show();
+
+                MenuInputStateHelper.NameInputStates nameInputState = inputStateBox.get();
+
+                //Based on the input state we set the text of the error label, to the appropriate text.
+                switch (nameInputState) {
+                    case NAMEALREADYEXISTS:
+                        errorLabel.setLabel(Language.text.get("inputNameAlreadyExists"));
+                        errorLabel.show();
+                        break;
+                    case NAMEISBLANK:
+                        errorLabel.setLabel(Language.text.get("inputNameIsBlank"));
+                        errorLabel.show();
+                        break;
+                }
             };
 
             @Override
             public void addComponents() {
-                //Error messasage
-                //I had to change the coordinates as it is using, a different font style.
-                errorLabel = new UiTextLabel(new Rectangle(0, 80, 100, 32), Origin.CENTER, Language.text.get("playerInputNameAlreadyExists")) {
+                //Blank error label
+                errorLabel = new UiTextLabel(new Rectangle(0, 80, 100, 32), Origin.CENTER, "") {
                     @Override
                     public void onClick() {
                         //Hide the error button and label.
                         this.hide();
                     }
                 };
-
                 errorLabel.setFontStyle(UiTextLabel.FontStyles.ERRORMESSAGE);
-
                 add(errorLabel);
+
             };
         };
 

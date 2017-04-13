@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.world.generator.WorldGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WorldProvider {
@@ -275,5 +276,25 @@ public class WorldProvider {
      */
     public static String getFilePath(String worldName) {
         return "worlds/" + worldName + ".wld";
+    }
+
+    /**
+     * Returns a boolean based on whether a WorldInfo exists on the system, where the 'WorldName' of the
+     * World info file matches the parameter entered.
+     *
+     * @param worldName String denoting the world Name, we are looking for a match on.
+     * @return boolean based on whether a worldInfo file exists with the specific name entered.
+     */
+    public static boolean doesWorldWithNameExist(final String worldName) {
+        //Retrieve all players on system
+        final WorldInfo[] existingWorldInfos = getWorlds();
+
+        //Check if any of the retrieved player infos have a matching player name.
+        //Source http://stackoverflow.com/questions/23004921/how-to-check-if-element-exists-using-a-lambda-expression
+        boolean match = Arrays.stream(existingWorldInfos)
+                .anyMatch(worldInfo -> worldInfo.name.equals(worldName));
+
+        //return boolean indicating whether a match was found
+        return match;
     }
 }

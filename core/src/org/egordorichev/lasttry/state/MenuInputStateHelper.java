@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.state;
 
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
+import org.egordorichev.lasttry.world.WorldProvider;
 
 /**
  * User will input either a new 'PlayerName' or a new 'WorldName', when starting the game.
@@ -41,18 +42,27 @@ public class MenuInputStateHelper
         return NameInputStates.NAMEINPUTVALID;
     }
 
+    /**
+     * Returns an appropriate state based on whether the world name matches any of the
+     * 'NameInputState' enums.
+     *
+     * @param worldName String denoting world Name inputted by the user.
+     * @return NameInputState enum denoting the state of the world name.
+     */
     public static NameInputStates getStateOfInputWorldName(String worldName)
     {
         //Check to see if the inputted world name, is not empty.
-        if(worldName.isEmpty())
-        {
+        if(worldName.isEmpty()) {
             return NameInputStates.NAMEISBLANK;
         }
 
-        return null;
+        //Check whether a World Info on the system exists with the inputted name
+        if(WorldProvider.doesWorldWithNameExist(worldName)) {
+            return NameInputStates.NAMEALREADYEXISTS;
+        }
+
+        return NameInputStates.NAMEINPUTVALID;
     }
-
-
 
 
 }
