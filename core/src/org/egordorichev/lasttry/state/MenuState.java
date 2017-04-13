@@ -1,7 +1,9 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
+import com.sun.org.apache.regexp.internal.RE;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.PlayerProvider;
@@ -65,6 +67,11 @@ public class MenuState implements State {
      */
     private WorldInfo worldInfo;
 
+    /**
+     * Panel used to display errors.
+     */
+    private UiPanel errorPanel;
+
     public MenuState() {
         this.mainMenu = new UiPanel() {
             @Override
@@ -108,8 +115,8 @@ public class MenuState implements State {
             public void onShow() {
                 clear();
 
-	            playerInfo = new PlayerInfo();
-	            playerInfos = PlayerProvider.getPlayers();
+                playerInfo = new PlayerInfo();
+                playerInfos = PlayerProvider.getPlayers();
 
                 playerCards = new UiCardHolder(new Rectangle(0, -250, 256, 0), Origin.CENTER) {
                     @Override
@@ -443,6 +450,8 @@ public class MenuState implements State {
                 add(new UiTextButton(new Rectangle(32, 128, 100, 32), Origin.CENTER, Language.text.get("backButton")) {
                     @Override
                     public void onClick() {
+                        //If an error message is displayed, we should hide the error message.
+                        errorPanel.hide();
                         playerName.hide();
                         playerNew.show();
                     }
@@ -459,25 +468,25 @@ public class MenuState implements State {
 
                         //Switch statement based on the input states.
                         //TODO Create appropriate actions and alert user appropriately
-                        switch(playerNameInputState)
-                        {
+                        switch(playerNameInputState) {
                             case NAMEISBLANK:
                                 LastTry.warning("Player name input by user is blank");
+                                errorPanel.show();
                                 break;
                             case NAMEALREADYEXISTS:
                                 LastTry.warning("A player info with the entered player name of "+playerNameInput+" already exists");
+                                errorPanel.show();
                                 break;
                             case NAMEINPUTVALID:
                                 playerInfo.name = playerNameInput;
-
                                 PlayerProvider.create(playerInfo);
-
+                                //TODO A check maybe, to be added here.
+                                //Hide the error panel
+                                errorPanel.hide();
                                 playerName.hide();
                                 playerSelect.show();
                                 break;
                         }
-
-
                     }
                 });
             }
@@ -485,10 +494,42 @@ public class MenuState implements State {
 
         this.playerName.hide();
 
+        //Setting up error panel
+        this.errorPanel = new UiPanel(){
+            private UiTextLabel errorLabel;
+
+            @Override
+            public void show() {
+                super.show();
+                //I am creating the object as a private variable, to be able to hide & show them indefinitely.
+                errorLabel.show();
+            };
+
+            @Override
+            public void addComponents() {
+                //Error messasage
+                //I had to change the coordinates as it is using, a different font style.
+                errorLabel = new UiTextLabel(new Rectangle(0, 80, 100, 32), Origin.CENTER, Language.text.get("playerInputNameAlreadyExists")) {
+                    @Override
+                    public void onClick() {
+                        //Hide the error button and label.
+                        this.hide();
+                    }
+                };
+
+                errorLabel.setFontStyle(UiTextLabel.FontStyles.ERRORMESSAGE);
+
+                add(errorLabel);
+            };
+        };
+
+        this.errorPanel.hide();
+
         LastTry.ui.add(this.mainMenu);
         LastTry.ui.add(this.playerSelect);
         LastTry.ui.add(this.playerNew);
         LastTry.ui.add(this.playerName);
+        LastTry.ui.add(this.errorPanel);
         LastTry.ui.add(this.worldSelect);
         LastTry.ui.add(this.worldNew);
         LastTry.ui.add(this.worldEvil);

@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -13,6 +14,8 @@ public class Assets {
 	public static BitmapFont f18;
 	public static BitmapFont f22;
 	public static BitmapFont f24;
+	//This font is used for error messages.
+	public static BitmapFont f22Red;
 
 	public static boolean load() {
 		return assetManager.update();
@@ -44,6 +47,10 @@ public class Assets {
 		f22 = generator.generateFont(parameters);
 		parameters.size = 24;
 		f24 = generator.generateFont(parameters);
+		//Error font specific style.
+		parameters.size = 22;
+		parameters.color = Color.RED;
+		f22Red = generator.generateFont(parameters);
 
 		generator.dispose();
 
