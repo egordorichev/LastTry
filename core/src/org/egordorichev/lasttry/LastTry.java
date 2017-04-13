@@ -29,7 +29,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0, 3);
+	public static final Version version = new Version(0, 5);
 	
 	/** Random instance */
 	public static final Random random = new Random();
@@ -58,8 +58,7 @@ public class LastTry extends Game {
 	/** World instance */
 	public static World world;
 
-	/** World info
-	 */
+	/** World info */
 	public static WorldInfo worldInfo;
 
 	/** Player instance */
@@ -83,9 +82,7 @@ public class LastTry extends Game {
 	/** Used for debug */
 	public static ShapeRenderer shapeRenderer;
 
-	/**
-	 * Creates first-priority instances
-	 */
+	/** Creates first-priority instances */
 	@Override
 	public void create() {
 		log = new Log();
