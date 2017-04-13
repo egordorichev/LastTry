@@ -54,8 +54,8 @@ public class UiTextLabel extends UiComponent {
     }
 
     /**
-     * Renders the element.  Checks if a specific font color has been set for the element.  If a font colour does exist
-     * we create a new font object and change the font color for this specific object.
+     * Renders the element.  Checks if a specific font style has been set for the element.  If a font style does exist
+     * we create a new font object (if needed) and change the font style for this specific object.
      *
      */
     @Override
@@ -76,8 +76,7 @@ public class UiTextLabel extends UiComponent {
         }
         else {
             //Check if private font object instance has been created, to prevent creating repeatedly.
-            if(privateFontInstance==null)
-            {
+            if(privateFontInstance==null) {
                 privateFontInstance = Assets.f22Red;
             }
 
