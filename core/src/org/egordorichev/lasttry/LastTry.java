@@ -171,7 +171,7 @@ public class LastTry extends Game {
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-            String[] split = Language.text.getString("windowTitles").split("//");
+            String[] split = Language.text.get("windowTitles").split("//");
             return split[random.nextInt(split.length)];
 	}
 
