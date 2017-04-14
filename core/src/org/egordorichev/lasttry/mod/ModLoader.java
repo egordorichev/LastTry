@@ -7,15 +7,18 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModLoader {
     /**
-     * List of loaded mods
+     * HashMap of loaded mops.
+     * Key - String, Mod name.
+     * Value - Mod, Mod object.
      */
-    private List<Mod> mods = new ArrayList<>();
+    private HashMap<String, Mod> modHashMap = new HashMap();
 
     /**
      * Lookups and loads all mods from "assets/mods" directory
@@ -74,7 +77,7 @@ public class ModLoader {
                     Mod mod = (Mod) aClass.newInstance();
                     mod.onLoad();
 
-                    this.mods.add(mod);
+                    this.modHashMap.put(mod.getName(), mod);
                 }
             }
         } catch (Exception exception) {
@@ -87,24 +90,15 @@ public class ModLoader {
      * Unloads all mods
      */
     public void unload() {
-        for (Mod mod : this.mods) {
-            mod.onUnload();
-        }
+        //Retrieve keys, for each key, retrieve the mod and unload the mod.
+        modHashMap.entrySet().stream().forEach(modHashMapKey -> {modHashMap.get(modHashMapKey).onUnload();});
     }
 
     /**
      * @param name mod name to lookup
      * @return mod with given name, or null, if it is not found
      */
-    public Mod getMod(String name) {
-        // TODO: Instead of a iteration use a name lookup map.
-
-        for (Mod mod : this.mods) {
-            if (mod.getName().equals(name)) {
-                return mod;
-            }
-        }
-
-        return null;
+    public Mod getMod(final String name) {
+        return modHashMap.get(name);
     }
 }
