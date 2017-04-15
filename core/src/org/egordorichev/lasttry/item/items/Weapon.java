@@ -20,16 +20,6 @@ public class Weapon extends Tool {
         this(id, name, Rarity.WHITE, baseDamage, damageType, useSpeed, texture);
     }
 
-	@Override
-	public boolean use() {
-		if (!this.isReady()) {
-			return false;
-		}
-
-		this.useDelay = this.useSpeed;
-		return this.onUse();
-	}
-
 	public DamageType getDamageType() {
         return this.damageType;
     }

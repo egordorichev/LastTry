@@ -29,9 +29,19 @@ public class Tool extends Item {
 	}
 
 	public Tool(short id, String name, float baseDamage, ToolPower power,
-	            int useSpeed, Texture texture) {
+	       int useSpeed, Texture texture) {
 
 		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
+	}
+
+	@Override
+	public boolean use() {
+		if (!this.isReady()) {
+			return false;
+		}
+
+		this.useDelay = this.useSpeed;
+		return this.onUse();
 	}
 
 	@Override
@@ -80,8 +90,7 @@ public class Tool extends Item {
 	 *
 	 * @return Rectangle object signifying equipped player hitbox.
 	 */
-	private Rectangle generateEquippedPlayerHitBox()
-	{
+	private Rectangle generateEquippedPlayerHitBox() {
 		//Retrieve the player hitbox
 		final Rectangle playerHitBox = LastTry.player.getHitbox();
 
@@ -93,9 +102,9 @@ public class Tool extends Item {
 
 		//Generate a hitbox that combines the weapon reach and the player reach
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x+toolHitBox.x,
-				playerHitBox.y+toolHitBox.y,
-				playerHitBox.width+toolHitBox.width,
-				playerHitBox.height+toolHitBox.height);
+			playerHitBox.y+toolHitBox.y,
+			playerHitBox.width+toolHitBox.width,
+			playerHitBox.height+toolHitBox.height);
 
 		return equippedPlayerHitbox;
 	}
@@ -105,8 +114,7 @@ public class Tool extends Item {
 	 *
 	 * @param enemy Enemy object representing enemy
 	 */
-	private void inflictDamageOnEnemy(final Enemy enemy)
-	{
+	private void inflictDamageOnEnemy(final Enemy enemy) {
 		LastTry.debug("Tool hitbox intersects with enemy hitbox");
 
 		final int damageToInflict = this.calculateDamageToInflict(enemy);
@@ -124,14 +132,12 @@ public class Tool extends Item {
 	 * @param enemy Enemy object
 	 * @return Negative integer representing hp points to subtract from enemy
 	 */
-	private int calculateDamageToInflict(final Enemy enemy)
-	{
+	private int calculateDamageToInflict(final Enemy enemy) {
 		//Round float to int
 		int weaponDamage = Math.round(this.baseDamage);
 
 		//If crit strike chance is active, double
-		if(this.criticalStrikeChanceActive())
-		{
+		if (this.criticalStrikeChanceActive()) {
 			LastTry.debug("Critical strike chance active");
 			weaponDamage = weaponDamage * 2;
 		}
@@ -142,8 +148,7 @@ public class Tool extends Item {
 		//Compensate for enemy defence points.
 		weaponDamage = weaponDamage - enemy.getDefense();
 
-		if(weaponDamage<0)
-		{
+		if (weaponDamage < 0) {
 			LastTry.debug("No damage will be done as weapondamage is not greater than defense of enemy");
 		}
 
@@ -160,11 +165,9 @@ public class Tool extends Item {
 	 *
 	 * @return
 	 */
-	private boolean criticalStrikeChanceActive()
-	{
+	private boolean criticalStrikeChanceActive() {
 	    //Generate random number, if less than critical strike chance percentage return true
-		if(LastTry.random.nextInt(100)<criticalStrikeChance)
-		{
+		if (LastTry.random.nextInt(100)<criticalStrikeChance) {
 			return true;
 		}
 
@@ -174,8 +177,7 @@ public class Tool extends Item {
 	/**
 	 *  Uses the tool to attack and handles calculations needed.
 	 */
-	private void handleToolAttack()
-	{
+	private void handleToolAttack() {
 		//Retrieve active enemies
 		List<Enemy> activeEnemies = LastTry.entityManager.retrieveEnemyEntities();
 
@@ -184,8 +186,7 @@ public class Tool extends Item {
 
 		//Loop through active enemies to check if equipped player hit box intersects enemy hitbox.
 		activeEnemies.stream().forEach(enemy -> {
-			if(equippedPlayerHitBox.intersects(enemy.getHitbox()))
-			{
+			if (equippedPlayerHitBox.intersects(enemy.getHitbox())) {
 				inflictDamageOnEnemy(enemy);
 			}
 		});
