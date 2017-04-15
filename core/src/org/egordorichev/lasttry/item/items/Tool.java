@@ -30,6 +30,11 @@ public class Tool extends Item {
 		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
 	}
 
+	/**
+	 * On use, we assume the tool is equipped and a click has been registered from the user.
+	 * Logic to attack enemies with a tool will be added here.
+	 * @return
+	 */
 	@Override
 	public boolean use() {
 		if (!this.isReady()) {
