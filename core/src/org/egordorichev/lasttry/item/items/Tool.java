@@ -2,13 +2,11 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.util.Rectangle;
 
-import javax.xml.soap.Text;
 import java.util.List;
 
 public class Tool extends Item {
@@ -37,16 +35,13 @@ public class Tool extends Item {
 	}
 
 	/**
-	 * On use is called, when a mouse click is detected and the tool is equipped.
 	 * Checks if an enemy is in the proximity range of the equipped player hitbox and writes to console.
 	 * Equipped player hitbox combines the player hitbox with the tool/weapon hitbox.
 	 * @return
 	 */
 	@Override
-	public boolean use() {
-		if (!this.isReady()) {
-			return false;
-		}
+	protected void onUpdate() {
+		super.onUpdate();
 
 		//Retrieve active enemies
 		List<Enemy> activeEnemies = LastTry.entityManager.retrieveEnemyEntities();
@@ -73,9 +68,6 @@ public class Tool extends Item {
 				LastTry.debug("Tool hitbox intersects with enemy jotnpx");
 			}
 		});
-
-		this.useDelay = this.useSpeed;
-		return this.onUse();
 	}
 
 	public int getPickaxePower() {
