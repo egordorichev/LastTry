@@ -45,7 +45,7 @@ public abstract class Enemy extends Entity {
     protected Animation[] animations;
 
     public Enemy(short id, int maxHp, int defense, int damage) {
-        super(maxHp, defense, damage);
+        super(maxHp, damage, defense);
 
         this.animations = new Animation[State.values().length];
         this.id = id;

@@ -40,7 +40,7 @@ public class Tool extends Item {
 
 		handleToolAttack();
 	}
-	
+
 	public int getPickaxePower() {
 		return this.power.pickaxe;
 	}
