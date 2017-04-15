@@ -15,6 +15,8 @@ public class EntityManager {
      */
     private List<PhysicBody> clearList = new ArrayList<>();
 
+    //TODO Convert the entities list to a map
+
     /**
      * TODO: gore
      */
@@ -112,5 +114,30 @@ public class EntityManager {
      */
     public List<PhysicBody> getEntities() {
         return entities;
+    }
+
+    /**
+     * Returns a list of active enemies.
+     * Does not return enemies that have been marked for deletion.
+     *
+     * @return List of enemies that have not been marked for deletion.
+     */
+    public List<Enemy> retrieveEnemyEntities()
+    {
+        List<Enemy> enemyEntities = new ArrayList<>();
+        for(PhysicBody physicBody: entities)
+        {
+            //Check whether physicBody is an enemy type
+            if(physicBody instanceof Enemy)
+            {
+                //Check that the object is not marked for removal
+                if(!clearList.contains(physicBody))
+                {
+                 Enemy enemy = (Enemy)physicBody;
+                 enemyEntities.add(enemy);
+                }
+            }
+        }
+        return enemyEntities;
     }
 }
