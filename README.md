@@ -1,6 +1,6 @@
 ![Logo](https://github.com/egordorichev/LastTry/blob/8e7ee6c22752d3543375ef19d39dd988e8ec1cfd/core/assets/logo.png?raw=true "Logo")
 
-[![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![codebeat badge](https://codebeat.co/badges/fdf802d0-8d38-4c7c-91fd-5960b3d8432c)](https://codebeat.co/projects/github-com-egordorichev-lasttry-libgdx)
+[![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 LastTry is open-source Terraria clone in Java, written using LibGDX library.
 Our goal is to recreate original game with better perfomance, and old content.
