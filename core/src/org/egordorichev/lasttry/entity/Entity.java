@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Effect;
 import org.egordorichev.lasttry.effect.EffectData;
 
@@ -100,10 +101,21 @@ public class Entity extends PhysicBody {
      * @param amount Value to increment hit-points by.
      */
     public void modifyHp(int amount) {
+
+        //TODO Remove Debug statements.
+
+        LastTry.debug("Received request to modify hp by: "+amount);
+
         if (!this.invulnerable) {
+
+            LastTry.debug("Entity is not invulnerable");
+
             this.stats.hp = Math.min(Math.max(0, this.stats.hp + amount), this.stats.maxHp);
 
+            LastTry.debug("Entity final hp is: "+this.stats.hp);
+
             if (this.stats.hp == 0) {
+                LastTry.debug("Entity hp has reached 0");
                 this.die();
             }
         }
