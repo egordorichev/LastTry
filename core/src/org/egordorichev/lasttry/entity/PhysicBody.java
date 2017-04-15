@@ -218,6 +218,27 @@ public abstract class PhysicBody {
     }
 
     /**
+     * Will move the body in the specified direction, the amount will be based on the velocity.
+     * This is used for knockback, as different weapons will generate a different degree of knockback.
+     *
+     * @param direction Direction specifying where the char should be moved to
+     * @param velocity Amount of velocity to move body with
+     */
+    public void move(Direction direction, int velocity) {
+        if (!this.shouldUpdate) {
+            return;
+        }
+
+        this.velocity.x += (direction == Direction.LEFT) ? -velocity : velocity;
+        this.direction = direction;
+
+        if (this.state != State.JUMPING && this.state != State.FALLING && this.state != State.FLYING) {
+            this.state = State.MOVING;
+        }
+    }
+
+
+    /**
      * Apply a boost
      *
      * @param x
@@ -387,5 +408,17 @@ public abstract class PhysicBody {
         public int getId() {
             return this.id;
         }
+    }
+
+    /**
+     * Applies a knockback effect on the body, in the direction specified and with the
+     * speed specified in knockback velocity.
+     *
+     * @param direction The direction in which the character should move
+     * @param knockbackVelocity Amount of velocity to knock body with
+     */
+    public void applyKnockBackEffect(Direction direction, int knockbackVelocity)
+    {
+            this.move(Direction.RIGHT, knockbackVelocity);
     }
 }

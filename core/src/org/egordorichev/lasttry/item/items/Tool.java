@@ -97,9 +97,11 @@ public class Tool extends Item {
 
         //Loop through active enemies to check if enemy is not invulnerable then check if there is intersection between hitboxes.
         activeEnemies.stream().forEach(enemy -> {
+
             if(enemy.isEntityInvulnerable()==false)
             {
                 if (equippedPlayerHitBox.intersects(enemy.getHitbox())) {
+
                     inflictDamageOnEnemy(enemy);
                 }
             }
@@ -113,6 +115,8 @@ public class Tool extends Item {
 	 * @return Rectangle object signifying equipped player hitbox.
 	 */
 	private Rectangle generateEquippedPlayerHitBox() {
+	    //TODO Rewrite this entire method, it is wrong.  Hitbox should be rotated with the weapon.
+
 		//Retrieve the player hitbox
 		final Rectangle playerHitBox = LastTry.player.getHitbox();
 
@@ -147,7 +151,9 @@ public class Tool extends Item {
 
 		enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
 
-		//TODO Apply knockback
+		//TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
+		enemy.applyKnockBackEffect(LastTry.player.getDirection(), 1);
+
 	}
 
 	/**

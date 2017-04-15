@@ -282,4 +282,14 @@ public class Entity extends PhysicBody {
     {
         return invulnerable;
     }
+
+    /**
+     * Returns a direction object for the entity
+     *
+     * @return Direction object
+     */
+    public Direction getDirection()
+    {
+        return direction;
+    }
 }
