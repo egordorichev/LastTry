@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -122,6 +123,10 @@ public class Tool extends Item {
 		LastTry.debug("Calculate weapon damage is: "+damageToInflict);
 
 		enemy.modifyHp(damageToInflict);
+
+		enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
+
+		//TODO Apply knockback
 	}
 
 	/**

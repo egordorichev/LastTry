@@ -6,8 +6,37 @@ import org.egordorichev.lasttry.effect.EffectData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Entity extends PhysicBody {
+
+    public enum InvulnerableTimerConstant
+    {
+        WEAPONATTACK(500);
+
+        private int timerDuration;
+
+        InvulnerableTimerConstant(final int timerDuration) {
+        this.timerDuration = timerDuration;
+        }
+
+        public int getTimerDuration()
+        {
+            return this.timerDuration;
+        }
+    }
+
+    /**
+     * Timer object specifically for the setting an amount of time for which the Entity should be invulnerable
+     */
+    private Timer invulnerableTimer;
+
+    /**
+     * Boolean acting as flag, to signal whether the invulnerable timer is currently active
+     */
+    private boolean invulnerableTimerActive;
+
     /**
      * Stats
      */
@@ -119,6 +148,48 @@ public class Entity extends PhysicBody {
                 this.die();
             }
         }
+        else
+        {
+            LastTry.debug("Entity is invulnerable, damage will not be registered");
+        }
+    }
+
+    /**
+     * Sets the entity to be invulnerable for a certain period of time, dictated by the constant parameter.
+     *
+     * @param invulnerableTempTimePeriod Enum containing time constant
+     */
+    public void setEntityToInvulnerableTemp(InvulnerableTimerConstant invulnerableTempTimePeriod)
+    {
+        //Check that the timer is not currently active and the entity is not currently invulnerable, to prevent needlessly
+        //initializing a new timer object.
+        if(invulnerableTimerActive==false&&invulnerable==false)
+        {
+            invulnerable = true;
+            invulnerableTimerActive = true;
+
+            LastTry.debug("Entity has been set to be invulnerable for a time period of: "+invulnerableTempTimePeriod.getTimerDuration());
+            startTemporarilyInvulnerableTimer(invulnerableTempTimePeriod);
+        }
+    }
+
+    /**
+     * Sets and starts a timer, to make the entity temporarily invulnerable.
+     *
+     * @param timerConstant enum containing the time duration, to make the entity invulnerable for.
+     */
+    private void startTemporarilyInvulnerableTimer(InvulnerableTimerConstant timerConstant)
+    {
+        invulnerableTimer = new Timer();
+
+        invulnerableTimer.schedule(new TimerTask() {
+            @Override
+            public void run(){
+                LastTry.debug("Invulnerablity timer has expired");
+                invulnerable = false;
+                invulnerableTimerActive = false;
+            }
+        }, timerConstant.getTimerDuration());
     }
 
     /**
