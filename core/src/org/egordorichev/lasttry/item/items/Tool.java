@@ -85,6 +85,27 @@ public class Tool extends Item {
 		return this.rarity;
 	}
 
+    /**
+     *  Uses the tool to attack and handles calculations needed.
+     */
+    private void handleToolAttack() {
+        //Retrieve active enemies
+        List<Enemy> activeEnemies = LastTry.entityManager.retrieveEnemyEntities();
+
+        //Retrieve equipped player hitbox
+        Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
+
+        //Loop through active enemies to check if enemy is not invulnerable then check if there is intersection between hitboxes.
+        activeEnemies.stream().forEach(enemy -> {
+            if(enemy.isEntityInvulnerable()==false)
+            {
+                if (equippedPlayerHitBox.intersects(enemy.getHitbox())) {
+                    inflictDamageOnEnemy(enemy);
+                }
+            }
+        });
+    }
+
 	/**
 	 * Generates a Rectangle object signifying a hitbox that encompasses both the Player's personal hitbox and
 	 * the hitbox of the equipped weapon.
@@ -179,21 +200,4 @@ public class Tool extends Item {
 		return false;
 	}
 
-	/**
-	 *  Uses the tool to attack and handles calculations needed.
-	 */
-	private void handleToolAttack() {
-		//Retrieve active enemies
-		List<Enemy> activeEnemies = LastTry.entityManager.retrieveEnemyEntities();
-
-		//Retrieve equipped player hitbox
-		Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
-
-		//Loop through active enemies to check if equipped player hit box intersects enemy hitbox.
-		activeEnemies.stream().forEach(enemy -> {
-			if (equippedPlayerHitBox.intersects(enemy.getHitbox())) {
-				inflictDamageOnEnemy(enemy);
-			}
-		});
-	}
 }

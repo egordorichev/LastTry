@@ -272,4 +272,14 @@ public class Entity extends PhysicBody {
     public void setMaxHp(int maxHp) {
         this.stats.maxHp = maxHp;
     }
+
+    /**
+     * Returns a boolean indicating whether the entity is invulnerable
+     *
+     * @return Boolean
+     */
+    public boolean isEntityInvulnerable()
+    {
+        return invulnerable;
+    }
 }
