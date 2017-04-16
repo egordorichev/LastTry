@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.world.chunk.ChunkProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WorldProvider {

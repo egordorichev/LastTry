@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayerProvider {
@@ -209,4 +210,26 @@ public class PlayerProvider {
 	public static String getPath(String playerName) {
 		return "players/" + playerName + ".plr";
 	}
+
+	/**
+	 * Returns a boolean based on whether a PlayerInfo exists on the system, where the 'PlayerName' of the
+	 * Player info file matches the parameter entered.
+	 *
+	 * @param playerName String denoting the player Name, we are looking for a match on.
+	 * @return boolean based on whether a playerinfo file exists with the specific name entered.
+	 */
+	public static boolean doesPlayerInfoWithNameExist(String playerName)
+	{
+		//Retrieve all players on system
+		final PlayerInfo[] existingPlayerInfos = getPlayers();
+
+		//Check if any of the retrieved player infos have a matching player name.
+		//Source http://stackoverflow.com/questions/23004921/how-to-check-if-element-exists-using-a-lambda-expression
+		boolean match = Arrays.stream(existingPlayerInfos)
+				.anyMatch(playerInfo -> playerInfo.name.equals(playerName));
+
+		//return boolean indicating whether a match was found
+		return match;
+	}
+
 }

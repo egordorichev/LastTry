@@ -146,4 +146,7 @@ public class Textures {
 	public static final String crimsonWorld = "IconCrimson.png";
 	public static final String corruptionHardmodeWorld = "IconHallowCorruption.png";
 	public static final String crimsonHardmodeWorld = "IconHallowCrimson.png";
+
+	public static final String zombie = "Zombie.png";
+	public static final String rabbit = "Rabbit.png";
 }
