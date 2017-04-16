@@ -30,6 +30,7 @@ public class GamePlayState implements State {
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {
+            LastTry.entityManager.spawnEnemy(EnemyID.zombie, spawnX, spawnY);
             LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, spawnX, spawnY);
             LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
         }

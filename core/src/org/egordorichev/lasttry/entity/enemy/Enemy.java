@@ -25,6 +25,8 @@ public abstract class Enemy extends Entity {
         define(EnemyID.greenSlime, GreenSlime.class);
         define(EnemyID.blueSlime, BlueSlime.class);
         define(EnemyID.eyeOfCthulhu, EyeOfCthulhu.class);
+        define(EnemyID.zombie, Zombie.class);
+
     }
 
     /**

@@ -152,7 +152,7 @@ public class Tool extends Item {
 		enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
 
 		//TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
-		enemy.applyKnockBackEffect(LastTry.player.getDirection(), 1);
+		enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
 
 	}
 

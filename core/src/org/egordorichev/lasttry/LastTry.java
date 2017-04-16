@@ -213,6 +213,7 @@ public class LastTry extends Game {
 		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
 	}
 
+	//TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 	/**
 	 * Handles exception, if it is critical, exits the game
 	 *

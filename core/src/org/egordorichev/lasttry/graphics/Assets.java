@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import org.egordorichev.lasttry.LastTry;
 
 public class Assets {
 	public static AssetManager assetManager = new AssetManager();
@@ -54,9 +53,11 @@ public class Assets {
 
 		generator.dispose();
 
+		//Textures are loaded here also
 		loadTexture(Textures.greenSlime);
 		loadTexture(Textures.blueSlime);
 		loadTexture(Textures.eyeOfCthulhu);
+		loadTexture(Textures.zombie);
 
 		loadTexture(Textures.dirt);
 		loadTexture(Textures.dirtIcon);
