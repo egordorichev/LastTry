@@ -38,16 +38,17 @@ public class Zombie extends Enemy {
         this.texture = Assets.getTexture(Textures.zombie);
 
         Animation walkAnimation = new Animation(false);
-        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 144, 34, -48), 0));
-        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 34, -48), 0));
-        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 48, 34, -48), 0));
+        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 34, 48), 10));
+        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 48, 34, 48), 10));
+        walkAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 34, 48), 10));
 
 
         Animation idleAnimation = new Animation(true);
-        idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 144, 34, -48), 10));
-        idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 34, -48), 10));
+        idleAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 34, 48), 10));
 
         Animation jumpAnimation = new Animation(false);
+        jumpAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 34, 48), 10));
+        jumpAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 48, 34, 48), 10));
         jumpAnimation.addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 96, 34, 48), 10));
 
         this.animations[State.JUMPING.getId()] = jumpAnimation;
@@ -65,6 +66,17 @@ public class Zombie extends Enemy {
     @Override
     public void updateAI() {
         super.updateAI();
+
+        //TODO Should walk and follow the player, to attack the player.
+        jumpBehaviour();
+
+    }
+
+    /**
+     * Jump behaviour AI, copied from Slime monster.
+     */
+    private void jumpBehaviour()
+    {
         // New cycle -> allow jumping again
         if (this.currentAi == 0 && this.velocity.y == 0) {
             canJump = true;
@@ -92,6 +104,21 @@ public class Zombie extends Enemy {
         if (this.state == State.JUMPING || this.state == State.FALLING) {
             this.move(this.direction);
         }
+    }
+
+    //TODO Improve and reimplement
+    private void walkAction()
+    {
+        //TODO walk to the player
+        // Set direction so that slime faces the player
+        int dir = Float.compare(LastTry.player.getX(), this.getX());
+        if (dir < 0) {
+            this.direction = Direction.LEFT;
+        } else if (dir > 0) {
+            this.direction = Direction.RIGHT;
+        }
+        // Jump and set next jump delay.
+        this.move(this.direction, 1);
     }
 
     /**
