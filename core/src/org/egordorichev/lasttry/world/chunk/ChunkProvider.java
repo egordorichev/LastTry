@@ -67,12 +67,6 @@ public class ChunkProvider {
 	}
 
 	public static void save(String worldName, Chunk chunk) {
-		File dir = new File(WorldProvider.getFilePath(worldName) + "/");
-
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
-
 		try {
 			FileWriter stream = new FileWriter(getFilePath(worldName, chunk.getGridX(), chunk.getGridY()));
 			stream.writeInt32(CURRENT_VERSION);

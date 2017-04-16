@@ -71,7 +71,7 @@ public class Chunk {
 			return ItemID.none;
 		}
 
-		return this.data.blocks[x + y * SIZE];
+		return this.data.walls[x + y * SIZE];
 	}
 
 	public void setWall(short id, int globalX, int globalY) {
@@ -83,7 +83,7 @@ public class Chunk {
 			return;
 		}
 
-		this.data.blocks[x + y * SIZE] = id;
+		this.data.walls[x + y * SIZE] = id;
 	}
 
 	public byte getWallHP(int globalX, int globalY) {
@@ -95,7 +95,7 @@ public class Chunk {
 			return ItemID.none;
 		}
 
-		return this.data.blocksHealth[x + y * SIZE];
+		return this.data.wallsHealth[x + y * SIZE];
 	}
 
 	public void setWallHP(byte hp, int globalX, int globalY) {
@@ -107,7 +107,7 @@ public class Chunk {
 			return;
 		}
 
-		this.data.blocksHealth[x + y * SIZE] = hp;
+		this.data.wallsHealth[x + y * SIZE] = hp;
 	}
 
 	public int getGridX() {

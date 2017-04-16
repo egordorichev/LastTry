@@ -12,225 +12,246 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldProvider {
-    /** Current supported world version */
-    public static short CURRENT_VERSION = 6;
+	/** Current supported world version */
+	public static short CURRENT_VERSION = 6;
 
-    /**
-     * Returns all worlds in the "worlds/" directory
-     * @return all worlds in the "worlds/" directory
-     */
-    public static WorldInfo[] getWorlds() {
-        File worldsDirectory = new File("worlds/");
+	/**
+	 * Returns all worlds in the "worlds/" directory
+	 * @return all worlds in the "worlds/" directory
+	 */
+	public static WorldInfo[] getWorlds() {
+		File worldsDirectory = new File("worlds/");
 
-        if (!worldsDirectory.mkdir()) {
-            try {
-                worldsDirectory.createNewFile();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        } else {
-            LastTry.warning("There's no worlds directory so one will be created!");
-        }
+		if (!worldsDirectory.mkdir()) {
+			try {
+				worldsDirectory.createNewFile();
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		} else {
+			LastTry.warning("There's no worlds directory so one will be created!");
+		}
 
-        File[] files = worldsDirectory.listFiles();
+		File[] files = worldsDirectory.listFiles();
 
-        List<WorldInfo> worlds = new ArrayList<>();
+		List<WorldInfo> worlds = new ArrayList<>();
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isFile()) {
-                worlds.add(getWorldInfo("worlds/" + files[i].getName()));
-            }
-        }
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isFile()) {
+				worlds.add(getWorldInfo("worlds/" + files[i].getName()));
+			}
+		}
 
-        return worlds.toArray(new WorldInfo[0]);
-    }
+		return worlds.toArray(new WorldInfo[0]);
+	}
 
-    /**
-     * Returns world info from given file name
-     * @param fileName world file
-     * @return world info
-     */
-    public static WorldInfo getWorldInfo(String fileName) {
-        String worldName = fileName.replace("worlds/", "").replace(".wld", "");
-        WorldSize size;
-        int version;
-        int flags = 0;
+	/**
+	 * Returns world info from given file name
+	 * @param fileName world file
+	 * @return world info
+	 */
+	public static WorldInfo getWorldInfo(String fileName) {
+		String worldName = fileName.replace("worlds/", "").replace(".wld", "");
+		WorldSize size;
+		int version;
+		int flags = 0;
 
-        try {
-            FileReader stream = new FileReader(fileName);
+		try {
+			FileReader stream = new FileReader(fileName);
 
-            version = stream.readInt32();
+			version = stream.readInt32();
 
-            if (stream.readBoolean()) {
-                flags |= World.HARDMODE;
-            }
+			if (stream.readBoolean()) {
+				flags |= World.HARDMODE;
+			}
 
-            if (stream.readBoolean()) {
-                flags |= World.EXPERT;
-            }
+			if (stream.readBoolean()) {
+				flags |= World.EXPERT;
+			}
 
-            if (stream.readBoolean()) {
-                flags |= World.CRIMSON;
-            }
+			if (stream.readBoolean()) {
+				flags |= World.CRIMSON;
+			}
 
-            stream.readByte();
-            stream.readByte();
+			stream.readByte();
+			stream.readByte();
 
-            short width = stream.readInt16();
-            short height = stream.readInt16();
+			short width = stream.readInt16();
+			short height = stream.readInt16();
 
-            if (width == 4200 && height == 1200) {
-                size = WorldSize.SMALL;
-            } else if (width == 6400 && height == 1800) {
-                size = WorldSize.MEDIUM;
-            } else {
-                size = WorldSize.LARGE;
-            }
+			if (width == 6400 && height == 1800) {
+				size = WorldSize.MEDIUM;
+			} else if (width == 8400 && height == 2400) {
+				size = WorldSize.LARGE;
+			} else {
+				size = WorldSize.SMALL;
+			}
 
-            stream.close();
-        } catch (Exception exception) {
-            LastTry.handleException(exception);
-            return null;
-        }
+				stream.close();
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
+			return null;
+		}
 
-        return new WorldInfo(worldName, size, version, flags);
-    }
+		return new WorldInfo(worldName, size, version, flags);
+	}
 
-    /**
-     * Generates new world with the given name, width, and height.
-     * @return new world.
-     */
-    public static World generate(WorldInfo info) {
-        LastTry.log.info("Generating world " + info.name + " ...");
+	/**
+	 * Generates new world with the given name, width, and height.
+	 * @return new world.
+	 */
+	public static World generate(WorldInfo info) {
+		LastTry.log.info("Generating world " + info.name + " ...");
 
-        Biome.preload();
+		Biome.preload();
 
-        short width;
-        short height;
+		short width;
+		short height;
 
-        switch (info.size) {
-            case SMALL:
-            default:
-                width = 4200;
-                height = 1200;
-            break;
-            case LARGE:
-                width = 8400;
-                height = 2400;
-            break;
-            case MEDIUM:
-                width = 6400;
-                height = 1800;
-            break;
-        }
+		switch (info.size) {
+			case SMALL: default:
+				width = 4200;
+				height = 1200;
+			break;
+			case LARGE:
+				width = 8400;
+				height = 2400;
+			break;
+			case MEDIUM:
+				width = 6400;
+				height = 1800;
+			break;
+		}
 
-        World world = new World(width, height, info.flags);
+		File dir = new File(getFilePath(info.name).replace(".wld", "") + "/");
 
-        LastTry.worldInfo = info;
-        LastTry.world = world;
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
 
-	    LastTry.log("Finished generating!");
+		World world = new World(width, height, info.flags);
 
-        return world;
-    }
+		LastTry.worldInfo = info;
+		LastTry.world = world;
 
-    /**
-     * Saves the given world.
-     * @param world world to save.
-     */
-    public static void save(World world) {
-        LastTry.log("Saving world " + LastTry.worldInfo.name + " ...");
+		LastTry.log("Finished generating!");
 
-        try {
-            LastTry.log(LastTry.worldInfo.name);
+		return world;
+	}
 
-            FileWriter stream = new FileWriter(getFilePath(LastTry.worldInfo.name));
+	/**
+	 * Saves the given world.
+	 * @param world world to save.
+	 */
+	public static void save(World world) {
+		LastTry.log("Saving world " + LastTry.worldInfo.name + " ...");
 
-            stream.writeInt32(CURRENT_VERSION);
-            stream.writeBoolean(world.isHardmode());
-            stream.writeBoolean(world.isExpertMode());
-            stream.writeBoolean(world.evilIsCrimson());
+		try {
+			LastTry.log(LastTry.worldInfo.name);
 
-            stream.writeByte(LastTry.environment.time.getHour());
-            stream.writeByte(LastTry.environment.time.getMinute());
+			FileWriter stream = new FileWriter(getFilePath(LastTry.worldInfo.name));
 
-	        stream.writeBoolean(true);
-	        stream.close();
+			stream.writeInt32(CURRENT_VERSION);
 
-            for (Chunk chunk : world.chunks) {
-	            if (chunk != null) {
-	            	ChunkProvider.save(LastTry.worldInfo.name, chunk);
-	            }
-            }
+			switch (LastTry.worldInfo.size) {
+				case SMALL: default:
+					stream.writeInt16((short) 4200);
+					stream.writeInt16((short) 1200);
+				break;
+				case LARGE:
+					stream.writeInt16((short) 8400);
+					stream.writeInt16((short) 2400);
+				break;
+				case MEDIUM:
+					stream.writeInt16((short) 6400);
+					stream.writeInt16((short) 1800);
+				break;
+			}
 
-            LastTry.log("Done saving!");
-        } catch (IOException exception) {
-            LastTry.handleException(exception);
-        }
-    }
+			stream.writeBoolean(world.isHardmode());
+			stream.writeBoolean(world.isExpertMode());
+			stream.writeBoolean(world.evilIsCrimson());
 
-    /**
-     * Load a world by the given name. Returns null if the world cannot be found.
-     * @return World by name.
-     */
-    public static World load() {
-        LastTry.log("Loading world...");
+			stream.writeByte(LastTry.environment.time.getHour());
+			stream.writeByte(LastTry.environment.time.getMinute());
 
-        try {
-	        FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name));
+			stream.writeBoolean(true);
+			stream.close();
 
-            int version = stream.readInt32();
+			for (Chunk chunk : world.chunks) {
+				if (chunk != null) {
+					ChunkProvider.save(LastTry.worldInfo.name, chunk);
+				}
+			}
 
-            if (version > CURRENT_VERSION) {
-                throw new RuntimeException("Unsupported world version: " + version);
-            } else if (version < CURRENT_VERSION) {
-                LastTry.log.warn("Trying to load old version world");
-            }
+			LastTry.log("Done saving!");
+		} catch (IOException exception) {
+			LastTry.handleException(exception);
+		}
+	}
 
-            int flags = 0;
+	/**
+	 * Load a world by the given name. Returns null if the world cannot be found.
+	 * @return World by name.
+	 */
+	public static World load() {
+		LastTry.log("Loading world...");
 
-            if (stream.readBoolean()) {
-                flags |= World.HARDMODE;
-            }
+		try {
+			FileReader stream = new FileReader(getFilePath(LastTry.worldInfo.name));
 
-            if (stream.readBoolean()) {
-                flags |= World.EXPERT;
-            }
+			int version = stream.readInt32();
 
-            if (stream.readBoolean()) {
-                flags |= World.CRIMSON;
-            }
+			if (version > CURRENT_VERSION) {
+				throw new RuntimeException("Unsupported world version: " + version);
+			} else if (version < CURRENT_VERSION) {
+				LastTry.log.warn("Trying to load old version world");
+			}
 
-            LastTry.environment.time.setHour(stream.readByte());
-            LastTry.environment.time.setMinute(stream.readByte());
+			short width = stream.readInt16();
+			short height = stream.readInt16();
 
-            short width = stream.readInt16();
-            short height = stream.readInt16();
+			int flags = 0;
 
-            if (!stream.readBoolean()) {
-                throw new RuntimeException("Verification failed");
-            }
+			if (stream.readBoolean()) {
+				flags |= World.HARDMODE;
+			}
 
-            stream.close();
-            Biome.preload();
+			if (stream.readBoolean()) {
+				flags |= World.EXPERT;
+			}
 
-            World world = new World(width, height, flags);
-            LastTry.log("Done loading!");
+			if (stream.readBoolean()) {
+				flags |= World.CRIMSON;
+			}
 
-            return world;
-        } catch (IOException exception) {
-            LastTry.handleException(exception);
-        }
+			LastTry.environment.time.setHour(stream.readByte());
+			LastTry.environment.time.setMinute(stream.readByte());
 
-        return null;
-    }
+			if (!stream.readBoolean()) {
+				throw new RuntimeException("Verification failed");
+			}
 
-    /**
-     * Get the file path of a world by the given name.
-     * @param worldName World name.
-     * @return Path to world file.
-     */
-    public static String getFilePath(String worldName) {
-        return "worlds/" + worldName + ".wld";
-    }
+			stream.close();
+			Biome.preload();
+
+			World world = new World(width, height, flags);
+			LastTry.log("Done loading!");
+
+			return world;
+		} catch (IOException exception) {
+			LastTry.handleException(exception);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the file path of a world by the given name.
+	 * @param worldName World name.
+	 * @return Path to world file.
+	 */
+	public static String getFilePath(String worldName) {
+		return "worlds/" + worldName + ".wld";
+	}
 }
