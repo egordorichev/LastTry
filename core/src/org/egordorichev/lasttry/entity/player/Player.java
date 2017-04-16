@@ -107,7 +107,7 @@ public class Player extends Entity {
 			holder.getItem().renderAnimation();
 		}
 
-		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+		this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.SIZE
 			- this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
 			(this.direction == Direction.LEFT), false);
 	}

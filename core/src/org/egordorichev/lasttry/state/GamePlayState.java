@@ -21,8 +21,8 @@ public class GamePlayState implements State {
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
-        int spawnX = LastTry.world.getWidth() / 2 * Block.TEX_SIZE;
-        int spawnY = 50 * Block.TEX_SIZE;
+        int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
+        int spawnY = 50 * Block.SIZE;
 
         LastTry.player.spawn(spawnX, spawnY);
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 1000));
@@ -71,7 +71,7 @@ public class GamePlayState implements State {
                 LastTry.player.getCenterX());
 
         LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY());
+                LastTry.world.getHeight() * Block.SIZE - LastTry.player.getCenterY());
 
         LastTry.camera.update();
         LastTry.batch.setProjectionMatrix(LastTry.camera.combined);

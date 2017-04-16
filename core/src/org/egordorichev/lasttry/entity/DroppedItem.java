@@ -32,7 +32,7 @@ public class DroppedItem extends PhysicBody {
 	public void render() {
 		Texture texture = this.holder.getItem().getTexture();
     	float x = this.getX();
-    	float y = LastTry.world.getHeight() * Block.TEX_SIZE - this.renderBounds.y - this.renderBounds.height;
+    	float y = LastTry.world.getHeight() * Block.SIZE - this.renderBounds.y - this.renderBounds.height;
 
 		LastTry.batch.draw(texture, x, y);
 	}

@@ -155,11 +155,11 @@ public class Environment {
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.TEX_SIZE;
-        int twh = windowHeight / Block.TEX_SIZE;
-        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+        int tww = windowWidth / Block.SIZE;
+        int twh = windowHeight / Block.SIZE;
+        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.SIZE;
         int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-                / Block.TEX_SIZE);
+                / Block.SIZE);
 
         int minY = Math.max(0, tcy - 20);
         int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);

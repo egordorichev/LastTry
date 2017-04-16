@@ -84,7 +84,7 @@ public abstract class Enemy extends Entity {
 
     @Override
     public void render() {
-        this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
+        this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.SIZE
                         - this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
                 (this.direction == Direction.RIGHT), false);
     }

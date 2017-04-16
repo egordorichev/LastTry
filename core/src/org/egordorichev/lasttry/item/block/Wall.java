@@ -40,10 +40,10 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
         int variant = 1;
         int binary = Block.calculateBinary(t, r, b, l);
 
-        LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-                (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE, false, false);
+        LastTry.batch.draw(this.tiles, x * Block.SIZE,
+                (LastTry.world.getHeight() - y - 1) * Block.SIZE, Block.SIZE, Block.SIZE,
+                Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
+                Block.SIZE, false, false);
     }
 
     @Override

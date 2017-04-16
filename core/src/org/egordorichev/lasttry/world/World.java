@@ -57,11 +57,11 @@ public class World {
 	public void render() {
 		int windowWidth = Gdx.graphics.getWidth();
 		int windowHeight = Gdx.graphics.getHeight();
-		int tww = windowWidth / Block.TEX_SIZE;
-		int twh = windowHeight / Block.TEX_SIZE;
-		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+		int tww = windowWidth / Block.SIZE;
+		int twh = windowHeight / Block.SIZE;
+		int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.SIZE;
 		int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-			/ Block.TEX_SIZE);
+			/ Block.SIZE);
 
 		int minY = Math.max(0, tcy - 2);
 		int maxY = Math.min(this.height - 1, tcy + twh + 3);
@@ -297,10 +297,10 @@ public class World {
 	public boolean isColliding(Rectangle bounds) {
 		// Create the bounds and fit them to the world's grid.
 		Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
-		gridBounds.x /= Block.TEX_SIZE;
-		gridBounds.y /= Block.TEX_SIZE;
-		gridBounds.width /= Block.TEX_SIZE;
-		gridBounds.height /= Block.TEX_SIZE;
+		gridBounds.x /= Block.SIZE;
+		gridBounds.y /= Block.SIZE;
+		gridBounds.width /= Block.SIZE;
+		gridBounds.height /= Block.SIZE;
 
 		// Iterate blocks and check for conditions
 		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
@@ -318,8 +318,8 @@ public class World {
 
 				// Check if the parameter bounds intersect with the block at the
 				// iterated coordiantes.
-				Rectangle blockRect = new Rectangle(x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE,
-						Block.TEX_SIZE);
+				Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE,
+						Block.SIZE);
 				if (blockRect.intersects(bounds)) {
 					return true;
 				}

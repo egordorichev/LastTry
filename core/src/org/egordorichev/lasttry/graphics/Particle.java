@@ -21,6 +21,6 @@ public class Particle extends PhysicBody {
 
 	@Override
 	public void render() {
-		LastTry.batch.draw(this.texture, this.getX(), LastTry.world.getHeight() * Block.TEX_SIZE - this.getY());
+		LastTry.batch.draw(this.texture, this.getX(), LastTry.world.getHeight() * Block.SIZE - this.getY());
 	}
 }

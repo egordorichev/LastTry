@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
-    public static final int TEX_SIZE = 16;
+    public static final int SIZE = 16;
     public static final byte MAX_HP = 4;
 
     /** Is the block solid */
@@ -84,7 +84,7 @@ public class Block extends Item {
     }
 
     public void die(int x, int y) {
-	LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.TEX_SIZE * x, Block.TEX_SIZE * y);
+	LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
     }
 
     public boolean canBePlaced(int x, int y) {
@@ -112,22 +112,22 @@ public class Block extends Item {
         byte binary = Block.calculateBinary(t, r, b, l);
 
         if (binary == 15) {
-            LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-                (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE * (binary), 48 + variant * Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE, false, false);
+            LastTry.batch.draw(this.tiles, x * Block.SIZE,
+                (LastTry.world.getHeight() - y - 1) * Block.SIZE, Block.SIZE, Block.SIZE,
+                Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
+                Block.SIZE, false, false);
         } else {
-            LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE,
-                (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE * (binary), variant * Block.TEX_SIZE, Block.TEX_SIZE,
-                Block.TEX_SIZE, false, false);
+            LastTry.batch.draw(this.tiles, x * Block.SIZE,
+                (LastTry.world.getHeight() - y - 1) * Block.SIZE, Block.SIZE, Block.SIZE,
+                Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
+                Block.SIZE, false, false);
         }
 
         if (this.renderCracks()) {
 	        byte hp = LastTry.world.getBlockHp(x, y);
 
 	        if (hp < Block.MAX_HP) {
-				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE);
+				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE);
 	        }
         }
     }
@@ -142,14 +142,14 @@ public class Block extends Item {
      */
     @Override
     public boolean use() {
-        int x = LastTry.getMouseXInWorld() / Block.TEX_SIZE;
-        int y = LastTry.getMouseYInWorld() / Block.TEX_SIZE;
+        int x = LastTry.getMouseXInWorld() / Block.SIZE;
+        int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
         if (this.canBePlaced(x, y) && LastTry.world.canPlaceInWorld(this, x, y)) {
             Rectangle rectangle = LastTry.player.getHitbox();
 
-            if (rectangle.intersects(new Rectangle(x * TEX_SIZE, y * TEX_SIZE, this.width * TEX_SIZE,
-		            this.height * TEX_SIZE))) {
+            if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,
+		            this.height * SIZE))) {
 
                 return false;
             }

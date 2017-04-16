@@ -28,8 +28,8 @@ public class Plant extends Block {
 	@Override
 	public void die(int x, int y) {
 		if (hasGrown(x, y)) {
-			LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.TEX_SIZE - Block.TEX_SIZE / 2,
-				y * Block.TEX_SIZE - Block.TEX_SIZE / 2);
+			LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
+				y * Block.SIZE - Block.SIZE / 2);
 
 			LastTry.log("plants");
 		}
@@ -41,7 +41,7 @@ public class Plant extends Block {
 
 			if (seeds != 0) {
 				LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
-					x * Block.TEX_SIZE - Block.TEX_SIZE / 2, y * Block.TEX_SIZE - Block.TEX_SIZE / 2);
+					x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 			}
 		}
 
@@ -83,8 +83,8 @@ public class Plant extends Block {
             tx = 16;
         }
 
-        LastTry.batch.draw(this.tiles, x * Block.TEX_SIZE, (LastTry.world.getHeight() - y - 1) * Block.TEX_SIZE,
-                tx, 0, Block.TEX_SIZE, Block.TEX_SIZE);
+        LastTry.batch.draw(this.tiles, x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE,
+                tx, 0, Block.SIZE, Block.SIZE);
     }
 
     @Override

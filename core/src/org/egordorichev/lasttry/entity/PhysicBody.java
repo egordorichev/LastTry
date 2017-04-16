@@ -146,7 +146,7 @@ public abstract class PhysicBody {
 					 * that is too steep to climb.
 					 */
 
-                    float step = Block.TEX_SIZE * STEP_HEIGHT;
+                    float step = Block.SIZE * STEP_HEIGHT;
 
                     if (LastTry.world.isColliding(newHitbox.offset(0, -step))) {
                         // Intersection with a wall too steep to climb
@@ -156,7 +156,7 @@ public abstract class PhysicBody {
                         // Wall isn't steep, can be climbed by entity.
 
                         this.renderBounds.x += this.velocity.x;
-                        this.renderBounds.y -= Block.TEX_SIZE / 2;
+                        this.renderBounds.y -= Block.SIZE / 2;
                     }
                 } else {
                     // Moving normally
@@ -325,7 +325,7 @@ public abstract class PhysicBody {
      * @return World grid x-position
      */
     public int getGridX() {
-        return (int) this.renderBounds.x / Block.TEX_SIZE;
+        return (int) this.renderBounds.x / Block.SIZE;
     }
 
     /**
@@ -335,7 +335,7 @@ public abstract class PhysicBody {
      * @return World grid y-position
      */
     public int getGridY() {
-        return (int) this.renderBounds.y / Block.TEX_SIZE;
+        return (int) this.renderBounds.y / Block.SIZE;
     }
 
     /**
@@ -344,7 +344,7 @@ public abstract class PhysicBody {
      * @return World grid width.
      */
     public int getGridWidth() {
-        return (int) this.renderBounds.width / Block.TEX_SIZE;
+        return (int) this.renderBounds.width / Block.SIZE;
     }
 
     /**
@@ -353,7 +353,7 @@ public abstract class PhysicBody {
      * @return World grid height.
      */
     public int getGridHeight() {
-        return (int) this.renderBounds.height / Block.TEX_SIZE;
+        return (int) this.renderBounds.height / Block.SIZE;
     }
 
     public float getX() {
