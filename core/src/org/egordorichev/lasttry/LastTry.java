@@ -100,8 +100,8 @@ public class LastTry extends Game {
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
                 
-                Locale en_US = new Locale("en", "US");
-                Language.load(en_US);
+        Locale en_US = new Locale("en", "US");
+        Language.load(en_US);
                 
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
