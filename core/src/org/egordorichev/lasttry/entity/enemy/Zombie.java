@@ -1,10 +1,9 @@
 package org.egordorichev.lasttry.entity.enemy;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Direction;
-import org.egordorichev.lasttry.entity.Drop;
+import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;

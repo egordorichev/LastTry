@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.entity.player.skin;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -11,7 +11,7 @@ public class PlayerRenderInfo {
     public boolean male;
 
     public PlayerRenderInfo(int hairStyle, Color hairColor, Color eyesColor,
-                            Color skinColor, int clothesStyle, boolean male) {
+            Color skinColor, int clothesStyle, boolean male) {
 
         this.hairStyle = hairStyle;
         this.hairColor = hairColor;

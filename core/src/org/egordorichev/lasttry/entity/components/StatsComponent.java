@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.entity.components;
 
-import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.entity.Entity;
 
-public class StatsComponent extends Component {
+public class StatsComponent extends EntityComponent {
 	private Entity entity;
 	private int hp;
 	private int maxHp;
@@ -16,6 +15,13 @@ public class StatsComponent extends Component {
 
 	public void update(int dt) {
 		// TODO: regen
+	}
+
+	public int set(int maxHp, int defense, int damage) {
+		this.maxHp = maxHp;
+		this.hp = maxHp;
+		this.defense = defense;
+		this.damage = damage;
 	}
 
 	public int modifyHP(int amount) {

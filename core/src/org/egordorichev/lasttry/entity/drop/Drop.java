@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.drop;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;

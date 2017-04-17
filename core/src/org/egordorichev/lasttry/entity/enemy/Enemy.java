@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.drop.Drop;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.item.block.Block;

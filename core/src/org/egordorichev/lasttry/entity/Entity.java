@@ -4,19 +4,23 @@ import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class Entity {
-	public PhysicsComponent physics = new PhysicsComponent(this);
-	public GraphicsComponent graphics = new GraphicsComponent(this);
+	public PhysicsComponent physics;
+	public GraphicsComponent graphics;
 	private boolean active = false;
 
-	public Entity() {
+	public Entity(PhysicsComponent physics, GraphicsComponent graphics) {
+		this.physics = physics;
+		this.graphics = graphics;
 
+		this.physics.setEntity(this);
+		this.graphics.setEntity(this);
 	}
 
-	void render() {
+	public void render() {
 		this.graphics.render();
 	}
 
-	void update(int dt) {
+	public void update(int dt) {
 		if (!this.active) {
 			return;
 		}
@@ -24,7 +28,7 @@ public class Entity {
 		this.physics.update(dt);
 	}
 
-	void spawn(int x, int y) {
+	public void spawn(int x, int y) {
 		if (this.active) {
 			return;
 		}

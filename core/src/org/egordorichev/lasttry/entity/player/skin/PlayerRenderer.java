@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.entity.player.skin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;

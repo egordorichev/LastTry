@@ -1,7 +1,8 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.drop;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.PhysicBody;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;

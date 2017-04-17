@@ -2,25 +2,22 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.entity.PhysicBody;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
-public class PhysicsComponent extends Component {
-	private static final float STOP_VELOCITY = 0.2F;
-	private static final float STEP_HEIGHT = 1.05F;
+public class PhysicsComponent extends EntityComponent {
+	protected static final float STOP_VELOCITY = 0.2F;
+	protected static final float STEP_HEIGHT = 1.05F;
 
-	private Entity entity;
-	private Vector2 position = new Vector2();
-	private Vector2 size = new Vector2();
-	private Vector2 velocity = new Vector2();
-	private boolean solid;
-	private Rectangle hitbox;
+	protected Entity entity;
+	protected Vector2 position = new Vector2();
+	protected Vector2 size = new Vector2();
+	protected Vector2 velocity = new Vector2();
+	protected boolean solid;
+	protected Rectangle hitbox;
 
-	public PhysicsComponent(Entity entity) {
-		this.entity = entity;
+	public PhysicsComponent() {
 		this.size = new Vector2(32, 48);
 		this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
 	}
