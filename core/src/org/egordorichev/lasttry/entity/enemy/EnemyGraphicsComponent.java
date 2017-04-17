@@ -9,6 +9,6 @@ public class EnemyGraphicsComponent extends GraphicsComponent {
 
 	@Override
 	public void render() {
-		// TODO
+
 	}
 }

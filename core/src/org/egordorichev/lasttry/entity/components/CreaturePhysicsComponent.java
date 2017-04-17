@@ -16,6 +16,7 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 	@Override
 	public void move(Direction direction) {
 		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
+		this.direction = direction;
 
 		StateComponent state = ((Creature) this.entity).state;
 

@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.enemy.enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Direction;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.graphics.Animation;
@@ -12,13 +11,7 @@ import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Slime extends Enemy {
-    /**
-     * The next AI tick to jump at.
-     */
     protected int nextJump;
-    /**
-     * Marker for if the slime has jumped this AI cycle.
-     */
     protected boolean canJump;
 
     public Slime(short id, int hp, int defense, int damage, Texture texture) {
@@ -26,7 +19,7 @@ public class Slime extends Enemy {
 
         this.drops.add(new Drop(Items.gel, Drop.Chance.ALWAYS, 1, 4));
 
-        this.maxAi = 90;
+        this.ai.setMax(90);
         this.updateJumpDelay();
         this.texture = texture;
 

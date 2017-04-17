@@ -3,7 +3,9 @@ package org.egordorichev.lasttry.entity.player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.entity.components.StateComponent;
 import org.egordorichev.lasttry.entity.player.skin.PlayerRenderInfo;
 import org.egordorichev.lasttry.entity.player.skin.PlayerRenderer;
@@ -25,7 +27,12 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
+		Creature creature = (Creature) this.entity;
 
+		this.animations[creature.state.get().getId()].render(
+			creature.physics.getPosition().x, creature.physics.getPosition().y,
+			creature.physics.getSize().x, creature.physics.getSize().x,
+			(creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
 	}
 
 	private void setupAnimations() {

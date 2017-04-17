@@ -1,26 +1,26 @@
-package org.egordorichev.lasttry.entity.enemy;
+package org.egordorichev.lasttry.entity.components;
 
-import org.egordorichev.lasttry.entity.components.EntityComponent;
+import org.egordorichev.lasttry.entity.CreatureWithAI;
 
 public class AiComponent extends EntityComponent {
 	private int currentAi = 0;
 	private int maxAi = 0;
 
-	public AiComponent(Enemy enemy) {
-		super(enemy);
+	public AiComponent(CreatureWithAI creature) {
+		super(creature);
 	}
 
 	public void update(int dt) {
 		this.currentAi++;
 
-		((Enemy) this.entity).updateAI();
+		((CreatureWithAI) this.entity).updateAI();
 
 		if (this.currentAi >= this.maxAi) {
 			this.currentAi = 0;
 		}
 	}
 
-	public void setMaxAi(int maxAi) {
+	public void setMax(int maxAi) {
 		this.maxAi = maxAi;
 		this.currentAi = 0;
 	}

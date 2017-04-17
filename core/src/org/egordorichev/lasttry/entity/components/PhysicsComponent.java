@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -21,6 +22,7 @@ public class PhysicsComponent extends EntityComponent {
 	protected Vector2 velocity = new Vector2();
 	protected boolean solid;
 	protected Rectangle hitbox;
+	protected Direction direction = Direction.RIGHT;
 
 	public PhysicsComponent() {
 		this.size = new Vector2(32, 48);
@@ -37,18 +39,20 @@ public class PhysicsComponent extends EntityComponent {
 		this.updateXVelocity();
 		this.updateYVelocity();
 
-		/*
-			if (this.velocity.y > 0) {
-				this.state = PhysicBody.State.FALLING;
-			} else if (this.velocity.y == 0 && this.state == PhysicBody.State.FALLING) {
-				this.state = PhysicBody.State.IDLE;
-			}
+		StateComponent state = ((Creature) this.entity).state;
 
-			if (this.velocity.x == 0 && this.state != PhysicBody.State.IDLE && this.state != PhysicBody.State.FALLING
-					&& this.state != PhysicBody.State.JUMPING) {
-				this.state = PhysicBody.State.IDLE;
-			}
-		*/
+		if (this.velocity.y > 0) {
+			state.set(StateComponent.State.FALLING);
+		} else if (this.velocity.y == 0 && state.get() == StateComponent.State.FALLING) {
+			state.set(StateComponent.State.IDLE);
+		}
+
+		if (this.velocity.x == 0 && state.get() != StateComponent.State.IDLE
+				&& state.get() != StateComponent.State.FALLING
+				&& state.get() != StateComponent.State.JUMPING) {
+
+			state.set(StateComponent.State.IDLE);
+		}
 	}
 
 	public void jump() {
@@ -117,6 +121,10 @@ public class PhysicsComponent extends EntityComponent {
 		this.position.y = gridY * Block.SIZE;
 	}
 
+	public void setSolid(boolean solid) {
+		this.solid = solid;
+	}
+
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
@@ -129,6 +137,10 @@ public class PhysicsComponent extends EntityComponent {
 
 	public Vector2 getPosition() {
 		return this.position;
+	}
+
+	public Vector2 getSize() {
+		return this.size;
 	}
 
 	public int getGridX() {
@@ -158,5 +170,9 @@ public class PhysicsComponent extends EntityComponent {
 	public Rectangle getHitbox() {
 		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
 			this.hitbox.height);
+	}
+
+	public Direction getDirection() {
+		return this.direction;
 	}
 }

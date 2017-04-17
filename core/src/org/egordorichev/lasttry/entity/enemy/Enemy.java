@@ -1,7 +1,9 @@
 package org.egordorichev.lasttry.entity.enemy;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.components.AiComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -9,9 +11,9 @@ import org.egordorichev.lasttry.entity.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Enemy extends Creature {
-	public AiComponent ai = new AiComponent(this);
+public abstract class Enemy extends CreatureWithAI {
     protected int id;
+    protected Texture texture;
     protected List<Drop> drops = new ArrayList<>();
 
     public Enemy(short id, int maxHp, int defense, int damage) {
@@ -19,12 +21,6 @@ public abstract class Enemy extends Creature {
 
         this.stats.set(maxHp, 0, damage, defense);
 	    this.id = id;
-    }
-
-    @Override
-    public void update(int dt) {
-        super.update(dt);
-	    this.ai.update(dt);
     }
 
     public void updateAI() {
