@@ -8,6 +8,26 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 	}
 
 	@Override
+	public void jump() {
+		((Creature) this.entity).state.set(StateComponent.State.JUMPING);
+		this.velocity.y -= 10.0f;
+	}
+
+	@Override
+	public void move(Direction direction) {
+		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
+
+		StateComponent state = ((Creature) this.entity).state;
+
+		if (state.get() != StateComponent.State.JUMPING
+				&& state.get() != StateComponent.State.FALLING
+				&& state.get() != StateComponent.State.FLYING) {
+
+			state.set(StateComponent.State.MOVING);
+		}
+	}
+
+	@Override
 	public void update(int dt) {
 		super.update(dt);
 

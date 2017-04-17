@@ -7,6 +7,11 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class PhysicsComponent extends EntityComponent {
+	public enum Direction {
+		LEFT,
+		RIGHT
+	}
+
 	protected static final float STOP_VELOCITY = 0.2F;
 	protected static final float STEP_HEIGHT = 1.05F;
 
@@ -44,6 +49,14 @@ public class PhysicsComponent extends EntityComponent {
 				this.state = PhysicBody.State.IDLE;
 			}
 		*/
+	}
+
+	public void jump() {
+
+	}
+
+	public void move(Direction direction) {
+
 	}
 
 	private void updateXVelocity() {
@@ -96,7 +109,7 @@ public class PhysicsComponent extends EntityComponent {
 	}
 
 	protected void onBlockHit() {
-
+		// TODO: callback?
 	}
 
 	public void setGridPosition(float gridX, float gridY) {
@@ -109,6 +122,11 @@ public class PhysicsComponent extends EntityComponent {
 		this.position.y = y;
 	}
 
+	public void setSize(int width, int height) {
+		this.size.x = width;
+		this.size.y = height;
+	}
+
 	public Vector2 getPosition() {
 		return this.position;
 	}
@@ -119,5 +137,18 @@ public class PhysicsComponent extends EntityComponent {
 
 	public int getGridY() {
 		return (int) this.position.y / Block.SIZE;
+	}
+
+	public float getX() {
+		return this.position.x;
+	}
+
+	public float getY() {
+		return this.position.y;
+	}
+
+	public Rectangle getHitbox() {
+		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
+			this.hitbox.height);
 	}
 }

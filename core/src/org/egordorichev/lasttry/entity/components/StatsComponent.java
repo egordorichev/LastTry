@@ -6,6 +6,8 @@ public class StatsComponent extends EntityComponent {
 	private Entity entity;
 	private int hp;
 	private int maxHp;
+	private int mana;
+	private int maxMana;
 	private int defense;
 	private int damage;
 
@@ -17,9 +19,11 @@ public class StatsComponent extends EntityComponent {
 		// TODO: regen
 	}
 
-	public int set(int maxHp, int defense, int damage) {
+	public void set(int maxHp, int maxMana, int defense, int damage) {
 		this.maxHp = maxHp;
 		this.hp = maxHp;
+		this.maxMana = maxMana;
+		this.mana = maxMana;
 		this.defense = defense;
 		this.damage = damage;
 	}
@@ -37,6 +41,21 @@ public class StatsComponent extends EntityComponent {
 		}
 
 		return this.maxHp;
+	}
+
+	public int modifyMana(int amount) {
+		this.mana = Math.max(0, Math.min(this.maxMana, this.mana + amount));
+		return this.mana;
+	}
+
+	public int modifyMaxMana(int amount) {
+		this.maxMana = Math.max(0, this.maxMana + amount);
+
+		if (this.mana > this.maxMana) {
+			this.maxMana = this.maxMana;
+		}
+
+		return this.maxMana;
 	}
 
 	public int modifyDefense(int amount) {

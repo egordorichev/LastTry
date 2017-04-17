@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 public class Entity {
 	public PhysicsComponent physics;
 	public GraphicsComponent graphics;
-	private boolean active = false;
+	protected boolean active = false;
 
 	public Entity(PhysicsComponent physics, GraphicsComponent graphics) {
 		this.physics = physics;

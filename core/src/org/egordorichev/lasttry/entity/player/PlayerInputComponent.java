@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.player;
 
 import org.egordorichev.lasttry.entity.components.EntityComponent;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 
@@ -15,11 +16,11 @@ public class PlayerInputComponent extends EntityComponent {
 		}
 
 		if (InputManager.isKeyDown(Keys.MOVE_LEFT)) {
-			this.entity.physics.move(Direction.LEFT);
+			this.entity.physics.move(PhysicsComponent.Direction.LEFT);
 		}
 
 		if (InputManager.isKeyDown(Keys.MOVE_RIGHT)) {
-			this.entity.physics.move(Direction.RIGHT);
+			this.entity.physics.move(PhysicsComponent.Direction.RIGHT);
 		}
 
 		if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {

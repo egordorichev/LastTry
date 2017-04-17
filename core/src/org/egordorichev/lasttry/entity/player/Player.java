@@ -15,7 +15,7 @@ public class Player extends Creature {
 	public Player(String name) {
 		super(new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
 
-		this.stats.set(100, 0, 0);
+		this.stats.set(100, 20, 0, 0);
 		this.name = name;
 		this.inventory = new UiInventory(INVENTORY_SIZE);
 
