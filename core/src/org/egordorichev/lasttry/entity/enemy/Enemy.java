@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.enemy;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
-import org.egordorichev.lasttry.entity.components.AiComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
