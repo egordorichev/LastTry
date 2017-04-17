@@ -16,6 +16,7 @@ import org.egordorichev.lasttry.world.WorldInfo;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.WorldSize;
 import org.egordorichev.lasttry.world.environment.Environment;
+import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class MenuState implements State {
     /**
@@ -378,6 +379,7 @@ public class MenuState implements State {
                                 worldInfo.name = worldNameInput;
 
                                 WorldProvider.generate(worldInfo);
+                                LastTry.spawnSystem = new SpawnSystem();
                                 LastTry.environment = new Environment();
                                 WorldProvider.save(LastTry.world);
 
