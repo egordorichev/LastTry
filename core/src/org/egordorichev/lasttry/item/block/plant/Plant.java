@@ -2,11 +2,10 @@ package org.egordorichev.lasttry.item.block.plant;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.DroppedItem;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Util;
