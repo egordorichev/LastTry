@@ -147,6 +147,14 @@ public class PhysicsComponent extends EntityComponent {
 		return this.position.y;
 	}
 
+	public float getCenterX() {
+		return this.position.x + this.size.x / 2;
+	}
+
+	public float getCenterY() {
+		return this.position.y + this.size.y / 2;
+	}
+
 	public Rectangle getHitbox() {
 		return new Rectangle(this.getX() + this.hitbox.x, this.getY() + this.hitbox.y, this.hitbox.width,
 			this.hitbox.height);

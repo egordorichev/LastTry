@@ -71,8 +71,8 @@ public class EntityManager {
 
         for(Entity entity : entities) {
             if (entity instanceof Enemy) {
-                //Check that the object is not marked for removal
-                //TODO this contains would be faster if clearList was a HashMap, source: http://stackoverflow.com/questions/559839/big-o-summary-for-java-collections-framework-implementations
+                // Check that the object is not marked for removal
+                // TODO this contains would be faster if clearList was a HashMap, source: http://stackoverflow.com/questions/559839/big-o-summary-for-java-collections-framework-implementations
 
 	            if(!clearList.contains(entity)) {
                     Enemy enemy = (Enemy) entity;

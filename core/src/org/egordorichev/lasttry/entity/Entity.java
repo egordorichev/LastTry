@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
@@ -35,6 +36,26 @@ public class Entity {
 
 		this.active = true;
 		this.physics.setGridPosition(x, y);
+		this.onSpawn();
+	}
+
+	public void die() {
+		if (!this.active) {
+			return;
+		}
+
+		this.active = false;
+		this.onDeath();
+
+		LastTry.entityManager.markForRemoval(this);
+	}
+
+	protected void onSpawn() {
+
+	}
+
+	protected void onDeath() {
+
 	}
 
 	public boolean isActive() {
