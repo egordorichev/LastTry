@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.*;
@@ -22,7 +21,6 @@ import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
-
 import java.util.Random;
 import java.util.Locale;
 
@@ -63,9 +61,6 @@ public class LastTry extends Game {
 
 	/** Player instance */
 	public static Player player;
-
-	/** Player info */
-	public static PlayerInfo playerInfo;
 
 	/** Environment instance*/
 	public static Environment environment;
@@ -130,9 +125,7 @@ public class LastTry extends Game {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-
 		viewport.update(width, height);
-		// camera.update();
 	}
 
 	/** Renders and updates the game */
@@ -151,7 +144,7 @@ public class LastTry extends Game {
 	@Override
 	public void dispose() {
 		if(player != null){
-			PlayerProvider.save();
+			PlayerIO.save();
 		}
 
 		if (world != null) {
@@ -163,12 +156,11 @@ public class LastTry extends Game {
 
 	/**
 	 * Returns random title for game the window
-	 *
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-            String[] split = Language.text.get("windowTitles").split("//");
-            return split[random.nextInt(split.length)];
+        String[] split = Language.text.get("windowTitles").split("//");
+        return split[random.nextInt(split.length)];
 	}
 
 	/**
@@ -197,37 +189,26 @@ public class LastTry extends Game {
 
 	/**
 	 * Returns mouse X coordinate, under the world
-	 *
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+		return (int) (player.physics.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
 	}
 
 	/**
 	 * Returns mouse Y coordinate, under the world
-	 *
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+		return (int) (player.physics.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
 	}
 
-	//TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 	/**
 	 * Handles exception, if it is critical, exits the game
-	 *
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
-		// TODO: replace with Crash.report()
-		
-		exception.printStackTrace();
-		Throwable cause = exception;
-
-		while ((cause = cause.getCause()) != null) {
-			System.err.println("→ caused by:");
-			exception.getCause().printStackTrace ();
-		}
+		// TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
+		Crash.report(Thread.currentThread(), exception);
 	}
 }
