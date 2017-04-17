@@ -14,5 +14,12 @@ public class GreenSlime extends Slime {
 		     Assets.getTexture(Textures.greenSlime));
 
         this.drops.add(new Drop(Items.copperCoin, 3, 3));
+
     }
+
+    @Override
+    public boolean canSpawn(){
+        return LastTry.environment.time.isDay() && LastTry.environment.getCurrentBiome()==Biome.forest;
+    }
+
 }

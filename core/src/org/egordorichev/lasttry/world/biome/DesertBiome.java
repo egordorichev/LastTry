@@ -5,6 +5,6 @@ import org.egordorichev.lasttry.graphics.Textures;
 
 public class DesertBiome extends Biome {
     public DesertBiome() {
-        super(Id.DESERT, new SpawnInfo(180, 7), Assets.getTexture(Textures.forestBack)); // TODO: replace
+        super("Desert", new SpawnInfo(180, 7), Assets.getTexture(Textures.forestBack)); // TODO: replace
     }
 }

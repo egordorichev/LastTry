@@ -74,4 +74,11 @@ public class EyeOfCthulhu extends Boss {
             // TODO
         }
     }
+
+    @Override
+    public boolean canSpawn(){
+        //TODO
+        return false;
+    }
+
 }

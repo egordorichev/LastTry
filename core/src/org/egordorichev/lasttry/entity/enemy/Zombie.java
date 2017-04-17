@@ -129,4 +129,9 @@ public class Zombie extends Enemy {
         this.canJump = false;
         this.nextJump = (int) ((this.maxAi / 2) + (Math.random() * this.maxAi / 2));
     }
+
+    @Override
+    public boolean canSpawn(){
+        return LastTry.environment.time.isDay();
+    }
 }

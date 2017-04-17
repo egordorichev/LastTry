@@ -14,4 +14,9 @@ public class BlueSlime extends Slime {
 
         this.drops.add(new Drop(Items.copperCoin, 25, 25));
     }
+
+    @Override
+    public boolean canSpawn(){
+        return LastTry.environment.time.isDay() && LastTry.environment.getCurrentBiome()==Biome.forest;
+    }
 }

@@ -127,6 +127,15 @@ public abstract class Enemy extends Entity {
 
     }
 
+    /**
+     * Returns a boolean indicating whether the enemy can spawn based on the player's game conditions.
+     * @return boolean
+     */
+    public boolean canSpawn(){
+        return false;
+    }
+
+
     @Override
     public void onDeath() {
         // On death, drop items in world.
