@@ -2,14 +2,11 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
-import org.egordorichev.lasttry.entity.components.StatsComponent;
 
 public class Entity {
 	public PhysicsComponent physics = new PhysicsComponent(this);
 	public GraphicsComponent graphics = new GraphicsComponent(this);
-	public StatsComponent stats = new StatsComponent(this);
-
-	private boolean active;
+	private boolean active = false;
 
 	public Entity() {
 
@@ -24,7 +21,6 @@ public class Entity {
 			return;
 		}
 
-		this.stats.update(dt);
 		this.physics.update(dt);
 	}
 
@@ -35,5 +31,9 @@ public class Entity {
 
 		this.active = true;
 		this.physics.setGridPosition(x, y);
+	}
+
+	public boolean isActive() {
+		return this.active;
 	}
 }

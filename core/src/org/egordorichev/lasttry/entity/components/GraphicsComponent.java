@@ -11,6 +11,6 @@ public class GraphicsComponent extends Component {
 	}
 
 	public void render() {
-
+		// TODO
 	}
 }
