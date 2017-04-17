@@ -22,6 +22,7 @@ import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
+import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 import java.util.Random;
 import java.util.Locale;
@@ -69,6 +70,9 @@ public class LastTry extends Game {
 
 	/** Environment instance*/
 	public static Environment environment;
+
+	/** Spawn system instance*/
+	public static SpawnSystem spawnSystem;
 
 	/** PhysicBody manager instance*/
 	public static EntityManager entityManager;
