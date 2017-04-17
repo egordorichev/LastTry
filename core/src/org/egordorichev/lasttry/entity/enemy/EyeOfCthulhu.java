@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.world.biome.Biome;
 
 public class EyeOfCthulhu extends Boss {
     public EyeOfCthulhu() {
-        super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800, Biome.BiomeSpawnIdentifier.CORRUPTION);
+        super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800);
 
         this.texture = Assets.getTexture(Textures.eyeOfCthulhu);
 

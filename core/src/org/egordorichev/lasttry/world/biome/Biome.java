@@ -14,14 +14,20 @@ public class Biome {
     /**
      * Enums used for identifying the Biome, of which a specific enemy spawns.
      */
-    public enum BiomeSpawnIdentifier{
-        ALL, FOREST, DESERT, CORRUPTION, CRIMSON, CORRUPTDESERT, CRIMSONDESERT;
+    public enum Id{
+        FOREST("Forest"), DESERT("Desert"), CORRUPTION("Corruption"), CRIMSON("Crimson"), CORRUPTDESERT("Corruptdesert"), CRIMSONDESERT("Crimsondesert");
+
+        private String name;
+
+        Id(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
     }
 
-    /**
-     * Biome name
-     */
-    protected String name;
 
     /**
      * Background texture
@@ -31,7 +37,7 @@ public class Biome {
     /**
      * Enum representing Biome UniqueId.
      */
-    protected BiomeSpawnIdentifier biomeId;
+    protected Id id;
 
 
     /**
@@ -44,9 +50,8 @@ public class Biome {
      */
     private SpawnInfo spawnInfo;
 
-    public Biome(BiomeSpawnIdentifier biomeId, String name, SpawnInfo spawnInfo, Texture texture) {
-        this.biomeId = biomeId;
-        this.name = name;
+    public Biome(Id id, SpawnInfo spawnInfo, Texture texture) {
+        this.id = id;
         this.spawnInfo = spawnInfo;
         this.texture = texture;
     }
@@ -92,8 +97,8 @@ public class Biome {
      *
      * @return biome name
      */
-    public String getName() {
-        return this.name;
+    public Id getId() {
+        return this.id;
     }
 
     /**

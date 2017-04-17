@@ -5,6 +5,6 @@ import org.egordorichev.lasttry.graphics.Textures;
 
 public class CorruptionBiome extends Biome {
     public CorruptionBiome() {
-        super(BiomeSpawnIdentifier.CORRUPTION, "Corruption", new SpawnInfo(390, 5), Assets.getTexture(Textures.corruptionBack));
+        super(Id.CORRUPTION, new SpawnInfo(390, 5), Assets.getTexture(Textures.corruptionBack));
     }
 }

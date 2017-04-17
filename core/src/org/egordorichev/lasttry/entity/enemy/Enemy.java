@@ -53,23 +53,19 @@ public abstract class Enemy extends Entity {
      */
     private int spawnWeight;
 
-    /**
-     * Specifying the biome where the enemy spawns at.
-     */
-    private Biome.BiomeSpawnIdentifier biomeSpawnId;
 
     //TODO Should these parameters be replaced with an enum that encapsulates the stats?
-    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight, Biome.BiomeSpawnIdentifier biomeSpawnId) {
+    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight) {
         super(maxHp, damage, defense);
 
         this.animations = new Animation[State.values().length];
         this.id = id;
     }
 
-    public Enemy(short id, Biome.BiomeSpawnIdentifier biomeSpawnId) {
+    public Enemy(short id) {
         //TODO Should parameters be converted into an enum?
         //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
-        this(id, 10, 0, 5, 1, biomeSpawnId);
+        this(id, 10, 0, 5, 1);
 
         this.animations = new Animation[State.values().length];
         this.id = id;
