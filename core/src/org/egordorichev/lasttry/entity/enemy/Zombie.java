@@ -29,7 +29,7 @@ public class Zombie extends Enemy {
     protected boolean canJump;
 
     public Zombie() {
-        super(EnemyID.zombie, 100, 2, 25);
+        super(EnemyID.zombie, 100, 2, 25, 2);
 
         this.drops.add(new Drop(Items.copperCoin, 25, 25));
 

@@ -46,7 +46,15 @@ public abstract class Enemy extends Entity {
      */
     protected Animation[] animations;
 
-    public Enemy(short id, int maxHp, int defense, int damage) {
+    /**
+     * Each biome has a maxinum number of enemies limit.  When deciding what enemy to spawn next in a biome, the
+     * spawn weight of multiple enemies are added till the maximum number of enemies in the biome is complete.
+     */
+    protected int spawnWeight;
+
+
+    //TODO Should these parameters be replaced with an enum that encapsulates the stats?
+    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight) {
         super(maxHp, damage, defense);
 
         this.animations = new Animation[State.values().length];
@@ -54,7 +62,9 @@ public abstract class Enemy extends Entity {
     }
 
     public Enemy(short id) {
-        this(id, 10, 0, 5);
+        //TODO Should parameters be converted into an enum?
+        //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
+        this(id, 10, 0, 5, 1);
 
         this.animations = new Animation[State.values().length];
         this.id = id;

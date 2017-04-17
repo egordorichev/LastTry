@@ -7,6 +7,7 @@ public class Boss extends Enemy {
     protected Phase currentPhase;
 
     public Boss(short id, String name, int maxHp) {
+        //TODO Boss should be the maximum spawn rate of whatever biome, the boss is spawning in.
         super(id);
         this.name = name;
     }

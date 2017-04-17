@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.item.Items;
 
 public class GreenSlime extends Slime {
     public GreenSlime() {
-        super(EnemyID.greenSlime, LastTry.world.isExpertMode() ? 14 : 28, 0, LastTry.world.isExpertMode() ? 6 : 16,
+        super(EnemyID.greenSlime, LastTry.world.isExpertMode() ? 14 : 28, 0, LastTry.world.isExpertMode() ? 6 : 16,2,
 		    Assets.getTexture(Textures.greenSlime));
 
         this.drops.add(new Drop(Items.copperCoin, 3, 3));
