@@ -1,14 +1,16 @@
 package org.egordorichev.lasttry.entity.enemy;
 
+import org.egordorichev.lasttry.world.biome.Biome;
+
 public class Boss extends Enemy {
     protected String name;
 
     protected Phase[] phases;
     protected Phase currentPhase;
 
-    public Boss(short id, String name, int maxHp) {
+    public Boss(short id, String name, int maxHp, Biome.BiomeSpawnIdentifier biomeSpawnIdentifier) {
         //TODO Boss should be the maximum spawn rate of whatever biome, the boss is spawning in.
-        super(id);
+        super(id, biomeSpawnIdentifier);
         this.name = name;
     }
 

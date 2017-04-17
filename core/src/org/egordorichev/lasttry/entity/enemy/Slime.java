@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.biome.Biome;
 
 public class Slime extends Enemy {
     /**
@@ -20,8 +21,8 @@ public class Slime extends Enemy {
      */
     protected boolean canJump;
 
-    public Slime(short id, int hp, int defense, int damage, int spawnWeight, Texture texture) {
-        super(id, hp, defense, damage, spawnWeight);
+    public Slime(short id, int hp, int defense, int damage, int spawnWeight, Biome.BiomeSpawnIdentifier biomeSpawnIdentifier, Texture texture) {
+        super(id, hp, defense, damage, spawnWeight, biomeSpawnIdentifier);
 
         this.drops.add(new Drop(Items.gel, Drop.Chance.ALWAYS, 1, 4));
 

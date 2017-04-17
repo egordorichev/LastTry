@@ -12,6 +12,13 @@ public class Biome {
     public static Biome crimsonDesert = new CrimsonDesertBiome();
 
     /**
+     * Enums used for identifying the Biome, of which a specific enemy spawns.
+     */
+    public enum BiomeSpawnIdentifier{
+        ALL, FOREST, DESERT, CORRUPTION, CRIMSON, CORRUPTDESERT, CRIMSONDESERT;
+    }
+
+    /**
      * Biome name
      */
     protected String name;
@@ -20,6 +27,12 @@ public class Biome {
      * Background texture
      */
     protected Texture texture;
+
+    /**
+     * Enum representing Biome UniqueId.
+     */
+    protected BiomeSpawnIdentifier biomeId;
+
 
     /**
      * Texture alpha
@@ -31,7 +44,8 @@ public class Biome {
      */
     private SpawnInfo spawnInfo;
 
-    public Biome(String name, SpawnInfo spawnInfo, Texture texture) {
+    public Biome(BiomeSpawnIdentifier biomeId, String name, SpawnInfo spawnInfo, Texture texture) {
+        this.biomeId = biomeId;
         this.name = name;
         this.spawnInfo = spawnInfo;
         this.texture = texture;

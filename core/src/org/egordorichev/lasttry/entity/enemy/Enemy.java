@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.*;
 import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,21 +51,25 @@ public abstract class Enemy extends Entity {
      * Each biome has a maxinum number of enemies limit.  When deciding what enemy to spawn next in a biome, the
      * spawn weight of multiple enemies are added till the maximum number of enemies in the biome is complete.
      */
-    protected int spawnWeight;
+    private int spawnWeight;
 
+    /**
+     * Specifying the biome where the enemy spawns at.
+     */
+    private Biome.BiomeSpawnIdentifier biomeSpawnId;
 
     //TODO Should these parameters be replaced with an enum that encapsulates the stats?
-    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight) {
+    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight, Biome.BiomeSpawnIdentifier biomeSpawnId) {
         super(maxHp, damage, defense);
 
         this.animations = new Animation[State.values().length];
         this.id = id;
     }
 
-    public Enemy(short id) {
+    public Enemy(short id, Biome.BiomeSpawnIdentifier biomeSpawnId) {
         //TODO Should parameters be converted into an enum?
         //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
-        this(id, 10, 0, 5, 1);
+        this(id, 10, 0, 5, 1, biomeSpawnId);
 
         this.animations = new Animation[State.values().length];
         this.id = id;

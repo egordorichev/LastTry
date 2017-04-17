@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.biome.Biome;
 
 /**
  * Zombie enemy added, currently uses the same AI as slime.
@@ -29,7 +30,7 @@ public class Zombie extends Enemy {
     protected boolean canJump;
 
     public Zombie() {
-        super(EnemyID.zombie, 100, 2, 25, 2);
+        super(EnemyID.zombie, 100, 2, 25, 2, Biome.BiomeSpawnIdentifier.FOREST);
 
         this.drops.add(new Drop(Items.copperCoin, 25, 25));
 
