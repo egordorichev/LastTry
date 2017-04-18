@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.entity.Entity;
 
-public class StateComponent extends EntityComponent {
+public class CreatureStateComponent extends EntityComponent {
 	public enum State {
 		IDLE(0), MOVING(1), JUMPING(2), FALLING(3), FLYING(4), DEAD(5), ACTING(6);
 
@@ -20,7 +20,7 @@ public class StateComponent extends EntityComponent {
 	private Entity entity;
 	private State state = State.IDLE;
 
-	public StateComponent(Entity entity) {
+	public CreatureStateComponent(Entity entity) {
 		this.entity = entity;
 	}
 

@@ -17,7 +17,7 @@ public class DigTool extends Tool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Block block = LastTry.world.getBlock(x, y);
+		Block block = LastTry.world.blocks.get(x, y);
 
 		if (block == null) {
 			return false;

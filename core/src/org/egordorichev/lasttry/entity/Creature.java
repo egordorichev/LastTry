@@ -3,20 +3,30 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.entity.components.*;
 
 public class Creature extends Entity {
-	public StatsComponent stats = new StatsComponent(this);
-	public StateComponent state = new StateComponent(this);
+	public CreaturePhysicsComponent physics;
+	public CreatureGraphicsComponent graphics;
+	public CreatureStatsComponent stats;
+	public CreatureStateComponent state;
 
 	public Creature() {
-		super(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
+		this.physics = new CreaturePhysicsComponent(this);
+		this.stats = new CreatureStatsComponent(this);
+		this.state = new CreatureStateComponent(this);
 	}
 
-	public Creature(PhysicsComponent physics, GraphicsComponent graphics) {
-		super(physics, graphics);
+	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
+		this.physics = physics;
+		this.graphics = graphics;
+	}
+
+	@Override
+	public void render() {
+		this.graphics.render();
 	}
 
 	@Override
 	public void update(int dt) {
-		super.update(dt);
+		this.physics.update(dt);
 		this.stats.update(dt);
 	}
 }

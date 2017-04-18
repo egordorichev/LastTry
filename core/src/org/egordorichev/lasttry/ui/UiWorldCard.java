@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.WorldInfo;
 
 public class UiWorldCard extends UiCard {
     private WorldInfo info;

@@ -3,13 +3,13 @@ package org.egordorichev.lasttry.entity.components;
 import org.egordorichev.lasttry.entity.Creature;
 
 public class CreaturePhysicsComponent extends PhysicsComponent {
-	public CreaturePhysicsComponent() {
-
+	public CreaturePhysicsComponent(Creature creature) {
+		super(creature);
 	}
 
 	@Override
 	public void jump() {
-		((Creature) this.entity).state.set(StateComponent.State.JUMPING);
+		this.creature.state.set(CreatureStateComponent.State.JUMPING);
 		this.velocity.y -= 10.0f;
 	}
 
@@ -18,13 +18,13 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
 		this.direction = direction;
 
-		StateComponent state = ((Creature) this.entity).state;
+		CreatureStateComponent state = ((Creature) this.entity).state;
 
-		if (state.get() != StateComponent.State.JUMPING
-				&& state.get() != StateComponent.State.FALLING
-				&& state.get() != StateComponent.State.FLYING) {
+		if (state.get() != CreatureStateComponent.State.JUMPING
+				&& state.get() != CreatureStateComponent.State.FALLING
+				&& state.get() != CreatureStateComponent.State.FLYING) {
 
-			state.set(StateComponent.State.MOVING);
+			state.set(CreatureStateComponent.State.MOVING);
 		}
 	}
 
@@ -32,18 +32,18 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 	public void update(int dt) {
 		super.update(dt);
 
-		StateComponent state = ((Creature) this.entity).state;
+		CreatureStateComponent state = ((Creature) this.entity).state;
 
 		if (this.velocity.y > 0) {
-			state.set(StateComponent.State.FALLING);
-		} else if (this.velocity.y == 0 && state.get() == StateComponent.State.FALLING) {
-			state.set(StateComponent.State.IDLE);
+			state.set(CreatureStateComponent.State.FALLING);
+		} else if (this.velocity.y == 0 && state.get() == CreatureStateComponent.State.FALLING) {
+			state.set(CreatureStateComponent.State.IDLE);
 		}
 
-		if (this.velocity.x == 0 && state.get() != StateComponent.State.IDLE &&
-				state.get() != StateComponent.State.FALLING && state.get() != StateComponent.State.JUMPING) {
+		if (this.velocity.x == 0 && state.get() != CreatureStateComponent.State.IDLE &&
+				state.get() != CreatureStateComponent.State.FALLING && state.get() != CreatureStateComponent.State.JUMPING) {
 
-			state.set(StateComponent.State.IDLE);
+			state.set(CreatureStateComponent.State.IDLE);
 		}
 	}
 }

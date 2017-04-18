@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.entity.Entity;
 
-public class StatsComponent extends EntityComponent {
+public class CreatureStatsComponent extends EntityComponent {
 	private Entity entity;
 	private int hp;
 	private int maxHp;
@@ -11,7 +11,7 @@ public class StatsComponent extends EntityComponent {
 	private int defense;
 	private int damage;
 
-	public StatsComponent(Entity entity) {
+	public CreatureStatsComponent(Entity entity) {
 		this.entity = entity;
 	}
 

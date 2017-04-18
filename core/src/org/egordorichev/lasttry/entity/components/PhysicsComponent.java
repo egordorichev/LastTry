@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
-public class PhysicsComponent extends EntityComponent {
+public class PhysicsComponent extends CreatureComponent {
 	public enum Direction {
 		LEFT,
 		RIGHT
@@ -24,7 +24,9 @@ public class PhysicsComponent extends EntityComponent {
 	protected Rectangle hitbox;
 	protected Direction direction = Direction.RIGHT;
 
-	public PhysicsComponent() {
+	public PhysicsComponent(Creature creature) {
+		super(creature);
+
 		this.size = new Vector2(32, 48);
 		this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
 	}
@@ -39,19 +41,19 @@ public class PhysicsComponent extends EntityComponent {
 		this.updateXVelocity();
 		this.updateYVelocity();
 
-		StateComponent state = ((Creature) this.entity).state;
+		CreatureStateComponent state = ((Creature) this.entity).state;
 
 		if (this.velocity.y > 0) {
-			state.set(StateComponent.State.FALLING);
-		} else if (this.velocity.y == 0 && state.get() == StateComponent.State.FALLING) {
-			state.set(StateComponent.State.IDLE);
+			state.set(CreatureStateComponent.State.FALLING);
+		} else if (this.velocity.y == 0 && state.get() == CreatureStateComponent.State.FALLING) {
+			state.set(CreatureStateComponent.State.IDLE);
 		}
 
-		if (this.velocity.x == 0 && state.get() != StateComponent.State.IDLE
-				&& state.get() != StateComponent.State.FALLING
-				&& state.get() != StateComponent.State.JUMPING) {
+		if (this.velocity.x == 0 && state.get() != CreatureStateComponent.State.IDLE
+				&& state.get() != CreatureStateComponent.State.FALLING
+				&& state.get() != CreatureStateComponent.State.JUMPING) {
 
-			state.set(StateComponent.State.IDLE);
+			state.set(CreatureStateComponent.State.IDLE);
 		}
 	}
 

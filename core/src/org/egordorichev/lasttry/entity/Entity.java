@@ -1,32 +1,20 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.components.GraphicsComponent;
-import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class Entity {
-	public PhysicsComponent physics;
-	public GraphicsComponent graphics;
 	protected boolean active = false;
 
-	public Entity(PhysicsComponent physics, GraphicsComponent graphics) {
-		this.physics = physics;
-		this.graphics = graphics;
+	public Entity() {
 
-		this.physics.setEntity(this);
-		this.graphics.setEntity(this);
 	}
 
 	public void render() {
-		this.graphics.render();
+
 	}
 
 	public void update(int dt) {
-		if (!this.active) {
-			return;
-		}
 
-		this.physics.update(dt);
 	}
 
 	public void spawn(int x, int y) {
@@ -35,7 +23,6 @@ public class Entity {
 		}
 
 		this.active = true;
-		this.physics.setGridPosition(x, y);
 		this.onSpawn();
 	}
 

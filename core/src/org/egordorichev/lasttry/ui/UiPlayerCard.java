@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.entity.player.PlayerInfo;
 import org.egordorichev.lasttry.entity.player.skin.PlayerRenderer;
 
 public class UiPlayerCard extends UiCard {
