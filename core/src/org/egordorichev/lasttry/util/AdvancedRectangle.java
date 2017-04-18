@@ -55,6 +55,7 @@ public class AdvancedRectangle {
 
         int boundaryInPixels = this.boundaryInBlocks * Block.TEX_SIZE;
 
+        //TODO Swap these on y axis reflection
         this.topRightPoint = new xyPoint(x+boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPRIGHT);
 
         this.bottomRightPoint = new xyPoint(x+boundaryInPixels, y+boundaryInPixels,PointsIdent.BOTTOMRIGHT);
@@ -166,6 +167,7 @@ public class AdvancedRectangle {
         int blockXPoint = convertToBlock(Math.round(x));
         int blockYPoint = convertToBlock(Math.round(y));
 
+        //TODO Swap this on Y axis reflection
         //If the y point is less than top y point & x point less than bottom x point
         if(blockYPoint>topLeftPoint.getY()&&blockXPoint<bottomRightPoint.getX()) {
             return true;

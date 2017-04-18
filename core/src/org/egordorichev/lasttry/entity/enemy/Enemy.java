@@ -53,19 +53,24 @@ public abstract class Enemy extends Entity {
      */
     private int spawnWeight;
 
+    /**
+     * Enemy name
+     */
+    protected String name;
 
     //TODO Should these parameters be replaced with an enum that encapsulates the stats?
-    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight) {
+    public Enemy(String name, short id, int maxHp, int defense, int damage, int spawnWeight) {
         super(maxHp, damage, defense);
         this.spawnWeight = spawnWeight;
         this.animations = new Animation[State.values().length];
         this.id = id;
+        this.name = name;
     }
 
-    public Enemy(short id) {
+    public Enemy(short id, String name) {
         //TODO Should parameters be converted into an enum?
         //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
-        this(id, 10, 0, 5, 1);
+        this(name, id, 10, 0, 5, 1);
         this.animations = new Animation[State.values().length];
         this.id = id;
     }
@@ -157,5 +162,13 @@ public abstract class Enemy extends Entity {
 
     public int getId() {
         return this.id;
+    }
+
+    /**
+     * Returns name of the enemy
+     * @return String representing name of the enemy.
+     */
+    public String getName() {
+        return this.name;
     }
 }

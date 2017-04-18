@@ -21,8 +21,8 @@ public class Slime extends Enemy {
      */
     protected boolean canJump;
 
-    public Slime(short id, int hp, int defense, int damage, int spawnWeight, Texture texture) {
-        super(id, hp, defense, damage, spawnWeight);
+    public Slime(String name, short id, int hp, int defense, int damage, int spawnWeight, Texture texture) {
+        super(name, id, hp, defense, damage, spawnWeight);
 
         this.drops.add(new Drop(Items.gel, Drop.Chance.ALWAYS, 1, 4));
 
