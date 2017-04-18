@@ -32,7 +32,7 @@ public class SpawnSystem {
 
     private int spawnRate, maxSpawns;
 
-    private int minXGrid, minYGRID, maxXGRID, maxYGrid;
+    private int minXGrid, minYGRID, maxXGRID, maxYGrid, maxXGridForActiveZone;
 
     private int diffBetweenSpawnedAndMaxSpawns;
 
@@ -119,14 +119,23 @@ public class SpawnSystem {
 
         GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
 
+        LastTry.debug("Monster about to be spawned");
+
+        LastTry.debug("Monster is being spawned with block x point of: "+suitableXySpawnPoint.getFirst()/Block.TEX_SIZE+ " block y point of: "+suitableXySpawnPoint.getSecond()/Block.TEX_SIZE);
+
+        LastTry.debug("Monster is being spawned with x point of: "+suitableXySpawnPoint.getFirst()+ "y point of: "+suitableXySpawnPoint.getSecond());
+
         LastTry.entityManager.spawnEnemy((short)enemy.getId(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
 
     }
 
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
 
-        //Add 6 blocks to min Y and 6 blocks to max X, to return a spawn point off screen.
-        int xGridSpawnPoint = maxXGRID+6; int yGridSpawnPoint = minYGRID + 6;
+
+        LastTry.debug("Generating eligible spawn point");
+
+        //Generate inside the active zone
+        int xGridSpawnPoint = maxXGridForActiveZone-30; int yGridSpawnPoint = minYGRID;
 
         int xPixelSpawnPoint = xGridSpawnPoint* Block.TEX_SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.TEX_SIZE;
 
@@ -143,7 +152,7 @@ public class SpawnSystem {
         Enemy.triggerEnemyCacheCreation();
 
         Enemy.availEnemies.stream().forEach(enemy -> {
-            if(enemy.canSpawn()&&enemy.getSpawnWeight()<diffBetweenSpawnedAndMaxSpawns){
+            if(enemy.canSpawn()&&enemy.getSpawnWeight()<=diffBetweenSpawnedAndMaxSpawns){
                 eligibleEnemiesForSpawn.add(enemy);
             }
         });
@@ -172,11 +181,11 @@ public class SpawnSystem {
         double spawnRateDouble = spawnRate;
 
         if(percentageOfSpawnRateAndActiveMonsters<40){
-            spawnRateDouble = spawnRateDouble * 0.9;
+            spawnRateDouble = spawnRateDouble * 0.1;
         }else if(percentageOfSpawnRateAndActiveMonsters<60){
-            spawnRateDouble = spawnRateDouble * 0.94;
+            spawnRateDouble = spawnRateDouble * 0.05;
         }else{
-            spawnRateDouble = spawnRateDouble * 0.98;
+            spawnRateDouble = spawnRateDouble * 0.01;
         }
 
         return (float)spawnRateDouble;
@@ -229,6 +238,10 @@ public class SpawnSystem {
         //Checking to make y values is not less than 0
         this.minXGrid = Math.max(0, tcx - 2);
         this.maxXGRID = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2);
+
+        //Active zone is 6 greater
+        //TODO Must check that it is not out of bounds.
+        this.maxXGridForActiveZone = this.maxXGRID + 25;
     }
 
     /**
@@ -250,7 +263,7 @@ public class SpawnSystem {
 
             //TODO Rethink
             //Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(this.isEnemyInActiveArea(enemy)&&this.activeEnemyEntities.contains(enemy)==false){
+            if(this.isEnemyInActiveArea(enemy)){
                 this.activeEnemyEntities.add(enemy);
                 //LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
@@ -277,11 +290,18 @@ public class SpawnSystem {
          * True
          * If enemy block grid y is less than max y grid and enemy block grid y greater than min y grid
          */
-        if(enemyBlockGridX>this.minXGrid&&enemyBlockGridX<this.maxXGRID){
-            if(enemyBlockGridY<this.maxYGrid&&enemyBlockGridY>this.minYGRID){
+        if(enemyBlockGridX>=this.minXGrid&&enemyBlockGridX<=this.maxXGridForActiveZone){
+            if(enemyBlockGridY<=this.maxYGrid&&enemyBlockGridY>=this.minYGRID){
                 return true;
             }
         }
+
+        LastTry.debug("Limits maxXGrid: "+this.maxXGridForActiveZone+" and limits min X grid: "+this.minXGrid);
+        LastTry.debug("Pixels max X Grid: "+this.maxXGridForActiveZone*Block.TEX_SIZE+" and pixel limits X grid: "+this.minXGrid*Block.TEX_SIZE);
+        LastTry.debug("Limits maxYGrid: "+this.maxYGrid+" and limits min Y grid: "+this.minYGRID);
+        LastTry.debug("Pixels max Y Grid: "+this.maxYGrid*Block.TEX_SIZE+" and pixel limits Y grid: "+this.minYGRID*Block.TEX_SIZE);
+        LastTry.debug("Enemy found out of active area with x of: "+enemyBlockGridX+" and y of: "+enemyBlockGridY);
+        LastTry.debug("In pixels x is: "+enemyBlockGridX*Block.TEX_SIZE+" and y pixels is: "+enemyBlockGridY*Block.TEX_SIZE);
 
         return false;
     }
