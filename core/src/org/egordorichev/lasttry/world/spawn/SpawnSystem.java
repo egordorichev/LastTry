@@ -126,7 +126,7 @@ public class SpawnSystem {
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
 
         //Add 6 blocks to min Y and 6 blocks to max X, to return a spawn point off screen.
-        int xGridSpawnPoint = minXGrid+6; int yGridSpawnPoint = minYGRID + 6;
+        int xGridSpawnPoint = maxXGRID+6; int yGridSpawnPoint = minYGRID + 6;
 
         int xPixelSpawnPoint = xGridSpawnPoint* Block.TEX_SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.TEX_SIZE;
 
@@ -172,11 +172,11 @@ public class SpawnSystem {
         double spawnRateDouble = spawnRate;
 
         if(percentageOfSpawnRateAndActiveMonsters<40){
-            spawnRateDouble = spawnRateDouble * 0.6;
-        }else if(percentageOfSpawnRateAndActiveMonsters<60){
-            spawnRateDouble = spawnRateDouble * 0.8;
-        }else{
             spawnRateDouble = spawnRateDouble * 0.9;
+        }else if(percentageOfSpawnRateAndActiveMonsters<60){
+            spawnRateDouble = spawnRateDouble * 0.94;
+        }else{
+            spawnRateDouble = spawnRateDouble * 0.98;
         }
 
         return (float)spawnRateDouble;
