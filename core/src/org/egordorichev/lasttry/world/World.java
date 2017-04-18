@@ -325,7 +325,8 @@ public class World {
     }
 
     /**
-     * Check if the given position resides within the world's bounds
+     * Check if the given position resides within the world's bounds.
+     * Uses gridstyle points (Block co ordinates)
      *
      * @param x X-position to check.
      * @param y Y-position to check.

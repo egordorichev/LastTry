@@ -53,20 +53,20 @@ public class AdvancedRectangle {
      */
     private void generatePoints(){
 
-        int boundaryInPixels = boundaryInBlocks * Block.TEX_SIZE;
+        int boundaryInPixels = this.boundaryInBlocks * Block.TEX_SIZE;
 
-        topRightPoint = new xyPoint(x+boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPRIGHT);
+        this.topRightPoint = new xyPoint(x+boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPRIGHT);
 
-        bottomRightPoint = new xyPoint(x+boundaryInPixels, y+boundaryInPixels,PointsIdent.BOTTOMRIGHT);
+        this.bottomRightPoint = new xyPoint(x+boundaryInPixels, y+boundaryInPixels,PointsIdent.BOTTOMRIGHT);
 
-        topLeftPoint = new xyPoint(x-boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPLEFT);
+        this.topLeftPoint = new xyPoint(x-boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPLEFT);
 
-        bottomLeftPoint = new xyPoint(x-boundaryInPixels, y+boundaryInPixels, PointsIdent.BOTTOMLEFT);
+        this.bottomLeftPoint = new xyPoint(x-boundaryInPixels, y+boundaryInPixels, PointsIdent.BOTTOMLEFT);
 
-        top = new Side(topRightPoint, topLeftPoint, SidesIdent.TOP);
-        bottom = new Side(bottomRightPoint, bottomLeftPoint, SidesIdent.BOTTOM);
-        left = new Side(topLeftPoint, bottomLeftPoint, SidesIdent.LEFT);
-        right = new Side(topRightPoint, bottomRightPoint, SidesIdent.RIGHT);
+        this.top = new Side(this.topRightPoint, this.topLeftPoint, SidesIdent.TOP);
+        this.bottom = new Side(this.bottomRightPoint, this.bottomLeftPoint, SidesIdent.BOTTOM);
+        this.left = new Side(this.topLeftPoint, this.bottomLeftPoint, SidesIdent.LEFT);
+        this.right = new Side(this.topRightPoint, this.bottomRightPoint, SidesIdent.RIGHT);
 
     }
 
@@ -77,7 +77,7 @@ public class AdvancedRectangle {
      */
     public boolean allSidesInBoundary(){
 
-        Side[] sides = {top, bottom, left, right};
+        Side[] sides = {this.top, this.bottom, this.left, this.right};
 
         for(Side side: sides){
             if(!side.isSideInBoundary()){
@@ -88,10 +88,10 @@ public class AdvancedRectangle {
     }
 
     public void debugSetItemsOnPoints(){
-        LastTry.world.setBlock(ItemID.grassBlock, topLeftPoint.getX()/16,topLeftPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, topRightPoint.getX()/16,topRightPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, bottomLeftPoint.getX()/16,bottomLeftPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, bottomRightPoint.getX()/16,bottomRightPoint.getY()/16);
+        LastTry.world.setBlock(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
+        LastTry.world.setBlock(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
+        LastTry.world.setBlock(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
+        LastTry.world.setBlock(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
     }
 
 
@@ -102,8 +102,8 @@ public class AdvancedRectangle {
         private GenericContainer.Triple<Integer, PointsIdent> specificXyPoint;
 
         xyPoint(int x, int y, PointsIdent pointIdentifier){
-            specificXyPoint = new GenericContainer.Triple<>();
-            specificXyPoint.set(x, y, pointIdentifier);
+            this.specificXyPoint = new GenericContainer.Triple<>();
+            this.specificXyPoint.set(x, y, pointIdentifier);
         }
 
         public int getX() {return this.specificXyPoint.getX();}
@@ -150,6 +150,28 @@ public class AdvancedRectangle {
      */
     private int convertToBlock(int xPoint){
         return xPoint/Block.TEX_SIZE;
+    }
+
+
+    /**
+     * Checks if the x & y points received are within the rectangle area
+     *
+     * @param x pixel x co ordinate
+     * @param y pixel y co ordinate
+     * @return boolean indicating whether the pixel is within.
+     */
+    public boolean isXyPointsWithinRectangle(float x, float y) {
+
+        //Converts pixel co ordinates to grid style co oridnates
+        int blockXPoint = convertToBlock(Math.round(x));
+        int blockYPoint = convertToBlock(Math.round(y));
+
+        //If the y point is less than top y point & x point less than bottom x point
+        if(blockYPoint>topLeftPoint.getY()&&blockXPoint<bottomRightPoint.getX()) {
+            return true;
+        }
+
+        return false;
     }
 
 }
