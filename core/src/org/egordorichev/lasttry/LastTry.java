@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.*;
@@ -17,7 +17,6 @@ import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
@@ -27,7 +26,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0, 5);
+	public static final Version version = new Version(0, 6);
 	
 	/** Random instance */
 	public static final Random random = new Random();
@@ -47,17 +46,11 @@ public class LastTry extends Game {
 	/** Last Try instance */
 	public static LastTry instance;
 
-	/** Static log instance */
-	public static Log log;
-
 	/** Ui manager */
 	public static UiManager ui;
 
 	/** World instance */
 	public static World world;
-
-	/** World info */
-	public static WorldInfo worldInfo;
 
 	/** Player instance */
 	public static Player player;
@@ -74,14 +67,9 @@ public class LastTry extends Game {
 	/** Debug helper */
 	public static Debug debug;
 
-	/** Used for debug */
-	public static ShapeRenderer shapeRenderer;
-
 	/** Creates first-priority instances */
 	@Override
 	public void create() {
-		log = new Log();
-
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
 			public void uncaughtException(Thread thread, Throwable throwable) {
@@ -91,7 +79,6 @@ public class LastTry extends Game {
 
 		instance = this;
 		debug = new Debug();
-		shapeRenderer = new ShapeRenderer();
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
                 
@@ -118,7 +105,6 @@ public class LastTry extends Game {
 
 	/**
 	 * Handles window resize
-	 *
 	 * @param width  new window width
 	 * @param height new window height
 	 */
@@ -148,7 +134,7 @@ public class LastTry extends Game {
 		}
 
 		if (world != null) {
-			WorldProvider.save(world);
+			WorldIO.save();
 		}
 
 		Assets.dispose();
@@ -161,30 +147,6 @@ public class LastTry extends Game {
 	private String getRandomWindowTitle() {
         String[] split = Language.text.get("windowTitles").split("//");
         return split[random.nextInt(split.length)];
-	}
-
-	/**
-	 * Logs given message
-	 * @param message message to log
-	 */
-	public static void log(String message) {
-		LastTry.log.info(message);
-	}
-
-	/**
-	 * Logs a info-level message
-	 * @param message message to log
-	 */
-	public static void debug(String message) {
-		log.debug(message);
-	}
-
-	public static void warning(String message) {
-		log.warn(message);
-	}
-
-	public static void error(String message) {
-		log.error(message);
 	}
 
 	/**
@@ -210,5 +172,9 @@ public class LastTry extends Game {
 	public static void handleException(Exception exception) {
 		// TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 		Crash.report(Thread.currentThread(), exception);
+	}
+
+	public static void abort() {
+		System.exit(1);
 	}
 }
