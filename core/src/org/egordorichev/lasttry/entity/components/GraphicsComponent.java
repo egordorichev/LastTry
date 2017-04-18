@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.entity.components;
 
-public class GraphicsComponent extends EntityComponent {
+public class GraphicsComponent extends CreatureComponent {
 	public GraphicsComponent() {
 
 	}

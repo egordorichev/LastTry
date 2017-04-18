@@ -3,12 +3,8 @@ package org.egordorichev.lasttry.entity.player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
-import org.egordorichev.lasttry.entity.components.PhysicsComponent;
-import org.egordorichev.lasttry.entity.components.StateComponent;
-import org.egordorichev.lasttry.entity.player.skin.PlayerRenderInfo;
-import org.egordorichev.lasttry.entity.player.skin.PlayerRenderer;
+import org.egordorichev.lasttry.entity.components.*;
+import org.egordorichev.lasttry.entity.player.skin.*;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 
@@ -19,20 +15,17 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	public PlayerGraphicsComponent() {
 		this.setupAnimations();
 
-		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.GREEN, Color.GREEN, 1, true);
-		// TODO: replace it
+		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.GREEN, Color.GREEN, 1, true); // TODO: replace it
 
 		this.texture = PlayerRenderer.generateTexture(info);
 	}
 
 	@Override
 	public void render() {
-		Creature creature = (Creature) this.entity;
-
-		this.animations[creature.state.get().getId()].render(
-			creature.physics.getPosition().x, creature.physics.getPosition().y,
-			creature.physics.getSize().x, creature.physics.getSize().x,
-			(creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
+		this.animations[this.creature.state.get().getId()].render(
+			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
+			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
+			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
 	}
 
 	private void setupAnimations() {

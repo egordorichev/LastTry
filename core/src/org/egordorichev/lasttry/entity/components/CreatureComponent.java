@@ -1,7 +1,23 @@
 package org.egordorichev.lasttry.entity.components;
 
-/**
- * Created by egor on 4/18/17.
- */
-public class CreatureComponent {
+import org.egordorichev.lasttry.entity.Creature;
+
+public class CreatureComponent extends Creature {
+	protected Creature creature;
+
+	public CreatureComponent(Creature creature) {
+		this.creature = creature;
+	}
+
+	public CreatureComponent() {
+
+	}
+
+	public void setCreature(Creature creature) {
+		this.creature = creature;
+	}
+
+	public Creature getEntity() {
+		return this.creature;
+	}
 }
