@@ -58,6 +58,9 @@ public class SpawnSystem {
 
         int spawnRate = this.calculateSpawnRate(origSpawnRate);
 
+        float percentChanceSpawnRate = 1/(float)spawnRate;
+
+        //TODO Expensive calculation
         int spawnWeightOfActiveEnemies = this.calcSpawnWeightOfActiveEnemies();
 
         //If spawn weight of active enemies is greater than max spawns of biome we quit
@@ -65,16 +68,38 @@ public class SpawnSystem {
             return;
         }
 
+        //TODO Split percentage calc into another method
+        float percentageOfSpawnRateAndActiveMonsters;
+
         //int diffMaxSpawnsAndActiveMonsters = maxSpawns - spawnWeightOfActiveEnemies;
+        if(spawnWeightOfActiveEnemies==0){
+            percentageOfSpawnRateAndActiveMonsters = 1;
+        }else {
+            percentageOfSpawnRateAndActiveMonsters = ((float)spawnWeightOfActiveEnemies / (float)maxSpawns) * 100;
+        }
 
-        int percentageOfSpawnRateAndActiveMonsters = spawnWeightOfActiveEnemies/maxSpawns * 100;
+        float spawnRateFloat = this.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
 
-        spawnRate = this.applyMultiplierToSpawnRate(spawnRate, percentageOfSpawnRateAndActiveMonsters);
+        if(!this.shouldEnemySpawn(spawnRateFloat)){
+            return;
+        }
+
+        LastTry.debug("Monster will spawn");
 
     }
 
 
-    private int applyMultiplierToSpawnRate(int spawnRate, int percentageOfSpawnRateAndActiveMonsters){
+    private boolean shouldEnemySpawn(float spawnRateFloat){
+        float randomNumber = LastTry.random.nextFloat();
+
+        if(spawnRateFloat>randomNumber){
+            return true;
+        }
+
+        return false;
+    }
+
+    private float applyMultiplierToSpawnRate(float spawnRate, float percentageOfSpawnRateAndActiveMonsters){
 
         double spawnRateDouble = spawnRate;
 
@@ -82,11 +107,11 @@ public class SpawnSystem {
             spawnRateDouble = spawnRateDouble * 0.6;
         }else if(percentageOfSpawnRateAndActiveMonsters<60){
             spawnRateDouble = spawnRateDouble * 0.8;
-        }else if(percentageOfSpawnRateAndActiveMonsters<80){
+        }else{
             spawnRateDouble = spawnRateDouble * 0.9;
         }
 
-        return (int)spawnRateDouble;
+        return (float)spawnRateDouble;
     }
 
     private int calculateSpawnRate(int spawnRate) {
@@ -162,7 +187,7 @@ public class SpawnSystem {
 
             if(this.isEnemyInActiveArea(enemy)){
                 activeEnemies.add(enemy);
-                LastTry.debug("Enemy in active area of: "+enemy.getName());
+                //LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
         });
 
@@ -226,12 +251,12 @@ public class SpawnSystem {
 
     private int calcSpawnRateBasedOnEvents(ArrayList<Event> activeEvents, int spawnRate){
         //TODO Implement spawn info in events
-        return 0;
+        return spawnRate;
     }
 
     private int calcSpawnRateBasedOnTime(int spawnRate){
         //TODO Implement spawn info based on day
-        return 0;
+        return spawnRate;
     }
 
     private int calcSpawnRateBasedOnItems(int spawnRate){
