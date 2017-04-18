@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.core.crash;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.Version;
+
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.List;
