@@ -17,6 +17,12 @@ public abstract class Enemy extends Entity {
      */
     public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
 
+    //TODO To be removed and reimplemented
+    /**
+     * Static list created to allow looping through of enemies
+     */
+    public static ArrayList<Enemy> availEnemies = new ArrayList<>();
+
     /**
      * Max Ai for this enemy
      */
@@ -79,6 +85,9 @@ public abstract class Enemy extends Entity {
         // TODO: handle duplicates
         LastTry.debug("Defined [" + id + "] as " + enemy.getSimpleName());
         ENEMY_CACHE.put(id, enemy);
+
+        Enemy enemyInstance = create(id);
+        availEnemies.add(enemyInstance);
     }
 
     public static Enemy create(short id) {
@@ -177,4 +186,9 @@ public abstract class Enemy extends Entity {
      * @return int representing spawn weight of the enemy
      */
     public int getSpawnWeight(){return this.spawnWeight; }
+
+    /**
+     * Triggers the static initializer, ensuring that enemies are created.
+     */
+    public static void triggerEnemyCacheCreation(){return;}
 }

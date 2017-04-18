@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javafx.util.Pair;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
+import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.environment.Environment;
@@ -68,6 +70,7 @@ public class SpawnSystem {
         float percentChanceSpawnRate = 1/(float)spawnRate;
 
         //TODO Expensive calculation
+        //TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
         int spawnWeightOfActiveEnemies = this.calcSpawnWeightOfActiveEnemies();
 
         //If spawn weight of active enemies is greater than max spawns of biome we quit
@@ -92,25 +95,54 @@ public class SpawnSystem {
             return;
         }
 
-        LastTry.debug("Monster will spawn");
+        LastTry.debug("Monster probability successful");
 
         //TODO Can branch here if 0 enemies
-        ArrayList<Enemy> eligibleEnemiesForSpawn = handleSpawnMonster();
+        ArrayList<Enemy> eligibleEnemiesForSpawn = retrieveEligibleSpawnMonsters();
 
         if(eligibleEnemiesForSpawn.size()==0){
+
             return;
         }
 
         Enemy enemyToBeSpawned = retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
         LastTry.debug("Enemy to be spawned is: "+enemyToBeSpawned);
+
+        spawnEnemy(enemyToBeSpawned);
+
     }
 
-    private ArrayList<Enemy> handleSpawnMonster() {
+
+
+    private void spawnEnemy(Enemy enemy) {
+
+        GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
+
+        LastTry.entityManager.spawnEnemy((short)enemy.getId(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+
+    }
+
+    private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
+
+        //Add 6 blocks to min Y and 6 blocks to max X, to return a spawn point off screen.
+        int xGridSpawnPoint = minXGrid+6; int yGridSpawnPoint = minYGRID + 6;
+
+        int xPixelSpawnPoint = xGridSpawnPoint* Block.TEX_SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.TEX_SIZE;
+
+        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
+        xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
+
+        return xyPoint;
+    }
+
+    private ArrayList<Enemy> retrieveEligibleSpawnMonsters() {
 
         ArrayList<Enemy> eligibleEnemiesForSpawn = new ArrayList<>();
 
-        this.activeEnemyEntities.stream().forEach(enemy -> {
+        Enemy.triggerEnemyCacheCreation();
+
+        Enemy.availEnemies.stream().forEach(enemy -> {
             if(enemy.canSpawn()&&enemy.getSpawnWeight()<diffBetweenSpawnedAndMaxSpawns){
                 eligibleEnemiesForSpawn.add(enemy);
             }
@@ -125,7 +157,8 @@ public class SpawnSystem {
     }
 
     private boolean shouldEnemySpawn(float spawnRateFloat){
-        float randomNumber = LastTry.random.nextFloat();
+        //TODO Rethink probability
+        float randomNumber = LastTry.random.nextFloat()/100;
 
         if(spawnRateFloat>randomNumber){
             return true;
@@ -205,13 +238,19 @@ public class SpawnSystem {
      */
     private void generateEnemiesInActiveArea() {
 
+        //Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
+        //each time to ensure we have an up to date list
+        this.activeEnemyEntities.clear();
+
         this.generateMinMaxGridBlockValues();
 
         List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
 
         enemyEntities.stream().forEach(enemy -> {
 
-            if(this.isEnemyInActiveArea(enemy)){
+            //TODO Rethink
+            //Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
+            if(this.isEnemyInActiveArea(enemy)&&this.activeEnemyEntities.contains(enemy)==false){
                 this.activeEnemyEntities.add(enemy);
                 //LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
