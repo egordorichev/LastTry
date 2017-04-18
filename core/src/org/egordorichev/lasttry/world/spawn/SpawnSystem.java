@@ -36,15 +36,60 @@ public class SpawnSystem {
 
     public void update() {
 
+        if(LastTry.environment.getCurrentBiome()==null){
+            return;
+        }
+
         //Get user biome
         this.biome = LastTry.environment.getCurrentBiome();
 
         //Retrieve spawn rate & max spawns
-        this.spawnRate = biome.getSpawnRate();
-        this.maxSpawns = biome.getSpawnMax();
+       // this.spawnRate = biome.getSpawnRate();
+        //this.maxSpawns = biome.getSpawnMax();
+
+        this.spawnTriggered();
     }
 
-    private void calculateSpawnRate(int spawnRate) {
+    private void spawnTriggered() {
+
+        final int maxSpawns = biome.getSpawnMax();
+
+        final int origSpawnRate = biome.getSpawnRate();
+
+        int spawnRate = this.calculateSpawnRate(origSpawnRate);
+
+        int spawnWeightOfActiveEnemies = this.calcSpawnWeightOfActiveEnemies();
+
+        //If spawn weight of active enemies is greater than max spawns of biome we quit
+        if(spawnWeightOfActiveEnemies>maxSpawns){
+            return;
+        }
+
+        //int diffMaxSpawnsAndActiveMonsters = maxSpawns - spawnWeightOfActiveEnemies;
+
+        int percentageOfSpawnRateAndActiveMonsters = spawnWeightOfActiveEnemies/maxSpawns * 100;
+
+        spawnRate = this.applyMultiplierToSpawnRate(spawnRate, percentageOfSpawnRateAndActiveMonsters);
+
+    }
+
+
+    private int applyMultiplierToSpawnRate(int spawnRate, int percentageOfSpawnRateAndActiveMonsters){
+
+        double spawnRateDouble = spawnRate;
+
+        if(percentageOfSpawnRateAndActiveMonsters<40){
+            spawnRateDouble = spawnRateDouble * 0.6;
+        }else if(percentageOfSpawnRateAndActiveMonsters<60){
+            spawnRateDouble = spawnRateDouble * 0.8;
+        }else if(percentageOfSpawnRateAndActiveMonsters<80){
+            spawnRateDouble = spawnRateDouble * 0.9;
+        }
+
+        return (int)spawnRateDouble;
+    }
+
+    private int calculateSpawnRate(int spawnRate) {
 
         //Get active events
         ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
@@ -55,9 +100,16 @@ public class SpawnSystem {
 
         spawnRate = this.calcSpawnRateBasedOnTime(spawnRate);
 
-        ArrayList<Enemy> enemiesInActiveArea = this.getEnemiesInActiveArea();
+        return spawnRate;
     }
 
+
+    private int calcSpawnWeightOfActiveEnemies(){
+
+        ArrayList<Enemy> enemiesInActiveArea = this.getEnemiesInActiveArea();
+
+        return enemiesInActiveArea.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
+    }
 
     /**
      * Generates the max and minimum x,y values of the current screen the user is viewing.
@@ -89,7 +141,7 @@ public class SpawnSystem {
     /**
      * Debug method
      */
-    public void debugEnemiesInActiveArea() {
+    public void debugRemovedEnemiesInActiveArea() {
         this.getEnemiesInActiveArea();
     }
 

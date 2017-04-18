@@ -171,4 +171,10 @@ public abstract class Enemy extends Entity {
     public String getName() {
         return this.name;
     }
+
+    /**
+     * Returns the spawn Weight of the enemy
+     * @return int representing spawn weight of the enemy
+     */
+    public int getSpawnWeight(){return this.spawnWeight; }
 }

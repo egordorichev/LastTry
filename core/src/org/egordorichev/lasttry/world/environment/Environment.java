@@ -100,7 +100,7 @@ public class Environment {
 
         //LastTry.spawnSystem.calcArea();
 
-        LastTry.spawnSystem.debugEnemiesInActiveArea();
+        LastTry.spawnSystem.update();
     }
 
     /**
