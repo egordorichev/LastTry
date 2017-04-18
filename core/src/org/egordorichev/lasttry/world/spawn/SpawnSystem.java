@@ -32,6 +32,10 @@ public class SpawnSystem {
 
     private int minXGrid, minYGRID, maxXGRID, maxYGrid;
 
+    private int diffBetweenSpawnedAndMaxSpawns;
+
+    private List<Enemy> activeEnemyEntities = new ArrayList<>();
+
     private boolean day = false;
 
     public void update() {
@@ -50,10 +54,13 @@ public class SpawnSystem {
         this.spawnTriggered();
     }
 
+
+    //TODO Split method
     private void spawnTriggered() {
 
         final int maxSpawns = biome.getSpawnMax();
 
+        //1 in 'origSpawnRate' chance of happening, so if spawn rate is '600'.  1 in 600 chance of occurring
         final int origSpawnRate = biome.getSpawnRate();
 
         int spawnRate = this.calculateSpawnRate(origSpawnRate);
@@ -71,7 +78,8 @@ public class SpawnSystem {
         //TODO Split percentage calc into another method
         float percentageOfSpawnRateAndActiveMonsters;
 
-        //int diffMaxSpawnsAndActiveMonsters = maxSpawns - spawnWeightOfActiveEnemies;
+        diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfActiveEnemies;
+
         if(spawnWeightOfActiveEnemies==0){
             percentageOfSpawnRateAndActiveMonsters = 1;
         }else {
@@ -86,8 +94,35 @@ public class SpawnSystem {
 
         LastTry.debug("Monster will spawn");
 
+        //TODO Can branch here if 0 enemies
+        ArrayList<Enemy> eligibleEnemiesForSpawn = handleSpawnMonster();
+
+        if(eligibleEnemiesForSpawn.size()==0){
+            return;
+        }
+
+        Enemy enemyToBeSpawned = retrieveRandomEnemy(eligibleEnemiesForSpawn);
+
+        LastTry.debug("Enemy to be spawned is: "+enemyToBeSpawned);
     }
 
+    private ArrayList<Enemy> handleSpawnMonster() {
+
+        ArrayList<Enemy> eligibleEnemiesForSpawn = new ArrayList<>();
+
+        this.activeEnemyEntities.stream().forEach(enemy -> {
+            if(enemy.canSpawn()&&enemy.getSpawnWeight()<diffBetweenSpawnedAndMaxSpawns){
+                eligibleEnemiesForSpawn.add(enemy);
+            }
+        });
+
+        return eligibleEnemiesForSpawn;
+    }
+
+    private Enemy retrieveRandomEnemy(ArrayList<Enemy> eligibleEnemiesForSpawning){
+        int randomIndex = LastTry.random.nextInt(eligibleEnemiesForSpawning.size());
+        return eligibleEnemiesForSpawning.get(randomIndex);
+    }
 
     private boolean shouldEnemySpawn(float spawnRateFloat){
         float randomNumber = LastTry.random.nextFloat();
@@ -131,9 +166,9 @@ public class SpawnSystem {
 
     private int calcSpawnWeightOfActiveEnemies(){
 
-        ArrayList<Enemy> enemiesInActiveArea = this.getEnemiesInActiveArea();
+       this.generateEnemiesInActiveArea();
 
-        return enemiesInActiveArea.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
+        return this.activeEnemyEntities.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
     }
 
     /**
@@ -164,34 +199,23 @@ public class SpawnSystem {
     }
 
     /**
-     * Debug method
-     */
-    public void debugRemovedEnemiesInActiveArea() {
-        this.getEnemiesInActiveArea();
-    }
-
-    /**
      * Retrieves enemies in the active area.
      *
      * @return A list of enemies int he active area.
      */
-    private ArrayList<Enemy> getEnemiesInActiveArea() {
+    private void generateEnemiesInActiveArea() {
 
         this.generateMinMaxGridBlockValues();
 
         List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
 
-        ArrayList<Enemy> activeEnemies = new ArrayList<>();
-
         enemyEntities.stream().forEach(enemy -> {
 
             if(this.isEnemyInActiveArea(enemy)){
-                activeEnemies.add(enemy);
+                this.activeEnemyEntities.add(enemy);
                 //LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
         });
-
-        return activeEnemies;
     }
 
     /**
@@ -223,8 +247,6 @@ public class SpawnSystem {
         return false;
     }
 
-
-    private int getTotalSpawnRateOfActiveEnemies(){return 0;}
 
     /**
      * Generate rectangle with co ordinates where the player is in the center and a boundary between sides and player
