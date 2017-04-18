@@ -25,6 +25,16 @@ public class WorldChunksComponent extends WorldComponent {
 		this.chunks[index] = ChunkIO.load(x, y);
 	}
 
+	public void set(Chunk chunk, int x, int y) {
+		int index = this.getIndex(x, y);
+
+		if (!this.isInside(index)) {
+			return;
+		}
+
+		this.chunks[index] = chunk;
+	}
+
 	public boolean isLoaded(int index) {
 		if (!this.isInside(index)) {
 			return false;

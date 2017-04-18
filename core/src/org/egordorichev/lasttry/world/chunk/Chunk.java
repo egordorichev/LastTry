@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.item.ItemID;
 public class Chunk {
 	public static final int SIZE = 256;
 
-	ChunkData data;
+	private ChunkData data;
 	private Vector2 position;
 
 	public Chunk(ChunkData data, Vector2 position) {
@@ -108,6 +108,10 @@ public class Chunk {
 		}
 
 		this.data.wallsHealth[x + y * SIZE] = hp;
+	}
+
+	public ChunkData getData() {
+		return this.data;
 	}
 
 	public int getGridX() {
