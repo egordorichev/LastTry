@@ -29,13 +29,13 @@ public class ShortSword extends MeleeWeapon {
 		float height = this.texture.getHeight();
 		float angle = -45f;
 
-		if (LastTry.player.isFlipped()) {
-			LastTry.batch.draw(this.texture, LastTry.player.getCenterX() - width, LastTry.world.getHeight() * Block.SIZE -
-				LastTry.player.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
+		if (LastTry.player.physics.isFlipped()) {
+			LastTry.batch.draw(this.texture, LastTry.player.physics.getCenterX() - width, LastTry.world.getHeight() * Block.SIZE -
+				LastTry.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
 				(int) height, true, false);
 		} else {
-			LastTry.batch.draw(this.texture, LastTry.player.getCenterX(), LastTry.world.getHeight() * Block.SIZE -
-				LastTry.player.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
+			LastTry.batch.draw(this.texture, LastTry.player.physics.getCenterX(), LastTry.world.getHeight() * Block.SIZE -
+				LastTry.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
 				(int) height, false, false);
 		}
 	}

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world;
 
+import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
@@ -53,6 +54,10 @@ public class World {
 
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
+	}
+
+	public boolean isColliding(Rectangle rectangle) {
+		return false; // TODO
 	}
 
 	public enum Size {

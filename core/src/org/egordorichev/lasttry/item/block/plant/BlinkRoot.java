@@ -12,14 +12,14 @@ public class BlinkRoot extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        byte hp = LastTry.world.getBlockHp(x, y);
+        byte hp = LastTry.world.blocks.getHP(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD + 1 && LastTry.random.nextInt(3) == 0) {
-            LastTry.world.setBlockHP(Plant.GROW_THRESHOLD, x, y);
+            LastTry.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
         } else if (hp == Plant.GROW_THRESHOLD || hp == Plant.GROW_THRESHOLD + 1) {
-            LastTry.world.setBlockHP(Plant.GROW_THRESHOLD, x, y);
+            LastTry.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
         } else if (hp < Plant.GROW_THRESHOLD) {
-            LastTry.world.setBlockHP((byte) (hp + 1), x, y);
+            LastTry.world.blocks.setHP((byte) (hp + 1), x, y);
         }
     }
 
@@ -29,9 +29,9 @@ public class BlinkRoot extends Plant {
             return false;
         }
 
-        short id = LastTry.world.getBlockID(x, y + 1);
+        short id = LastTry.world.blocks.getID(x, y - 1);
 
-        if (id != ItemID.dirtBlock) { // TODO: add mud
+        if (id != ItemID.dirtBlock && id != ItemID.mudBlock) {
             return false;
         }
 

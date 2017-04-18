@@ -16,7 +16,7 @@ public class SilverThorn extends Plant {
             return false;
         }
 
-        short id = LastTry.world.getBlockID(x, y + 1);
+        short id = LastTry.world.blocks.getID(x, y - 1);
 
         if (id == ItemID.iceBlock || id == ItemID.snowBlock) {
             return true;
@@ -27,12 +27,12 @@ public class SilverThorn extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = LastTry.world.getBlockHp(x, y);
+        int hp = LastTry.world.blocks.getID(x, y);
 
         if (hp > Plant.GROW_THRESHOLD) {
-            LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
+            LastTry.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
         } else {
-            LastTry.world.setBlockHP((byte) (hp + 1), x, y);
+            LastTry.world.blocks.setHP((byte) (hp + 1), x, y);
         }
     }
 }

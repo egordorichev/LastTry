@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
@@ -92,7 +93,7 @@ public class Block extends Item {
     }
 
     public void place(int x, int y) {
-    	LastTry.world.setBlock(this.id, x, y);
+    	LastTry.world.blocks.set(this.id, x, y);
     }
 
     /**
@@ -102,10 +103,10 @@ public class Block extends Item {
      * @param y Y-position in the world.
      */
     public void renderBlock(int x, int y) {
-        boolean t = LastTry.world.getBlockID(x, y - 1) == this.id;
-        boolean r = LastTry.world.getBlockID(x + 1, y) == this.id;
-        boolean b = LastTry.world.getBlockID(x, y + 1) == this.id;
-        boolean l = LastTry.world.getBlockID(x - 1, y) == this.id;
+        boolean t = LastTry.world.blocks.getID(x, y - 1) == this.id;
+        boolean r = LastTry.world.blocks.getID(x + 1, y) == this.id;
+        boolean b = LastTry.world.blocks.getID(x, y + 1) == this.id;
+        boolean l = LastTry.world.blocks.getID(x - 1, y) == this.id;
 
         // TODO: FIXME: replace with var
         short variant = 1;
@@ -124,7 +125,7 @@ public class Block extends Item {
         }
 
         if (this.renderCracks()) {
-	        byte hp = LastTry.world.getBlockHp(x, y);
+	        byte hp = LastTry.world.blocks.getHP(x, y);
 
 	        if (hp < Block.MAX_HP) {
 				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE);
@@ -145,8 +146,8 @@ public class Block extends Item {
         int x = LastTry.getMouseXInWorld() / Block.SIZE;
         int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-        if (this.canBePlaced(x, y) && LastTry.world.canPlaceInWorld(this, x, y)) {
-            Rectangle rectangle = LastTry.player.getHitbox();
+        if (this.canBePlaced(x, y) && LastTry.world.blocks.getID(x, y) == ItemID.none) {
+            Rectangle rectangle = LastTry.player.physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,
 		            this.height * SIZE))) {

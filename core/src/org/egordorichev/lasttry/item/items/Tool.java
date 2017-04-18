@@ -2,11 +2,11 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Log;
 
 import java.util.List;
 
@@ -98,13 +98,11 @@ public class Tool extends Item {
         //Loop through active enemies to check if enemy is not invulnerable then check if there is intersection between hitboxes.
         activeEnemies.stream().forEach(enemy -> {
 
-            if(enemy.isEntityInvulnerable()==false)
-            {
-                if (equippedPlayerHitBox.intersects(enemy.getHitbox())) {
-
+            // if(enemy.() == false) { : TODO invulnerable enemies
+                if (equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
                     inflictDamageOnEnemy(enemy);
                 }
-            }
+            // }
         });
     }
 
@@ -115,10 +113,10 @@ public class Tool extends Item {
 	 * @return Rectangle object signifying equipped player hitbox.
 	 */
 	private Rectangle generateEquippedPlayerHitBox() {
-	    //TODO Rewrite this entire method, it is wrong.  Hitbox should be rotated with the weapon.
+	    // TODO Rewrite this entire method, it is wrong.  Hitbox should be rotated with the weapon.
 
 		//Retrieve the player hitbox
-		final Rectangle playerHitBox = LastTry.player.getHitbox();
+		final Rectangle playerHitBox = LastTry.player.physics.getHitbox();
 
 		//Retrieve item texture, will be used for calculating item dimensions
 		final Texture itemTexture = this.getTexture();
@@ -141,18 +139,16 @@ public class Tool extends Item {
 	 * @param enemy Enemy object representing enemy
 	 */
 	private void inflictDamageOnEnemy(final Enemy enemy) {
-		LastTry.debug("Tool hitbox intersects with enemy hitbox");
+		Log.debug("Tool hitbox intersects with enemy hitbox");
 
 		final int damageToInflict = this.calculateDamageToInflict(enemy);
 
-		LastTry.debug("Calculate weapon damage is: "+damageToInflict);
+		Log.debug("Calculate weapon damage is: "+damageToInflict);
 
-		enemy.modifyHp(damageToInflict);
-
-		enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
-
-		//TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
-		enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
+		enemy.stats.modifyHP(damageToInflict);
+		// enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
+		// TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
+		// enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
 
 	}
 
@@ -170,18 +166,18 @@ public class Tool extends Item {
 
 		//If crit strike chance is active, double
 		if (this.criticalStrikeChanceActive()) {
-			LastTry.debug("Critical strike chance active");
+			Log.debug("Critical strike chance active");
 			weaponDamage = weaponDamage * 2;
 		}
 
 		//TODO Remove these debug statements
-		LastTry.debug("Calculate weapon base damage is: "+weaponDamage+" defense of enemy is: "+enemy.getDefense());
+		Log.debug("Calculate weapon base damage is: " + weaponDamage + " defense of enemy is: " + enemy.stats.getDefense());
 
 		//Compensate for enemy defence points.
-		weaponDamage = weaponDamage - enemy.getDefense();
+		weaponDamage = weaponDamage - enemy.stats.getDefense();
 
 		if (weaponDamage < 0) {
-			LastTry.debug("No damage will be done as weapondamage is not greater than defense of enemy");
+			Log.debug("No damage will be done as weaponDamage is not greater than defense of enemy");
 		}
 
 		//Negate the value
@@ -199,7 +195,7 @@ public class Tool extends Item {
 	 */
 	private boolean criticalStrikeChanceActive() {
 	    //Generate random number, if less than critical strike chance percentage return true
-		if (LastTry.random.nextInt(100)<criticalStrikeChance) {
+		if (LastTry.random.nextInt(100) < criticalStrikeChance) {
 			return true;
 		}
 

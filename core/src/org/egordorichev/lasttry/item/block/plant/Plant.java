@@ -29,13 +29,9 @@ public class Plant extends Block {
 		if (hasGrown(x, y)) {
 			LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
 				y * Block.SIZE - Block.SIZE / 2);
-
-			LastTry.log("plants");
 		}
 
 		if (isBlooming(x, y)) {
-			LastTry.log("seeds");
-
 			short seeds = getSeedsFor(this.id);
 
 			if (seeds != 0) {
@@ -44,16 +40,16 @@ public class Plant extends Block {
 			}
 		}
 
-		LastTry.world.setBlock(ItemID.none, x, y);
+		LastTry.world.blocks.set(ItemID.none, x, y);
 	}
 
 	public static boolean isBlooming(int x, int y) {
-    	return LastTry.world.getBlockHp(x, y) > GROW_THRESHOLD;
+    	return LastTry.world.blocks.getHP(x, y) > GROW_THRESHOLD;
 	}
 
 
 	public static boolean hasGrown(int x, int y) {
-		return LastTry.world.getBlockHp(x, y) >= GROW_THRESHOLD;
+		return LastTry.world.blocks.getHP(x, y) >= GROW_THRESHOLD;
 	}
 
 	public static short getSeedsFor(short id) {
@@ -72,7 +68,7 @@ public class Plant extends Block {
 
 	@Override
     public void renderBlock(int x, int y) {
-        int hp = LastTry.world.getBlockHp(x, y);
+        int hp = LastTry.world.blocks.getHP(x, y);
 
         int tx = 0;
 
@@ -83,7 +79,7 @@ public class Plant extends Block {
         }
 
         LastTry.batch.draw(this.tiles, x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE,
-                tx, 0, Block.SIZE, Block.SIZE);
+            tx, 0, Block.SIZE, Block.SIZE);
     }
 
     @Override
@@ -92,7 +88,7 @@ public class Plant extends Block {
     }
 
     public boolean canBeGrownAt(int x, int y) {
-        short id = LastTry.world.getBlockID(x, y);
+        short id = LastTry.world.blocks.getID(x, y);
 
         if (id != ItemID.none) {
             return false;

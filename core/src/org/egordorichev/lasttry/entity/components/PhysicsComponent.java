@@ -137,6 +137,10 @@ public class PhysicsComponent extends CreatureComponent {
 		this.size.y = height;
 	}
 
+	public boolean isFlipped() {
+		return this.direction == Direction.LEFT;
+	}
+
 	public Vector2 getPosition() {
 		return this.position;
 	}

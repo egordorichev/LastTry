@@ -17,10 +17,10 @@ public class BlockGround extends Block {
      */
     @Override
     public void renderBlock(int x, int y) {
-        boolean t = LastTry.world.getBlock(x, y - 1) instanceof BlockGround;
-        boolean r = LastTry.world.getBlock(x + 1, y) instanceof BlockGround;
-        boolean b = LastTry.world.getBlock(x, y + 1) instanceof BlockGround;
-        boolean l =LastTry.world.getBlock(x - 1, y) instanceof BlockGround;
+        boolean t = LastTry.world.blocks.get(x, y - 1) instanceof BlockGround;
+        boolean r = LastTry.world.blocks.get(x + 1, y) instanceof BlockGround;
+        boolean b = LastTry.world.blocks.get(x, y + 1) instanceof BlockGround;
+        boolean l =LastTry.world.blocks.get(x - 1, y) instanceof BlockGround;
 
         short variant = 1; // TODO: FIXME: replace  with var
 	    byte binary = Block.calculateBinary(t, r, b, l);
@@ -41,7 +41,7 @@ public class BlockGround extends Block {
         }
 
 	    if (this.renderCracks()) {
-		    byte hp = LastTry.world.getBlockHp(x, y);
+		    byte hp = LastTry.world.blocks.getHP(x, y);
 
 		    if (hp < Block.MAX_HP) {
 			    LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE);
