@@ -53,6 +53,10 @@ public class WorldChunksComponent extends WorldComponent {
 		return this.chunks[index];
 	}
 
+	public Chunk getFor(int x, int y) {
+		return this.get(x / Chunk.SIZE, y / Chunk.SIZE);
+	}
+
 	private boolean isInside(int index) {
 		if (index >= this.size || index < 0) {
 			return false;
