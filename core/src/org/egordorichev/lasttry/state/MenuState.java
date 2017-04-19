@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.ui.*;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.environment.Environment;
+import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class MenuState implements State {
     /**
@@ -371,6 +372,7 @@ public class MenuState implements State {
                                 worldInfo.name = worldNameInput;
 
                                 WorldProvider.generate(worldInfo);
+                                LastTry.spawnSystem = new SpawnSystem();
                                 LastTry.environment = new Environment();
                                 WorldProvider.save(LastTry.world);
 

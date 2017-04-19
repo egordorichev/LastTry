@@ -97,6 +97,10 @@ public class Environment {
                 event.update(dt);
             }
         }
+
+        //LastTry.spawnSystem.calcArea();
+
+        LastTry.spawnSystem.update();
     }
 
     /**
@@ -194,4 +198,15 @@ public class Environment {
     public Biome getCurrentBiome() {
         return this.currentBiome;
     }
+
+    /**
+     * Method returns currently occurring events with a 1 tick delay.
+     * Meaning the method does NOT guarantee that all events in the list may be currently occurring.
+     * Events may have stopped.  Maximum delay is 1 tick.
+     * Update method is called 60 times a second, in update method events are checked.
+     *
+     * @return currently occuring events, may be wrong due to a 1 tick delay
+     */
+    public ArrayList<Event> getCurrentEvents() {return this.events;}
+
 }

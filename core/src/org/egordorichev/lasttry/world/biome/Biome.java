@@ -11,15 +11,17 @@ public class Biome {
     public static Biome corruptDesert = new CorruptDesertBiome();
     public static Biome crimsonDesert = new CrimsonDesertBiome();
 
-    /**
-     * Biome name
-     */
-    protected String name;
 
     /**
      * Background texture
      */
     protected Texture texture;
+
+    /**
+     * Biome name
+     */
+    protected String name;
+
 
     /**
      * Texture alpha
@@ -89,5 +91,26 @@ public class Biome {
         LastTry.batch.setColor(1, 1, 1, this.alpha);
         LastTry.batch.draw(this.texture, 0, 0);
         LastTry.batch.setColor(1, 1, 1, 1);
+    }
+
+    /**
+     * Returns integer specifying the 'spawn rate'.
+     * Spawn rate will be calculated as a '1' in 'Spawn Rate' chance of monster being spawned
+     *
+     * @return int representing spawn rate of the biome
+     */
+    public int getSpawnRate()
+    {
+        return spawnInfo.spawnRate;
+    }
+
+    /**
+     * Returns integer specifying the maximum number of monster spawns, in a certain area close to the player
+     *
+     * @return int representing maximum spawn rate of a monster.
+     */
+    public int getSpawnMax()
+    {
+        return spawnInfo.spawnMax;
     }
 }
