@@ -6,17 +6,18 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
-import org.egordorichev.lasttry.item.block.Block;
 
 public class DroppedItem extends Entity {
     private final ItemHolder holder;
     private Texture texture;
+    private PhysicsComponent physics;
 
     public DroppedItem(ItemHolder holder) {
-        super(new PhysicsComponent(), null);
+        super();
 
         this.holder = holder;
         this.texture = this.holder.getItem().getTexture();
+        this.physics = new PhysicsComponent();
         this.physics.setSize(this.texture.getWidth(), this.texture.getHeight());
         this.active = true;
     }

@@ -7,8 +7,8 @@ import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Creature {
 	public static final int INVENTORY_SIZE = 89;
-	public UiInventory inventory;
 
+	public UiInventory inventory;
 	private PlayerInputComponent input;
 	private String name;
 

@@ -33,7 +33,7 @@ public class Seeds extends Item {
                 return false;
             }
 
-            LastTry.world.blocks.set(this.plant.getId(), x, y);
+            LastTry.world.blocks.set(this.plant.getID(), x, y);
             LastTry.world.blocks.setHP((byte) 1, x, y);
 
             return true;

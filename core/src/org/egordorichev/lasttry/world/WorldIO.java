@@ -12,7 +12,7 @@ import java.io.IOException;
 public class WorldIO {
 	public static final int VERSION = 0;
 
-	public static World load(String name) {
+	public static void load(String name) {
 		String fileName = getSaveName(name);
 		File file = new File(fileName);
 
@@ -50,16 +50,16 @@ public class WorldIO {
 			}
 
 			stream.close();
-			return new World(name, size, flags);
+			LastTry.world = new World(name, size, flags);
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
 
-		return null;
+		LastTry.world = null;
 	}
 
-	public static void generate(String name, short width, short height, int flags) {
-
+	public static World generate(String name, short width, short height, int flags) {
+		return null; // TODO
 	}
 
 	public static void save() {

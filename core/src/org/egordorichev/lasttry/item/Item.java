@@ -83,7 +83,7 @@ public class Item {
 	 * Return the item's {@link #id ID}.
 	 * @return Items ID.
 	 */
-	public short getId() {
+	public short getID() {
 		return this.id;
 	}
 

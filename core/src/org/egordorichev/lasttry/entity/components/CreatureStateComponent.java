@@ -12,7 +12,7 @@ public class CreatureStateComponent extends EntityComponent {
 			this.id = id;
 		}
 
-		public int getId() {
+		public int getID() {
 			return this.id;
 		}
 	}

@@ -35,7 +35,7 @@ public class GrassSeeds extends Item {
                 return false;
             }
 
-            LastTry.world.blocks.set(this.grass.getId(), x, y);
+            LastTry.world.blocks.set(this.grass.getID(), x, y);
             LastTry.world.blocks.set((byte) 1, x, y);
 
             return true;

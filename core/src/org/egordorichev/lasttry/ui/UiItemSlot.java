@@ -35,7 +35,7 @@ public class UiItemSlot extends UiComponent {
     public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back) {
         super(rectangle, origin);
 
-        this.itemHolder = null;
+        this.itemHolder = new ItemHolder(null, 0);
         this.type = type;
         this.back = back;
 
@@ -96,13 +96,13 @@ public class UiItemSlot extends UiComponent {
             LastTry.batch.draw(this.texture, x, y, width, height);
         }
 
-        if (this.itemHolder != null && this.itemHolder.getItem() != null) {
+        if (this.itemHolder.getItem() != null) {
             LastTry.batch.setColor(1, 1, 1, 1);
             this.itemHolder.renderAt(x, y, width, height);
         } else if (this.back != null) {
             LastTry.batch.setColor(1, 1, 1, 0.7f);
             LastTry.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2, y + (height
-                    - this.back.getRegionHeight()) / 2);
+                - this.back.getRegionHeight()) / 2);
             LastTry.batch.setColor(1, 1, 1, 1);
         }
     }
@@ -124,10 +124,6 @@ public class UiItemSlot extends UiComponent {
     }
 
     public Item getItem() {
-        if (this.itemHolder == null) {
-            return null;
-        }
-
         return this.itemHolder.getItem();
     }
 
@@ -138,14 +134,10 @@ public class UiItemSlot extends UiComponent {
 	    	return 0;
 	    }
 
-	    return item.getId();
+	    return item.getID();
     }
 
     public int getItemCount() {
-	    if (this.itemHolder == null) {
-		    return 0;
-	    }
-
 	    return this.itemHolder.getCount();
     }
 
@@ -192,7 +184,7 @@ public class UiItemSlot extends UiComponent {
         if (this.state == State.MOUSE_DOWN) {
             if (LastTry.player.inventory.isOpen()) {
                 if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
-                    if (LastTry.player.inventory.currentItem != null && this.itemHolder != null
+                    if (LastTry.player.inventory.currentItem != null
                             && this.itemHolder.getItem() == LastTry.player.inventory.currentItem.getItem()) {
 
                         if (this.canHold(LastTry.player.inventory.currentItem)) {
@@ -209,7 +201,7 @@ public class UiItemSlot extends UiComponent {
                             }
                         }
                     } else {
-	                    if (this.itemHolder == null || this.canHold(LastTry.player.inventory.currentItem)) {
+	                    if (this.canHold(LastTry.player.inventory.currentItem)) {
                             ItemHolder tmp = LastTry.player.inventory.currentItem;
                             LastTry.player.inventory.currentItem = this.itemHolder;
                             this.itemHolder = tmp;

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class EntityManager {
     }
 
     public Enemy spawnEnemy(short id, int x, int y) {
-        Enemy enemy = Enemy.create(id);
+        Enemy enemy = Enemies.create(id);
         this.spawn(enemy, x, y);
         return enemy;
     }

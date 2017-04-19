@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.util;
 
-import javafx.geometry.Side;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -53,7 +52,7 @@ public class AdvancedRectangle {
      */
     private void generatePoints(){
 
-        int boundaryInPixels = this.boundaryInBlocks * Block.TEX_SIZE;
+        int boundaryInPixels = this.boundaryInBlocks * Block.SIZE;
 
         //TODO Swap these on y axis reflection
         this.topRightPoint = new xyPoint(x+boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPRIGHT);
@@ -89,10 +88,10 @@ public class AdvancedRectangle {
     }
 
     public void debugSetItemsOnPoints(){
-        LastTry.world.setBlock(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
-        LastTry.world.setBlock(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
+        LastTry.world.blocks.set(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
+        LastTry.world.blocks.set(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
+        LastTry.world.blocks.set(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
+        LastTry.world.blocks.set(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
     }
 
 
@@ -150,7 +149,7 @@ public class AdvancedRectangle {
      * @return block point co oridnate in int
      */
     private int convertToBlock(int xPoint){
-        return xPoint/Block.TEX_SIZE;
+        return xPoint/Block.SIZE;
     }
 
 

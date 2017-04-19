@@ -21,7 +21,7 @@ public class Grass extends BlockGround {
     private void spread(int x, int y) {
         Block block = (Block) Item.fromID(LastTry.world.blocks.getID(x, y));
 
-        if (block != null && this.canBeGrownAt(block.getId())) {
+        if (block != null && this.canBeGrownAt(block.getID())) {
             LastTry.world.blocks.set(this.id, x, y);
         }
     }

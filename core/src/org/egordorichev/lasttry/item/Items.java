@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -67,7 +67,7 @@ public class Items {
 
 	static {
 		if (!Bootstrap.isLoaded()) {
-			LastTry.error("Trying to access items class before bootstrap");
+			Log.error("Trying to access items class before bootstrap");
 		}
 
 		dirtWall = new Wall(ItemID.dirtWall, Language.text.get("dirtWall"), Assets.getTexture(Textures.dirtWallIcon), Assets.getTexture(Textures.dirtWall));

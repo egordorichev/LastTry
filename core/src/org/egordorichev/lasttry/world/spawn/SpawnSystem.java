@@ -112,7 +112,7 @@ public class SpawnSystem {
 
         Log.debug("Monster is being spawned with x point of: "+suitableXySpawnPoint.getFirst()+ "y point of: "+suitableXySpawnPoint.getSecond());
 
-        LastTry.entityManager.spawnEnemy((short)enemy.getId(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+        LastTry.entityManager.spawnEnemy((short)enemy.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
 
     }
 

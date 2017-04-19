@@ -46,6 +46,6 @@ public class GenericContainer<T> {
 
             public T getX(){return a;}
             public T getY(){return b;}
-            public U getIdent(){return c;}
+            public U getIDent(){return c;}
     }
 }

@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
-	private Animation[] animations = new Animation[StateComponent.State.values().length];
+	private Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
 	private Texture texture;
 
 	public PlayerGraphicsComponent() {
@@ -22,7 +22,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
-		this.animations[this.creature.state.get().getId()].render(
+		this.animations[this.creature.state.get().getID()].render(
 			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
 			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
 			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
@@ -58,12 +58,12 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 		Animation actingAnimation = new Animation(true); // TODO
 
-		this.animations[StateComponent.State.IDLE.getId()] = idleAnimation;
-		this.animations[StateComponent.State.MOVING.getId()] = movingAnimation;
-		this.animations[StateComponent.State.JUMPING.getId()] = jumpingAnimation;
-		this.animations[StateComponent.State.FALLING.getId()] = jumpingAnimation; // They are the same
-		this.animations[StateComponent.State.FLYING.getId()] = flyingAnimation;
-		this.animations[StateComponent.State.DEAD.getId()] = deadAnimation;
-		this.animations[StateComponent.State.ACTING.getId()] = actingAnimation;
+		this.animations[CreatureStateComponent.State.IDLE.getID()] = idleAnimation;
+		this.animations[CreatureStateComponent.State.MOVING.getID()] = movingAnimation;
+		this.animations[CreatureStateComponent.State.JUMPING.getID()] = jumpingAnimation;
+		this.animations[CreatureStateComponent.State.FALLING.getID()] = jumpingAnimation; // They are the same
+		this.animations[CreatureStateComponent.State.FLYING.getID()] = flyingAnimation;
+		this.animations[CreatureStateComponent.State.DEAD.getID()] = deadAnimation;
+		this.animations[CreatureStateComponent.State.ACTING.getID()] = actingAnimation;
 	}
 }

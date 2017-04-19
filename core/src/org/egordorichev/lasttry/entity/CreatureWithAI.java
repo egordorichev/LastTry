@@ -1,13 +1,11 @@
 package org.egordorichev.lasttry.entity;
 
-import org.egordorichev.lasttry.entity.components.AiComponent;
-import org.egordorichev.lasttry.entity.components.GraphicsComponent;
-import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.entity.components.*;
 
 public class CreatureWithAI extends Creature {
 	public AiComponent ai = new AiComponent(this);
 
-	public CreatureWithAI(PhysicsComponent physics, GraphicsComponent graphics) {
+	public CreatureWithAI(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
 		super(physics, graphics);
 	}
 

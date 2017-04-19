@@ -2,8 +2,9 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.entity.EnemyID;
-import org.egordorichev.lasttry.entity.enemy.enemies.*;
+import org.egordorichev.lasttry.entity.enemy.enemies.BlueSlime;
+import org.egordorichev.lasttry.entity.enemy.enemies.GreenSlime;
+import org.egordorichev.lasttry.entity.enemy.enemies.Zombie;
 import org.egordorichev.lasttry.util.Log;
 
 import java.util.HashMap;
@@ -17,7 +18,6 @@ public class Enemies {
 		} else {
 			define(EnemyID.greenSlime, GreenSlime.class);
 			define(EnemyID.blueSlime, BlueSlime.class);
-			define(EnemyID.eyeOfCthulhu, EyeOfCthulhu.class);
 			define(EnemyID.zombie, Zombie.class);
 		}
 	}
@@ -46,5 +46,9 @@ public class Enemies {
 			LastTry.handleException(exception);
 			return null;
 		}
+	}
+
+	public static void preload() {
+
 	}
 }
