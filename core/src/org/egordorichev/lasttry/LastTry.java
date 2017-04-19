@@ -20,7 +20,7 @@ import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.world.spawn.SpawnSystem;
+	import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 import java.util.Random;
 import java.util.Locale;
 

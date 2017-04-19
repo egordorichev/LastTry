@@ -26,8 +26,17 @@ public class PhysicsComponent extends CreatureComponent {
 
 	public PhysicsComponent(Creature creature) {
 		super(creature);
+	}
 
-		this.size = new Vector2(32, 48);
+	public PhysicsComponent() {
+		this.hitbox = new Rectangle(0, 0, 0, 0);
+	}
+
+	@Override
+	public void setCreature(Creature creature) {
+		super.setCreature(creature);
+
+		this.size = new Vector2(32, 48); // TODO: get the size
 		this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
 	}
 

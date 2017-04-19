@@ -6,7 +6,7 @@ public class CreatureComponent extends Creature {
 	protected Creature creature;
 
 	public CreatureComponent(Creature creature) {
-		this.creature = creature;
+		this.setCreature(creature);
 	}
 
 	public CreatureComponent() {

@@ -9,12 +9,13 @@ public class Player extends Creature {
 	public static final int INVENTORY_SIZE = 89;
 	public UiInventory inventory;
 
-	private PlayerInputComponent input = new PlayerInputComponent(this);
+	private PlayerInputComponent input;
 	private String name;
 
 	public Player(String name) {
 		super(new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
 
+		this.input = new PlayerInputComponent(this);
 		this.stats.set(100, 20, 0, 0);
 		this.name = name;
 		this.inventory = new UiInventory(INVENTORY_SIZE);
