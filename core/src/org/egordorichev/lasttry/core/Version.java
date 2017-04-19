@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry;
+package org.egordorichev.lasttry.core;
 
 public class Version {
 	public int minor;

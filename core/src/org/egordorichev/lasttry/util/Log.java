@@ -11,47 +11,43 @@ public class Log {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    private boolean enabled;
+    private static boolean enabled;
 
-    public Log() {
-        this.enabled = true;
+    public static void debug(String message) {
+        printMessage(ANSI_GREEN + "DEBUG", message);
     }
 
-    public void debug(String message) {
-        this.printMessage(ANSI_GREEN + "DEBUG", message);
+    public static void warn(String message) {
+        printMessage(ANSI_PURPLE + "WARN", message);
     }
 
-    public void warn(String message) {
-        this.printMessage(ANSI_PURPLE + "WARN", message);
+    public static void error(String message) {
+        printMessage(ANSI_RED + "ERROR", message);
     }
 
-    public void error(String message) {
-        this.printMessage(ANSI_RED + "ERROR", message);
+    public static void info(String message) {
+        printMessage(ANSI_BLUE + "INFO", message);
     }
 
-    public void info(String message) {
-        this.printMessage(ANSI_BLUE + "INFO", message);
-    }
-
-    private void printMessage(String start, String message) {
+    private static void printMessage(String start, String message) {
         System.out.print(start + " ");
-        this.printPath(Thread.currentThread().getStackTrace());
+        printPath(Thread.currentThread().getStackTrace());
         System.out.println(" " + message + ANSI_RESET);
     }
 
-    private void printPath(StackTraceElement[] stackTraceElements) {
+    private static void printPath(StackTraceElement[] stackTraceElements) {
         System.out.print(stackTraceElements[3].getClassName());
     }
 
-    public void enable() {
-        this.enabled = true;
+    public static void enable() {
+        enabled = true;
     }
 
-    public void disable() {
-        this.enabled = false;
+    public static void disable() {
+        enabled = false;
     }
 
-    public boolean isEnabled() {
-        return this.enabled;
+    public static boolean isEnabled() {
+        return enabled;
     }
 }

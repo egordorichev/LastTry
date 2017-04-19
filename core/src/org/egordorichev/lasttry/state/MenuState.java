@@ -1,20 +1,13 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
-import com.sun.org.apache.regexp.internal.RE;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.player.PlayerInfo;
-import org.egordorichev.lasttry.entity.player.PlayerProvider;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.ui.*;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.WorldInfo;
-import org.egordorichev.lasttry.world.WorldProvider;
-import org.egordorichev.lasttry.world.WorldSize;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 

@@ -19,8 +19,8 @@ public class GrassSeeds extends Item {
     @Override
     public boolean use() {
         // Get world position to place block at
-        int x = LastTry.getMouseXInWorld() / Block.TEX_SIZE;
-        int y = LastTry.getMouseYInWorld() / Block.TEX_SIZE;
+        int x = LastTry.getMouseXInWorld() / Block.SIZE;
+        int y = LastTry.getMouseYInWorld() / Block.SIZE;
         // TODO: Distance checks from cursor coordinates to player coordinates
 
         short id = LastTry.world.getBlockID(x, y);
@@ -31,7 +31,7 @@ public class GrassSeeds extends Item {
             // TODO: Check other entities in the world
             Rectangle rectangle = LastTry.player.getHitbox();
 
-            if (rectangle.intersects(new Rectangle(x * Block.TEX_SIZE, y * Block.TEX_SIZE, Block.TEX_SIZE, Block.TEX_SIZE))) {
+            if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
                 return false;
             }
 

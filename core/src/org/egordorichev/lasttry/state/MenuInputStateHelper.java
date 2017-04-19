@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.state;
 
-import org.egordorichev.lasttry.entity.player.PlayerProvider;
-import org.egordorichev.lasttry.world.WorldProvider;
 
 /**
  * User will input either a new 'PlayerName' or a new 'WorldName', when starting the game.
@@ -9,8 +7,7 @@ import org.egordorichev.lasttry.world.WorldProvider;
  *
  * Created by Logotie on 13/04/2017.
  */
-public class MenuInputStateHelper
-{
+public class MenuInputStateHelper {
     /**
      * NAMEALREADYEXISTS - Name already exists, either as a previously created World or Player name. Depending on context of input.
      * NAMEISBLANK - Name entered, contains no characters.

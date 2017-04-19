@@ -1,16 +1,23 @@
 package org.egordorichev.lasttry.entity.enemy;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.entity.drop.Drop;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.player.Player;
+<<<<<<< HEAD
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.world.biome.Biome;
 
+=======
+>>>>>>> component-future
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+<<<<<<< HEAD
 public abstract class Enemy extends Entity {
     /**
      * Defined enemies
@@ -43,16 +50,14 @@ public abstract class Enemy extends Entity {
     /**
      * Enemy id
      */
+=======
+public abstract class Enemy extends CreatureWithAI {
+>>>>>>> component-future
     protected int id;
-    /**
-     * Enemy drops
-     */
+    protected Texture texture;
     protected List<Drop> drops = new ArrayList<>();
-    /**
-     * Animations
-     */
-    protected Animation[] animations;
 
+<<<<<<< HEAD
     /**
      * Each biome has a maxinum number of enemies limit.  When deciding what enemy to spawn next in a biome, the
      * spawn weight of multiple enemies are added till the maximum number of enemies in the biome is complete.
@@ -125,18 +130,16 @@ public abstract class Enemy extends Entity {
 
         // this.animations[this.state.getId()].update(dt);
         this.updateAI();
+=======
+    public Enemy(short id, int maxHp, int defense, int damage) {
+        super(new PhysicsComponent(), new EnemyGraphicsComponent());
+
+        this.stats.set(maxHp, 0, damage, defense);
+	    this.id = id;
+>>>>>>> component-future
     }
 
     public void updateAI() {
-        this.currentAi++;
-
-        if (this.currentAi >= this.maxAi) {
-            this.currentAi = 0;
-        }
-    }
-
-    @Override
-    public void onSpawn() {
 
     }
 
@@ -151,22 +154,18 @@ public abstract class Enemy extends Entity {
 
     @Override
     public void onDeath() {
-        // On death, drop items in world.
         for (Drop drop : this.drops) {
             if (drop.getChance().roll()) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-                LastTry.entityManager.spawn(droppedItem, (int) this.getCenterX(),
-                    (int) this.getCenterY());
+                LastTry.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
+		            (int) this.physics.getCenterY());
             }
         }
     }
 
-    /**
-     * Called when the entity collides with player.
-     */
     protected void onPlayerCollision(Player player) {
-        // TODO
+        // TODO: hit the player
     }
 
     public int getId() {

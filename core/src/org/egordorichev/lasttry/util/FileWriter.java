@@ -9,18 +9,6 @@ public class FileWriter implements AutoCloseable {
     private DataOutputStream stream;
 
     public FileWriter(String path) throws IOException {
-        File file = new File(path);
-
-        if (!file.exists()) {
-            File parentDir = file.getParentFile();
-
-            if (parentDir != null && !parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-
-            file.createNewFile();
-        }
-
         this.stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(path), 32768));
     }
 

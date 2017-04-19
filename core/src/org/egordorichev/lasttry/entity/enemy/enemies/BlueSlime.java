@@ -1,7 +1,7 @@
-package org.egordorichev.lasttry.entity.enemy;
+package org.egordorichev.lasttry.entity.enemy.enemies;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Drop;
+import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
