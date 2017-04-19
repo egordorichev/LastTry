@@ -12,7 +12,7 @@ import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.mod.ModLoader;
+import org.egordorichev.lasttry.util.Camera;
 
 public class GamePlayState implements State {
 	private final Texture hpTexture;
@@ -27,31 +27,13 @@ public class GamePlayState implements State {
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 1000));
         LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));
         LastTry.entityManager = new EntityManager();
-
-        for (int i = 0; i < 2; i++) {
-            //TODO Points
-            //LastTry.entityManager.spawnEnemy(EnemyID.zombie, spawnX, spawnY);
-            //LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, spawnX, spawnY);
-            //LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
-        }
-
-	    LastTry.modLoader = new ModLoader();
-        LastTry.modLoader.load();
     }
 
-    /**
-     * Never used
-     */
     @Override
     public void show() {
 
     }
 
-    /**
-     * Renders and updates the splash
-     *
-     * @param delta delta from last update
-     */
     @Override
     public void render(float delta) {
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
@@ -67,20 +49,20 @@ public class GamePlayState implements State {
 
         LastTry.environment.render();
 
-        LastTry.camera.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-                LastTry.player.physics.getCenterX());
+	    Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
+            LastTry.player.physics.getCenterX());
 
-        LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-                LastTry.world.getHeight() * Block.SIZE - LastTry.player.physics.getCenterY());
+	    Camera.game.position.y = Math.max(Gdx.graphics.getHeight() / 2,
+            LastTry.world.getHeight() * Block.SIZE - LastTry.player.physics.getCenterY());
 
-        LastTry.camera.update();
-        LastTry.batch.setProjectionMatrix(LastTry.camera.combined);
+	    Camera.game.update();
+        LastTry.batch.setProjectionMatrix(Camera.game.combined);
 
         LastTry.world.render();
         LastTry.entityManager.render();
         LastTry.player.render();
 
-        LastTry.batch.setProjectionMatrix(LastTry.uiCamera.combined);
+        LastTry.batch.setProjectionMatrix(Camera.ui.combined);
 
         int mouseX = (int) InputManager.getMousePosition().x;
         int mouseY = (int) InputManager.getMousePosition().y;
@@ -100,42 +82,26 @@ public class GamePlayState implements State {
         LastTry.debug.render();
     }
 
-    /**
-     * Updates the view
-     */
     @Override
     public void resize(int width, int height) {
-        LastTry.viewport.update(width, height);
-        LastTry.camera.update();
+	    Camera.resize(width, height);
     }
 
-    /**
-     * Never used
-     */
     @Override
     public void pause() {
 
     }
 
-    /**
-     * Never used
-     */
     @Override
     public void resume() {
 
     }
 
-    /**
-     * Never used
-     */
     @Override
     public void hide() {
 
     }
 
-    /**
-     * Never used
-     */
     @Override
     public void dispose() {
 

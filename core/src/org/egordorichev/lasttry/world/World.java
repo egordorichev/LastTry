@@ -4,14 +4,12 @@ import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
-import org.egordorichev.lasttry.world.components.WorldRenderComponent;
 
 public class World {
 	public static final int UPDATE_DELAY = 20;
 
 	public WorldFlagsComponent flags;
 	public WorldChunksComponent chunks;
-	public WorldRenderComponent renderer;
 	public WorldBlocksComponent blocks;
 	public WorldWallsComponent walls;
 	private Size size;
@@ -19,7 +17,6 @@ public class World {
 
 	public World(String name, Size size, int flags) {
 		this.chunks = new WorldChunksComponent(this);
-		this.renderer = new WorldRenderComponent(this);
 		this.flags = new WorldFlagsComponent(this, flags);
 		this.blocks = new WorldBlocksComponent(this);
 		this.walls = new WorldWallsComponent(this);
@@ -29,11 +26,11 @@ public class World {
 	}
 
 	public void render() {
-		this.renderer.render();
+		this.chunks.render();
 	}
 
 	public void update() {
-		// TODO
+		this.chunks.update();
 	}
 
 	public short getWidth() {

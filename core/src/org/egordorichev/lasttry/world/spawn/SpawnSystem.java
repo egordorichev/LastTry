@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
@@ -150,11 +151,11 @@ public class SpawnSystem {
 
         //We want to get the further most position of x on the screen, camera is always in the middle so we
         //divide total window width by 2 and divide by blcok size to get grid position
-        int tcx = (int) (LastTry.camera.position.x - windowWidth/2) / Block.SIZE;
+        int tcx = (int) (Camera.game.position.x - windowWidth/2) / Block.SIZE;
 
         //TODO Change on inversion of y axis
         //We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight/2)
+        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)
                 / Block.SIZE);
 
         //Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.

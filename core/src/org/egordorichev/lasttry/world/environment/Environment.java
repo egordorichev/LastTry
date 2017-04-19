@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
@@ -161,8 +162,8 @@ public class Environment {
         int windowHeight = Gdx.graphics.getHeight();
         int tww = windowWidth / Block.SIZE;
         int twh = windowHeight / Block.SIZE;
-        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.SIZE;
-        int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
+        int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
+        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight / 2)
                 / Block.SIZE);
 
         int minY = Math.max(0, tcy - 20);

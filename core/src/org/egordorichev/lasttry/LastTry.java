@@ -16,6 +16,7 @@ import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
@@ -32,17 +33,8 @@ public class LastTry extends Game {
 	/** Random instance */
 	public static final Random random = new Random();
 	
-	/** Camera */
-	public static OrthographicCamera camera;
-	
-	/** UI Camera */
-	public static OrthographicCamera uiCamera;
-	
 	/** Public sprite batch */
 	public static SpriteBatch batch;
-	
-	/** Game viewport */
-	public static Viewport viewport;
 	
 	/** Last Try instance */
 	public static LastTry instance;
@@ -65,9 +57,6 @@ public class LastTry extends Game {
 	/** PhysicBody manager instance*/
 	public static EntityManager entityManager;
 
-	/** Mod loader */
-	public static ModLoader modLoader;
-
 	/** Debug helper */
 	public static Debug debug;
 
@@ -82,26 +71,15 @@ public class LastTry extends Game {
 		});
 
 		instance = this;
-		debug = new Debug();
+
+		Camera.create(800, 600);
+		Language.load(new Locale("en", "US"));
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
-                
-        Locale en_US = new Locale("en", "US");
-        Language.load(en_US);
-                
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
-		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
-
-		camera = new OrthographicCamera(width, height);
-		camera.setToOrtho(false, width, height);
-		uiCamera = new OrthographicCamera(width, height);
-		uiCamera.setToOrtho(false, width, height);
-		viewport = new FitViewport(width, height);
-
+		debug = new Debug();
 		batch = new SpriteBatch();
-
 		ui = new UiManager();
 
 		this.setScreen(new SplashState());
@@ -115,7 +93,7 @@ public class LastTry extends Game {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		viewport.update(width, height);
+		Camera.resize(width, height);
 	}
 
 	/** Renders and updates the game */
@@ -174,7 +152,6 @@ public class LastTry extends Game {
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
-		// TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 		Crash.report(Thread.currentThread(), exception);
 	}
 
