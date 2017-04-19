@@ -106,6 +106,11 @@ public class PlayerIO {
 		return new Player(name); // TODO
 	}
 
+	public static boolean saveExists(String name) {
+		File file = new File(getSaveName(name));
+		return file.exists();
+	}
+
 	private static String getSaveName(String playerName) {
 		return "players/" + playerName + ".plr";
 	}

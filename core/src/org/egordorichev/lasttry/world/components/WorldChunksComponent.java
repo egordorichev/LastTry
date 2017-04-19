@@ -1,6 +1,9 @@
 package org.egordorichev.lasttry.world.components;
 
+import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
@@ -38,7 +41,22 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void render() {
+		int x = Camera.getXInBlocks();
+		int y = Camera.getYInBlocks();
+		int width = Gdx.graphics.getWidth() / Block.SIZE;
+		int height = Gdx.graphics.getHeight() / Block.SIZE;
 
+		Chunk tl = this.getFor(x, y + height);
+		Chunk tr = this.getFor(x + width, y);
+		Chunk bl = this.getFor(x, y);
+		Chunk br = this.getFor(x, y + width);
+
+		// TODO: check, if they are the same
+
+		tl.render();
+		tr.render();
+		bl.render();
+		br.render();
 	}
 
 	public void load(int x, int y) {

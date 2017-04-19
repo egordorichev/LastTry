@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.entity.player.PlayerIO;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
@@ -27,9 +28,21 @@ public class LoadState implements State {
                         loadString = "Loading environment...";
                         LastTry.environment = new Environment();
                         loadString = "Loading world...";
-	                    WorldIO.load("test");
-	                    loadString = "Loading player...";
-	                    PlayerIO.load("test");
+
+                        if (WorldIO.saveExists("test")) {
+                        	WorldIO.load("test");
+                        } else {
+                        	WorldIO.generate("test", World.Size.SMALL.getWidth(), World.Size.SMALL.getHeight(), 0);
+                        }
+
+                        loadString = "Loading player...";
+
+                        if (PlayerIO.saveExists("test")) {
+	                        PlayerIO.load("test");
+                        } else {
+	                        PlayerIO.generate("test");
+                        }
+
                         loaded = true;
                     }
                 });

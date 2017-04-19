@@ -96,6 +96,11 @@ public class WorldIO {
 		}
 	}
 
+	public static boolean saveExists(String name) {
+		File file = new File(getSaveName(name));
+		return file.exists();
+	}
+
 	private static String getSaveName(String name) {
 		return "worlds/" + name + ".wld";
 	}

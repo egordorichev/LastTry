@@ -12,8 +12,8 @@ import java.util.List;
 
 public abstract class Enemy extends CreatureWithAI {
     protected int id;
-	  private int spawnWeight = 1;
-	  protected String name;
+	protected int spawnWeight = 1;
+	protected String name;
     protected List<Drop> drops = new ArrayList<>();
 
     public Enemy(short id, String name, int maxHp, int defense, int damage) {
