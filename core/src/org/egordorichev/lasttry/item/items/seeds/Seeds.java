@@ -27,14 +27,14 @@ public class Seeds extends Item {
         if (this.plant.canBeGrownAt(x, y)) {
             // Check if the plant intersects the player's hitbox
             // TODO: Check other entities in the world
-            Rectangle rectangle = LastTry.player.getHitbox();
+            Rectangle rectangle = LastTry.player.physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
                 return false;
             }
 
-            LastTry.world.setBlock(this.plant.getId(), x, y);
-            LastTry.world.setBlockHP((byte) 1, x, y);
+            LastTry.world.blocks.set(this.plant.getId(), x, y);
+            LastTry.world.blocks.setHP((byte) 1, x, y);
 
             return true;
         }

@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.item.Items;
 
 public class EyeOfCthulhu extends Boss { // TODO
     public EyeOfCthulhu() {
-        super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.isExpertMode() ? 3640 : 2800);
+        super(EnemyID.eyeOfCthulhu, "Eye of Cthulhu", LastTry.world.flags.isExpertMode() ? 3640 : 2800);
 
         /*this.texture = Assets.getTexture(Textures.eyeOfCthulhu);
 

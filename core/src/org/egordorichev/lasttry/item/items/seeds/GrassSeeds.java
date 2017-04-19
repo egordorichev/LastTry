@@ -23,20 +23,20 @@ public class GrassSeeds extends Item {
         int y = LastTry.getMouseYInWorld() / Block.SIZE;
         // TODO: Distance checks from cursor coordinates to player coordinates
 
-        short id = LastTry.world.getBlockID(x, y);
+        short id = LastTry.world.blocks.getID(x, y);
 
         // Check if the plant can be placed.
         if (this.grass.canBeGrownAt(id)) {
             // Check if the plant intersects the player's hitbox
             // TODO: Check other entities in the world
-            Rectangle rectangle = LastTry.player.getHitbox();
+            Rectangle rectangle = LastTry.player.physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
                 return false;
             }
 
-            LastTry.world.setBlock(this.grass.getId(), x, y);
-            LastTry.world.setBlockHP((byte) 1, x, y);
+            LastTry.world.blocks.set(this.grass.getId(), x, y);
+            LastTry.world.blocks.set((byte) 1, x, y);
 
             return true;
         }

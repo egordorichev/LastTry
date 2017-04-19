@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.world.biome.Biome;
 
 public class BlueSlime extends Slime {
     public BlueSlime() {
-        super("BlueSlime", EnemyID.blueSlime, LastTry.world.isExpertMode() ? 10 : 10, 2, LastTry.world.isExpertMode() ? 7 : 14,3, Assets.getTexture(Textures.blueSlime));
+        super(EnemyID.blueSlime, LastTry.world.flags.isExpertMode() ? 10 : 10, 2, LastTry.world.flags.isExpertMode() ? 7 : 14, Assets.getTexture(Textures.blueSlime));
 
         this.drops.add(new Drop(Items.copperCoin, 25, 25));
     }
