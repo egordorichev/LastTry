@@ -133,15 +133,11 @@ public class SpawnSystem {
     }
 
 
-
-
     private Enemy retrieveRandomEnemy(ArrayList<Enemy> eligibleEnemiesForSpawning){
         int randomIndex = LastTry.random.nextInt(eligibleEnemiesForSpawning.size());
         return eligibleEnemiesForSpawning.get(randomIndex);
     }
-
-
-
+    
     //TODO Move out
     /**
      * Generates the max and minimum x,y values of the current screen the user is viewing.
