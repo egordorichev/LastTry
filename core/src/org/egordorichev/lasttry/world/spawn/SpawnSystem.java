@@ -1,22 +1,12 @@
 package org.egordorichev.lasttry.world.spawn;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import javafx.util.Pair;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
-import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.environment.Environment;
-import org.egordorichev.lasttry.world.environment.Event;
-import org.w3c.dom.ls.LSException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +29,11 @@ public class SpawnSystem {
     private List<Enemy> activeEnemyEntities = new ArrayList<>();
 
     public void update() {
-
         if(LastTry.environment.getCurrentBiome()==null){
             return;
         }
-
         //Get user biome
         this.biome = LastTry.environment.getCurrentBiome();
-
         this.spawnTriggered();
     }
 
@@ -54,13 +41,15 @@ public class SpawnSystem {
     //TODO Split method
     private void spawnTriggered() {
 
+        //Retrieve max spawns of biome
         final int maxSpawns = biome.getSpawnMax();
 
-        //1 in 'origSpawnRate' chance of happening, so if spawn rate is '600'.  1 in 600 chance of occurring
         final int origSpawnRate = biome.getSpawnRate();
 
-        int spawnRate = SpawnLogic.calculateSpawnRate(origSpawnRate);
+        //Spawn rate is modified based on different factors such as time, events occurring.
+        int spawnRate = SpawnRateLogic.calculateSpawnRate(origSpawnRate);
 
+        //Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
         float percentChanceSpawnRate = 1/(float)spawnRate;
 
         //TODO Expensive calculation
@@ -83,7 +72,7 @@ public class SpawnSystem {
             percentageOfSpawnRateAndActiveMonsters = ((float)spawnWeightOfActiveEnemies / (float)maxSpawns) * 100;
         }
 
-        float spawnRateFloat = SpawnLogic.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+        float spawnRateFloat = SpawnRateLogic.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
 
         if(!this.shouldEnemySpawn(spawnRateFloat)){
             return;
@@ -170,8 +159,6 @@ public class SpawnSystem {
 
         return false;
     }
-
-
 
 
 
