@@ -38,8 +38,6 @@ public class SpawnSystem {
 
     private List<Enemy> activeEnemyEntities = new ArrayList<>();
 
-    private boolean day = false;
-
     public void update() {
 
         if(LastTry.environment.getCurrentBiome()==null){
@@ -48,10 +46,6 @@ public class SpawnSystem {
 
         //Get user biome
         this.biome = LastTry.environment.getCurrentBiome();
-
-        //Retrieve spawn rate & max spawns
-       // this.spawnRate = biome.getSpawnRate();
-        //this.maxSpawns = biome.getSpawnMax();
 
         this.spawnTriggered();
     }
@@ -65,7 +59,7 @@ public class SpawnSystem {
         //1 in 'origSpawnRate' chance of happening, so if spawn rate is '600'.  1 in 600 chance of occurring
         final int origSpawnRate = biome.getSpawnRate();
 
-        int spawnRate = this.calculateSpawnRate(origSpawnRate);
+        int spawnRate = SpawnLogic.calculateSpawnRate(origSpawnRate);
 
         float percentChanceSpawnRate = 1/(float)spawnRate;
 
@@ -89,7 +83,7 @@ public class SpawnSystem {
             percentageOfSpawnRateAndActiveMonsters = ((float)spawnWeightOfActiveEnemies / (float)maxSpawns) * 100;
         }
 
-        float spawnRateFloat = this.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+        float spawnRateFloat = SpawnLogic.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
 
         if(!this.shouldEnemySpawn(spawnRateFloat)){
             return;
@@ -129,8 +123,8 @@ public class SpawnSystem {
 
     }
 
+    //MOVE OUT
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
-
 
         LastTry.debug("Generating eligible spawn point");
 
@@ -144,6 +138,7 @@ public class SpawnSystem {
 
         return xyPoint;
     }
+
 
     private ArrayList<Enemy> retrieveEligibleSpawnMonsters() {
 
@@ -176,34 +171,8 @@ public class SpawnSystem {
         return false;
     }
 
-    private float applyMultiplierToSpawnRate(float spawnRate, float percentageOfSpawnRateAndActiveMonsters){
 
-        double spawnRateDouble = spawnRate;
 
-        if(percentageOfSpawnRateAndActiveMonsters<40){
-            spawnRateDouble = spawnRateDouble * 0.1;
-        }else if(percentageOfSpawnRateAndActiveMonsters<60){
-            spawnRateDouble = spawnRateDouble * 0.05;
-        }else{
-            spawnRateDouble = spawnRateDouble * 0.01;
-        }
-
-        return (float)spawnRateDouble;
-    }
-
-    private int calculateSpawnRate(int spawnRate) {
-
-        //Get active events
-        ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
-
-        spawnRate = this.calcSpawnRateBasedOnEvents(activeEvents, spawnRate);
-
-        spawnRate = this.calcSpawnRateBasedOnItems(spawnRate);
-
-        spawnRate = this.calcSpawnRateBasedOnTime(spawnRate);
-
-        return spawnRate;
-    }
 
 
     private int calcSpawnWeightOfActiveEnemies(){
@@ -213,6 +182,7 @@ public class SpawnSystem {
         return this.activeEnemyEntities.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
     }
 
+    //TODO Move out
     /**
      * Generates the max and minimum x,y values of the current screen the user is viewing.
      */
@@ -330,19 +300,6 @@ public class SpawnSystem {
     }
 
 
-    private int calcSpawnRateBasedOnEvents(ArrayList<Event> activeEvents, int spawnRate){
-        //TODO Implement spawn info in events
-        return spawnRate;
-    }
 
-    private int calcSpawnRateBasedOnTime(int spawnRate){
-        //TODO Implement spawn info based on day
-        return spawnRate;
-    }
-
-    private int calcSpawnRateBasedOnItems(int spawnRate){
-        //TODO Implement spawn rate altering based on items in environment
-        return spawnRate;
-    }
 
 }
