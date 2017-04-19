@@ -3,8 +3,10 @@ package org.egordorichev.lasttry.state;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.player.PlayerIO;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.world.WorldIO;
 
 public class SplashState implements State {
     /** Splash texture */
@@ -34,7 +36,11 @@ public class SplashState implements State {
 
 	    if (Assets.load()) {
 	        Graphics.load();
-	        LastTry.instance.setScreen(new MenuState());
+
+	        PlayerIO.load("test");
+	        WorldIO.load("test");
+
+	        LastTry.instance.setScreen(new GamePlayState());
 	    }
     }
 

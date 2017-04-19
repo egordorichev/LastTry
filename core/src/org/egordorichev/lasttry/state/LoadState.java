@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.world.WorldProvider;
 import org.egordorichev.lasttry.world.environment.Environment;
+import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class LoadState implements State {
     private boolean loaded = false;
@@ -23,13 +24,14 @@ public class LoadState implements State {
                     @Override
                     public void run() {
 	                    Bootstrap.load();
-	                    loadString = "Loading environment...";
+                        loadString = "Loading spawn system...";
+                        LastTry.spawnSystem = new SpawnSystem();
+                        loadString = "Loading environment...";
                         LastTry.environment = new Environment();
                         loadString = "Loading world...";
                         LastTry.world = WorldProvider.load();
                         loadString = "Loading player...";
                         LastTry.player = PlayerProvider.load();
-
                         loaded = true;
                     }
                 });

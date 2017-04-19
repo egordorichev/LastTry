@@ -63,10 +63,10 @@ public class EvilBlock extends BlockGround {
             return;
         }
 
-        Block block = (Block) Item.fromID(LastTry.world.getBlockID(nx, ny));
+        Block block = (Block) Item.fromID(LastTry.world.blocks.getID(nx, ny));
 
-        if (block != null && EvilBlock.canBeInfected(block.getId())) {
-            LastTry.world.setBlock(EvilBlock.getInfectIDFor(this.id, block.getId()), nx, ny);
+        if (block != null && EvilBlock.canBeInfected(block.getID())) {
+            LastTry.world.blocks.set(EvilBlock.getInfectIDFor(this.id, block.getID()), nx, ny);
         }
     }
 }

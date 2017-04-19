@@ -97,6 +97,10 @@ public class Environment {
                 event.update(dt);
             }
         }
+
+        //LastTry.spawnSystem.calcArea();
+
+        LastTry.spawnSystem.update();
     }
 
     /**
@@ -155,11 +159,11 @@ public class Environment {
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.TEX_SIZE;
-        int twh = windowHeight / Block.TEX_SIZE;
-        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
+        int tww = windowWidth / Block.SIZE;
+        int twh = windowHeight / Block.SIZE;
+        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.SIZE;
         int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-                / Block.TEX_SIZE);
+                / Block.SIZE);
 
         int minY = Math.max(0, tcy - 20);
         int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
@@ -170,7 +174,7 @@ public class Environment {
 
         for (int y = minY; y < maxY; y++) {
             for (int x = minX; x < maxX; x++) {
-                this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
+                this.blockCount[LastTry.world.blocks.getID(x, y)] += 1;
             }
         }
 
@@ -194,4 +198,15 @@ public class Environment {
     public Biome getCurrentBiome() {
         return this.currentBiome;
     }
+
+    /**
+     * Method returns currently occurring events with a 1 tick delay.
+     * Meaning the method does NOT guarantee that all events in the list may be currently occurring.
+     * Events may have stopped.  Maximum delay is 1 tick.
+     * Update method is called 60 times a second, in update method events are checked.
+     *
+     * @return currently occuring events, may be wrong due to a 1 tick delay
+     */
+    public ArrayList<Event> getCurrentEvents() {return this.events;}
+
 }

@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.world.generator;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.world.WorldData;
+import org.egordorichev.lasttry.world.chunk.Chunk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,6 @@ public class WorldGenerator {
 
     /**
      * Adds a new generator task to the list
-     *
      * @param task task, to be added
      */
     public void addTask(GeneratorTask task) {
@@ -89,7 +88,6 @@ public class WorldGenerator {
 
     /**
      * Insert a new generator task at given index
-     *
      * @param task  task, to be added
      * @param index new task index
      */
@@ -99,7 +97,6 @@ public class WorldGenerator {
 
     /**
      * Removes task with given index
-     *
      * @param index task index to remove
      */
     public void removeTask(int index) {
@@ -108,12 +105,11 @@ public class WorldGenerator {
 
     /**
      * Generates a new world
-     *
      * @param width  world width in blocks
      * @param height world height in blocs
      * @return new world data
      */
-    public WorldData generate(int width, int height) {
+    public Chunk[] generate(int width, int height) {
         this.width = width;
         this.height = height;
         this.data = new WorldData(width * height);
@@ -126,12 +122,10 @@ public class WorldGenerator {
 
         this.runTasks();
 
-        return this.data;
+        return this.data.toChunks(width, height);
     }
 
-    /**
-     * Adds a new task, witch generates surface
-     */
+    /** Adds a new task, witch generates surface */
     private void addSurfaceGenerator() {
         this.tasks.add(0, new GeneratorTask() { // Terrain
             @Override

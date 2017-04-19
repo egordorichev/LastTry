@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.EnemyID;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -21,8 +20,8 @@ public class GamePlayState implements State {
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
-        int spawnX = LastTry.world.getWidth() / 2 * Block.TEX_SIZE;
-        int spawnY = 50 * Block.TEX_SIZE;
+        int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
+        int spawnY = 50 * Block.SIZE;
 
         LastTry.player.spawn(spawnX, spawnY);
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 1000));
@@ -30,9 +29,10 @@ public class GamePlayState implements State {
         LastTry.entityManager = new EntityManager();
 
         for (int i = 0; i < 2; i++) {
-            LastTry.entityManager.spawnEnemy(EnemyID.zombie, spawnX, spawnY);
-            LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, spawnX, spawnY);
-            LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
+            //TODO Points
+            //LastTry.entityManager.spawnEnemy(EnemyID.zombie, spawnX, spawnY);
+            //LastTry.entityManager.spawnEnemy(EnemyID.greenSlime, spawnX, spawnY);
+            //LastTry.entityManager.spawnEnemy(EnemyID.blueSlime, spawnX, spawnY);
         }
 
 	    LastTry.modLoader = new ModLoader();
@@ -68,10 +68,10 @@ public class GamePlayState implements State {
         LastTry.environment.render();
 
         LastTry.camera.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-                LastTry.player.getCenterX());
+                LastTry.player.physics.getCenterX());
 
         LastTry.camera.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-                LastTry.world.getHeight() * Block.TEX_SIZE - LastTry.player.getCenterY());
+                LastTry.world.getHeight() * Block.SIZE - LastTry.player.physics.getCenterY());
 
         LastTry.camera.update();
         LastTry.batch.setProjectionMatrix(LastTry.camera.combined);
@@ -85,10 +85,10 @@ public class GamePlayState implements State {
         int mouseX = (int) InputManager.getMousePosition().x;
         int mouseY = (int) InputManager.getMousePosition().y;
 
-        int hp = LastTry.player.getHp();
+        int hp = LastTry.player.stats.getHp();
         int x = Gdx.graphics.getWidth() - 260;
 
-	    Assets.f22.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.getMaxHp()), x,
+	    Assets.f22.draw(LastTry.batch, String.format("Life: %d/%d", hp, LastTry.player.stats.getMaxHP()), x,
                 Gdx.graphics.getHeight() - 4);
 
         for (int i = 0; i < hp / 20; i++) {
@@ -96,7 +96,7 @@ public class GamePlayState implements State {
         }
 
         LastTry.ui.render();
-        LastTry.player.renderBuffs();
+        // LastTry.player.renderBuffs(); TODO
         LastTry.debug.render();
     }
 

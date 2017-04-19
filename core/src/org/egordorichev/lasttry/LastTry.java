@@ -5,10 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
+import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.crash.Crash;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.player.*;
@@ -18,18 +17,17 @@ import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.*;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
-
+	import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 import java.util.Random;
 import java.util.Locale;
 
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0, 5);
+	public static final Version version = new Version(0, 6);
 	
 	/** Random instance */
 	public static final Random random = new Random();
@@ -49,26 +47,20 @@ public class LastTry extends Game {
 	/** Last Try instance */
 	public static LastTry instance;
 
-	/** Static log instance */
-	public static Log log;
-
 	/** Ui manager */
 	public static UiManager ui;
 
 	/** World instance */
 	public static World world;
 
-	/** World info */
-	public static WorldInfo worldInfo;
-
 	/** Player instance */
 	public static Player player;
 
-	/** Player info */
-	public static PlayerInfo playerInfo;
-
 	/** Environment instance*/
 	public static Environment environment;
+
+	/** Spawn system instance*/
+	public static SpawnSystem spawnSystem;
 
 	/** PhysicBody manager instance*/
 	public static EntityManager entityManager;
@@ -79,14 +71,9 @@ public class LastTry extends Game {
 	/** Debug helper */
 	public static Debug debug;
 
-	/** Used for debug */
-	public static ShapeRenderer shapeRenderer;
-
 	/** Creates first-priority instances */
 	@Override
 	public void create() {
-		log = new Log();
-
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
 			public void uncaughtException(Thread thread, Throwable throwable) {
@@ -96,12 +83,11 @@ public class LastTry extends Game {
 
 		instance = this;
 		debug = new Debug();
-		shapeRenderer = new ShapeRenderer();
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
                 
-                Locale en_US = new Locale("en", "US");
-                Language.load(en_US);
+        Locale en_US = new Locale("en", "US");
+        Language.load(en_US);
                 
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
@@ -123,16 +109,13 @@ public class LastTry extends Game {
 
 	/**
 	 * Handles window resize
-	 *
 	 * @param width  new window width
 	 * @param height new window height
 	 */
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-
 		viewport.update(width, height);
-		// camera.update();
 	}
 
 	/** Renders and updates the game */
@@ -151,11 +134,11 @@ public class LastTry extends Game {
 	@Override
 	public void dispose() {
 		if(player != null){
-			PlayerProvider.save();
+			PlayerIO.save();
 		}
 
 		if (world != null) {
-			WorldProvider.save(world);
+			WorldIO.save();
 		}
 
 		Assets.dispose();
@@ -163,71 +146,39 @@ public class LastTry extends Game {
 
 	/**
 	 * Returns random title for game the window
-	 *
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-            String[] split = Language.text.get("windowTitles").split("//");
-            return split[random.nextInt(split.length)];
-	}
-
-	/**
-	 * Logs given message
-	 * @param message message to log
-	 */
-	public static void log(String message) {
-		LastTry.log.info(message);
-	}
-
-	/**
-	 * Logs a info-level message
-	 * @param message message to log
-	 */
-	public static void debug(String message) {
-		log.debug(message);
-	}
-
-	public static void warning(String message) {
-		log.warn(message);
-	}
-
-	public static void error(String message) {
-		log.error(message);
+        String[] split = Language.text.get("windowTitles").split("//");
+        return split[random.nextInt(split.length)];
 	}
 
 	/**
 	 * Returns mouse X coordinate, under the world
-	 *
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+		return (int) (player.physics.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
 	}
 
 	/**
 	 * Returns mouse Y coordinate, under the world
-	 *
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+		return (int) (player.physics.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
 	}
 
-	//TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 	/**
 	 * Handles exception, if it is critical, exits the game
-	 *
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
-		// TODO: replace with Crash.report()
-		
-		exception.printStackTrace();
-		Throwable cause = exception;
+		// TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
+		Crash.report(Thread.currentThread(), exception);
+	}
 
-		while ((cause = cause.getCause()) != null) {
-			System.err.println("→ caused by:");
-			exception.getCause().printStackTrace ();
-		}
+	public static void abort() {
+		System.exit(1);
 	}
 }
