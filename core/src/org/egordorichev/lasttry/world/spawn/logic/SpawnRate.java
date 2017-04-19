@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.world.spawn;
+package org.egordorichev.lasttry.world.spawn.logic;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.world.environment.Event;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Spawnrate is decreased/increased based on various factors such as current events,
  * items in the environment and current game time.
  */
-public class SpawnRateLogic {
+public class SpawnRate {
 
     /**
      * Enums containing the spawn rate multiplier.

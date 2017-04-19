@@ -7,6 +7,8 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.spawn.logic.EnemySpawn;
+import org.egordorichev.lasttry.world.spawn.logic.SpawnRate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +49,16 @@ public class SpawnSystem {
         final int origSpawnRate = biome.getSpawnRate();
 
         //Spawn rate is modified based on different factors such as time, events occurring.
-        int spawnRate = SpawnRateLogic.calculateSpawnRate(origSpawnRate);
+        int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
 
         //Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
         float percentChanceSpawnRate = 1/(float)spawnRate;
 
+        ArrayList<Enemy> enemiesInActiveArea = this.generateEnemiesInActiveArea();
+
         //TODO Expensive calculation
         //TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
-        int spawnWeightOfActiveEnemies = this.calcSpawnWeightOfActiveEnemies();
+        int spawnWeightOfActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
 
         //If spawn weight of active enemies is greater than max spawns of biome we quit
         if(spawnWeightOfActiveEnemies>maxSpawns){
@@ -64,7 +68,7 @@ public class SpawnSystem {
         //TODO Split percentage calc into another method
         float percentageOfSpawnRateAndActiveMonsters;
 
-        diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfActiveEnemies;
+        int diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfActiveEnemies;
 
         if(spawnWeightOfActiveEnemies==0){
             percentageOfSpawnRateAndActiveMonsters = 1;
@@ -72,19 +76,18 @@ public class SpawnSystem {
             percentageOfSpawnRateAndActiveMonsters = ((float)spawnWeightOfActiveEnemies / (float)maxSpawns) * 100;
         }
 
-        float spawnRateFloat = SpawnRateLogic.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+        float spawnRateFloat = SpawnRate.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
 
-        if(!this.shouldEnemySpawn(spawnRateFloat)){
+        if(!EnemySpawn.shouldEnemySpawn(spawnRateFloat)){
             return;
         }
 
         LastTry.debug("Monster probability successful");
 
         //TODO Can branch here if 0 enemies
-        ArrayList<Enemy> eligibleEnemiesForSpawn = retrieveEligibleSpawnMonsters();
+        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(diffBetweenSpawnedAndMaxSpawns);
 
         if(eligibleEnemiesForSpawn.size()==0){
-
             return;
         }
 
@@ -129,45 +132,14 @@ public class SpawnSystem {
     }
 
 
-    private ArrayList<Enemy> retrieveEligibleSpawnMonsters() {
 
-        ArrayList<Enemy> eligibleEnemiesForSpawn = new ArrayList<>();
-
-        Enemy.triggerEnemyCacheCreation();
-
-        Enemy.availEnemies.stream().forEach(enemy -> {
-            if(enemy.canSpawn()&&enemy.getSpawnWeight()<=diffBetweenSpawnedAndMaxSpawns){
-                eligibleEnemiesForSpawn.add(enemy);
-            }
-        });
-
-        return eligibleEnemiesForSpawn;
-    }
 
     private Enemy retrieveRandomEnemy(ArrayList<Enemy> eligibleEnemiesForSpawning){
         int randomIndex = LastTry.random.nextInt(eligibleEnemiesForSpawning.size());
         return eligibleEnemiesForSpawning.get(randomIndex);
     }
 
-    private boolean shouldEnemySpawn(float spawnRateFloat){
-        //TODO Rethink probability
-        float randomNumber = LastTry.random.nextFloat()/100;
 
-        if(spawnRateFloat>randomNumber){
-            return true;
-        }
-
-        return false;
-    }
-
-
-
-    private int calcSpawnWeightOfActiveEnemies(){
-
-       this.generateEnemiesInActiveArea();
-
-        return this.activeEnemyEntities.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
-    }
 
     //TODO Move out
     /**
@@ -206,11 +178,11 @@ public class SpawnSystem {
      *
      * @return A list of enemies int he active area.
      */
-    private void generateEnemiesInActiveArea() {
+    private ArrayList<Enemy> generateEnemiesInActiveArea() {
 
         //Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         //each time to ensure we have an up to date list
-        this.activeEnemyEntities.clear();
+        ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
 
         this.generateMinMaxGridBlockValues();
 
@@ -221,10 +193,12 @@ public class SpawnSystem {
             //TODO Rethink
             //Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
             if(this.isEnemyInActiveArea(enemy)){
-                this.activeEnemyEntities.add(enemy);
+                enemiesInActiveArea.add(enemy);
                 //LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
         });
+
+        return enemiesInActiveArea;
     }
 
     /**
