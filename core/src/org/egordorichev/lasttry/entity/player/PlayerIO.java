@@ -36,6 +36,8 @@ public class PlayerIO {
 				LastTry.abort();
 			}
 
+			// COmment
+
 			LastTry.player = new Player(playerName);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
