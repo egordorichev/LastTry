@@ -6,19 +6,20 @@ import org.egordorichev.lasttry.entity.*;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.entity.enemy.enemies.BlueSlime;
+import org.egordorichev.lasttry.entity.enemy.enemies.GreenSlime;
 import org.egordorichev.lasttry.entity.player.Player;
-<<<<<<< HEAD
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
-
-=======
->>>>>>> component-future
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-<<<<<<< HEAD
-public abstract class Enemy extends Entity {
+import static org.egordorichev.lasttry.entity.enemy.Enemies.define;
+
+public abstract class Enemy extends CreatureWithAI {
     /**
      * Defined enemies
      */
@@ -50,14 +51,10 @@ public abstract class Enemy extends Entity {
     /**
      * Enemy id
      */
-=======
-public abstract class Enemy extends CreatureWithAI {
->>>>>>> component-future
     protected int id;
     protected Texture texture;
     protected List<Drop> drops = new ArrayList<>();
 
-<<<<<<< HEAD
     /**
      * Each biome has a maxinum number of enemies limit.  When deciding what enemy to spawn next in a biome, the
      * spawn weight of multiple enemies are added till the maximum number of enemies in the biome is complete.
@@ -78,6 +75,13 @@ public abstract class Enemy extends CreatureWithAI {
         this.name = name;
     }
 
+    public Enemy(short id, int maxHp, int defense, int damage) {
+        super(new PhysicsComponent(), new EnemyGraphicsComponent());
+
+        this.stats.set(maxHp, 0, damage, defense);
+        this.id = id;
+    }
+
     public Enemy(short id, String name) {
         //TODO Should parameters be converted into an enum?
         //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
@@ -88,7 +92,7 @@ public abstract class Enemy extends CreatureWithAI {
 
     public static void define(short id, Class<? extends Enemy> enemy) {
         // TODO: handle duplicates
-        LastTry.debug("Defined [" + id + "] as " + enemy.getSimpleName());
+        Log.debug("Defined [" + id + "] as " + enemy.getSimpleName());
         ENEMY_CACHE.put(id, enemy);
 
         Enemy enemyInstance = create(id);
@@ -102,7 +106,7 @@ public abstract class Enemy extends CreatureWithAI {
             if (aClass != null) {
                 return aClass.newInstance();
             } else {
-                LastTry.log.warn("Enemy with id " + id + " is not found");
+                Log.warn("Enemy with id " + id + " is not found");
                 return null;
             }
         } catch (Exception exception) {
@@ -115,7 +119,7 @@ public abstract class Enemy extends CreatureWithAI {
     public void render() {
         this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
                         - this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
-                (this.direction == Direction.RIGHT), false);
+                (this.direction == PhysicsComponent.Direction.RIGHT), false);
     }
 
     @Override
@@ -130,13 +134,6 @@ public abstract class Enemy extends CreatureWithAI {
 
         // this.animations[this.state.getId()].update(dt);
         this.updateAI();
-=======
-    public Enemy(short id, int maxHp, int defense, int damage) {
-        super(new PhysicsComponent(), new EnemyGraphicsComponent());
-
-        this.stats.set(maxHp, 0, damage, defense);
-	    this.id = id;
->>>>>>> component-future
     }
 
     public void updateAI() {

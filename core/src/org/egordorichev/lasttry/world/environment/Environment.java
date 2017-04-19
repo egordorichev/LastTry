@@ -174,7 +174,7 @@ public class Environment {
 
         for (int y = minY; y < maxY; y++) {
             for (int x = minX; x < maxX; x++) {
-                this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
+                this.blockCount[LastTry.world.blocks.getID(x, y)] += 1;
             }
         }
 

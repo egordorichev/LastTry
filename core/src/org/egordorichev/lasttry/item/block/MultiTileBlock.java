@@ -16,7 +16,7 @@ public class MultiTileBlock extends Block {
     public void renderBlock(int x, int y) {
 		boolean first = false;
 
-		if (LastTry.world.getBlockID(x - 1, y) == this.id) {
+		if (LastTry.world.blocks.getID(x - 1, y) == this.id) {
 
 		} else {
 			first = true;
@@ -42,7 +42,7 @@ public class MultiTileBlock extends Block {
 	public void place(int x, int y) {
 		for (int j = y; j < y + this.height; j++) {
 			for (int i = x; i < x + this.width; i++) {
-				LastTry.world.setBlock(this.id, i, j);
+				LastTry.world.blocks.set(this.id, i, j);
 			}
 		}
 	}

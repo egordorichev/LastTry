@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.spawn.logic.EnemySpawn;
 import org.egordorichev.lasttry.world.spawn.logic.SpawnRate;
@@ -82,7 +83,7 @@ public class SpawnSystem {
             return;
         }
 
-        LastTry.debug("Monster probability successful");
+        Log.debug("Monster probability successful");
 
         //TODO Can branch here if 0 enemies
         ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(diffBetweenSpawnedAndMaxSpawns);
@@ -93,7 +94,7 @@ public class SpawnSystem {
 
         Enemy enemyToBeSpawned = retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
-        LastTry.debug("Enemy to be spawned is: "+enemyToBeSpawned);
+        Log.debug("Enemy to be spawned is: "+enemyToBeSpawned);
 
         spawnEnemy(enemyToBeSpawned);
 
@@ -105,11 +106,11 @@ public class SpawnSystem {
 
         GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
 
-        LastTry.debug("Monster about to be spawned");
+        Log.debug("Monster about to be spawned");
 
-        LastTry.debug("Monster is being spawned with block x point of: "+suitableXySpawnPoint.getFirst()/Block.TEX_SIZE+ " block y point of: "+suitableXySpawnPoint.getSecond()/Block.TEX_SIZE);
+        Log.debug("Monster is being spawned with block x point of: "+suitableXySpawnPoint.getFirst()/Block.SIZE+ " block y point of: "+suitableXySpawnPoint.getSecond()/Block.SIZE);
 
-        LastTry.debug("Monster is being spawned with x point of: "+suitableXySpawnPoint.getFirst()+ "y point of: "+suitableXySpawnPoint.getSecond());
+        Log.debug("Monster is being spawned with x point of: "+suitableXySpawnPoint.getFirst()+ "y point of: "+suitableXySpawnPoint.getSecond());
 
         LastTry.entityManager.spawnEnemy((short)enemy.getId(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
 
@@ -118,12 +119,12 @@ public class SpawnSystem {
     //MOVE OUT
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
 
-        LastTry.debug("Generating eligible spawn point");
+        Log.debug("Generating eligible spawn point");
 
         //Generate inside the active zone
         int xGridSpawnPoint = maxXGridForActiveZone-30; int yGridSpawnPoint = minYGRID;
 
-        int xPixelSpawnPoint = xGridSpawnPoint* Block.TEX_SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.TEX_SIZE;
+        int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
 
         GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
         xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
@@ -148,17 +149,17 @@ public class SpawnSystem {
     private void generateMinMaxGridBlockValues() {
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.TEX_SIZE;
-        int twh = windowHeight / Block.TEX_SIZE;
+        int tww = windowWidth / Block.SIZE;
+        int twh = windowHeight / Block.SIZE;
 
         //We want to get the further most position of x on the screen, camera is always in the middle so we
         //divide total window width by 2 and divide by blcok size to get grid position
-        int tcx = (int) (LastTry.camera.position.x - windowWidth/2) / Block.TEX_SIZE;
+        int tcx = (int) (LastTry.camera.position.x - windowWidth/2) / Block.SIZE;
 
         //TODO Change on inversion of y axis
         //We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
         int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight/2)
-                / Block.TEX_SIZE);
+                / Block.SIZE);
 
         //Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         this.minYGRID = Math.max(0, tcy - 2);
@@ -211,8 +212,8 @@ public class SpawnSystem {
     private boolean isEnemyInActiveArea(Enemy enemy) {
 
         //Get block co ordinates of enemy
-        int enemyBlockGridX = enemy.getGridX();
-        int enemyBlockGridY = enemy.getGridY();
+        int enemyBlockGridX = enemy.physics.getGridX();
+        int enemyBlockGridY = enemy.physics.getGridY();
 
         //TODO Change on inversion of y axis
         //Due to inverted y axis
@@ -227,12 +228,12 @@ public class SpawnSystem {
             }
         }
 
-        LastTry.debug("Limits maxXGrid: "+this.maxXGridForActiveZone+" and limits min X grid: "+this.minXGrid);
-        LastTry.debug("Pixels max X Grid: "+this.maxXGridForActiveZone*Block.TEX_SIZE+" and pixel limits X grid: "+this.minXGrid*Block.TEX_SIZE);
-        LastTry.debug("Limits maxYGrid: "+this.maxYGrid+" and limits min Y grid: "+this.minYGRID);
-        LastTry.debug("Pixels max Y Grid: "+this.maxYGrid*Block.TEX_SIZE+" and pixel limits Y grid: "+this.minYGRID*Block.TEX_SIZE);
-        LastTry.debug("Enemy found out of active area with x of: "+enemyBlockGridX+" and y of: "+enemyBlockGridY);
-        LastTry.debug("In pixels x is: "+enemyBlockGridX*Block.TEX_SIZE+" and y pixels is: "+enemyBlockGridY*Block.TEX_SIZE);
+        Log.debug("Limits maxXGrid: "+this.maxXGridForActiveZone+" and limits min X grid: "+this.minXGrid);
+        Log.debug("Pixels max X Grid: "+this.maxXGridForActiveZone*Block.SIZE+" and pixel limits X grid: "+this.minXGrid*Block.SIZE);
+        Log.debug("Limits maxYGrid: "+this.maxYGrid+" and limits min Y grid: "+this.minYGRID);
+        Log.debug("Pixels max Y Grid: "+this.maxYGrid*Block.SIZE+" and pixel limits Y grid: "+this.minYGRID*Block.SIZE);
+        Log.debug("Enemy found out of active area with x of: "+enemyBlockGridX+" and y of: "+enemyBlockGridY);
+        Log.debug("In pixels x is: "+enemyBlockGridX*Block.SIZE+" and y pixels is: "+enemyBlockGridY*Block.SIZE);
 
         return false;
     }
@@ -244,13 +245,13 @@ public class SpawnSystem {
      */
     public void calcArea(){
 
-        float xOfPLayer = LastTry.player.getCenterX();
-        float yOfPlayer = LastTry.player.getCenterY();
+        float xOfPLayer = LastTry.player.physics.getCenterX();
+        float yOfPlayer = LastTry.player.physics.getCenterY();
 
         AdvancedRectangle advancedRectangle = new AdvancedRectangle(xOfPLayer, yOfPlayer, 6);
 
         if(advancedRectangle.allSidesInBoundary()){
-            LastTry.debug("All sides in boundary");
+            Log.debug("All sides in boundary");
             //advancedRectangle.debugSetItemsOnPoints();
         }
     }
