@@ -36,11 +36,7 @@ public class SplashState implements State {
 
 	    if (Assets.load()) {
 	        Graphics.load();
-
-	        PlayerIO.load("test");
-	        WorldIO.load("test");
-
-	        LastTry.instance.setScreen(new GamePlayState());
+	        LastTry.instance.setScreen(new LoadState());
 	    }
     }
 

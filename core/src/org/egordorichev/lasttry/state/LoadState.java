@@ -1,14 +1,12 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.entity.player.PlayerProvider;
+import org.egordorichev.lasttry.entity.player.PlayerIO;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.world.WorldProvider;
+import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
@@ -29,9 +27,9 @@ public class LoadState implements State {
                         loadString = "Loading environment...";
                         LastTry.environment = new Environment();
                         loadString = "Loading world...";
-                        LastTry.world = WorldProvider.load();
-                        loadString = "Loading player...";
-                        LastTry.player = PlayerProvider.load();
+	                    WorldIO.load("test");
+	                    loadString = "Loading player...";
+	                    PlayerIO.load("test");
                         loaded = true;
                     }
                 });
