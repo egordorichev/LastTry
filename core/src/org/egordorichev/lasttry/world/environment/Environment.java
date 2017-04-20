@@ -101,8 +101,6 @@ public class Environment {
             }
         }
 
-        //LastTry.spawnSystem.calcArea();
-
         LastTry.spawnSystem.update();
     }
 

@@ -12,7 +12,7 @@ public class Biome {
     public static Biome corruptDesert = new CorruptDesertBiome();
     public static Biome crimsonDesert = new CrimsonDesertBiome();
 
-    public BiomeAnimationComponent biomeAnimation;
+    public BiomeAnimationComponent animation;
 
     protected String name;
 
@@ -21,7 +21,7 @@ public class Biome {
     public Biome(String name, SpawnInfo spawnInfo, Texture backgroundTexture) {
         this.name = name;
         this.spawnInfo = spawnInfo;
-        biomeAnimation = new BiomeAnimationComponent(this, backgroundTexture);
+        animation = new BiomeAnimationComponent(this, backgroundTexture);
     }
 
     //TODO To be implemented
