@@ -20,7 +20,7 @@ import java.util.List;
  * Created by LogoTie on 17/04/2017.
  */
 public class SpawnSystem {
-    private Biome biome;
+    private  Biome biome;
     private int spawnRate;
 	private int maxSpawns;
     private int minXGrid;
@@ -37,13 +37,14 @@ public class SpawnSystem {
         }
 
         this.biome = LastTry.environment.currentBiome.get(); // Get user biome
-	    this.spawnTriggered();
+	    spawnTriggered();
     }
 
     // TODO Split method
-    private void spawnTriggered() {
+    private  void spawnTriggered() {
         // Retrieve max spawns of biome
-        final int maxSpawns = biome.getSpawnMax();  final int origSpawnRate = biome.getSpawnRate();
+        final int maxSpawns = this.biome.getSpawnMax();
+        final int origSpawnRate = this.biome.getSpawnRate();
 
         // Spawn rate is modified based on different factors such as time, events occurring.
         int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
@@ -86,23 +87,17 @@ public class SpawnSystem {
             return;
         }
 
-        Enemy enemyToBeSpawned = retrieveRandomEnemy(eligibleEnemiesForSpawn);
-        spawnEnemy(enemyToBeSpawned);
+        Enemy enemyToBeSpawned = EnemySpawn.retrieveRandomEnemy(eligibleEnemiesForSpawn);
+        this.spawnEnemy(enemyToBeSpawned);
     }
 
     private void spawnEnemy(Enemy enemy) {
         GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
-
-        Log.debug("Monster about to be spawned");
-        Log.debug("Monster is being spawned with block x point of: "+suitableXySpawnPoint.getFirst()/Block.SIZE+ " block y point of: "+suitableXySpawnPoint.getSecond()/Block.SIZE);
-        Log.debug("Monster is being spawned with x point of: "+suitableXySpawnPoint.getFirst()+ "y point of: "+suitableXySpawnPoint.getSecond());
         LastTry.entityManager.spawnEnemy((short)enemy.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
     }
 
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
-
         Log.debug("Generating eligible spawn point");
-
         // Generate inside the active zone
         int xGridSpawnPoint = maxXGridForActiveZone-30; int yGridSpawnPoint = minYGRID;
         int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
@@ -111,11 +106,6 @@ public class SpawnSystem {
         xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
 
         return xyPoint;
-    }
-
-    private Enemy retrieveRandomEnemy(ArrayList<Enemy> eligibleEnemiesForSpawning){
-        int randomIndex = LastTry.random.nextInt(eligibleEnemiesForSpawning.size());
-        return eligibleEnemiesForSpawning.get(randomIndex);
     }
 
     private void generateMinMaxGridBlockValues() {
@@ -130,8 +120,7 @@ public class SpawnSystem {
 
         // TODO Change on inversion of y axis
         // We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)
-                / Block.SIZE);
+        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         this.minYGRID = Math.max(0, tcy - 2);
@@ -172,20 +161,11 @@ public class SpawnSystem {
         int enemyBlockGridY = enemy.physics.getGridY();
 
         // TODO Change on inversion of y axis
-        // Due to inverted y axis
-
         if(enemyBlockGridX>=this.minXGrid&&enemyBlockGridX<=this.maxXGridForActiveZone){
             if(enemyBlockGridY<=this.maxYGrid&&enemyBlockGridY>=this.minYGRID){
                 return true;
             }
         }
-
-        Log.debug("Limits maxXGrid: "+this.maxXGridForActiveZone+" and limits min X grid: "+this.minXGrid);
-        Log.debug("Pixels max X Grid: "+this.maxXGridForActiveZone*Block.SIZE+" and pixel limits X grid: "+this.minXGrid*Block.SIZE);
-        Log.debug("Limits maxYGrid: "+this.maxYGrid+" and limits min Y grid: "+this.minYGRID);
-        Log.debug("Pixels max Y Grid: "+this.maxYGrid*Block.SIZE+" and pixel limits Y grid: "+this.minYGRID*Block.SIZE);
-        Log.debug("Enemy found out of active area with x of: "+enemyBlockGridX+" and y of: "+enemyBlockGridY);
-        Log.debug("In pixels x is: "+enemyBlockGridX*Block.SIZE+" and y pixels is: "+enemyBlockGridY*Block.SIZE);
 
         return false;
     }
