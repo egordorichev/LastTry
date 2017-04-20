@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.biome.components.BiomeComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,11 +32,12 @@ public class Environment {
     /**
      * Current biome, player is
      */
-    private Biome currentBiome = null;
+    private BiomeComponent currentBiome = null;
+
     /**
      * Previous biome
      */
-    private Biome lastBiome = null;
+    private BiomeComponent lastBiome = null;
 
     public Environment() {
         this.blockCount = new int[ItemID.count];
@@ -98,8 +100,6 @@ public class Environment {
                 event.update(dt);
             }
         }
-
-        //LastTry.spawnSystem.calcArea();
 
         LastTry.spawnSystem.update();
     }
@@ -182,21 +182,21 @@ public class Environment {
         this.lastBiome = this.currentBiome;
 
         if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
-            this.currentBiome = Biome.corruption;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
-            this.currentBiome = Biome.crimson;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
-            this.currentBiome = Biome.corruptDesert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
-            this.currentBiome = Biome.crimsonDesert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.sandBlock] >= 1000) {
-            this.currentBiome = Biome.desert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else {
-            this.currentBiome = Biome.forest;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         }
     }
 
-    public Biome getCurrentBiome() {
+    public BiomeComponent getCurrentBiome() {
         return this.currentBiome;
     }
 
