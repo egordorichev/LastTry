@@ -25,22 +25,11 @@ public class Biome {
     }
 
     //TODO To be implemented
-    public static void preload() {
-    }
-
-    public void fadeIn() { biomeAnimation.fadeIn(); }
-
-    public void fadeOut() { biomeAnimation.fadeOut();}
-
-    public boolean fadeInIsDone() { return biomeAnimation.fadeInIsDone(); }
-
-    public boolean fadeOutIsDone() { return this.biomeAnimation.fadeOutIsDone(); }
+    public static void preload() { }
 
     public String getName() {
         return this.name;
     }
-
-    public void renderBackground() { this.biomeAnimation.renderBackground();}
 
     public int getSpawnRate()
     {

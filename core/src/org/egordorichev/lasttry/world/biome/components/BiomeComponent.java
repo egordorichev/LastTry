@@ -9,22 +9,22 @@ public class BiomeComponent extends Component {
     public BiomeComponent(Biome biome) {this.biome = biome;}
 
     public void fadeIn() {
-        this.biome.fadeIn();
+        this.biome.biomeAnimation.fadeIn();
     }
 
     public void fadeOut() {
-        this.biome.fadeOut();
+        this.biome.biomeAnimation.fadeOut();
     }
 
-    public boolean fadeInIsDone() { return this.biome.fadeInIsDone(); }
+    public boolean fadeInIsDone() { return this.biome.biomeAnimation.fadeInIsDone(); }
 
     public boolean fadeOutIsDone() {
-        return this.biome.fadeOutIsDone();
+        return this.biome.biomeAnimation.fadeOutIsDone();
     }
 
     public String getName() {
         return this.biome.getName();
     }
 
-    public void renderBackground() { this.biome.renderBackground();}
+    public void renderBackground() { this.biome.biomeAnimation.renderBackground();}
 }
