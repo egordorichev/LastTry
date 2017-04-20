@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.world.spawn.logic;
+package org.egordorichev.lasttry.world.spawn.components;
 
 import org.egordorichev.lasttry.world.environment.Event;
 

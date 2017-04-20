@@ -7,11 +7,13 @@ public class Creature extends Entity {
 	public CreatureGraphicsComponent graphics;
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
+	public CreatureEffectComponent effects;
 
 	public Creature() {
 		this.physics = new CreaturePhysicsComponent(this);
 		this.stats = new CreatureStatsComponent(this);
 		this.state = new CreatureStateComponent(this);
+		this.effects = new CreatureEffectComponent(this);
 	}
 
 	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {

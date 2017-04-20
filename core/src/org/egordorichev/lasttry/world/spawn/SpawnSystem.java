@@ -9,8 +9,8 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.spawn.logic.EnemySpawn;
-import org.egordorichev.lasttry.world.spawn.logic.SpawnRate;
+import org.egordorichev.lasttry.world.spawn.components.EnemySpawn;
+import org.egordorichev.lasttry.world.spawn.components.SpawnRate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,7 @@ public class SpawnSystem {
     // TODO Split method
     private void spawnTriggered() {
         // Retrieve max spawns of biome
-        final int maxSpawns = biome.getSpawnMax();
-        final int origSpawnRate = biome.getSpawnRate();
+        final int maxSpawns = biome.getSpawnMax();  final int origSpawnRate = biome.getSpawnRate();
 
         // Spawn rate is modified based on different factors such as time, events occurring.
         int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
