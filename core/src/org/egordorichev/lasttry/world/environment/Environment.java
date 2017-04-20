@@ -19,10 +19,12 @@ public class Environment {
     public int[] blockCount;
     public WorldTime time;
     public ArrayList<Event> events = new ArrayList<Event>();
-	public BiomeComponent currentBiome = null;
-	public BiomeComponent lastBiome = null;
+	public BiomeComponent currentBiome;
+	public BiomeComponent lastBiome;
 
     public Environment() {
+	    this.currentBiome = new BiomeComponent(Biome.forest);
+	    this.lastBiome = new BiomeComponent(Biome.forest);
         this.blockCount = new int[ItemID.count];
         this.time = new WorldTime((byte) 8, (byte) 15);
 

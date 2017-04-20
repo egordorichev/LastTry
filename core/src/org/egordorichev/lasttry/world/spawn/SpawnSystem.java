@@ -36,7 +36,7 @@ public class SpawnSystem {
         if(LastTry.environment.currentBiome.get() == null){
             return;
         }
-        
+
         //Get user biome
         this.biome = LastTry.environment.currentBiome.get();
         this.spawnTriggered();
