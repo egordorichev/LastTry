@@ -17,15 +17,21 @@ public class Creature extends Entity {
 	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
 		this.physics = physics;
 		this.graphics = graphics;
+
+		this.physics.setCreature(this);
+		this.graphics.setCreature(this);
 	}
 
 	@Override
 	public void render() {
+		super.render();
 		this.graphics.render();
 	}
 
 	@Override
 	public void update(int dt) {
+		super.update(dt);
+
 		this.physics.update(dt);
 		this.stats.update(dt);
 	}
