@@ -33,11 +33,12 @@ public class SpawnSystem {
     private List<Enemy> activeEnemyEntities = new ArrayList<>();
 
     public void update() {
-        if(LastTry.environment.getCurrentBiome()==null){
+        if(LastTry.environment.currentBiome.get() == null){
             return;
         }
+        
         //Get user biome
-        this.biome = LastTry.environment.getCurrentBiome();
+        this.biome = LastTry.environment.currentBiome.get();
         this.spawnTriggered();
     }
 
