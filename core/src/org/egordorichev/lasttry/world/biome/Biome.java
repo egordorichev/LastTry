@@ -24,6 +24,7 @@ public class Biome {
         biomeAnimation = new BiomeAnimationComponent(this, backgroundTexture);
     }
 
+    //TODO To be implemented
     public static void preload() {
     }
 
