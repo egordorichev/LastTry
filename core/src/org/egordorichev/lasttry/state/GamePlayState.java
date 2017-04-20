@@ -24,7 +24,7 @@ public class GamePlayState implements State {
         int spawnY = 50 * Block.SIZE;
 
         LastTry.player.spawn(spawnX, spawnY);
-        LastTry.player.inventory.add(new ItemHolder(Items.wood, 1000));
+        LastTry.player.inventory.add(new ItemHolder(Items.wood, 100));
         LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));
         LastTry.entityManager = new EntityManager();
     }
