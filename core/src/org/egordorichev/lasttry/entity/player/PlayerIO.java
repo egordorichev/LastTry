@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
@@ -114,7 +115,13 @@ public class PlayerIO {
 	}
 
 	public static Player generate(String name) {
-		return new Player(name); // TODO
+		Player player = new Player(name);
+
+		player.inventory.add(new ItemHolder(Items.copperShortSword, 1));
+		player.inventory.add(new ItemHolder(Items.copperPickaxe 1));
+		player.inventory.add(new ItemHolder(Items.copperAxe, 1));
+
+		return player; // TODO
 	}
 
 	public static boolean saveExists(String name) {
