@@ -118,7 +118,7 @@ public class PlayerIO {
 		Player player = new Player(name);
 
 		player.inventory.add(new ItemHolder(Items.copperShortSword, 1));
-		player.inventory.add(new ItemHolder(Items.copperPickaxe 1));
+		player.inventory.add(new ItemHolder(Items.copperPickaxe, 1));
 		player.inventory.add(new ItemHolder(Items.copperAxe, 1));
 
 		return player; // TODO
