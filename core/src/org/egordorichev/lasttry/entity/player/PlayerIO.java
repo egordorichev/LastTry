@@ -23,6 +23,8 @@ public class PlayerIO {
 			LastTry.abort();
 		}
 
+		Log.debug("Loading player " + playerName + "...");
+
 		try {
 			FileReader stream = new FileReader(fileName);
 
@@ -44,7 +46,7 @@ public class PlayerIO {
 				if (id != 0) {
 					ItemHolder holder = LastTry.player.inventory.getItemHolder(i);
 					holder.setItem(Item.fromID(id));
-					holder.setCount(stream.readInt32());
+					holder.setCount(stream.readInt16());
 
 					if (stream.readBoolean()) {
 						holder.setModifier(Modifier.fromID(stream.readByte()));
@@ -61,6 +63,8 @@ public class PlayerIO {
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
+
+		Log.debug("Done loading player " + playerName + "!");
 	}
 
 	public static void save() {
@@ -76,6 +80,8 @@ public class PlayerIO {
 			}
 		}
 
+		Log.debug("Saving player " + LastTry.player.getName() + "...");
+
 		try {
 			FileWriter stream = new FileWriter(fileName);
 			stream.writeInt32(VERSION);
@@ -90,7 +96,10 @@ public class PlayerIO {
 					stream.writeInt16((short) holder.getCount());
 
 					if (holder.getModifier() != null) {
+						stream.writeBoolean(true);
 						stream.writeByte(holder.getModifier().getID());
+					} else {
+						stream.writeBoolean(false);
 					}
 				}
 			}
@@ -100,6 +109,8 @@ public class PlayerIO {
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
+
+		Log.debug("Done saving player " + LastTry.player.getName() + "!");
 	}
 
 	public static Player generate(String name) {

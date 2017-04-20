@@ -33,6 +33,7 @@ public class Log {
         System.out.print(start + " ");
         printPath(Thread.currentThread().getStackTrace());
         System.out.println(" " + message + ANSI_RESET);
+        System.out.flush();
     }
 
     private static void printPath(StackTraceElement[] stackTraceElements) {

@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Creature {
-	public static final int INVENTORY_SIZE = 89;
+	public static final int INVENTORY_SIZE = 88;
 
 	public UiInventory inventory;
 	private PlayerInputComponent input;

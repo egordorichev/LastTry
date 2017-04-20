@@ -21,6 +21,8 @@ public class WorldIO {
 			LastTry.abort();
 		}
 
+		Log.debug("Loading world " + name + "...");
+
 		try {
 			FileReader stream = new FileReader(fileName);
 
@@ -54,9 +56,14 @@ public class WorldIO {
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
+
+		Log.debug("Done loading world " + name + "!");
 	}
 
 	public static World generate(String name, World.Size size, int flags) {
+		File file = new File("worlds/" + name + "/");
+		file.mkdir();
+
 		return new World(name, size, flags); // TODO
 	}
 
@@ -73,9 +80,10 @@ public class WorldIO {
 			}
 		}
 
+		Log.debug("Saving world " + LastTry.world.getName() + "...");
+
 		try {
 			FileWriter stream = new FileWriter(fileName);
-
 			stream.writeInt32(VERSION);
 
 			switch (LastTry.world.getSize()) {
@@ -92,6 +100,8 @@ public class WorldIO {
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
+
+		Log.debug("Done saving world " + LastTry.world.getName() + "!");
 	}
 
 	public static boolean saveExists(String name) {

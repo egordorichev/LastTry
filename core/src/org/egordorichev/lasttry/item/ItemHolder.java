@@ -55,6 +55,14 @@ public class ItemHolder {
 	}
 
 	public void setCount(int count) {
+    	if (this.item == null) {
+    		this.count = 0;
+	    }
+
+    	if (count > this.item.getMaxInStack()) {
+    		this.count = this.item.getMaxInStack();
+	    }
+
 		this.count = count;
 	}
 
