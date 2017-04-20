@@ -53,10 +53,10 @@ public class WorldChunksComponent extends WorldComponent {
 
 		// TODO: check, if they are the same
 
-		tl.render();
+		/* tl.render();
 		tr.render();
 		bl.render();
-		br.render();
+		br.render(); */
 	}
 
 	public void load(int x, int y) {

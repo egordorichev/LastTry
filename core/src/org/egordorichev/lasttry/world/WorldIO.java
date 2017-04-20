@@ -54,12 +54,10 @@ public class WorldIO {
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
-
-		LastTry.world = null;
 	}
 
-	public static World generate(String name, short width, short height, int flags) {
-		return null; // TODO
+	public static World generate(String name, World.Size size, int flags) {
+		return new World(name, size, flags); // TODO
 	}
 
 	public static void save() {

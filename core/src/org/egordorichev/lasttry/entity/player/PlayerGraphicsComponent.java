@@ -13,11 +13,9 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private Texture texture;
 
 	public PlayerGraphicsComponent() {
-		this.setupAnimations();
-
 		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.GREEN, Color.GREEN, 1, true); // TODO: replace it
-
 		this.texture = PlayerRenderer.generateTexture(info);
+		this.setupAnimations();
 	}
 
 	@Override

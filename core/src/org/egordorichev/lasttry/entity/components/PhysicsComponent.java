@@ -16,7 +16,6 @@ public class PhysicsComponent extends CreatureComponent {
 	protected static final float STOP_VELOCITY = 0.2F;
 	protected static final float STEP_HEIGHT = 1.05F;
 
-	protected Entity entity;
 	protected Vector2 position = new Vector2();
 	protected Vector2 size = new Vector2();
 	protected Vector2 velocity = new Vector2();
@@ -41,7 +40,7 @@ public class PhysicsComponent extends CreatureComponent {
 	}
 
 	public void update(int dt) {
-		if (!this.entity.isActive()) {
+		if (!this.creature.isActive()) {
 			return;
 		}
 
@@ -50,19 +49,17 @@ public class PhysicsComponent extends CreatureComponent {
 		this.updateXVelocity();
 		this.updateYVelocity();
 
-		CreatureStateComponent state = ((Creature) this.entity).state;
-
 		if (this.velocity.y > 0) {
-			state.set(CreatureStateComponent.State.FALLING);
-		} else if (this.velocity.y == 0 && state.get() == CreatureStateComponent.State.FALLING) {
-			state.set(CreatureStateComponent.State.IDLE);
+			this.creature.state.set(CreatureStateComponent.State.FALLING);
+		} else if (this.velocity.y == 0 && this.creature.state.get() == CreatureStateComponent.State.FALLING) {
+			this.creature.state.set(CreatureStateComponent.State.IDLE);
 		}
 
-		if (this.velocity.x == 0 && state.get() != CreatureStateComponent.State.IDLE
-				&& state.get() != CreatureStateComponent.State.FALLING
-				&& state.get() != CreatureStateComponent.State.JUMPING) {
+		if (this.velocity.x == 0 && this.creature.state.get() != CreatureStateComponent.State.IDLE
+				&& this.creature.state.get() != CreatureStateComponent.State.FALLING
+				&& this.creature.state.get() != CreatureStateComponent.State.JUMPING) {
 
-			state.set(CreatureStateComponent.State.IDLE);
+			this.creature.state.set(CreatureStateComponent.State.IDLE);
 		}
 	}
 

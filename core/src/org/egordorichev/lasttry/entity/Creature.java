@@ -20,6 +20,9 @@ public class Creature extends Entity {
 
 		this.physics.setCreature(this);
 		this.graphics.setCreature(this);
+
+		this.stats = new CreatureStatsComponent(this);
+		this.state = new CreatureStateComponent(this);
 	}
 
 	@Override

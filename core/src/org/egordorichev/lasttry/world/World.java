@@ -16,13 +16,13 @@ public class World {
 	private String name;
 
 	public World(String name, Size size, int flags) {
+		this.size = size;
+		this.name = name;
+
 		this.chunks = new WorldChunksComponent(this);
 		this.flags = new WorldFlagsComponent(this, flags);
 		this.blocks = new WorldBlocksComponent(this);
 		this.walls = new WorldWallsComponent(this);
-
-		this.size = size;
-		this.name = name;
 	}
 
 	public void render() {

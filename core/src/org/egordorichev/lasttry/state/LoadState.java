@@ -32,7 +32,7 @@ public class LoadState implements State {
                         if (WorldIO.saveExists("test")) {
                         	WorldIO.load("test");
                         } else {
-                        	WorldIO.generate("test", World.Size.SMALL.getWidth(), World.Size.SMALL.getHeight(), 0);
+                        	LastTry.world = WorldIO.generate("test", World.Size.SMALL, 0);
                         }
 
                         loadString = "Loading player...";
@@ -40,7 +40,7 @@ public class LoadState implements State {
                         if (PlayerIO.saveExists("test")) {
 	                        PlayerIO.load("test");
                         } else {
-	                        PlayerIO.generate("test");
+	                        LastTry.player = PlayerIO.generate("test");
                         }
 
                         loaded = true;
