@@ -10,4 +10,8 @@ public class BiomeAnimationComponent extends BiomeComponent {
         super(biome);
     }
 
+    /**
+     * Texture alpha
+     */
+    public float alpha = 0;
 }

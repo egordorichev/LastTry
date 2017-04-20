@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.biome;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
 public class Biome {
     public static Biome forest = new ForestBiome();
@@ -11,6 +12,7 @@ public class Biome {
     public static Biome corruptDesert = new CorruptDesertBiome();
     public static Biome crimsonDesert = new CrimsonDesertBiome();
 
+    public BiomeAnimationComponent biomeAnimation;
 
     /**
      * Background texture
@@ -24,11 +26,6 @@ public class Biome {
 
 
     /**
-     * Texture alpha
-     */
-    private float alpha = 0;
-
-    /**
      * Spawn info
      */
     private SpawnInfo spawnInfo;
@@ -37,6 +34,7 @@ public class Biome {
         this.name = name;
         this.spawnInfo = spawnInfo;
         this.texture = texture;
+        biomeAnimation = new BiomeAnimationComponent(this);
     }
 
     public static void preload() {
@@ -47,14 +45,14 @@ public class Biome {
      * Animates background
      */
     public void fadeIn() {
-        this.alpha = (Math.min(1, this.alpha + 0.01f));
+        this.biomeAnimation.alpha = (Math.min(1, this.biomeAnimation.alpha + 0.01f));
     }
 
     /**
      * Animates background
      */
     public void fadeOut() {
-        this.alpha = (Math.min(1, this.alpha - 0.01f));
+        this.biomeAnimation.alpha = (Math.min(1, this.biomeAnimation.alpha - 0.01f));
     }
 
     /**
@@ -63,7 +61,7 @@ public class Biome {
      * @return animation is done
      */
     public boolean fadeInIsDone() {
-        return this.alpha >= 0.99f;
+        return this.biomeAnimation.alpha >= 0.99f;
     }
 
     /**
@@ -72,7 +70,7 @@ public class Biome {
      * @return animation is done
      */
     public boolean fadeOutIsDone() {
-        return this.alpha < 0.01f;
+        return this.biomeAnimation.alpha < 0.01f;
     }
 
     /**
@@ -88,7 +86,7 @@ public class Biome {
      * Renders backgrounds
      */
     public void renderBackground() {
-        LastTry.batch.setColor(1, 1, 1, this.alpha);
+        LastTry.batch.setColor(1, 1, 1, this.biomeAnimation.alpha);
         LastTry.batch.draw(this.texture, 0, 0);
         LastTry.batch.setColor(1, 1, 1, 1);
     }
