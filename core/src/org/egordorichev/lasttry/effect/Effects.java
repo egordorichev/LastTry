@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 
-public abstract class Effect {
+public abstract class Effects {
     protected boolean canBeRemoved;
     protected String name;
     protected String description;
     protected Texture texture;
 
-    public Effect(String name, String description, Texture texture) {
+    public Effects(String name, String description, Texture texture) {
         this.name = name;
         this.canBeRemoved = true;
         this.description = description;

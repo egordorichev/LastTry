@@ -3,13 +3,13 @@ package org.egordorichev.lasttry.effect;
 import org.egordorichev.lasttry.entity.Creature;
 
 public class EffectData {
-    private Effect effect;
+    private Effects effect;
     private int currentTime;
     private int totalTime;
     private Creature creature;
     private boolean done;
 
-    public EffectData(Creature creature, Effect effect, int time) {
+    public EffectData(Creature creature, Effects effect, int time) {
         this.effect = effect;
         this.creature = creature;
         this.setTime(time);
@@ -42,7 +42,7 @@ public class EffectData {
         this.totalTime = time * 60;
     }
 
-    public Effect getEffect() {
+    public Effects getEffect() {
         return this.effect;
     }
 

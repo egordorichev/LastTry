@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity.components;
 
-import org.egordorichev.lasttry.effect.Effect;
 import org.egordorichev.lasttry.effect.EffectData;
+import org.egordorichev.lasttry.effect.Effects;
 import org.egordorichev.lasttry.entity.Creature;
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class CreatureEffectsComponent extends CreatureComponent {
         this.creature = creature;
     }
 
-    public void applyEffect(final Effect effect, final int time) {
+    public void applyEffect(final Effects effect, final int time) {
         //If effect already exists, simply update time
         effects.stream().forEach(effectData ->{
             if(effectData.getEffect() == effect){
@@ -27,7 +27,7 @@ public class CreatureEffectsComponent extends CreatureComponent {
         effects.add(new EffectData(this.creature, effect, time));
     }
 
-    public void removeEffect(final Effect effect) {
+    public void removeEffect(final Effects effect) {
         effects.removeIf(effectData -> effectData.getEffect()==effect);
     }
 
