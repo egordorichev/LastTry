@@ -1,6 +1,7 @@
-package org.egordorichev.lasttry.world.environment;
+package org.egordorichev.lasttry.world.environment.events;
 
 import org.egordorichev.lasttry.util.Util;
+import org.egordorichev.lasttry.world.environment.Event;
 
 public class Rain extends Event {
     private int time = 0;

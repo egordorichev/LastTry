@@ -1,6 +1,7 @@
-package org.egordorichev.lasttry.world.environment;
+package org.egordorichev.lasttry.world.environment.events;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.world.environment.Event;
 
 public class BloomMoon extends Event {
     public BloomMoon() {

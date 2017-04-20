@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.world.environment;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
@@ -17,27 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Environment {
-    /**
-     * Block count, displayed on the screen
-     */
     public int[] blockCount;
-    /**
-     * Time in the world
-     */
     public WorldTime time;
-    /**
-     * Events, that currently happen in the world
-     */
     public ArrayList<Event> events = new ArrayList<Event>();
-    /**
-     * Current biome, player is
-     */
-    private BiomeComponent currentBiome = null;
-
-    /**
-     * Previous biome
-     */
-    private BiomeComponent lastBiome = null;
+	public BiomeComponent currentBiome = null;
+	public BiomeComponent lastBiome = null;
 
     public Environment() {
         this.blockCount = new int[ItemID.count];
@@ -51,9 +34,6 @@ public class Environment {
         }, 1);
     }
 
-    /**
-     * Renders current biome and the sky
-     */
     public void render() {
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
             LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
@@ -68,11 +48,6 @@ public class Environment {
         }
     }
 
-    /**
-     * Updates biomes and spawns mobs
-     *
-     * @param dt The milliseconds passed since the last update.
-     */
     public void update(int dt) {
 	    if (LastTry.world == null) {
 		    return;
@@ -104,12 +79,6 @@ public class Environment {
         LastTry.spawnSystem.update();
     }
 
-    /**
-     * Returns true, if event with given name is happening
-     *
-     * @param event event to lookup
-     * @return if event with given name is happening
-     */
     public boolean isEventHappening(Event event) {
         for (Event e : this.events) {
             if (e == event) {
@@ -120,26 +89,14 @@ public class Environment {
         return false;
     }
 
-    /**
-     * @return if blood moon happens
-     */
     public boolean isBloodMoon() {
         return this.isEventHappening(Event.bloodMoon);
     }
 
-    /**
-     * @return if it rains
-     */
     public boolean isRaining() {
         return this.isEventHappening(Event.rain);
     }
 
-    /**
-     * Try to start an event
-     *
-     * @param event event to start
-     * @return if it is started
-     */
     public boolean startEvent(Event event) {
         if (event.start()) {
             this.events.add(event);
@@ -150,9 +107,6 @@ public class Environment {
         return false;
     }
 
-    /**
-     * Updates current biome
-     */
     private void updateBiome() {
         if (LastTry.world == null) {
             return;
@@ -196,18 +150,7 @@ public class Environment {
         }
     }
 
-    public BiomeComponent getCurrentBiome() {
-        return this.currentBiome;
+    public ArrayList<Event> getCurrentEvents() {
+    	return this.events;
     }
-
-    /**
-     * Method returns currently occurring events with a 1 tick delay.
-     * Meaning the method does NOT guarantee that all events in the list may be currently occurring.
-     * Events may have stopped.  Maximum delay is 1 tick.
-     * Update method is called 60 times a second, in update method events are checked.
-     *
-     * @return currently occuring events, may be wrong due to a 1 tick delay
-     */
-    public ArrayList<Event> getCurrentEvents() {return this.events;}
-
 }

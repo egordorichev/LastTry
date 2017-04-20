@@ -16,6 +16,6 @@ public class BlueSlime extends Slime {
 
     @Override
     public boolean canSpawn(){
-        return LastTry.environment.time.isDay() && LastTry.environment.getCurrentBiome()==Biome.forest;
+        return LastTry.environment.time.isDay() && LastTry.environment.currentBiome.get() == Biome.forest;
     }
 }
