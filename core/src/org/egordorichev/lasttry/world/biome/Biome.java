@@ -14,99 +14,38 @@ public class Biome {
 
     public BiomeAnimationComponent biomeAnimation;
 
-    /**
-     * Background texture
-     */
-    protected Texture texture;
-
-    /**
-     * Biome name
-     */
     protected String name;
 
-
-    /**
-     * Spawn info
-     */
     private SpawnInfo spawnInfo;
 
-    public Biome(String name, SpawnInfo spawnInfo, Texture texture) {
+    public Biome(String name, SpawnInfo spawnInfo, Texture backgroundTexture) {
         this.name = name;
         this.spawnInfo = spawnInfo;
-        this.texture = texture;
-        biomeAnimation = new BiomeAnimationComponent(this);
+        biomeAnimation = new BiomeAnimationComponent(this, backgroundTexture);
     }
 
     public static void preload() {
-
     }
 
-    /**
-     * Animates background
-     */
-    public void fadeIn() {
-        this.biomeAnimation.alpha = (Math.min(1, this.biomeAnimation.alpha + 0.01f));
-    }
+    public void fadeIn() { biomeAnimation.fadeIn(); }
 
-    /**
-     * Animates background
-     */
-    public void fadeOut() {
-        this.biomeAnimation.alpha = (Math.min(1, this.biomeAnimation.alpha - 0.01f));
-    }
+    public void fadeOut() { biomeAnimation.fadeOut();}
 
-    /**
-     * Shows, if animation is done
-     *
-     * @return animation is done
-     */
-    public boolean fadeInIsDone() {
-        return this.biomeAnimation.alpha >= 0.99f;
-    }
+    public boolean fadeInIsDone() { return biomeAnimation.fadeInIsDone(); }
 
-    /**
-     * Shows, if animation is done
-     *
-     * @return animation is done
-     */
-    public boolean fadeOutIsDone() {
-        return this.biomeAnimation.alpha < 0.01f;
-    }
+    public boolean fadeOutIsDone() { return this.biomeAnimation.fadeOutIsDone(); }
 
-    /**
-     * Returns biome name
-     *
-     * @return biome name
-     */
     public String getName() {
         return this.name;
     }
 
-    /**
-     * Renders backgrounds
-     */
-    public void renderBackground() {
-        LastTry.batch.setColor(1, 1, 1, this.biomeAnimation.alpha);
-        LastTry.batch.draw(this.texture, 0, 0);
-        LastTry.batch.setColor(1, 1, 1, 1);
-    }
+    public void renderBackground() { this.biomeAnimation.renderBackground();}
 
-    /**
-     * Returns integer specifying the 'spawn rate'.
-     * Spawn rate will be calculated as a '1' in 'Spawn Rate' chance of monster being spawned
-     *
-     * @return int representing spawn rate of the biome
-     */
     public int getSpawnRate()
     {
         return spawnInfo.spawnRate;
     }
 
-    /**
-     * Returns integer specifying the maximum number of monster spawns, in a certain area close to the player
-     *
-     * @return int representing maximum spawn rate of a monster.
-     */
     public int getSpawnMax()
     {
         return spawnInfo.spawnMax;
