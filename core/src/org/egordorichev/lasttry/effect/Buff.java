@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.language.Language;
 
-public abstract class Buff extends Effects {
+public abstract class Buff extends Effect {
     public static final Buff ammoReservation = new Buff(Language.text.get("ammoBuff"), Language.text.get("ammoBuffDescription"),
 		    Assets.getTexture(Textures.ammoReservationBuff)) {
 

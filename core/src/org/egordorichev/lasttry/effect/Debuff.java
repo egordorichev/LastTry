@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.effect;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.entity.Creature;
 
-public abstract class Debuff extends Effects {
+public abstract class Debuff extends Effect {
     // TODO: add debuffs
 
     public Debuff(String name, String description, Texture texture) {
