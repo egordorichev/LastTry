@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.spawn;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
@@ -30,6 +31,7 @@ public class SpawnSystem {
 	private int maxXGridForActiveZone;
     private int diffBetweenSpawnedAndMaxSpawns;
     private List<Enemy> activeEnemyEntities = new ArrayList<>();
+    private int spawnWeightOfCurrentlyActiveEnemies;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -40,47 +42,40 @@ public class SpawnSystem {
 	    spawnTriggered();
     }
 
+    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
+
+        // TODO Expensive calculation
+        // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
+        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
+
+        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawns){
+            return false;
+        }
+
+        return true;
+    }
+
+
     // TODO Split method
     private  void spawnTriggered() {
         // Retrieve max spawns of biome
         final int maxSpawns = this.biome.getSpawnMax();
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        // Spawn rate is modified based on different factors such as time, events occurring.
-        int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
-
-        // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
-        float percentChanceSpawnRate = 1/(float)spawnRate;
-
         ArrayList<Enemy> enemiesInActiveArea = this.generateEnemiesInActiveArea();
 
-        // TODO Expensive calculation
-        // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
-        int spawnWeightOfActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
+        boolean spaceForNewEnemy = ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
 
-        // If spawn weight of active enemies is greater than max spawns of biome we quit
-        if(spawnWeightOfActiveEnemies>maxSpawns){
+        if(!spaceForNewEnemy){
             return;
         }
 
-        //TODO Split percentage calc into another method
-        float percentageOfSpawnRateAndActiveMonsters;
+        final float spawnRateFinal = this.calculateFinalSpawnRate(origSpawnRate);
 
-        int diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfActiveEnemies;
-
-        if (spawnWeightOfActiveEnemies == 0) {
-            percentageOfSpawnRateAndActiveMonsters = 1;
-        } else {
-            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfActiveEnemies / (float) maxSpawns) * 100;
-        }
-
-        float spawnRateFloat = SpawnRate.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
-
-        if (!EnemySpawn.shouldEnemySpawn(spawnRateFloat)) {
+        if (!EnemySpawn.shouldEnemySpawn(spawnRateFinal)) {
             return;
         }
 
-        // TODO Can branch here if 0 enemies
         ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(diffBetweenSpawnedAndMaxSpawns);
 
         if (eligibleEnemiesForSpawn.size() == 0) {
@@ -90,6 +85,33 @@ public class SpawnSystem {
         Enemy enemyToBeSpawned = EnemySpawn.retrieveRandomEnemy(eligibleEnemiesForSpawn);
         this.spawnEnemy(enemyToBeSpawned);
     }
+
+
+
+    private float calculateFinalSpawnRate(int origSpawnRate){
+
+        // Spawn rate is modified based on different factors such as time, events occurring.
+        int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
+
+        // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
+        float percentChanceSpawnRate = 1/(float)spawnRate;
+
+        //TODO Split percentage calc into another method
+        float percentageOfSpawnRateAndActiveMonsters;
+
+        int diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfCurrentlyActiveEnemies;
+
+        if (spawnWeightOfCurrentlyActiveEnemies == 0) {
+            percentageOfSpawnRateAndActiveMonsters = 1;
+        } else {
+            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
+        }
+
+        float spawnRateFloat = SpawnRate.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+
+        return spawnRateFloat;
+    }
+
 
     private void spawnEnemy(Enemy enemy) {
         GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
