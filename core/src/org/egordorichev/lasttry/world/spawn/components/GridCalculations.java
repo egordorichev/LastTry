@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.util.GenericContainer;
 
 /**
  * Created by Admin on 21/04/2017.
@@ -39,6 +40,21 @@ public class GridCalculations {
         activeAreaOfPlayer.setMaxXPointActiveZone(activeAreaOfPlayer.getMaxXPoint()+25);
 
         return activeAreaOfPlayer;
+    }
+
+    public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(Area enemySpawnArea) {
+
+        // Generate inside the active zone
+        int xGridSpawnPoint = enemySpawnArea.getMaxXPointActiveZone()-30;
+        int yGridSpawnPoint = enemySpawnArea.getMinYPoint();
+
+        int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE;
+        int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
+
+        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
+        xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
+
+        return xyPoint;
     }
 
 

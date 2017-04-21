@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.util.GenericContainer;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnemySpawn {
 
@@ -35,6 +36,9 @@ public class EnemySpawn {
         return false;
     }
 
+
+
+
     public static int calcSpawnWeightOfActiveEnemies(final ArrayList<Enemy> enemiesInActiveArea) {
         return enemiesInActiveArea.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
     }
@@ -44,20 +48,25 @@ public class EnemySpawn {
         return eligibleEnemiesForSpawning.get(randomIndex);
     }
 
-    public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(Area enemySpawnArea) {
+    public static ArrayList<Enemy> generateEnemiesInActiveArea(Area playerActiveArea) {
+        // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
+        // each time to ensure we have an up to date list
+        ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
+        List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
 
-        // Generate inside the active zone
-        int xGridSpawnPoint = enemySpawnArea.getMaxXPointActiveZone()-30;
-        int yGridSpawnPoint = enemySpawnArea.getMinYPoint();
+        enemyEntities.stream().forEach(enemy -> {
 
-        int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE;
-        int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
+            // TODO Rethink
+            // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
+            if(EnemySpawn.isEnemyInActiveArea(enemy, playerActiveArea)){
+                enemiesInActiveArea.add(enemy);
+                // LastTry.debug("Enemy in active area of: "+enemy.getName());
+            }
+        });
 
-        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
-        xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
-
-        return xyPoint;
+        return enemiesInActiveArea;
     }
+
 
     public static boolean isEnemyInActiveArea(Enemy enemy, Area area) {
 

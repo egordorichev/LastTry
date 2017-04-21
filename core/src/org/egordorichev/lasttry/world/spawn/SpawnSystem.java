@@ -24,85 +24,63 @@ import java.util.List;
  */
 public class SpawnSystem {
     private  Biome biome;
-    private int spawnRate;
-	private int maxSpawns;
-    private int diffBetweenSpawnedAndMaxSpawns;
-    private List<Enemy> activeEnemyEntities = new ArrayList<>();
     private int spawnWeightOfCurrentlyActiveEnemies;
-    private Area activeAreaOfPlayer;
+    private Area playerActiveArea;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
             return;
         }
-
         this.biome = LastTry.environment.currentBiome.get(); // Get user biome
-
-        spawnTriggered();
+        this.refreshTriggered();
     }
 
-    private  void spawnTriggered() {
+    private void refreshTriggered() {
 
         final int maxSpawns = this.biome.getSpawnMax();
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        ArrayList<Enemy> enemiesInActiveArea = this.generateEnemiesInActiveArea();
+        playerActiveArea = GridCalculations.generateActiveArea();
+
+        ArrayList<Enemy> enemiesInActiveArea = EnemySpawn.generateEnemiesInActiveArea(playerActiveArea);
 
         //Calculate if any enemy is less than or equal to the remaining max space of the biome
         final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
 
         if(!spaceForNewEnemy){
             return;
+        }else{
+            this.spawnRequested(origSpawnRate, maxSpawns);
         }
+    }
 
+    private void spawnRequested(final int origSpawnRate, final int maxSpawns) {
         //Calculate spawn rate based on certain rules.
-        final float spawnRateFinal = this.calculateFinalSpawnRate(origSpawnRate);
+        final float spawnRateFinal = SpawnRate.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
 
         if (!EnemySpawn.shouldEnemySpawn(spawnRateFinal)) {
             return;
         }
 
-        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(diffBetweenSpawnedAndMaxSpawns);
+        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
 
         if (eligibleEnemiesForSpawn.size() == 0) {
             return;
+        }else{
+            this.spawnTriggered(eligibleEnemiesForSpawn);
         }
+    }
 
+    private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
         Enemy enemyToBeSpawned = EnemySpawn.retrieveRandomEnemy(eligibleEnemiesForSpawn);
-        this.spawnEnemy(enemyToBeSpawned);
+
+        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridCalculations.generateEligibleSpawnPoint(GridCalculations.generateActiveArea());
+
+        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
     }
 
-    private float calculateFinalSpawnRate(int origSpawnRate) {
-        // Spawn rate is modified based on different factors such as time, events occurring
-        return SpawnRate.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
-    }
 
-    private void spawnEnemy(Enemy enemy) {
-        GenericContainer.Pair<Integer> suitableXySpawnPoint = EnemySpawn.generateEligibleSpawnPoint(activeAreaOfPlayer);
-        LastTry.entityManager.spawnEnemy((short)enemy.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
-    }
-
-    private ArrayList<Enemy> generateEnemiesInActiveArea() {
-        // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
-        // each time to ensure we have an up to date list
-        ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
-        activeAreaOfPlayer= GridCalculations.generateActiveArea();
-        List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
-
-        enemyEntities.stream().forEach(enemy -> {
-
-            // TODO Rethink
-            // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(EnemySpawn.isEnemyInActiveArea(enemy, activeAreaOfPlayer)){
-                enemiesInActiveArea.add(enemy);
-                // LastTry.debug("Enemy in active area of: "+enemy.getName());
-            }
-        });
-
-        return enemiesInActiveArea;
-    }
-    
     private void calcArea(){
         float xOfPLayer = LastTry.player.physics.getCenterX();
         float yOfPlayer = LastTry.player.physics.getCenterY();
@@ -124,7 +102,7 @@ public class SpawnSystem {
         // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
         this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
 
-        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawns){
+        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawnsOfBiome){
             return false;
         }
 
