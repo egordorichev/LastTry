@@ -43,10 +43,10 @@ public class SpawnSystem {
         //Calculate if any enemy is less than or equal to the remaining max space of the biome
         final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
 
-        if(!spaceForNewEnemy){
-            return;
-        }else{
+        if(spaceForNewEnemy){
             this.spawnRequested(origSpawnRate, maxSpawns);
+        }else{
+            return;
         }
     }
 
@@ -72,7 +72,6 @@ public class SpawnSystem {
 
         GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
 
-        //TODO Broken currently
         LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
     }
 
