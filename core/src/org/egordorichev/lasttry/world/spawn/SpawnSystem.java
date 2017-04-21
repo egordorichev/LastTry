@@ -21,6 +21,7 @@ public class SpawnSystem {
     private  Biome biome;
     private int spawnWeightOfCurrentlyActiveEnemies;
     private AreaComponent playerActiveArea;
+    private int enemiesInActiveAreaCount;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -28,6 +29,19 @@ public class SpawnSystem {
         }
         this.biome = LastTry.environment.currentBiome.get(); // Get user biome
         this.refreshTriggered();
+    }
+
+    //The following three methods are exposed for the debugger.
+    public int getSpawnWeightOfCurrentlyActiveEnemies() {
+        return spawnWeightOfCurrentlyActiveEnemies;
+    }
+
+    public int getEnemiesInActiveAreaCount() {
+        return enemiesInActiveAreaCount;
+    }
+
+    public int getRemainingSpawnWeightOfBiome() {
+        return biome.getSpawnMax() - spawnWeightOfCurrentlyActiveEnemies;
     }
 
     private void refreshTriggered() {
@@ -39,6 +53,8 @@ public class SpawnSystem {
         playerActiveArea = GridComponent.generateActiveArea();
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
+
+        enemiesInActiveAreaCount = enemiesInActiveArea.size();
 
         //Calculate if any enemy is less than or equal to the remaining max space of the biome
         final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
@@ -73,6 +89,8 @@ public class SpawnSystem {
         GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
 
         LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+
+        LastTry.debug.print("Spawn has been triggered");
     }
 
 
