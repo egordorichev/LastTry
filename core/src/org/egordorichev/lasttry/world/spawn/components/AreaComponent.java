@@ -5,47 +5,47 @@ package org.egordorichev.lasttry.world.spawn.components;
  */
 public class AreaComponent {
 
-    private int minXPoint, maxXPoint, minYPoint, maxYPoint;
+    private int minXGridPoint, maxXGridPoint, minYGridPoint, maxYGridPoint;
 
-    private int maxXPointActiveZone;
+    private int maxXGridPointActiveZone;
 
-    public int getMinXPoint() {
-        return this.minXPoint;
+    public int getMinXGridPoint() {
+        return this.minXGridPoint;
     }
 
-    public void setMinXPoint(int minXPoint) {
-        this.minXPoint = minXPoint;
+    public void setMinXGridPoint(int minXGridPoint) {
+        this.minXGridPoint = minXGridPoint;
     }
 
-    public int getMaxXPoint() {
-        return this.maxXPoint;
+    public int getMaxXGridPoint() {
+        return this.maxXGridPoint;
     }
 
-    public void setMaxXPoint(int maxXPoint) {
-        this.maxXPoint = maxXPoint;
+    public void setMaxXGridPoint(int maxXGridPoint) {
+        this.maxXGridPoint = maxXGridPoint;
     }
 
-    public int getMinYPoint() {
-        return this.minYPoint;
+    public int getMinYGridPoint() {
+        return this.minYGridPoint;
     }
 
-    public void setMinYPoint(int minYPoint) {
-        this.minYPoint = minYPoint;
+    public void setMinYGridPoint(int minYGridPoint) {
+        this.minYGridPoint = minYGridPoint;
     }
 
-    public int getMaxYPoint() {
-        return this.maxYPoint;
+    public int getMaxYGridPoint() {
+        return this.maxYGridPoint;
     }
 
-    public void setMaxYPoint(int maxYPoint) {
-        this.maxYPoint = maxYPoint;
+    public void setMaxYGridPoint(int maxYGridPoint) {
+        this.maxYGridPoint = maxYGridPoint;
     }
 
-    public int getMaxXPointActiveZone() {
-        return this.maxXPointActiveZone;
+    public int getMaxXGridPointActiveZone() {
+        return this.maxXGridPointActiveZone;
     }
 
-    public void setMaxXPointActiveZone(int maxXPointActiveZone) {
-        this.maxXPointActiveZone = maxXPointActiveZone;
+    public void setMaxXGridPointActiveZone(int maxXGridPointActiveZone) {
+        this.maxXGridPointActiveZone = maxXGridPointActiveZone;
     }
 }

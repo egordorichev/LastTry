@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.spawn.components;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
@@ -28,16 +29,16 @@ public class GridComponent {
         int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
-        activeAreaOfPlayer.setMinYPoint(Math.max(0, tcy - 2));
-        activeAreaOfPlayer.setMaxYPoint(Math.min(LastTry.world.getHeight() - 1, tcy + twh + 3));
+        activeAreaOfPlayer.setMinYGridPoint(Math.max(0, tcy - 2));
+        activeAreaOfPlayer.setMaxYGridPoint(Math.min(LastTry.world.getHeight() - 1, tcy + twh + 3));
 
         // Checking to make y values is not less than 0
-        activeAreaOfPlayer.setMinXPoint(Math.max(0, tcx - 2));
-        activeAreaOfPlayer.setMaxXPoint(Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2));
+        activeAreaOfPlayer.setMinXGridPoint(Math.max(0, tcx - 2));
+        activeAreaOfPlayer.setMaxXGridPoint(Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2));
 
         // Active zone is 6 greater
         // TODO Must check that it is not out of bou
-        activeAreaOfPlayer.setMaxXPointActiveZone(activeAreaOfPlayer.getMaxXPoint()+25);
+        activeAreaOfPlayer.setMaxXGridPointActiveZone(activeAreaOfPlayer.getMaxXGridPoint()+25);
 
         return activeAreaOfPlayer;
     }
@@ -45,8 +46,8 @@ public class GridComponent {
     public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(AreaComponent enemySpawnArea) {
 
         // Generate inside the active zone
-        int xGridSpawnPoint = enemySpawnArea.getMaxXPointActiveZone()-30;
-        int yGridSpawnPoint = enemySpawnArea.getMinYPoint();
+        int xGridSpawnPoint = enemySpawnArea.getMaxXGridPointActiveZone()-30;
+        int yGridSpawnPoint = enemySpawnArea.getMinYGridPoint();
 
         int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE;
         int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
@@ -55,6 +56,22 @@ public class GridComponent {
         xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
 
         return xyPoint;
+    }
+
+    public static boolean isEnemyInActiveArea(Enemy enemy, AreaComponent area) {
+
+        // Get block co ordinates of enemy
+        int enemyBlockGridX = enemy.physics.getGridX();
+        int enemyBlockGridY = enemy.physics.getGridY();
+
+        // TODO Change on inversion of y axis
+        if(enemyBlockGridX>=area.getMinXGridPoint()&&enemyBlockGridX<=area.getMaxXGridPoint()){
+            if(enemyBlockGridY<=area.getMaxYGridPoint()&&enemyBlockGridY>=area.getMinYGridPoint()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

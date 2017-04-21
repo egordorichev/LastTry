@@ -52,7 +52,7 @@ public class EnemySpawnComponent {
 
             // TODO Rethink
             // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(EnemySpawnComponent.isEnemyInActiveArea(enemy, playerActiveArea)){
+            if(GridComponent.isEnemyInActiveArea(enemy, playerActiveArea)){
                 enemiesInActiveArea.add(enemy);
                 // LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
@@ -61,20 +61,4 @@ public class EnemySpawnComponent {
         return enemiesInActiveArea;
     }
 
-
-    public static boolean isEnemyInActiveArea(Enemy enemy, AreaComponent area) {
-
-        // Get block co ordinates of enemy
-        int enemyBlockGridX = enemy.physics.getGridX();
-        int enemyBlockGridY = enemy.physics.getGridY();
-
-        // TODO Change on inversion of y axis
-        if(enemyBlockGridX>=area.getMinXPoint()&&enemyBlockGridX<=area.getMaxXPoint()){
-            if(enemyBlockGridY<=area.getMaxYPoint()&&enemyBlockGridY>=area.getMinYPoint()){
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
