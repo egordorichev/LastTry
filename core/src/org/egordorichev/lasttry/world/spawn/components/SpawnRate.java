@@ -19,7 +19,7 @@ public class SpawnRate {
         }
     }
 
-    public static int calculateSpawnRate(int spawnRate) {
+    public static float calculateSpawnRate(int spawnRate, int spawnWeightOfCurrentlyActiveMonsters, float maxSpawns) {
         //Get active events
         //ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
 
@@ -29,7 +29,28 @@ public class SpawnRate {
         spawnRate = calcSpawnRateBasedOnItems(spawnRate);
         spawnRate = calcSpawnRateBasedOnTime(spawnRate);
 
-        return spawnRate;
+        float spawnRateFinal = applyMultiplierToSpawnRate(spawnRate, spawnWeightOfCurrentlyActiveMonsters, maxSpawns);
+
+        return spawnRateFinal;
+    }
+
+
+    private static float applyMultiplierToSpawnRate(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns){
+
+        // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
+        float percentChanceSpawnRate = 1/(float)spawnRate;
+
+        float percentageOfSpawnRateAndActiveMonsters;
+
+        if (spawnWeightOfCurrentlyActiveEnemies == 0) {
+            percentageOfSpawnRateAndActiveMonsters = 1;
+        } else {
+            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
+        }
+
+        float spawnRateFloat = applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+
+        return spawnRateFloat;
     }
 
     private static int calcSpawnRateBasedOnEvents(ArrayList<Event> activeEvents, int spawnRate) {

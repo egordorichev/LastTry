@@ -39,37 +39,26 @@ public class SpawnSystem {
         }
 
         this.biome = LastTry.environment.currentBiome.get(); // Get user biome
-	    spawnTriggered();
+
+        spawnTriggered();
     }
 
-    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
-
-        // TODO Expensive calculation
-        // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
-        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
-
-        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawns){
-            return false;
-        }
-
-        return true;
-    }
-
-
-    // TODO Split method
     private  void spawnTriggered() {
-        // Retrieve max spawns of biome
+
         final int maxSpawns = this.biome.getSpawnMax();
+
         final int origSpawnRate = this.biome.getSpawnRate();
 
         ArrayList<Enemy> enemiesInActiveArea = this.generateEnemiesInActiveArea();
 
-        boolean spaceForNewEnemy = ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
+        //Calculate if any enemy is less than or equal to the remaining max space of the biome
+        final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
 
         if(!spaceForNewEnemy){
             return;
         }
 
+        //Calculate spawn rate based on certain rules.
         final float spawnRateFinal = this.calculateFinalSpawnRate(origSpawnRate);
 
         if (!EnemySpawn.shouldEnemySpawn(spawnRateFinal)) {
@@ -86,32 +75,10 @@ public class SpawnSystem {
         this.spawnEnemy(enemyToBeSpawned);
     }
 
-
-
-    private float calculateFinalSpawnRate(int origSpawnRate){
-
-        // Spawn rate is modified based on different factors such as time, events occurring.
-        int spawnRate = SpawnRate.calculateSpawnRate(origSpawnRate);
-
-        // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
-        float percentChanceSpawnRate = 1/(float)spawnRate;
-
-        //TODO Split percentage calc into another method
-        float percentageOfSpawnRateAndActiveMonsters;
-
-        int diffBetweenSpawnedAndMaxSpawns = maxSpawns - spawnWeightOfCurrentlyActiveEnemies;
-
-        if (spawnWeightOfCurrentlyActiveEnemies == 0) {
-            percentageOfSpawnRateAndActiveMonsters = 1;
-        } else {
-            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
-        }
-
-        float spawnRateFloat = SpawnRate.applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
-
-        return spawnRateFloat;
+    private float calculateFinalSpawnRate(int origSpawnRate) {
+        // Spawn rate is modified based on different factors such as time, events occurring
+        return SpawnRate.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
     }
-
 
     private void spawnEnemy(Enemy enemy) {
         GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
@@ -119,7 +86,6 @@ public class SpawnSystem {
     }
 
     private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
-        Log.debug("Generating eligible spawn point");
         // Generate inside the active zone
         int xGridSpawnPoint = maxXGridForActiveZone-30; int yGridSpawnPoint = minYGRID;
         int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
@@ -192,7 +158,7 @@ public class SpawnSystem {
         return false;
     }
 
-    public void calcArea(){
+    private void calcArea(){
         float xOfPLayer = LastTry.player.physics.getCenterX();
         float yOfPlayer = LastTry.player.physics.getCenterY();
 
@@ -204,7 +170,20 @@ public class SpawnSystem {
         }
     }
 
-    public void calculateNonSpawnSafePlayerArea(){
+    private void calculateNonSpawnSafePlayerArea(){
         // TODO Implement
     }
+
+    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
+        // TODO Expensive calculation
+        // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
+        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
+
+        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawns){
+            return false;
+        }
+
+        return true;
+    }
+
 }
