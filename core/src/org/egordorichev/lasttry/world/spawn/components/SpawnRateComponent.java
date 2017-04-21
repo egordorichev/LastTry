@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.world.environment.Event;
 
 import java.util.ArrayList;
 
-public class SpawnRate {
+public class SpawnRateComponent {
     private enum SpawnRateMultiplier{
         LESS_THAN_40(0.05f), LESS_THAN_60(0.025f), DEFAULT(0.0125f);
 

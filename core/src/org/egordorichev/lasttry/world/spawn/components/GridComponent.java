@@ -9,10 +9,10 @@ import org.egordorichev.lasttry.util.GenericContainer;
 /**
  * Created by Admin on 21/04/2017.
  */
-public class GridCalculations {
+public class GridComponent {
 
-    public static Area generateActiveArea() {
-        Area activeAreaOfPlayer = new Area();
+    public static AreaComponent generateActiveArea() {
+        AreaComponent activeAreaOfPlayer = new AreaComponent();
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
@@ -42,7 +42,7 @@ public class GridCalculations {
         return activeAreaOfPlayer;
     }
 
-    public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(Area enemySpawnArea) {
+    public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(AreaComponent enemySpawnArea) {
 
         // Generate inside the active zone
         int xGridSpawnPoint = enemySpawnArea.getMaxXPointActiveZone()-30;

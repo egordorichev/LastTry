@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.world.spawn.components;
 /**
  * Created by Admin on 21/04/2017.
  */
-public class Area {
+public class AreaComponent {
 
     private int minXPoint, maxXPoint, minYPoint, maxYPoint;
 

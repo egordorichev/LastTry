@@ -1,22 +1,17 @@
 package org.egordorichev.lasttry.world.spawn;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
-import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.spawn.components.Area;
-import org.egordorichev.lasttry.world.spawn.components.EnemySpawn;
-import org.egordorichev.lasttry.world.spawn.components.GridCalculations;
-import org.egordorichev.lasttry.world.spawn.components.SpawnRate;
+import org.egordorichev.lasttry.world.spawn.components.AreaComponent;
+import org.egordorichev.lasttry.world.spawn.components.EnemySpawnComponent;
+import org.egordorichev.lasttry.world.spawn.components.GridComponent;
+import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Spawn system that will spawn monsters in the gameworld based on certain rules.
@@ -25,7 +20,7 @@ import java.util.List;
 public class SpawnSystem {
     private  Biome biome;
     private int spawnWeightOfCurrentlyActiveEnemies;
-    private Area playerActiveArea;
+    private AreaComponent playerActiveArea;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -41,9 +36,9 @@ public class SpawnSystem {
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridCalculations.generateActiveArea();
+        playerActiveArea = GridComponent.generateActiveArea();
 
-        ArrayList<Enemy> enemiesInActiveArea = EnemySpawn.generateEnemiesInActiveArea(playerActiveArea);
+        ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 
         //Calculate if any enemy is less than or equal to the remaining max space of the biome
         final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
@@ -57,13 +52,13 @@ public class SpawnSystem {
 
     private void spawnRequested(final int origSpawnRate, final int maxSpawns) {
         //Calculate spawn rate based on certain rules.
-        final float spawnRateFinal = SpawnRate.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
+        final float spawnRateFinal = SpawnRateComponent.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
 
-        if (!EnemySpawn.shouldEnemySpawn(spawnRateFinal)) {
+        if (!EnemySpawnComponent.shouldEnemySpawn(spawnRateFinal)) {
             return;
         }
 
-        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawn.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
+        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawnComponent.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
 
         if (eligibleEnemiesForSpawn.size() == 0) {
             return;
@@ -73,9 +68,9 @@ public class SpawnSystem {
     }
 
     private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
-        Enemy enemyToBeSpawned = EnemySpawn.retrieveRandomEnemy(eligibleEnemiesForSpawn);
+        Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
-        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridCalculations.generateEligibleSpawnPoint(GridCalculations.generateActiveArea());
+        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
 
         LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
     }
@@ -100,7 +95,7 @@ public class SpawnSystem {
     private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
         // TODO Expensive calculation
         // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
-        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawn.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
+        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawnComponent.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
 
         if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawnsOfBiome){
             return false;

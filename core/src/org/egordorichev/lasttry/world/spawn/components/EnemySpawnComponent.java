@@ -3,14 +3,11 @@ package org.egordorichev.lasttry.world.spawn.components;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
-import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.GenericContainer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnemySpawn {
+public class EnemySpawnComponent {
 
     //availableMaxSpawn is an int denoting the remaining spawn value allowed for a new spawn in the biome
     public static ArrayList<Enemy> retrieveEligibleSpawnEnemies(final int availableMaxSpawn) {
@@ -36,9 +33,6 @@ public class EnemySpawn {
         return false;
     }
 
-
-
-
     public static int calcSpawnWeightOfActiveEnemies(final ArrayList<Enemy> enemiesInActiveArea) {
         return enemiesInActiveArea.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
     }
@@ -48,7 +42,7 @@ public class EnemySpawn {
         return eligibleEnemiesForSpawning.get(randomIndex);
     }
 
-    public static ArrayList<Enemy> generateEnemiesInActiveArea(Area playerActiveArea) {
+    public static ArrayList<Enemy> generateEnemiesInActiveArea(AreaComponent playerActiveArea) {
         // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         // each time to ensure we have an up to date list
         ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
@@ -58,7 +52,7 @@ public class EnemySpawn {
 
             // TODO Rethink
             // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(EnemySpawn.isEnemyInActiveArea(enemy, playerActiveArea)){
+            if(EnemySpawnComponent.isEnemyInActiveArea(enemy, playerActiveArea)){
                 enemiesInActiveArea.add(enemy);
                 // LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
@@ -68,7 +62,7 @@ public class EnemySpawn {
     }
 
 
-    public static boolean isEnemyInActiveArea(Enemy enemy, Area area) {
+    public static boolean isEnemyInActiveArea(Enemy enemy, AreaComponent area) {
 
         // Get block co ordinates of enemy
         int enemyBlockGridX = enemy.physics.getGridX();
