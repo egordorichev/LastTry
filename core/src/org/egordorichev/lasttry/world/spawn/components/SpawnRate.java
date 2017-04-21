@@ -24,18 +24,17 @@ public class SpawnRate {
         //ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
 
         //TODO Implement spawn rate rules based on events
-
         spawnRate = calcSpawnRateBasedOnEvents(null, spawnRate);
         spawnRate = calcSpawnRateBasedOnItems(spawnRate);
         spawnRate = calcSpawnRateBasedOnTime(spawnRate);
 
-        float spawnRateFinal = applyMultiplierToSpawnRate(spawnRate, spawnWeightOfCurrentlyActiveMonsters, maxSpawns);
+        float spawnRateFinal = calculateSpawnRateUsingMultiplier(spawnRate, spawnWeightOfCurrentlyActiveMonsters, maxSpawns);
 
         return spawnRateFinal;
     }
 
 
-    private static float applyMultiplierToSpawnRate(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns){
+    private static float calculateSpawnRateUsingMultiplier(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns){
 
         // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
         float percentChanceSpawnRate = 1/(float)spawnRate;

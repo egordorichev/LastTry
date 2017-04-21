@@ -10,7 +10,9 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.spawn.components.Area;
 import org.egordorichev.lasttry.world.spawn.components.EnemySpawn;
+import org.egordorichev.lasttry.world.spawn.components.GridCalculations;
 import org.egordorichev.lasttry.world.spawn.components.SpawnRate;
 
 import java.util.ArrayList;
@@ -24,14 +26,10 @@ public class SpawnSystem {
     private  Biome biome;
     private int spawnRate;
 	private int maxSpawns;
-    private int minXGrid;
-	private int minYGRID;
-	private int maxXGRID;
-	private int maxYGrid;
-	private int maxXGridForActiveZone;
     private int diffBetweenSpawnedAndMaxSpawns;
     private List<Enemy> activeEnemyEntities = new ArrayList<>();
     private int spawnWeightOfCurrentlyActiveEnemies;
+    private Area activeAreaOfPlayer;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -81,60 +79,22 @@ public class SpawnSystem {
     }
 
     private void spawnEnemy(Enemy enemy) {
-        GenericContainer.Pair<Integer> suitableXySpawnPoint = generateEligibleSpawnPoint();
+        GenericContainer.Pair<Integer> suitableXySpawnPoint = EnemySpawn.generateEligibleSpawnPoint(activeAreaOfPlayer);
         LastTry.entityManager.spawnEnemy((short)enemy.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
-    }
-
-    private GenericContainer.Pair<Integer> generateEligibleSpawnPoint() {
-        // Generate inside the active zone
-        int xGridSpawnPoint = maxXGridForActiveZone-30; int yGridSpawnPoint = minYGRID;
-        int xPixelSpawnPoint = xGridSpawnPoint* Block.SIZE; int yPixelSpawnPoint = yGridSpawnPoint * Block.SIZE;
-
-        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
-        xyPoint.set(xPixelSpawnPoint, yPixelSpawnPoint);
-
-        return xyPoint;
-    }
-
-    private void generateMinMaxGridBlockValues() {
-        int windowWidth = Gdx.graphics.getWidth();
-        int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.SIZE;
-        int twh = windowHeight / Block.SIZE;
-
-        // We want to get the further most position of x on the screen, camera is always in the middle so we
-        // divide total window width by 2 and divide by blcok size to get grid position
-        int tcx = (int) (Camera.game.position.x - windowWidth/2) / Block.SIZE;
-
-        // TODO Change on inversion of y axis
-        // We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
-
-        // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
-        this.minYGRID = Math.max(0, tcy - 2);
-        this.maxYGrid = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 3);
-
-        // Checking to make y values is not less than 0
-        this.minXGrid = Math.max(0, tcx - 2);
-        this.maxXGRID = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2);
-
-        // Active zone is 6 greater
-        // TODO Must check that it is not out of bounds.
-        this.maxXGridForActiveZone = this.maxXGRID + 25;
     }
 
     private ArrayList<Enemy> generateEnemiesInActiveArea() {
         // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         // each time to ensure we have an up to date list
         ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
-        this.generateMinMaxGridBlockValues();
+        activeAreaOfPlayer= GridCalculations.generateActiveArea();
         List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
 
         enemyEntities.stream().forEach(enemy -> {
 
             // TODO Rethink
             // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(this.isEnemyInActiveArea(enemy)){
+            if(EnemySpawn.isEnemyInActiveArea(enemy, activeAreaOfPlayer)){
                 enemiesInActiveArea.add(enemy);
                 // LastTry.debug("Enemy in active area of: "+enemy.getName());
             }
@@ -142,22 +102,7 @@ public class SpawnSystem {
 
         return enemiesInActiveArea;
     }
-
-    private boolean isEnemyInActiveArea(Enemy enemy) {
-        // Get block co ordinates of enemy
-        int enemyBlockGridX = enemy.physics.getGridX();
-        int enemyBlockGridY = enemy.physics.getGridY();
-
-        // TODO Change on inversion of y axis
-        if(enemyBlockGridX>=this.minXGrid&&enemyBlockGridX<=this.maxXGridForActiveZone){
-            if(enemyBlockGridY<=this.maxYGrid&&enemyBlockGridY>=this.minYGRID){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    
     private void calcArea(){
         float xOfPLayer = LastTry.player.physics.getCenterX();
         float yOfPlayer = LastTry.player.physics.getCenterY();
