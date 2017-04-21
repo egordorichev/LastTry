@@ -34,7 +34,7 @@ public class SpawnRateComponent {
     }
 
 
-    private static float calculateSpawnRateUsingMultiplier(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns){
+    private static float calculateSpawnRateUsingMultiplier(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns) {
 
         // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
         float percentChanceSpawnRate = 1/(float)spawnRate;

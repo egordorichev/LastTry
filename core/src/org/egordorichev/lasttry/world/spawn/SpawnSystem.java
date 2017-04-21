@@ -72,7 +72,8 @@ public class SpawnSystem {
 
         GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
 
-        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+        //TODO Broken currently
+        //LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
     }
 
 
