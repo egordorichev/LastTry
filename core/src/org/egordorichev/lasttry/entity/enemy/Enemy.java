@@ -18,6 +18,7 @@ public abstract class Enemy extends CreatureWithAI {
 
     public Enemy(short id, String name, int maxHp, int defense, int damage) {
         super(new EnemyPhysicsComponent(), new EnemyGraphicsComponent());
+        this. id = id; this.name = name;
     }
 
     @Override
