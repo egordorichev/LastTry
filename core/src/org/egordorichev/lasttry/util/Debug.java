@@ -30,6 +30,9 @@ public class Debug {
 	    Assets.f22.draw(LastTry.batch, "Enemies in active area: "+LastTry.spawnSystem.getEnemiesInActiveAreaCount(), 10, 90);
 	    //TODO Heavy call, should be rethought and removed
 	    Assets.f22.draw(LastTry.batch, "Total amount of enemies: "+LastTry.entityManager.retrieveEnemyEntities().size(), 10, 110);
+	    Assets.f22.draw(LastTry.batch, "Current Biome: "+LastTry.environment.currentBiome.getName(), 10, 130);
+	    Assets.f22.draw(LastTry.batch, "Max spawns of current biome: "+LastTry.environment.currentBiome.get().getSpawnMax(), 10, 150);
+	    Assets.f22.draw(LastTry.batch, "Current in world time: "+LastTry.environment.time.toString(true), 10, 170);
 
 
 	    if(messagesToBePrinted.keySet().size()==0){
@@ -52,7 +55,7 @@ public class Debug {
             return;
         }
 
-        Assets.f22.draw(LastTry.batch, message, 10, 130);
+        Assets.f22.draw(LastTry.batch, message, 10, 190);
 
         //Decrement counter as it has been displayed for 1 tick
         gameTicksCounter--;
