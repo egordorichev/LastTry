@@ -43,13 +43,7 @@ public class GridComponent {
         return activeAreaOfPlayer;
     }
 
-
-    /**
-     * Returns a distance in blocks, signifying the radius of a circle that an entity must be within to be
-     * inside the active area zone.
-     *
-     * @return double signifying distance/radius of the active area circle.
-     */
+    //TODO Must be changed to incorporate player location
     public static double generateActiveAreaCircleRadius() {
 
         final int windowWidth = Gdx.graphics.getWidth();
