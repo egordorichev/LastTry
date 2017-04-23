@@ -7,6 +7,7 @@ import java.util.List;
 
 public class EntityManager {
     private List<Entity> entities = new ArrayList<>();
+    private List<Enemy> enemyEntities = new ArrayList<>();
     private List<Entity> clearList = new ArrayList<>();
 
     // private List<Gore> gores = new ArrayList<>();
@@ -45,12 +46,12 @@ public class EntityManager {
     public Entity spawn(Entity entity, int x, int y) {
         entity.spawn(x, y);
         this.entities.add(entity);
-
         return entity;
     }
 
     public Enemy spawnEnemy(short id, int x, int y) {
         Enemy enemy = Enemies.create(id);
+        this.enemyEntities.add(enemy);
         this.spawn(enemy, x, y);
         return enemy;
     }
@@ -61,27 +62,15 @@ public class EntityManager {
 
     public void markForRemoval(Entity entity) {
         this.clearList.add(entity);
+        //Maintaining a second list for quick enemy retrieval.
+        if(entity instanceof Enemy){
+            enemyEntities.remove(entity);
+        }
     }
 
     public List<Entity> getEntities() {
         return entities;
     }
 
-    public List<Enemy> retrieveEnemyEntities() {
-        List<Enemy> enemyEntities = new ArrayList<>();
-
-        for(Entity entity : entities) {
-            if (entity instanceof Enemy) {
-                // Check that the object is not marked for removal
-                // TODO this contains would be faster if clearList was a HashMap, source: http://stackoverflow.com/questions/559839/big-o-summary-for-java-collections-framework-implementations
-
-	            if(!clearList.contains(entity)) {
-                    Enemy enemy = (Enemy) entity;
-                    enemyEntities.add(enemy);
-                }
-            }
-        }
-
-        return enemyEntities;
-    }
+    public List<Enemy> retrieveEnemyEntities() { return enemyEntities; }
 }
