@@ -43,6 +43,33 @@ public class GridComponent {
         return activeAreaOfPlayer;
     }
 
+
+    /**
+     * Returns a distance in blocks, signifying the radius of a circle that an entity must be within to be
+     * inside the active area zone.
+     *
+     * @return double signifying distance/radius of the active area circle.
+     */
+    public static double generateActiveAreaCircleRadius() {
+
+        final int windowWidth = Gdx.graphics.getWidth();
+        final int windowHeight = Gdx.graphics.getHeight();
+        final int tww = windowWidth / Block.SIZE;
+        final int twh = windowHeight / Block.SIZE;
+
+        //Divide width & height of screen by 2, to get distance to furthermost part of the screen.
+        //Will be used to construct a triangle from centerpoint to further most point of the screen
+        final int centerWidth = tww/2;
+        final int centerHeight = twh/2;
+
+        final double activeAreaCircleRadius = Math.sqrt((tww*tww)+(twh*twh));
+
+        assert activeAreaCircleRadius != 0 : "Generated radius is 0";
+
+        return activeAreaCircleRadius;
+    }
+
+
     public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(AreaComponent enemySpawnArea) {
 
         // Generate inside the active zone

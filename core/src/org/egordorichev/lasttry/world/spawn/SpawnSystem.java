@@ -22,6 +22,7 @@ public class SpawnSystem {
     private int spawnWeightOfCurrentlyActiveEnemies;
     private AreaComponent playerActiveArea;
     private int enemiesInActiveAreaCount;
+    private double activeAreaCircleRadius;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -51,6 +52,9 @@ public class SpawnSystem {
         final int origSpawnRate = this.biome.getSpawnRate();
 
         playerActiveArea = GridComponent.generateActiveArea();
+
+        //TODO Switch Grid Active area to Circle active area
+        activeAreaCircleRadius = GridComponent.generateActiveAreaCircleRadius();
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 
