@@ -18,7 +18,11 @@ public class Animation {
         this.stopped = false;
     }
 
-    public void addFrame(AnimationFrame frame) {
+	public void setLooped(boolean looped) {
+		this.looped = looped;
+	}
+
+	public void addFrame(AnimationFrame frame) {
         this.frames.add(frame);
     }
 

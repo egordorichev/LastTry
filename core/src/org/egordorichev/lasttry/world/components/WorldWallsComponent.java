@@ -1,10 +1,11 @@
-package org.egordorichev.lasttry.world;
+package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldComponent;
 
@@ -58,11 +59,11 @@ public class WorldWallsComponent extends WorldComponent {
 	}
 
 	private Chunk getChunk(int x, int y) {
-		if (!LastTry.world.isInside(x, y)) {
+		if (!this.world.isInside(x, y)) {
 			return null;
 		}
 
-		Chunk chunk = LastTry.world.chunks.getFor(x, y);
+		Chunk chunk = this.world.chunks.getFor(x, y);
 
 		if (chunk == null) {
 			LastTry.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);

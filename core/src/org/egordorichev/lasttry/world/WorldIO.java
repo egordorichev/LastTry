@@ -4,7 +4,9 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
+import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,9 +64,12 @@ public class WorldIO {
 
 	public static World generate(String name, World.Size size, int flags) {
 		File file = new File("worlds/" + name + "/");
-		file.mkdir();
 
-		return new World(name, size, flags); // TODO
+		if (!file.exists()) {
+			file.mkdir();
+		}
+
+		return new WorldGenerator(name, size, flags).generate();
 	}
 
 	public static void save() {
@@ -97,6 +102,8 @@ public class WorldIO {
 			stream.writeBoolean(LastTry.world.flags.evilIsCrimson());
 
 			stream.close();
+
+			LastTry.world.chunks.save();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}

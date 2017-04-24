@@ -20,6 +20,8 @@ public class ChunkIO {
 			return generate(x, y);
 		}
 
+		Log.debug("Loading chunk " + x + ":" + y + "...");
+
 		try {
 			FileReader stream = new FileReader(fileName);
 
@@ -55,6 +57,7 @@ public class ChunkIO {
 			return new Chunk(data, new Vector2(x, y));
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
+			LastTry.abort();
 		}
 
 		return null;
@@ -80,8 +83,10 @@ public class ChunkIO {
 		Chunk chunk = LastTry.world.chunks.get(x, y);
 
 		if (chunk == null) {
-			Log.warn("Failed to save chunk " + x + ":" + y + ".");
+			return;
 		}
+
+		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
@@ -104,6 +109,7 @@ public class ChunkIO {
 			stream.close();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
+			LastTry.abort();
 		}
 	}
 

@@ -57,11 +57,11 @@ public class WorldBlocksComponent extends WorldComponent {
 	}
 
 	private Chunk getChunk(int x, int y) {
-		if (!LastTry.world.isInside(x, y)) {
+		if (!this.world.isInside(x, y)) {
 			return null;
 		}
 
-		Chunk chunk = LastTry.world.chunks.getFor(x, y);
+		Chunk chunk = this.world.chunks.getFor(x, y);
 
 		if (chunk == null) {
 			LastTry.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);

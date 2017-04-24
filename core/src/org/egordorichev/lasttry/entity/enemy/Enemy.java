@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
-import org.egordorichev.lasttry.entity.components.EnemyGraphicsComponent;
+import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
 import org.egordorichev.lasttry.entity.components.EnemyPhysicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -17,7 +17,7 @@ public abstract class Enemy extends CreatureWithAI {
     protected List<Drop> drops = new ArrayList<>();
 
     public Enemy(short id, String name, int maxHp, int defense, int damage) {
-        super(new EnemyPhysicsComponent(), new EnemyGraphicsComponent());
+        super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent());
         this. id = id; this.name = name;
     }
 

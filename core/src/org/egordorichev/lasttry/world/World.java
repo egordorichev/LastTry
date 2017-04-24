@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
+import org.egordorichev.lasttry.world.components.WorldWallsComponent;
 
 public class World {
 	public static final int UPDATE_DELAY = 20;

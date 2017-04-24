@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.world.components;
 
 import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -8,6 +9,7 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
+import org.egordorichev.lasttry.world.chunk.EmptyChunk;
 
 import java.util.ArrayList;
 
@@ -53,8 +55,8 @@ public class WorldChunksComponent extends WorldComponent {
 
 		// TODO: check, if they are the same
 
-		/* tl.render();
-		tr.render();
+		tl.render();
+		/*tr.render();
 		bl.render();
 		br.render(); */
 	}
@@ -99,7 +101,16 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public Chunk getFor(int x, int y) {
-		return this.get(x / Chunk.SIZE, y / Chunk.SIZE);
+		x /= Chunk.SIZE;
+		y /= Chunk.SIZE;
+
+		Chunk chunk = this.get(x, y);
+
+		if (chunk == null) {
+			return ChunkIO.load(x, y);
+		}
+
+		return chunk;
 	}
 
 	private boolean isInside(int index) {
@@ -112,5 +123,13 @@ public class WorldChunksComponent extends WorldComponent {
 
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth();
+	}
+
+	public void save() {
+		for (int y = 0; y < LastTry.world.getHeight() / Chunk.SIZE; y++) {
+			for (int x = 0; x < LastTry.world.getWidth() / Chunk.SIZE; x++) {
+				ChunkIO.save(x, y);
+			}
+		}
 	}
 }
