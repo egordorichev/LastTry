@@ -1,15 +1,11 @@
 package org.egordorichev.lasttry.entity.components;
 
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.graphics.Animation;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
-	private Animation[] animations;
-	private Creature creature;
+	protected Animation[] animations;
 
-	public CreatureGraphicsComponent(Creature creature) {
-		this.creature = creature;
-
+	public CreatureGraphicsComponent() {
 		int size = CreatureStateComponent.State.values().length;
 
 		this.animations = new Animation[size];
