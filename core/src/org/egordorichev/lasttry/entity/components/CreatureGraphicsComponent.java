@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.graphics.Animation;
 
+import java.util.Arrays;
+
 public class CreatureGraphicsComponent extends GraphicsComponent {
 	protected Animation[] animations;
 
@@ -18,5 +20,9 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 	@Override
 	public void render() {
 		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY());
+	}
+
+	public void update() {
+		this.animations[this.creature.state.get().getID()].update();
 	}
 }

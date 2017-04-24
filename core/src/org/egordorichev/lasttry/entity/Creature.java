@@ -39,5 +39,6 @@ public class Creature extends Entity {
 
 		this.physics.update(dt);
 		this.stats.update(dt);
+		this.graphics.update();
 	}
 }
