@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import sun.net.www.content.text.Generic;
+import sun.nio.cs.ext.MacArabic;
 
 /**
  * Created by Admin on 21/04/2017.
@@ -75,11 +76,6 @@ public class GridComponent {
         int tww = windowWidth / Block.SIZE;
         int twh = windowHeight / Block.SIZE;
 
-        final double activeAreaCircleRadius = Math.sqrt((tww*tww)+(twh*twh));
-        final double activeAreaCircleDiameter = activeAreaCircleRadius*2;
-
-        circleAreaComponent.setCircleRadius(activeAreaCircleRadius);
-        circleAreaComponent.setCircleDiameter(activeAreaCircleDiameter);
 
         // We want to get the further most position of x on the screen, camera is always in the middle so we
         // divide total window width by 2 and divide by blcok size to get grid position
@@ -99,7 +95,21 @@ public class GridComponent {
 
         // Active zone is 6 greater
         // TODO Must check that it is not out of bou
-        //circleAreaComponent.setMaxXGridPointSpawnZone(circleAreaComponent.getMaxXActiveAreaGridPoint()+25);
+        //Spawn window width and height are approx 6 - 7 blocks bigger than active area window
+        final int spawnWindowWidth = windowWidth + 200;
+        final int spawnWindowHeight = windowHeight + 200;
+        final int gridSpawnWindowWidth = spawnWindowWidth/Block.SIZE;
+        final int gridSpawnWindowHeight = spawnWindowHeight/Block.SIZE;
+
+        //Divided by 2 as we want to get the radius from the center of the screen.
+        final int gridSpawnWindowWidthForRadius =  gridSpawnWindowWidth/2;
+        final int gridSpawnWindowHeightForRadius = gridSpawnWindowHeight/2;
+
+        final double activeAreaCircleRadius = Math.sqrt((gridSpawnWindowWidthForRadius*gridSpawnWindowWidthForRadius)+(gridSpawnWindowHeightForRadius*gridSpawnWindowHeightForRadius));
+        final double activeAreaCircleDiameter = activeAreaCircleRadius*2;
+
+        circleAreaComponent.setCircleRadius(activeAreaCircleRadius);
+        circleAreaComponent.setCircleDiameter(activeAreaCircleDiameter);
 
         return circleAreaComponent;
     }
@@ -124,6 +134,55 @@ public class GridComponent {
 
         GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
         xyPoint.set(randomXGridSpawnPoint, randomYGridSpawnPoint);
+
+        return xyPoint;
+    }
+
+
+    public static GenericContainer.Pair<Integer> generateEligibleEnemySpawnPoint(CircleAreaComponent enemySpawnArea) {
+
+        int distanceOfScreenBlocksHeight = Gdx.graphics.getHeight()/Block.SIZE;
+        int distanceOfScreenBlocksWidth = Gdx.graphics.getWidth()/Block.SIZE;
+
+        //Get length of diagonal of inner active area rectangle
+        final double radiusOfActiveArea = Math.sqrt((distanceOfScreenBlocksWidth*distanceOfScreenBlocksWidth)+(distanceOfScreenBlocksHeight*distanceOfScreenBlocksHeight));
+
+        final int diffBetweenActiveAreaRadiusAndSpawnAreaRadius = (int)(enemySpawnArea.getCircleRadius()-radiusOfActiveArea);
+
+        int minimumDistance = diffBetweenActiveAreaRadiusAndSpawnAreaRadius;
+        int maximumDistance = (int) enemySpawnArea.getCircleDiameter();
+
+        //Randomly generate angle
+        int angle = generateRandomNumber(0, 360);
+
+        //Randomly generate a distance between min and max
+        int randomDistance = generateRandomNumber(minimumDistance, maximumDistance);
+
+        //Get player co ordinates
+        int playerXGridPoint = LastTry.player.physics.getGridX();
+        int playerYGridPoint = LastTry.player.physics.getGridY();
+
+        //Move point by distance
+        //Source: http://stackoverflow.com/questions/41465581/move-point-in-cartesian-coordinate-through-distance-in-the-given-direction
+        double newXGridPoint = playerXGridPoint + randomDistance * Math.cos(angle * Math.PI/180);
+        double newYGridPoint = playerYGridPoint + randomDistance * Math.sin(angle * Math.PI/180);
+
+        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
+        xyPoint.set((int)newXGridPoint, (int)newYGridPoint);
+
+        //Origin to rotate about
+//        int centerXGridPoint = (int)(Camera.game.position.x/Block.SIZE);
+//        int centerYGridPoint = (int)(Camera.game.position.y/Block.SIZE);
+//
+//        int intermediateTransformXPoint = playerXGridPoint - centerXGridPoint;
+//        int intermediateTransformYPoint = playerYGridPoint - centerYGridPoint;
+//
+//        //Rotate x point, source: https://academo.org/demos/rotation-about-point/
+//        double rotatedXGridPoint = intermediateTransformXPoint*Math.cos(angle) - intermediateTransformYPoint * Math.sin(angle);
+//        double rotatedYGridPoint = intermediateTransformYPoint*Math.cos(angle) + intermediateTransformXPoint * Math.sin(angle);
+//
+//        int finalRotatedXGridPoint = (int)(rotatedXGridPoint + centerXGridPoint);
+//        int finalRotatedYGridPoint = (int)(rotatedYGridPoint + centerYGridPoint);
 
         return xyPoint;
     }
