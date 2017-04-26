@@ -138,7 +138,7 @@ public class GridComponent {
 
         return randomNumber;
     }
-    
+
 
     public static boolean isEnemyInActiveArea(Enemy enemy, AreaComponent area) {
 
