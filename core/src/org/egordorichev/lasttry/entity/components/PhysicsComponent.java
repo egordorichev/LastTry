@@ -44,7 +44,9 @@ public class PhysicsComponent extends CreatureComponent {
 			return;
 		}
 
-		this.velocity.y -= 0.4f;
+		if (this.solid) {
+			this.velocity.y -= 0.4f;
+		}
 
 		this.updateXVelocity();
 		this.updateYVelocity();

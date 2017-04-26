@@ -81,11 +81,6 @@ public class ChunkIO {
 		}
 
 		Chunk chunk = LastTry.world.chunks.get(x, y);
-
-		if (chunk == null) {
-			return;
-		}
-
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {

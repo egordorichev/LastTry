@@ -28,6 +28,12 @@ public class Creature extends Entity {
 	}
 
 	@Override
+	public void spawn(int x, int y) {
+		super.spawn(x, y);
+		this.physics.setPosition(x, y);
+	}
+
+	@Override
 	public void render() {
 		super.render();
 		this.graphics.render();

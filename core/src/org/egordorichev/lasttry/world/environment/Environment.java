@@ -148,7 +148,7 @@ public class Environment {
         } else if (this.blockCount[ItemID.sandBlock] >= 1000) {
             this.currentBiome = new BiomeComponent(Biome.corruption);
         } else {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = new BiomeComponent(Biome.forest);
         }
     }
 

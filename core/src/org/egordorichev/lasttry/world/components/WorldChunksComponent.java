@@ -128,7 +128,9 @@ public class WorldChunksComponent extends WorldComponent {
 	public void save() {
 		for (int y = 0; y < LastTry.world.getHeight() / Chunk.SIZE; y++) {
 			for (int x = 0; x < LastTry.world.getWidth() / Chunk.SIZE; x++) {
-				ChunkIO.save(x, y);
+				if (this.get(x, y) != null) {
+					ChunkIO.save(x, y);
+				}
 			}
 		}
 	}

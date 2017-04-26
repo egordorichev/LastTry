@@ -3,9 +3,13 @@ package org.egordorichev.lasttry.entity.player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.entity.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.item.ItemHolder;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private Texture texture;
@@ -18,6 +22,9 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
+		ItemHolder holder = LastTry.player.inventory.getActiveHolder();
+		holder.renderAt((int) this.creature.physics.getPosition().x, (int) this.creature.physics.getPosition().y);
+
 		this.animations[this.creature.state.get().getID()].render(
 			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
 			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
@@ -43,7 +50,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 		this.animations[CreatureStateComponent.State.MOVING.getID()].addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 1072, 32, 48), 1));
 
 		this.animations[CreatureStateComponent.State.JUMPING.getID()].addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 288, 32, 48), 0));
-		this.animations[CreatureStateComponent.State.FALLING.getID()] = this.animations[CreatureStateComponent.State.JUMPING.getID()];
+		this.animations[CreatureStateComponent.State.FALLING.getID()].addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 288, 32, 48), 0));
 
 		this.animations[CreatureStateComponent.State.DEAD.getID()].addFrame(new AnimationFrame(new TextureRegion(this.texture, 0, 0, 0, 0), 0)); // TODO
 	}
