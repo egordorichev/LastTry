@@ -99,7 +99,8 @@ public class GridComponent {
             if(UtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())==true){
                 pointInMap = true;
             }else{
-                rotatedGridPoints = UtilComponent.increaseAngle(angle, randomDistance);
+                angle = UtilComponent.increaseAngle(angle, randomDistance);
+                rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
             }
         }
 

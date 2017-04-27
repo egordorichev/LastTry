@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.util.GenericContainer;
  */
 public class UtilComponent {
 
-    public static GenericContainer.Pair<Integer> increaseAngle(int angle, int distance) {
+    public static int increaseAngle(int angle, int distance) {
 
         if(angle==360){
             angle = 0;
@@ -18,7 +18,7 @@ public class UtilComponent {
 
         angle++;
 
-        return GridComponent.retrieveRotatedGridPoints(distance, angle);
+        return angle;
     }
 
     public static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
@@ -38,5 +38,5 @@ public class UtilComponent {
 
         return randomNumber;
     }
-    
+
 }
