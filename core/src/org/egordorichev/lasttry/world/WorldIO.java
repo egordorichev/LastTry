@@ -75,7 +75,7 @@ public class WorldIO {
 			file.mkdir();
 		}
 
-		return new WorldGenerator(name, size, flags).generate();
+		return new World(name, size, flags);
 	}
 
 	public static void save() {

@@ -27,10 +27,10 @@ public class PlayerRenderer {
         pixmap.drawPixmap(playerHead, 0, 0);
         playerEyes.setColor(info.eyesColor);
         pixmap.drawPixmap(playerEyes, 0, 0);
-        Pixmap hair = new Pixmap(Gdx.files.internal("PlayerHair" + info.hairStyle + ".png"));
-        hair.setColor(info.hairColor);
 
-        pixmap.drawPixmap(hair, 0, 0);
+        // Pixmap hair = new Pixmap(Gdx.files.internal("PlayerHair" + info.hairStyle + ".png"));
+	    // hair.setColor(info.hairColor);
+        // pixmap.drawPixmap(hair, 0, 0);
 
         return new Texture(pixmap);
     }

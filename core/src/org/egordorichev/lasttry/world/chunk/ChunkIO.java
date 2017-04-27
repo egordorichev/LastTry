@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
@@ -64,6 +66,24 @@ public class ChunkIO {
 	}
 
 	public static Chunk generate(int x, int y) { // TODO
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Log.debug("Generating chunk " + x + ":" + y + "...");
+				ChunkData data = new ChunkData();
+
+				for (int y = 0; y < Chunk.SIZE; y++) {
+					for (int x = 0; x < Chunk.SIZE; x++) {
+						data.blocks[x + y * Chunk.SIZE] = ItemID.dirtBlock;
+						data.blocksHealth[x + y * Chunk.SIZE] = Block.MAX_HP;
+					}
+				}
+
+				LastTry.world.chunks.set(new Chunk(data, new Vector2(x, y)), x, y);
+				Log.debug("Done generating chunk " + x + ":" + y + "!");
+			}
+		}).start();
+
 		return new EmptyChunk(new Vector2(x, y));
 	}
 
