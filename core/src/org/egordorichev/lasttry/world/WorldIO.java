@@ -63,6 +63,12 @@ public class WorldIO {
 	}
 
 	public static World generate(String name, World.Size size, int flags) {
+		File dir = new File("worlds/");
+
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
 		File file = new File("worlds/" + name + "/");
 
 		if (!file.exists()) {

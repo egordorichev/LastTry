@@ -69,6 +69,12 @@ public class PlayerIO {
 	}
 
 	public static void save() {
+		File dir = new File("players/");
+
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
 		String fileName = getSaveName(LastTry.player.getName());
 		File file = new File(fileName);
 
