@@ -96,7 +96,7 @@ public class GridComponent {
 
         while(!pointInMap){
 
-            if(UtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())==true){
+            if(UtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())){
                 pointInMap = true;
             }else{
                 angle = UtilComponent.increaseAngle(angle, randomDistance);
