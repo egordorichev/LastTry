@@ -20,8 +20,8 @@ public class GamePlayState implements State {
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
-        int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
-        int spawnY = 50 * Block.SIZE;
+    	int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
+        int spawnY = LastTry.world.getHeight() / Block.SIZE - 100;
 
         LastTry.player.spawn(spawnX, spawnY);
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 100));
@@ -37,7 +37,7 @@ public class GamePlayState implements State {
     @Override
     public void render(float delta) {
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-			 (Gdx.graphics.getBufferFormat().coverageSampling? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+			 (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
         LastTry.environment.update((int) delta);
         LastTry.entityManager.update((int) delta);
@@ -52,8 +52,7 @@ public class GamePlayState implements State {
 	    Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
             LastTry.player.physics.getCenterX());
 
-	    Camera.game.position.y = Math.max(Gdx.graphics.getHeight() / 2,
-            LastTry.world.getHeight() * Block.SIZE - LastTry.player.physics.getCenterY());
+	    Camera.game.position.y = Math.max(0, LastTry.player.physics.getCenterY());
 
 	    Camera.game.update();
         LastTry.batch.setProjectionMatrix(Camera.game.combined);

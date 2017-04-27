@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.enemy;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.*;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
-import org.egordorichev.lasttry.entity.components.EnemyPhysicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.player.Player;

@@ -7,8 +7,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.entity.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemHolder;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
@@ -23,7 +21,10 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	@Override
 	public void render() {
 		ItemHolder holder = LastTry.player.inventory.getActiveHolder();
-		holder.renderAt((int) this.creature.physics.getPosition().x, (int) this.creature.physics.getPosition().y);
+
+		if (holder.getItem() != null) {
+			holder.getItem().renderAnimation();
+		}
 
 		this.animations[this.creature.state.get().getID()].render(
 			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,

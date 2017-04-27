@@ -14,7 +14,7 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 	@Override
 	public void jump() {
 		this.creature.state.set(CreatureStateComponent.State.JUMPING);
-		this.velocity.y -= 10.0f;
+		this.velocity.y += 10.0f;
 	}
 
 	@Override

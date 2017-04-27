@@ -21,8 +21,6 @@ public class Player extends Creature {
 		this.inventory = new UiInventory(INVENTORY_SIZE);
 
 		LastTry.ui.add(this.inventory);
-
-		this.physics.setSolid(false);
 	}
 
 	@Override
