@@ -42,11 +42,11 @@ public class EnemySpawnComponent {
         return eligibleEnemiesForSpawning.get(randomIndex);
     }
 
-    public static ArrayList<Enemy> generateEnemiesInActiveArea(AreaComponent playerActiveArea) {
+    public static ArrayList<Enemy> generateEnemiesInActiveArea(CircleAreaComponent playerActiveArea) {
         // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         // each time to ensure we have an up to date list
         ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
-        List<Enemy> enemyEntities = LastTry.entityManager.retrieveEnemyEntities();
+        List<Enemy> enemyEntities = LastTry.entityManager.getEnemyEntities();
 
         enemyEntities.stream().forEach(enemy -> {
 

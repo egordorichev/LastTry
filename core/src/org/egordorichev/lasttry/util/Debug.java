@@ -29,7 +29,7 @@ public class Debug {
 	    Assets.f22.draw(LastTry.batch, "Remaining spawn weight of biome: "+LastTry.spawnSystem.getRemainingSpawnWeightOfBiome(), 10, 70);
 	    Assets.f22.draw(LastTry.batch, "Enemies in active area: "+LastTry.spawnSystem.getEnemiesInActiveAreaCount(), 10, 90);
 	    //TODO Heavy call, should be rethought and removed
-	    Assets.f22.draw(LastTry.batch, "Total amount of enemies: "+LastTry.entityManager.retrieveEnemyEntities().size(), 10, 110);
+	    Assets.f22.draw(LastTry.batch, "Total amount of enemies: "+LastTry.entityManager.getEnemyEntities().size(), 10, 110);
 	    Assets.f22.draw(LastTry.batch, "Current Biome: "+LastTry.environment.currentBiome.getName(), 10, 130);
 	    Assets.f22.draw(LastTry.batch, "Max spawns of current biome: "+LastTry.environment.currentBiome.get().getSpawnMax(), 10, 150);
 	    Assets.f22.draw(LastTry.batch, "Current in world time: "+LastTry.environment.time.toString(true), 10, 170);

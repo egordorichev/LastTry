@@ -6,10 +6,7 @@ import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.spawn.components.AreaComponent;
-import org.egordorichev.lasttry.world.spawn.components.EnemySpawnComponent;
-import org.egordorichev.lasttry.world.spawn.components.GridComponent;
-import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
+import org.egordorichev.lasttry.world.spawn.components.*;
 
 import java.util.ArrayList;
 
@@ -20,9 +17,8 @@ import java.util.ArrayList;
 public class SpawnSystem {
     private  Biome biome;
     private int spawnWeightOfCurrentlyActiveEnemies;
-    private AreaComponent playerActiveArea;
+    private CircleAreaComponent playerActiveArea;
     private int enemiesInActiveAreaCount;
-    private double activeAreaCircleRadius;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -51,10 +47,7 @@ public class SpawnSystem {
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridComponent.generateActiveArea();
-
-        //TODO Switch Grid Active area to Circle active area
-        activeAreaCircleRadius = GridComponent.generateActiveAreaCircleRadius();
+        playerActiveArea = GridComponent.generateActiveAreaCircle();
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 

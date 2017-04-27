@@ -50,6 +50,7 @@ public class World {
 		return this.name;
 	}
 
+	//GridPoints
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
 	}
