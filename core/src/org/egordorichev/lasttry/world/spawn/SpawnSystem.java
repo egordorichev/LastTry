@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.spawn.components.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Spawn system that will spawn monsters in the gameworld based on certain rules.
@@ -84,11 +85,22 @@ public class SpawnSystem {
     private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
         Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
-        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
+        Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
 
-        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst()* Block.SIZE, suitableXySpawnPoint.getSecond()*Block.SIZE);
+        if(optionalSuitableXySpawnPoint.isPresent()){
+            int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
+            int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
-        LastTry.debug.print("Spawn has been triggered");
+            LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
+            LastTry.debug.print("Spawn has been triggered");
+        }else{
+            LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
+
+            return;
+        }
+
+
+
     }
 
 

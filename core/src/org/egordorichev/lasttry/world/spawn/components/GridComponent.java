@@ -9,6 +9,8 @@ import org.egordorichev.lasttry.util.GenericContainer;
 import sun.net.www.content.text.Generic;
 import sun.nio.cs.ext.MacArabic;
 
+import java.util.Optional;
+
 /**
  * Created by Admin on 21/04/2017.
  */
@@ -77,7 +79,7 @@ public class GridComponent {
         return minAndMaxDists;
     }
 
-    public static GenericContainer.Pair<Integer> generateEligibleEnemySpawnPoint(CircleAreaComponent enemySpawnArea) {
+    public static Optional<GenericContainer.Pair<Integer>> generateEligibleEnemySpawnPoint(CircleAreaComponent enemySpawnArea) {
 
         GenericContainer.Pair<Integer> minAndMaxDists = retrieveMinMaxDistances(enemySpawnArea);
 
@@ -90,24 +92,39 @@ public class GridComponent {
         //Randomly generate a distance between min and max
         int randomDistance = SpawnUtilComponent.generateRandomNumber(minimumDistance, maximumDistance);
 
-        GenericContainer.Pair<Integer> rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
+        Optional<GenericContainer.Pair<Integer>> optionalRotatedSpawnPoints = Optional.of(retrieveRotatedGridPoints(randomDistance, angle));
+
+        //GenericContainer.Pair<Integer> rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
 
         boolean pointInMap = false;
 
-
-        //TODO Add counter
+        //A rudimentary timer counter
+        int counter = 64;
 
         while(!pointInMap){
+            if(counter==0){
 
-            if(SpawnUtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())){
-                pointInMap = true;
+                LastTry.debug.print("Unable to find suitable point to spawn enemy, counter expired");
+                optionalRotatedSpawnPoints = Optional.ofNullable(null);
+                return optionalRotatedSpawnPoints;
+
             }else{
-                angle = SpawnUtilComponent.increaseAngle(angle, randomDistance);
-                rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
+
+                int xSpawnPoint = optionalRotatedSpawnPoints.get().getFirst();
+                int ySpawnPoint = optionalRotatedSpawnPoints.get().getSecond();
+
+                if (SpawnUtilComponent.isPointOnMap(xSpawnPoint, ySpawnPoint)) {
+                    pointInMap = true;
+                } else {
+                    angle = SpawnUtilComponent.increaseAngle(angle, randomDistance);
+                    optionalRotatedSpawnPoints = Optional.of(retrieveRotatedGridPoints(randomDistance, angle));
+                }
+                counter--;
+
             }
         }
 
-        return rotatedGridPoints;
+        return optionalRotatedSpawnPoints;
     }
 
     public static GenericContainer.Pair<Integer> retrieveRotatedGridPoints(int distance, int angle) {
