@@ -2,10 +2,12 @@ package org.egordorichev.lasttry.world.spawn.components;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
+import org.egordorichev.lasttry.world.WorldTime;
 import sun.net.www.content.text.Generic;
 import sun.nio.cs.ext.MacArabic;
 
@@ -16,7 +18,29 @@ import java.util.Optional;
  */
 public class GridComponent {
 
-    public static CircleAreaComponent generateActiveAreaCircle() {
+    private static WorldTime time;
+    private static CircleAreaComponent cachedActiveAreaCircle;
+
+    public static CircleAreaComponent retrieveActiveAreaCircle(WorldTime timeOfRequest) {
+        //Logic to prevent having to recalculate active area circle every game tick (one game tick = one in game second)
+        if(time==null&&cachedActiveAreaCircle==null){
+            time = timeOfRequest;
+            cachedActiveAreaCircle = generateActiveAreaCircle();
+            return cachedActiveAreaCircle;
+        }else{
+            //If time is matching we return previously created circle
+            if(SpawnUtilComponent.matchingTime(time, timeOfRequest)){
+                assert cachedActiveAreaCircle != null: "Cached active area circle points to null!";
+                return cachedActiveAreaCircle;
+            }
+
+            time = timeOfRequest;
+            cachedActiveAreaCircle = generateActiveAreaCircle();
+            return cachedActiveAreaCircle;
+        }
+    }
+
+    private static CircleAreaComponent generateActiveAreaCircle() {
 
         CircleAreaComponent circleAreaComponent = new CircleAreaComponent();
 
@@ -24,7 +48,6 @@ public class GridComponent {
         int windowHeight = Gdx.graphics.getHeight();
         int tww = windowWidth / Block.SIZE;
         int twh = windowHeight / Block.SIZE;
-
 
         // We want to get the further most position of x on the screen, camera is always in the middle so we
         // divide total window width by 2 and divide by blcok size to get grid position
@@ -56,8 +79,11 @@ public class GridComponent {
         circleAreaComponent.setCircleRadius(activeAreaCircleRadius);
         circleAreaComponent.setCircleDiameter(activeAreaCircleDiameter);
 
+        cachedActiveAreaCircle = circleAreaComponent;
+
         return circleAreaComponent;
     }
+
 
     private static GenericContainer.Pair<Integer> retrieveMinMaxDistances(CircleAreaComponent enemySpawnArea) {
 
@@ -142,10 +168,10 @@ public class GridComponent {
         return rotatedXyPoints;
     }
 
-    public static boolean isEnemyInActiveArea(Enemy enemy, CircleAreaComponent area) {
+    public static boolean isCreatureInPlayerActiveArea(CreatureWithAI creatureWithAI, CircleAreaComponent area) {
         // Get block co ordinates of enemy
-        int enemyBlockGridX = enemy.physics.getGridX();
-        int enemyBlockGridY = enemy.physics.getGridY();
+        int enemyBlockGridX = creatureWithAI.physics.getGridX();
+        int enemyBlockGridY = creatureWithAI.physics.getGridY();
 
         boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
 

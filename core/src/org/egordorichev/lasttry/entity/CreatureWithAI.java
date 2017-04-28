@@ -18,4 +18,11 @@ public class CreatureWithAI extends Creature {
 	public void updateAI() {
 
 	}
+
+	public void tryToDespawn() {
+
+
+
+	}
+
 }

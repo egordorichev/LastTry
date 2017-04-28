@@ -72,5 +72,5 @@ public class EntityManager {
         return entities;
     }
 
-    public List<Enemy> getEnemyEntities() { return enemyEntities; }
+    public synchronized List<Enemy> getEnemyEntities() { return enemyEntities; }
 }

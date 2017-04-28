@@ -49,7 +49,7 @@ public class SpawnSystem {
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridComponent.generateActiveAreaCircle();
+        playerActiveArea = GridComponent.retrieveActiveAreaCircle(LastTry.environment.time);
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 

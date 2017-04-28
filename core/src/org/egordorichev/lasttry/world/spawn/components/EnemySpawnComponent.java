@@ -52,7 +52,7 @@ public class EnemySpawnComponent {
 
             // TODO Rethink
             // Checks if the enemy is in the active area and if the enemy is not already in the list, it adds to the list
-            if(GridComponent.isEnemyInActiveArea(enemy, playerActiveArea)){
+            if(GridComponent.isCreatureInPlayerActiveArea(enemy, playerActiveArea)){
                 enemiesInActiveArea.add(enemy);
                 // LastTry.debug("Enemy in active area of: "+enemy.getName());
             }

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.enemy.Enemy;
 
 public class Entity {
 	protected boolean active = false;
@@ -49,4 +50,5 @@ public class Entity {
 	public boolean isActive() {
 		return this.active;
 	}
+
 }
