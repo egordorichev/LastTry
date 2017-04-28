@@ -1,10 +1,8 @@
 package org.egordorichev.lasttry.world.spawn.components;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
-import org.egordorichev.lasttry.util.GenericContainer;
 
 public class SpawnUtilComponent {
 

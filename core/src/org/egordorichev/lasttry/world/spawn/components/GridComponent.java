@@ -94,8 +94,6 @@ public class GridComponent {
 
         Optional<GenericContainer.Pair<Integer>> optionalRotatedSpawnPoints = Optional.of(retrieveRotatedGridPoints(randomDistance, angle));
 
-        //GenericContainer.Pair<Integer> rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
-
         boolean pointInMap = false;
 
         //A rudimentary timer counter
@@ -113,6 +111,7 @@ public class GridComponent {
                 int xSpawnPoint = optionalRotatedSpawnPoints.get().getFirst();
                 int ySpawnPoint = optionalRotatedSpawnPoints.get().getSecond();
 
+                //TODO Add check to see if anything exists on that point
                 if (SpawnUtilComponent.isPointOnMap(xSpawnPoint, ySpawnPoint)) {
                     pointInMap = true;
                 } else {
@@ -144,19 +143,11 @@ public class GridComponent {
     }
 
     public static boolean isEnemyInActiveArea(Enemy enemy, CircleAreaComponent area) {
-
         // Get block co ordinates of enemy
         int enemyBlockGridX = enemy.physics.getGridX();
         int enemyBlockGridY = enemy.physics.getGridY();
 
         boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
-
-//        // TODO Change on inversion of y axis
-//        if(enemyBlockGridX>=area.getMinXActiveAreaGridPoint()&&enemyBlockGridX<=area.getMaxXActiveAreaGridPoint()){
-//            if(enemyBlockGridY<=area.getMaxYActiveAreaGridPoint()&&enemyBlockGridY>=area.getMinYActiveAreaGridPoint()){
-//                return true;
-//            }
-//        }
 
         return isEnemyInCircleSpawnArea;
     }

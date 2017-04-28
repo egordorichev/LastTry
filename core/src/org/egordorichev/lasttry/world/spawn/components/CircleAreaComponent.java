@@ -1,15 +1,10 @@
 package org.egordorichev.lasttry.world.spawn.components;
 
-/**
- * Created by Admin on 25/04/2017.
- */
 public class CircleAreaComponent {
 
     private int minXActiveAreaGridPoint, maxXActiveAreaGridPoint, minYActiveAreaGridPoint, maxYActiveAreaGridPoint;
 
     private double circleRadius, circleDiameter;
-
-    //private int maxXGridPointActiveZone;
 
     public int getMinXActiveAreaGridPoint() {
         return this.minXActiveAreaGridPoint;
@@ -42,14 +37,6 @@ public class CircleAreaComponent {
     public void setMaxYActiveAreaGridPoint(int maxYActiveAreaGridPoint) {
         this.maxYActiveAreaGridPoint = maxYActiveAreaGridPoint;
     }
-
-//    public int getMaxXGridPointActiveZone() {
-//        return this.maxXGridPointActiveZone;
-//    }
-//
-//    public void setMaxXGridPointSpawnZone(int maxXGridPointActiveZone) {
-//        this.maxXGridPointActiveZone = maxXGridPointActiveZone;
-//    }
 
     public double getCircleRadius() {
         return this.circleRadius;

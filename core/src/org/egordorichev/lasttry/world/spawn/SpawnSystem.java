@@ -99,25 +99,6 @@ public class SpawnSystem {
             return;
         }
 
-
-
-    }
-
-
-    private void calcArea(){
-        float xOfPLayer = LastTry.player.physics.getCenterX();
-        float yOfPlayer = LastTry.player.physics.getCenterY();
-
-        AdvancedRectangle advancedRectangle = new AdvancedRectangle(xOfPLayer, yOfPlayer, 6);
-
-        if(advancedRectangle.allSidesInBoundary()){
-            Log.debug("All sides in boundary");
-            // advancedRectangle.debugSetItemsOnPoints();
-        }
-    }
-
-    private void calculateNonSpawnSafePlayerArea(){
-        // TODO Implement
     }
 
     private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
