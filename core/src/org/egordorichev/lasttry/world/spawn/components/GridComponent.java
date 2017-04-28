@@ -48,12 +48,8 @@ public class GridComponent {
         final int gridSpawnWindowWidth = spawnWindowWidth/Block.SIZE;
         final int gridSpawnWindowHeight = spawnWindowHeight/Block.SIZE;
 
-        //Divided by 2 as we want to get the radius from the center of the screen.
-        final int gridSpawnWindowWidthForRadius =  gridSpawnWindowWidth/2;
-        final int gridSpawnWindowHeightForRadius = gridSpawnWindowHeight/2;
-
-        final double activeAreaCircleRadius = Math.sqrt((gridSpawnWindowWidthForRadius*gridSpawnWindowWidthForRadius)+(gridSpawnWindowHeightForRadius*gridSpawnWindowHeightForRadius));
-        final double activeAreaCircleDiameter = activeAreaCircleRadius*2;
+        final double activeAreaCircleDiameter = Math.sqrt((gridSpawnWindowWidth*gridSpawnWindowWidth)+(gridSpawnWindowHeight*gridSpawnWindowHeight));
+        final double activeAreaCircleRadius = activeAreaCircleDiameter/2;
 
         circleAreaComponent.setCircleRadius(activeAreaCircleRadius);
         circleAreaComponent.setCircleDiameter(activeAreaCircleDiameter);
@@ -67,12 +63,16 @@ public class GridComponent {
         int distanceOfScreenBlocksWidth = Gdx.graphics.getWidth()/Block.SIZE;
 
         //Get length of diagonal of inner active area rectangle
-        final double radiusOfActiveArea = Math.sqrt((distanceOfScreenBlocksWidth*distanceOfScreenBlocksWidth)+(distanceOfScreenBlocksHeight*distanceOfScreenBlocksHeight));
+        final double diameterOfActiveArea = Math.sqrt((distanceOfScreenBlocksWidth*distanceOfScreenBlocksWidth)+(distanceOfScreenBlocksHeight*distanceOfScreenBlocksHeight));
 
-        final int diffBetweenActiveAreaRadiusAndSpawnAreaRadius = (int)(enemySpawnArea.getCircleRadius()-radiusOfActiveArea);
+        final double radiusOfActiveArea = diameterOfActiveArea/2;
+
+        assert (int)(enemySpawnArea.getCircleRadius()-radiusOfActiveArea) > 0: "Enemy spawn area MUST be greater than radius of active area";
 
         GenericContainer.Pair<Integer> minAndMaxDists = new GenericContainer.Pair<>();
-        minAndMaxDists.set(diffBetweenActiveAreaRadiusAndSpawnAreaRadius, (int)enemySpawnArea.getCircleRadius());
+        //minAndMaxDists.set(diffBetweenActiveAreaRadiusAndSpawnAreaRadius, (int)radiusOfActiveArea);
+        //Enemy must spawn at least outside of the active area and at most inside the spawn area
+        minAndMaxDists.set((int)radiusOfActiveArea, (int)enemySpawnArea.getCircleRadius());
 
         return minAndMaxDists;
     }
@@ -85,21 +85,24 @@ public class GridComponent {
         int maximumDistance = minAndMaxDists.getSecond();
 
         //Randomly generate angle
-        int angle = UtilComponent.generateRandomNumber(0, 360);
+        int angle = SpawnUtilComponent.generateRandomNumber(0, 360);
 
         //Randomly generate a distance between min and max
-        int randomDistance = UtilComponent.generateRandomNumber(minimumDistance, maximumDistance);
+        int randomDistance = SpawnUtilComponent.generateRandomNumber(minimumDistance, maximumDistance);
 
         GenericContainer.Pair<Integer> rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
 
         boolean pointInMap = false;
 
+
+        //TODO Add counter
+
         while(!pointInMap){
 
-            if(UtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())){
+            if(SpawnUtilComponent.isPointOnMap(rotatedGridPoints.getFirst(), rotatedGridPoints.getSecond())){
                 pointInMap = true;
             }else{
-                angle = UtilComponent.increaseAngle(angle, randomDistance);
+                angle = SpawnUtilComponent.increaseAngle(angle, randomDistance);
                 rotatedGridPoints = retrieveRotatedGridPoints(randomDistance, angle);
             }
         }
@@ -129,14 +132,16 @@ public class GridComponent {
         int enemyBlockGridX = enemy.physics.getGridX();
         int enemyBlockGridY = enemy.physics.getGridY();
 
-        // TODO Change on inversion of y axis
-        if(enemyBlockGridX>=area.getMinXActiveAreaGridPoint()&&enemyBlockGridX<=area.getMaxXActiveAreaGridPoint()){
-            if(enemyBlockGridY<=area.getMaxYActiveAreaGridPoint()&&enemyBlockGridY>=area.getMinYActiveAreaGridPoint()){
-                return true;
-            }
-        }
+        boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
 
-        return false;
+//        // TODO Change on inversion of y axis
+//        if(enemyBlockGridX>=area.getMinXActiveAreaGridPoint()&&enemyBlockGridX<=area.getMaxXActiveAreaGridPoint()){
+//            if(enemyBlockGridY<=area.getMaxYActiveAreaGridPoint()&&enemyBlockGridY>=area.getMinYActiveAreaGridPoint()){
+//                return true;
+//            }
+//        }
+
+        return isEnemyInCircleSpawnArea;
     }
 
 }

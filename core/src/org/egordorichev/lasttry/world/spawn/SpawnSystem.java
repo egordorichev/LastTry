@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.spawn;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
@@ -83,9 +84,9 @@ public class SpawnSystem {
     private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
         Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
-//        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
-//
-//        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
+
+        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst()* Block.SIZE, suitableXySpawnPoint.getSecond()*Block.SIZE);
 
         LastTry.debug.print("Spawn has been triggered");
     }

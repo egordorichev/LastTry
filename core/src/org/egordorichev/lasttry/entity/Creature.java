@@ -27,6 +27,7 @@ public class Creature extends Entity {
 		this.state = new CreatureStateComponent(this);
 	}
 
+	//Pixels
 	@Override
 	public void spawn(int x, int y) {
 		super.spawn(x, y);

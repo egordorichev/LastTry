@@ -3,12 +3,10 @@ package org.egordorichev.lasttry.world.spawn.components;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 
-/**
- * Created by Admin on 27/04/2017.
- */
-public class UtilComponent {
+public class SpawnUtilComponent {
 
     public static int increaseAngle(int angle, int distance) {
 
@@ -19,6 +17,27 @@ public class UtilComponent {
         angle++;
 
         return angle;
+    }
+
+    public static boolean arePointsInCircle(int x, int y, CircleAreaComponent circleArea) {
+
+        //TODO Will convert into formula
+        double cameraGridPositionXBlocks = Camera.game.position.x/Block.SIZE;
+        double cameraGridPositionYBlocks = Camera.game.position.y/Block.SIZE;
+
+        double xPointCalcs = x - cameraGridPositionXBlocks;
+        double yPointCalcs = y - cameraGridPositionYBlocks;
+
+        double xPointCalc = Math.pow(xPointCalcs,2);
+        double yPointCalc = Math.pow(yPointCalcs,2);
+
+        double result = Math.sqrt(xPointCalc+yPointCalc);
+
+        if(result>=circleArea.getCircleRadius()){
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
