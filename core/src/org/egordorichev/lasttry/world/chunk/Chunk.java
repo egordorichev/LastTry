@@ -42,7 +42,15 @@ public class Chunk {
 	}
 
 	public void render() {
+		for (int y = 0; y < SIZE; y++) {
+			for (int x = 0; x < SIZE; x++) {
+				Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
 
+				if (block != null) {
+					block.renderBlock(x, y);
+				}
+			}
+		}
 	}
 
 	public short getBlock(int globalX, int globalY) {

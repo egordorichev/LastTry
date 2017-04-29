@@ -48,14 +48,14 @@ public class WorldChunksComponent extends WorldComponent {
 		int width = Gdx.graphics.getWidth() / Block.SIZE;
 		int height = Gdx.graphics.getHeight() / Block.SIZE;
 
-		Chunk tl = this.getFor(x, y + height);
-		Chunk tr = this.getFor(x + width, y);
-		Chunk bl = this.getFor(x, y);
-		Chunk br = this.getFor(x, y + width);
+		Chunk tl = this.getFor(1, 1);
+		// Chunk tr = this.getFor(x + width, y);
+		// Chunk bl = this.getFor(x, y);
+		// Chunk br = this.getFor(x, y + width);
 
 		// TODO: check, if they are the same
 
-		tl.render();
+		// tl.render();
 		/*tr.render();
 		bl.render();
 		br.render(); */
@@ -68,7 +68,7 @@ public class WorldChunksComponent extends WorldComponent {
 			return;
 		}
 
-		this.chunks[index] = ChunkIO.load(x, y);
+		this.set(ChunkIO.load(x, y), x, y);
 		this.loadedChunks.add(this.chunks[index]);
 	}
 
@@ -107,7 +107,8 @@ public class WorldChunksComponent extends WorldComponent {
 		Chunk chunk = this.get(x, y);
 
 		if (chunk == null) {
-			return ChunkIO.load(x, y);
+			this.load(x, y);
+			return this.get(x, y);
 		}
 
 		return chunk;
@@ -122,7 +123,7 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	private int getIndex(int x, int y) {
-		return x + y * this.world.getWidth();
+		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
 	public void save() {

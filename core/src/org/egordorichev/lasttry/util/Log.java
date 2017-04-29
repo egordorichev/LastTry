@@ -13,30 +13,31 @@ public class Log {
 
     private static boolean enabled;
 
-    public static void debug(String message) {
+    public synchronized static void debug(String message) {
         printMessage(ANSI_GREEN + "DEBUG", message);
     }
 
-    public static void warn(String message) {
+    public synchronized static void warn(String message) {
         printMessage(ANSI_PURPLE + "WARN", message);
     }
 
-    public static void error(String message) {
+    public synchronized static void error(String message) {
         printMessage(ANSI_RED + "ERROR", message);
     }
 
-    public static void info(String message) {
+    public synchronized static void info(String message) {
         printMessage(ANSI_BLUE + "INFO", message);
     }
 
-    private static void printMessage(String start, String message) {
+    private synchronized static void printMessage(String start, String message) {
         System.out.print(start + " ");
         printPath(Thread.currentThread().getStackTrace());
+		System.out.print(":" + Thread.currentThread().getStackTrace()[3].getLineNumber());
         System.out.println(" " + message + ANSI_RESET);
         System.out.flush();
     }
 
-    private static void printPath(StackTraceElement[] stackTraceElements) {
+    private synchronized static void printPath(StackTraceElement[] stackTraceElements) {
         System.out.print(stackTraceElements[3].getClassName());
     }
 

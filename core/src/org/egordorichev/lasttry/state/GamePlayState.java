@@ -20,7 +20,7 @@ public class GamePlayState implements State {
     public GamePlayState() {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
-    	int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
+	    int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
         int spawnY = LastTry.world.getHeight() / Block.SIZE - 100;
 
         LastTry.player.spawn(spawnX, spawnY);

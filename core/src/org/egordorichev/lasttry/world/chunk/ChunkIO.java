@@ -19,6 +19,7 @@ public class ChunkIO {
 		File file = new File(fileName);
 
 		if (!file.exists()) {
+			Log.debug("Chunk does not exist, generating a new one...");
 			return generate(x, y);
 		}
 
@@ -56,13 +57,14 @@ public class ChunkIO {
 			}
 
 			stream.close();
+			Log.debug("Done loading chunk " + x + ":" + y + "!");
+
 			return new Chunk(data, new Vector2(x, y));
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 			LastTry.abort();
+			return null;
 		}
-
-		return null;
 	}
 
 	public static Chunk generate(int x, int y) { // TODO
