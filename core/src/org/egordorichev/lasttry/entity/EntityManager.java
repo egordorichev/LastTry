@@ -1,16 +1,34 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EntityManager {
     private List<Entity> entities = new ArrayList<>();
     private List<Enemy> enemyEntities = new ArrayList<>();
     private List<Entity> clearList = new ArrayList<>();
 
+    //Seconds
+    public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
+
     // private List<Gore> gores = new ArrayList<>();
+
+    public EntityManager() {
+        Util.runInThread(new Callable() {
+            @Override
+            public void call() {
+                attemptDespawnEnemies();
+            }
+        }, ENEMY_DESPAWN_SWEEP_INTERVAL);
+    }
 
     public void render() {
         // TODO: Only render on-screen entities.
@@ -72,5 +90,31 @@ public class EntityManager {
         return entities;
     }
 
-    public List<Enemy> retrieveEnemyEntities() { return enemyEntities; }
+    public List<Enemy> getEnemyEntities() { return enemyEntities; }
+
+    //Todo Will be rewritten to include NPCs
+    private synchronized void attemptDespawnEnemies() {
+        try{
+            LastTry.debug.print("Starting despawn enemy process");
+
+            //Iterator cannot be used here, as list size is being changed in another thread.
+            //Iterator use here, will result in a NPE
+            for(int i=0; i<this.enemyEntities.size(); i++){
+                CreatureWithAI creatureWithAI = (CreatureWithAI)enemyEntities.get(i);
+
+                //Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+                ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
+
+                readOnlyLock.readLock().lock();
+                creatureWithAI.tryToDespawn();
+                readOnlyLock.readLock().unlock();
+
+            }
+
+            LastTry.debug.print("Despawn enemy process complete");
+        }catch (Exception e){
+            LastTry.handleException(e);
+        }
+
+    }
 }

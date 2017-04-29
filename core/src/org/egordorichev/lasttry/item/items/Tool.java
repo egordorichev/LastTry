@@ -90,7 +90,7 @@ public class Tool extends Item {
      */
     private void handleToolAttack() {
         //Retrieve active enemies
-        List<Enemy> activeEnemies = LastTry.entityManager.retrieveEnemyEntities();
+        List<Enemy> activeEnemies = LastTry.entityManager.getEnemyEntities();
 
         //Retrieve equipped player hitbox
         Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();

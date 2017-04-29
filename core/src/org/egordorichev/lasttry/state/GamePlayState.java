@@ -22,7 +22,7 @@ public class GamePlayState implements State {
 
 	    int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
         int spawnY = LastTry.world.getHeight() / Block.SIZE - 100;
-
+        
         LastTry.player.spawn(spawnX, spawnY);
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 100));
         LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));

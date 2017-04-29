@@ -2,70 +2,43 @@ package org.egordorichev.lasttry.world.spawn.components;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
+import org.egordorichev.lasttry.world.WorldTime;
 import sun.net.www.content.text.Generic;
 import sun.nio.cs.ext.MacArabic;
+
+import java.util.Optional;
 
 /**
  * Created by Admin on 21/04/2017.
  */
 public class GridComponent {
 
-    public static AreaComponent generateActiveArea() {
-        AreaComponent activeAreaOfPlayer = new AreaComponent();
+    private static WorldTime time;
+    private static CircleAreaComponent cachedActiveAreaCircle;
 
-        int windowWidth = Gdx.graphics.getWidth();
-        int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.SIZE;
-        int twh = windowHeight / Block.SIZE;
+    public static CircleAreaComponent retrieveActiveAreaCircle(WorldTime timeOfRequest) {
+        //Logic to prevent having to recalculate active area circle every game tick (one game tick = one in game second)
+        if(time==null&&cachedActiveAreaCircle==null){
+            time = timeOfRequest;
+            cachedActiveAreaCircle = generateActiveAreaCircle();
+            return cachedActiveAreaCircle;
+        }else{
+            //If time is matching we return previously created circle
+            if(SpawnUtilComponent.matchingTime(time, timeOfRequest)){
+                assert cachedActiveAreaCircle != null: "Cached active area circle points to null!";
+                return cachedActiveAreaCircle;
+            }
 
-        // We want to get the further most position of x on the screen, camera is always in the middle so we
-        // divide total window width by 2 and divide by blcok size to get grid position
-        int tcx = (int) (Camera.game.position.x - windowWidth/2) / Block.SIZE;
-
-        // TODO Change on inversion of y axis
-        // We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
-
-        // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
-        activeAreaOfPlayer.setMinYGridPoint(Math.max(0, tcy - 2));
-        activeAreaOfPlayer.setMaxYGridPoint(Math.min(LastTry.world.getHeight() - 1, tcy + twh + 3));
-
-        // Checking to make y values is not less than 0
-        activeAreaOfPlayer.setMinXGridPoint(Math.max(0, tcx - 2));
-        activeAreaOfPlayer.setMaxXGridPoint(Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2));
-
-        // Active zone is 6 greater
-        // TODO Must check that it is not out of bou
-        activeAreaOfPlayer.setMaxXGridPointActiveZone(activeAreaOfPlayer.getMaxXGridPoint()+25);
-
-        return activeAreaOfPlayer;
+            time = timeOfRequest;
+            cachedActiveAreaCircle = generateActiveAreaCircle();
+            return cachedActiveAreaCircle;
+        }
     }
-
-    //TODO Must be changed to incorporate player location
-    public static double generateActiveAreaCircleRadius() {
-
-        //Add 200 to add a buffer to the view.
-        final int windowWidth = Gdx.graphics.getWidth()+200;
-        final int windowHeight = Gdx.graphics.getHeight();
-        final int tww = windowWidth / Block.SIZE;
-        final int twh = windowHeight / Block.SIZE;
-
-        //Divide width & height of screen by 2, to get distance to furthermost part of the screen.
-        //Will be used to construct a triangle from centerpoint to further most point of the screen
-        final int centerWidth = tww/2;
-        final int centerHeight = twh/2;
-
-        final double activeAreaCircleRadius = Math.sqrt((tww*tww)+(twh*twh));
-
-        assert activeAreaCircleRadius != 0 : "Generated radius is 0";
-
-        return activeAreaCircleRadius;
-    }
-
 
     private static CircleAreaComponent generateActiveAreaCircle() {
 
@@ -75,7 +48,6 @@ public class GridComponent {
         int windowHeight = Gdx.graphics.getHeight();
         int tww = windowWidth / Block.SIZE;
         int twh = windowHeight / Block.SIZE;
-
 
         // We want to get the further most position of x on the screen, camera is always in the middle so we
         // divide total window width by 2 and divide by blcok size to get grid position
@@ -101,120 +73,109 @@ public class GridComponent {
         final int gridSpawnWindowWidth = spawnWindowWidth/Block.SIZE;
         final int gridSpawnWindowHeight = spawnWindowHeight/Block.SIZE;
 
-        //Divided by 2 as we want to get the radius from the center of the screen.
-        final int gridSpawnWindowWidthForRadius =  gridSpawnWindowWidth/2;
-        final int gridSpawnWindowHeightForRadius = gridSpawnWindowHeight/2;
-
-        final double activeAreaCircleRadius = Math.sqrt((gridSpawnWindowWidthForRadius*gridSpawnWindowWidthForRadius)+(gridSpawnWindowHeightForRadius*gridSpawnWindowHeightForRadius));
-        final double activeAreaCircleDiameter = activeAreaCircleRadius*2;
+        final double activeAreaCircleDiameter = Math.sqrt((gridSpawnWindowWidth*gridSpawnWindowWidth)+(gridSpawnWindowHeight*gridSpawnWindowHeight));
+        final double activeAreaCircleRadius = activeAreaCircleDiameter/2;
 
         circleAreaComponent.setCircleRadius(activeAreaCircleRadius);
         circleAreaComponent.setCircleDiameter(activeAreaCircleDiameter);
+
+        cachedActiveAreaCircle = circleAreaComponent;
 
         return circleAreaComponent;
     }
 
 
-    public static GenericContainer.Pair<Integer> generateEligibleSpawnPoint(CircleAreaComponent enemySpawnArea) {
-
-        //Get current center grid points of screen
-        int xGridCenterPoint = (int)(Camera.game.position.x/Block.SIZE);
-        int yGridCenterPoint = (int)(Camera.game.position.y/Block.SIZE);
-
-        //Get min points of circle spawn area for x and y
-        int minXGridSpawnAreaPoint = xGridCenterPoint - (int)enemySpawnArea.getCircleRadius();
-        int maxXGridSpawnAreaPoint = xGridCenterPoint + (int)enemySpawnArea.getCircleRadius();
-
-        int maxYGridSpawnAreaPoint = yGridCenterPoint - (int)enemySpawnArea.getCircleRadius();
-        int minYGridSpawnAreaPoint = yGridCenterPoint + (int)enemySpawnArea.getCircleRadius();
-
-        //Retrieve random values for the x and y point
-        int randomXGridSpawnPoint = generateRandomNumber(minXGridSpawnAreaPoint, maxXGridSpawnAreaPoint);
-        int randomYGridSpawnPoint = generateRandomNumber(minYGridSpawnAreaPoint, maxYGridSpawnAreaPoint);
-
-        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
-        xyPoint.set(randomXGridSpawnPoint, randomYGridSpawnPoint);
-
-        return xyPoint;
-    }
-
-
-    public static GenericContainer.Pair<Integer> generateEligibleEnemySpawnPoint(CircleAreaComponent enemySpawnArea) {
+    private static GenericContainer.Pair<Integer> retrieveMinMaxDistances(CircleAreaComponent enemySpawnArea) {
 
         int distanceOfScreenBlocksHeight = Gdx.graphics.getHeight()/Block.SIZE;
         int distanceOfScreenBlocksWidth = Gdx.graphics.getWidth()/Block.SIZE;
 
         //Get length of diagonal of inner active area rectangle
-        final double radiusOfActiveArea = Math.sqrt((distanceOfScreenBlocksWidth*distanceOfScreenBlocksWidth)+(distanceOfScreenBlocksHeight*distanceOfScreenBlocksHeight));
+        final double diameterOfActiveArea = Math.sqrt((distanceOfScreenBlocksWidth*distanceOfScreenBlocksWidth)+(distanceOfScreenBlocksHeight*distanceOfScreenBlocksHeight));
 
-        final int diffBetweenActiveAreaRadiusAndSpawnAreaRadius = (int)(enemySpawnArea.getCircleRadius()-radiusOfActiveArea);
+        final double radiusOfActiveArea = diameterOfActiveArea/2;
 
-        int minimumDistance = diffBetweenActiveAreaRadiusAndSpawnAreaRadius;
-        int maximumDistance = (int) enemySpawnArea.getCircleDiameter();
+        assert (int)(enemySpawnArea.getCircleRadius()-radiusOfActiveArea) > 0: "Enemy spawn area MUST be greater than radius of active area";
+
+        GenericContainer.Pair<Integer> minAndMaxDists = new GenericContainer.Pair<>();
+        //minAndMaxDists.set(diffBetweenActiveAreaRadiusAndSpawnAreaRadius, (int)radiusOfActiveArea);
+        //Enemy must spawn at least outside of the active area and at most inside the spawn area
+        minAndMaxDists.set((int)radiusOfActiveArea, (int)enemySpawnArea.getCircleRadius());
+
+        return minAndMaxDists;
+    }
+
+    public static Optional<GenericContainer.Pair<Integer>> generateEligibleEnemySpawnPoint(CircleAreaComponent enemySpawnArea) {
+
+        GenericContainer.Pair<Integer> minAndMaxDists = retrieveMinMaxDistances(enemySpawnArea);
+
+        int minimumDistance = minAndMaxDists.getFirst();
+        int maximumDistance = minAndMaxDists.getSecond();
 
         //Randomly generate angle
-        int angle = generateRandomNumber(0, 360);
+        int angle = SpawnUtilComponent.generateRandomNumber(0, 360);
 
         //Randomly generate a distance between min and max
-        int randomDistance = generateRandomNumber(minimumDistance, maximumDistance);
+        int randomDistance = SpawnUtilComponent.generateRandomNumber(minimumDistance, maximumDistance);
 
-        //Get player co ordinates
+        Optional<GenericContainer.Pair<Integer>> optionalRotatedSpawnPoints = Optional.of(retrieveRotatedGridPoints(randomDistance, angle));
+
+        boolean pointInMap = false;
+
+        //A rudimentary timer counter
+        int counter = 64;
+
+        while(!pointInMap){
+            if(counter==0){
+
+                LastTry.debug.print("Unable to find suitable point to spawn enemy, counter expired");
+                optionalRotatedSpawnPoints = Optional.ofNullable(null);
+                return optionalRotatedSpawnPoints;
+
+            }else{
+
+                int xSpawnPoint = optionalRotatedSpawnPoints.get().getFirst();
+                int ySpawnPoint = optionalRotatedSpawnPoints.get().getSecond();
+
+                //TODO Add check to see if anything exists on that point
+                if (SpawnUtilComponent.isPointOnMap(xSpawnPoint, ySpawnPoint)) {
+                    pointInMap = true;
+                } else {
+                    angle = SpawnUtilComponent.increaseAngle(angle, randomDistance);
+                    optionalRotatedSpawnPoints = Optional.of(retrieveRotatedGridPoints(randomDistance, angle));
+                }
+                counter--;
+
+            }
+        }
+
+        return optionalRotatedSpawnPoints;
+    }
+
+    public static GenericContainer.Pair<Integer> retrieveRotatedGridPoints(int distance, int angle) {
+
         int playerXGridPoint = LastTry.player.physics.getGridX();
         int playerYGridPoint = LastTry.player.physics.getGridY();
 
         //Move point by distance
         //Source: http://stackoverflow.com/questions/41465581/move-point-in-cartesian-coordinate-through-distance-in-the-given-direction
-        double newXGridPoint = playerXGridPoint + randomDistance * Math.cos(angle * Math.PI/180);
-        double newYGridPoint = playerYGridPoint + randomDistance * Math.sin(angle * Math.PI/180);
+        int newXGridPoint = (int)(playerXGridPoint + distance * Math.cos(angle*Math.PI/180));
+        int newYGridPoint = (int)(playerYGridPoint + distance * Math.sin(angle*Math.PI/180));
 
-        GenericContainer.Pair<Integer> xyPoint = new GenericContainer.Pair<>();
-        xyPoint.set((int)newXGridPoint, (int)newYGridPoint);
+        GenericContainer.Pair<Integer> rotatedXyPoints = new GenericContainer.Pair<>();
+        rotatedXyPoints.set(newXGridPoint, newYGridPoint);
 
-        //Origin to rotate about
-//        int centerXGridPoint = (int)(Camera.game.position.x/Block.SIZE);
-//        int centerYGridPoint = (int)(Camera.game.position.y/Block.SIZE);
-//
-//        int intermediateTransformXPoint = playerXGridPoint - centerXGridPoint;
-//        int intermediateTransformYPoint = playerYGridPoint - centerYGridPoint;
-//
-//        //Rotate x point, source: https://academo.org/demos/rotation-about-point/
-//        double rotatedXGridPoint = intermediateTransformXPoint*Math.cos(angle) - intermediateTransformYPoint * Math.sin(angle);
-//        double rotatedYGridPoint = intermediateTransformYPoint*Math.cos(angle) + intermediateTransformXPoint * Math.sin(angle);
-//
-//        int finalRotatedXGridPoint = (int)(rotatedXGridPoint + centerXGridPoint);
-//        int finalRotatedYGridPoint = (int)(rotatedYGridPoint + centerYGridPoint);
-
-        return xyPoint;
+        return rotatedXyPoints;
     }
 
-    private static int generateRandomNumber(int minNumber, int maxNumber) {
-
-        if(maxNumber-minNumber<=0){
-            throw new IllegalArgumentException("Difference between max & min numbers is less than or equal to 0");
-        }
-
-        int randomNumber = LastTry.random.nextInt(maxNumber-minNumber)+minNumber;
-
-        return randomNumber;
-    }
-
-
-    public static boolean isEnemyInActiveArea(Enemy enemy, AreaComponent area) {
-
+    public static boolean isCreatureInPlayerActiveArea(CreatureWithAI creatureWithAI, CircleAreaComponent area) {
         // Get block co ordinates of enemy
-        int enemyBlockGridX = enemy.physics.getGridX();
-        int enemyBlockGridY = enemy.physics.getGridY();
+        int enemyBlockGridX = creatureWithAI.physics.getGridX();
+        int enemyBlockGridY = creatureWithAI.physics.getGridY();
 
-        // TODO Change on inversion of y axis
-        if(enemyBlockGridX>=area.getMinXGridPoint()&&enemyBlockGridX<=area.getMaxXGridPoint()){
-            if(enemyBlockGridY<=area.getMaxYGridPoint()&&enemyBlockGridY>=area.getMinYGridPoint()){
-                return true;
-            }
-        }
+        boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
 
-        return false;
+        return isEnemyInCircleSpawnArea;
     }
-
-
 
 }

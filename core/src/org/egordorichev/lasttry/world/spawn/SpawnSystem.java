@@ -2,16 +2,15 @@ package org.egordorichev.lasttry.world.spawn;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.spawn.components.AreaComponent;
-import org.egordorichev.lasttry.world.spawn.components.EnemySpawnComponent;
-import org.egordorichev.lasttry.world.spawn.components.GridComponent;
-import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
+import org.egordorichev.lasttry.world.spawn.components.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Spawn system that will spawn monsters in the gameworld based on certain rules.
@@ -20,9 +19,8 @@ import java.util.ArrayList;
 public class SpawnSystem {
     private  Biome biome;
     private int spawnWeightOfCurrentlyActiveEnemies;
-    private AreaComponent playerActiveArea;
+    private CircleAreaComponent playerActiveArea;
     private int enemiesInActiveAreaCount;
-    private double activeAreaCircleRadius;
 
     public void update() {
         if(LastTry.environment.currentBiome.get() == null){
@@ -51,10 +49,7 @@ public class SpawnSystem {
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridComponent.generateActiveArea();
-
-        //TODO Switch Grid Active area to Circle active area
-        activeAreaCircleRadius = GridComponent.generateActiveAreaCircleRadius();
+        playerActiveArea = GridComponent.retrieveActiveAreaCircle(LastTry.environment.time);
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 
@@ -90,28 +85,20 @@ public class SpawnSystem {
     private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
         Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
-//        GenericContainer.Pair<Integer> suitableXySpawnPoint = GridComponent.generateEligibleSpawnPoint(playerActiveArea);
-//
-//        LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), suitableXySpawnPoint.getFirst(), suitableXySpawnPoint.getSecond());
+        Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
 
-        LastTry.debug.print("Spawn has been triggered");
-    }
+        if(optionalSuitableXySpawnPoint.isPresent()){
+            int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
+            int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
+            LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
+            LastTry.debug.print("Spawn has been triggered");
+        }else{
+            LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
 
-    private void calcArea(){
-        float xOfPLayer = LastTry.player.physics.getCenterX();
-        float yOfPlayer = LastTry.player.physics.getCenterY();
-
-        AdvancedRectangle advancedRectangle = new AdvancedRectangle(xOfPLayer, yOfPlayer, 6);
-
-        if(advancedRectangle.allSidesInBoundary()){
-            Log.debug("All sides in boundary");
-            // advancedRectangle.debugSetItemsOnPoints();
+            return;
         }
-    }
 
-    private void calculateNonSpawnSafePlayerArea(){
-        // TODO Implement
     }
 
     private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
