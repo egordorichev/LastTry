@@ -94,9 +94,6 @@ public class EntityManager {
 
     //Todo Will be rewritten to include NPCs
     private synchronized void attemptDespawnEnemies() {
-
-
-
         try{
             LastTry.debug.print("Starting despawn enemy process");
 
@@ -107,9 +104,11 @@ public class EntityManager {
 
                 //Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
                 ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
+
                 readOnlyLock.readLock().lock();
                 creatureWithAI.tryToDespawn();
                 readOnlyLock.readLock().unlock();
+
             }
 
             LastTry.debug.print("Despawn enemy process complete");
