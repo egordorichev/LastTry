@@ -21,9 +21,9 @@ public class GamePlayState implements State {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
 	    int spawnX = LastTry.world.getWidth() / 2 * Block.SIZE;
-        int spawnY = LastTry.world.getHeight() / Block.SIZE - 100;
+        int spawnY = LastTry.world.getHeight() / Block.SIZE ;
         
-        LastTry.player.spawn(spawnX, spawnY);
+        LastTry.player.spawn(0, LastTry.world.getHeight());
         LastTry.player.inventory.add(new ItemHolder(Items.wood, 100));
         LastTry.player.inventory.add(new ItemHolder(Items.workBench, 10));
         LastTry.entityManager = new EntityManager();

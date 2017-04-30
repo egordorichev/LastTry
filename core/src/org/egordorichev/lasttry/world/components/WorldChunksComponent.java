@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.components;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -48,13 +49,17 @@ public class WorldChunksComponent extends WorldComponent {
 		int width = Gdx.graphics.getWidth() / Block.SIZE;
 		int height = Gdx.graphics.getHeight() / Block.SIZE;
 
-		Chunk tl = this.getFor(1, 1);
+		Chunk t2 = this.getFor(LastTry.player.physics.getGridX(), LastTry.player.physics.getGridY());
+
+		t2.render(LastTry.player.physics.getGridX(), LastTry.player.physics.getGridY());
+
+		//Chunk t2 = this.getFor(playerPoistionGridX, playerPositionGridY);
 		// Chunk tr = this.getFor(x + width, y);
 		// Chunk bl = this.getFor(x, y);
 		// Chunk br = this.getFor(x, y + width);
 
 		// TODO: check, if they are the same
-
+		//t2.render();
 		// tl.render();
 		/*tr.render();
 		bl.render();

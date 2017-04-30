@@ -17,9 +17,9 @@ public class BlockGround extends Block {
      */
     @Override
     public void renderBlock(int x, int y) {
-        boolean t = LastTry.world.blocks.get(x, y - 1) instanceof BlockGround;
+        boolean t = LastTry.world.blocks.get(x, y + 1) instanceof BlockGround;
         boolean r = LastTry.world.blocks.get(x + 1, y) instanceof BlockGround;
-        boolean b = LastTry.world.blocks.get(x, y + 1) instanceof BlockGround;
+        boolean b = LastTry.world.blocks.get(x, y - 1) instanceof BlockGround;
         boolean l =LastTry.world.blocks.get(x - 1, y) instanceof BlockGround;
 
         short variant = 1; // TODO: FIXME: replace  with var

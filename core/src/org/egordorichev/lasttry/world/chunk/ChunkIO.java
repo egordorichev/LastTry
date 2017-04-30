@@ -14,6 +14,7 @@ import java.io.IOException;
 public class ChunkIO {
 	public static final int VERSION = 0;
 
+	//Grid co ordinates
 	public static Chunk load(int x, int y) {
 		String fileName = getSaveName(x, y);
 		File file = new File(fileName);

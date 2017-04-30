@@ -1,9 +1,11 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Log;
 
 public class Chunk {
 	public static final int SIZE = 256;
@@ -41,10 +43,14 @@ public class Chunk {
 		}
 	}
 
-	public void render() {
+	public void render(int xGridPoint, int yGridPoint) {
 		for (int y = 0; y < SIZE; y++) {
 			for (int x = 0; x < SIZE; x++) {
 				Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
+
+				if(x == xGridPoint && y == yGridPoint){
+					Log.debug("HIT!");
+				}
 
 				if (block != null) {
 					block.renderBlock(x, y);

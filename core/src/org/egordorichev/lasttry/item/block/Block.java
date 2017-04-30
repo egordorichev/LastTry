@@ -103,9 +103,9 @@ public class Block extends Item {
      * @param y Y-position in the world.
      */
     public void renderBlock(int x, int y) {
-        boolean t = LastTry.world.blocks.getID(x, y - 1) == this.id;
+        boolean t = LastTry.world.blocks.getID(x, y + 1) == this.id;
         boolean r = LastTry.world.blocks.getID(x + 1, y) == this.id;
-        boolean b = LastTry.world.blocks.getID(x, y + 1) == this.id;
+        boolean b = LastTry.world.blocks.getID(x, y - 1) == this.id;
         boolean l = LastTry.world.blocks.getID(x - 1, y) == this.id;
 
         // TODO: FIXME: replace with var
