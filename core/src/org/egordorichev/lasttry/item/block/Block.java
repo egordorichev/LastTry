@@ -114,12 +114,12 @@ public class Block extends Item {
 
         if (binary == 15) {
             LastTry.batch.draw(this.tiles, x * Block.SIZE,
-                (LastTry.world.getHeight() - y - 1) * Block.SIZE, Block.SIZE, Block.SIZE,
+                y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
                 Block.SIZE, false, false);
         } else {
             LastTry.batch.draw(this.tiles, x * Block.SIZE,
-                (LastTry.world.getHeight() - y - 1) * Block.SIZE, Block.SIZE, Block.SIZE,
+                y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
                 Block.SIZE, false, false);
         }
@@ -128,7 +128,7 @@ public class Block extends Item {
 	        byte hp = LastTry.world.blocks.getHP(x, y);
 
 	        if (hp < Block.MAX_HP) {
-				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, (LastTry.world.getHeight() - y - 1) * Block.SIZE);
+				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 	        }
         }
     }
