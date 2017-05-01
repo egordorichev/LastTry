@@ -1,54 +1,38 @@
 package org.egordorichev.lasttry.entity.enemy;
 
-import org.egordorichev.lasttry.LastTry;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.entity.enemy.enemies.BlueSlime;
-import org.egordorichev.lasttry.entity.enemy.enemies.GreenSlime;
-import org.egordorichev.lasttry.entity.enemy.enemies.Zombie;
 import org.egordorichev.lasttry.util.Log;
-
 import java.util.HashMap;
 
 public class Enemies {
-	public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
+    public static HashMap<String, EnemyInfo> ENEMY_CACHE = new HashMap<>();
 
-	static {
-		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to access enemies class before bootstrap");
-		} else {
-			define(EnemyID.greenSlime, GreenSlime.class);
-			define(EnemyID.blueSlime, BlueSlime.class);
-			define(EnemyID.zombie, Zombie.class);
-		}
-	}
+    public static void load() {
+        if (!Bootstrap.isLoaded()) {
+            Log.error("Trying to access enemies class before bootstrap");
+            return;
+        }
 
+        ENEMY_CACHE.clear();
 
-	public static void define(short id, Class<? extends Enemy> enemy) {
-		if (ENEMY_CACHE.containsKey(id)) {
-			Log.error("Enemy with id " + id + " is already defined!");
-		} else {
-			Log.debug("Defined [" + id + "] as " + enemy.getSimpleName());
-			ENEMY_CACHE.put(id, enemy);
-		}
-	}
+        try {
+            JsonReader jsonReader = new JsonReader();
+            JsonValue root = jsonReader.parse(Gdx.files.internal("enemies/standard.json"));
 
-	public static Enemy create(short id) {
-		try {
-			Class<? extends Enemy> aClass = ENEMY_CACHE.get(id);
+            for (JsonValue enemy : root) {
+                ENEMY_CACHE.put(enemy.name(), new EnemyInfo(enemy));
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Log.error("Failed to load enemies");
+            return;
+        }
+    }
 
-			if (aClass != null) {
-				return aClass.newInstance();
-			} else {
-				Log.warn("Enemy with id " + id + " is not found");
-				return null;
-			}
-		} catch (Exception exception) {
-			LastTry.handleException(exception);
-			return null;
-		}
-	}
-
-	public static void preload() {
-
-	}
+    public static Enemy create(String name) {
+        return null; // todo
+    }
 }

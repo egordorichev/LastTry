@@ -67,8 +67,8 @@ public class EntityManager {
         return entity;
     }
 
-    public Enemy spawnEnemy(short id, int x, int y) {
-        Enemy enemy = Enemies.create(id);
+    public Enemy spawnEnemy(String name, int x, int y) {
+        Enemy enemy = Enemies.create(name);
         this.enemyEntities.add(enemy);
         this.spawn(enemy, x, y);
         return enemy;

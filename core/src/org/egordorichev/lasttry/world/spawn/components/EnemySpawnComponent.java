@@ -13,7 +13,6 @@ public class EnemySpawnComponent {
     //availableMaxSpawn is an int denoting the remaining spawn value allowed for a new spawn in the biome
     public static ArrayList<Enemy> retrieveEligibleSpawnEnemies(final int availableMaxSpawn) {
         final ArrayList<Enemy> eligibleEnemiesForSpawn = new ArrayList<>();
-        Enemies.preload();
 	    Enemies.ENEMY_CACHE.keySet().stream().forEach(enemyKey -> {
 	        Enemy enemy = Enemies.create(enemyKey);
 	        if(enemy.canSpawn()&&enemy.getSpawnWeight()<=availableMaxSpawn){

@@ -1,14 +1,18 @@
 {
 	"Green Slime" : {
 		"id" : 0,
-		"texture" : "greenSlime",
+        "ai" : 1,
+		"texture" : "greenSlime.png",
 		"damage" : [ 6, 12, 118 ],
 		"hp" : [ 14, 28, 338 ],
 		"defense" : [ 0, 0, 0 ],
 		"kbResist" : [ 20, 3 ],
 
 		"drop" : [
-
+            {
+                "id" : 11,
+                "count" : [ 1, 3 ]
+            }
 		]
 	}
 }

@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -10,23 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Enemy extends CreatureWithAI {
-    protected int id;
+    protected String name;
 	protected int spawnWeight = 1;
-	protected String name;
     protected List<Drop> drops = new ArrayList<>();
 
-    public Enemy(short id, String name, int maxHp, int defense, int damage) {
-        super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent());
-        this. id = id; this.name = name;
+    public Enemy(AI ai, String name, int maxHp, int defense, int damage) {
+        super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
+        this.name = name;
     }
 
     @Override
     public void update(int dt) {
         super.update(dt);
-    }
-
-    public void updateAI() {
-
     }
 
     public boolean canSpawn(){
@@ -47,10 +43,6 @@ public abstract class Enemy extends CreatureWithAI {
 
     protected void onPlayerCollision(Player player) {
         // TODO: hit the player
-    }
-
-    public int getID() {
-        return this.id;
     }
 
     public String getName() {

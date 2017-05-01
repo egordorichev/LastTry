@@ -90,7 +90,7 @@ public class SpawnSystem {
             int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
             int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
-            Globals.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
+            // Globals.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
             LastTry.debug.print("Spawn has been triggered");
         }else{
             LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
