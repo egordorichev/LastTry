@@ -44,19 +44,7 @@ public class Chunk {
 	}
 
 	public void render(int xGridPoint, int yGridPoint) {
-		for (int y = 0; y < SIZE; y++) {
-			for (int x = 0; x < SIZE; x++) {
-				Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
 
-				if(x == xGridPoint && y == yGridPoint){
-					Log.debug("HIT!");
-				}
-
-				if (block != null) {
-					block.renderBlock(x, y);
-				}
-			}
-		}
 	}
 
 	public short getBlock(int globalX, int globalY) {
