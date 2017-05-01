@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.entity.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Enemy extends CreatureWithAI {
+public class Enemy extends CreatureWithAI {
     protected String name;
 	protected int spawnWeight = 1;
     protected List<Drop> drops = new ArrayList<>();

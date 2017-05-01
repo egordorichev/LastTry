@@ -16,7 +16,7 @@ public class AIs {
             Log.error("Trying to access ais class before bootstrap");
         }
 
-        none = new AI() {
+        none = new AI(AIID.none) {
             @Override
             public void update(CreatureWithAI creature, int dt, int currentAi) {
 

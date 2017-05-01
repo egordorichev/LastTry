@@ -33,6 +33,13 @@ public class Enemies {
     }
 
     public static Enemy create(String name) {
-        return null; // todo
+        EnemyInfo enemy = ENEMY_CACHE.get(name);
+
+        if (enemy == null) {
+            Log.warn("Enemy with name " + name + " does not exist.");
+            return null;
+        }
+
+        return enemy.create();
     }
 }
