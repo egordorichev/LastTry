@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.environment.events;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.world.environment.Event;
 
 public class BloomMoon extends Event {
@@ -15,7 +15,7 @@ public class BloomMoon extends Event {
 
     @Override
     public void update(int dt) {
-        if (!LastTry.environment.time.isNight()) {
+        if (!Globals.environment.time.isNight()) {
             this.end();
         }
     }
@@ -27,7 +27,7 @@ public class BloomMoon extends Event {
 
     @Override
     public boolean canHappen() {
-        if (LastTry.environment.time.isNight()) {
+        if (Globals.environment.time.isNight()) {
             return true;
         }
 

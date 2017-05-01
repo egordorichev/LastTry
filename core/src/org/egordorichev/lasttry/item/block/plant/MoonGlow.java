@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
@@ -12,16 +12,16 @@ public class MoonGlow extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = LastTry.world.blocks.getID(x, y);
+        int hp = Globals.world.blocks.getID(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD) {
-            if (LastTry.environment.time.isNight()) {
-                LastTry.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
+            if (Globals.environment.time.isNight()) {
+                Globals.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
             } else {
-                LastTry.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD), x, y);
+                Globals.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD), x, y);
             }
         } else {
-            LastTry.world.blocks.setHP((byte) (hp + 1), x, y);
+            Globals.world.blocks.setHP((byte) (hp + 1), x, y);
         }
     }
 
@@ -31,7 +31,7 @@ public class MoonGlow extends Plant {
             return false;
         }
 
-        short id = LastTry.world.blocks.getHP(x, y - 1);
+        short id = Globals.world.blocks.getHP(x, y - 1);
 
         if (id != ItemID.jungleGrassBlock) {
             return false;

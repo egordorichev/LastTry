@@ -1,15 +1,13 @@
 package org.egordorichev.lasttry.world.spawn.components;
 
 import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.WorldTime;
-import sun.net.www.content.text.Generic;
-import sun.nio.cs.ext.MacArabic;
 
 import java.util.Optional;
 
@@ -55,15 +53,15 @@ public class GridComponent {
 
         // TODO Change on inversion of y axis
         // We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
+        int tcy = (int) (Globals.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         circleAreaComponent.setMinYActiveAreaGridPoint(Math.max(0, tcy - 2));
-        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(LastTry.world.getHeight() - 1, tcy + twh + 3));
+        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.world.getHeight() - 1, tcy + twh + 3));
 
         // Checking to make y values is not less than 0
         circleAreaComponent.setMinXActiveAreaGridPoint(Math.max(0, tcx - 2));
-        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(LastTry.world.getWidth() - 1, tcx + tww + 2));
+        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(Globals.world.getWidth() - 1, tcx + tww + 2));
 
         // Active zone is 6 greater
         // TODO Must check that it is not out of bou
@@ -154,8 +152,8 @@ public class GridComponent {
 
     public static GenericContainer.Pair<Integer> retrieveRotatedGridPoints(int distance, int angle) {
 
-        int playerXGridPoint = LastTry.player.physics.getGridX();
-        int playerYGridPoint = LastTry.player.physics.getGridY();
+        int playerXGridPoint = Globals.player.physics.getGridX();
+        int playerYGridPoint = Globals.player.physics.getGridY();
 
         //Move point by distance
         //Source: http://stackoverflow.com/questions/41465581/move-point-in-cartesian-coordinate-through-distance-in-the-given-direction

@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
-import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.Globals;
 
 public class Entity {
 	protected boolean active = false;
@@ -36,7 +35,7 @@ public class Entity {
 		this.active = false;
 		this.onDeath();
 
-		LastTry.entityManager.markForRemoval(this);
+		Globals.entityManager.markForRemoval(this);
 	}
 
 	protected void onSpawn() {

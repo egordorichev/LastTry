@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.player;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
@@ -39,13 +40,13 @@ public class PlayerIO {
 				LastTry.abort();
 			}
 
-			LastTry.player = new Player(playerName);
+			Globals.player = new Player(playerName);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				short id = stream.readInt16();
 
 				if (id != 0) {
-					ItemHolder holder = LastTry.player.inventory.getItemHolder(i);
+					ItemHolder holder = Globals.player.inventory.getItemHolder(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
 
@@ -75,26 +76,26 @@ public class PlayerIO {
 			dir.mkdir();
 		}
 
-		String fileName = getSaveName(LastTry.player.getName());
+		String fileName = getSaveName(Globals.player.getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
-				Log.error("Failed to create save file for the player " + LastTry.player.getName() + "!");
+				Log.error("Failed to create save file for the player " + Globals.player.getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving player " + LastTry.player.getName() + "...");
+		Log.debug("Saving player " + Globals.player.getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
 			stream.writeInt32(VERSION);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				ItemHolder holder = LastTry.player.inventory.getItemHolder(i);
+				ItemHolder holder = Globals.player.inventory.getItemHolder(i);
 
 				if (holder.getItem() == null) {
 					stream.writeInt16(ItemID.none);
@@ -117,7 +118,7 @@ public class PlayerIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving player " + LastTry.player.getName() + "!");
+		Log.debug("Done saving player " + Globals.player.getName() + "!");
 	}
 
 	public static Player generate(String name) {

@@ -1,8 +1,8 @@
 package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 public class ItemHolder {
@@ -26,10 +26,10 @@ public class ItemHolder {
 
             int th = texture.getHeight();
 
-            LastTry.batch.draw(texture, x, y);
+            Graphics.batch.draw(texture, x, y);
 
             if (this.count > 1) {
-	            Assets.f18.draw(LastTry.batch, String.format("%d", this.count), x - 8, y + th - 8);
+	            Assets.f18.draw(Graphics.batch, String.format("%d", this.count), x - 8, y + th - 8);
             }
         }
     }
@@ -42,10 +42,10 @@ public class ItemHolder {
             int th = texture.getHeight();
             int iy = y + (height - th) / 2;
 
-            LastTry.batch.draw(texture, x + (width - tw) / 2, iy);
+            Graphics.batch.draw(texture, x + (width - tw) / 2, iy);
 
             if (this.count > 1) {
-	            Assets.f18.draw(LastTry.batch, String.format("%d", this.count), x + tw / 2, iy + th / 2);
+	            Assets.f18.draw(Graphics.batch, String.format("%d", this.count), x + tw / 2, iy + th / 2);
             }
         }
     }

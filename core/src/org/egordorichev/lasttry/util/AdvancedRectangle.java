@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.util;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 
@@ -88,10 +88,10 @@ public class AdvancedRectangle {
     }
 
     public void debugSetItemsOnPoints(){
-        LastTry.world.blocks.set(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
-        LastTry.world.blocks.set(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
-        LastTry.world.blocks.set(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
-        LastTry.world.blocks.set(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
+        Globals.world.blocks.set(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
+        Globals.world.blocks.set(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
+        Globals.world.blocks.set(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
+        Globals.world.blocks.set(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
     }
 
 
@@ -134,7 +134,7 @@ public class AdvancedRectangle {
             xyPoint[] sidePoints = {first, second};
 
             for(xyPoint sidePoint: sidePoints){
-                if(!LastTry.world.isInside(convertToBlock(sidePoint.getX()), convertToBlock(sidePoint.getY()))){
+                if(!Globals.world.isInside(convertToBlock(sidePoint.getX()), convertToBlock(sidePoint.getY()))){
                     return false;
                 }
             }

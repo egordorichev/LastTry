@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.spawn.components;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
@@ -46,7 +47,7 @@ public class EnemySpawnComponent {
         // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         // each time to ensure we have an up to date list
         ArrayList<Enemy> enemiesInActiveArea = new ArrayList<>();
-        List<Enemy> enemyEntities = LastTry.entityManager.getEnemyEntities();
+        List<Enemy> enemyEntities = Globals.entityManager.getEnemyEntities();
 
         enemyEntities.stream().forEach(enemy -> {
 

@@ -2,13 +2,15 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Graphics {
 	public static TextureRegion[] tileCracks;
 	public static Texture skyTexture = new Texture(Gdx.files.internal(Textures.sky));
+    public static SpriteBatch batch;
 
-	public static void load() {
+    public static void load() {
 		tileCracks = new TextureRegion[24];
 
 		for (int x = 0; x < 6; x++) {

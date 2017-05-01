@@ -3,25 +3,17 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.crash.Crash;
-import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.player.*;
 import org.egordorichev.lasttry.graphics.*;
 import org.egordorichev.lasttry.input.InputManager;
-import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.world.*;
-import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
-	import org.egordorichev.lasttry.world.spawn.SpawnSystem;
+
 import java.util.Random;
 import java.util.Locale;
 
@@ -32,30 +24,12 @@ public class LastTry extends Game {
 	
 	/** Random instance */
 	public static final Random random = new Random();
-	
-	/** Public sprite batch */
-	public static SpriteBatch batch;
-	
+
 	/** Last Try instance */
 	public static LastTry instance;
 
 	/** Ui manager */
 	public static UiManager ui;
-
-	/** World instance */
-	public static World world;
-
-	/** Player instance */
-	public static Player player;
-
-	/** Environment instance*/
-	public static Environment environment;
-
-	/** Spawn system instance*/
-	public static SpawnSystem spawnSystem;
-
-	/** PhysicBody manager instance*/
-	public static EntityManager entityManager;
 
 	/** Debug helper */
 	public static Debug debug;
@@ -78,8 +52,9 @@ public class LastTry extends Game {
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
+		Graphics.batch = new SpriteBatch();
+
 		debug = new Debug();
-		batch = new SpriteBatch();
 		ui = new UiManager();
 
 		this.setScreen(new SplashState());
@@ -102,23 +77,16 @@ public class LastTry extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
-		batch.enableBlending();
-		batch.begin();
+		Graphics.batch.enableBlending();
+		Graphics.batch.begin();
 		super.render();
-		batch.end();
+		Graphics.batch.end();
 	}
 
 	/** Handles game exit */
 	@Override
 	public void dispose() {
-		if(player != null){
-			PlayerIO.save();
-		}
-
-		if (world != null) {
-			WorldIO.save();
-		}
-
+		Globals.dispose();
 		Assets.dispose();
 	}
 
@@ -136,7 +104,7 @@ public class LastTry extends Game {
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.physics.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+		return (int) (Globals.player.physics.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
 	}
 
 	/**
@@ -144,7 +112,7 @@ public class LastTry extends Game {
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.physics.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+		return (int) (Globals.player.physics.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
 	}
 
 	/**

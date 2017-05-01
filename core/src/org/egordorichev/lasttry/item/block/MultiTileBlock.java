@@ -1,7 +1,8 @@
 package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class MultiTileBlock extends Block {
@@ -16,7 +17,7 @@ public class MultiTileBlock extends Block {
     public void renderBlock(int x, int y) {
 		boolean first = false;
 
-		if (LastTry.world.blocks.getID(x - 1, y) == this.id) {
+		if (Globals.world.blocks.getID(x - 1, y) == this.id) {
 
 		} else {
 			first = true;
@@ -25,8 +26,8 @@ public class MultiTileBlock extends Block {
 		if (first) {
 		    short variant = 1;
 
-		    LastTry.batch.draw(this.tiles, x * Block.SIZE,
-				(LastTry.world.getHeight() - y - 1) * Block.SIZE);
+		    Graphics.batch.draw(this.tiles, x * Block.SIZE,
+				(Globals.world.getHeight() - y - 1) * Block.SIZE);
 	    }
     }
 
@@ -42,7 +43,7 @@ public class MultiTileBlock extends Block {
 	public void place(int x, int y) {
 		for (int j = y; j < y + this.height; j++) {
 			for (int i = x; i < x + this.width; i++) {
-				LastTry.world.blocks.set(this.id, i, j);
+				Globals.world.blocks.set(this.id, i, j);
 			}
 		}
 	}

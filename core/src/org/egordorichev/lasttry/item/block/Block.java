@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -85,7 +86,7 @@ public class Block extends Item {
     }
 
     public void die(int x, int y) {
-	LastTry.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+	Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
     }
 
     public boolean canBePlaced(int x, int y) {
@@ -93,7 +94,7 @@ public class Block extends Item {
     }
 
     public void place(int x, int y) {
-    	LastTry.world.blocks.set(this.id, x, y);
+    	Globals.world.blocks.set(this.id, x, y);
     }
 
     /**
@@ -103,32 +104,32 @@ public class Block extends Item {
      * @param y Y-position in the world.
      */
     public void renderBlock(int x, int y) {
-        boolean t = LastTry.world.blocks.getID(x, y + 1) == this.id;
-        boolean r = LastTry.world.blocks.getID(x + 1, y) == this.id;
-        boolean b = LastTry.world.blocks.getID(x, y - 1) == this.id;
-        boolean l = LastTry.world.blocks.getID(x - 1, y) == this.id;
+        boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
+        boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
+        boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
+        boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
 
         // TODO: FIXME: replace with var
         short variant = 1;
         byte binary = Block.calculateBinary(t, r, b, l);
 
         if (binary == 15) {
-            LastTry.batch.draw(this.tiles, x * Block.SIZE,
+            Graphics.batch.draw(this.tiles, x * Block.SIZE,
                 y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
                 Block.SIZE, false, false);
         } else {
-            LastTry.batch.draw(this.tiles, x * Block.SIZE,
+            Graphics.batch.draw(this.tiles, x * Block.SIZE,
                 y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
                 Block.SIZE, false, false);
         }
 
         if (this.renderCracks()) {
-	        byte hp = LastTry.world.blocks.getHP(x, y);
+	        byte hp = Globals.world.blocks.getHP(x, y);
 
 	        if (hp < Block.MAX_HP) {
-				LastTry.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
+				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 	        }
         }
     }
@@ -146,8 +147,8 @@ public class Block extends Item {
         int x = LastTry.getMouseXInWorld() / Block.SIZE;
         int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-        if (this.canBePlaced(x, y) && LastTry.world.blocks.getID(x, y) == ItemID.none) {
-            Rectangle rectangle = LastTry.player.physics.getHitbox();
+        if (this.canBePlaced(x, y) && Globals.world.blocks.getID(x, y) == ItemID.none) {
+            Rectangle rectangle = Globals.player.physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,
 		            this.height * SIZE))) {

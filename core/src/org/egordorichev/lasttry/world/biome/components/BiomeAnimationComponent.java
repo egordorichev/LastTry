@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.biome.components;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.world.biome.Biome;
 
 public class BiomeAnimationComponent extends BiomeComponent {
@@ -24,9 +24,9 @@ public class BiomeAnimationComponent extends BiomeComponent {
     public boolean fadeOutIsDone() { return this.alpha < 0.01f; }
 
     public void renderBackground() {
-        LastTry.batch.setColor(1, 1, 1, this.alpha);
-        LastTry.batch.draw(this.backgroundTexture, 0, 0);
-        LastTry.batch.setColor(1, 1, 1, 1);
+        Graphics.batch.setColor(1, 1, 1, this.alpha);
+        Graphics.batch.draw(this.backgroundTexture, 0, 0);
+        Graphics.batch.setColor(1, 1, 1, 1);
     }
 
 

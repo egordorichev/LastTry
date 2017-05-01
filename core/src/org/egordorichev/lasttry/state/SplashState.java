@@ -20,7 +20,7 @@ public class SplashState implements State {
 
     @Override
     public void render(float delta) {
-        LastTry.batch.draw(this.splash, 0, 0);
+        Graphics.batch.draw(this.splash, 0, 0);
 
 	    Assets.assetManager.finishLoading(); // Comment this line to draw splash
 

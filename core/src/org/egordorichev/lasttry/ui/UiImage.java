@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiImage extends UiComponent {
     private Texture texture;
@@ -27,6 +27,6 @@ public class UiImage extends UiComponent {
     public void render() {
         super.render();
 
-        LastTry.batch.draw(this.texture, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        Graphics.batch.draw(this.texture, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 }

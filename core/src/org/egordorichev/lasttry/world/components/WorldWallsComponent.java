@@ -1,13 +1,12 @@
 package org.egordorichev.lasttry.world.components;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
-import org.egordorichev.lasttry.world.components.WorldComponent;
 
 public class WorldWallsComponent extends WorldComponent {
 	public WorldWallsComponent(World world) {
@@ -66,7 +65,7 @@ public class WorldWallsComponent extends WorldComponent {
 		Chunk chunk = this.world.chunks.getFor(x, y);
 
 		if (chunk == null) {
-			LastTry.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
+			Globals.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
 			return null;
 		}
 

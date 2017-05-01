@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.entity.enemy.enemies;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.enemy.EnemyID;
 import org.egordorichev.lasttry.graphics.Assets;
@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.world.biome.Biome;
 
 public class GreenSlime extends Slime {
     public GreenSlime() {
-        super(EnemyID.greenSlime, "Green Slime", LastTry.world.flags.isExpertMode() ? 10 : 10, 0, LastTry.world.flags.isExpertMode() ? 6 : 16,
+        super(EnemyID.greenSlime, "Green Slime", Globals.world.flags.isExpertMode() ? 10 : 10, 0, Globals.world.flags.isExpertMode() ? 6 : 16,
 		     Assets.getTexture(Textures.greenSlime));
 
         this.drops.add(new Drop(Items.copperCoin, 3, 3));
@@ -19,6 +19,6 @@ public class GreenSlime extends Slime {
 
     @Override
     public boolean canSpawn(){
-        return LastTry.environment.time.isDay() && LastTry.environment.currentBiome.get() == Biome.forest;
+        return Globals.environment.time.isDay() && Globals.environment.currentBiome.get() == Biome.forest;
     }
 }

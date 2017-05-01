@@ -1,11 +1,10 @@
 package org.egordorichev.lasttry.world.spawn;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.AdvancedRectangle;
 import org.egordorichev.lasttry.util.GenericContainer;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.spawn.components.*;
 
@@ -23,10 +22,10 @@ public class SpawnSystem {
     private int enemiesInActiveAreaCount;
 
     public void update() {
-        if(LastTry.environment.currentBiome.get() == null){
+        if(Globals.environment.currentBiome.get() == null){
             return;
         }
-        this.biome = LastTry.environment.currentBiome.get(); // Get user biome
+        this.biome = Globals.environment.currentBiome.get(); // Get user biome
         this.refreshTriggered();
     }
 
@@ -49,7 +48,7 @@ public class SpawnSystem {
 
         final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridComponent.retrieveActiveAreaCircle(LastTry.environment.time);
+        playerActiveArea = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
 
         ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 
@@ -91,7 +90,7 @@ public class SpawnSystem {
             int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
             int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
-            LastTry.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
+            Globals.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
             LastTry.debug.print("Spawn has been triggered");
         }else{
             LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");

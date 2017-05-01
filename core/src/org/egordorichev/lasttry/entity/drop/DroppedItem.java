@@ -1,9 +1,10 @@
 package org.egordorichev.lasttry.entity.drop;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 
@@ -24,23 +25,23 @@ public class DroppedItem extends Entity {
 
 	@Override
 	public void render() {
-		LastTry.batch.draw(texture, this.physics.getX(), this.physics.getY());
+		Graphics.batch.draw(texture, this.physics.getX(), this.physics.getY());
 	}
 
 	@Override
     public void update(int dt) {
         super.update(dt);
 
-        if (this.physics.getHitbox().intersects(LastTry.player.physics.getHitbox())) {
+        if (this.physics.getHitbox().intersects(Globals.player.physics.getHitbox())) {
             if (this.holder.getItem() == Items.heart) {
-                LastTry.player.stats.modifyHP(20 * this.holder.getCount());
+                Globals.player.stats.modifyHP(20 * this.holder.getCount());
             } else if (this.holder.getItem() == Items.mana) {
-                LastTry.player.stats.modifyMana(20 * this.holder.getCount());
+                Globals.player.stats.modifyMana(20 * this.holder.getCount());
             } else {
-                LastTry.player.inventory.add(this.holder);
+                Globals.player.inventory.add(this.holder);
             }
 
-            LastTry.entityManager.markForRemoval(this);
+            Globals.entityManager.markForRemoval(this);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -82,7 +83,7 @@ public class ChunkIO {
 					}
 				}
 
-				LastTry.world.chunks.set(new Chunk(data, new Vector2(x, y)), x, y);
+				Globals.world.chunks.set(new Chunk(data, new Vector2(x, y)), x, y);
 				Log.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
@@ -103,7 +104,7 @@ public class ChunkIO {
 			}
 		}
 
-		Chunk chunk = LastTry.world.chunks.get(x, y);
+		Chunk chunk = Globals.world.chunks.get(x, y);
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
@@ -132,6 +133,6 @@ public class ChunkIO {
 	}
 
 	private static String getSaveName(int x, int y) {
-		return "worlds/" + LastTry.world.getName() + "/" + x + ":" + y + ".cnk";
+		return "worlds/" + Globals.world.getName() + "/" + x + ":" + y + ".cnk";
 	}
 }

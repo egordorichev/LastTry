@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
@@ -90,7 +91,7 @@ public class Tool extends Item {
      */
     private void handleToolAttack() {
         //Retrieve active enemies
-        List<Enemy> activeEnemies = LastTry.entityManager.getEnemyEntities();
+        List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
 
         //Retrieve equipped player hitbox
         Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
@@ -116,7 +117,7 @@ public class Tool extends Item {
 	    // TODO Rewrite this entire method, it is wrong.  Hitbox should be rotated with the weapon.
 
 		//Retrieve the player hitbox
-		final Rectangle playerHitBox = LastTry.player.physics.getHitbox();
+		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
 
 		//Retrieve item texture, will be used for calculating item dimensions
 		final Texture itemTexture = this.getTexture();

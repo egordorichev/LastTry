@@ -1,11 +1,10 @@
 package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.world.spawn.SpawnSystem;
+import org.egordorichev.lasttry.graphics.Graphics;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Debug {
@@ -22,17 +21,17 @@ public class Debug {
             return;
         }
 
-	    Assets.f22.draw(LastTry.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
-	    Assets.f22.draw(LastTry.batch, "X: " + String.format("%d", LastTry.player.physics.getGridX())
-            + " Y: " + String.format("%d", LastTry.player.physics.getGridY()), 40, 30);
-	    Assets.f22.draw(LastTry.batch, "Spawn weight of active enemies: "+LastTry.spawnSystem.getSpawnWeightOfCurrentlyActiveEnemies(), 10, 50);
-	    Assets.f22.draw(LastTry.batch, "Remaining spawn weight of biome: "+LastTry.spawnSystem.getRemainingSpawnWeightOfBiome(), 10, 70);
-	    Assets.f22.draw(LastTry.batch, "Enemies in active area: "+LastTry.spawnSystem.getEnemiesInActiveAreaCount(), 10, 90);
+	    Assets.f22.draw(Graphics.batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 10, 30);
+	    Assets.f22.draw(Graphics.batch, "X: " + String.format("%d", Globals.player.physics.getGridX())
+            + " Y: " + String.format("%d", Globals.player.physics.getGridY()), 40, 30);
+	    Assets.f22.draw(Graphics.batch, "Spawn weight of active enemies: "+ Globals.spawnSystem.getSpawnWeightOfCurrentlyActiveEnemies(), 10, 50);
+	    Assets.f22.draw(Graphics.batch, "Remaining spawn weight of biome: "+ Globals.spawnSystem.getRemainingSpawnWeightOfBiome(), 10, 70);
+	    Assets.f22.draw(Graphics.batch, "Enemies in active area: "+ Globals.spawnSystem.getEnemiesInActiveAreaCount(), 10, 90);
 	    //TODO Heavy call, should be rethought and removed
-	    Assets.f22.draw(LastTry.batch, "Total amount of enemies: "+LastTry.entityManager.getEnemyEntities().size(), 10, 110);
-	    Assets.f22.draw(LastTry.batch, "Current Biome: "+LastTry.environment.currentBiome.getName(), 10, 130);
-	    Assets.f22.draw(LastTry.batch, "Max spawns of current biome: "+LastTry.environment.currentBiome.get().getSpawnMax(), 10, 150);
-	    Assets.f22.draw(LastTry.batch, "Current in world time: "+LastTry.environment.time.toString(true), 10, 170);
+	    Assets.f22.draw(Graphics.batch, "Total amount of enemies: "+ Globals.entityManager.getEnemyEntities().size(), 10, 110);
+	    Assets.f22.draw(Graphics.batch, "Current Biome: "+ Globals.environment.currentBiome.getName(), 10, 130);
+	    Assets.f22.draw(Graphics.batch, "Max spawns of current biome: "+ Globals.environment.currentBiome.get().getSpawnMax(), 10, 150);
+	    Assets.f22.draw(Graphics.batch, "Current in world time: "+ Globals.environment.time.toString(true), 10, 170);
 
 
 	    if(messagesToBePrinted.keySet().size()==0){
@@ -55,7 +54,7 @@ public class Debug {
             return;
         }
 
-        Assets.f22.draw(LastTry.batch, message, 10, 190);
+        Assets.f22.draw(Graphics.batch, message, 10, 190);
 
         //Decrement counter as it has been displayed for 1 tick
         gameTicksCounter--;

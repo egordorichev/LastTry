@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -12,14 +13,14 @@ public class BlinkRoot extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        byte hp = LastTry.world.blocks.getHP(x, y);
+        byte hp = Globals.world.blocks.getHP(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD + 1 && LastTry.random.nextInt(3) == 0) {
-            LastTry.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
+            Globals.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
         } else if (hp == Plant.GROW_THRESHOLD || hp == Plant.GROW_THRESHOLD + 1) {
-            LastTry.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
+            Globals.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);
         } else if (hp < Plant.GROW_THRESHOLD) {
-            LastTry.world.blocks.setHP((byte) (hp + 1), x, y);
+            Globals.world.blocks.setHP((byte) (hp + 1), x, y);
         }
     }
 
@@ -29,7 +30,7 @@ public class BlinkRoot extends Plant {
             return false;
         }
 
-        short id = LastTry.world.blocks.getID(x, y - 1);
+        short id = Globals.world.blocks.getID(x, y - 1);
 
         if (id != ItemID.dirtBlock && id != ItemID.mudBlock) {
             return false;

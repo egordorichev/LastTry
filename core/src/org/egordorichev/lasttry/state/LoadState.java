@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.entity.player.PlayerIO;
@@ -24,15 +25,15 @@ public class LoadState implements State {
                     public void run() {
 	                    Bootstrap.load();
                         loadString = "Loading spawn system...";
-                        LastTry.spawnSystem = new SpawnSystem();
+                        Globals.spawnSystem = new SpawnSystem();
                         loadString = "Loading environment...";
-                        LastTry.environment = new Environment();
+                        Globals.environment = new Environment();
                         loadString = "Loading world...";
 
                         if (WorldIO.saveExists("test")) {
                         	WorldIO.load("test");
                         } else {
-                        	LastTry.world = WorldIO.generate("test", World.Size.SMALL, 0);
+                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0);
                         }
 
                         loadString = "Loading player...";
@@ -40,7 +41,7 @@ public class LoadState implements State {
                         if (PlayerIO.saveExists("test")) {
 	                        PlayerIO.load("test");
                         } else {
-	                        LastTry.player = PlayerIO.generate("test");
+	                        Globals.player = PlayerIO.generate("test");
                         }
 
                         loaded = true;
@@ -63,10 +64,10 @@ public class LoadState implements State {
         }
 
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
+            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
-        Assets.f22.draw(LastTry.batch, this.loadString, 0, 0);
+        Assets.f22.draw(Graphics.batch, this.loadString, 0, 0);
         LastTry.ui.render();
     }
 

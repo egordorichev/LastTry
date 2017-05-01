@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
@@ -218,16 +218,16 @@ public class UiInventory extends UiComponent {
         Item item = this.slots[this.currentSlot].getItem();
 
         if (item == null) {
-            Assets.f22.draw(LastTry.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
+            Assets.f22.draw(Graphics.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
         } else {
             item.update((int) Gdx.graphics.getDeltaTime() * 1000000);
 
             Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
             if (modifier != null) {
-                Assets.f22.draw(LastTry.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
+                Assets.f22.draw(Graphics.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
             } else {
-                Assets.f22.draw(LastTry.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
+                Assets.f22.draw(Graphics.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
             }
         }
 

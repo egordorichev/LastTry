@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
@@ -83,10 +82,10 @@ public class PhysicsComponent extends CreatureComponent {
 			if (!this.solid) {
 				this.position.x += this.velocity.x;
 			} else {
-				if (LastTry.world.isColliding(newHitbox)) {
+				if (Globals.world.isColliding(newHitbox)) {
 					float step = Block.SIZE * STEP_HEIGHT;
 
-					if (LastTry.world.isColliding(newHitbox.offset(0, -step))) {
+					if (Globals.world.isColliding(newHitbox.offset(0, -step))) {
 						this.velocity.x = 0;
 						this.onBlockHit();
 					} else {
@@ -113,7 +112,7 @@ public class PhysicsComponent extends CreatureComponent {
 
 			newHitbox.y += this.velocity.y;
 
-			if (!this.solid || !LastTry.world.isColliding(newHitbox)) {
+			if (!this.solid || !Globals.world.isColliding(newHitbox)) {
 				this.position.y += this.velocity.y;
 			} else {
 				this.velocity.y = 0;

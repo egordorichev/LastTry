@@ -4,8 +4,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.item.Item;
@@ -88,22 +89,22 @@ public class UiItemSlot extends UiComponent {
         int width = this.getWidth();
         int height = this.getHeight();
 
-        LastTry.batch.setColor(1, 1, 1, 0.8f);
+        Graphics.batch.setColor(1, 1, 1, 0.8f);
 
         if (this.active) {
-            LastTry.batch.draw(inventorySlot5, x, y, width, height);
+            Graphics.batch.draw(inventorySlot5, x, y, width, height);
         } else {
-            LastTry.batch.draw(this.texture, x, y, width, height);
+            Graphics.batch.draw(this.texture, x, y, width, height);
         }
 
         if (this.itemHolder.getItem() != null) {
-            LastTry.batch.setColor(1, 1, 1, 1);
+            Graphics.batch.setColor(1, 1, 1, 1);
             this.itemHolder.renderAt(x, y, width, height);
         } else if (this.back != null) {
-            LastTry.batch.setColor(1, 1, 1, 0.7f);
-            LastTry.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2, y + (height
+            Graphics.batch.setColor(1, 1, 1, 0.7f);
+            Graphics.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2, y + (height
                 - this.back.getRegionHeight()) / 2);
-            LastTry.batch.setColor(1, 1, 1, 1);
+            Graphics.batch.setColor(1, 1, 1, 1);
         }
     }
 
@@ -182,28 +183,28 @@ public class UiItemSlot extends UiComponent {
     @Override
     protected void onStateChange() {
         if (this.state == State.MOUSE_DOWN) {
-            if (LastTry.player.inventory.isOpen()) {
+            if (Globals.player.inventory.isOpen()) {
                 if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
-                    if (LastTry.player.inventory.currentItem != null
-                            && this.itemHolder.getItem() == LastTry.player.inventory.currentItem.getItem()) {
+                    if (Globals.player.inventory.currentItem != null
+                            && this.itemHolder.getItem() == Globals.player.inventory.currentItem.getItem()) {
 
-                        if (this.canHold(LastTry.player.inventory.currentItem)) {
-                            int count = LastTry.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
+                        if (this.canHold(Globals.player.inventory.currentItem)) {
+                            int count = Globals.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
                             int max = this.itemHolder.getItem().getMaxInStack();
 
                             if (count <= max) {
                                 this.itemHolder.setCount(count);
-                                LastTry.player.inventory.currentItem = null;
+                                Globals.player.inventory.currentItem = null;
                             } else {
                                 ItemHolder tmp = this.itemHolder;
-                                this.itemHolder = LastTry.player.inventory.currentItem;
-                                LastTry.player.inventory.currentItem = tmp;
+                                this.itemHolder = Globals.player.inventory.currentItem;
+                                Globals.player.inventory.currentItem = tmp;
                             }
                         }
                     } else {
-	                    if (this.canHold(LastTry.player.inventory.currentItem)) {
-                            ItemHolder tmp = LastTry.player.inventory.currentItem;
-                            LastTry.player.inventory.currentItem = this.itemHolder;
+	                    if (this.canHold(Globals.player.inventory.currentItem)) {
+                            ItemHolder tmp = Globals.player.inventory.currentItem;
+                            Globals.player.inventory.currentItem = this.itemHolder;
                             this.itemHolder = tmp;
                         }
                     }

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.World;
@@ -12,7 +13,7 @@ public class WorldGenerator {
 
     public WorldGenerator(String name, World.Size size, int flags) {
     	this.world = new World(name, size, flags);
-		LastTry.world = this.world;
+		Globals.world = this.world;
 
         this.addSurfaceGenerator();
         this.addCavesGenerator();

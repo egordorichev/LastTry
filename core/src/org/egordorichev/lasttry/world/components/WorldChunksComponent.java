@@ -1,8 +1,7 @@
 package org.egordorichev.lasttry.world.components;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -10,7 +9,6 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
-import org.egordorichev.lasttry.world.chunk.EmptyChunk;
 
 import java.util.ArrayList;
 
@@ -49,9 +47,9 @@ public class WorldChunksComponent extends WorldComponent {
 		int width = Gdx.graphics.getWidth() / Block.SIZE;
 		int height = Gdx.graphics.getHeight() / Block.SIZE;
 
-		Chunk t2 = this.getFor(LastTry.player.physics.getGridX(), LastTry.player.physics.getGridY());
+		Chunk t2 = this.getFor(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
 
-		t2.render(LastTry.player.physics.getGridX(), LastTry.player.physics.getGridY());
+		t2.render(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
 
 		//Chunk t2 = this.getFor(playerPoistionGridX, playerPositionGridY);
 		// Chunk tr = this.getFor(x + width, y);
@@ -132,8 +130,8 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void save() {
-		for (int y = 0; y < LastTry.world.getHeight() / Chunk.SIZE; y++) {
-			for (int x = 0; x < LastTry.world.getWidth() / Chunk.SIZE; x++) {
+		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {
+			for (int x = 0; x < Globals.world.getWidth() / Chunk.SIZE; x++) {
 				if (this.get(x, y) != null) {
 					ChunkIO.save(x, y);
 				}

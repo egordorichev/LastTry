@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.items.seeds;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
@@ -27,14 +28,14 @@ public class Seeds extends Item {
         if (this.plant.canBeGrownAt(x, y)) {
             // Check if the plant intersects the player's hitbox
             // TODO: Check other entities in the world
-            Rectangle rectangle = LastTry.player.physics.getHitbox();
+            Rectangle rectangle = Globals.player.physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
                 return false;
             }
 
-            LastTry.world.blocks.set(this.plant.getID(), x, y);
-            LastTry.world.blocks.setHP((byte) 1, x, y);
+            Globals.world.blocks.set(this.plant.getID(), x, y);
+            Globals.world.blocks.setHP((byte) 1, x, y);
 
             return true;
         }

@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.spawn.components;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
@@ -43,7 +44,7 @@ public class SpawnUtilComponent {
 
     public static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
 
-        boolean isPointInMap = LastTry.world.isInside(xGridPoint, yGridPoint);
+        boolean isPointInMap = Globals.world.isInside(xGridPoint, yGridPoint);
 
         return  isPointInMap;
     }

@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.graphics;
 
-import org.egordorichev.lasttry.LastTry;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +52,7 @@ public class Animation {
         }
 
         AnimationFrame frame = this.frames.get(this.currentFrame);
-        LastTry.batch.draw(frame.region, x, y);
+        Graphics.batch.draw(frame.region, x, y);
     }
 
     public void render(float x, float y, float width, float height) {
@@ -63,7 +61,7 @@ public class Animation {
         }
 
         AnimationFrame frame = this.frames.get(this.currentFrame);
-        LastTry.batch.draw(frame.region, x, y, width, height);
+        Graphics.batch.draw(frame.region, x, y, width, height);
     }
 
     public void render(float x, float y, float width, float height, boolean horizontalFlip,
@@ -77,6 +75,6 @@ public class Animation {
         frame.region.flip((frame.region.isFlipX()) != horizontalFlip,
                 (frame.region.isFlipY()) != verticalFlip);
 
-        LastTry.batch.draw(frame.region, x, y, width, height);
+        Graphics.batch.draw(frame.region, x, y, width, height);
     }
 }

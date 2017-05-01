@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.environment;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -38,7 +38,7 @@ public class Environment {
 
     public void render() {
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
+            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
         if (this.currentBiome != null) {
@@ -51,7 +51,7 @@ public class Environment {
     }
 
     public void update(int dt) {
-	    if (LastTry.world == null) {
+	    if (Globals.world == null) {
 		    return;
 	    }
 
@@ -78,7 +78,7 @@ public class Environment {
             }
         }
 
-        LastTry.spawnSystem.update();
+        Globals.spawnSystem.update();
     }
 
     public boolean isEventHappening(Event event) {
@@ -110,7 +110,7 @@ public class Environment {
     }
 
     private void updateBiome() {
-        if (LastTry.world == null) {
+        if (Globals.world == null) {
             return;
         }
 
@@ -119,19 +119,19 @@ public class Environment {
         int tww = windowWidth / Block.SIZE;
         int twh = windowHeight / Block.SIZE;
         int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
-        int tcy = (int) (LastTry.world.getHeight() - (Camera.game.position.y + windowHeight / 2)
+        int tcy = (int) (Globals.world.getHeight() - (Camera.game.position.y + windowHeight / 2)
                 / Block.SIZE);
 
         int minY = Math.max(0, tcy - 20);
-        int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
+        int maxY = Math.min(Globals.world.getHeight() - 1, tcy + twh + 23);
         int minX = Math.max(0, tcx - 20);
-        int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 20);
+        int maxX = Math.min(Globals.world.getWidth() - 1, tcx + tww + 20);
 
         Arrays.fill(this.blockCount, 0);
 
         for (int y = minY; y < maxY; y++) {
             for (int x = minX; x < maxX; x++) {
-                this.blockCount[LastTry.world.blocks.getID(x, y)] += 1;
+                this.blockCount[Globals.world.blocks.getID(x, y)] += 1;
             }
         }
 

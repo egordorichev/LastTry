@@ -1,8 +1,8 @@
 package org.egordorichev.lasttry.effect;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public abstract class Effect {
     protected boolean canBeRemoved;
@@ -18,7 +18,7 @@ public abstract class Effect {
     }
 
     public void render(int x, int y) {
-        LastTry.batch.draw(this.texture, x, y);
+        Graphics.batch.draw(this.texture, x, y);
     }
 
 
