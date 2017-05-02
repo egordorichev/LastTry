@@ -5,8 +5,6 @@
 LastTry is open-source Terraria clone in Java, written using LibGDX library.
 Our goal is to recreate original game with better perfomance, and old content.
 
-###### Java Doc is aviable at [https://egordorichev.github.io/](https://egordorichev.github.io/)
-
 ### Building
 
 Clone the repo:
