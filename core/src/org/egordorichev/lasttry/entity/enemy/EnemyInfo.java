@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.entity.enemy;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
+import org.egordorichev.lasttry.entity.drop.Drop;
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Log;
 
 public class EnemyInfo {
@@ -30,7 +32,11 @@ public class EnemyInfo {
             enemy.stats.set(hp, 0, defense, damage);
 	        enemy.graphics.load(this.root.get("animation"));
 
-	        // todo: animations, kb resist, knock back, drops
+	        for (JsonValue drop : root.get("drop")) {
+	        	enemy.drops.add(new Drop(Item.fromID(drop.get("id").asShort()), drop.get("count").get(0).asShort(), drop.get("count").get(1).asShort()));
+	        }
+
+	        // todo: kb resist, knock back, hitbox
 
             return enemy;
         } catch (Exception exception) {
