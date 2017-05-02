@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.components;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Animation;
 
 import java.util.Arrays;
@@ -15,6 +16,10 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 		for (int i = 0; i < size; i++) {
 			this.animations[i] = new Animation(true);
 		}
+	}
+
+	public void load(JsonValue root) {
+		// TODO
 	}
 
 	@Override

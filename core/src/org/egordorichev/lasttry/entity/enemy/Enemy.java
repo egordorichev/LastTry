@@ -15,7 +15,7 @@ public class Enemy extends CreatureWithAI {
 	protected int spawnWeight = 1;
     protected List<Drop> drops = new ArrayList<>();
 
-    public Enemy(AI ai, String name, int maxHp, int defense, int damage) {
+    public Enemy(AI ai, String name) {
         super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
         this.name = name;
     }

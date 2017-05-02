@@ -25,9 +25,14 @@ public class EnemyInfo {
             int damage = Globals.world.flags.isHardmode() ? this.root.get("damage").get(2).asInt()
                 : Globals.world.flags.isExpertMode() ?  this.root.get("damage").get(1).asInt() : this.root.get("damage").get(0).asInt();
 
-            // todo: animations, kb resist, knock back
+            Enemy enemy = new Enemy(AI.fromID(this.root.get("ai").asShort()), this.root.name());
 
-            return new Enemy(AI.fromID(this.root.get("ai").asShort()), this.root.name(), hp, defense, damage);
+            enemy.stats.set(hp, 0, defense, damage);
+	        enemy.graphics.load(this.root.get("animation"));
+
+	        // todo: animations, kb resist, knock back, drops
+
+            return enemy;
         } catch (Exception exception) {
             Log.error("Failed to parse " + this.root.name() + "!");
         }
