@@ -1,11 +1,12 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
+import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 
 public class Chunk {
 	public static final int SIZE = 256;
@@ -43,7 +44,46 @@ public class Chunk {
 		}
 	}
 
-	public void render(int xGridPoint, int yGridPoint) {
+
+	//Only renders the blocks visible to the user.
+	public void renderWithinLimits() {
+
+		CircleAreaComponent visibleAreaOfScreen = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
+
+		//Retrieve min and max x,y values.
+		int minimumYBlockGrid = visibleAreaOfScreen.getMinYActiveAreaGridPoint();
+		int maximumYBlockGrid = visibleAreaOfScreen.getMaxYActiveAreaGridPoint();
+		int maximumXBlockGrid = visibleAreaOfScreen.getMaxXActiveAreaGridPoint();
+		int miniumumXBlockGrid = visibleAreaOfScreen.getMinXActiveAreaGridPoint();
+
+		for(int x = miniumumXBlockGrid; x<maximumXBlockGrid; x++) {
+			for(int y = minimumYBlockGrid; y<maximumYBlockGrid; y++) {
+
+				//Convert Grid Position into 'block in chunk' position
+				int xBlockInChunk = (int)((x-this.position.x)/SIZE);
+				int yBlockInChunk = (int)((y-this.position.y)/SIZE);
+
+				Block block = (Block) Item.fromID(this.data.blocks[xBlockInChunk + yBlockInChunk * SIZE]);
+
+				//Added this to test that maximum values retrieved are actually valid
+				//if(y==maximumYBlockGrid-2){
+
+				    //Block blockTop = (Block) Item.fromID(12);
+				    //blockTop.renderBlock(x,y);
+
+                //}else{
+                    //Render the block
+                    if(block!=null){
+                        block.renderBlock(x,y);
+                    }
+                //}
+
+
+			}
+		}
+	}
+
+	public void render() {
 
 	}
 

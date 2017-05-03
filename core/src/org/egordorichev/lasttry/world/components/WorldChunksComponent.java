@@ -16,6 +16,7 @@ public class WorldChunksComponent extends WorldComponent {
 	private Chunk[] chunks;
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
 	private int size;
+//	private static int debugTimerCounter = 20;
 
 	public WorldChunksComponent(World world) {
 		super(world);
@@ -47,9 +48,21 @@ public class WorldChunksComponent extends WorldComponent {
 		int width = Gdx.graphics.getWidth() / Block.SIZE;
 		int height = Gdx.graphics.getHeight() / Block.SIZE;
 
+		//Retrieve
 		Chunk t2 = this.getFor(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
 
-		t2.render(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
+		//t2.render(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
+
+//		long startTime = System.nanoTime();
+		t2.renderWithinLimits();
+//		long endTime = System.nanoTime();
+
+//		long duration = (endTime - startTime);
+//
+//		if(debugTimerCounter>0) {
+//			System.out.println(duration);
+//			debugTimerCounter--;
+//		}
 
 		//Chunk t2 = this.getFor(playerPoistionGridX, playerPositionGridY);
 		// Chunk tr = this.getFor(x + width, y);

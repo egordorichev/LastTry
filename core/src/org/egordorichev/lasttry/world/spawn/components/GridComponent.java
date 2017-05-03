@@ -20,25 +20,31 @@ public class GridComponent {
     private static CircleAreaComponent cachedActiveAreaCircle;
 
     public static CircleAreaComponent retrieveActiveAreaCircle(WorldTime timeOfRequest) {
+       //todo fix temp store code, as I noticed it was caching the first value and never calling 'generateactiveareacircle' again
         //Logic to prevent having to recalculate active area circle every game tick (one game tick = one in game second)
-        if(time==null&&cachedActiveAreaCircle==null){
-            time = timeOfRequest;
-            cachedActiveAreaCircle = generateActiveAreaCircle();
-            return cachedActiveAreaCircle;
-        }else{
-            //If time is matching we return previously created circle
-            if(SpawnUtilComponent.matchingTime(time, timeOfRequest)){
-                assert cachedActiveAreaCircle != null: "Cached active area circle points to null!";
-                return cachedActiveAreaCircle;
-            }
+//        if(time==null&&cachedActiveAreaCircle==null){
+//            time = timeOfRequest;
+//            cachedActiveAreaCircle = generateActiveAreaCircle();
+//            return cachedActiveAreaCircle;
+//        }else{
+//            //If time is matching we return previously created circle
+//            if(SpawnUtilComponent.matchingTime(time, timeOfRequest)){
+//                assert cachedActiveAreaCircle != null: "Cached active area circle points to null!";
+//                return cachedActiveAreaCircle;
+//            }
+//
+//            time = timeOfRequest;
+//            cachedActiveAreaCircle = generateActiveAreaCircle();
+//            return cachedActiveAreaCircle;
+//        }
 
-            time = timeOfRequest;
-            cachedActiveAreaCircle = generateActiveAreaCircle();
-            return cachedActiveAreaCircle;
-        }
+        return generateActiveAreaCircle();
+
     }
 
     private static CircleAreaComponent generateActiveAreaCircle() {
+
+        //LastTry.debug.print("Active Area Called");
 
         CircleAreaComponent circleAreaComponent = new CircleAreaComponent();
 
@@ -53,7 +59,7 @@ public class GridComponent {
 
         // TODO Change on inversion of y axis
         // We are subtracting because of the inverted y axis otherwise it would be LastTry.camera.position.y+windowheight/2
-        int tcy = (int) (Globals.world.getHeight() - (Camera.game.position.y + windowHeight/2)/Block.SIZE);
+        int tcy = (int) (Camera.game.position.y - windowHeight/2)/Block.SIZE;
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         circleAreaComponent.setMinYActiveAreaGridPoint(Math.max(0, tcy - 2));
