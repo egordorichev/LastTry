@@ -27,8 +27,8 @@ public class Player extends Creature {
 	public void update(int dt) {
 		super.update(dt);
 		this.input.update(dt);
-		
-                if (this.inventory.currentItem.getItem() != null) {
+
+		if (this.inventory.currentItem != null && this.inventory.currentItem.getItem() != null) {
 		    this.inventory.currentItem.getItem().update(dt);
 	        }
 	}
