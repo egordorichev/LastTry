@@ -8,6 +8,7 @@ public class AiComponent extends CreatureComponent {
 	private int maxAi = 0;
 	private CreatureWithAI creature;
 	private AI ai;
+	private short data;
 
 	public AiComponent(CreatureWithAI creature, AI ai) {
 		super(creature);
@@ -31,11 +32,23 @@ public class AiComponent extends CreatureComponent {
 		this.currentAi = 0;
 	}
 
+	public void set(int ai) {
+		this.currentAi = Math.min(this.maxAi, ai);
+	}
+
+	public void setData(short data) {
+		this.data = data;
+	}
+
 	public int get() {
 		return this.currentAi;
 	}
 
 	public int getMax() {
 		return this.maxAi;
+	}
+
+	public short getData() {
+		return this.data;
 	}
 }

@@ -14,10 +14,13 @@ public class Enemy extends CreatureWithAI {
     protected String name;
 	protected int spawnWeight = 1;
     protected List<Drop> drops = new ArrayList<>();
+	protected Creature target;
 
     public Enemy(AI ai, String name) {
         super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
+
         this.name = name;
+        this.target = Globals.player;
     }
 
     @Override
@@ -41,11 +44,19 @@ public class Enemy extends CreatureWithAI {
         }
     }
 
-    protected void onPlayerCollision(Player player) {
+	public void setTarget(Creature target) {
+		this.target = target;
+	}
+
+	protected void onPlayerCollision(Player player) {
         // TODO: hit the player
     }
 
-    public String getName() {
+	public Creature getTarget() {
+		return this.target;
+	}
+
+	public String getName() {
         return this.name;
     }
 
