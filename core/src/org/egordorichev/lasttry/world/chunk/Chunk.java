@@ -8,9 +8,12 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 
+import java.util.UUID;
+
 public class Chunk {
 	public static final int SIZE = 256;
 	public static final int TOTAL_SIZE = 256 * 256;
+	public  UUID randomUUID = UUID.randomUUID();
 
 	private ChunkData data;
 	private Vector2 position;
@@ -48,6 +51,8 @@ public class Chunk {
 	//Only renders the blocks visible to the user.
 	public void renderWithinLimits() {
 
+		Block blockToGen = DebugChunk.getBlockToGenerate(randomUUID);
+
 		CircleAreaComponent visibleAreaOfScreen = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
 
 		//Retrieve min and max x,y values.
@@ -73,8 +78,8 @@ public class Chunk {
 
                 //}else{
                     //Render the block
-                    if(block!=null){
-                        block.renderBlock(x,y);
+                    if(blockToGen!=null){
+						blockToGen.renderBlock(x,y);
                     }
                 //}
 
