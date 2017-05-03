@@ -2,7 +2,9 @@ package org.egordorichev.lasttry.world.components;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.block.Wall;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
@@ -43,38 +45,33 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void render() {
-		int x = Camera.getXInBlocks();
-		int y = Camera.getYInBlocks();
-		int width = Gdx.graphics.getWidth() / Block.SIZE;
-		int height = Gdx.graphics.getHeight() / Block.SIZE;
+		int windowWidth = Gdx.graphics.getWidth();
+		int windowHeight = Gdx.graphics.getHeight();
+		int tww = windowWidth / Block.SIZE;
+		int twh = windowHeight / Block.SIZE;
+		int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
+		int tcy = (int) ((Camera.game.position.y - windowHeight / 2) / Block.SIZE);
 
-		//Retrieve
-		Chunk t2 = this.getFor(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
+		int minY = Math.max(0, tcy - 2);
+		int maxY = Math.min(this.world.getHeight() - 1, tcy + twh + 3);
+		int minX = Math.max(0, tcx - 2);
+		int maxX = Math.min(this.world.getWidth() - 1, tcx + tww + 2);
 
-		//t2.render(Globals.player.physics.getGridX(), Globals.player.physics.getGridY());
+		for (int y = minY; y < maxY; y++) {
+			for (int x = minX; x < maxX; x++) {
+				Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
-//		long startTime = System.nanoTime();
-		t2.renderWithinLimits();
-//		long endTime = System.nanoTime();
+				if (wall != null) {
+					wall.renderWall(x, y);
+				}
 
-//		long duration = (endTime - startTime);
-//
-//		if(debugTimerCounter>0) {
-//			System.out.println(duration);
-//			debugTimerCounter--;
-//		}
-
-		//Chunk t2 = this.getFor(playerPoistionGridX, playerPositionGridY);
-		// Chunk tr = this.getFor(x + width, y);
-		// Chunk bl = this.getFor(x, y);
-		// Chunk br = this.getFor(x, y + width);
-
-		// TODO: check, if they are the same
-		//t2.render();
-		// tl.render();
-		/*tr.render();
-		bl.render();
-		br.render(); */
+				if (block != null) {
+					block.updateBlockStyle(x, y);
+					block.renderBlock(x, y);
+				}
+			}
+		}
 	}
 
 	public void load(int x, int y) {
