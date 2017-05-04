@@ -18,7 +18,7 @@ public class PhysicsComponent extends CreatureComponent {
 	protected Vector2 position = new Vector2();
 	protected Vector2 size = new Vector2();
 	protected Vector2 velocity = new Vector2();
-	protected boolean solid;
+	protected boolean solid = true;
 	protected Rectangle hitbox;
 	protected Direction direction = Direction.RIGHT;
 

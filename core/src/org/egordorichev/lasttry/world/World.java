@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.world;
 
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
@@ -50,13 +52,39 @@ public class World {
 		return this.name;
 	}
 
-	//GridPoints
+	// GridPoints
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
 	}
 
-	public boolean isColliding(Rectangle rectangle) {
-		return false; // TODO
+	public boolean isColliding(Rectangle bounds) {
+		Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
+		gridBounds.x /= Block.SIZE;
+		gridBounds.y /= Block.SIZE;
+		gridBounds.width /= Block.SIZE;
+		gridBounds.height /= Block.SIZE;
+
+		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
+			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
+				if (!this.isInside(x, y)) {
+					return true;
+				}
+
+				Block block = (Block) Item.fromID(this.blocks.getID(x, y));
+
+				if (block == null || !block.isSolid()) {
+					continue;
+				}
+
+				Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE);
+
+				if (blockRect.intersects(bounds)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public enum Size {
