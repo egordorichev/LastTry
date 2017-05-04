@@ -30,7 +30,7 @@ public class Player extends Creature {
 
 		if (this.inventory.currentItem != null && this.inventory.currentItem.getItem() != null) {
 		    this.inventory.currentItem.getItem().update(dt);
-	        }
+		}
 	}
 
 	public String getName() {

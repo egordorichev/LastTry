@@ -15,7 +15,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 public class UiInventory extends UiComponent {
-    public ItemHolder currentItem = null;
+    public ItemHolder currentItem = new ItemHolder(null, 0);
     public int currentSlot = 0;
     public UiItemSlot[] slots;
     private boolean open;

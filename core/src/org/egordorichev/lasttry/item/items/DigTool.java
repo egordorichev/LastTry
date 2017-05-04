@@ -49,11 +49,11 @@ public class DigTool extends Tool {
 		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
 
 		if (Globals.player.physics.isFlipped()) {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX() - width, Globals.world.getHeight() * Block.SIZE -
+			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX() - width,
 				Globals.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
 				(int) height, true, false);
 		} else {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(), Globals.world.getHeight() * Block.SIZE -
+			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
 				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
 				(int) height, false, false);
 		}

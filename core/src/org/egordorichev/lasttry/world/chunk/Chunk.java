@@ -47,51 +47,6 @@ public class Chunk {
 		}
 	}
 
-
-	//Only renders the blocks visible to the user.
-	public void renderWithinLimits() {
-
-		Block blockToGen = DebugChunk.getBlockToGenerate(randomUUID);
-
-		CircleAreaComponent visibleAreaOfScreen = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
-
-		//Retrieve min and max x,y values.
-		int minimumYBlockGrid = visibleAreaOfScreen.getMinYActiveAreaGridPoint();
-		int maximumYBlockGrid = visibleAreaOfScreen.getMaxYActiveAreaGridPoint();
-		int maximumXBlockGrid = visibleAreaOfScreen.getMaxXActiveAreaGridPoint();
-		int miniumumXBlockGrid = visibleAreaOfScreen.getMinXActiveAreaGridPoint();
-
-		for(int x = miniumumXBlockGrid; x<maximumXBlockGrid; x++) {
-			for(int y = minimumYBlockGrid; y<maximumYBlockGrid; y++) {
-
-				//Convert Grid Position into 'block in chunk' position
-				int xBlockInChunk = (int)((x-this.position.x)/SIZE);
-				int yBlockInChunk = (int)((y-this.position.y)/SIZE);
-
-				Block block = (Block) Item.fromID(this.data.blocks[xBlockInChunk + yBlockInChunk * SIZE]);
-
-				//Added this to test that maximum values retrieved are actually valid
-				//if(y==maximumYBlockGrid-2){
-
-				    //Block blockTop = (Block) Item.fromID(12);
-				    //blockTop.renderBlock(x,y);
-
-                //}else{
-                    //Render the block
-                    if(blockToGen!=null){
-						blockToGen.renderBlock(x,y);
-                    }
-                //}
-
-
-			}
-		}
-	}
-
-	public void render() {
-
-	}
-
 	public short getBlock(int globalX, int globalY) {
 		return this.getBlockInside(globalX - this.getX(), globalY - this.getY());
 	}
