@@ -14,6 +14,12 @@ import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
 import java.util.ArrayList;
 
+
+/**
+ * Methods that alter any of the collections that contain Chunks, are synchronized.
+ * The ChunkGC thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
+ * Therefore chunk collection altering methods are made synchronized.
+ */
 public class WorldChunksComponent extends WorldComponent {
 	private Chunk[] chunks;
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
@@ -37,7 +43,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 	}
 
-	public void updateLogic() {
+	public synchronized void updateLogic() {
 		for (int i = 0; i < this.loadedChunks.size(); i++) {
 			this.loadedChunks.get(i).update();
 		}
@@ -73,7 +79,7 @@ public class WorldChunksComponent extends WorldComponent {
 		}
 	}
 
-	public void load(int x, int y) {
+	public synchronized void load(int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -84,7 +90,7 @@ public class WorldChunksComponent extends WorldComponent {
 		this.loadedChunks.add(this.chunks[index]);
 	}
 
-	public void set(Chunk chunk, int x, int y) {
+	public synchronized void set(Chunk chunk, int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -102,7 +108,7 @@ public class WorldChunksComponent extends WorldComponent {
 		return this.chunks[index] != null;
 	}
 
-	public Chunk get(int x, int y) {
+	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -112,7 +118,7 @@ public class WorldChunksComponent extends WorldComponent {
 		return this.chunks[index];
 	}
 
-	public Chunk getFor(int x, int y) {
+	public synchronized Chunk getFor(int x, int y) {
 		x /= Chunk.SIZE;
 		y /= Chunk.SIZE;
 
@@ -138,6 +144,7 @@ public class WorldChunksComponent extends WorldComponent {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
+	//No need to make synchronized, as we are only reading the value.
 	public int getLoadedChunksSize() { return loadedChunks.size(); }
 
 	public void save() {
