@@ -25,9 +25,9 @@ public class GamePlayState implements State {
     	this.hpTexture = Assets.getTexture(Textures.hp);
 
 	    int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
-        int spawnY = Globals.world.getHeight() / Block.SIZE ;
+        int spawnY = Globals.world.getHeight() - 10;
         
-        Globals.player.spawn(0, Globals.world.getHeight());
+        Globals.player.spawn(spawnX, spawnY);
         Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
         Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
         Globals.entityManager = new EntityManager();

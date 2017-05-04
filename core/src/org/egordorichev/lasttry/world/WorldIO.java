@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
+import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +75,8 @@ public class WorldIO {
 			file.mkdir();
 		}
 
-		return new World(name, size, flags);
+		return new WorldGenerator(name, size, flags).generate();
+		// return new World(name, size, flags);
 	}
 
 	public static void save() {

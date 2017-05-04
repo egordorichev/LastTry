@@ -15,8 +15,6 @@ public class EnemyInfo {
     }
 
     public Enemy create() {
-        Log.debug(AI.fromID(this.root.get("ai").asShort()).toString());
-
         try {
             int hp = Globals.world.flags.isHardmode() ? this.root.get("hp").get(2).asInt()
                 : Globals.world.flags.isExpertMode() ?  this.root.get("hp").get(1).asInt() : this.root.get("hp").get(0).asInt();

@@ -54,7 +54,12 @@ public class WorldWallsComponent extends WorldComponent {
 			return;
 		}
 
-		chunk.setWallHP(hp, x, y);
+
+		if (hp == 0) {
+			chunk.setWall(ItemID.none, x, y);
+		} else {
+			chunk.setWallHP(hp, x, y);
+		}
 	}
 
 	private Chunk getChunk(int x, int y) {
