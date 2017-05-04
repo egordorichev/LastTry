@@ -18,7 +18,6 @@ public class WorldChunksComponent extends WorldComponent {
 	private Chunk[] chunks;
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
 	private int size;
-//	private static int debugTimerCounter = 20;
 
 	public WorldChunksComponent(World world) {
 		super(world);
@@ -138,6 +137,8 @@ public class WorldChunksComponent extends WorldComponent {
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
+
+	public int getLoadedChunksSize() { return loadedChunks.size(); }
 
 	public void save() {
 		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {

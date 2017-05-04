@@ -1,24 +1,23 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
-import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 public class Chunk {
 	public static final int SIZE = 256;
 	public static final int TOTAL_SIZE = 256 * 256;
-	public  UUID randomUUID = UUID.randomUUID();
 
 	private ChunkData data;
 	private Vector2 position;
+	private LocalDateTime lastAccessedTime;
+
 
 	public Chunk(ChunkData data, Vector2 position) {
+		this.updateLastAccessedTime();
 		this.data = data;
 		this.position = position;
 	}
@@ -33,6 +32,8 @@ public class Chunk {
 				}
 			}
 		}
+
+		this.updateLastAccessedTime();
 	}
 
 	public void updateGraphics() {
@@ -45,9 +46,16 @@ public class Chunk {
 				}
 			}
 		}
+
+		this.updateLastAccessedTime();
+	}
+
+	private void updateLastAccessedTime() {
+		this.lastAccessedTime = LocalDateTime.now();
 	}
 
 	public short getBlock(int globalX, int globalY) {
+
 		return this.getBlockInside(globalX - this.getX(), globalY - this.getY());
 	}
 
@@ -72,11 +80,13 @@ public class Chunk {
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
+
 		return this.getBlockHPInside(globalX - this.getX(), globalY - this.getY());
 	}
 
 	public byte getBlockHPInside(int x, int y) {
 		if (!this.isInside(x, y)) {
+
 			return ItemID.none;
 		}
 
@@ -85,10 +95,12 @@ public class Chunk {
 
 	public void setBlockHP(byte hp, int globalX, int globalY) {
 		this.setBlockHPInside(hp, globalX - this.getX(), globalY - this.getY());
+
 	}
 
 	public void setBlockHPInside(byte hp, int x, int y) {
 		if (!this.isInside(x, y)) {
+
 			return;
 		}
 
@@ -96,6 +108,7 @@ public class Chunk {
 	}
 
 	public short getWall(int globalX, int globalY) {
+
 		return this.getWallInside(globalX - this.getX(), globalY - this.getY());
 	}
 
@@ -132,11 +145,13 @@ public class Chunk {
 	}
 
 	public void setWallHP(byte hp, int globalX, int globalY) {
+
 		this.setWallHPInside(hp, globalX - this.getX(), globalY - this.getY());
 	}
 
 	public void setWallHPInside(byte hp, int x, int y) {
 		if (!this.isInside(x, y)) {
+
 			return;
 		}
 
@@ -144,26 +159,46 @@ public class Chunk {
 	}
 
 	public ChunkData getData() {
+
+		this.updateLastAccessedTime();
+
 		return this.data;
 	}
 
 	public int getGridX() {
+
+		this.updateLastAccessedTime();
+
 		return (int) this.position.x;
 	}
 
 	public int getGridY() {
+
+		this.updateLastAccessedTime();
+
 		return (int) this.position.y;
 	}
 
 	public int getX() {
+
+		this.updateLastAccessedTime();
+
 		return (int) this.position.x * SIZE;
 	}
 
 	public int getY() {
+
+		this.updateLastAccessedTime();
+
 		return (int) this.position.y * SIZE;
 	}
 
 	private boolean isInside(int x, int y) {
+
+		this.updateLastAccessedTime();
+
 		return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 	}
+
+	public LocalDateTime getLastAccessedTime() { return this.lastAccessedTime; }
 }
