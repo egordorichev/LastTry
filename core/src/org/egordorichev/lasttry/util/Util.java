@@ -7,10 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.input.InputManager;
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Util {
 	public static float map(float value, float inMin, float inMax, float outMin, float outMax) {
@@ -47,6 +44,22 @@ public class Util {
 				callable.call();
 			};
 		});
+	}
+
+	public static void futureOneTimeRunInThread(Callable callable, long delay, TimeUnit timeUnit) {
+
+		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
+		ScheduledFuture<?> scheduledFuture = scheduledExecutorService
+				.schedule(
+				new Runnable() {
+					@Override
+					public void run() {
+						callable.call();
+					}
+				}, delay, timeUnit)
+				;
+
 	}
 
 	public static boolean fileExists(String path) {

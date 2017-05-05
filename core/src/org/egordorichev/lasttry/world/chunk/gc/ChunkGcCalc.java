@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.world.chunk.gc;
 
 import org.egordorichev.lasttry.Globals;
 
+import static org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc.ChunkGCLevel.S6;
+
 //Static methods responsible for calculating the appropriate Chunk gc level
 public class ChunkGcCalc {
 
@@ -13,7 +15,7 @@ public class ChunkGcCalc {
         S4("Level 4 - 30 sec interval, 10 chunk release", 75, 80, 30, 10),
         S3("Level 3 - 60 sec interval, 10 chunk release", 50, 75, 60, 10),
         S2("Level 2 - 90 sec interval, 5 chunk release", 25, 50, 90, 5),
-        S1("Level 1 - 120 sec interval, 5 chunk release", 10, 25, 120, 5);
+        S1("Level 1 - 120 sec interval, 5 chunk release", 0, 25, 120, 5);
 
         private String levelDescription;
         //Time Interval before the next GC process should be attempted again
@@ -56,6 +58,17 @@ public class ChunkGcCalc {
 
         int filledPercentOfChunks = getFilledChunksPercent();
 
+        //todo rethink this, must be a better exception to throw
+        if(filledPercentOfChunks>100){
+            throw new IllegalArgumentException("Filled percentage of chunks, is greater than 100");
+        }
+
+        //When percentage of chunks is full, immediately return S6;
+        if(filledPercentOfChunks==100){
+            return S6;
+        }
+
+
         ChunkGCLevel[] availGcLevels = ChunkGCLevel.values();
 
         ChunkGCLevel appropriateLevel = null;
@@ -65,7 +78,8 @@ public class ChunkGcCalc {
             int higherBoundTriggerPercent = chunkGCLevel.getTriggerPercentageHigherBounds();
             int lowerBoundTriggerPercent = chunkGCLevel.getTriggerPercentageLowerBounds();
 
-            if(filledPercentOfChunks<higherBoundTriggerPercent&&filledPercentOfChunks>lowerBoundTriggerPercent){
+            //todo right now if percentage of chunks is 100, it is not caught here but caught higher up
+            if(filledPercentOfChunks<higherBoundTriggerPercent&&filledPercentOfChunks>=lowerBoundTriggerPercent){
                 appropriateLevel = chunkGCLevel;
             }
         }

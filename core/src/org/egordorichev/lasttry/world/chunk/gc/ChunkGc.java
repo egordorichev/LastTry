@@ -1,50 +1,25 @@
 package org.egordorichev.lasttry.world.chunk.gc;
 
-import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.util.Callable;
-import org.egordorichev.lasttry.util.Util;
-
 /**
  * Handles automatic removal of unused loaded chunks from game memory.
  * Rules:
  * LoadedChunks must contain at least 2 chunks -- Current chunk and last loaded chunks.
  */
-//todo ChunkGc to be triggered using an adjustable timer or when loaded chunks is reaching max chunks
 public class ChunkGc {
 
-    private boolean isChunkGCInProcess = false;
+    private ChunkGcCalc.ChunkGCLevel currentChunkGcLevel;
 
-    //todo Chunk gc will be either triggered by: timer or when loaded chunks is approaching max chunks
-    public void requestChunkGC(){
-        int amountOfLoadedChunks = Globals.world.chunks.getAmountOfLoadedChunks();
-
-        if(amountOfLoadedChunks>2){
-            this.triggerChunkGC();
-        }else{
-            //todo increase the amount of time before next chunk gc request is sent.
-        }
+    ChunkGc(ChunkGcCalc.ChunkGCLevel levelToRunChunkGcAt) {
+        this.currentChunkGcLevel = levelToRunChunkGcAt;
     }
 
-    private synchronized void setChunkGCInProcess(boolean flag) { this.isChunkGCInProcess = flag; }
+    public void performChunkGC() {
 
-    private void triggerChunkGC() {
+        //todo set flag in chunk gc manager to true, signalling a chunk gc is in progress
 
-        this.setChunkGCInProcess(true);
+        //todo once complete set a flag in chunk gc manager, signalling a chunk gc is no longer in progress
 
-        Util.oneTimeRunInThread(new Callable() {
-            @Override
-            public void call() {
-                performChunkGC();
-            }
-        });
-
+        //todo once complete, call method in chunk gc manager to schedule next gc
     }
-
-    private void performChunkGC() {
-
-    }
-
-
 
 }
