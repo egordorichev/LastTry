@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Methods that alter any of the collections that contain Chunks, are synchronized.
- * The ChunkGC thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
+ * The ChunkGc thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
  * Therefore chunk collection altering methods are made synchronized.
  */
 public class WorldChunksComponent extends WorldComponent {

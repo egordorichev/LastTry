@@ -10,8 +10,8 @@ import org.egordorichev.lasttry.util.Util;
  * Rules:
  * LoadedChunks must contain at least 2 chunks -- Current chunk and last loaded chunks.
  */
-//todo ChunkGC to be triggered using an adjustable timer or when loaded chunks is reaching max chunks
-public class ChunkGC {
+//todo ChunkGc to be triggered using an adjustable timer or when loaded chunks is reaching max chunks
+public class ChunkGc {
 
     private boolean isChunkGCInProcess = false;
 

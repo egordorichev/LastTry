@@ -52,6 +52,8 @@ public class World {
 		return this.name;
 	}
 
+	public short getMaxChunks() { return this.size.getMaxChunks(); }
+
 	// GridPoints
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
@@ -88,18 +90,20 @@ public class World {
 	}
 
 	public enum Size {
-		SMALL("Small", 4096, 1024),
-		MEDIUM("Medium", 6144, 2048),
-		LARGE("Large", 8192, 2304);
+		SMALL("Small", 4096, 1024, 64),
+		MEDIUM("Medium", 6144, 2048, 192),
+		LARGE("Large", 8192, 2304, 288);
 
 		private String name;
 		private short width;
 		private short height;
+		private short maxChunks;
 
-		Size(String name, int width, int height) {
+		Size(String name, int width, int height, int maxChunks) {
 			this.name = name;
 			this.width = (short) width;
 			this.height = (short) height;
+			this.maxChunks = (short) maxChunks;
 		}
 
 		@Override
@@ -114,5 +118,7 @@ public class World {
 		public short getHeight() {
 			return this.height;
 		}
+
+		public short getMaxChunks() { return this.maxChunks; }
 	}
 }
