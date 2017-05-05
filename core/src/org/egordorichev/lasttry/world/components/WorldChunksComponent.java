@@ -145,7 +145,7 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	//No need to make synchronized, as we are only reading the value.
-	public int getLoadedChunksSize() { return loadedChunks.size(); }
+	public int getAmountOfLoadedChunks() { return loadedChunks.size(); }
 
 	public void save() {
 		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {

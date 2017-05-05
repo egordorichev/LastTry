@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Chunk {
 	public static final int SIZE = 256;
@@ -14,12 +15,14 @@ public class Chunk {
 	private ChunkData data;
 	private Vector2 position;
 	private LocalDateTime lastAccessedTime;
+	private UUID uniqueChunkId;
 
 
 	public Chunk(ChunkData data, Vector2 position) {
 		this.updateLastAccessedTime();
 		this.data = data;
 		this.position = position;
+		this.uniqueChunkId = UUID.randomUUID();
 	}
 
 	public void update() {

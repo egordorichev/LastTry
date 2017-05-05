@@ -1,11 +1,13 @@
 package org.egordorichev.lasttry.util;
 
+import jdk.nashorn.internal.codegen.CompilerConstants;
 import org.egordorichev.lasttry.LastTry;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.input.InputManager;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +35,18 @@ public class Util {
 				callable.call();
 			}
 		}, 0, time, TimeUnit.SECONDS);
+	}
+
+	public static void oneTimeRunInThread(Callable callable) {
+
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+		executorService.submit(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			};
+		});
 	}
 
 	public static boolean fileExists(String path) {
