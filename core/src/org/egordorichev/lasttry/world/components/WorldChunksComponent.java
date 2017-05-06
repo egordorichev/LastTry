@@ -169,6 +169,7 @@ public class WorldChunksComponent extends WorldComponent {
 	//No need to make synchronized, as we are only reading the value.
 	public int getAmountOfLoadedChunks() { return loadedChunks.size(); }
 
+	//todo return immutable object?
 	public ArrayList<Chunk> getLoadedChunks() { return loadedChunks; }
 
 	public void save() {

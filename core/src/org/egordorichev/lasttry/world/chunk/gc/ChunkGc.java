@@ -20,6 +20,7 @@ public class ChunkGc {
         this.currentChunkGcLevel = levelToRunChunkGcAt;
     }
 
+    //todo split into smaller methods
     public void performChunkGC() {
 
         Log.debug("Received request to perform Chunk GC");
