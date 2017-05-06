@@ -53,6 +53,11 @@ public class ChunkGcManager {
 
         int futureTimeSecondsToRunChunkGc = chunkGCLevel.getTimeIntervalBeforeNextAttempt();
 
+        this.scheduleFutureChunkGcThread(chunkGCLevel);
+    }
+
+    private synchronized void scheduleFutureChunkGcThread(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
+
         Util.futureOneTimeRunInThread(new Callable() {
             @Override
             public void call() {
@@ -64,10 +69,11 @@ public class ChunkGcManager {
 
                 ChunkGc chunkGcThread = new ChunkGc(chunkGCLevelForCurrentGc);
                 chunkGcThread.onWakeUp();
-                
-            }
-        }, futureTimeSecondsToRunChunkGc, TimeUnit.SECONDS);
-    }
 
+            }
+        }, chunkGCLevel.getTimeIntervalBeforeNextAttempt(), TimeUnit.SECONDS);
+
+
+    }
 
 }
