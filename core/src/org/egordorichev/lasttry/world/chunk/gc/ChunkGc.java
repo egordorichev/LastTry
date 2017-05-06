@@ -21,10 +21,7 @@ public class ChunkGc {
 
         Log.debug("Received request to perform Chunk GC");
 
-        assert Globals.world.chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
-
-        //Set flag in gc manager, signalling a chunk gc is in progress
-        setChunkGcInProgressFlag(true);
+        this.startUp();
 
         List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
         Log.debug("Amount of loaded chunks is: "+loadedChunks.size());
@@ -42,18 +39,14 @@ public class ChunkGc {
     }
 
     private ArrayList<UUID> getUniqueIdsOfChunksToBeFreed(List<Chunk> loadedChunks) {
-        // Sort by local date, most recent date is last and oldest date is first.
-        Collections.sort(loadedChunks, new Comparator<Chunk>() {
-            public int compare(Chunk one, Chunk other) {
-                return one.getLastAccessedTime().compareTo(other.getLastAccessedTime());
-            }
-        });
+
+        this.sortBasedOnDate(loadedChunks);
 
         int amountOfChunksToFree = currentChunkGcLevel.getChunksToFree();
         Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
 
         ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
-
+        
         //We remove the oldest chunk, which will be the first chunks.
         for(int i=0; i<amountOfChunksToFree; i++){
             Chunk chunkToBeFreed = loadedChunks.get(i);
@@ -70,11 +63,29 @@ public class ChunkGc {
         });
     }
 
+    private void startUp() {
+
+        assert Globals.world.chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
+
+        //Set flag in gc manager, signalling a chunk gc is in progress
+        setChunkGcInProgressFlag(true);
+
+    }
+
     private void finish() {
         setChunkGcInProgressFlag(true);
 
         //Schedule next chunk gc
         Globals.chunkGcManager.requestFutureChunkGc();
+    }
+
+    private void sortBasedOnDate(List<Chunk> loadedChunks) {
+        // Sort by local date, most recent date is last and oldest date is first.
+        Collections.sort(loadedChunks, new Comparator<Chunk>() {
+            public int compare(Chunk one, Chunk other) {
+                return one.getLastAccessedTime().compareTo(other.getLastAccessedTime());
+            }
+        });
     }
 
 }
