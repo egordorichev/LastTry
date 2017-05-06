@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.chunk.gc;
+
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
@@ -63,7 +63,7 @@ public class ChunkGcManager {
             @Override
             public void call() {
 
-                Log.debug("Chunk GC time limit has expired");
+                Log.debug("Chunk GC thread has started, time limit has expired");
 
                 //On wakeup, we run a chunk gc immediately based on a ChunkGC level we receive based on the current loaded chunks level
                 ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getImmutableLoadedChunks().size());
