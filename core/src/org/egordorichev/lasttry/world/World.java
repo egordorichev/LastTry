@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
@@ -52,8 +53,6 @@ public class World {
 		return this.name;
 	}
 
-	public short getMaxChunks() { return this.size.getMaxChunks(); }
-
 	// GridPoints
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
@@ -90,16 +89,16 @@ public class World {
 	}
 
 	public enum Size {
-		SMALL("Small", 4096, 1024, 64),
-		MEDIUM("Medium", 6144, 2048, 192),
-		LARGE("Large", 8192, 2304, 288);
+		SMALL("Small", 4096, 1024),//Small contains 64 chunks
+		MEDIUM("Medium", 6144, 2048), //Medium contains 192 chunks
+		LARGE("Large", 8192, 2304); //Large contains 288 chunks
 
 		private String name;
 		private short width;
 		private short height;
 		private short maxChunks;
 
-		Size(String name, int width, int height, int maxChunks) {
+		Size(String name, int width, int height) {
 			this.name = name;
 			this.width = (short) width;
 			this.height = (short) height;
@@ -119,6 +118,11 @@ public class World {
 			return this.height;
 		}
 
-		public short getMaxChunks() { return this.maxChunks; }
+		public short getMaxChunks() {
+
+			int maxChunks = (width/Chunk.SIZE)*(short)(height/ Chunk.SIZE);
+
+			return (short)maxChunks;
+		}
 	}
 }
