@@ -14,6 +14,7 @@ import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -148,17 +149,19 @@ public class WorldChunksComponent extends WorldComponent {
 		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
 
 		for(int i=0; i<chunks.length; i++){
-			Chunk chunk = chunks[i];
 
-			if(chunk!=null){
-				if(chunk.getUniqueChunkId()==uniqueIdOfChunkToBeRemoved){
-					//Remove reference from list
-					chunks[i]=null;
+			final int index = i;
 
-					//we are only freeing one chunk at a time therefore we can return from the loop after freeing
-					return;
+			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
+
+			optionalChunk.ifPresent(chunk -> {
+
+				if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
+					chunks[index] = null;
 				}
-			}
+
+			});
+			
 		}
 	}
 
