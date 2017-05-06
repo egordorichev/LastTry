@@ -13,6 +13,8 @@ import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
 
 
 /**
@@ -140,12 +142,34 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
+	//todo may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
+
+		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
+
+		for(int i=0; i<chunks.length; i++){
+			Chunk chunk = chunks[i];
+
+			if(chunk!=null){
+				if(chunk.getUniqueChunkId()==uniqueIdOfChunkToBeRemoved){
+					//Remove reference from list
+					chunks[i]=null;
+
+					//we are only freeing one chunk at a time therefore we can return from the loop after freeing
+					return;
+				}
+			}
+		}
+	}
+
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
 	//No need to make synchronized, as we are only reading the value.
 	public int getAmountOfLoadedChunks() { return loadedChunks.size(); }
+
+	public ArrayList<Chunk> getLoadedChunks() { return loadedChunks; }
 
 	public void save() {
 		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {

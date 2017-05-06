@@ -29,7 +29,7 @@ public class ChunkGcManager {
         return chunkGcInProgress;
     }
 
-    public void requestFutureChunkGc(){
+    public synchronized void requestFutureChunkGc(){
 
         if(!isChunkGcInProgress()){
 
@@ -45,7 +45,7 @@ public class ChunkGcManager {
         }
     }
 
-    private int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getAmountOfLoadedChunks(); }
+    private synchronized int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getAmountOfLoadedChunks(); }
 
     private synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
 
