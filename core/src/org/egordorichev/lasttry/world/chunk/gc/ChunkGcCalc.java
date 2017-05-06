@@ -12,33 +12,29 @@ public class ChunkGcCalc {
     //Enums representing the 6 possible levels of a Chunk GC
     public enum ChunkGCLevel{
 
-        S6("Level 6 - 15 sec interval, 5 chunk release", 90, 100, 15, 5),
-        S5("Level 5 - 20 sec interval, 6 chunk release", 80, 90, 20, 6),
-        S4("Level 4 - 30 sec interval, 10 chunk release", 75, 80, 30, 10),
-        S3("Level 3 - 60 sec interval, 10 chunk release", 50, 75, 60, 10),
-        S2("Level 2 - 90 sec interval, 5 chunk release", 25, 50, 90, 5),
-        S1("Level 1 - 120 sec interval, 5 chunk release", 15, 25, 120, 5),
-        S0("Level 0 - 120 sec interval, 1 chunk release", 5, 15, 120, 1),
+        S6(ChunkGcLevel.ChunkGcLevelBounds.S6, 15, 5),
+        S5(ChunkGcLevel.ChunkGcLevelBounds.S5, 20, 6),
+        S4(ChunkGcLevel.ChunkGcLevelBounds.S4, 30, 10),
+        S3(ChunkGcLevel.ChunkGcLevelBounds.S3, 60, 10),
+        S2(ChunkGcLevel.ChunkGcLevelBounds.S2, 90, 5),
+        S1(ChunkGcLevel.ChunkGcLevelBounds.S1, 120, 5),
+        S0(ChunkGcLevel.ChunkGcLevelBounds.S0, 120, 1),
         //Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive
-        SLEEP("Sleep - 120 sec interval, 0 chunk release", 0, 5, 120, 0);
+        SLEEP(ChunkGcLevel.ChunkGcLevelBounds.SLEEP, 120, 0);
 
-        private String levelDescription;
+        private ChunkGcLevel.ChunkGcLevelBounds  chunkGcLevelDesc;
         //Time Interval before the next GC process should be attempted again
         private int timeIntervalBeforeNextAttempt;
         private int chunksToFree;
-        private int triggerPercentageHigherBounds;
-        private int triggerPercentageLowerBounds;
 
-        ChunkGCLevel(String levelDescription, int triggerPercentageLowerBounds, int triggerPercentageHigherBounds, int timeIntervalBeforeNextAttempt, int chunksToFree) {
-            this.levelDescription = levelDescription;
-            this.triggerPercentageHigherBounds = triggerPercentageHigherBounds;
-            this.triggerPercentageLowerBounds = triggerPercentageLowerBounds;
+        ChunkGCLevel(ChunkGcLevel.ChunkGcLevelBounds chunkDesc, int timeIntervalBeforeNextAttempt, int chunksToFree) {
+            this.chunkGcLevelDesc = chunkDesc;
             this.timeIntervalBeforeNextAttempt = timeIntervalBeforeNextAttempt;
             this.chunksToFree = chunksToFree;
         }
 
-        public String getLevelDescription() {
-            return this.levelDescription;
+        public ChunkGcLevel.ChunkGcLevelBounds getLevelDescription() {
+            return this.chunkGcLevelDesc;
         }
 
         public int getTimeIntervalBeforeNextAttempt() {
@@ -49,13 +45,6 @@ public class ChunkGcCalc {
             return this.chunksToFree;
         }
 
-        public int getTriggerPercentageHigherBounds() {
-            return this.triggerPercentageHigherBounds;
-        }
-
-        public int getTriggerPercentageLowerBounds() {
-            return this.triggerPercentageLowerBounds;
-        }
     }
 
     //Returns appropriate chunk gc level based on amount of loaded chunks in memory
@@ -80,8 +69,8 @@ public class ChunkGcCalc {
 
         for(ChunkGCLevel chunkGCLevel: availGcLevels)
         {
-            int higherBoundTriggerPercent = chunkGCLevel.getTriggerPercentageHigherBounds();
-            int lowerBoundTriggerPercent = chunkGCLevel.getTriggerPercentageLowerBounds();
+            int higherBoundTriggerPercent = chunkGCLevel.getLevelDescription().getTriggerPercentageHigherBounds();
+            int lowerBoundTriggerPercent = chunkGCLevel.getLevelDescription().getTriggerPercentageLowerBounds();
 
             //todo right now if percentage of chunks is 100, it is not caught here but caught higher up
             if(filledPercentOfChunks<higherBoundTriggerPercent&&filledPercentOfChunks>=lowerBoundTriggerPercent){

@@ -46,7 +46,7 @@ public class ChunkGc {
         Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
 
         ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
-        
+
         //We remove the oldest chunk, which will be the first chunks.
         for(int i=0; i<amountOfChunksToFree; i++){
             Chunk chunkToBeFreed = loadedChunks.get(i);
