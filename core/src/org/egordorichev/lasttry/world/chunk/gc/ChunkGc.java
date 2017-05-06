@@ -1,5 +1,8 @@
 package org.egordorichev.lasttry.world.chunk.gc;
 
+import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.util.Log;
+
 /**
  * Handles automatic removal of unused loaded chunks from game memory.
  * Rules:
@@ -14,6 +17,8 @@ public class ChunkGc {
     }
 
     public void performChunkGC() {
+
+        Log.debug("Received request to perform Chunk GC");
 
         //todo set flag in chunk gc manager to true, signalling a chunk gc is in progress
 

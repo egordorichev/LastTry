@@ -18,7 +18,9 @@ public class ChunkGcCalc {
         S3("Level 3 - 60 sec interval, 10 chunk release", 50, 75, 60, 10),
         S2("Level 2 - 90 sec interval, 5 chunk release", 25, 50, 90, 5),
         S1("Level 1 - 120 sec interval, 5 chunk release", 15, 25, 120, 5),
-        SLEEP("Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive", 0, 15, 120, 0);
+        S0("Level 0 - 120 sec interval, 1 chunk release", 5, 15, 4, 1),
+        //Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive
+        SLEEP("Sleep - 120 sec interval, 0 chunk release", 0, 5, 3, 0);
 
         private String levelDescription;
         //Time Interval before the next GC process should be attempted again
@@ -57,7 +59,7 @@ public class ChunkGcCalc {
     }
 
     //Returns appropriate chunk gc level based on amount of loaded chunks in memory
-    public static ChunkGCLevel calcGcLevel(int currentlyLoadedChunks) {
+    public static synchronized ChunkGCLevel calcGcLevel(int currentlyLoadedChunks) {
 
         int filledPercentOfChunks = getFilledChunksPercent();
 
@@ -92,13 +94,19 @@ public class ChunkGcCalc {
 
     //Calculates percentage of chunks that are filled out of max chunks for world
     private static int getFilledChunksPercent() {
-        int maxChunksSize = Globals.world.getMaxChunks();
+        double maxChunksSize = Globals.world.getMaxChunks();
 
-        int loadedChunksSize = Globals.world.chunks.getAmountOfLoadedChunks();
+        double loadedChunksSize = Globals.world.chunks.getAmountOfLoadedChunks();
 
-        int percentOfChunksLoaded = loadedChunksSize/maxChunksSize * 100;
+        if(loadedChunksSize<=MINIMUMCHUNKS){
+            return 0;
+        }
 
-        return percentOfChunksLoaded;
+        double loadedChunksOfTotalFraction = loadedChunksSize/maxChunksSize;
+
+        double loadedChunksOfTotalPercentage = loadedChunksOfTotalFraction * 100;
+
+        return (int)loadedChunksOfTotalPercentage;
     }
 
 }
