@@ -40,10 +40,9 @@ public class WorldChunksComponent extends WorldComponent {
 		}, World.UPDATE_DELAY);
 	}
 
-//todo removed, should it be brought back?
-//	public void update() {
-//
-//	}
+	public void update() {
+
+	}
 
 	public synchronized void updateLogic() {
 		for (int i = 0; i < this.loadedChunks.size(); i++) {
@@ -102,13 +101,14 @@ public class WorldChunksComponent extends WorldComponent {
 		this.chunks[index] = chunk;
 	}
 
-	public boolean isLoaded(int index) {
-		if (!this.isInside(index)) {
-			return false;
-		}
-
-		return this.chunks[index] != null;
-	}
+	//todo is this needed? as we seem to handle null whenever we use chunks
+//	public boolean isLoaded(int index) {
+//		if (!this.isInside(index)) {
+//			return false;
+//		}
+//
+//		return this.chunks[index] != null;
+//	}
 
 	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
