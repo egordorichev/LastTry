@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 
@@ -39,9 +40,10 @@ public class WorldChunksComponent extends WorldComponent {
 		}, World.UPDATE_DELAY);
 	}
 
-	public void update() {
-
-	}
+//todo removed, should it be brought back?
+//	public void update() {
+//
+//	}
 
 	public synchronized void updateLogic() {
 		for (int i = 0; i < this.loadedChunks.size(); i++) {
@@ -147,19 +149,23 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for(int i=0; i<chunks.length; i++){
 
-			final int index = i;
-
 			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
 
-			optionalChunk.ifPresent(chunk -> {
-
-				if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
-					chunks[index] = null;
-				}
-
-			});
+			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
 			
 		}
+	}
+
+	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
+
+		optionalChunk.ifPresent(chunk -> {
+
+			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
+				chunks[index] = null;
+			}
+
+		});
+
 	}
 
 	private int getIndex(int x, int y) {

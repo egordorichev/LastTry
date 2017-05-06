@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 //todo re-evaluate synchronized methods
 //todo on first run, interval should be set to 10 seconds to allow game to load previous chunks?
+//todo use synchronized block
 public class ChunkGcManager {
 
     boolean chunkGcInProgress = false;
@@ -72,8 +73,6 @@ public class ChunkGcManager {
 
             }
         }, chunkGCLevel.getTimeIntervalBeforeNextAttempt(), TimeUnit.SECONDS);
-
-
     }
 
 }
