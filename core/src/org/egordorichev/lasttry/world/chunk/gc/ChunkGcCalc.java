@@ -7,6 +7,8 @@ import static org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc.ChunkGCLevel.S
 //Static methods responsible for calculating the appropriate Chunk gc level
 public class ChunkGcCalc {
 
+    private final static int MINIMUMCHUNKS = 2;
+
     //Enums representing the 6 possible levels of a Chunk GC
     public enum ChunkGCLevel{
 
@@ -15,7 +17,8 @@ public class ChunkGcCalc {
         S4("Level 4 - 30 sec interval, 10 chunk release", 75, 80, 30, 10),
         S3("Level 3 - 60 sec interval, 10 chunk release", 50, 75, 60, 10),
         S2("Level 2 - 90 sec interval, 5 chunk release", 25, 50, 90, 5),
-        S1("Level 1 - 120 sec interval, 5 chunk release", 0, 25, 120, 5);
+        S1("Level 1 - 120 sec interval, 5 chunk release", 15, 25, 120, 5),
+        SLEEP("Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive", 0, 15, 120, 0);
 
         private String levelDescription;
         //Time Interval before the next GC process should be attempted again
