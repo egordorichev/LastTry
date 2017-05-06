@@ -1,11 +1,9 @@
 package org.egordorichev.lasttry.world.chunk.gc;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 //Logic responsible for carrying out chunk gc
@@ -33,9 +31,10 @@ public class ChunkGc {
         this.startUp();
 
         List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
-        Log.debug("Amount of loaded chunks is: "+loadedChunks.size());
+        List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
+        Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
 
-        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(loadedChunks);
+        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(mutableLoadedChunks);
 
         freeChunks(uniqueIdsOfChunksToBeFreed);
 
@@ -43,8 +42,8 @@ public class ChunkGc {
 
     }
 
-    private void setChunkGcInProgressFlag(boolean Flag) {
-        Globals.chunkGcManager.setChunkGcInProgress(true);
+    private void setChunkGcInProgressFlag(boolean flag) {
+        Globals.chunkGcManager.setChunkGcInProgress(flag);
     }
 
     private ArrayList<UUID> getUniqueIdsOfChunksToBeFreed(List<Chunk> loadedChunks) {
@@ -82,7 +81,7 @@ public class ChunkGc {
     }
 
     private void finish() {
-        setChunkGcInProgressFlag(true);
+        setChunkGcInProgressFlag(false);
 
         //Schedule next chunk gc
         Globals.chunkGcManager.requestFutureChunkGc();

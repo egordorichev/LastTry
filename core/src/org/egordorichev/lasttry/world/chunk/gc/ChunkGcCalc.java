@@ -7,6 +7,7 @@ import static org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc.ChunkGCLevel.S
 //Static methods responsible for calculating the appropriate Chunk gc level
 public class ChunkGcCalc {
 
+    //todo Right now minimum loaded chunks is being activated when loaded chunks size is at least '3' not just '2'
     public final static int MINIMUMLOADEDCHUNKS = 2;
 
     //Enums representing the 6 possible levels of a Chunk GC
