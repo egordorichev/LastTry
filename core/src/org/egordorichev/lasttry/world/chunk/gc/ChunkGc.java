@@ -17,7 +17,6 @@ public class ChunkGc {
         this.currentChunkGcLevel = levelToRunChunkGcAt;
     }
 
-    //todo split into smaller methods
     public void performChunkGC() {
 
         Log.debug("Received request to perform Chunk GC");
@@ -25,11 +24,24 @@ public class ChunkGc {
         assert Globals.world.chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
 
         //Set flag in gc manager, signalling a chunk gc is in progress
-        Globals.chunkGcManager.setChunkGcInProgress(true);
+        setChunkGcInProgressFlag(true);
 
         List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
         Log.debug("Amount of loaded chunks is: "+loadedChunks.size());
 
+        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(loadedChunks);
+
+        freeChunks(uniqueIdsOfChunksToBeFreed);
+
+        finish();
+
+    }
+
+    private void setChunkGcInProgressFlag(boolean Flag) {
+        Globals.chunkGcManager.setChunkGcInProgress(true);
+    }
+
+    private ArrayList<UUID> getUniqueIdsOfChunksToBeFreed(List<Chunk> loadedChunks) {
         // Sort by local date, most recent date is last and oldest date is first.
         Collections.sort(loadedChunks, new Comparator<Chunk>() {
             public int compare(Chunk one, Chunk other) {
@@ -48,12 +60,18 @@ public class ChunkGc {
             uniqueIdsOfChunksToBeFreed.add(chunkToBeFreed.getUniqueChunkId());
         }
 
+        return uniqueIdsOfChunksToBeFreed;
+    }
+
+    private void freeChunks(List<UUID> idsOfChunksToBeFreed) {
         //free chunks
-        uniqueIdsOfChunksToBeFreed.stream().forEach(uniqueIdOfChunkToBeFreed -> {
+        idsOfChunksToBeFreed.stream().forEach(uniqueIdOfChunkToBeFreed -> {
             Globals.world.chunks.removeChunk(uniqueIdOfChunkToBeFreed);
         });
+    }
 
-        Globals.chunkGcManager.setChunkGcInProgress(false);
+    private void finish() {
+        setChunkGcInProgressFlag(true);
 
         //Schedule next chunk gc
         Globals.chunkGcManager.requestFutureChunkGc();
