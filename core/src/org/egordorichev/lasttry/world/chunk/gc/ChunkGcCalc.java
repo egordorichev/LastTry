@@ -12,28 +12,28 @@ public class ChunkGcCalc {
     //Enums representing the 6 possible levels of a Chunk GC
     public enum ChunkGCLevel{
 
-        S6(ChunkGcLevel.ChunkGcLevelBounds.S6, 15, 5),
-        S5(ChunkGcLevel.ChunkGcLevelBounds.S5, 20, 6),
-        S4(ChunkGcLevel.ChunkGcLevelBounds.S4, 30, 10),
-        S3(ChunkGcLevel.ChunkGcLevelBounds.S3, 60, 10),
-        S2(ChunkGcLevel.ChunkGcLevelBounds.S2, 90, 5),
-        S1(ChunkGcLevel.ChunkGcLevelBounds.S1, 120, 5),
-        S0(ChunkGcLevel.ChunkGcLevelBounds.S0, 120, 1),
+        S6(ChunkGcLevelConstants.ChunkGcLevelBounds.S6, 15, 5),
+        S5(ChunkGcLevelConstants.ChunkGcLevelBounds.S5, 20, 6),
+        S4(ChunkGcLevelConstants.ChunkGcLevelBounds.S4, 30, 10),
+        S3(ChunkGcLevelConstants.ChunkGcLevelBounds.S3, 60, 10),
+        S2(ChunkGcLevelConstants.ChunkGcLevelBounds.S2, 90, 5),
+        S1(ChunkGcLevelConstants.ChunkGcLevelBounds.S1, 120, 5),
+        S0(ChunkGcLevelConstants.ChunkGcLevelBounds.S0, 120, 1),
         //Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive
-        SLEEP(ChunkGcLevel.ChunkGcLevelBounds.SLEEP, 120, 0);
+        SLEEP(ChunkGcLevelConstants.ChunkGcLevelBounds.SLEEP, 120, 0);
 
-        private ChunkGcLevel.ChunkGcLevelBounds  chunkGcLevelDesc;
+        private ChunkGcLevelConstants.ChunkGcLevelBounds  chunkGcLevelDesc;
         //Time Interval before the next GC process should be attempted again
         private int timeIntervalBeforeNextAttempt;
         private int chunksToFree;
 
-        ChunkGCLevel(ChunkGcLevel.ChunkGcLevelBounds chunkDesc, int timeIntervalBeforeNextAttempt, int chunksToFree) {
+        ChunkGCLevel(ChunkGcLevelConstants.ChunkGcLevelBounds chunkDesc, int timeIntervalBeforeNextAttempt, int chunksToFree) {
             this.chunkGcLevelDesc = chunkDesc;
             this.timeIntervalBeforeNextAttempt = timeIntervalBeforeNextAttempt;
             this.chunksToFree = chunksToFree;
         }
 
-        public ChunkGcLevel.ChunkGcLevelBounds getLevelDescription() {
+        public ChunkGcLevelConstants.ChunkGcLevelBounds getLevelDescription() {
             return this.chunkGcLevelDesc;
         }
 

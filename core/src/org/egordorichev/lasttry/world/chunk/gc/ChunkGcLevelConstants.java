@@ -1,9 +1,6 @@
 package org.egordorichev.lasttry.world.chunk.gc;
 
-/**
- * Created by Admin on 06/05/2017.
- */
-public class ChunkGcLevel {
+public class ChunkGcLevelConstants {
 
     public enum ChunkGcLevelBounds{
         S6("Level 6 - 15 sec interval, 5 chunk release", 90, 100),
