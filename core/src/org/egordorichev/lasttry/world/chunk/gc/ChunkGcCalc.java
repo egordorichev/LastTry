@@ -62,7 +62,12 @@ public class ChunkGcCalc {
             return S6;
         }
 
+        return getAppropriateLevel(filledPercentOfChunks);
 
+    }
+
+    private static synchronized ChunkGCLevel getAppropriateLevel(int filledPercentOfChunks) {
+        
         ChunkGCLevel[] availGcLevels = ChunkGCLevel.values();
 
         ChunkGCLevel appropriateLevel = null;
@@ -80,6 +85,7 @@ public class ChunkGcCalc {
 
         return appropriateLevel;
     }
+
 
     //Calculates percentage of chunks that are filled out of max chunks for world
     private static int getFilledChunksPercent() {
