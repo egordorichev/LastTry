@@ -67,7 +67,7 @@ public class ChunkGcCalc {
     }
 
     private static synchronized ChunkGCLevel getAppropriateLevel(int filledPercentOfChunks) {
-        
+
         ChunkGCLevel[] availGcLevels = ChunkGCLevel.values();
 
         ChunkGCLevel appropriateLevel = null;

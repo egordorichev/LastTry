@@ -47,7 +47,7 @@ public class ChunkGcManager {
 
     private synchronized int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getImmutableLoadedChunks().size(); }
 
-    private synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
+    public synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
 
         Log.debug("Level of chunk gc to be scheduled is: "+chunkGCLevel.getLevelDescription());
 
@@ -62,15 +62,9 @@ public class ChunkGcManager {
                 //On wakeup, we run a chunk gc immediately based on a ChunkGC level we receive based on the current loaded chunks level
                 ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getImmutableLoadedChunks().size());
 
-                //If the ChunkGcLevel is sleep, we set a delay for the amount of time and simply request another chunkgc on wakeup
-                if(chunkGCLevelForCurrentGc== ChunkGcCalc.ChunkGCLevel.SLEEP){
-                    Log.debug("Chunk GC level is sleep");
-                    Globals.chunkGcManager.scheduleChunkGc(chunkGCLevelForCurrentGc);
-                }else{
-                    ChunkGc chunkGcThread = new ChunkGc(chunkGCLevelForCurrentGc);
-                    Log.debug("Chunk GC level is: "+chunkGCLevelForCurrentGc.getLevelDescription());
-                    chunkGcThread.performChunkGC();
-                }
+                ChunkGc chunkGcThread = new ChunkGc(chunkGCLevelForCurrentGc);
+                chunkGcThread.onWakeUp();
+                
             }
         }, futureTimeSecondsToRunChunkGc, TimeUnit.SECONDS);
     }

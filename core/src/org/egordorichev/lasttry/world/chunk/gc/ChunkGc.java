@@ -17,6 +17,15 @@ public class ChunkGc {
         this.currentChunkGcLevel = levelToRunChunkGcAt;
     }
 
+    public void onWakeUp(){
+        if(currentChunkGcLevel== ChunkGcCalc.ChunkGCLevel.SLEEP){
+            Globals.chunkGcManager.scheduleChunkGc(currentChunkGcLevel);
+        }else{
+            this.performChunkGC();
+        }
+    }
+
+
     public void performChunkGC() {
 
         Log.debug("Received request to perform Chunk GC");
