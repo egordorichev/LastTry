@@ -12,10 +12,7 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -169,11 +166,13 @@ public class WorldChunksComponent extends WorldComponent {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
-	//No need to make synchronized, as we are only reading the value.
-	public int getAmountOfLoadedChunks() { return loadedChunks.size(); }
-
 	//todo return immutable object?
-	public ArrayList<Chunk> getLoadedChunks() { return loadedChunks; }
+	public synchronized List<Chunk> getImmutableLoadedChunks() {
+
+		List<Chunk> immutableLoadedChunksList = Collections.unmodifiableList(loadedChunks);
+
+		return immutableLoadedChunksList;
+	}
 
 	public void save() {
 		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {

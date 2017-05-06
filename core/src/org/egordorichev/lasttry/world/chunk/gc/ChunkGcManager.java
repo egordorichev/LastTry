@@ -45,7 +45,7 @@ public class ChunkGcManager {
         }
     }
 
-    private synchronized int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getAmountOfLoadedChunks(); }
+    private synchronized int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getImmutableLoadedChunks().size(); }
 
     private synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
 
@@ -60,7 +60,7 @@ public class ChunkGcManager {
                 Log.debug("Chunk GC time limit has expired");
 
                 //On wakeup, we run a chunk gc immediately based on a ChunkGC level we receive based on the current loaded chunks level
-                ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getAmountOfLoadedChunks());
+                ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getImmutableLoadedChunks().size());
 
                 //If the ChunkGcLevel is sleep, we set a delay for the amount of time and simply request another chunkgc on wakeup
                 if(chunkGCLevelForCurrentGc== ChunkGcCalc.ChunkGCLevel.SLEEP){

@@ -6,10 +6,7 @@ import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.UUID;
+import java.util.*;
 
 //Logic responsible for carrying out chunk gc
 public class ChunkGc {
@@ -25,12 +22,12 @@ public class ChunkGc {
 
         Log.debug("Received request to perform Chunk GC");
 
-        assert Globals.world.chunks.getAmountOfLoadedChunks()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
+        assert Globals.world.chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
 
         //Set flag in gc manager, signalling a chunk gc is in progress
         Globals.chunkGcManager.setChunkGcInProgress(true);
 
-        ArrayList<Chunk> loadedChunks = Globals.world.chunks.getLoadedChunks();
+        List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
         Log.debug("Amount of loaded chunks is: "+loadedChunks.size());
 
         // Sort by local date, most recent date is last and oldest date is first.
