@@ -12,12 +12,13 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
-import java.util.ArrayList;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 
 /**
  * Methods that alter any of the collections that contain Chunks, are synchronized.
- * The ChunkGC thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
+ * The ChunkGc thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
  * Therefore chunk collection altering methods are made synchronized.
  */
 public class WorldChunksComponent extends WorldComponent {
@@ -100,13 +101,14 @@ public class WorldChunksComponent extends WorldComponent {
 		this.chunks[index] = chunk;
 	}
 
-	public boolean isLoaded(int index) {
-		if (!this.isInside(index)) {
-			return false;
-		}
-
-		return this.chunks[index] != null;
-	}
+	//todo is this needed? as we seem to handle null whenever we use chunks
+//	public boolean isLoaded(int index) {
+//		if (!this.isInside(index)) {
+//			return false;
+//		}
+//
+//		return this.chunks[index] != null;
+//	}
 
 	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
@@ -140,12 +142,43 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
+	//todo may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
+
+		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
+
+		for(int i=0; i<chunks.length; i++){
+
+			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
+
+			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
+			
+		}
+	}
+
+	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
+
+		optionalChunk.ifPresent(chunk -> {
+
+			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
+				chunks[index] = null;
+			}
+
+		});
+
+	}
+
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
-	//No need to make synchronized, as we are only reading the value.
-	public int getAmountOfLoadedChunks() { return loadedChunks.size(); }
+	//todo return immutable object?
+	public synchronized List<Chunk> getImmutableLoadedChunks() {
+
+		List<Chunk> immutableLoadedChunksList = Collections.unmodifiableList(loadedChunks);
+
+		return immutableLoadedChunksList;
+	}
 
 	public void save() {
 		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {

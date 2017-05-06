@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.entity.player.PlayerIO;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
+import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
@@ -14,6 +15,7 @@ public class Globals {
     public static Environment environment;
     public static SpawnSystem spawnSystem;
     public static EntityManager entityManager;
+    public static ChunkGcManager chunkGcManager;
 
     public static void dispose() {
         if(player != null){

@@ -203,5 +203,7 @@ public class Chunk {
 		return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 	}
 
+	public UUID getUniqueChunkId() { return this.uniqueChunkId; }
+
 	public LocalDateTime getLastAccessedTime() { return this.lastAccessedTime; }
 }
