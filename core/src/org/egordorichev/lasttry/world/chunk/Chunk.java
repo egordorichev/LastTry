@@ -58,7 +58,6 @@ public class Chunk {
 	}
 
 	public short getBlock(int globalX, int globalY) {
-
 		return this.getBlockInside(globalX - this.getX(), globalY - this.getY());
 	}
 
@@ -80,10 +79,10 @@ public class Chunk {
 		}
 
 		this.data.blocks[x + y * SIZE] = id;
+		this.data.blocksHealth[x + y * SIZE] = Block.MAX_HP;
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
-
 		return this.getBlockHPInside(globalX - this.getX(), globalY - this.getY());
 	}
 
@@ -103,7 +102,6 @@ public class Chunk {
 
 	public void setBlockHPInside(byte hp, int x, int y) {
 		if (!this.isInside(x, y)) {
-
 			return;
 		}
 
@@ -111,7 +109,6 @@ public class Chunk {
 	}
 
 	public short getWall(int globalX, int globalY) {
-
 		return this.getWallInside(globalX - this.getX(), globalY - this.getY());
 	}
 
@@ -132,6 +129,7 @@ public class Chunk {
 			return;
 		}
 
+		this.data.wallsHealth[x + y * SIZE] = Block.MAX_HP;
 		this.data.walls[x + y * SIZE] = id;
 	}
 
