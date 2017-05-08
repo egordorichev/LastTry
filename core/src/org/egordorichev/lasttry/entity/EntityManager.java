@@ -69,6 +69,11 @@ public class EntityManager {
 
     public Enemy spawnEnemy(String name, int x, int y) {
         Enemy enemy = Enemies.create(name);
+
+        if (enemy == null) {
+        	return null;
+        }
+
         this.enemyEntities.add(enemy);
         this.spawn(enemy, x, y);
         return enemy;
