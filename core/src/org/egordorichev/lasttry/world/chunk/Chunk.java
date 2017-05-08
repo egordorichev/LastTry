@@ -160,48 +160,46 @@ public class Chunk {
 	}
 
 	public ChunkData getData() {
-
 		this.updateLastAccessedTime();
 
 		return this.data;
 	}
 
 	public int getGridX() {
-
 		this.updateLastAccessedTime();
 
 		return (int) this.position.x;
 	}
 
 	public int getGridY() {
-
 		this.updateLastAccessedTime();
 
 		return (int) this.position.y;
 	}
 
 	public int getX() {
-
 		this.updateLastAccessedTime();
 
 		return (int) this.position.x * SIZE;
 	}
 
 	public int getY() {
-
 		this.updateLastAccessedTime();
 
 		return (int) this.position.y * SIZE;
 	}
 
 	private boolean isInside(int x, int y) {
-
 		this.updateLastAccessedTime();
 
 		return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 	}
 
-	public UUID getUniqueChunkId() { return this.uniqueChunkId; }
+	public UUID getUniqueChunkId() {
+		return this.uniqueChunkId;
+	}
 
-	public LocalDateTime getLastAccessedTime() { return this.lastAccessedTime; }
+	public LocalDateTime getLastAccessedTime() {
+		return this.lastAccessedTime;
+	}
 }
