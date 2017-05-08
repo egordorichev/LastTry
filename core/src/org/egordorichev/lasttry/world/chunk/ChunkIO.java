@@ -69,7 +69,7 @@ public class ChunkIO {
 		}
 	}
 
-	public static Chunk generate(int x, int y) { // TODO
+	public static Chunk generate(int x, int y) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -78,8 +78,7 @@ public class ChunkIO {
 
 				for (int y = 0; y < Chunk.SIZE; y++) {
 					for (int x = 0; x < Chunk.SIZE; x++) {
-						data.blocks[x + y * Chunk.SIZE] = ItemID.dirtBlock;
-						data.blocksHealth[x + y * Chunk.SIZE] = Block.MAX_HP;
+						data.blocks[x + y * Chunk.SIZE] = ItemID.none;
 					}
 				}
 

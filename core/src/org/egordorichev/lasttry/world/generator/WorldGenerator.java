@@ -16,7 +16,7 @@ public class WorldGenerator {
 		Globals.world = this.world;
 
         this.addSurfaceGenerator();
-        this.addCavesGenerator();
+        // this.addCavesGenerator();
     }
 
     public void addTask(GeneratorTask task) {
@@ -46,7 +46,7 @@ public class WorldGenerator {
 
                 double[] points = new double[width];
 
-	                int max = height - 100;
+	            int max = height - 100;
                 int min = height - 250;
 
                 for (int i = 0; i < width; i++) {
@@ -65,7 +65,7 @@ public class WorldGenerator {
                     for (int y = 0; y < height; y++) {
                         if (y == yMax) {
                             generator.world.blocks.set(ItemID.grassBlock, x, y);
-                        } else if (y > yMax) {
+                        } else if (y < yMax) {
                             generator.world.blocks.set(ItemID.dirtBlock, x, y);
                             generator.world.walls.set(ItemID.dirtWall, x, y);
                         }
