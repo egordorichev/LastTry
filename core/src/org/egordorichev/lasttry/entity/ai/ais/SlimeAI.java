@@ -21,7 +21,7 @@ public class SlimeAI extends AI {
 
 	@Override
     public void update(CreatureWithAI creature, int dt, int currentAi) {
-		if (currentAi == creature.ai.getData()) {
+		if (currentAi == 0) {
 			if (creature.physics.getVelocity().y == 0) {
 				creature.physics.jump();
 			}
@@ -35,10 +35,10 @@ public class SlimeAI extends AI {
 			} else if (dir > 0) {
 				creature.ai.setData((short) 1);
 			}
+		}
 
-			if (creature.state.get() == CreatureStateComponent.State.JUMPING) {
-				creature.physics.move((creature.ai.getData() == 0) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
-			}
+		if (creature.state.get() == CreatureStateComponent.State.JUMPING) {
+			creature.physics.move((creature.ai.getData() == 0) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
 		}
     }
 }

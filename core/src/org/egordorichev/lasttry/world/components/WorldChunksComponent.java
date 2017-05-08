@@ -68,9 +68,9 @@ public class WorldChunksComponent extends WorldComponent {
 				Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
-//				if (wall != null) {
+				if (wall != null) {
 //					wall.renderWall(x, y);
-//				}
+				}
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);

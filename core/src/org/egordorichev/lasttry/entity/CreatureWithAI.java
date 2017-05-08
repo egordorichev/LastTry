@@ -15,6 +15,7 @@ public class CreatureWithAI extends Creature {
 		super(physics, graphics);
 
 		this.ai = new AiComponent(this, ai);
+		this.ai.ai.init(this);
 	}
 
 	@Override

@@ -38,6 +38,7 @@
 
 			"jumping" : {
 				"stopped" : true,
+				"looping" : true,
 
 				"frames" : [
 					{
