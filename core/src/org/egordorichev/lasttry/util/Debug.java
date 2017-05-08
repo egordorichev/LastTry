@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 
@@ -10,7 +11,7 @@ import java.util.*;
 public class Debug {
     private boolean enabled;
     private int uniqueCounter;
-    //LinkedHashMap guarantees insertion order of elements, is kept.
+    // LinkedHashMap guarantees insertion order of elements, is kept.
     private Map<Integer, GenericContainer.UniqueTypePair> messagesToBePrinted = new LinkedHashMap<>();
     public Debug() {
         this.enabled = false;
@@ -27,7 +28,7 @@ public class Debug {
 	    Assets.f22.draw(Graphics.batch, "Spawn weight of active enemies: "+ Globals.spawnSystem.getSpawnWeightOfCurrentlyActiveEnemies(), 10, 50);
 	    Assets.f22.draw(Graphics.batch, "Remaining spawn weight of biome: "+ Globals.spawnSystem.getRemainingSpawnWeightOfBiome(), 10, 70);
 	    Assets.f22.draw(Graphics.batch, "Enemies in active area: "+ Globals.spawnSystem.getEnemiesInActiveAreaCount(), 10, 90);
-	    //TODO Heavy call, should be rethought and removed
+	    // TODO Heavy call, should be rethought and removed
 	    Assets.f22.draw(Graphics.batch, "Total amount of enemies: "+ Globals.entityManager.getEnemyEntities().size(), 10, 110);
 	    Assets.f22.draw(Graphics.batch, "Current Biome: "+ Globals.environment.currentBiome.getName(), 10, 130);
 	    Assets.f22.draw(Graphics.batch, "Max spawns of current biome: "+ Globals.environment.currentBiome.get().getSpawnMax(), 10, 150);
@@ -65,14 +66,26 @@ public class Debug {
     }
 
     public void enable() {
+    	if (LastTry.release) {
+    		return;
+	    }
+
         this.enabled = true;
     }
 
     public void disable() {
+	    if (LastTry.release) {
+		    return;
+	    }
+
         this.enabled = false;
     }
 
     public void toggle() {
+	    if (LastTry.release) {
+		    return;
+	    }
+
         this.enabled = !this.enabled;
     }
 
