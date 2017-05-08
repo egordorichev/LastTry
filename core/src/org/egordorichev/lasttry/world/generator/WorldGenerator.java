@@ -46,7 +46,7 @@ public class WorldGenerator {
 
                 double[] points = new double[width];
 
-                int max = height - 100;
+	                int max = height - 100;
                 int min = height - 250;
 
                 for (int i = 0; i < width; i++) {
