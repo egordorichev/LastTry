@@ -6,7 +6,10 @@ import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.spawn.components.*;
+import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
+import org.egordorichev.lasttry.world.spawn.components.EnemySpawnComponent;
+import org.egordorichev.lasttry.world.spawn.components.GridComponent;
+import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -90,7 +93,7 @@ public class SpawnSystem {
             int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
             int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
-            // Globals.entityManager.spawnEnemy((short)enemyToBeSpawned.getID(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
+            Globals.entityManager.spawnEnemy(enemyToBeSpawned.getName(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
             LastTry.debug.print("Spawn has been triggered");
         }else{
             LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
