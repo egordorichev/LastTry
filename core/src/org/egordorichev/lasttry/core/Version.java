@@ -2,14 +2,14 @@ package org.egordorichev.lasttry.core;
 
 public class Version {
 	public int minor;
-	public int major;
+	public double major;
 	
-	public Version(int major, int minor) {
+	public Version(double major, int minor) {
 		this.major = major;
 		this.minor = minor;
 	}
-	
-        @Override
+
+	@Override
 	public String toString() {
 		return "v." + this.major + "." + this.minor;	
 	}
