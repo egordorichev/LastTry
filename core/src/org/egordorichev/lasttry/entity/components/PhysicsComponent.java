@@ -188,4 +188,8 @@ public class PhysicsComponent extends CreatureComponent {
 	public Direction getDirection() {
 		return this.direction;
 	}
+
+	public Vector2 getVelocity() {
+		return this.velocity;
+	}
 }

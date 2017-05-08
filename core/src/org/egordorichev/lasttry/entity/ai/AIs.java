@@ -17,7 +17,12 @@ public class AIs {
         }
 
         none = new AI(AIID.none) {
-            @Override
+	        @Override
+	        public void init(CreatureWithAI creature) {
+		        
+	        }
+
+	        @Override
             public void update(CreatureWithAI creature, int dt, int currentAi) {
 
             }

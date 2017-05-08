@@ -2,7 +2,7 @@
 	"Green Slime" : {
 		"id" : 0,
         "ai" : 1,
-		"texture" : "greenSlime.png",
+		"texture" : "GreenSlime.png",
 		"damage" : [ 6, 12, 118 ],
 		"hp" : [ 14, 28, 338 ],
 		"defense" : [ 0, 0, 0 ],
@@ -23,7 +23,6 @@
 		"animation" : {
 			"idle" : {
 				"looping" : true,
-				"stopped" : false,
 
 				"frames" : [
 					{
@@ -32,6 +31,17 @@
 					},
 					{
 						"time" : 10,
+						"rect" : [ 32, 0, 32, 24 ]
+					}
+				]
+			},
+
+			"jumping" : {
+				"stopped" : true,
+
+				"frames" : [
+					{
+						"time" : 1,
 						"rect" : [ 32, 0, 32, 24 ]
 					}
 				]

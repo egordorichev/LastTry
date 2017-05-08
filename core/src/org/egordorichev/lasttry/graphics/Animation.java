@@ -20,6 +20,10 @@ public class Animation {
 		this.looped = looped;
 	}
 
+	public void setStopped(boolean stopped) {
+    	this.stopped = stopped;
+	}
+
 	public void addFrame(AnimationFrame frame) {
         this.frames.add(frame);
     }

@@ -14,6 +14,7 @@ public abstract class AI {
         this.id = id;
     }
 
+    public abstract void init(CreatureWithAI creature);
     public abstract void update(CreatureWithAI creature, int dt, int currentAi);
 
     public short getId() {

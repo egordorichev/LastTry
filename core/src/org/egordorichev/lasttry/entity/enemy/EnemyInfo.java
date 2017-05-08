@@ -28,7 +28,7 @@ public class EnemyInfo {
             Enemy enemy = new Enemy(AI.fromID(this.root.get("ai").asShort()), this.root.name());
 
             enemy.stats.set(hp, 0, defense, damage);
-	        enemy.graphics.load(this.root.get("animation"));
+	        enemy.graphics.load(this.root.get("animation"), root.get("texture").asString());
 
 	        for (JsonValue drop : root.get("drop")) {
 	        	enemy.drops.add(new Drop(Item.fromID(drop.get("id").asShort()), drop.get("count").get(0).asShort(), drop.get("count").get(1).asShort()));
@@ -38,7 +38,8 @@ public class EnemyInfo {
 
             return enemy;
         } catch (Exception exception) {
-            Log.error("Failed to parse " + this.root.name() + "!");
+            Log.error("Failed to parse " + this.root.name() + "!\n Cause:");
+            exception.printStackTrace();
         }
 
         return null;
