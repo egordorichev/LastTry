@@ -20,7 +20,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0, 7);
+	public static final Version version = new Version(0, 8);
 	
 	/** Random instance */
 	public static final Random random = new Random();
@@ -96,7 +96,7 @@ public class LastTry extends Game {
 	 */
 	private String getRandomWindowTitle() {
         String[] split = Language.text.get("windowTitles").split("//");
-        return split[random.nextInt(split.length)];
+        return split[random.nextInt(split.length)] + " " + version.toString();
 	}
 
 	/**
