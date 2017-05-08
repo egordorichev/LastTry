@@ -17,6 +17,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
 	private final Texture hpTexture;
@@ -33,6 +34,9 @@ public class GamePlayState implements State {
         Globals.entityManager = new EntityManager();
 
         Globals.entityManager.spawn(Enemies.create("Green Slime"), spawnX, spawnY + 4);
+
+        //Begin the ChunkGC process
+        Globals.chunkGcManager = new ChunkGcManager();
     }
 
     @Override

@@ -12,13 +12,19 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
-import java.util.ArrayList;
+import javax.swing.text.html.Option;
+import java.util.*;
 
+
+/**
+ * Methods that alter any of the collections that contain Chunks, are synchronized.
+ * The ChunkGc thread will alter the Chunk collections (separate from the main thread), when removing unused Chunks.
+ * Therefore chunk collection altering methods are made synchronized.
+ */
 public class WorldChunksComponent extends WorldComponent {
 	private Chunk[] chunks;
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
 	private int size;
-//	private static int debugTimerCounter = 20;
 
 	public WorldChunksComponent(World world) {
 		super(world);
@@ -38,7 +44,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 	}
 
-	public void updateLogic() {
+	public synchronized void updateLogic() {
 		for (int i = 0; i < this.loadedChunks.size(); i++) {
 			this.loadedChunks.get(i).update();
 		}
@@ -74,7 +80,7 @@ public class WorldChunksComponent extends WorldComponent {
 		}
 	}
 
-	public void load(int x, int y) {
+	public synchronized void load(int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -85,7 +91,7 @@ public class WorldChunksComponent extends WorldComponent {
 		this.loadedChunks.add(this.chunks[index]);
 	}
 
-	public void set(Chunk chunk, int x, int y) {
+	public synchronized void set(Chunk chunk, int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -95,15 +101,16 @@ public class WorldChunksComponent extends WorldComponent {
 		this.chunks[index] = chunk;
 	}
 
-	public boolean isLoaded(int index) {
-		if (!this.isInside(index)) {
-			return false;
-		}
+	//todo is this needed? as we seem to handle null whenever we use chunks
+//	public boolean isLoaded(int index) {
+//		if (!this.isInside(index)) {
+//			return false;
+//		}
+//
+//		return this.chunks[index] != null;
+//	}
 
-		return this.chunks[index] != null;
-	}
-
-	public Chunk get(int x, int y) {
+	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
 
 		if (!this.isInside(index)) {
@@ -113,7 +120,7 @@ public class WorldChunksComponent extends WorldComponent {
 		return this.chunks[index];
 	}
 
-	public Chunk getFor(int x, int y) {
+	public synchronized Chunk getFor(int x, int y) {
 		x /= Chunk.SIZE;
 		y /= Chunk.SIZE;
 
@@ -135,8 +142,42 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
+	//todo may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
+
+		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
+
+		for(int i=0; i<chunks.length; i++){
+
+			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
+
+			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
+			
+		}
+	}
+
+	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
+
+		optionalChunk.ifPresent(chunk -> {
+
+			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
+				chunks[index] = null;
+			}
+
+		});
+
+	}
+
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
+	}
+
+	//todo return immutable object?
+	public synchronized List<Chunk> getImmutableLoadedChunks() {
+
+		List<Chunk> immutableLoadedChunksList = Collections.unmodifiableList(loadedChunks);
+
+		return immutableLoadedChunksList;
 	}
 
 	public void save() {

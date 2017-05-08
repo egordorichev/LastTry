@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
@@ -88,18 +89,20 @@ public class World {
 	}
 
 	public enum Size {
-		SMALL("Small", 4096, 1024),
-		MEDIUM("Medium", 6144, 2048),
-		LARGE("Large", 8192, 2304);
+		SMALL("Small", 4096, 1024),//Small contains 64 chunks
+		MEDIUM("Medium", 6144, 2048), //Medium contains 192 chunks
+		LARGE("Large", 8192, 2304); //Large contains 288 chunks
 
 		private String name;
 		private short width;
 		private short height;
+		private short maxChunks;
 
 		Size(String name, int width, int height) {
 			this.name = name;
 			this.width = (short) width;
 			this.height = (short) height;
+			this.maxChunks = (short) maxChunks;
 		}
 
 		@Override
@@ -113,6 +116,13 @@ public class World {
 
 		public short getHeight() {
 			return this.height;
+		}
+
+		public short getMaxChunks() {
+
+			int maxChunks = (width/Chunk.SIZE)*(short)(height/ Chunk.SIZE);
+
+			return (short)maxChunks;
 		}
 	}
 }
