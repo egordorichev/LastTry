@@ -20,13 +20,10 @@ public class EnemyInfo {
         	int hp = 1;
         	int damage = 1;
 
-        	JsonValue root = this.root;
+	        JsonValue root = this.root;
 
         	if (this.root.has("copy")) {
-		        System.out.println("COPY FROM " + this.root.getString("copy"));
 		        JsonValue r = Enemies.ENEMY_CACHE.get(this.root.getString("copy")).root;
-
-		        System.out.println(r.get("texture").asString());
 
 		        if (r != null) {
         			root = r;
