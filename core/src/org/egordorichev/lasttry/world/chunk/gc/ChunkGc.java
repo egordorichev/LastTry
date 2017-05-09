@@ -19,27 +19,38 @@ public class ChunkGc {
         if(currentChunkGcLevel== ChunkGcCalc.ChunkGCLevel.SLEEP){
             Globals.chunkGcManager.scheduleChunkGc(currentChunkGcLevel);
         }else{
-            this.performChunkGC();
+            this.beginChunkGC();
         }
     }
 
 
-    public void performChunkGC() {
+    public void beginChunkGC() {
 
         Log.debug("Received request to perform Chunk GC");
 
         this.startUp();
 
+        this.performChunkGc();
+
+        this.finish();
+
+    }
+
+    private void performChunkGc() {
+
+        List<Chunk> mutableLoadedChunks = this.retrieveMutableLoadedChunks();
+
+        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(mutableLoadedChunks);
+
+        this.freeChunks(uniqueIdsOfChunksToBeFreed);
+    }
+
+    private List<Chunk> retrieveMutableLoadedChunks() {
         List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
         List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
         Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
 
-        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(mutableLoadedChunks);
-
-        freeChunks(uniqueIdsOfChunksToBeFreed);
-
-        finish();
-
+        return mutableLoadedChunks;
     }
 
     private void setChunkGcInProgressFlag(boolean flag) {

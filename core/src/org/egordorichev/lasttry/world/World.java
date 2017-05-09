@@ -91,7 +91,8 @@ public class World {
 	public enum Size {
 		SMALL("Small", 4096, 1024),//Small contains 64 chunks
 		MEDIUM("Medium", 6144, 2048), //Medium contains 192 chunks
-		LARGE("Large", 8192, 2304); //Large contains 288 chunks
+		LARGE("Large", 8192, 2304), //Large contains 288 chunks
+		DEVEXTRALARGE("Dev: Extra Large", 16384, 4608); //Dev Extra Large contains 1152 chunks
 
 		private String name;
 		private short width;
