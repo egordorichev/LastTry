@@ -33,7 +33,9 @@ public class GamePlayState implements State {
 		Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Enemies.create("Blue Slime"), spawnX, spawnY);
+		//Test
+		Globals.entityManager.spawn(Enemies.create("Blue Slime"), spawnX-10, spawnY);
+		Globals.entityManager.spawn(Enemies.create("Green Slime"), spawnX+10, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 

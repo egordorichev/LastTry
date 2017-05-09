@@ -9,9 +9,11 @@ import org.egordorichev.lasttry.util.Log;
 
 public class EnemyInfo {
     private JsonValue root;
+    private String enemyName;
 
-    public EnemyInfo(JsonValue root) {
+    public EnemyInfo(JsonValue root, String enemyName) {
         this.root = root;
+        this.enemyName = enemyName;
     }
 
     public Enemy create() {
@@ -39,7 +41,7 @@ public class EnemyInfo {
 		    damage = Globals.world.flags.isHardmode() ? root.get("damage").get(2).asInt()
 			    : Globals.world.flags.isExpertMode() ? root.get("damage").get(1).asInt() : root.get("damage").get(0).asInt();
 
-	        Enemy enemy = new Enemy(AI.fromID(root.get("ai").asShort()), root.name());
+	        Enemy enemy = new Enemy(AI.fromID(root.get("ai").asShort()), enemyName);
 	        enemy.stats.set(hp, 0, defense, damage);
 
 	        if (root.has("animation")) {

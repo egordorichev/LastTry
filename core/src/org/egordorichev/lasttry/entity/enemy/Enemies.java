@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.util.Log;
+
 import java.util.HashMap;
 
 public class Enemies {
@@ -23,7 +24,7 @@ public class Enemies {
             JsonValue root = jsonReader.parse(Gdx.files.internal("enemies/standard.json"));
 
             for (JsonValue enemy : root) {
-	            ENEMY_CACHE.put(enemy.name(), new EnemyInfo(enemy));
+	            ENEMY_CACHE.put(enemy.name(), new EnemyInfo(enemy, enemy.name()));
             }
         } catch (Exception exception) {
             exception.printStackTrace();
