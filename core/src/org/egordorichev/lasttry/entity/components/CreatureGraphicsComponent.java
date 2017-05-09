@@ -39,7 +39,7 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 		Animation to = this.animations[this.toID(type)];
 
 		if (animation.has("copy")) {
-			to = this.animations[this.toID(animation.get("copy").asString())];
+			to.copy(this.animations[this.toID(animation.get("copy").asString())]);
 		} else {
 			if (animation.has("looping")) {
 				to.setLooped(animation.get("looping").asBoolean());
@@ -67,19 +67,14 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 	}
 
 	private int toID(String animation) {
-		if (animation == "moving") {
-			return CreatureStateComponent.State.MOVING.getID();
-		} else if (animation == "jumping") {
-			return CreatureStateComponent.State.JUMPING.getID();
-		} else if (animation == "falling") {
-			return CreatureStateComponent.State.FALLING.getID();
-		} else if (animation == "dead") {
-			return CreatureStateComponent.State.DEAD.getID();
-		} else if (animation == "acting") {
-			return CreatureStateComponent.State.ACTING.getID();
+		switch (animation) {
+			case "moving": return CreatureStateComponent.State.MOVING.getID();
+			case "jumping": return CreatureStateComponent.State.JUMPING.getID();
+			case "falling": return CreatureStateComponent.State.FALLING.getID();
+			case "dead": return CreatureStateComponent.State.DEAD.getID();
+			case "acting": return CreatureStateComponent.State.ACTING.getID();
+			default: return CreatureStateComponent.State.IDLE.getID();
 		}
-
-		return CreatureStateComponent.State.IDLE.getID();
 	}
 
 	@Override

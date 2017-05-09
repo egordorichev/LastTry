@@ -24,4 +24,8 @@ public abstract class AI {
     public static AI fromID(short id) {
         return AIs.AI_CACHE[id];
     }
+
+    public boolean canSpawn() {
+    	return false;
+    }
 }

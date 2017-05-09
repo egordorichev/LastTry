@@ -37,8 +37,13 @@ public class SlimeAI extends AI {
 			}
 		}
 
-		if (creature.state.get() == CreatureStateComponent.State.JUMPING) {
+		if (creature.state.get() == CreatureStateComponent.State.JUMPING || creature.state.get() == CreatureStateComponent.State.FALLING) {
 			creature.physics.move((creature.ai.getData() == 0) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
 		}
     }
+
+	@Override
+	public boolean canSpawn() {
+		return Globals.environment.time.isDay();
+	}
 }

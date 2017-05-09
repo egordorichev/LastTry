@@ -11,6 +11,7 @@ public class Keys {
 	public static final int OPEN_INVENTORY = Input.Keys.E;
 	public static final int DEBUG_MODE = Input.Keys.TAB;
 	public static final int ERASE_TEXT = Input.Keys.BACKSPACE;
+	public static final int OPEN_CHAT = Input.Keys.SLASH;
 	public static final int HOTBAR_SLOT_0 = Input.Keys.NUM_1;
 	public static final int HOTBAR_SLOT_1 = Input.Keys.NUM_2;
 	public static final int HOTBAR_SLOT_2 = Input.Keys.NUM_3;
