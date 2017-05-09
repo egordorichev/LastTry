@@ -141,8 +141,7 @@ public class GridComponent {
                 int xSpawnPoint = optionalRotatedSpawnPoints.get().getFirst();
                 int ySpawnPoint = optionalRotatedSpawnPoints.get().getSecond();
 
-                //TODO Add check to see if anything exists on that point
-                if (SpawnUtilComponent.isPointOnMap(xSpawnPoint, ySpawnPoint)) {
+                if (SpawnUtilComponent.isPointSuitableForSpawning(xSpawnPoint, ySpawnPoint)) {
                     pointInMap = true;
                 } else {
                     angle = SpawnUtilComponent.increaseAngle(angle, randomDistance);
@@ -181,5 +180,7 @@ public class GridComponent {
 
         return isEnemyInCircleSpawnArea;
     }
+
+
 
 }
