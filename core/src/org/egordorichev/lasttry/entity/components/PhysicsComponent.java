@@ -85,12 +85,12 @@ public class PhysicsComponent extends CreatureComponent {
 				if (Globals.world.isColliding(newHitbox)) {
 					float step = Block.SIZE * STEP_HEIGHT;
 
-					if (Globals.world.isColliding(newHitbox.offset(0, -step))) {
+					if (Globals.world.isColliding(newHitbox.offset(0, step))) {
 						this.velocity.x = 0;
 						this.onBlockHit();
 					} else {
 						this.position.x += this.velocity.x;
-						this.position.y -= Block.SIZE / 2;
+						this.position.y += Block.SIZE / 2;
 					}
 				} else {
 					this.position.x += this.velocity.x;

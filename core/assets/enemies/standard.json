@@ -67,5 +67,11 @@
 				"frames" : []
 			}
 		}
+	},
+
+	"Blue Slime" : {
+		"id" : 1,
+		"texture" : "BlueSlime.png",
+		"copy" : "Green Slime"
 	}
 }

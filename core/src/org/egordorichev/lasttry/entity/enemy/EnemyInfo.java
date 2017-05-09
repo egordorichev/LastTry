@@ -16,22 +16,43 @@ public class EnemyInfo {
 
     public Enemy create() {
         try {
-            int hp = Globals.world.flags.isHardmode() ? this.root.get("hp").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("hp").get(1).asInt() : this.root.get("hp").get(0).asInt();
+        	int defense = 0;
+        	int hp = 1;
+        	int damage = 1;
 
-            int defense  = Globals.world.flags.isHardmode() ? this.root.get("defense").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("defense").get(1).asInt() : this.root.get("defense").get(0).asInt();
+        	JsonValue root = this.root;
 
-            int damage = Globals.world.flags.isHardmode() ? this.root.get("damage").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("damage").get(1).asInt() : this.root.get("damage").get(0).asInt();
+        	if (this.root.has("copy")) {
+		        System.out.println("COPY FROM " + this.root.getString("copy"));
+		        JsonValue r = Enemies.ENEMY_CACHE.get(this.root.getString("copy")).root;
 
-            Enemy enemy = new Enemy(AI.fromID(this.root.get("ai").asShort()), this.root.name());
+		        System.out.println(r.get("texture").asString());
 
-            enemy.stats.set(hp, 0, defense, damage);
-	        enemy.graphics.load(this.root.get("animation"), root.get("texture").asString());
+		        if (r != null) {
+        			root = r;
+		        }
+	        }
 
-	        for (JsonValue drop : root.get("drop")) {
-	        	enemy.drops.add(new Drop(Item.fromID(drop.get("id").asShort()), drop.get("count").get(0).asShort(), drop.get("count").get(1).asShort()));
+		    hp = Globals.world.flags.isHardmode() ? root.get("hp").get(2).asInt()
+			    : Globals.world.flags.isExpertMode() ? root.get("hp").get(1).asInt() : root.get("hp").get(0).asInt();
+
+		    defense = Globals.world.flags.isHardmode() ? root.get("defense").get(2).asInt()
+			    : Globals.world.flags.isExpertMode() ? root.get("defense").get(1).asInt() : root.get("defense").get(0).asInt();
+
+		    damage = Globals.world.flags.isHardmode() ? root.get("damage").get(2).asInt()
+			    : Globals.world.flags.isExpertMode() ? root.get("damage").get(1).asInt() : root.get("damage").get(0).asInt();
+
+	        Enemy enemy = new Enemy(AI.fromID(root.get("ai").asShort()), root.name());
+	        enemy.stats.set(hp, 0, defense, damage);
+
+	        if (root.has("animation")) {
+		        enemy.graphics.load(root.get("animation"), this.root.has("texture") ? this.root.get("texture").asString() : root.get("texture").asString());
+	        }
+
+	        if (root.has("drop")) {
+	        	for (JsonValue drop : root.get("drop")) {
+			        enemy.drops.add(new Drop(Item.fromID(drop.get("id").asShort()), drop.get("count").get(0).asShort(), drop.get("count").get(1).asShort()));
+		        }
 	        }
 
 	        // todo: kb resist, knock back, hitbox

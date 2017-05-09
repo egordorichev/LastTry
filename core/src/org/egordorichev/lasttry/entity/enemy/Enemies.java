@@ -23,7 +23,7 @@ public class Enemies {
             JsonValue root = jsonReader.parse(Gdx.files.internal("enemies/standard.json"));
 
             for (JsonValue enemy : root) {
-                ENEMY_CACHE.put(enemy.name(), new EnemyInfo(enemy));
+	            ENEMY_CACHE.put(enemy.name(), new EnemyInfo(enemy));
             }
         } catch (Exception exception) {
             exception.printStackTrace();

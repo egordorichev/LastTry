@@ -7,8 +7,6 @@ import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Assets;
 
-import java.util.Arrays;
-
 public class CreatureGraphicsComponent extends GraphicsComponent {
 	protected Animation[] animations;
 	protected Texture texture;
