@@ -31,7 +31,7 @@ public class Enemy extends CreatureWithAI {
     }
 
     public boolean canSpawn(){
-        return true;
+        return this.ai.ai.canSpawn();
     }
 
     @Override

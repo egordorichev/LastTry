@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.core.crash;
+package org.egordorichev.lasttry.core;
 
 import org.egordorichev.lasttry.LastTry;
 

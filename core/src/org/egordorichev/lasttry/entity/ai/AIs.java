@@ -26,6 +26,11 @@ public class AIs {
             public void update(CreatureWithAI creature, int dt, int currentAi) {
 
             }
+
+	        @Override
+	        public boolean canSpawn() {
+		        return true;
+	        }
         };
 
         slime = new SlimeAI();

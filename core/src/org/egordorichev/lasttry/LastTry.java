@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.egordorichev.lasttry.core.Version;
-import org.egordorichev.lasttry.core.crash.Crash;
+import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.graphics.*;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.state.SplashState;
@@ -20,7 +20,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0.0, 8, "alpha");
+	public static final Version version = new Version(0.0, 9, "alpha");
 	
 	/** Random instance */
 	public static final Random random = new Random();
@@ -33,6 +33,9 @@ public class LastTry extends Game {
 
 	/** Debug helper */
 	public static Debug debug;
+
+	/** Shows, if this is a release */
+	public static boolean release = true;
 
 	/** Creates first-priority instances */
 	@Override

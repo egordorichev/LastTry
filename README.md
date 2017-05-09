@@ -24,12 +24,9 @@ Compile project:
 
 You should end up with a jar, placed in `desktop/build/libs/`. Run it.
 
-### Contributing
+### TODO
 
-If you want to help the project grow, here is some stuff you can do:
-
- * **Writing java-docs** The project is not fully documented yet
- * **Adding new features to the code** How about implementing secret mob or other easter egg? 
+[TODO list can be found here](https://trello.com/b/MgdX6wA4/game-lasttry).
 
 ### Liecense
 

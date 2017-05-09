@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.graphics;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,21 @@ public class Animation {
         this.looped = looped;
         this.currentFrame = 0;
         this.stopped = false;
+    }
+
+    public void copy(Animation animation) {
+    	this.stopped = animation.stopped;
+    	this.looped = animation.looped;
+    	this.currentFrame = animation.currentFrame;
+    	this.currentTime = animation.currentTime;
+    	this.frames = new ArrayList<>();
+
+    	for (AnimationFrame frame : animation.frames) {
+		    TextureRegion rect = new TextureRegion(frame.region.getTexture(), frame.region.getRegionX(),
+				frame.region.getRegionY(), frame.region.getRegionWidth(), frame.region.getRegionHeight());
+
+    		this.addFrame(new AnimationFrame(rect, frame.time));
+	    }
     }
 
 	public void setLooped(boolean looped) {

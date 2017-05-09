@@ -7,7 +7,7 @@ public class AiComponent extends CreatureComponent {
 	private int currentAi = 0;
 	private int maxAi = 0;
 	private CreatureWithAI creature;
-	private AI ai;
+	public AI ai;
 	private short data;
 
 	public AiComponent(CreatureWithAI creature, AI ai) {
@@ -20,11 +20,11 @@ public class AiComponent extends CreatureComponent {
 	public void update(int dt) {
 		this.currentAi++;
 
-		this.ai.update(this.creature, dt, this.currentAi);
-
 		if (this.currentAi >= this.maxAi) {
 			this.currentAi = 0;
 		}
+
+		this.ai.update(this.creature, dt, this.currentAi);
 	}
 
 	public void setMax(int maxAi) {

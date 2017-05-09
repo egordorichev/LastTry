@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.graphics.Assets;
@@ -16,103 +15,105 @@ import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
 	private final Texture hpTexture;
 
-    public GamePlayState() {
-    	this.hpTexture = Assets.getTexture(Textures.hp);
+	public GamePlayState() {
+		this.hpTexture = Assets.getTexture(Textures.hp);
 
-	    int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
-        int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
-        
-        Globals.player.spawn(spawnX, spawnY);
-        Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
-        Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
-        Globals.entityManager = new EntityManager();
+		int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
+		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
 
-        Globals.entityManager.spawn(Enemies.create("Green Slime"), spawnX, spawnY);
+		Globals.player.spawn(spawnX, spawnY);
+		Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
+		Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
 
-        // Begin the ChunkGC process
-        Globals.chunkGcManager = new ChunkGcManager();
-    }
+		Globals.entityManager = new EntityManager();
+		Globals.entityManager.spawn(Enemies.create("Green Slime"), spawnX, spawnY);
+		Globals.chunkGcManager = new ChunkGcManager();
+		Globals.chat = new UiChat();
 
-    @Override
-    public void show() {
+		LastTry.ui.add(Globals.chat);
+	}
 
-    }
+	@Override
+	public void show() {
 
-    @Override
-    public void render(float delta) {
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-			 (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+	}
 
-        Globals.environment.update((int) delta);
-        Globals.entityManager.update((int) delta);
-        Globals.player.update((int) delta);
+	@Override
+	public void render(float delta) {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
+			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
-        if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
-            LastTry.debug.toggle();
-        }
+		Globals.environment.update((int) delta);
+		Globals.entityManager.update((int) delta);
+		Globals.player.update((int) delta);
 
-        Globals.environment.render();
+		if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
+			LastTry.debug.toggle();
+		}
 
-	    Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-            Globals.player.physics.getCenterX());
+		Globals.environment.render();
 
-	    Camera.game.position.y = Math.max(0, Globals.player.physics.getCenterY());
+		Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
+			Globals.player.physics.getCenterX());
 
-	    Camera.game.update();
-        Graphics.batch.setProjectionMatrix(Camera.game.combined);
+		Camera.game.position.y = Math.max(0, Globals.player.physics.getCenterY());
 
-        Globals.world.render();
-        Globals.entityManager.render();
-        Globals.player.render();
+		Camera.game.update();
+		Graphics.batch.setProjectionMatrix(Camera.game.combined);
 
-        Graphics.batch.setProjectionMatrix(Camera.ui.combined);
+		Globals.world.render();
+		Globals.entityManager.render();
+		Globals.player.render();
 
-        int mouseX = (int) InputManager.getMousePosition().x;
-        int mouseY = (int) InputManager.getMousePosition().y;
+		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
 
-        int hp = Globals.player.stats.getHp();
-        int x = Gdx.graphics.getWidth() - 260;
+		int mouseX = (int) InputManager.getMousePosition().x;
+		int mouseY = (int) InputManager.getMousePosition().y;
 
-	    Assets.f22.draw(Graphics.batch, String.format("Life: %d/%d", hp, Globals.player.stats.getMaxHP()), x,
-                Gdx.graphics.getHeight() - 4);
+		int hp = Globals.player.stats.getHp();
+		int x = Gdx.graphics.getWidth() - 260;
 
-        for (int i = 0; i < hp / 20; i++) {
-            Graphics.batch.draw(this.hpTexture, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
-        }
+		Assets.f22.draw(Graphics.batch, String.format("Life: %d/%d", hp, Globals.player.stats.getMaxHP()), x,
+				Gdx.graphics.getHeight() - 4);
 
-        LastTry.ui.render();
-        // LastTry.player.renderBuffs(); TODO
-        LastTry.debug.render();
-    }
+		for (int i = 0; i < hp / 20; i++) {
+			Graphics.batch.draw(this.hpTexture, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
+		}
 
-    @Override
-    public void resize(int width, int height) {
-	    Camera.resize(width, height);
-    }
+		LastTry.ui.render();
+		// LastTry.player.renderBuffs(); TODO
+		LastTry.debug.render();
+	}
 
-    @Override
-    public void pause() {
+	@Override
+	public void resize(int width, int height) {
+		Camera.resize(width, height);
+	}
 
-    }
+	@Override
+	public void pause() {
 
-    @Override
-    public void resume() {
+	}
 
-    }
+	@Override
+	public void resume() {
 
-    @Override
-    public void hide() {
+	}
 
-    }
+	@Override
+	public void hide() {
 
-    @Override
-    public void dispose() {
+	}
 
-    }
+	@Override
+	public void dispose() {
+
+	}
 }
