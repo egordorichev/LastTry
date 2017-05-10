@@ -33,7 +33,7 @@ public class LoadState implements State {
                         if (WorldIO.saveExists("test")) {
                         	WorldIO.load("test");
                         } else {
-                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0);
+                        	Globals.world = WorldIO.generate("test", World.Size.LARGE, 0);
                         }
 
                         loadString = "Loading player...";
