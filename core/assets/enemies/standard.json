@@ -1,6 +1,5 @@
 {
 	"Green Slime" : {
-		"id" : 0,
 		"ai" : 1,
 		"texture" : "GreenSlime.png",
 		"damage" : [ 6, 12, 118 ],
@@ -70,8 +69,11 @@
 	},
 
 	"Blue Slime" : {
-		"id" : 1,
+		"copy" : "Green Slime",
 		"texture" : "BlueSlime.png",
-		"copy" : "Green Slime"
+		"damage" : [ 7, 14, 74 ],
+		"hp" : [ 25, 50, 330 ],
+		"defense" : [ 2, 2, 2 ],
+		"kbResist" : [ 0, 10 ]
 	}
 }

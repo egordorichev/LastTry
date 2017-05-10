@@ -192,4 +192,8 @@ public class PhysicsComponent extends CreatureComponent {
 	public Vector2 getVelocity() {
 		return this.velocity;
 	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
 }

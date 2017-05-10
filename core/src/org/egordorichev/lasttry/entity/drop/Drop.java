@@ -75,4 +75,9 @@ public class Drop {
             return LastTry.random.nextInt(rate) == 0;
         }
     }
+
+	@Override
+	public Drop clone() {
+		return new Drop(this.item, this.chance, this.minAmount, this.maxAmount);
+	}
 }
