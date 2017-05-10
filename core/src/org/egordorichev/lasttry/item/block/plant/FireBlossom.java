@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
@@ -16,7 +16,7 @@ public class FireBlossom extends Plant {
             return false;
         }
 
-        short id = LastTry.world.getBlockID(x, y + 1);
+        short id = Globals.world.blocks.getID(x, y + 1);
 
         if (id == ItemID.ashBlock) {
             return true;
@@ -27,18 +27,18 @@ public class FireBlossom extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = LastTry.world.getBlockHp(x, y);
+        int hp = Globals.world.blocks.getHP(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD) {
-            if (LastTry.environment.time.getHour() >= 4 && LastTry.environment.time.getHour() <= 7
-                    && !LastTry.environment.isRaining()) { // TODO: from 3:45 to 7:30
+            if (Globals.environment.time.getHour() >= 4 && Globals.environment.time.getHour() <= 7
+                    && !Globals.environment.isRaining()) { // TODO: from 3:45 to 7:30
 
-                LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
+                Globals.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);
             } else {
-                LastTry.world.setBlockHP((byte) (Plant.GROW_THRESHOLD), x, y);
+                Globals.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD), x, y);
             }
         } else {
-            LastTry.world.setBlockHP((byte) (hp + 1), x, y);
+            Globals.world.blocks.setHP((byte) (hp + 1), x, y);
         }
     }
 }

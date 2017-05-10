@@ -1,161 +1,69 @@
 package org.egordorichev.lasttry.entity.enemy;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.*;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.CreatureWithAI;
+import org.egordorichev.lasttry.entity.ai.AI;
+import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
+import org.egordorichev.lasttry.entity.drop.Drop;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.player.Player;
-import org.egordorichev.lasttry.graphics.Animation;
-import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.world.biome.Biome;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public abstract class Enemy extends Entity {
-    /**
-     * Defined enemies
-     */
-    public static HashMap<Short, Class<? extends Enemy>> ENEMY_CACHE = new HashMap<>();
-
-    /**
-     * Max Ai for this enemy
-     */
-    protected static int maxAi;
-
-    static {
-        define(EnemyID.greenSlime, GreenSlime.class);
-        define(EnemyID.blueSlime, BlueSlime.class);
-        define(EnemyID.eyeOfCthulhu, EyeOfCthulhu.class);
-        define(EnemyID.zombie, Zombie.class);
-
-    }
-
-    /**
-     * Current Ai counter
-     */
-    protected int currentAi;
-    /**
-     * Enemy id
-     */
-    protected int id;
-    /**
-     * Enemy drops
-     */
+public class Enemy extends CreatureWithAI {
+    protected String name;
+	protected int spawnWeight = 1;
     protected List<Drop> drops = new ArrayList<>();
-    /**
-     * Animations
-     */
-    protected Animation[] animations;
+	protected Creature target;
 
-    /**
-     * Each biome has a maxinum number of enemies limit.  When deciding what enemy to spawn next in a biome, the
-     * spawn weight of multiple enemies are added till the maximum number of enemies in the biome is complete.
-     */
-    private int spawnWeight;
+    public Enemy(AI ai, String name) {
+        super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
 
-
-    //TODO Should these parameters be replaced with an enum that encapsulates the stats?
-    public Enemy(short id, int maxHp, int defense, int damage, int spawnWeight) {
-        super(maxHp, damage, defense);
-        this.spawnWeight = spawnWeight;
-        this.animations = new Animation[State.values().length];
-        this.id = id;
-    }
-
-    public Enemy(short id) {
-        //TODO Should parameters be converted into an enum?
-        //TODO Handle the 'spawnWeight' for a 'Boss' level enemy
-        this(id, 10, 0, 5, 1);
-        this.animations = new Animation[State.values().length];
-        this.id = id;
-    }
-
-    public static void define(short id, Class<? extends Enemy> enemy) {
-        // TODO: handle duplicates
-        LastTry.debug("Defined [" + id + "] as " + enemy.getSimpleName());
-        ENEMY_CACHE.put(id, enemy);
-    }
-
-    public static Enemy create(short id) {
-        try {
-            Class<? extends Enemy> aClass = ENEMY_CACHE.get(id);
-
-            if (aClass != null) {
-                return aClass.newInstance();
-            } else {
-                LastTry.log.warn("Enemy with id " + id + " is not found");
-                return null;
-            }
-        } catch (Exception exception) {
-            LastTry.handleException(exception);
-            return null;
-        }
-    }
-
-    @Override
-    public void render() {
-        this.animations[this.state.getId()].render(this.renderBounds.x, LastTry.world.getHeight() * Block.TEX_SIZE
-                        - this.renderBounds.y - this.renderBounds.height, this.renderBounds.width, this.renderBounds.height,
-                (this.direction == Direction.RIGHT), false);
+        this.name = name;
+        this.target = Globals.player;
     }
 
     @Override
     public void update(int dt) {
         super.update(dt);
-
-        this.animations[this.state.getId()].update();
-
-        if (LastTry.player.getHitbox().intersects(this.getHitbox())) {
-            this.onPlayerCollision(LastTry.player);
-        }
-
-        // this.animations[this.state.getId()].update(dt);
-        this.updateAI();
     }
 
-    public void updateAI() {
-        this.currentAi++;
-
-        if (this.currentAi >= this.maxAi) {
-            this.currentAi = 0;
-        }
-    }
-
-    @Override
-    public void onSpawn() {
-
-    }
-
-    /**
-     * Returns a boolean indicating whether the enemy can spawn based on the player's game conditions.
-     * @return boolean
-     */
     public boolean canSpawn(){
-        return false;
+        return this.ai.ai.canSpawn();
     }
-
 
     @Override
     public void onDeath() {
-        // On death, drop items in world.
         for (Drop drop : this.drops) {
-            if (drop.getChance().roll()) {
+            if (LastTry.random.nextInt(drop.getChance()) == 0) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-                LastTry.entityManager.spawn(droppedItem, (int) this.getCenterX(),
-                    (int) this.getCenterY());
+                Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
+		            (int) this.physics.getCenterY());
             }
         }
     }
 
-    /**
-     * Called when the entity collides with player.
-     */
-    protected void onPlayerCollision(Player player) {
-        // TODO
+	public void setTarget(Creature target) {
+		this.target = target;
+	}
+
+	protected void onPlayerCollision(Player player) {
+        // TODO: hit the player
     }
 
-    public int getId() {
-        return this.id;
+	public Creature getTarget() {
+		return this.target;
+	}
+
+	public String getName() {
+        return this.name;
+    }
+
+    public int getSpawnWeight() {
+    	return this.spawnWeight;
     }
 }

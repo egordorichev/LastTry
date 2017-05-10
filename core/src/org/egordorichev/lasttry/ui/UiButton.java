@@ -2,8 +2,8 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiButton extends UiComponent {
     protected String label;
@@ -34,7 +34,7 @@ public class UiButton extends UiComponent {
 
         // Gdx.graphics.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight()); TODO: draw texture
 
-        Assets.f22.draw(LastTry.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
+        Assets.f22.draw(Graphics.batch, this.label, this.getX() + (this.getWidth() - this.textWidth) / 2, this.getY()
                 + (this.getHeight() - Assets.f22.getLineHeight()) / 2);
     }
 

@@ -5,6 +5,10 @@
 *.ear
 hs_err_pid*
 
+core/assets/worlds/*
+core/assets/players/*
+core/assets/mods/*
+
 ## Robovm
 /ios/robovm-build/
 

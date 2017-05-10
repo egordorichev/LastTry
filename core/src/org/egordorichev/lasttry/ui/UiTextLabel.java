@@ -1,11 +1,10 @@
 package org.egordorichev.lasttry.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiTextLabel extends UiComponent {
 
@@ -71,7 +70,7 @@ public class UiTextLabel extends UiComponent {
          */
         if(fontStyle==null) {
             //Draw the font using the global 'font' variable.
-            this.font.draw(LastTry.batch, this.label, this.getX(),
+            this.font.draw(Graphics.batch, this.label, this.getX(),
                     this.getY() + (this.getHeight() - this.font.getLineHeight()) / 2);
         }
         else {
@@ -81,7 +80,7 @@ public class UiTextLabel extends UiComponent {
             }
 
             //Draw the new font style.
-            privateFontInstance.draw(LastTry.batch, this.label, this.getX(),
+            privateFontInstance.draw(Graphics.batch, this.label, this.getX(),
                     this.getY() + (this.getHeight() - this.font.getLineHeight()) / 2);
 
         }

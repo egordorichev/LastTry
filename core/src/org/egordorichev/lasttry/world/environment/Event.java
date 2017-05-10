@@ -1,5 +1,8 @@
 package org.egordorichev.lasttry.world.environment;
 
+import org.egordorichev.lasttry.world.environment.events.BloomMoon;
+import org.egordorichev.lasttry.world.environment.events.Rain;
+
 public class Event {
     public static Event bloodMoon = new BloomMoon();
     public static Event rain = new Rain();

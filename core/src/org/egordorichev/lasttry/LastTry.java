@@ -3,24 +3,15 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import org.egordorichev.lasttry.core.crash.Crash;
-import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.player.*;
+import org.egordorichev.lasttry.core.Version;
+import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.graphics.*;
 import org.egordorichev.lasttry.input.InputManager;
-import org.egordorichev.lasttry.mod.ModLoader;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.util.Log;
-import org.egordorichev.lasttry.world.*;
-import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.language.Language;
 
 import java.util.Random;
@@ -29,64 +20,26 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0, 5);
+	public static final Version version = new Version(0.0, 9, "alpha");
 	
 	/** Random instance */
 	public static final Random random = new Random();
-	
-	/** Camera */
-	public static OrthographicCamera camera;
-	
-	/** UI Camera */
-	public static OrthographicCamera uiCamera;
-	
-	/** Public sprite batch */
-	public static SpriteBatch batch;
-	
-	/** Game viewport */
-	public static Viewport viewport;
-	
+
 	/** Last Try instance */
 	public static LastTry instance;
-
-	/** Static log instance */
-	public static Log log;
 
 	/** Ui manager */
 	public static UiManager ui;
 
-	/** World instance */
-	public static World world;
-
-	/** World info */
-	public static WorldInfo worldInfo;
-
-	/** Player instance */
-	public static Player player;
-
-	/** Player info */
-	public static PlayerInfo playerInfo;
-
-	/** Environment instance*/
-	public static Environment environment;
-
-	/** PhysicBody manager instance*/
-	public static EntityManager entityManager;
-
-	/** Mod loader */
-	public static ModLoader modLoader;
-
 	/** Debug helper */
 	public static Debug debug;
 
-	/** Used for debug */
-	public static ShapeRenderer shapeRenderer;
+	/** Shows, if this is a release */
+	public static boolean release = true;
 
 	/** Creates first-priority instances */
 	@Override
 	public void create() {
-		log = new Log();
-
 		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
 			public void uncaughtException(Thread thread, Throwable throwable) {
@@ -95,27 +48,16 @@ public class LastTry extends Game {
 		});
 
 		instance = this;
-		debug = new Debug();
-		shapeRenderer = new ShapeRenderer();
+
+		Camera.create(800, 600);
+		Language.load(new Locale("en", "US"));
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
-                
-                Locale en_US = new Locale("en", "US");
-                Language.load(en_US);
-                
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
-		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
+		Graphics.batch = new SpriteBatch();
 
-		camera = new OrthographicCamera(width, height);
-		camera.setToOrtho(false, width, height);
-		uiCamera = new OrthographicCamera(width, height);
-		uiCamera.setToOrtho(false, width, height);
-		viewport = new FitViewport(width, height);
-
-		batch = new SpriteBatch();
-
+		debug = new Debug();
 		ui = new UiManager();
 
 		this.setScreen(new SplashState());
@@ -123,16 +65,13 @@ public class LastTry extends Game {
 
 	/**
 	 * Handles window resize
-	 *
 	 * @param width  new window width
 	 * @param height new window height
 	 */
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-
-		viewport.update(width, height);
-		// camera.update();
+		Camera.resize(width, height);
 	}
 
 	/** Renders and updates the game */
@@ -141,93 +80,53 @@ public class LastTry extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 
-		batch.enableBlending();
-		batch.begin();
+		Graphics.batch.enableBlending();
+		Graphics.batch.begin();
 		super.render();
-		batch.end();
+		Graphics.batch.end();
 	}
 
 	/** Handles game exit */
 	@Override
 	public void dispose() {
-		if(player != null){
-			PlayerProvider.save();
-		}
-
-		if (world != null) {
-			WorldProvider.save(world);
-		}
-
+		Globals.dispose();
 		Assets.dispose();
 	}
 
 	/**
 	 * Returns random title for game the window
-	 *
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-            String[] split = Language.text.get("windowTitles").split("//");
-            return split[random.nextInt(split.length)];
-	}
-
-	/**
-	 * Logs given message
-	 * @param message message to log
-	 */
-	public static void log(String message) {
-		LastTry.log.info(message);
-	}
-
-	/**
-	 * Logs a info-level message
-	 * @param message message to log
-	 */
-	public static void debug(String message) {
-		log.debug(message);
-	}
-
-	public static void warning(String message) {
-		log.warn(message);
-	}
-
-	public static void error(String message) {
-		log.error(message);
+        String[] split = Language.text.get("windowTitles").split("//");
+        return split[random.nextInt(split.length)] + " " + version.toString();
 	}
 
 	/**
 	 * Returns mouse X coordinate, under the world
-	 *
 	 * @return mouse X coordinate, under the world
 	 */
 	public static int getMouseXInWorld() {
-		return (int) (player.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
+		return (int) (Globals.player.physics.getCenterX() - Gdx.graphics.getWidth() / 2 + InputManager.getMousePosition().x);
 	}
 
 	/**
 	 * Returns mouse Y coordinate, under the world
-	 *
 	 * @return mouse Y coordinate, under the world
 	 */
 	public static int getMouseYInWorld() {
-		return (int) (player.getCenterY() - Gdx.graphics.getHeight() / 2 + InputManager.getMousePosition().y);
+		return (int) (Globals.player.physics.getCenterY() + Gdx.graphics.getHeight() / 2 - InputManager.getMousePosition().y);
 	}
 
-	//TODO Exception was not displayed, when I attempted to load a texture that was not in the assets.
 	/**
 	 * Handles exception, if it is critical, exits the game
-	 *
 	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
-		// TODO: replace with Crash.report()
-		
-		exception.printStackTrace();
-		Throwable cause = exception;
+		Crash.report(Thread.currentThread(), exception);
+	}
 
-		while ((cause = cause.getCause()) != null) {
-			System.err.println("→ caused by:");
-			exception.getCause().printStackTrace ();
-		}
+	public static void abort() {
+		System.exit(1);
 	}
 }

@@ -1,42 +1,30 @@
 package org.egordorichev.lasttry.world.environment;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.biome.components.BiomeComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Environment {
-    /**
-     * Block count, displayed on the screen
-     */
     public int[] blockCount;
-    /**
-     * Time in the world
-     */
     public WorldTime time;
-    /**
-     * Events, that currently happen in the world
-     */
     public ArrayList<Event> events = new ArrayList<Event>();
-    /**
-     * Current biome, player is
-     */
-    private Biome currentBiome = null;
-    /**
-     * Previous biome
-     */
-    private Biome lastBiome = null;
+	public BiomeComponent currentBiome;
+	public BiomeComponent lastBiome;
 
     public Environment() {
+	    this.currentBiome = new BiomeComponent(Biome.forest);
+	    this.lastBiome = new BiomeComponent(Biome.forest);
         this.blockCount = new int[ItemID.count];
         this.time = new WorldTime((byte) 8, (byte) 15);
 
@@ -48,12 +36,9 @@ public class Environment {
         }, 1);
     }
 
-    /**
-     * Renders current biome and the sky
-     */
     public void render() {
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
+            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
         if (this.currentBiome != null) {
@@ -65,13 +50,8 @@ public class Environment {
         }
     }
 
-    /**
-     * Updates biomes and spawns mobs
-     *
-     * @param dt The milliseconds passed since the last update.
-     */
     public void update(int dt) {
-	    if (LastTry.world == null) {
+	    if (Globals.world == null) {
 		    return;
 	    }
 
@@ -97,14 +77,10 @@ public class Environment {
                 event.update(dt);
             }
         }
+
+        Globals.spawnSystem.update();
     }
 
-    /**
-     * Returns true, if event with given name is happening
-     *
-     * @param event event to lookup
-     * @return if event with given name is happening
-     */
     public boolean isEventHappening(Event event) {
         for (Event e : this.events) {
             if (e == event) {
@@ -115,26 +91,14 @@ public class Environment {
         return false;
     }
 
-    /**
-     * @return if blood moon happens
-     */
     public boolean isBloodMoon() {
         return this.isEventHappening(Event.bloodMoon);
     }
 
-    /**
-     * @return if it rains
-     */
     public boolean isRaining() {
         return this.isEventHappening(Event.rain);
     }
 
-    /**
-     * Try to start an event
-     *
-     * @param event event to start
-     * @return if it is started
-     */
     public boolean startEvent(Event event) {
         if (event.start()) {
             this.events.add(event);
@@ -145,53 +109,50 @@ public class Environment {
         return false;
     }
 
-    /**
-     * Updates current biome
-     */
     private void updateBiome() {
-        if (LastTry.world == null) {
+        if (Globals.world == null) {
             return;
         }
 
         int windowWidth = Gdx.graphics.getWidth();
         int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.TEX_SIZE;
-        int twh = windowHeight / Block.TEX_SIZE;
-        int tcx = (int) (LastTry.camera.position.x - windowWidth / 2) / Block.TEX_SIZE;
-        int tcy = (int) (LastTry.world.getHeight() - (LastTry.camera.position.y + windowHeight / 2)
-                / Block.TEX_SIZE);
+        int tww = windowWidth / Block.SIZE;
+        int twh = windowHeight / Block.SIZE;
+        int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
+        int tcy = (int) (Globals.world.getHeight() - (Camera.game.position.y + windowHeight / 2)
+                / Block.SIZE);
 
         int minY = Math.max(0, tcy - 20);
-        int maxY = Math.min(LastTry.world.getHeight() - 1, tcy + twh + 23);
+        int maxY = Math.min(Globals.world.getHeight() - 1, tcy + twh + 23);
         int minX = Math.max(0, tcx - 20);
-        int maxX = Math.min(LastTry.world.getWidth() - 1, tcx + tww + 20);
+        int maxX = Math.min(Globals.world.getWidth() - 1, tcx + tww + 20);
 
         Arrays.fill(this.blockCount, 0);
 
         for (int y = minY; y < maxY; y++) {
             for (int x = minX; x < maxX; x++) {
-                this.blockCount[LastTry.world.getBlockID(x, y)] += 1;
+                this.blockCount[Globals.world.blocks.getID(x, y)] += 1;
             }
         }
 
         this.lastBiome = this.currentBiome;
 
         if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
-            this.currentBiome = Biome.corruption;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
-            this.currentBiome = Biome.crimson;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
-            this.currentBiome = Biome.corruptDesert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
-            this.currentBiome = Biome.crimsonDesert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else if (this.blockCount[ItemID.sandBlock] >= 1000) {
-            this.currentBiome = Biome.desert;
+            this.currentBiome = new BiomeComponent(Biome.corruption);
         } else {
-            this.currentBiome = Biome.forest;
+            this.currentBiome = new BiomeComponent(Biome.forest);
         }
     }
 
-    public Biome getCurrentBiome() {
-        return this.currentBiome;
+    public ArrayList<Event> getCurrentEvents() {
+    	return this.events;
     }
 }

@@ -1,7 +1,10 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
@@ -14,10 +17,10 @@ public class DigTool extends Tool {
 
 	@Override
 	protected boolean onUse() {
-		int x = LastTry.getMouseXInWorld() / Block.TEX_SIZE;
-		int y = LastTry.getMouseYInWorld() / Block.TEX_SIZE;
+		int x = LastTry.getMouseXInWorld() / Block.SIZE;
+		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Block block = LastTry.world.getBlock(x, y);
+		Block block = Globals.world.blocks.get(x, y);
 
 		if (block == null) {
 			return false;
@@ -26,10 +29,10 @@ public class DigTool extends Tool {
 		ToolPower power = block.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = LastTry.world.getBlockHp(x, y);
+			byte hp = Globals.world.blocks.getHP(x, y);
 
 			if (hp > 0) {
-				LastTry.world.setBlockHP((byte) (hp - 1), x, y);
+				Globals.world.blocks.setHP((byte) (hp - 1), x, y);
 			}
 		}
 
@@ -46,13 +49,13 @@ public class DigTool extends Tool {
 		float height = this.texture.getHeight();
 		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
 
-		if (LastTry.player.isFlipped()) {
-			LastTry.batch.draw(this.texture, LastTry.player.getCenterX() - width, LastTry.world.getHeight() * Block.TEX_SIZE -
-				LastTry.player.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
+		if (Globals.player.physics.isFlipped()) {
+			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX() - width,
+				Globals.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
 				(int) height, true, false);
 		} else {
-			LastTry.batch.draw(this.texture, LastTry.player.getCenterX(), LastTry.world.getHeight() * Block.TEX_SIZE -
-				LastTry.player.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
+			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
+				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
 				(int) height, false, false);
 		}
 	}

@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
@@ -19,10 +19,10 @@ public class Grass extends BlockGround {
     }
 
     private void spread(int x, int y) {
-        Block block = (Block) Item.fromID(LastTry.world.getBlockID(x, y));
+        Block block = (Block) Item.fromID(Globals.world.blocks.getID(x, y));
 
-        if (block != null && this.canBeGrownAt(block.getId())) {
-            LastTry.world.setBlock(this.id, x, y);
+        if (block != null && this.canBeGrownAt(block.getID())) {
+            Globals.world.blocks.set(this.id, x, y);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.graphics;
 
-import org.egordorichev.lasttry.LastTry;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,54 @@ public class Animation {
         this.stopped = false;
     }
 
-    public void addFrame(AnimationFrame frame) {
+    public void copyFrom(Animation animation) {
+		this.looped = animation.looped;
+	    this.stopped = animation.stopped;
+	    this.currentFrame = animation.currentFrame;
+	    this.currentTime = animation.currentTime;
+	    this.frames.clear();
+
+	    for (AnimationFrame frame : animation.frames) {
+		    TextureRegion rect = new TextureRegion(frame.region.getTexture(), frame.region.getRegionX(),
+				    frame.region.getRegionY(), frame.region.getRegionWidth(), frame.region.getRegionHeight());
+
+		    this.addFrame(new AnimationFrame(rect, frame.time));
+	    }
+    }
+
+    public void setTexture(Texture texture) {
+	    for (AnimationFrame frame : this.frames) {
+			frame.region.setTexture(texture);
+	    }
+    }
+
+    public Animation copy() {
+	    Animation animation = new Animation(this.looped);
+
+	    animation.stopped = this.stopped;
+	    animation.currentFrame = this.currentFrame;
+	    animation.currentTime = this.currentTime;
+	    animation.frames.clear();
+
+    	for (AnimationFrame frame : this.frames) {
+		    TextureRegion rect = new TextureRegion(frame.region.getTexture(), frame.region.getRegionX(),
+				frame.region.getRegionY(), frame.region.getRegionWidth(), frame.region.getRegionHeight());
+
+    		animation.addFrame(new AnimationFrame(rect, frame.time));
+	    }
+
+	    return animation;
+    }
+
+	public void setLooped(boolean looped) {
+		this.looped = looped;
+	}
+
+	public void setStopped(boolean stopped) {
+    	this.stopped = stopped;
+	}
+
+	public void addFrame(AnimationFrame frame) {
         this.frames.add(frame);
     }
 
@@ -50,7 +98,7 @@ public class Animation {
         }
 
         AnimationFrame frame = this.frames.get(this.currentFrame);
-        LastTry.batch.draw(frame.region, x, y);
+        Graphics.batch.draw(frame.region, x, y);
     }
 
     public void render(float x, float y, float width, float height) {
@@ -59,7 +107,7 @@ public class Animation {
         }
 
         AnimationFrame frame = this.frames.get(this.currentFrame);
-        LastTry.batch.draw(frame.region, x, y, width, height);
+        Graphics.batch.draw(frame.region, x, y, width, height);
     }
 
     public void render(float x, float y, float width, float height, boolean horizontalFlip,
@@ -73,6 +121,6 @@ public class Animation {
         frame.region.flip((frame.region.isFlipX()) != horizontalFlip,
                 (frame.region.isFlipY()) != verticalFlip);
 
-        LastTry.batch.draw(frame.region, x, y, width, height);
+        Graphics.batch.draw(frame.region, x, y, width, height);
     }
 }

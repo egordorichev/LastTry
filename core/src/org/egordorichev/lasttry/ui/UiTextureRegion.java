@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiTextureRegion extends UiComponent {
     private TextureRegion region;
@@ -20,6 +20,6 @@ public class UiTextureRegion extends UiComponent {
     public void render() {
         super.render();
 
-        LastTry.batch.draw(this.region, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        Graphics.batch.draw(this.region, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 }

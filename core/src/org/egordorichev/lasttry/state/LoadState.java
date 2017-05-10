@@ -1,15 +1,16 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.entity.player.PlayerProvider;
+import org.egordorichev.lasttry.entity.player.PlayerIO;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.world.WorldProvider;
+import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.environment.Environment;
+import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class LoadState implements State {
     private boolean loaded = false;
@@ -23,12 +24,25 @@ public class LoadState implements State {
                     @Override
                     public void run() {
 	                    Bootstrap.load();
-	                    loadString = "Loading environment...";
-                        LastTry.environment = new Environment();
+                        loadString = "Loading spawn system...";
+                        Globals.spawnSystem = new SpawnSystem();
+                        loadString = "Loading environment...";
+                        Globals.environment = new Environment();
                         loadString = "Loading world...";
-                        LastTry.world = WorldProvider.load();
+
+                        if (WorldIO.saveExists("test")) {
+                        	WorldIO.load("test");
+                        } else {
+                        	Globals.world = WorldIO.generate("test", World.Size.LARGE, 0);
+                        }
+
                         loadString = "Loading player...";
-                        LastTry.player = PlayerProvider.load();
+
+                        if (PlayerIO.saveExists("test")) {
+	                        PlayerIO.load("test");
+                        } else {
+	                        Globals.player = PlayerIO.generate("test");
+                        }
 
                         loaded = true;
                     }
@@ -50,10 +64,10 @@ public class LoadState implements State {
         }
 
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            LastTry.batch.draw(Graphics.skyTexture, i * 48, 0);
+            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
         }
 
-        Assets.f22.draw(LastTry.batch, this.loadString, 0, 0);
+        Assets.f22.draw(Graphics.batch, this.loadString, 0, 0);
         LastTry.ui.render();
     }
 

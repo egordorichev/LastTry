@@ -1,14 +1,12 @@
 package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
-
+import org.egordorichev.lasttry.util.Log;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -20,9 +18,7 @@ public class ModLoader {
      */
     private HashMap<String, Mod> modHashMap = new HashMap();
 
-    /**
-     * Lookups and loads all mods from "assets/mods" directory
-	 */
+    /** Lookups and loads all mods from "mods" directory */
     public void load() {
 		File modDirectory = new File("mods/");
 
@@ -33,7 +29,7 @@ public class ModLoader {
 				exception.printStackTrace();
 			}
 		} else {
-			LastTry.warning("There's no mods directory so one will be created!");
+			Log.info("There's no mods directory so one will be created!");
 		}
 
 		File[] mods = modDirectory.listFiles();
@@ -49,7 +45,6 @@ public class ModLoader {
 
     /**
      * Loads single mod
-     *
      * @param file mod file
      */
     private void loadMod(File file) {
@@ -82,16 +77,17 @@ public class ModLoader {
             }
         } catch (Exception exception) {
             LastTry.handleException(exception);
-            LastTry.log.warn("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
+	        Log.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
         }
     }
 
-    /**
-     * Unloads all mods
-     */
+    /** Unloads all mods */
     public void unload() {
-        //Retrieve keys, for each key, retrieve the mod and unload the mod.
-        modHashMap.entrySet().stream().forEach(modHashMapKey -> {modHashMap.get(modHashMapKey).onUnload();});
+        this.modHashMap.entrySet().stream().forEach(modHashMapKey -> {
+        	modHashMap.get(modHashMapKey).onUnload();
+        });
+
+        this.modHashMap.clear();
     }
 
     /**

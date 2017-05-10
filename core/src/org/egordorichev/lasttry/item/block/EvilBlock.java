@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
@@ -63,10 +64,10 @@ public class EvilBlock extends BlockGround {
             return;
         }
 
-        Block block = (Block) Item.fromID(LastTry.world.getBlockID(nx, ny));
+        Block block = (Block) Item.fromID(Globals.world.blocks.getID(nx, ny));
 
-        if (block != null && EvilBlock.canBeInfected(block.getId())) {
-            LastTry.world.setBlock(EvilBlock.getInfectIDFor(this.id, block.getId()), nx, ny);
+        if (block != null && EvilBlock.canBeInfected(block.getID())) {
+            Globals.world.blocks.set(EvilBlock.getInfectIDFor(this.id, block.getID()), nx, ny);
         }
     }
 }
