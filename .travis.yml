@@ -5,7 +5,7 @@ sudo: true
 compiler:
   - javac
 
-script: ./gradlew build
+script: ./gradlew clear desktop:dist
 
 notifications:
     email: false
