@@ -3,7 +3,7 @@ language: java
 compiler:
   - javac
 
-script: ./gradlew clear desktop:dist
+script: ./gradlew check
 
 notifications:
     email: false
