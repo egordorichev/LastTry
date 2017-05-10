@@ -16,9 +16,8 @@ public class EntityManager {
     private List<Enemy> enemyEntities = new ArrayList<>();
     private List<Entity> clearList = new ArrayList<>();
 
-    //Seconds
+    // Seconds
     public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
-
     // private List<Gore> gores = new ArrayList<>();
 
     public EntityManager() {

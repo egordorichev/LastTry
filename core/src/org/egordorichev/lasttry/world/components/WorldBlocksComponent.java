@@ -54,11 +54,8 @@ public class WorldBlocksComponent extends WorldComponent {
 			return;
 		}
 
-		if (hp == 0) {
-			chunk.setBlock(ItemID.none, x, y);
-		} else {
-			chunk.setBlockHP(hp, x, y);
-		}
+
+		chunk.setBlockHP(hp, x, y);
 	}
 
 	private Chunk getChunk(int x, int y) {
