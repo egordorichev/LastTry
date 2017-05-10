@@ -10,6 +10,7 @@ public class AIs {
 
     public static AI none;
     public static AI slime;
+    public static AI zombie;
 
     static {
         if (!Bootstrap.isLoaded()) {
@@ -34,6 +35,7 @@ public class AIs {
         };
 
         slime = new SlimeAI();
+	    zombie = new ZombieAI();
     }
 
     public static void load() {

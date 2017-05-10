@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -33,7 +32,10 @@ public class GamePlayState implements State {
 		Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Enemies.create("Green Slime"), spawnX, spawnY);
+
+		//todo to be removed
+		Globals.entityManager.spawnEnemy("Blue Slime", spawnX-10, spawnY);
+		Globals.entityManager.spawnEnemy("Zombie", spawnX+10, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 

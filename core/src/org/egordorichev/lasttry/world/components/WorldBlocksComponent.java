@@ -12,6 +12,7 @@ public class WorldBlocksComponent extends WorldComponent {
 		super(world);
 	}
 
+	//grid points
 	public Block get(int x, int y) {
 		return (Block) Item.fromID(this.getID(x, y));
 	}

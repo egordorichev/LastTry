@@ -1,12 +1,11 @@
 {
 	"Green Slime" : {
-		"id" : 0,
 		"ai" : 1,
 		"texture" : "GreenSlime.png",
 		"damage" : [ 6, 12, 118 ],
 		"hp" : [ 14, 28, 338 ],
 		"defense" : [ 0, 0, 0 ],
-		"kbResist" : [ 20, 3 ],
+		"kbResist" : [ 20, 3, 20 ],
 		"hitbox" : [ 0, 0, 32, 24 ],
 
 		"drop" : [
@@ -53,6 +52,74 @@
 
 			"falling" : {
 				"copy" : "jumping"
+			},
+
+			"dead" : {
+				"looping" : false,
+				"stopped" : true,
+				"frames" : []
+			},
+
+			"acting" : {
+				"looping" : false,
+				"stopped" : true,
+				"frames" : []
+			}
+		}
+	},
+
+	"Blue Slime" : {
+		"copy" : "Green Slime",
+		"texture" : "BlueSlime.png",
+		"damage" : [ 7, 14, 74 ],
+		"hp" : [ 25, 50, 330 ],
+		"defense" : [ 2, 2, 2 ],
+		"kbResist" : [ 0, 10, 10 ]
+	},
+
+	"Zombie" : {
+		"ai" : 2,
+		"texture" : "Zombie.png",
+		"damage" : [ 14, 28, 50 ],
+		"hp" : [ 45, 90, 198 ],
+		"defense" : [ 6, 6, 6 ],
+		"kbResist" : [ 50, 50, 50 ],
+		"hitbox" : [ 0, 0, 34, 48 ],
+
+		"drop" : [
+
+		],
+
+		"animation" : {
+			"idle" : {
+				"looping" : true,
+
+				"frames" : [
+					{
+						"time" : 20,
+						"rect" : [ 0, 0, 34, 46 ]
+					},
+					{
+						"time" : 20,
+						"rect" : [ 0, 48, 34, 46 ]
+					},
+					{
+						"time" : 20,
+						"rect" : [ 0, 96, 34, 46 ]
+					}
+				]
+			},
+
+			"jumping" : {
+				"copy" : "idle"
+			},
+
+			"moving" : {
+				"copy" : "idle"
+			},
+
+			"falling" : {
+				"copy" : "idle"
 			},
 
 			"dead" : {

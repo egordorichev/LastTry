@@ -42,7 +42,7 @@ public class SpawnUtilComponent {
         return true;
     }
 
-    public static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
+    private static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
 
         boolean isPointInMap = Globals.world.isInside(xGridPoint, yGridPoint);
 
@@ -70,5 +70,31 @@ public class SpawnUtilComponent {
         return false;
     }
 
+    public static boolean isPointSuitableForSpawning(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+
+        boolean isPointOccupied = isPointOccupied(xGridSpawnPoint, yGridSpawnPoint);
+
+        boolean isPointOnMap = SpawnUtilComponent.isPointOnMap(xGridSpawnPoint, yGridSpawnPoint);
+
+        if(isPointOccupied==false&&isPointOnMap==true){
+            //Log.debug("Suitable point found at x: "+xGridSpawnPoint+" y: "+yGridSpawnPoint);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static boolean isPointOccupied(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+
+        Block blockAtXyPoint = Globals.world.blocks.get(xGridSpawnPoint, yGridSpawnPoint);
+
+        boolean isPointOccupied = blockAtXyPoint == null ? false : true;
+
+//        if(isPointOccupied==false){
+//            Log.debug("Empty space found at x: "+xGridSpawnPoint+" y: "+yGridSpawnPoint);
+//        }
+
+        return isPointOccupied;
+    }
 
 }

@@ -9,21 +9,17 @@ public class Drop {
     private int minAmount;
     private int maxAmount;
     private Item item;
-    private Chance chance;
+    private int chance;
 
     public Drop(Item item) {
-        this(item, Chance.ALWAYS, 1, 1);
+        this(item, 1, 1, 1);
     }
 
     public Drop(Item item, int maxAmount) {
-        this(item, Chance.ALWAYS, 1, maxAmount);
+        this(item, 1, 1, maxAmount);
     }
 
-    public Drop(Item item, int minAmount, int maxAmount) {
-        this(item, Chance.ALWAYS, minAmount, maxAmount);
-    }
-
-    public Drop(Item item, Chance chance, int minAmount, int maxAmount) {
+    public Drop(Item item, int chance, int minAmount, int maxAmount) {
         this.item = item;
         this.chance = chance;
         this.minAmount = minAmount;
@@ -49,30 +45,12 @@ public class Drop {
         return this.minAmount;
     }
 
-    public Chance getChance() {
+    public int getChance() {
         return this.chance;
     }
 
-    public enum Chance {
-        ALWAYS(1), // 100% 1/1
-        ALMOST_ALWAYS(2), // 50%
-        VERY_COMMON(5), // 20%
-        COMMON(20), // 5% 1/20
-        UNCOMMON(50), // 2% 1/50
-        VERY_UNCOMMON(100), // 1% 1/100
-        RARE(200), // 0.5% 1/200
-        VERY_RARE(286), // 0.35% 1/286
-        EXTREMELY_RARE(500), // 0.2% 1/500
-        LEGENDARY(1000); // 0.1% 1/1000
-
-        private final int rate;
-
-	    Chance(int rate) {
-            this.rate = rate;
-        }
-
-        public boolean roll() {
-            return LastTry.random.nextInt(rate) == 0;
-        }
-    }
+	@Override
+	public Drop clone() {
+		return new Drop(this.item, this.chance, this.minAmount, this.maxAmount);
+	}
 }

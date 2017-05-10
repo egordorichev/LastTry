@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.graphics;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
@@ -18,19 +19,43 @@ public class Animation {
         this.stopped = false;
     }
 
-    public void copy(Animation animation) {
-    	this.stopped = animation.stopped;
-    	this.looped = animation.looped;
-    	this.currentFrame = animation.currentFrame;
-    	this.currentTime = animation.currentTime;
-    	this.frames = new ArrayList<>();
+    public void copyFrom(Animation animation) {
+		this.looped = animation.looped;
+	    this.stopped = animation.stopped;
+	    this.currentFrame = animation.currentFrame;
+	    this.currentTime = animation.currentTime;
+	    this.frames.clear();
 
-    	for (AnimationFrame frame : animation.frames) {
+	    for (AnimationFrame frame : animation.frames) {
+		    TextureRegion rect = new TextureRegion(frame.region.getTexture(), frame.region.getRegionX(),
+				    frame.region.getRegionY(), frame.region.getRegionWidth(), frame.region.getRegionHeight());
+
+		    this.addFrame(new AnimationFrame(rect, frame.time));
+	    }
+    }
+
+    public void setTexture(Texture texture) {
+	    for (AnimationFrame frame : this.frames) {
+			frame.region.setTexture(texture);
+	    }
+    }
+
+    public Animation copy() {
+	    Animation animation = new Animation(this.looped);
+
+	    animation.stopped = this.stopped;
+	    animation.currentFrame = this.currentFrame;
+	    animation.currentTime = this.currentTime;
+	    animation.frames.clear();
+
+    	for (AnimationFrame frame : this.frames) {
 		    TextureRegion rect = new TextureRegion(frame.region.getTexture(), frame.region.getRegionX(),
 				frame.region.getRegionY(), frame.region.getRegionWidth(), frame.region.getRegionHeight());
 
-    		this.addFrame(new AnimationFrame(rect, frame.time));
+    		animation.addFrame(new AnimationFrame(rect, frame.time));
 	    }
+
+	    return animation;
     }
 
 	public void setLooped(boolean looped) {

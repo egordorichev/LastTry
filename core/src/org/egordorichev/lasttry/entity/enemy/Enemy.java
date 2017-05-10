@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.enemy;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.ai.AI;
@@ -37,7 +38,7 @@ public class Enemy extends CreatureWithAI {
     @Override
     public void onDeath() {
         for (Drop drop : this.drops) {
-            if (drop.getChance().roll()) {
+            if (LastTry.random.nextInt(drop.getChance()) == 0) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
                 Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),

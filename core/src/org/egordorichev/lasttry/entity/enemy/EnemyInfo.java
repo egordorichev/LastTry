@@ -1,47 +1,215 @@
 package org.egordorichev.lasttry.entity.enemy;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
+import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
+import org.egordorichev.lasttry.graphics.Animation;
+import org.egordorichev.lasttry.graphics.AnimationFrame;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.util.Rectangle;
+
+import java.util.ArrayList;
 
 public class EnemyInfo {
-    private JsonValue root;
+	public short ai = 0;
+	public int[] hp = new int[3];
+	public int[] defense = new int[3];
+	public int[] damage = new int[3];
+	public float[] kbResist = new float[3];
+	public String texture = "";
+	public String name;
+	public Texture image;
+	public ArrayList<Drop> drops = new ArrayList<>();
+	public Rectangle hitbox = new Rectangle(0, 0, 16, 16);
+	public Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
 
-    public EnemyInfo(JsonValue root) {
-        this.root = root;
+    public EnemyInfo(JsonValue root, String name) throws Exception {
+    	for (int i = 0; i < this.animations.length; i++) {
+    		this.animations[i] = new Animation(true);
+	    }
+
+		try {
+			if (root.has("copy")) {
+				String from = root.getString("copy");
+
+				if (from.equals("name")) {
+					throw new Exception("You can't copy enemy from it self");
+				}
+
+				this.copy(from);
+			}
+
+			this.load(root);
+			this.name = name;
+		} catch (Exception exception) {
+			throw exception;
+		}
     }
 
-    public Enemy create() {
-        try {
-            int hp = Globals.world.flags.isHardmode() ? this.root.get("hp").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("hp").get(1).asInt() : this.root.get("hp").get(0).asInt();
+    private void copy(String from) throws Exception {
+		EnemyInfo info = Enemies.ENEMY_CACHE.get(from);
 
-            int defense  = Globals.world.flags.isHardmode() ? this.root.get("defense").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("defense").get(1).asInt() : this.root.get("defense").get(0).asInt();
+		if (info == null) {
+			throw new Exception("Enemy for copy " + from + " is not found");
+		}
 
-            int damage = Globals.world.flags.isHardmode() ? this.root.get("damage").get(2).asInt()
-                : Globals.world.flags.isExpertMode() ?  this.root.get("damage").get(1).asInt() : this.root.get("damage").get(0).asInt();
+    	this.hp = info.hp.clone();
+    	this.defense = info.defense.clone();
+        this.damage = info.damage.clone();
+        this.texture = info.texture;
 
-            Enemy enemy = new Enemy(AI.fromID(this.root.get("ai").asShort()), this.root.name());
+	    for (Drop drop : info.drops) {
+	    	this.drops.add(drop.clone());
+	    }
 
-            enemy.stats.set(hp, 0, defense, damage);
-	        enemy.graphics.load(this.root.get("animation"), root.get("texture").asString());
+	    this.ai = info.ai;
+        this.kbResist = info.kbResist;
+        this.hitbox = info.hitbox.copy();
 
-	        for (JsonValue drop : root.get("drop")) {
-	        	enemy.drops.add(new Drop(Item.fromID(drop.get("id").asShort()), drop.get("count").get(0).asShort(), drop.get("count").get(1).asShort()));
-	        }
-
-	        // todo: kb resist, knock back, hitbox
-
-            return enemy;
-        } catch (Exception exception) {
-            Log.error("Failed to parse " + this.root.name() + "!\n Cause:");
-            exception.printStackTrace();
+        for (int i = 0; i < info.animations.length; i++) {
+        	this.animations[i] = info.animations[i].copy();
         }
+    }
 
-        return null;
+    private void load(JsonValue root) throws Exception {
+    	if (root.has("hp")) {
+		    this.hp = root.get("hp").asIntArray();
+	    }
+
+	    if (root.has("defense")) {
+		    this.defense = root.get("defense").asIntArray();
+	    }
+
+	    if (root.has("damage")) {
+		    this.damage = root.get("damage").asIntArray();
+	    }
+
+	    if (root.has("texture")) {
+		    this.texture = root.get("texture").asString();
+	    }
+
+	    if (root.has("ai")) {
+		    this.ai = root.get("ai").asShort();
+	    }
+
+	    if (root.has("ai")) {
+		    this.ai = root.get("ai").asShort();
+	    }
+
+	    if (root.has("kbResist")) {
+		    this.kbResist = root.get("kbResist").asFloatArray();
+	    }
+
+	    if (root.has("hitbox")) {
+    		JsonValue hitbox = root.get("hitbox");
+
+		    this.hitbox.x = hitbox.getInt(0);
+		    this.hitbox.y = hitbox.getInt(1);
+		    this.hitbox.width = hitbox.getInt(2);
+		    this.hitbox.height = hitbox.getInt(3);
+	    }
+
+	    if (root.has("drop")) {
+		    JsonValue drops = root.get("drop");
+
+		    for (JsonValue drop : drops) {
+		    	Item item = Item.fromID(drop.getShort("id"));
+
+		    	if (item == null) {
+		    		throw new Exception("Item with id " + drop.getShort("id") + " is not found");
+			    }
+
+		    	this.drops.add(new Drop(item, drop.getShort("count", (short) 1), drop.getInt("chance", 1), (short) 1));
+		    }
+	    }
+
+	    this.image = Assets.getTexture(this.texture);
+
+	    if (root.has("animation")) {
+    		JsonValue animation = root.get("animation");
+
+		    this.loadAnimation(animation, "idle");
+		    this.loadAnimation(animation, "moving");
+		    this.loadAnimation(animation, "jumping");
+		    this.loadAnimation(animation, "falling");
+		    this.loadAnimation(animation, "dead");
+		    this.loadAnimation(animation, "acting");
+	    }
+    }
+
+	private void loadAnimation(JsonValue root, String type) {
+		JsonValue animation = root.get(type);
+		Animation to = this.animations[this.toID(type)];
+
+		if (animation.has("copy")) {
+			to.copyFrom(this.animations[this.toID(animation.get("copy").asString())]);
+		} else {
+			if (animation.has("looping")) {
+				to.setLooped(animation.get("looping").asBoolean());
+			}
+
+			if (animation.has("stopped")) {
+				to.setStopped(animation.get("stopped").asBoolean());
+			}
+
+			if (!animation.has("frames")) {
+				return;
+			}
+
+			for (JsonValue frame : animation.get("frames")) {
+				this.loadFrame(frame, to);
+			}
+		}
+	}
+
+	private void loadFrame(JsonValue frame, Animation to) {
+		JsonValue rect = frame.get("rect");
+
+		to.addFrame(new AnimationFrame(new TextureRegion(this.image, rect.get(0).asInt(),
+			rect.get(1).asInt(), rect.get(2).asInt(), rect.get(3).asInt()), frame.getInt("time", 10)));
+	}
+
+	private int toID(String animation) {
+		switch (animation) {
+			case "moving": return CreatureStateComponent.State.MOVING.getID();
+			case "jumping": return CreatureStateComponent.State.JUMPING.getID();
+			case "falling": return CreatureStateComponent.State.FALLING.getID();
+			case "dead": return CreatureStateComponent.State.DEAD.getID();
+			case "acting": return CreatureStateComponent.State.ACTING.getID();
+			default: return CreatureStateComponent.State.IDLE.getID();
+		}
+	}
+
+    public Enemy create() {
+    	Enemy enemy = new Enemy(AI.fromID(this.ai), this.name);
+
+		int hp = this.hp[0];
+		int defense = this.damage[0];
+		int damage = this.damage[0];
+
+		if (Globals.world.flags.isHardmode()) {
+			hp = this.hp[2];
+			defense = this.defense[2];
+			damage = this.damage[2];
+	    } else if (Globals.world.flags.isExpertMode()) {
+			hp = this.hp[1];
+			defense = this.defense[1];
+			damage = this.damage[1];
+		}
+
+    	enemy.stats.set(hp, 0, defense, damage);
+		enemy.physics.setHitbox(this.hitbox.copy());
+
+		for (int i = 0; i < this.animations.length; i++) {
+			enemy.graphics.animations[i] = this.animations[i].copy();
+			enemy.graphics.animations[i].setTexture(this.image);
+		}
+
+        return enemy;
     }
 }
