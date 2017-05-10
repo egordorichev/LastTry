@@ -20,7 +20,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0.0, 9, "alpha");
+	public static final Version version = new Version(0.0, 10, "alpha");
 	
 	/** Random instance */
 	public static final Random random = new Random();
