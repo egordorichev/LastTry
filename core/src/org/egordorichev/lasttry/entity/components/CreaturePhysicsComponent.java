@@ -23,7 +23,7 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 
 	@Override
 	public void move(Direction direction) {
-		this.velocity.x += (direction == Direction.LEFT) ? -1 : 1;
+		this.velocity.x += (direction == Direction.LEFT) ? -this.speed : this.speed;
 		this.direction = direction;
 
 		if (this.creature.state.get() != CreatureStateComponent.State.JUMPING

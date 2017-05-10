@@ -85,6 +85,7 @@
 		"defense" : [ 6, 6, 6 ],
 		"kbResist" : [ 50, 50, 50 ],
 		"hitbox" : [ 0, 0, 34, 48 ],
+		"speed" : 0.26,
 
 		"drop" : [
 

@@ -21,6 +21,7 @@ public class EnemyInfo {
 	public int[] defense = new int[3];
 	public int[] damage = new int[3];
 	public float[] kbResist = new float[3];
+	public float speed = 1;
 	public String texture = "";
 	public String name;
 	public Texture image;
@@ -62,6 +63,7 @@ public class EnemyInfo {
     	this.defense = info.defense.clone();
         this.damage = info.damage.clone();
         this.texture = info.texture;
+        this.speed = info.speed;
 
 	    for (Drop drop : info.drops) {
 	    	this.drops.add(drop.clone());
@@ -91,6 +93,10 @@ public class EnemyInfo {
 
 	    if (root.has("texture")) {
 		    this.texture = root.get("texture").asString();
+	    }
+
+	    if (root.has("speed")) {
+		    this.speed = root.get("speed").asFloat();
 	    }
 
 	    if (root.has("ai")) {
@@ -204,6 +210,7 @@ public class EnemyInfo {
 
     	enemy.stats.set(hp, 0, defense, damage);
 		enemy.physics.setHitbox(this.hitbox.copy());
+		enemy.physics.setSpeed(this.speed);
 
 		for (int i = 0; i < this.animations.length; i++) {
 			enemy.graphics.animations[i] = this.animations[i].copy();

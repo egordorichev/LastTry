@@ -17,7 +17,7 @@ public class Entity {
 
 	}
 
-	//Pixels
+	// Pixels
 	public void spawn(int x, int y) {
 		if (this.active) {
 			return;
