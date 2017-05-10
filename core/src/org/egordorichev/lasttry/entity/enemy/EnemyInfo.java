@@ -27,6 +27,7 @@ public class EnemyInfo {
 	public Texture image;
 	public ArrayList<Drop> drops = new ArrayList<>();
 	public Rectangle hitbox = new Rectangle(0, 0, 16, 16);
+	public Rectangle renderBounds = new Rectangle(0, 0, 16, 16);
 	public Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
 
     public EnemyInfo(JsonValue root, String name) throws Exception {
@@ -72,6 +73,7 @@ public class EnemyInfo {
 	    this.ai = info.ai;
         this.kbResist = info.kbResist;
         this.hitbox = info.hitbox.copy();
+        this.renderBounds = info.renderBounds.copy();
 
         for (int i = 0; i < info.animations.length; i++) {
         	this.animations[i] = info.animations[i].copy();
@@ -118,6 +120,15 @@ public class EnemyInfo {
 		    this.hitbox.y = hitbox.getInt(1);
 		    this.hitbox.width = hitbox.getInt(2);
 		    this.hitbox.height = hitbox.getInt(3);
+	    }
+
+	    if (root.has("size")) {
+		    JsonValue hitbox = root.get("size");
+
+		    this.renderBounds.width = hitbox.getInt(0);
+		    this.renderBounds.height = hitbox.getInt(1);
+	    } else {
+    		this.renderBounds = this.hitbox.copy();
 	    }
 
 	    if (root.has("drop")) {
@@ -210,7 +221,7 @@ public class EnemyInfo {
 
     	enemy.stats.set(hp, 0, defense, damage);
 		enemy.physics.setHitbox(this.hitbox.copy());
-		enemy.physics.setSize((int) this.hitbox.width, (int) this.hitbox.height);
+		enemy.physics.setSize((int) this.renderBounds.width, (int) this.renderBounds.height);
 		enemy.physics.setSpeed(this.speed);
 
 		for (int i = 0; i < this.animations.length; i++) {

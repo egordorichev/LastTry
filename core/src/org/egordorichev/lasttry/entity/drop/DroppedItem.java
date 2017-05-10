@@ -29,8 +29,6 @@ public class DroppedItem extends Creature {
 		this.physics.update(dt);
 
         if (this.physics.getHitbox().intersects(Globals.player.physics.getHitbox())) {
-        	System.out.println("touch");
-
             if (this.holder.getItem() == Items.heart) {
                 Globals.player.stats.modifyHP(20 * this.holder.getCount());
             } else if (this.holder.getItem() == Items.mana) {
