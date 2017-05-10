@@ -20,4 +20,9 @@ public class ZombieAI extends AI {
 	public void update(CreatureWithAI creature, int dt, int currentAi) {
 		creature.physics.move((Float.compare(Globals.player.physics.getCenterX(), creature.physics.getCenterX()) == -1) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
 	}
+
+	@Override
+	public boolean canSpawn() {
+		return true;
+	}
 }
