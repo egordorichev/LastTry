@@ -124,7 +124,7 @@ public class EnemyInfo {
 		    		throw new Exception("Item with id " + drop.getShort("id") + " is not found");
 			    }
 
-		    	this.drops.add(new Drop(item, drop.getShort("count", (short) 1)));
+		    	this.drops.add(new Drop(item, drop.getShort("count", (short) 1), drop.getInt("chance", 1), (short) 1));
 		    }
 	    }
 

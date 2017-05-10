@@ -1,8 +1,10 @@
 package org.egordorichev.lasttry.entity.ai.ais;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.ai.AIID;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class ZombieAI extends AI {
 	public ZombieAI() {
@@ -16,6 +18,6 @@ public class ZombieAI extends AI {
 
 	@Override
 	public void update(CreatureWithAI creature, int dt, int currentAi) {
-		// TODO
+		creature.physics.move((Float.compare(Globals.player.physics.getCenterX(), creature.physics.getCenterX()) == -1) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
 	}
 }

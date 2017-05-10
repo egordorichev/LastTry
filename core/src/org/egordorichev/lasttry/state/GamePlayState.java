@@ -35,7 +35,7 @@ public class GamePlayState implements State {
 
 		//todo to be removed
 		Globals.entityManager.spawnEnemy("Blue Slime", spawnX-10, spawnY);
-		Globals.entityManager.spawnEnemy("Green Slime", spawnX+10, spawnY);
+		Globals.entityManager.spawnEnemy("Zombie", spawnX+10, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
