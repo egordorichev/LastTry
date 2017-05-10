@@ -29,7 +29,7 @@ public class GamePlayState implements State {
 
 		Globals.player.spawn(spawnX, spawnY);
 		Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
-		Globals.player.inventory.add(new ItemHolder(Items.workBench, 10));
+		Globals.player.inventory.add(new ItemHolder(Items.superpick, 1));
 
 		Globals.entityManager = new EntityManager();
 

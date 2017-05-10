@@ -210,6 +210,7 @@ public class EnemyInfo {
 
     	enemy.stats.set(hp, 0, defense, damage);
 		enemy.physics.setHitbox(this.hitbox.copy());
+		enemy.physics.setSize((int) this.hitbox.width, (int) this.hitbox.height);
 		enemy.physics.setSpeed(this.speed);
 
 		for (int i = 0; i < this.animations.length; i++) {
