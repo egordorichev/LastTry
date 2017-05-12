@@ -8,6 +8,9 @@ import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.graphics.*;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.language.LocalizationUtil;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
@@ -40,12 +43,10 @@ public class LastTry extends Game {
 	/** Creates first-priority instances */
 	@Override
 	public void create() {
-		Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			@Override
-			public void uncaughtException(Thread thread, Throwable throwable) {
-				Crash.report(thread, throwable);
-			}
-		});
+		//TODO:  Just for testing
+		//LocalizationUtil.localize(Items.class, Item.class);
+
+		Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> Crash.report(thread, throwable));
 
 		instance = this;
 

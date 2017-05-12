@@ -2,10 +2,6 @@ package org.egordorichev.lasttry.effect;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.language.Language;
 
 public  class Buff extends Effect {
 
@@ -16,8 +12,8 @@ public  class Buff extends Effect {
     }
 
     @Override
-    public void apply(Creature creature) {};
+    public void apply(Creature creature) {}
 
     @Override
-    public void remove(Creature creature) {};
+    public void remove(Creature creature) {}
 }
