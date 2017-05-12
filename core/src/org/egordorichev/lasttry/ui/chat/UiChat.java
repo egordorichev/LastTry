@@ -119,8 +119,14 @@ public class UiChat extends UiPanel {
 			super.render();
 		}
 
-		for (int i = 0; i < this.lines.size(); i++) {
-			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, 10, 40 + i * 20);
+		for (int i = this.lines.size() - 1; i >= 0; i--) {
+			ChatLine line = this.lines.get(i);
+
+			if (line.shouldBeRemoved()) {
+				this.lines.remove(i);
+			}
+
+			Assets.f18.draw(Graphics.batch, line.text, 10, 40 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
