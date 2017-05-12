@@ -24,16 +24,15 @@ public class UiChat extends UiPanel {
 
 	private boolean open = false;
 	private UiTextInput input;
-	private int x = 300;
 	private ArrayList<ChatLine> lines = new ArrayList<ChatLine>();
 
 	public UiChat() {
-		super(new Rectangle(0, 0, WIDTH, HEIGHT), Origin.BOTTOM_RIGHT);
+		super(new Rectangle(300, 0, WIDTH, HEIGHT), Origin.BOTTOM_RIGHT);
 	}
 
 	@Override
 	public void addComponents() {
-		this.input = new UiTextInput(new Rectangle(this.x, 20, 400, 20), Origin.BOTTOM_LEFT) {
+		this.input = new UiTextInput(new Rectangle(300, 20, 400, 20), Origin.BOTTOM_LEFT) {
 			@Override
 			public void onEnter() {
 				eval(getText());
@@ -54,7 +53,7 @@ public class UiChat extends UiPanel {
 		}
 
 		for (int i = 0; i < this.lines.size(); i++) {
-			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, this.x, 40 + i * 20);
+			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, 300, 40 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
