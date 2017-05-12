@@ -99,6 +99,17 @@ public class Block extends Item {
     		return false;
 	    }
 
+	    Block t = Globals.world.blocks.get(x, y + 1);
+	    Block b = Globals.world.blocks.get(x, y - 1);
+	    Block l = Globals.world.blocks.get(x + 1, y);
+	    Block r = Globals.world.blocks.get(x - 1, y);
+
+    	if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
+			    (r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
+
+    		return false;
+	    }
+
     	return true;
     }
 
