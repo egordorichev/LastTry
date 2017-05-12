@@ -25,14 +25,81 @@ public class UiChat extends UiPanel {
 	private boolean open = false;
 	private UiTextInput input;
 	private ArrayList<ChatLine> lines = new ArrayList<ChatLine>();
+	private ArrayList<ChatCommand> commands = new ArrayList<ChatCommand>();
 
 	public UiChat() {
-		super(new Rectangle(300, 0, WIDTH, HEIGHT), Origin.BOTTOM_RIGHT);
+		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
+		
+		this.commands.add(new ChatCommand("/help") {
+			@Override
+			public void call(String[] args) {
+				print("Please, visit dev chat for more.");
+			}
+		});
+		
+		this.commands.add(new ChatCommand("/give") {
+			@Override
+			public void call(String[] args) {
+				if (args.length != 2 && args.length != 3) {
+					print("/give [item id] (count)");
+				} else {
+					Item item = Item.fromID(Integer.valueOf(args[1]));
+					int count = args.length == 2 ? 1 : Integer.valueOf(args[2]);
+
+					if (item == null) {
+						print("Unknown item");
+					} else {
+						Globals.player.inventory.add(new ItemHolder(item, count));
+					}
+				}			
+			}
+		});
+
+		this.commands.add(new ChatCommand("/spawn") {
+			@Override
+			public void call(String[] args) {
+				if (args.length != 2 && args.length != 3) {
+					print("/spawn [enemy name] (count)");
+				} else {
+					String name = args[1].replace("\"", "");
+					Enemy enemy = Enemies.create(name);
+					int count = args.length == 2 ? 1 : Integer.valueOf(args[2]);
+
+					if (enemy == null) {
+						print("Unknown enemy");
+					} else {
+						for (int i = 0; i < count; i++) {
+							Globals.entityManager.spawnEnemy(name, (int) Globals.player.physics.getX(), (int) Globals.player.physics.getY());
+						}
+					}
+				}
+			}
+		});
+
+		this.commands.add(new ChatCommand("/chunks") {
+			@Override
+			public void call(String[] args) {
+				if (args.length == 1) {
+					print("/chunks [gc / list]");
+				} else {
+					switch (args[1]) {
+						case "gc":
+							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
+							print("Running instant chunk GC...");
+						break;
+						case "list":
+							print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
+						break;
+						default: print("/chunks [gc / list]");
+					}
+				}
+			}
+		});
 	}
 
 	@Override
 	public void addComponents() {
-		this.input = new UiTextInput(new Rectangle(300, 20, 400, 20), Origin.BOTTOM_LEFT) {
+		this.input = new UiTextInput(new Rectangle(10, 20, 400, 20), Origin.BOTTOM_LEFT) {
 			@Override
 			public void onEnter() {
 				eval(getText());
@@ -53,7 +120,7 @@ public class UiChat extends UiPanel {
 		}
 
 		for (int i = 0; i < this.lines.size(); i++) {
-			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, 300, 40 + i * 20);
+			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, 10, 40 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -62,59 +129,16 @@ public class UiChat extends UiPanel {
 	}
 
 	public void eval(String text) {
-		String[] parts = this.split(text.trim());
+		String[] args = this.split(text.trim());
 
-		switch (parts[0]) {
-			case "/help": this.print("Please, visit dev chat for more."); break;
-			case "/give":
-				if (parts.length != 2 && parts.length != 3) {
-					this.print("/give [item id] (count)");
-				} else {
-					Item item = Item.fromID(Integer.valueOf(parts[1]));
-					int count = parts.length == 2 ? 1 : Integer.valueOf(parts[2]);
-
-					if (item == null) {
-						this.print("Unknown item");
-					} else {
-						Globals.player.inventory.add(new ItemHolder(item, count));
-					}
-				}
-			break;
-			case "/chunks":
-				if (parts.length == 1) {
-					this.print("/chunks [gc / list]");
-				} else {
-					switch (parts[1]) {
-						case "gc":
-							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
-							this.print("Running instant chunk GC...");
-						break;
-						case "list":
-							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
-						break;
-						default: this.print("/chunks [gc / list]");
-					}
-				}
-			break;
-			case "/spawn":
-				if (parts.length != 2 && parts.length != 3) {
-					this.print("/spawn [enemy name] (count)");
-				} else {
-					String name = parts[1].replace("\"", "");
-					Enemy enemy = Enemies.create(name);
-					int count = parts.length == 2 ? 1 : Integer.valueOf(parts[2]);
-
-					if (enemy == null) {
-						this.print("Unknown enemy");
-					} else {
-						for (int i = 0; i < count; i++) {
-							Globals.entityManager.spawnEnemy(name, (int) Globals.player.physics.getX(), (int) Globals.player.physics.getY());
-						}
-					}
-				}
-			break;
-			default: this.print("Unknown command: " + parts[0]); break;
+		for (ChatCommand command : this.commands) {
+			if (command.getName().equals(args[0])) {
+				command.call(args);
+				return;
+			}
 		}
+			
+		this.print("Unknown command: " + args[0]);
 	}
 
 	private String[] split(String string) {

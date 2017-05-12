@@ -29,13 +29,8 @@ public class GamePlayState implements State {
 		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
 
 		Globals.player.spawn(spawnX, spawnY);
-		Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
 
 		Globals.entityManager = new EntityManager();
-
-		//todo to be removed
-		Globals.entityManager.spawnEnemy("Blue Slime", spawnX-10, spawnY);
-		Globals.entityManager.spawnEnemy("Zombie", spawnX+10, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
