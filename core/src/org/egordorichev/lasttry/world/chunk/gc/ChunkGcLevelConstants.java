@@ -9,7 +9,7 @@ public class ChunkGcLevelConstants {
         S2("Level 2 - 90 sec interval, 5 chunk release", 25, 50),
         S1("Level 1 - 120 sec interval, 5 chunk release", 15, 25),
         S0("Level 0 - 120 sec interval, 1 chunk release", 5, 15),
-        DEV("Level dev - runs once", 0, 100),
+        //DEV("Level dev - runs once", 0, 100),
         //Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive
         SLEEP("Sleep - 120 sec interval, 0 chunk release", 0, 5);
 

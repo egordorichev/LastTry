@@ -20,7 +20,7 @@ public class ChunkGcCalc {
         S2(ChunkGcLevelConstants.ChunkGcLevelBounds.S2, 90, 5),
         S1(ChunkGcLevelConstants.ChunkGcLevelBounds.S1, 120, 5),
         S0(ChunkGcLevelConstants.ChunkGcLevelBounds.S0, 120, 1),
-	    DEV(ChunkGcLevelConstants.ChunkGcLevelBounds.DEV, 0, 100),
+	    //DEV(ChunkGcLevelConstants.ChunkGcLevelBounds.DEV, 0, 100),
 	    //Amount of Chunks not enough for Chunks GC, Chunk GC will be inactive
         SLEEP(ChunkGcLevelConstants.ChunkGcLevelBounds.SLEEP, 120, 0);
 
