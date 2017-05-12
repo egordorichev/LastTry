@@ -86,11 +86,31 @@ public class Block extends Item {
     }
 
     public void die(int x, int y) {
-	Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
     }
 
     public boolean canBePlaced(int x, int y) {
-    	return true; // TODO: placement radius
+    	int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
+    	int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+
+    	double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
+
+    	if (length > Globals.player.getItemUseRadius()) {
+    		return false;
+	    }
+
+	    Block t = Globals.world.blocks.get(x, y + 1);
+	    Block b = Globals.world.blocks.get(x, y - 1);
+	    Block l = Globals.world.blocks.get(x + 1, y);
+	    Block r = Globals.world.blocks.get(x - 1, y);
+
+    	if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
+			    (r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
+
+    		return false;
+	    }
+
+    	return true;
     }
 
     public void place(int x, int y) {

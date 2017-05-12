@@ -2,7 +2,9 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Items;
 
@@ -23,6 +25,10 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
             case ItemID.dirtBlock:
                 return (Wall) Items.dirtWall;
         }
+    }
+
+    public void die(int x, int y) {
+	    Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
     }
 
     /**

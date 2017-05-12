@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.block.Wall;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -97,7 +98,6 @@ public class Chunk {
 
 	public void setBlockHP(byte hp, int globalX, int globalY) {
 		this.setBlockHPInside(hp, globalX - this.getX(), globalY - this.getY());
-
 	}
 
 	public void setBlockHPInside(byte hp, int x, int y) {
@@ -105,7 +105,17 @@ public class Chunk {
 			return;
 		}
 
-		this.data.blocksHealth[x + y * SIZE] = hp;
+		if (hp == 0) {
+			Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
+
+			if (block != null) {
+				block.die(x + this.getX(), y + this.getY());
+			}
+
+			this.setBlockInside(ItemID.none, x, y);
+		} else {
+			this.data.blocksHealth[x + y * SIZE] = hp;
+		}
 	}
 
 	public short getWall(int globalX, int globalY) {
@@ -146,14 +156,24 @@ public class Chunk {
 	}
 
 	public void setWallHP(byte hp, int globalX, int globalY) {
-
 		this.setWallHPInside(hp, globalX - this.getX(), globalY - this.getY());
 	}
 
 	public void setWallHPInside(byte hp, int x, int y) {
 		if (!this.isInside(x, y)) {
-
 			return;
+		}
+
+		if (hp == 0) {
+			Wall wall = (Wall) Item.fromID(this.data.blocks[x + y * SIZE]);
+
+			if (wall != null) {
+				wall.die(x + this.getX(), y + this.getY());
+			}
+
+			this.setWallInside(ItemID.none, x, y);
+		} else {
+			this.data.wallsHealth[x + y * SIZE] = hp;
 		}
 
 		this.data.wallsHealth[x + y * SIZE] = hp;

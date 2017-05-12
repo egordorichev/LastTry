@@ -21,6 +21,7 @@ public class PhysicsComponent extends CreatureComponent {
 	protected boolean solid = true;
 	protected Rectangle hitbox;
 	protected Direction direction = Direction.RIGHT;
+	protected float speed = 1.0f;
 
 	public PhysicsComponent(Creature creature) {
 		super(creature);
@@ -195,5 +196,13 @@ public class PhysicsComponent extends CreatureComponent {
 
 	public void setHitbox(Rectangle hitbox) {
 		this.hitbox = hitbox;
+	}
+
+	public float getSpeed() {
+		return this.speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 }

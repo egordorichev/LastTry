@@ -7,9 +7,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiTextLabel extends UiComponent {
-
-    public enum FontStyles
-    {
+    public enum FontStyles {
         ERRORMESSAGE;
     }
 
@@ -89,7 +87,7 @@ public class UiTextLabel extends UiComponent {
     /**
      * Sets font and calculates new size
      */
-    protected void setFont(BitmapFont font) {
+    public void setFont(BitmapFont font) {
         this.font = font;
         this.setLabel(this.label);
     }
@@ -108,7 +106,7 @@ public class UiTextLabel extends UiComponent {
         this.rect.height = this.font.getLineHeight() * 1.f;
     }
 
-    /**
+	/**
      * Sets the fontStyle to be applied to the font, for this specific instance.
      *
      * @param fontStyle Enum representing requested fontStyle.

@@ -64,6 +64,7 @@ public class Items {
 	public static final Item livingWood;
 	public static final Item wood;
 	public static final Item workBench;
+	public static final Item superpick;
 
 	static {
 		if (!Bootstrap.isLoaded()) {
@@ -119,6 +120,7 @@ public class Items {
 		livingWood = new LivingWood(ItemID.livingWood, Language.text.get("livingWood"), Assets.getTexture(Textures.nullItem), Assets.getTexture(Textures.livingWood));
 		wood = new Wood(ItemID.wood, Language.text.get("wood"), Assets.getTexture(Textures.woodIcon), Assets.getTexture(Textures.wood));
 		workBench = new WorkBench(ItemID.workBench, Language.text.get("workBench"), Assets.getTexture(Textures.workBench), 2, 1);
+		superpick = new Pickaxe(ItemID.superpick, "Superpick", 1000, 500, 0, Assets.getTexture(Textures.woodenSword));
 	}
 
 	public static void load() {

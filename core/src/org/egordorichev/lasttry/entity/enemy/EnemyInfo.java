@@ -21,11 +21,13 @@ public class EnemyInfo {
 	public int[] defense = new int[3];
 	public int[] damage = new int[3];
 	public float[] kbResist = new float[3];
+	public float speed = 1;
 	public String texture = "";
 	public String name;
 	public Texture image;
 	public ArrayList<Drop> drops = new ArrayList<>();
 	public Rectangle hitbox = new Rectangle(0, 0, 16, 16);
+	public Rectangle renderBounds = new Rectangle(0, 0, 16, 16);
 	public Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
 
     public EnemyInfo(JsonValue root, String name) throws Exception {
@@ -62,6 +64,7 @@ public class EnemyInfo {
     	this.defense = info.defense.clone();
         this.damage = info.damage.clone();
         this.texture = info.texture;
+        this.speed = info.speed;
 
 	    for (Drop drop : info.drops) {
 	    	this.drops.add(drop.clone());
@@ -70,6 +73,7 @@ public class EnemyInfo {
 	    this.ai = info.ai;
         this.kbResist = info.kbResist;
         this.hitbox = info.hitbox.copy();
+        this.renderBounds = info.renderBounds.copy();
 
         for (int i = 0; i < info.animations.length; i++) {
         	this.animations[i] = info.animations[i].copy();
@@ -93,6 +97,10 @@ public class EnemyInfo {
 		    this.texture = root.get("texture").asString();
 	    }
 
+	    if (root.has("speed")) {
+		    this.speed = root.get("speed").asFloat();
+	    }
+
 	    if (root.has("ai")) {
 		    this.ai = root.get("ai").asShort();
 	    }
@@ -112,6 +120,15 @@ public class EnemyInfo {
 		    this.hitbox.y = hitbox.getInt(1);
 		    this.hitbox.width = hitbox.getInt(2);
 		    this.hitbox.height = hitbox.getInt(3);
+	    }
+
+	    if (root.has("size")) {
+		    JsonValue hitbox = root.get("size");
+
+		    this.renderBounds.width = hitbox.getInt(0);
+		    this.renderBounds.height = hitbox.getInt(1);
+	    } else {
+    		this.renderBounds = this.hitbox.copy();
 	    }
 
 	    if (root.has("drop")) {
@@ -204,6 +221,8 @@ public class EnemyInfo {
 
     	enemy.stats.set(hp, 0, defense, damage);
 		enemy.physics.setHitbox(this.hitbox.copy());
+		enemy.physics.setSize((int) this.renderBounds.width, (int) this.renderBounds.height);
+		enemy.physics.setSpeed(this.speed);
 
 		for (int i = 0; i < this.animations.length; i++) {
 			enemy.graphics.animations[i] = this.animations[i].copy();

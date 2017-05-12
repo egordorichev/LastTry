@@ -12,7 +12,8 @@ public class WorldBlocksComponent extends WorldComponent {
 		super(world);
 	}
 
-	//grid points
+	// grid points
+
 	public Block get(int x, int y) {
 		return (Block) Item.fromID(this.getID(x, y));
 	}
@@ -35,6 +36,7 @@ public class WorldBlocksComponent extends WorldComponent {
 		}
 
 		chunk.setBlock(id, x, y);
+		this.updateNeighbors(x, y);
 	}
 
 	public byte getHP(int x, int y) {
@@ -54,10 +56,10 @@ public class WorldBlocksComponent extends WorldComponent {
 			return;
 		}
 
+		chunk.setBlockHP(hp, x, y);
+
 		if (hp == 0) {
-			chunk.setBlock(ItemID.none, x, y);
-		} else {
-			chunk.setBlockHP(hp, x, y);
+			this.updateNeighbors(x, y);
 		}
 	}
 
@@ -74,5 +76,17 @@ public class WorldBlocksComponent extends WorldComponent {
 		}
 
 		return chunk;
+	}
+
+	private void updateNeighbors(int x, int y) {
+		for (int by = y - 1; by < y + 2; by++) {
+			for (int bx = x - 1; bx < x + 2; bx++) {
+				Block block = this.get(bx, by);
+
+				if (block != null) {
+					block.onNeighborChange(bx, by, x, y);
+				}
+			}
+		}
 	}
 }

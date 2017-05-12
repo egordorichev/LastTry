@@ -19,7 +19,8 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 
 	@Override
 	public void render() {
-		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY());
+		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY(),
+			this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
 	}
 
 	public void update() {

@@ -16,9 +16,8 @@ public class EntityManager {
     private List<Enemy> enemyEntities = new ArrayList<>();
     private List<Entity> clearList = new ArrayList<>();
 
-    //Seconds
+    // Seconds
     public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
-
     // private List<Gore> gores = new ArrayList<>();
 
     public EntityManager() {
@@ -100,8 +99,6 @@ public class EntityManager {
     //Todo Will be rewritten to include NPCs
     private synchronized void attemptDespawnEnemies() {
         try{
-            LastTry.debug.print("Starting despawn enemy process");
-
             //Iterator cannot be used here, as list size is being changed in another thread.
             //Iterator use here, will result in a NPE
             for(int i=0; i<this.enemyEntities.size(); i++){
@@ -115,8 +112,7 @@ public class EntityManager {
                 readOnlyLock.readLock().unlock();
 
             }
-
-            LastTry.debug.print("Despawn enemy process complete");
+            
         }catch (Exception e){
             LastTry.handleException(e);
         }

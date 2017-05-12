@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
-	public static final int VERSION = 0;
+	public static final int VERSION = 1;
 
 	public static void load(String name) {
 		String fileName = getSaveName(name);
@@ -52,6 +52,9 @@ public class WorldIO {
 			if (stream.readBoolean()) {
 				flags |= WorldFlagsComponent.CRIMSON;
 			}
+
+			Globals.environment.time.setHour(stream.readByte());
+			Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
 			Globals.world = new World(name, size, flags);
@@ -107,6 +110,9 @@ public class WorldIO {
 			stream.writeBoolean(Globals.world.flags.isHardmode());
 			stream.writeBoolean(Globals.world.flags.isExpertMode());
 			stream.writeBoolean(Globals.world.flags.evilIsCrimson());
+
+			stream.writeByte(Globals.environment.time.getHour());
+			stream.writeByte(Globals.environment.time.getMinute());
 
 			stream.close();
 
