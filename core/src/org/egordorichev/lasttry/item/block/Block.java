@@ -90,7 +90,16 @@ public class Block extends Item {
     }
 
     public boolean canBePlaced(int x, int y) {
-    	return true; // TODO: placement radius
+    	int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
+    	int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+
+    	double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
+
+    	if (length > Globals.player.getItemUseRadius()) {
+    		return false;
+	    }
+
+    	return true;
     }
 
     public void place(int x, int y) {

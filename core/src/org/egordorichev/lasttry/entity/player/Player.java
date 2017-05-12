@@ -33,6 +33,10 @@ public class Player extends Creature {
 		}
 	}
 
+	public int getItemUseRadius() {
+		return 10; // TODO: modify
+	}
+
 	public String getName() {
 		return this.name;
 	}
