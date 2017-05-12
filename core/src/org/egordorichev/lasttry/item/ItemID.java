@@ -14,7 +14,7 @@ public class ItemID {
     public final static short woodenSword = 10;
     public final static short gel = 11;
     public final static short ebonstoneBlock = 12;
-    public final static short corruptThornyBushes = 13;
+    public final static short corruptThornyBushes = 13;6
     public final static short purpleIceBlock = 14;
     public final static short vileMushroom = 15;
     public final static short crimstoneBlock = 16;

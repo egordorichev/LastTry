@@ -20,6 +20,7 @@ import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
 	private final Texture hpTexture;
+	private static boolean paused = false;
 
 	public GamePlayState() {
 		this.hpTexture = Assets.getTexture(Textures.hp);
@@ -29,7 +30,6 @@ public class GamePlayState implements State {
 
 		Globals.player.spawn(spawnX, spawnY);
 		Globals.player.inventory.add(new ItemHolder(Items.wood, 100));
-		Globals.player.inventory.add(new ItemHolder(Items.superpick, 1));
 
 		Globals.entityManager = new EntityManager();
 
@@ -42,6 +42,14 @@ public class GamePlayState implements State {
 		LastTry.ui.add(Globals.chat);
 	}
 
+	public static void play() {
+		paused = false;
+	}
+
+	public static void stop() {
+		paused = true;
+	}
+
 	@Override
 	public void show() {
 
@@ -52,12 +60,18 @@ public class GamePlayState implements State {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
 			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
-		Globals.environment.update((int) delta);
-		Globals.entityManager.update((int) delta);
-		Globals.player.update((int) delta);
+		if (!this.paused) {
+			Globals.environment.update((int) delta);
+			Globals.entityManager.update((int) delta);
+			Globals.player.update((int) delta);
 
-		if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
-			LastTry.debug.toggle();
+			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
+				LastTry.debug.toggle();
+			}
+
+			if (InputManager.isKeyJustDown(Keys.OPEN_CHAT)) {
+				Globals.chat.open();
+			}
 		}
 
 		Globals.environment.render();
@@ -80,7 +94,7 @@ public class GamePlayState implements State {
 		int mouseY = (int) InputManager.getMousePosition().y;
 
 		int hp = Globals.player.stats.getHp();
-		int x = Gdx.graphics.getWidth() - 260;
+		int x = Gdx.graphics.getWidth() - 200;
 
 		Assets.f22.draw(Graphics.batch, String.format("Life: %d/%d", hp, Globals.player.stats.getMaxHP()), x,
 				Gdx.graphics.getHeight() - 4);
