@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.entity.enemy.Enemies;
+import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
@@ -16,6 +18,8 @@ import org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcLevelConstants;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UiChat extends UiPanel {
 	public static final int WIDTH = 400;
@@ -23,6 +27,7 @@ public class UiChat extends UiPanel {
 
 	private boolean open = false;
 	private UiTextInput input;
+	private int x = 300;
 	private ArrayList<ChatLine> lines = new ArrayList<ChatLine>();
 
 	public UiChat() {
@@ -31,7 +36,7 @@ public class UiChat extends UiPanel {
 
 	@Override
 	public void addComponents() {
-		this.input = new UiTextInput(new Rectangle(200, 20, 400, 20), Origin.BOTTOM_LEFT) {
+		this.input = new UiTextInput(new Rectangle(this.x, 20, 400, 20), Origin.BOTTOM_LEFT) {
 			@Override
 			public void onEnter() {
 				eval(getText());
@@ -52,7 +57,7 @@ public class UiChat extends UiPanel {
 		}
 
 		for (int i = 0; i < this.lines.size(); i++) {
-			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, 200, 40 + i * 20);
+			Assets.f18.draw(Graphics.batch, this.lines.get(i).text, this.x, 40 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -61,7 +66,7 @@ public class UiChat extends UiPanel {
 	}
 
 	public void eval(String text) {
-		String[] parts = text.trim().split(" ");
+		String[] parts = this.split(text.trim());
 
 		switch (parts[0]) {
 			case "/help": this.print("Please, visit dev chat for more."); break;
@@ -95,8 +100,36 @@ public class UiChat extends UiPanel {
 					}
 				}
 			break;
+			case "/spawn":
+				if (parts.length != 2 && parts.length != 3) {
+					this.print("/spawn [enemy name] (count)");
+				} else {
+					String name = parts[1].replace("\"", "");
+					Enemy enemy = Enemies.create(name);
+					int count = parts.length == 2 ? 1 : Integer.valueOf(parts[2]);
+
+					if (enemy == null) {
+						this.print("Unknown enemy");
+					} else {
+						for (int i = 0; i < count; i++) {
+							Globals.entityManager.spawnEnemy(name, (int) Globals.player.physics.getX(), (int) Globals.player.physics.getY());
+						}
+					}
+				}
+			break;
 			default: this.print("Unknown command: " + parts[0]); break;
 		}
+	}
+
+	private String[] split(String string) {
+		ArrayList<String> list = new ArrayList<String>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(string);
+
+		while (m.find()) {
+			list.add(m.group(1));
+		}
+
+		return list.toArray(new String[list.size()]);
 	}
 
 	public void print(String text) {
