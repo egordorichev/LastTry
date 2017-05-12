@@ -12,6 +12,8 @@ import org.egordorichev.lasttry.state.GamePlayState;
 import org.egordorichev.lasttry.ui.UiPanel;
 import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc;
+import org.egordorichev.lasttry.world.chunk.gc.ChunkGcLevelConstants;
 
 import java.util.ArrayList;
 
@@ -74,6 +76,25 @@ public class UiChat extends UiPanel {
 						this.print("Unknown item");
 					} else {
 						Globals.player.inventory.add(new ItemHolder(item, count));
+					}
+				}
+			break;
+			case "/chunks":
+				if (parts.length == 1) {
+					this.print("/chunks [gc / list / level]");
+				} else {
+					switch (parts[1]) {
+						case "gc":
+							Globals.chunkGcManager.scheduleFutureChunkGcThread(ChunkGcCalc.ChunkGCLevel.DEV);
+							this.print("Running chunk GC...");
+						break;
+						case "list":
+							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
+						break;
+						case "level":
+
+						break;
+						default: this.print("/chunks [gc / list / level]");
 					}
 				}
 			break;

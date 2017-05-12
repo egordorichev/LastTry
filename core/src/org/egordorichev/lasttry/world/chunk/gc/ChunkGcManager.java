@@ -9,13 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Responsible for determining intervals between Chunk GC should be run and amount of chunks to be freed.
- *
  */
 //todo re-evaluate synchronized methods
 //todo on first run, interval should be set to 10 seconds to allow game to load previous chunks?
 //todo use synchronized block
-public class ChunkGcManager {
 
+public class ChunkGcManager {
     boolean chunkGcInProgress = false;
 
     public ChunkGcManager() {
@@ -46,19 +45,18 @@ public class ChunkGcManager {
         }
     }
 
-    private synchronized int getCurrentlyLoadedChunks(){ return Globals.world.chunks.getImmutableLoadedChunks().size(); }
+    public synchronized int getCurrentlyLoadedChunks() {
+    	return Globals.world.chunks.getImmutableLoadedChunks().size();
+    }
 
     public synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
-
         Log.debug("Level of chunk gc to be scheduled is: "+chunkGCLevel.getLevelDescription());
 
         int futureTimeSecondsToRunChunkGc = chunkGCLevel.getTimeIntervalBeforeNextAttempt();
-
         this.scheduleFutureChunkGcThread(chunkGCLevel);
     }
 
-    private synchronized void scheduleFutureChunkGcThread(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
-
+    public synchronized void scheduleFutureChunkGcThread(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
         Util.futureOneTimeRunInThread(new Callable() {
             @Override
             public void call() {
