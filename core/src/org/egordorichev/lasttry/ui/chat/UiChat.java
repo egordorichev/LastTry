@@ -90,7 +90,7 @@ public class UiChat extends UiPanel {
 							this.print("Running instant chunk GC...");
 						break;
 						case "list":
-							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
+							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "+Globals.world.getSize().getMaxChunks());
 						break;
 						default: this.print("/chunks [gc / list]");
 					}
