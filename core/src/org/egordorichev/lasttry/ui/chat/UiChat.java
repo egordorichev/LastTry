@@ -13,9 +13,6 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.state.GamePlayState;
 import org.egordorichev.lasttry.ui.UiPanel;
 import org.egordorichev.lasttry.ui.UiTextInput;
-import org.egordorichev.lasttry.util.Log;
-import org.egordorichev.lasttry.world.chunk.gc.ChunkGcCalc;
-import org.egordorichev.lasttry.world.chunk.gc.ChunkGcLevelConstants;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -90,8 +87,8 @@ public class UiChat extends UiPanel {
 				} else {
 					switch (parts[1]) {
 						case "gc":
-							Globals.chunkGcManager.scheduleFutureChunkGcThread(ChunkGcCalc.ChunkGCLevel.DEV);
-							this.print("Running chunk GC...");
+							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
+							this.print("Running instant chunk GC...");
 						break;
 						case "list":
 							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
