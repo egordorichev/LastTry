@@ -95,6 +95,13 @@ public class UiChat extends UiPanel {
 				}
 			}
 		});
+
+		this.commands.add(new ChatCommand("/heal") {
+			@Override
+			public void call(String[] args) {
+				Globals.player.stats.modifyHP(+1000);
+			}
+		});
 	}
 
 	@Override
