@@ -81,7 +81,7 @@ public class UiChat extends UiPanel {
 			break;
 			case "/chunks":
 				if (parts.length == 1) {
-					this.print("/chunks [gc / list / level]");
+					this.print("/chunks [gc / list]");
 				} else {
 					switch (parts[1]) {
 						case "gc":
@@ -91,10 +91,7 @@ public class UiChat extends UiPanel {
 						case "list":
 							this.print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded");
 						break;
-						case "level":
-
-						break;
-						default: this.print("/chunks [gc / list / level]");
+						default: this.print("/chunks [gc / list]");
 					}
 				}
 			break;
