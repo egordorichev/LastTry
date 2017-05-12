@@ -3,7 +3,9 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.components.*;
+import org.egordorichev.lasttry.entity.components.AiComponent;
+import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
+import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
@@ -37,7 +39,6 @@ public class CreatureWithAI extends Creature {
 				Globals.entityManager.markForRemoval(this);
 			}
 
-			LastTry.debug.print("Complete in try despawn");
 		} catch (Exception e){
 			LastTry.handleException(e);
 		}
