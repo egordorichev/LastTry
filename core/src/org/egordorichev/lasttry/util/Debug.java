@@ -11,10 +11,10 @@ import java.util.*;
 public class Debug {
     private boolean enabled;
     private int uniqueCounter;
-    // LinkedHashMap guarantees insertion order of elements, is kept.
     private Map<Integer, GenericContainer.UniqueTypePair> messagesToBePrinted = new LinkedHashMap<>();
+
     public Debug() {
-        this.enabled = false;
+        this.enabled = !LastTry.release;
     }
 
     public void render() {

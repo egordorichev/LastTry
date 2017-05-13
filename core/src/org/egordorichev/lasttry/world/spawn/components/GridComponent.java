@@ -180,7 +180,4 @@ public class GridComponent {
 
         return isEnemyInCircleSpawnArea;
     }
-
-
-
 }

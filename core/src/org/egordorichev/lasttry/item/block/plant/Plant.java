@@ -68,7 +68,7 @@ public class Plant extends Block {
 	}
 
 	@Override
-    public void renderBlock(int x, int y) {
+    public void renderBlock(int x, int y, byte binary) {
         int hp = Globals.world.blocks.getHP(x, y);
 
         int tx = 0;
@@ -81,7 +81,7 @@ public class Plant extends Block {
 
         Graphics.batch.draw(this.tiles, x * Block.SIZE, (Globals.world.getHeight() - y - 1) * Block.SIZE,
             tx, 0, Block.SIZE, Block.SIZE);
-    }
+	}
 
     @Override
     protected boolean renderCracks() {

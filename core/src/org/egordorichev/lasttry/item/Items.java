@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.graphics.Assets;
@@ -72,7 +73,7 @@ public class Items {
 		}
 
 		dirtWall = new Wall(ItemID.dirtWall, Language.text.get("dirtWall"), Assets.getTexture(Textures.dirtWallIcon), Assets.getTexture(Textures.dirtWall));
-		dirtBlock= new BlockGround(ItemID.dirtBlock, Language.text.get("dirtBlock"), ToolPower.pickaxe(10), Assets.getTexture(Textures.dirtIcon), Assets.getTexture(Textures.dirt));
+		dirtBlock = new BlockGround(ItemID.dirtBlock, Language.text.get("dirtBlock"), ToolPower.pickaxe(10), Assets.getTexture(Textures.dirtIcon), Assets.getTexture(Textures.dirt));
 		grassBlock = new Grass(ItemID.grassBlock, Language.text.get("grassBlock"), Assets.getTexture(Textures.grassIcon), Assets.getTexture(Textures.grass));
 		copperCoin = new Coin(ItemID.copperCoin, Language.text.get("copperCoin"), Assets.getTexture(Textures.copperCoin));
 		silverCoin = new Coin(ItemID.silverCoin, Language.text.get("silverCoin"), Assets.getTexture(Textures.silverCoin));

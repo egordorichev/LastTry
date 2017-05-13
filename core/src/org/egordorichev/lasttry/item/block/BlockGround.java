@@ -12,18 +12,22 @@ public class BlockGround extends Block {
         super(id, name, true, requiredPower, texture, tiles);
     }
 
-    /**
+	@Override
+	public byte calculateBinary(int x, int y) {
+		boolean t = Globals.world.blocks.get(x, y + 1) instanceof BlockGround;
+		boolean r = Globals.world.blocks.get(x + 1, y) instanceof BlockGround;
+		boolean b = Globals.world.blocks.get(x, y - 1) instanceof BlockGround;
+		boolean l = Globals.world.blocks.get(x - 1, y) instanceof BlockGround;
+
+		return calculateBinary(t, r, b, l);
+	}
+
+	/**
      * Overridden so blocks of the same type merge.
      */
     @Override
-    public void renderBlock(int x, int y) {
-        boolean t = Globals.world.blocks.get(x, y + 1) instanceof BlockGround;
-        boolean r = Globals.world.blocks.get(x + 1, y) instanceof BlockGround;
-        boolean b = Globals.world.blocks.get(x, y - 1) instanceof BlockGround;
-        boolean l = Globals.world.blocks.get(x - 1, y) instanceof BlockGround;
-
+    public void renderBlock(int x, int y, byte binary) {
         short variant = 1; // TODO: FIXME: replace  with var
-	    byte binary = Block.calculateBinary(t, r, b, l);
 
         if (binary == 15) {
             // TODO: Replace (binary) with (corner)
