@@ -14,6 +14,7 @@ import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
@@ -54,7 +55,7 @@ public class GamePlayState implements State {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
 			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
-		if (!this.paused) {
+		if (!paused) {
 			Globals.environment.update((int) delta);
 			Globals.entityManager.update((int) delta);
 			Globals.player.update((int) delta);
@@ -90,7 +91,7 @@ public class GamePlayState implements State {
 		int hp = Globals.player.stats.getHp();
 		int x = Gdx.graphics.getWidth() - 200;
 
-		Assets.f22.draw(Graphics.batch, String.format("Life: %d/%d", hp, Globals.player.stats.getMaxHP()), x,
+		Assets.f22.draw(Graphics.batch, String.format(Language.text.get("hp") + ": %d/%d", hp, Globals.player.stats.getMaxHP()), x,
 				Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {
