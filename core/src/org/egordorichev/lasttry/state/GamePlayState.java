@@ -28,8 +28,8 @@ public class GamePlayState implements State {
 		int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
 		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
 
-		Globals.player.spawn(spawnX, spawnY);
 		Globals.entityManager = new EntityManager();
+		Globals.entityManager.spawn(Globals.player, spawnX, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
@@ -57,7 +57,6 @@ public class GamePlayState implements State {
 		if (!this.paused) {
 			Globals.environment.update((int) delta);
 			Globals.entityManager.update((int) delta);
-			Globals.player.update((int) delta);
 
 			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
 				LastTry.debug.toggle();
@@ -80,7 +79,6 @@ public class GamePlayState implements State {
 
 		Globals.world.render();
 		Globals.entityManager.render();
-		Globals.player.render();
 
 		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
 

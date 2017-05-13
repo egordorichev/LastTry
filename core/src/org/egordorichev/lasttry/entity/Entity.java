@@ -1,12 +1,14 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.Layers;
 
 public class Entity {
 	protected boolean active = false;
+	protected int zIndex = 0;
 
 	public Entity() {
-
+		this.setZIndex(Layers.entity);
 	}
 
 	public void render() {
@@ -36,6 +38,14 @@ public class Entity {
 		this.onDeath();
 
 		Globals.entityManager.markForRemoval(this);
+	}
+
+	public void setZIndex(int zIndex) {
+		this.zIndex = zIndex;
+	}
+
+	public int getzIndex() {
+		return this.zIndex;
 	}
 
 	protected void onSpawn() {
