@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 
 public class Creature extends Entity {
@@ -47,5 +48,9 @@ public class Creature extends Entity {
 		this.physics.update(dt);
 		this.stats.update(dt);
 		this.graphics.update();
+
+		if (this.stats.getHp() == 0) {
+			this.die();
+		}
 	}
 }

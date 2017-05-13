@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -86,17 +87,10 @@ public class Tool extends Item {
 		return this.rarity;
 	}
 
-    /**
-     *  Uses the tool to attack and handles calculations needed.
-     */
     private void handleToolAttack() {
-        //Retrieve active enemies
         List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
+	    Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
 
-        //Retrieve equipped player hitbox
-        Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
-
-        //Loop through active enemies to check if enemy is not invulnerable then check if there is intersection between hitboxes.
         activeEnemies.stream().forEach(enemy -> {
 
             // if(enemy.() == false) { : TODO invulnerable enemies
@@ -107,25 +101,12 @@ public class Tool extends Item {
         });
     }
 
-	/**
-	 * Generates a Rectangle object signifying a hitbox that encompasses both the Player's personal hitbox and
-	 * the hitbox of the equipped weapon.
-	 *
-	 * @return Rectangle object signifying equipped player hitbox.
-	 */
+
 	private Rectangle generateEquippedPlayerHitBox() {
-	    // TODO Rewrite this entire method, it is wrong.  Hitbox should be rotated with the weapon.
-
-		//Retrieve the player hitbox
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
-
-		//Retrieve item texture, will be used for calculating item dimensions
 		final Texture itemTexture = this.getTexture();
-
-		//Generate weapon hitbox dimensions, player dimensions have not yet been taken into account
 		final Rectangle toolHitBox = new Rectangle(0, 0, itemTexture.getWidth(), itemTexture.getHeight());
 
-		//Generate a hitbox that combines the weapon reach and the player reach
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x+toolHitBox.x,
 			playerHitBox.y+toolHitBox.y,
 			playerHitBox.width+toolHitBox.width,
@@ -134,73 +115,40 @@ public class Tool extends Item {
 		return equippedPlayerHitbox;
 	}
 
-	/**
-	 * Retrieves hp points to be removed from enemy and modifies hp of enemy object.
-	 *
-	 * @param enemy Enemy object representing enemy
-	 */
 	private void inflictDamageOnEnemy(final Enemy enemy) {
-		Log.debug("Tool hitbox intersects with enemy hitbox");
+		enemy.stats.modifyHP(-this.calculateDamageToInflict(enemy));
 
-		final int damageToInflict = this.calculateDamageToInflict(enemy);
-
-		Log.debug("Calculate weapon damage is: "+damageToInflict);
-
-		enemy.stats.modifyHP(damageToInflict);
 		// enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
 		// TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
 		// enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
-
 	}
 
-	/**
-	 * Returns damage to inflict on enemy.
-	 * Damage is a negative integer, calculated using 'baseDamage' of weapon, defense points of enemy and critical
-	 * strike chance.
-	 *
-	 * @param enemy Enemy object
-	 * @return Negative integer representing hp points to subtract from enemy
-	 */
 	private int calculateDamageToInflict(final Enemy enemy) {
-		//Round float to int
 		int weaponDamage = Math.round(this.baseDamage);
 
-		//If crit strike chance is active, double
 		if (this.criticalStrikeChanceActive()) {
-			Log.debug("Critical strike chance active");
 			weaponDamage = weaponDamage * 2;
+			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage), (int) enemy.physics.getCenterX()
+				+ LastTry.random.nextInt(32) - 32, (int) enemy.physics.getCenterY()+ LastTry.random.nextInt(32) - 32);
+		} else {
+			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage), (int) enemy.physics.getCenterX()
+				+ LastTry.random.nextInt(32) - 32, (int) enemy.physics.getCenterY()+ LastTry.random.nextInt(32) - 32);
 		}
 
-		//TODO Remove these debug statements
-		Log.debug("Calculate weapon base damage is: " + weaponDamage + " defense of enemy is: " + enemy.stats.getDefense());
-
-		//Compensate for enemy defence points.
-		weaponDamage = weaponDamage - enemy.stats.getDefense();
+		weaponDamage = weaponDamage - enemy.stats.getDefense() / 2;
 
 		if (weaponDamage < 0) {
-			Log.debug("No damage will be done as weaponDamage is not greater than defense of enemy");
+			weaponDamage = 1; // Min damage!
 		}
-
-		//Negate the value
-		weaponDamage = Math.negateExact(weaponDamage);
 
 		return weaponDamage;
 	}
 
-
-	/**
-	 * Returns a boolean indicating whether a critical strike should be activated for the strike.
-	 * Generates a random number, if random number is greater
-	 *
-	 * @return
-	 */
 	private boolean criticalStrikeChanceActive() {
-	    //Generate random number, if less than critical strike chance percentage return true
-		if (LastTry.random.nextInt(100) < criticalStrikeChance) {
+		if (LastTry.random.nextInt(100) < this.criticalStrikeChance) {
 			return true;
 		}
 
 		return false;
 	}
-
 }

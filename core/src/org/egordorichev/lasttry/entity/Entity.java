@@ -17,7 +17,7 @@ public class Entity {
 
 	}
 
-	// Pixels
+	// In Pixels!
 	public void spawn(int x, int y) {
 		if (this.active) {
 			return;
@@ -49,5 +49,4 @@ public class Entity {
 	public boolean isActive() {
 		return this.active;
 	}
-
 }

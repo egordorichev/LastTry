@@ -84,8 +84,9 @@ public class EntityManager {
 
     public void markForRemoval(Entity entity) {
         this.clearList.add(entity);
-        //Maintaining a second list for quick enemy retrieval.
-        if(entity instanceof Enemy){
+        // Maintaining a second list for quick enemy retrieval.
+
+	    if (entity instanceof Enemy){
             enemyEntities.remove(entity);
         }
     }
@@ -96,26 +97,20 @@ public class EntityManager {
 
     public List<Enemy> getEnemyEntities() { return enemyEntities; }
 
-    //Todo Will be rewritten to include NPCs
     private synchronized void attemptDespawnEnemies() {
-        try{
-            //Iterator cannot be used here, as list size is being changed in another thread.
-            //Iterator use here, will result in a NPE
-            for(int i=0; i<this.enemyEntities.size(); i++){
+        try {
+            for (int i = 0; i < this.enemyEntities.size(); i++){
                 CreatureWithAI creatureWithAI = (CreatureWithAI)enemyEntities.get(i);
 
-                //Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+                // Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
                 ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
 
                 readOnlyLock.readLock().lock();
                 creatureWithAI.tryToDespawn();
                 readOnlyLock.readLock().unlock();
-
             }
-            
-        }catch (Exception e){
+        } catch (Exception e) {
             LastTry.handleException(e);
         }
-
     }
 }
