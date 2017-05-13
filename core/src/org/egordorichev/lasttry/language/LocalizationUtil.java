@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.language;
 
 import com.badlogic.gdx.Gdx;
-import com.sun.xml.internal.ws.util.StringUtils;
 import org.egordorichev.lasttry.core.Crash;
 
 import java.io.*;
@@ -41,7 +40,7 @@ public final class LocalizationUtil {
 		for (int i = 0; i < localizableFields.size(); i++){
 			Field field = localizableFields.get(i);
 
-			text.append("\t").append(field.getName()).append(" = ").append(StringUtils.capitalize(field.getName()).replaceAll("(\\p{Ll})(\\p{Lu})","$1 $2")).append("\n");
+			text.append("\t").append(field.getName()).append(" = ").append(capitalize(field.getName()).replaceAll("(\\p{Ll})(\\p{Lu})","$1 $2")).append("\n");
 		}
 
 		try {
@@ -49,5 +48,9 @@ public final class LocalizationUtil {
 		} catch (IOException e) {
 			Crash.report(Thread.currentThread(), e);
 		}
+	}
+
+	private static String capitalize(String string){
+		return Character.toUpperCase(string.charAt(0)) + string.substring(1);
 	}
 }
