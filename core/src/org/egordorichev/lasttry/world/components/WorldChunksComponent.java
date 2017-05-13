@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
@@ -65,17 +65,28 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for (int y = minY; y < maxY; y++) {
 			for (int x = minX; x < maxX; x++) {
-				// Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
-
-				// if (wall != null) {
-				//	System.out.println("draw");
-				//	wall.renderWall(x, y);
-				// }
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);
-					block.renderBlock(x, y);
+
+					byte binary = block.calculateBinary(x, y);
+
+					if (binary != 15) {
+						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+
+						if (wall != null) {
+							wall.renderWall(x, y);
+						}
+					}
+
+				 	block.renderBlock(x, y, binary);
+				} else {
+					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+
+					if (wall != null) {
+						wall.renderWall(x, y);
+					}
 				}
 			}
 		}

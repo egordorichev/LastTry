@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 

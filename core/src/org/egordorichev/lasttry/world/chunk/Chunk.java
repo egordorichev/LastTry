@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.Wall;
+import org.egordorichev.lasttry.item.wall.Wall;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

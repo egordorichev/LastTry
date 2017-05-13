@@ -117,23 +117,23 @@ public class Block extends Item {
     	Globals.world.blocks.set(this.id, x, y);
     }
 
+    public byte calculateBinary(int x, int y) {
+	    boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
+	    boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
+	    boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
+	    boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
+        return Block.calculateBinary(t, r, b, l);
+    }
+
     /**
      * Renders the block at the given coordinates.
-     *
      * @param x X-position in the world.
      * @param y Y-position in the world.
      */
-    public void renderBlock(int x, int y) {
-        boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
-        boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
-        boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
-        boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
+    public void renderBlock(int x, int y, byte binary) {
+        short variant = 1; // TODO: FIXME: replace with var
 
-        // TODO: FIXME: replace with var
-        short variant = 1;
-        byte binary = Block.calculateBinary(t, r, b, l);
-
-        if (binary == 15) {
+	    if (binary == 15) {
             Graphics.batch.draw(this.tiles, x * Block.SIZE,
                 y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
