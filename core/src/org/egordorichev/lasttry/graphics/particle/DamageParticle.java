@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.graphics.particle;
 
+import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.graphics.Assets;

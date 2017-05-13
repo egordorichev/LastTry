@@ -6,8 +6,7 @@ import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -15,6 +14,8 @@ public class EntityManager {
     private List<Entity> entities = new ArrayList<>();
     private List<Enemy> enemyEntities = new ArrayList<>();
     private List<Entity> clearList = new ArrayList<>();
+
+    private static EntityComparator comparator = new EntityComparator();
 
     // Seconds
     public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
@@ -63,7 +64,26 @@ public class EntityManager {
     public Entity spawn(Entity entity, int x, int y) {
         entity.spawn(x, y);
         this.entities.add(entity);
+        this.sort();
+
         return entity;
+    }
+
+    private static class EntityComparator implements Comparator<Entity> {
+	    @Override
+	    public int compare(Entity o, Entity t1) {
+		    if (o.getzIndex() > t1.getzIndex()) {
+		    	return 1;
+		    } else if (o.getzIndex() < t1.getzIndex()) {
+		    	return -1;
+		    }
+
+		    return 0;
+	    }
+    }
+
+    private void sort() {
+	    Collections.sort(this.entities, comparator);
     }
 
     public Enemy spawnEnemy(String name, int x, int y) {
