@@ -25,10 +25,10 @@ public class SpawnSystem {
     private int enemiesInActiveAreaCount;
 
     public void update() {
-        if(Globals.environment.currentBiome.get() == null){
+        if(Globals.environment.currentBiome == null){
             return;
         }
-        this.biome = Globals.environment.currentBiome.get(); // Get user biome
+        this.biome = Globals.environment.currentBiome; // Get user biome
         this.refreshTriggered();
     }
 
