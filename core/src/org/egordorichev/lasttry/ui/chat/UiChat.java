@@ -102,6 +102,22 @@ public class UiChat extends UiPanel {
 				Globals.player.stats.modifyHP(+1000);
 			}
 		});
+
+		this.commands.add(new ChatCommand("/day") {
+			@Override
+			public void call(String[] args) {
+				Globals.environment.time.setHour((byte) 4);
+				Globals.environment.time.setMinute((byte) 30);
+			}
+		});
+
+		this.commands.add(new ChatCommand("/night") {
+			@Override
+			public void call(String[] args) {
+				Globals.environment.time.setHour((byte) 20);
+				Globals.environment.time.setMinute((byte) 30);
+			}
+		});
 	}
 
 	@Override

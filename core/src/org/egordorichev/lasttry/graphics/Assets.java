@@ -53,11 +53,13 @@ public class Assets {
 
 		generator.dispose();
 
-		//Textures are loaded here also
+		// Textures are loaded here also
 		loadTexture(Textures.greenSlime);
 		loadTexture(Textures.blueSlime);
 		loadTexture(Textures.eyeOfCthulhu);
 		loadTexture(Textures.zombie);
+		loadTexture(Textures.baldZombie);
+		loadTexture(Textures.slimedZombie);
 
 		loadTexture(Textures.dirt);
 		loadTexture(Textures.dirtIcon);

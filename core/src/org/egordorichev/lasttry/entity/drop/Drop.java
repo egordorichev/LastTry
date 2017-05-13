@@ -5,6 +5,8 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Drop {
     private int minAmount;
     private int maxAmount;
@@ -27,10 +29,7 @@ public class Drop {
     }
 
     public ItemHolder createHolder() {
-        // TODO: drop multiple for many items
-        int randBound = (this.maxAmount - this.minAmount) + 1;
-        int count = LastTry.random.nextInt(randBound) + this.maxAmount;
-        return new ItemHolder(this.item, count, Modifier.random(this.item));
+        return new ItemHolder(this.item, ThreadLocalRandom.current().nextInt(this.minAmount, this.maxAmount+ 1), Modifier.random(this.item));
     }
 
     public Item getItem() {

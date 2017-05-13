@@ -88,7 +88,7 @@ public class Item {
 	}
 
 	public static Item fromID(int id) {
-		if (id == 0) {
+		if (id <= 0 || id > ItemID.count) {
 			return null;
 		}
 
@@ -96,6 +96,6 @@ public class Item {
 	}
 
 	public int getMaxInStack() {
-		return 1;
+		return 999;
 	}
 }

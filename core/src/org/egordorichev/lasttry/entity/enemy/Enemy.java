@@ -40,10 +40,12 @@ public class Enemy extends CreatureWithAI {
     @Override
     public void onDeath() {
         for (Drop drop : this.drops) {
-            if (LastTry.random.nextInt(drop.getChance()) == 0) {
+	        if (LastTry.random.nextInt(drop.getChance()) == 0) {
                 DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-                Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
+		        System.out.println(droppedItem.getHolder().getItem().getID() + ":" + droppedItem.getHolder().getCount());
+
+		        Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
 		            (int) this.physics.getCenterY());
             }
         }
