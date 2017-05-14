@@ -38,8 +38,12 @@ public class Environment {
     }
 
     public void render() {
-        for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
+    	int time = this.time.getHour() * 60 + this.time.getMinute();
+		int height = Gdx.graphics.getHeight();
+
+        for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
+            Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height,
+		        time, 0, 1, 1024, false, false);
         }
 
         if (this.currentBiome != null) {

@@ -13,7 +13,8 @@ public class Assets {
 	public static BitmapFont f18;
 	public static BitmapFont f22;
 	public static BitmapFont f24;
-	//This font is used for error messages.
+
+	// This font is used for error messages.
 	public static BitmapFont f22Red;
 
 	public static boolean load() {
@@ -53,7 +54,6 @@ public class Assets {
 
 		generator.dispose();
 
-		// Textures are loaded here also
 		loadTexture(Textures.greenSlime);
 		loadTexture(Textures.blueSlime);
 		loadTexture(Textures.eyeOfCthulhu);
