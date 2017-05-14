@@ -26,6 +26,7 @@ public class Creature extends Entity {
 
 		this.stats = new CreatureStatsComponent(this);
 		this.state = new CreatureStateComponent(this);
+		this.effects = new CreatureEffectsComponent(this);
 	}
 
 	// Pixels

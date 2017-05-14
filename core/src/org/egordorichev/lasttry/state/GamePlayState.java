@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.effect.Buffs;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -33,6 +34,8 @@ public class GamePlayState implements State {
 		Globals.entityManager.spawn(Globals.player, spawnX, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
+
+		// Globals.player.effects.applyEffect(Buffs.honey, 100);
 
 		LastTry.ui.add(Globals.chat);
 	}
@@ -97,7 +100,7 @@ public class GamePlayState implements State {
 		}
 
 		LastTry.ui.render();
-		// LastTry.player.renderBuffs(); TODO
+		Globals.player.effects.render();
 		LastTry.debug.render();
 	}
 
