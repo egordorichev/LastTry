@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
@@ -107,7 +108,11 @@ public class Block extends Item {
     	if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
 			    (r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
 
-    		return false;
+    		Wall wall = Globals.world.walls.get(x, y);
+
+    		if (wall == null) {
+			    return false;
+		    }
 	    }
 
     	return true;
@@ -159,9 +164,7 @@ public class Block extends Item {
     	return true;
     }
 
-    /**
-     * Attempts to place the block in the world at the player's cursor.
-     */
+    /** Attempts to place the block in the world at the player's cursor. */
     @Override
     public boolean use() {
         int x = LastTry.getMouseXInWorld() / Block.SIZE;
@@ -198,10 +201,5 @@ public class Block extends Item {
      */
     public boolean isSolid() {
         return this.solid;
-    }
-
-    @Override
-    public int getMaxInStack() {
-        return 999;
     }
 }
