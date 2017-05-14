@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Graphics {
 	public static TextureRegion[] tileCracks;
 	public static Texture skyTexture = new Texture(Gdx.files.internal(Textures.sky));
+    public static Texture healthBarTexture;
+    public static Texture healthBarFrameTexture;
     public static SpriteBatch batch;
 
     public static void load() {
@@ -18,5 +20,8 @@ public class Graphics {
 				tileCracks[x * 4 + y] = new TextureRegion(Assets.getTexture(Textures.tileCracks), x * 18, y * 18, 18, 18);
 			}
 		}
+
+	    healthBarTexture = Assets.getTexture(Textures.healthBar);
+	    healthBarFrameTexture = Assets.getTexture(Textures.healthBarFrame);
 	}
 }

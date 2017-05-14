@@ -194,9 +194,12 @@ public class Assets {
 		loadTexture(Textures.honeyBuff);
 		loadTexture(Textures.peaceCandleBuff);
 		loadTexture(Textures.starInABottleBuff);
+
 		loadTexture(Textures.light);
 		loadTexture(Textures.shadow);
 		loadTexture(Textures.sky);
+		loadTexture(Textures.healthBar);
+		loadTexture(Textures.healthBarFrame);
 
 		loadTexture(Textures.corruptionWorld);
 		loadTexture(Textures.crimsonWorld);
