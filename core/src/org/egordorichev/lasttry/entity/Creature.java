@@ -51,17 +51,17 @@ public class Creature extends Entity {
 	public void renderHealthBar() {
 		float hp = (float) this.stats.getHp() / (float) this.stats.getMaxHP();
 
-		if (hp < 0.2f) {
+		if (hp < 0.3f) {
 			Graphics.batch.setColor(1, 0, 0, 1);
-		} else if (hp < 0.5f) {
+		} else if (hp < 0.6f) {
 			Graphics.batch.setColor(1, 1, 0, 1);
 		} else {
 			Graphics.batch.setColor(0, 1, 0, 1);
 		}
 
-		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 36);
+		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 
-		Graphics.batch.draw(Graphics.healthBarTexture, this.physics.getX(), this.physics.getY() - 20,
+		Graphics.batch.draw(Graphics.healthBarTexture, this.physics.getX() + 2, this.physics.getY() - 20,
 			mapped, 12, 0, 0, mapped, 12, false, false);
 		Graphics.batch.setColor(1, 1, 1, 1);
 		Graphics.batch.draw(Graphics.healthBarFrameTexture, this.physics.getX(), this.physics.getY() - 20);
