@@ -1,9 +1,4 @@
 language: java
 
-compiler:
-  - javac
-
-script: ./gradlew check
-
 notifications:
     email: false
