@@ -1,9 +1,7 @@
 language: java
 
-compiler:
-  - javac
-
-script: ./gradlew check
+jdk:
+  - oraclejdk8 
 
 notifications:
     email: false
