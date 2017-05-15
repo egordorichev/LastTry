@@ -54,6 +54,7 @@ public class Creature extends Entity {
 	public void update(int dt) {
 		super.update(dt);
 
+		this.graphics.update(dt);
 		this.stats.update(dt);
 
 		if (this.stats.getHp() == 0) {

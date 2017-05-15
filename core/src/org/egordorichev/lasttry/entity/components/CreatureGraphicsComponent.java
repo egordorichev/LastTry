@@ -31,7 +31,8 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 			this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
 	}
 
-	public void update() {
+	@Override
+	public void update(int dt) {
 		this.animations[this.creature.state.get().getID()].update();
 	}
 }
