@@ -1,13 +1,12 @@
 package org.egordorichev.lasttry.graphics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Graphics {
 	public static TextureRegion[] tileCracks;
-	public static Texture skyTexture = new Texture(Gdx.files.internal(Textures.sky));
+	public static Texture skyTexture;
     public static Texture healthBarTexture;
     public static Texture healthBarFrameTexture;
     public static SpriteBatch batch;
@@ -22,6 +21,7 @@ public class Graphics {
 		}
 
 	    healthBarTexture = Assets.getTexture(Textures.healthBar);
+	    skyTexture = Assets.getTexture(Textures.sky);
 	    healthBarFrameTexture = Assets.getTexture(Textures.healthBarFrame);
 	}
 }
