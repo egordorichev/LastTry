@@ -2,11 +2,13 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
-public class PhysicsComponent extends CreatureComponent {
+public class PhysicsComponent extends EntityComponent {
 	public enum Direction {
 		LEFT,
 		RIGHT
@@ -18,13 +20,13 @@ public class PhysicsComponent extends CreatureComponent {
 	protected Vector2 position = new Vector2();
 	protected Vector2 size = new Vector2();
 	protected Vector2 velocity = new Vector2();
-	protected boolean solid = true;
 	protected Rectangle hitbox;
 	protected Direction direction = Direction.RIGHT;
 	protected float speed = 1.0f;
+	protected boolean solid = true;
 
-	public PhysicsComponent(Creature creature) {
-		super(creature);
+	public PhysicsComponent(Entity entity) {
+		super(entity);
 	}
 
 	public PhysicsComponent() {
@@ -32,15 +34,15 @@ public class PhysicsComponent extends CreatureComponent {
 	}
 
 	@Override
-	public void setCreature(Creature creature) {
-		super.setCreature(creature);
+	public void setEntity(Entity entity) {
+		super.setEntity(entity);
 
 		this.size = new Vector2(32, 48); // TODO: get the size
 		this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
 	}
 
 	public void update(int dt) {
-		if (!this.creature.isActive()) {
+		if (!this.entity.isActive()) {
 			return;
 		}
 
@@ -50,19 +52,6 @@ public class PhysicsComponent extends CreatureComponent {
 
 		this.updateXVelocity();
 		this.updateYVelocity();
-
-		if (this.velocity.y > 0) {
-			this.creature.state.set(CreatureStateComponent.State.FALLING);
-		} else if (this.velocity.y == 0 && this.creature.state.get() == CreatureStateComponent.State.FALLING) {
-			this.creature.state.set(CreatureStateComponent.State.IDLE);
-		}
-
-		if (this.velocity.x == 0 && this.creature.state.get() != CreatureStateComponent.State.IDLE
-				&& this.creature.state.get() != CreatureStateComponent.State.FALLING
-				&& this.creature.state.get() != CreatureStateComponent.State.JUMPING) {
-
-			this.creature.state.set(CreatureStateComponent.State.IDLE);
-		}
 	}
 
 	public void jump() {

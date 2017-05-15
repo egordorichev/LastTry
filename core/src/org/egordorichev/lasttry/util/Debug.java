@@ -35,28 +35,28 @@ public class Debug {
 			return;
 		}
 
-		//Iterators are positions before the first element.
-		//A linked hash map is used, therefore we can guarantee the insertion order data is kept
+		// Iterators are positions before the first element.
+		// A linked hash map is used, therefore we can guarantee the insertion order data is kept
 		int currentMessageKey = messagesToBePrinted.keySet().iterator().next();
 
-		//Pair containing the String message and the amount of ticks the message should be displayed for.
+		// Pair containing the String message and the amount of ticks the message should be displayed for.
 		GenericContainer.UniqueTypePair<String, Integer> currentMessagePair = messagesToBePrinted.get(currentMessageKey);
 
 		String message = currentMessagePair.getValue1();
 		int gameTicksCounter = currentMessagePair.getValue2();
 
-		//If game ticks counter equals 0, means no more ticks should be allocated to rendering the message
-		if(gameTicksCounter==0){
+		// If game ticks counter equals 0, means no more ticks should be allocated to rendering the message
+		if(gameTicksCounter == 0){
 			messagesToBePrinted.remove(currentMessageKey);
 			return;
 		}
 
 		Assets.f18.draw(Graphics.batch, message, 10, 150);
 
-		//Decrement counter as it has been displayed for 1 tick
+		// Decrement counter as it has been displayed for 1 tick
 		gameTicksCounter--;
 
-		//Update the pair with the new game ticks counter.
+		// Update the pair with the new game ticks counter.
 		currentMessagePair.setValue2(gameTicksCounter);
 	}
 

@@ -1,8 +1,7 @@
 package org.egordorichev.lasttry.graphics.particle;
 
-import org.egordorichev.lasttry.Layers;
-import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
-import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
+import org.egordorichev.lasttry.entity.components.GraphicsComponent;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 
@@ -14,7 +13,7 @@ public class DamageParticle extends Particle {
 	public DamageParticle(boolean crit, int damage) {
 		super();
 
-		this.physics = new CreaturePhysicsComponent(this) {
+		this.physics = new PhysicsComponent(this) {
 			@Override
 			public void update(int dt) {
 				this.velocity.y += 0.1;
@@ -22,9 +21,11 @@ public class DamageParticle extends Particle {
 			}
 		};
 
+		this.damage = damage;
+		this.crit = crit;
 		this.physics.setSolid(false);
 
-		this.graphics = new CreatureGraphicsComponent() {
+		this.graphics = new GraphicsComponent() {
 			@Override
 			public void render() {
 				alpha -= 0.01;
@@ -45,9 +46,6 @@ public class DamageParticle extends Particle {
 			}
 		};
 
-		this.graphics.setCreature(this);
-
-		this.damage = damage;
-		this.crit = crit;
+		this.graphics.setEntity(this);
 	}
 }

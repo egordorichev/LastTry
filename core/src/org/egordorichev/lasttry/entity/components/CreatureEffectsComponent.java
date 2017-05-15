@@ -21,7 +21,7 @@ public class CreatureEffectsComponent extends CreatureComponent {
     }
 
     public void applyEffect(final Effect effect, final int time) {
-        //If effect already exists, simply update time
+        // If effect already exists, simply update time
         effects.stream().forEach(effectData ->{
             if(effectData.getEffect() == effect){
                 effectData.setTime(time);
@@ -29,7 +29,7 @@ public class CreatureEffectsComponent extends CreatureComponent {
             }
         });
 
-        //Else add effect
+        // Else add effect
         effects.add(new EffectData(this.creature, effect, time));
     }
 

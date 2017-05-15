@@ -1,54 +1,36 @@
 package org.egordorichev.lasttry.entity;
 
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.Util;
 
 public class Creature extends Entity {
-	public CreaturePhysicsComponent physics;
-	public CreatureGraphicsComponent graphics;
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
 	public CreatureEffectsComponent effects;
 
-	public Creature() {
-		this.physics = new CreaturePhysicsComponent(this);
-		this.stats = new CreatureStatsComponent(this);
-		this.state = new CreatureStateComponent(this);
-		this.effects = new CreatureEffectsComponent(this);
-	}
-
 	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
-		this.physics = physics;
-		this.graphics = graphics;
-
-		this.physics.setCreature(this);
-		this.graphics.setCreature(this);
+		super(physics, graphics);
 
 		this.stats = new CreatureStatsComponent(this);
 		this.state = new CreatureStateComponent(this);
 		this.effects = new CreatureEffectsComponent(this);
 	}
 
-	// Pixels
-	@Override
-	public void spawn(int x, int y) {
-		super.spawn(x, y);
-		this.physics.setPosition(x, y);
+	public Creature() {
+		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
 	@Override
 	public void render() {
 		super.render();
-		this.graphics.render();
 
 		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
 			this.renderHealthBar();
 		}
 	}
 
-	public void renderHealthBar() {
+	protected void renderHealthBar() {
 		float hp = (float) this.stats.getHp() / (float) this.stats.getMaxHP();
 
 		if (hp < 0.3f) {
@@ -60,20 +42,19 @@ public class Creature extends Entity {
 		}
 
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
+		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-		Graphics.batch.draw(Graphics.healthBarTexture, this.physics.getX() + 2, this.physics.getY() - 20,
+		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
 			mapped, 12, 0, 0, mapped, 12, false, false);
 		Graphics.batch.setColor(1, 1, 1, 1);
-		Graphics.batch.draw(Graphics.healthBarFrameTexture, this.physics.getX(), this.physics.getY() - 20);
+		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
 	}
 
 	@Override
 	public void update(int dt) {
 		super.update(dt);
 
-		this.physics.update(dt);
 		this.stats.update(dt);
-		this.graphics.update();
 
 		if (this.stats.getHp() == 0) {
 			this.die();

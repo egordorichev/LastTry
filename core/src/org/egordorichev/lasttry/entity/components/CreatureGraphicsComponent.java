@@ -1,11 +1,13 @@
 package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
-	public Animation[] animations;
 	protected Texture texture;
+	protected Creature creature;
 
 	public CreatureGraphicsComponent() {
 		int size = CreatureStateComponent.State.values().length;
@@ -15,6 +17,12 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 		for (int i = 0; i < size; i++) {
 			this.animations[i] = new Animation(true);
 		}
+	}
+
+	@Override
+	public void setEntity(Entity entity) {
+		super.setEntity(entity);
+		this.creature = (Creature) entity;
 	}
 
 	@Override

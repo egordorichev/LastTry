@@ -1,22 +1,35 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.Layers;
+import org.egordorichev.lasttry.entity.components.GraphicsComponent;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class Entity {
 	protected boolean active = false;
 	protected int zIndex = 0;
 
+	public PhysicsComponent physics;
+	public GraphicsComponent graphics;
+
+	public Entity(PhysicsComponent physics, GraphicsComponent graphics) {
+		this.graphics = graphics;
+		this.graphics.setEntity(this);
+
+		this.physics = physics;
+		this.physics.setEntity(this);
+	}
+
 	public Entity() {
-		this.setZIndex(Layers.entity);
+		this.physics = new PhysicsComponent(this);
+		this.graphics = new GraphicsComponent(this);
 	}
 
 	public void render() {
-
+		this.graphics.render();
 	}
 
 	public void update(int dt) {
-
+		this.physics.update(dt);
 	}
 
 	// In Pixels!
@@ -25,7 +38,9 @@ public class Entity {
 			return;
 		}
 
+		this.physics.setPosition(x, y);
 		this.active = true;
+
 		this.onSpawn();
 	}
 
@@ -44,7 +59,7 @@ public class Entity {
 		this.zIndex = zIndex;
 	}
 
-	public int getzIndex() {
+	public int getZIndex() {
 		return this.zIndex;
 	}
 
