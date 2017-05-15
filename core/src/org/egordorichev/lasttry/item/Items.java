@@ -66,13 +66,14 @@ public class Items {
 	public static final Item wood;
 	public static final Item workBench;
 	public static final Item superpick;
+	public static final Item woodenHammer;
 
 	static {
 		if (!Bootstrap.isLoaded()) {
 			Log.error("Trying to access items class before bootstrap");
 		}
 
-		dirtWall = new Wall(ItemID.dirtWall, Language.text.get("dirtWall"), Assets.getTexture(Textures.dirtWallIcon), Assets.getTexture(Textures.dirtWall));
+		dirtWall = new Wall(ItemID.dirtWall, Language.text.get("dirtWall"), ToolPower.hammer(10), Assets.getTexture(Textures.dirtWallIcon), Assets.getTexture(Textures.dirtWall));
 		dirtBlock = new BlockGround(ItemID.dirtBlock, Language.text.get("dirtBlock"), ToolPower.pickaxe(10), Assets.getTexture(Textures.dirtIcon), Assets.getTexture(Textures.dirt));
 		grassBlock = new Grass(ItemID.grassBlock, Language.text.get("grassBlock"), Assets.getTexture(Textures.grassIcon), Assets.getTexture(Textures.grass));
 		copperCoin = new Coin(ItemID.copperCoin, Language.text.get("copperCoin"), Assets.getTexture(Textures.copperCoin));
@@ -122,6 +123,7 @@ public class Items {
 		wood = new Wood(ItemID.wood, Language.text.get("wood"), Assets.getTexture(Textures.woodIcon), Assets.getTexture(Textures.wood));
 		workBench = new WorkBench(ItemID.workBench, Language.text.get("workBench"), Assets.getTexture(Textures.workBench), 2, 1);
 		superpick = new Pickaxe(ItemID.superpick, "Superpick", 1000, 500, 0, Assets.getTexture(Textures.woodenSword));
+		woodenHammer = new Hammer(ItemID.woodenHamer, "Wooden Hammer", 2, 25, 36, Assets.getTexture(Textures.woodenHammer));
 	}
 
 	public static void load() {

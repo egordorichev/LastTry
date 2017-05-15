@@ -16,20 +16,11 @@ public class Block extends Item {
     public static final int SIZE = 16;
     public static final byte MAX_HP = 4;
 
-    /** Is the block solid */
     protected boolean solid;
-
-    /** The tool type to use for the block */
-    protected ToolPower power;
-
-    /** The block spite-sheet */
-    protected Texture tiles;
-
-	/** Block width in tiles */
+	protected ToolPower power;
+	protected Texture tiles;
 	protected int width = 1;
-
-    /** Block height in tiles */
-    protected int height = 1;
+	protected int height = 1;
 
     public Block(short id, String name, boolean solid, ToolPower requiredPower, Texture texture, Texture tiles) {
         super(id, name, texture);
@@ -44,16 +35,7 @@ public class Block extends Item {
         return true;
     }
 
-	/**
-     * Calculates a number based on the edges that have blocks of the same type.
-     *
-     * @param top    Top edge matches current type.
-     * @param right  Right edge matches current type.
-     * @param bottom Bottom edge matches current type.
-     * @param left   Left edge matches current type.
-     * @return
-     */
-    public static byte calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
+	public static byte calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
         byte result = 0;
 
         if (top)
@@ -68,12 +50,6 @@ public class Block extends Item {
         return result;
     }
 
-    /**
-     * Updates the block at given coordinates
-     *
-     * @param x X-position in the world.
-     * @param y Y-position in the world.
-     */
     public void updateBlockStyle(int x, int y) {
         /* TODO: if block has animation, update it */
     }
@@ -130,11 +106,6 @@ public class Block extends Item {
         return Block.calculateBinary(t, r, b, l);
     }
 
-    /**
-     * Renders the block at the given coordinates.
-     * @param x X-position in the world.
-     * @param y Y-position in the world.
-     */
     public void renderBlock(int x, int y, byte binary) {
         short variant = 1; // TODO: FIXME: replace with var
 
@@ -159,12 +130,10 @@ public class Block extends Item {
         }
     }
 
-    /** Returns true, if we allowed to draw cracks here */
     protected boolean renderCracks() {
     	return true;
     }
 
-    /** Attempts to place the block in the world at the player's cursor. */
     @Override
     public boolean use() {
         int x = LastTry.getMouseXInWorld() / Block.SIZE;
@@ -187,18 +156,10 @@ public class Block extends Item {
         return false;
     }
 
-    /**
-     * Returns required power to break this block
-     * @return required power to break this block
-     */
     public ToolPower getRequiredPower() {
     	return this.power;
     }
 
-    /**
-     * Returns the solidity of the block.
-     * @return true if the block is solid.
-     */
     public boolean isSolid() {
         return this.solid;
     }

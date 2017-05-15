@@ -9,14 +9,18 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Wall extends org.egordorichev.lasttry.item.Item {
 	protected Texture tiles;
+	protected ToolPower power;
 
-	public Wall(short id, String name, Texture texture, Texture tiles) {
+	public Wall(short id, String name, ToolPower requiredPower, Texture texture, Texture tiles) {
 		super(id, name, texture);
+
 		this.tiles = tiles;
+		this.power = requiredPower;
 	}
 
 	public static Wall getForBlockID(int id) {
@@ -30,11 +34,6 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}
 
-	/**
-	 * Renders the wall at the given coordinates.
-	 * @param x X-position in the world.
-	 * @param y Y-position in the world.
-	 */
 	public void renderWall(int x, int y) {
 		boolean t = Globals.world.walls.getID(x, y + 1) == this.id;
 		boolean r = Globals.world.walls.getID(x + 1, y) == this.id;
@@ -49,6 +48,14 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 			y * Block.SIZE, Block.SIZE, Block.SIZE,
 			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
 			Block.SIZE, false, false);
+
+		if (this.renderCracks()) {
+			byte hp = Globals.world.walls.getHP(x, y);
+
+			if (hp < Block.MAX_HP) {
+				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
+			}
+		}
 	}
 
 	@Override
@@ -65,6 +72,10 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		}
 
 		return false;
+	}
+
+	protected boolean renderCracks() {
+		return true;
 	}
 
 	@Override
@@ -100,5 +111,9 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		}
 
 		return true;
+	}
+
+	public ToolPower getRequiredPower() {
+		return this.power;
 	}
 }

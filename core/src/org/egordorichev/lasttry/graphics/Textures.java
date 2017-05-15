@@ -91,6 +91,7 @@ public class Textures {
 	public static final String woodIcon = "WoodIcon.png";
 	public static final String tileCracks = "TileCracks.png";
 	public static final String workBench = "WorkBench.png";
+	public static final String woodenHammer = "WoodenHammer.png";
 
 	public static final String ammoReservationBuff = "AmmoReservationBuff.png";
 	public static final String archeryBuff = "ArcheryBuff.png";

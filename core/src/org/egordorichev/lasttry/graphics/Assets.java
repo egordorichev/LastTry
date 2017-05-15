@@ -148,6 +148,7 @@ public class Assets {
 		loadTexture(Textures.livingWood);
 		loadTexture(Textures.tileCracks);
 		loadTexture(Textures.workBench);
+		loadTexture(Textures.woodenHammer);
 
 		loadTexture(Textures.ammoReservationBuff);
 		loadTexture(Textures.archeryBuff);

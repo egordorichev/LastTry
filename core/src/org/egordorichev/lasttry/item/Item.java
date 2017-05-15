@@ -88,7 +88,7 @@ public class Item {
 	}
 
 	public static Item fromID(int id) {
-		if (id <= 0 || id > ItemID.count) {
+		if (id <= 0 || id >= ItemID.count) {
 			return null;
 		}
 

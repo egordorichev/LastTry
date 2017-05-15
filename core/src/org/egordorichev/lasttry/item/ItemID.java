@@ -52,6 +52,7 @@ public class ItemID {
 	public final static short wood = 50;
 	public final static short workBench = 51;
 	public final static short superpick = 52;
+	public final static short woodenHamer = 53;
 
-    public final static short count = 53; // Change this, if you add another item!
+    public final static short count = 54; // Change this, if you add another item!
 }
