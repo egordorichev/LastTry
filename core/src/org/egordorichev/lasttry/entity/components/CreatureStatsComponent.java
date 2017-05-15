@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.entity.components;
 
-import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Creature;
 
-public class CreatureStatsComponent extends EntityComponent {
-	private Entity entity;
+public class CreatureStatsComponent extends CreatureComponent {
 	private int hp;
 	private int maxHp;
 	private int mana;
@@ -11,8 +10,8 @@ public class CreatureStatsComponent extends EntityComponent {
 	private int defense;
 	private int damage;
 
-	public CreatureStatsComponent(Entity entity) {
-		this.entity = entity;
+	public CreatureStatsComponent(Creature creature) {
+		super(creature);
 	}
 
 	public void update(int dt) {

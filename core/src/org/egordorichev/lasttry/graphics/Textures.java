@@ -141,6 +141,8 @@ public class Textures {
 	public static final String light = "Light.png";
 	public static final String shadow = "Shadow.png";
 	public static final String sky = "Sky.png";
+	public static final String healthBar = "HealthBar.png";
+	public static final String healthBarFrame = "HealthBarFrame.png";
 
 	public static final String corruptionWorld = "IconCorruption.png";
 	public static final String crimsonWorld = "IconCrimson.png";
@@ -148,5 +150,7 @@ public class Textures {
 	public static final String crimsonHardmodeWorld = "IconHallowCrimson.png";
 
 	public static final String zombie = "Zombie.png";
+	public static final String baldZombie = "BaldZombie.png";
+	public static final String slimedZombie = "SlimedZombie.png";
 	public static final String rabbit = "Rabbit.png";
 }

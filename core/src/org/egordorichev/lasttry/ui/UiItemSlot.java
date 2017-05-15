@@ -188,7 +188,16 @@ public class UiItemSlot extends UiComponent {
                     if (Globals.player.inventory.currentItem != null
                             && this.itemHolder.getItem() == Globals.player.inventory.currentItem.getItem()) {
 
-                        if (this.canHold(Globals.player.inventory.currentItem)) {
+                    	if (this.type == Type.TRASH) {
+                    		if (Globals.player.inventory.currentItem.getItem() == null) {
+			                    Globals.player.inventory.currentItem = this.itemHolder;
+			                    this.itemHolder = new ItemHolder(null, 0);
+                    			return;
+		                    }
+
+							this.itemHolder = Globals.player.inventory.currentItem;
+		                    Globals.player.inventory.currentItem = new ItemHolder(null, 0);
+	                    } else if (this.canHold(Globals.player.inventory.currentItem)) {
                             int count = Globals.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
                             int max = this.itemHolder.getItem().getMaxInStack();
 
@@ -202,7 +211,16 @@ public class UiItemSlot extends UiComponent {
                             }
                         }
                     } else {
-	                    if (this.canHold(Globals.player.inventory.currentItem)) {
+	                    if (this.type == Type.TRASH) {
+		                    if (Globals.player.inventory.currentItem.getItem() == null) {
+			                    Globals.player.inventory.currentItem = this.itemHolder;
+			                    this.itemHolder = new ItemHolder(null, 0);
+			                    return;
+		                    }
+
+	                    	this.itemHolder = Globals.player.inventory.currentItem;
+		                    Globals.player.inventory.currentItem = new ItemHolder(null, 0);
+	                    } else if (this.canHold(Globals.player.inventory.currentItem)) {
                             ItemHolder tmp = Globals.player.inventory.currentItem;
                             Globals.player.inventory.currentItem = this.itemHolder;
                             this.itemHolder = tmp;

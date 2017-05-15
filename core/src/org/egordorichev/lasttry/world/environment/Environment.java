@@ -10,7 +10,6 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.biome.components.BiomeComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,13 +18,15 @@ public class Environment {
     public int[] blockCount;
     public WorldTime time;
     public ArrayList<Event> events = new ArrayList<Event>();
-	public BiomeComponent currentBiome;
-	public BiomeComponent lastBiome;
+	public Biome currentBiome;
+	public Biome lastBiome;
 
     public Environment() {
-	    this.currentBiome = new BiomeComponent(Biome.forest);
-	    this.lastBiome = new BiomeComponent(Biome.forest);
-        this.blockCount = new int[ItemID.count];
+	    this.currentBiome = Biome.forest;
+	    this.currentBiome.animation.fadeInFast();
+	    this.lastBiome = Biome.forest;
+
+	    this.blockCount = new int[ItemID.count];
         this.time = new WorldTime((byte) 8, (byte) 15);
 
         Util.runInThread(new Callable() {
@@ -37,16 +38,20 @@ public class Environment {
     }
 
     public void render() {
-        for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
+    	int time = this.time.getHour() * 60 + this.time.getMinute();
+		int height = Gdx.graphics.getHeight();
+
+        for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
+            Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height,
+		        time, 0, 1, 1024, false, false);
         }
 
         if (this.currentBiome != null) {
-            this.currentBiome.renderBackground();
+            this.currentBiome.animation.renderBackground();
         }
 
         if (this.lastBiome != null) {
-            this.lastBiome.renderBackground();
+            this.lastBiome.animation.renderBackground();
         }
     }
 
@@ -57,14 +62,14 @@ public class Environment {
 
         this.time.update();
 
-        if (this.currentBiome != null && !this.currentBiome.fadeInIsDone()) {
-            this.currentBiome.fadeIn();
+        if (this.currentBiome != null && !this.currentBiome.animation.fadeInIsDone()) {
+            this.currentBiome.animation.fadeIn();
         }
 
         if (this.lastBiome != null && this.lastBiome != this.currentBiome &&
-                !this.lastBiome.fadeOutIsDone()) {
+                !this.lastBiome.animation.fadeOutIsDone()) {
 
-            this.lastBiome.fadeOut();
+            this.lastBiome.animation.fadeOut();
         }
 
         for (int i = this.events.size() - 1; i >= 0; i--) {
@@ -114,18 +119,17 @@ public class Environment {
             return;
         }
 
-        int windowWidth = Gdx.graphics.getWidth();
-        int windowHeight = Gdx.graphics.getHeight();
-        int tww = windowWidth / Block.SIZE;
-        int twh = windowHeight / Block.SIZE;
-        int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
-        int tcy = (int) (Globals.world.getHeight() - (Camera.game.position.y + windowHeight / 2)
-                / Block.SIZE);
+	    int windowWidth = Gdx.graphics.getWidth();
+	    int windowHeight = Gdx.graphics.getHeight();
+	    int tww = windowWidth / Block.SIZE;
+	    int twh = windowHeight / Block.SIZE;
+	    int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
+	    int tcy = (int) ((Camera.game.position.y - windowHeight / 2) / Block.SIZE);
 
-        int minY = Math.max(0, tcy - 20);
-        int maxY = Math.min(Globals.world.getHeight() - 1, tcy + twh + 23);
-        int minX = Math.max(0, tcx - 20);
-        int maxX = Math.min(Globals.world.getWidth() - 1, tcx + tww + 20);
+	    int minY = Math.max(0, tcy - 2);
+	    int maxY = Math.min(Globals.world.getHeight() - 1, tcy + twh + 3);
+	    int minX = Math.max(0, tcx - 2);
+	    int maxX = Math.min(Globals.world.getWidth() - 1, tcx + tww + 2);
 
         Arrays.fill(this.blockCount, 0);
 
@@ -138,17 +142,17 @@ public class Environment {
         this.lastBiome = this.currentBiome;
 
         if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = Biome.corruption;
         } else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = Biome.corruption;
         } else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = Biome.corruption;
         } else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = Biome.corruption;
         } else if (this.blockCount[ItemID.sandBlock] >= 1000) {
-            this.currentBiome = new BiomeComponent(Biome.corruption);
+            this.currentBiome = Biome.corruption;
         } else {
-            this.currentBiome = new BiomeComponent(Biome.forest);
+            this.currentBiome = Biome.forest;
         }
     }
 

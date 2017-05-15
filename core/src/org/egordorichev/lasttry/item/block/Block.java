@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
@@ -90,30 +91,54 @@ public class Block extends Item {
     }
 
     public boolean canBePlaced(int x, int y) {
-    	return true; // TODO: placement radius
+    	int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
+    	int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+
+    	double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
+
+    	if (length > Globals.player.getItemUseRadius()) {
+    		return false;
+	    }
+
+	    Block t = Globals.world.blocks.get(x, y + 1);
+	    Block b = Globals.world.blocks.get(x, y - 1);
+	    Block l = Globals.world.blocks.get(x + 1, y);
+	    Block r = Globals.world.blocks.get(x - 1, y);
+
+    	if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
+			    (r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
+
+    		Wall wall = Globals.world.walls.get(x, y);
+
+    		if (wall == null) {
+			    return false;
+		    }
+	    }
+
+    	return true;
     }
 
     public void place(int x, int y) {
     	Globals.world.blocks.set(this.id, x, y);
     }
 
+    public byte calculateBinary(int x, int y) {
+	    boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
+	    boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
+	    boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
+	    boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
+        return Block.calculateBinary(t, r, b, l);
+    }
+
     /**
      * Renders the block at the given coordinates.
-     *
      * @param x X-position in the world.
      * @param y Y-position in the world.
      */
-    public void renderBlock(int x, int y) {
-        boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
-        boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
-        boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
-        boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
+    public void renderBlock(int x, int y, byte binary) {
+        short variant = 1; // TODO: FIXME: replace with var
 
-        // TODO: FIXME: replace with var
-        short variant = 1;
-        byte binary = Block.calculateBinary(t, r, b, l);
-
-        if (binary == 15) {
+	    if (binary == 15) {
             Graphics.batch.draw(this.tiles, x * Block.SIZE,
                 y * Block.SIZE, Block.SIZE, Block.SIZE,
                 Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
@@ -139,9 +164,7 @@ public class Block extends Item {
     	return true;
     }
 
-    /**
-     * Attempts to place the block in the world at the player's cursor.
-     */
+    /** Attempts to place the block in the world at the player's cursor. */
     @Override
     public boolean use() {
         int x = LastTry.getMouseXInWorld() / Block.SIZE;
@@ -178,10 +201,5 @@ public class Block extends Item {
      */
     public boolean isSolid() {
         return this.solid;
-    }
-
-    @Override
-    public int getMaxInStack() {
-        return 999;
     }
 }

@@ -13,6 +13,7 @@ import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
+import org.egordorichev.lasttry.language.Language;
 
 public class UiInventory extends UiComponent {
     public ItemHolder currentItem = new ItemHolder(null, 0);
@@ -218,7 +219,7 @@ public class UiInventory extends UiComponent {
         Item item = this.slots[this.currentSlot].getItem();
 
         if (item == null) {
-            Assets.f22.draw(Graphics.batch, "Inventory", 10, Gdx.graphics.getHeight() - 8);
+            Assets.f22.draw(Graphics.batch, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
         } else {
             item.update((int) Gdx.graphics.getDeltaTime() * 1000000);
 

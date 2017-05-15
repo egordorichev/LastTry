@@ -14,7 +14,7 @@ public class MultiTileBlock extends Block {
     }
 
     @Override
-    public void renderBlock(int x, int y) {
+    public void renderBlock(int x, int y, byte binary) {
 		boolean first = false;
 
 		if (Globals.world.blocks.getID(x - 1, y) == this.id) {

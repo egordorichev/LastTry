@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.util.Log;
 import java.io.File;
 import java.net.URL;
@@ -16,7 +17,7 @@ public class ModLoader {
      * Key - String, Mod name.
      * Value - Mod, Mod object.
      */
-    private HashMap<String, Mod> modHashMap = new HashMap();
+    private HashMap<String, Mod> modHashMap = new HashMap<>();
 
     /** Lookups and loads all mods from "mods" directory */
     public void load() {
@@ -26,7 +27,7 @@ public class ModLoader {
 			try {
 				modDirectory.createNewFile();
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				Crash.report(Thread.currentThread(), exception);
 			}
 		} else {
 			Log.info("There's no mods directory so one will be created!");
@@ -50,14 +51,14 @@ public class ModLoader {
     private void loadMod(File file) {
         try (JarFile jarFile = new JarFile(file)) {
             URL[] urls = new URL[]{
-                    new URL("jar:file:" + file.getAbsolutePath() + "!/")
+            		new URL("jar:file:" + file.getAbsolutePath() + "!/")
             };
 
             URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
             Enumeration<JarEntry> enumeration = jarFile.entries();
 
             while (enumeration.hasMoreElements()) {
-                JarEntry jarEntry = (JarEntry) enumeration.nextElement();
+                JarEntry jarEntry = enumeration.nextElement();
 
                 if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
                     continue;
@@ -83,7 +84,7 @@ public class ModLoader {
 
     /** Unloads all mods */
     public void unload() {
-        this.modHashMap.entrySet().stream().forEach(modHashMapKey -> {
+        this.modHashMap.entrySet().forEach(modHashMapKey -> {
         	modHashMap.get(modHashMapKey).onUnload();
         });
 

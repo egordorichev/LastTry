@@ -1,124 +1,135 @@
 package org.egordorichev.lasttry.entity;
 
+import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EntityManager {
-    private List<Entity> entities = new ArrayList<>();
-    private List<Enemy> enemyEntities = new ArrayList<>();
-    private List<Entity> clearList = new ArrayList<>();
+	private List<Entity> entities = new ArrayList<>();
+	private List<Enemy> enemyEntities = new ArrayList<>();
+	private List<Entity> clearList = new ArrayList<>();
+	private static EntityComparator comparator = new EntityComparator();
 
-    // Seconds
-    public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
-    // private List<Gore> gores = new ArrayList<>();
+	public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
+	// private List<Gore> gores = new ArrayList<>(); : TODO
 
-    public EntityManager() {
-        Util.runInThread(new Callable() {
-            @Override
-            public void call() {
-                attemptDespawnEnemies();
-            }
-        }, ENEMY_DESPAWN_SWEEP_INTERVAL);
-    }
+	public EntityManager() {
+		Util.runInThread(new Callable() {
+			@Override
+			public void call() {
+				attemptDespawnEnemies();
+			}
+		}, ENEMY_DESPAWN_SWEEP_INTERVAL);
+	}
 
-    public void render() {
-        // TODO: Only render on-screen entities.
-        // Old code for doing so:
-        /*
-         * int gx = entity.getGridX(); int gy = entity.getGridY(); int w =
-		 * entity.getGridWidth(); int h = entity.getGridHeight(); if ((gx > minX
-		 * - w && gx < maxX + w) && (gy > minY - h && gy < maxY + h)) {
-		 * entity.render(); }
-		 */
-        for (Entity entity : this.entities) {
-            entity.render();
-        }
-    }
+	public void render() {
+		Rectangle camera = new Rectangle(Camera.game.position.x - 16, Camera.game.position.y - 16, Gdx.graphics.getWidth() + 32, Gdx.graphics.getHeight());
 
-    public void update(int dt) {
-        for (Entity entity : this.clearList) {
-            this.entities.remove(entity);
-        }
+		for (Entity entity : this.entities) {
+			if (entity.physics.getHitbox().intersects(camera)) {
+				entity.render();
+			}
+		}
+	}
 
-        this.clearList.clear();
+	public void update(int dt) {
+		for (Entity entity : this.clearList) {
+			this.entities.remove(entity);
+		}
 
-        for (int i = this.entities.size() - 1; i >= 0; i--) {
-	        Entity entity = this.entities.get(i);
-            entity.update(dt);
+		this.clearList.clear();
 
-            if (!entity.isActive()) {
-                this.entities.remove(i);
-            }
-        }
-    }
+		for (int i = this.entities.size() - 1; i >= 0; i--) {
+			Entity entity = this.entities.get(i);
+			entity.update(dt);
 
-    public Entity spawn(Entity entity, int x, int y) {
-        entity.spawn(x, y);
-        this.entities.add(entity);
-        return entity;
-    }
+			if (!entity.isActive()) {
+				this.entities.remove(i);
+			}
+		}
+	}
 
-    public Enemy spawnEnemy(String name, int x, int y) {
-        Enemy enemy = Enemies.create(name);
+	public Entity spawn(Entity entity, int x, int y) {
+		entity.spawn(x, y);
+		this.entities.add(entity);
+		this.sort();
 
-        if (enemy == null) {
-        	return null;
-        }
+		return entity;
+	}
 
-        this.enemyEntities.add(enemy);
-        this.spawn(enemy, x, y);
-        return enemy;
-    }
+	private static class EntityComparator implements Comparator<Entity> {
+		@Override
+		public int compare(Entity o, Entity t1) {
+			if (o.getZIndex() > t1.getZIndex()) {
+				return 1;
+			} else if (o.getZIndex() < t1.getZIndex()) {
+				return -1;
+			}
 
-    public void remove(Entity entity) {
-        this.entities.remove(entity);
-    }
+			return 0;
+		}
+	}
 
-    public void markForRemoval(Entity entity) {
-        this.clearList.add(entity);
-        //Maintaining a second list for quick enemy retrieval.
-        if(entity instanceof Enemy){
-            enemyEntities.remove(entity);
-        }
-    }
+	private void sort() {
+		Collections.sort(this.entities, comparator);
+	}
 
-    public List<Entity> getEntities() {
-        return entities;
-    }
+	public Enemy spawnEnemy(String name, int x, int y) {
+		Enemy enemy = Enemies.create(name);
 
-    public List<Enemy> getEnemyEntities() { return enemyEntities; }
+		if (enemy == null) {
+			return null;
+		}
 
-    //Todo Will be rewritten to include NPCs
-    private synchronized void attemptDespawnEnemies() {
-        try{
-            LastTry.debug.print("Starting despawn enemy process");
+		this.enemyEntities.add(enemy);
+		this.spawn(enemy, x, y);
+		return enemy;
+	}
 
-            //Iterator cannot be used here, as list size is being changed in another thread.
-            //Iterator use here, will result in a NPE
-            for(int i=0; i<this.enemyEntities.size(); i++){
-                CreatureWithAI creatureWithAI = (CreatureWithAI)enemyEntities.get(i);
+	public void remove(Entity entity) {
+		this.entities.remove(entity);
+	}
 
-                //Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
-                ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
+	public void markForRemoval(Entity entity) {
+		this.clearList.add(entity);
 
-                readOnlyLock.readLock().lock();
-                creatureWithAI.tryToDespawn();
-                readOnlyLock.readLock().unlock();
+		if (entity instanceof Enemy){
+			enemyEntities.remove(entity);
+		}
+	}
 
-            }
+	public List<Entity> getEntities() {
+		return entities;
+	}
 
-            LastTry.debug.print("Despawn enemy process complete");
-        }catch (Exception e){
-            LastTry.handleException(e);
-        }
+	public List<Enemy> getEnemyEntities() {
+		return enemyEntities;
+	}
 
-    }
+	private synchronized void attemptDespawnEnemies() {
+		try {
+			for (int i = 0; i < this.enemyEntities.size(); i++){
+				CreatureWithAI creatureWithAI = enemyEntities.get(i);
+
+				// Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+				ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
+
+				readOnlyLock.readLock().lock();
+				creatureWithAI.tryToDespawn();
+				readOnlyLock.readLock().unlock();
+			}
+		} catch (Exception e) {
+			LastTry.handleException(e);
+		}
+	}
 }

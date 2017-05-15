@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.player;
 
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.ui.UiInventory;
@@ -21,6 +22,8 @@ public class Player extends Creature {
 		this.inventory = new UiInventory(INVENTORY_SIZE);
 
 		LastTry.ui.add(this.inventory);
+
+		this.setZIndex(Layers.player);
 	}
 
 	@Override
@@ -31,6 +34,10 @@ public class Player extends Creature {
 		if (this.inventory.currentItem != null && this.inventory.currentItem.getItem() != null) {
 		    this.inventory.currentItem.getItem().update(dt);
 		}
+	}
+
+	public int getItemUseRadius() {
+		return 10; // TODO: modify
 	}
 
 	public String getName() {

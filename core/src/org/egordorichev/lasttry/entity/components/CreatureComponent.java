@@ -11,6 +11,14 @@ public class CreatureComponent extends Component {
 	}
 
 	public CreatureComponent() {
+		// Unsafe!
+	}
+
+	public void render() {
+
+	}
+
+	public void update(int dt) {
 
 	}
 
@@ -18,7 +26,7 @@ public class CreatureComponent extends Component {
 		this.creature = creature;
 	}
 
-	public Creature getEntity() {
+	public Creature getCreature() {
 		return this.creature;
 	}
 }

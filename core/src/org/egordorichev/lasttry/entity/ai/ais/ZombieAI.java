@@ -23,6 +23,6 @@ public class ZombieAI extends AI {
 
 	@Override
 	public boolean canSpawn() {
-		return true;
+		return Globals.environment.time.isNight();
 	}
 }
