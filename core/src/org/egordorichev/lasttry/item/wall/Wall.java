@@ -63,8 +63,6 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		System.out.println("use");
-
 		if (this.canBePlaced(x, y) && Globals.world.walls.getID(x, y) == ItemID.none) {
 			this.place(x, y);
 
