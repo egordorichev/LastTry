@@ -13,6 +13,12 @@ public class SplashState implements State {
 
 	public SplashState() {
 		this.splash = new Texture(Gdx.files.internal("Splash.png"));
+
+		if (!LastTry.release) {
+			Assets.assetManager.finishLoading();
+			Graphics.load();
+			LastTry.instance.setScreen(new LoadState());
+		}
 	}
 
 	@Override
