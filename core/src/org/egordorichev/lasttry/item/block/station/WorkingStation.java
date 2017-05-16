@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.item.block.workingstation;
+package org.egordorichev.lasttry.item.block.station;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.item.block.MultiTileBlock;

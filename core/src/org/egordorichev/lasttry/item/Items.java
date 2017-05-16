@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.item.block.*;
 import org.egordorichev.lasttry.item.block.plant.*;
-import org.egordorichev.lasttry.item.block.workingstation.WorkBench;
+import org.egordorichev.lasttry.item.block.station.WorkBench;
 import org.egordorichev.lasttry.item.items.*;
 import org.egordorichev.lasttry.item.items.seeds.*;
 import org.egordorichev.lasttry.language.Language;

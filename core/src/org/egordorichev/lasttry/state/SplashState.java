@@ -8,6 +8,8 @@ import org.egordorichev.lasttry.graphics.Graphics;
 
 public class SplashState implements State {
 	private Texture splash;
+	private int state = 0;
+	private float alpha = 0;
 
 	public SplashState() {
 		this.splash = new Texture(Gdx.files.internal("Splash.png"));
@@ -20,13 +22,33 @@ public class SplashState implements State {
 
 	@Override
 	public void render(float delta) {
-		if (Assets.assetManager.update()) {
-			Graphics.load();
-			LastTry.instance.setScreen(new LoadState());
+		if (this.state != 2 && Assets.assetManager.update()) {
+			this.state = 2;
 		}
 
+		if (this.state == 0) {
+			this.alpha += 0.01f;
+
+			if (this.alpha > 1f) {
+				this.alpha = 1f;
+				this.state = 1;
+			}
+		} else if (this.state == 2) {
+			this.alpha -= 0.01f;
+
+			if (this.alpha < 0f) {
+				this.alpha = 0f;
+				this.state = 3;
+
+				Graphics.load();
+				LastTry.instance.setScreen(new LoadState());
+			}
+		}
+
+		Graphics.batch.setColor(1, 1, 1, this.alpha);
 		Graphics.batch.draw(this.splash, (Gdx.graphics.getWidth() - this.splash.getWidth()) / 2,
 			(Gdx.graphics.getHeight() - this.splash.getHeight()) / 2);
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
