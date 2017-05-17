@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.entity.drop;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -9,14 +9,14 @@ import org.egordorichev.lasttry.item.Items;
 
 public class DroppedItem extends Creature {
     private final ItemHolder holder;
-    private Texture texture;
+    private TextureRegion texture;
 
     public DroppedItem(ItemHolder holder) {
         super();
 
         this.holder = holder;
-        this.texture = this.holder.getItem().getTexture();
-        this.physics.setSize(this.texture.getWidth(), this.texture.getHeight());
+        this.texture = this.holder.getItem().getTextureRegion();
+        this.physics.setSize(this.texture.getRegionWidth(), this.texture.getRegionHeight());
     }
 
 	@Override

@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.effect;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.graphics.Graphics;
 
@@ -8,9 +8,9 @@ public abstract class Effect {
     protected boolean canBeRemoved;
     protected String name;
     protected String description;
-    protected Texture texture;
+    protected TextureRegion texture;
 
-    public Effect(String name, String description, Texture texture) {
+    public Effect(String name, String description, TextureRegion texture) {
         this.name = name;
         this.canBeRemoved = true;
         this.description = description;

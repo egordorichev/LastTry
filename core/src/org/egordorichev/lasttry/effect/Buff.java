@@ -1,19 +1,22 @@
 package org.egordorichev.lasttry.effect;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.entity.Creature;
 
 public  class Buff extends Effect {
-
     // TODO: Summons buffs
 
-    public Buff(String name, String description, Texture texture) {
+    public Buff(String name, String description, TextureRegion texture) {
         super(name, description, texture);
     }
 
     @Override
-    public void apply(Creature creature) {}
+    public void apply(Creature creature) {
+
+    }
 
     @Override
-    public void remove(Creature creature) {}
+    public void remove(Creature creature) {
+
+    }
 }

@@ -1,10 +1,10 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.Item;
 
 public class Coin extends Item {
-    public Coin(short id, String name, Texture texture) {
+    public Coin(short id, String name, TextureRegion texture) {
         super(id, name, texture);
     }
 

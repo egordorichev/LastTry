@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
 
 public class DigTool extends Tool {
-	public DigTool(short id, String name, Rarity rarity, float baseDamage, ToolPower power, int useSpeed, Texture texture) {
+	public DigTool(short id, String name, Rarity rarity, float baseDamage, ToolPower power, int useSpeed, TextureRegion texture) {
 		super(id, name, rarity, baseDamage, power, useSpeed, texture);
 		this.autoSwing = true;
 	}
@@ -44,8 +44,8 @@ public class DigTool extends Tool {
 			return;
 		}
 
-		float width = this.texture.getWidth();
-		float height = this.texture.getHeight();
+		float width = this.texture.getRegionWidth();
+		float height = this.texture.getRegionHeight();
 		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
 
 		if (Globals.player.physics.isFlipped()) {

@@ -132,6 +132,6 @@ public class ChunkIO {
 	}
 
 	private static String getSaveName(int x, int y) {
-		return "worlds/" + Globals.world.getName() + "/" + x + ":" + y + ".cnk";
+		return "data/worlds/" + Globals.world.getName() + "/" + x + ":" + y + ".cnk";
 	}
 }

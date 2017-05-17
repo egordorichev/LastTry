@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.wall;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -13,10 +13,10 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Wall extends org.egordorichev.lasttry.item.Item {
-	protected Texture tiles;
+	protected TextureRegion tiles;
 	protected ToolPower power;
 
-	public Wall(short id, String name, ToolPower requiredPower, Texture texture, Texture tiles) {
+	public Wall(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, texture);
 
 		this.tiles = tiles;

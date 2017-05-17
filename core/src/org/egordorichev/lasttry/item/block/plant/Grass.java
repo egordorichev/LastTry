@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.item.block.BlockGround;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class Grass extends BlockGround {
-    public Grass(short id, String name, Texture texture, Texture tiles) {
+    public Grass(short id, String name, TextureRegion texture, TextureRegion tiles) {
         super(id, name, ToolPower.pickaxe(10) ,texture, tiles);
     }
 

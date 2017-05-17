@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.block;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class EvilBlock extends BlockGround {
-    public EvilBlock(short id, String name, ToolPower requiredPower, Texture texture, Texture tiles) {
+    public EvilBlock(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
         super(id, name, requiredPower, texture, tiles);
     }
 

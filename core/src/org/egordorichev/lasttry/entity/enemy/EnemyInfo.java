@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.enemy;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
@@ -24,7 +23,7 @@ public class EnemyInfo {
 	public float speed = 1;
 	public String texture = "";
 	public String name;
-	public Texture image;
+	public TextureRegion image;
 	public ArrayList<Drop> drops = new ArrayList<>();
 	public Rectangle hitbox = new Rectangle(0, 0, 16, 16);
 	public Rectangle renderBounds = new Rectangle(0, 0, 16, 16);
@@ -161,7 +160,7 @@ public class EnemyInfo {
 			}
 		}
 
-		this.image = Assets.getTexture(this.texture);
+		this.image = Assets.getTextureRegion(this.texture);
 
 		if (root.has("animation")) {
 			JsonValue animation = root.get("animation");
@@ -242,7 +241,7 @@ public class EnemyInfo {
 
 		for (int i = 0; i < this.animations.length; i++) {
 			enemy.graphics.animations[i] = this.animations[i].copy();
-			enemy.graphics.animations[i].setTexture(this.image);
+			enemy.graphics.animations[i].setTextureRegion(this.image);
 		}
 
 		for (int i = 0; i < this.drops.size(); i++) {

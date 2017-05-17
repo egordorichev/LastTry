@@ -1,12 +1,12 @@
 package org.egordorichev.lasttry.entity.components;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
-	protected Texture texture;
+	protected TextureRegion texture;
 	protected Creature creature;
 
 	public CreatureGraphicsComponent() {

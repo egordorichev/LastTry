@@ -66,13 +66,13 @@ public class WorldIO {
 	}
 
 	public static World generate(String name, World.Size size, int flags) {
-		File dir = new File("worlds/");
+		File dir = new File("data/worlds/");
 
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
-		File file = new File("worlds/" + name + "/");
+		File file = new File("data/worlds/" + name + "/");
 
 		if (!file.exists()) {
 			file.mkdir();
@@ -130,6 +130,6 @@ public class WorldIO {
 	}
 
 	private static String getSaveName(String name) {
-		return "worlds/" + name + ".wld";
+		return "data/worlds/" + name + ".wld";
 	}
 }

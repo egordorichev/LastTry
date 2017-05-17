@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
@@ -19,7 +19,7 @@ public class Tool extends Item {
 	protected ToolPower power;
 
 	public Tool(short id, String name, Rarity rarity, float baseDamage, ToolPower power,
-	        int useSpeed, Texture texture) {
+	        int useSpeed, TextureRegion texture) {
 
 		super(id, name, rarity, texture);
 
@@ -32,7 +32,7 @@ public class Tool extends Item {
 	}
 
 	public Tool(short id, String name, float baseDamage, ToolPower power,
-	       int useSpeed, Texture texture) {
+	       int useSpeed, TextureRegion texture) {
 
 		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
 	}
@@ -104,8 +104,8 @@ public class Tool extends Item {
 
 	private Rectangle generateEquippedPlayerHitBox() {
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
-		final Texture itemTexture = this.getTexture();
-		final Rectangle toolHitBox = new Rectangle(0, 0, itemTexture.getWidth(), itemTexture.getHeight());
+		final TextureRegion itemTextureRegion = this.getTextureRegion();
+		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getWidth(), itemTextureRegion.getHeight());
 
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x+toolHitBox.x,
 			playerHitBox.y+toolHitBox.y,

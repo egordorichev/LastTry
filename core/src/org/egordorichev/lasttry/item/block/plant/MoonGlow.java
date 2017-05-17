@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class MoonGlow extends Plant {
     public MoonGlow() {
-        super(ItemID.moonGlow, "Moon Glow", Assets.getTexture(Textures.moonGlowIcon), Assets.getTexture(Textures.moonGlow));
+        super(ItemID.moonGlow, "Moon Glow", Assets.getTextureRegion(Textures.moonGlowIcon), Assets.getTextureRegion(Textures.moonGlow));
     }
 
     @Override

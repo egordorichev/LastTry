@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity.player.skin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PlayerRenderer {
     public static final int TEXTURE_WIDTH = 40;
@@ -14,7 +15,7 @@ public class PlayerRenderer {
     public static Pixmap playerHands = new Pixmap(Gdx.files.internal("PlayerHands.png"));
     public static Pixmap playerFeet = new Pixmap(Gdx.files.internal("PlayerFeet.png"));
 
-    public static Texture generateTexture(PlayerRenderInfo info) {
+    public static TextureRegion generateTextureRegion(PlayerRenderInfo info) {
         Pixmap pixmap = new Pixmap(TEXTURE_WIDTH, TEXTURE_HEIGHT, Pixmap.Format.RGBA8888);
 
         playerBody.setColor(info.skinColor);
@@ -32,6 +33,6 @@ public class PlayerRenderer {
 	    // hair.setColor(info.hairColor);
         // pixmap.drawPixmap(hair, 0, 0);
 
-        return new Texture(pixmap);
+        return new TextureRegion(new Texture(pixmap));
     }
 }

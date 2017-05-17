@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.biome;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
@@ -18,10 +18,10 @@ public class Biome {
 
     private SpawnInfo spawnInfo;
 
-    public Biome(String name, SpawnInfo spawnInfo, Texture backgroundTexture) {
+    public Biome(String name, SpawnInfo spawnInfo, TextureRegion backgroundTextureRegion) {
         this.name = name;
         this.spawnInfo = spawnInfo;
-        animation = new BiomeAnimationComponent(this, backgroundTexture);
+        animation = new BiomeAnimationComponent(this, backgroundTextureRegion);
     }
 
     //TODO To be implemented

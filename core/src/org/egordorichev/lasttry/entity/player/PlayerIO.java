@@ -70,7 +70,7 @@ public class PlayerIO {
 	}
 
 	public static void save() {
-		File dir = new File("players/");
+		File dir = new File("data/players/");
 
 		if (!dir.exists()) {
 			dir.mkdir();
@@ -137,6 +137,6 @@ public class PlayerIO {
 	}
 
 	private static String getSaveName(String playerName) {
-		return "players/" + playerName + ".plr";
+		return "data/players/" + playerName + ".plr";
 	}
 }

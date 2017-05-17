@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.Item;
 
 public class Ammo extends Item {
@@ -13,7 +13,7 @@ public class Ammo extends Item {
      */
     protected Type type;
 
-    public Ammo(short id, String name, int damage, Type type, Texture texture) {
+    public Ammo(short id, String name, int damage, Type type, TextureRegion texture) {
         super(id, name, texture);
 
         this.damage = damage;

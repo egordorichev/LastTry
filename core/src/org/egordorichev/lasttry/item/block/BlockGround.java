@@ -1,16 +1,16 @@
 package org.egordorichev.lasttry.item.block;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class BlockGround extends Block {
-    public BlockGround(short id, String name, ToolPower requiredPower,
-            Texture texture, Texture tiles) {
+	public BlockGround(short id, String name, ToolPower requiredPower,
+			TextureRegion texture, TextureRegion tiles) {
 
-        super(id, name, true, requiredPower, texture, tiles);
-    }
+		super(id, name, true, requiredPower, texture, tiles);
+	}
 
 	@Override
 	public byte calculateBinary(int x, int y) {
@@ -23,33 +23,23 @@ public class BlockGround extends Block {
 	}
 
 	/**
-     * Overridden so blocks of the same type merge.
-     */
-    @Override
-    public void renderBlock(int x, int y, byte binary) {
-        short variant = 1; // TODO: FIXME: replace  with var
+	 * Overridden so blocks of the same type merge.
+	 */
+	@Override
+	public void renderBlock(int x, int y, byte binary) {
+		short variant = 1; // TODO: FIXME: replace  with var
 
-        if (binary == 15) {
-            // TODO: Replace (binary) with (corner)
-            // It's not getting the right texture for some reason.
+		Graphics.batch.draw(this.tiles, x * Block.SIZE,
+			y * Block.SIZE, Block.SIZE, Block.SIZE,
+			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
+			Block.SIZE, false, false);
 
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        } else {
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        }
+		if (this.renderCracks()) {
+			byte hp = Globals.world.blocks.getHP(x, y);
 
-	    if (this.renderCracks()) {
-		    byte hp = Globals.world.blocks.getHP(x, y);
-
-		    if (hp < Block.MAX_HP) {
-			    Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-		    }
-	    }
-    }
+			if (hp < Block.MAX_HP) {
+				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
+			}
+		}
+	}
 }

@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.effect.Buffs;
@@ -21,11 +21,11 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
-	private final Texture hpTexture;
+	private final TextureRegion hpTextureRegion;
 	private static boolean paused = false;
 
 	public GamePlayState() {
-		this.hpTexture = Assets.getTexture(Textures.hp);
+		this.hpTextureRegion = Assets.getTextureRegion(Textures.hp);
 
 		int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
 		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
@@ -96,7 +96,7 @@ public class GamePlayState implements State {
 				Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {
-			Graphics.batch.draw(this.hpTexture, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
+			Graphics.batch.draw(this.hpTextureRegion, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);
 		}
 
 		LastTry.ui.render();

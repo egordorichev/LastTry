@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity.player;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
@@ -10,11 +10,11 @@ import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.item.ItemHolder;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
-	private Texture texture;
+	private TextureRegion texture;
 
 	public PlayerGraphicsComponent() {
 		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.GREEN, Color.GREEN, 1, true); // TODO: replace it
-		this.texture = PlayerRenderer.generateTexture(info);
+		this.texture = PlayerRenderer.generateTextureRegion(info);
 		this.setupAnimations();
 	}
 

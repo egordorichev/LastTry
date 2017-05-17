@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class WaterLeaf extends Plant {
     public WaterLeaf() {
-        super(ItemID.waterLeaf, "Water Leaf", Assets.getTexture(Textures.waterLeafIcon), Assets.getTexture(Textures.waterLeaf));
+        super(ItemID.waterLeaf, "Water Leaf", Assets.getTextureRegion(Textures.waterLeafIcon), Assets.getTextureRegion(Textures.waterLeaf));
     }
 
     @Override

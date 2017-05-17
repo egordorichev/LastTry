@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.modifier.Modifier;
@@ -22,9 +22,9 @@ public class ItemHolder {
 
     public void renderAt(int x, int y) {
         if (this.item != null) {
-            Texture texture = this.item.getTexture();
+            TextureRegion texture = this.item.getTextureRegion();
 
-            int th = texture.getHeight();
+            int th = texture.getRegionHeight();
 
             Graphics.batch.draw(texture, x, y);
 
@@ -36,10 +36,10 @@ public class ItemHolder {
 
     public void renderAt(int x, int y, int width, int height) {
         if (this.item != null) {
-            Texture texture = this.item.getTexture();
+            TextureRegion texture = this.item.getTextureRegion();
 
-            int tw = texture.getWidth();
-            int th = texture.getHeight();
+            int tw = texture.getRegionWidth();
+            int th = texture.getRegionHeight();
             int iy = y + (height - th) / 2;
 
             Graphics.batch.draw(texture, x + (width - tw) / 2, iy);

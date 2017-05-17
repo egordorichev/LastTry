@@ -1,12 +1,12 @@
 package org.egordorichev.lasttry.item.block;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class MultiTileBlock extends Block {
-    public MultiTileBlock(short id, String name, boolean solid, ToolPower requiredPower, Texture texture, Texture tiles, int gridWidth, int gridHeight) {
+    public MultiTileBlock(short id, String name, boolean solid, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles, int gridWidth, int gridHeight) {
         super(id, name, solid, requiredPower, texture, tiles);
 
         this.width = gridWidth;

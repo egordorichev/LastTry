@@ -64,7 +64,7 @@ public class LoadState implements State {
         }
 
         for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
+            Graphics.batch.draw(Graphics.skyTextureRegion, i * 48, 0);
         }
 
         Assets.f22.draw(Graphics.batch, this.loadString, 0, 0);

@@ -1,16 +1,16 @@
 package org.egordorichev.lasttry.item;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Item {
 	protected short id;
 	protected String name;
-	protected Texture texture;
+	protected TextureRegion texture;
 	protected Rarity rarity;
 	protected float useDelay;
 	protected int useSpeed;
 
-	public Item(short id, String name, Rarity rarity, Texture texture) {
+	public Item(short id, String name, Rarity rarity, TextureRegion texture) {
 		if (Items.ITEM_CACHE[id] != null) {
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
@@ -22,7 +22,7 @@ public class Item {
 		this.name = name;
 	}
 
-	public Item(short id, String name, Texture texture) {
+	public Item(short id, String name, TextureRegion texture) {
 		this(id, name, Rarity.WHITE, texture);
 	}
 
@@ -71,7 +71,7 @@ public class Item {
 		return this.name;
 	}
 
-	public Texture getTexture() {
+	public TextureRegion getTextureRegion() {
 		return this.texture;
 	}
 

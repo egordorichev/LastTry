@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class FireBlossom extends Plant {
     public FireBlossom() {
-        super(ItemID.fireBlossom, "Fire Blossom", Assets.getTexture(Textures.fireBlossomIcon), Assets.getTexture(Textures.fireBlossom));
+        super(ItemID.fireBlossom, "Fire Blossom", Assets.getTextureRegion(Textures.fireBlossomIcon), Assets.getTextureRegion(Textures.fireBlossom));
     }
 
     @Override

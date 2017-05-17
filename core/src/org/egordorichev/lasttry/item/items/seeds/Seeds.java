@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.items.seeds;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -11,7 +11,7 @@ import org.egordorichev.lasttry.util.Rectangle;
 public class Seeds extends Item {
     private Plant plant;
 
-    public Seeds(short id, String name, Texture texture, Plant plant) {
+    public Seeds(short id, String name, TextureRegion texture, Plant plant) {
         super(id, name, texture);
 
         this.plant = plant;

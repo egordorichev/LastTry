@@ -44,10 +44,10 @@ public class Creature extends Entity {
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
-			mapped, 12, 0, 0, mapped, 12, false, false);
-		Graphics.batch.setColor(1, 1, 1, 1);
-		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
+		//Graphics.batch.draw(Graphics.healthBarTextureRegion, x + 2, this.physics.getY() - 20,
+		//	mapped, 12, 0, 0, mapped, 12, false, false);
+		//Graphics.batch.setColor(1, 1, 1, 1);
+		//Graphics.batch.draw(Graphics.healthBarFrameTextureRegion, x, this.physics.getY() - 20);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 public class JungleGrass extends Grass {
     public JungleGrass() {
         super(ItemID.jungleGrassBlock, "Jungle Grass Block",
-		    Assets.getTexture(Textures.jungleGrassIcon), Assets.getTexture(Textures.jungleGrass));
+		    Assets.getTextureRegion(Textures.jungleGrassIcon), Assets.getTextureRegion(Textures.jungleGrass));
     }
 
     @Override

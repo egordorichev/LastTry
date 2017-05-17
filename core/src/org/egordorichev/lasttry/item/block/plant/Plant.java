@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.util.Util;
 public class Plant extends Block {
     public static final byte GROW_THRESHOLD = 20;
 
-    public Plant(short id, String name, Texture texture, Texture tiles) {
+    public Plant(short id, String name, TextureRegion texture, TextureRegion tiles) {
         super(id, name, false, ToolPower.pickaxe(10), texture, tiles);
     }
 

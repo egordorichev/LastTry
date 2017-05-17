@@ -21,7 +21,7 @@ public class ModLoader {
 
     /** Lookups and loads all mods from "mods" directory */
     public void load() {
-		File modDirectory = new File("mods/");
+		File modDirectory = new File("data/mods/");
 
 		if (!modDirectory.mkdir()) {
 			try {
