@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class BlinkRoot extends Plant {
     public BlinkRoot() {
-        super(ItemID.blinkRoot, "Blink Root", Assets.getTextureRegion(Textures.blinkRootIcon), Assets.getTextureRegion(Textures.blinkRoot));
+        super(ItemID.blinkRoot, "Blink Root", Assets.getTexture(Textures.blinkRootIcon), Assets.getTexture(Textures.blinkRoot));
     }
 
     @Override

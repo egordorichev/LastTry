@@ -42,8 +42,8 @@ public class Environment {
 		int height = Gdx.graphics.getHeight();
 
 		for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
-			// Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height,
-			//    time, 0, 1, 1024, false, fals);
+			Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height,
+				time, 0, 1, 1024, false, false);
 		}
 
 		if (this.currentBiome != null) {

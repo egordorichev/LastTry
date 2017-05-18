@@ -25,7 +25,7 @@ public class GamePlayState implements State {
 	private static boolean paused = false;
 
 	public GamePlayState() {
-		this.hpTextureRegion = Assets.getTextureRegion(Textures.hp);
+		this.hpTextureRegion = Assets.getTexture(Textures.hp);
 
 		int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
 		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;

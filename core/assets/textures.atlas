@@ -6,14 +6,14 @@ filter: Nearest,Nearest
 repeat: none
 AmmoReservation
   rotate: false
-  xy: 2014, 1538
+  xy: 170, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Archery
   rotate: false
-  xy: 204, 17
+  xy: 2014, 1334
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -27,105 +27,105 @@ BaldZombie
   index: -1
 Banner
   rotate: false
-  xy: 1444, 30
+  xy: 2014, 2014
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Battle
   rotate: false
-  xy: 2014, 1504
+  xy: 204, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 BlinkRoot
   rotate: false
-  xy: 1070, 2
+  xy: 1560, 100
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
 BlinkRootIcon
   rotate: false
-  xy: 1590, 12
+  xy: 1740, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-BlinkRootSeeds
+BlinkRootSeedsIcon
   rotate: false
-  xy: 1376, 244
+  xy: 40, 5
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 BlueSlime
   rotate: false
-  xy: 2, 25
+  xy: 1664, 244
   size: 64, 24
   orig: 64, 24
   offset: 0, 0
   index: -1
 Builder
   rotate: false
-  xy: 1410, 34
+  xy: 1364, 282
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Calm
   rotate: false
-  xy: 2014, 2014
+  xy: 2014, 1300
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-CopperAxe
+CopperAxeIcon
   rotate: false
   xy: 1410, 4
   size: 32, 28
   orig: 32, 28
   offset: 0, 0
   index: -1
-CopperCoin
+CopperCoinIcon
   rotate: false
   xy: 1350, 1054
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
-CopperPickaxe
+CopperPickaxeIcon
   rotate: false
-  xy: 2014, 1606
+  xy: 2014, 1504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-CopperShortSword
+CopperShortSwordIcon
   rotate: false
-  xy: 2014, 1640
+  xy: 136, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 CorruptGrass
   rotate: false
-  xy: 1352, 168
+  xy: 518, 2
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-CorruptGrass
+CorruptGrassIcon
   rotate: false
-  xy: 1518, 12
+  xy: 1632, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 CorruptThornyBushes
   rotate: false
-  xy: 518, 52
+  xy: 1352, 118
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
@@ -139,28 +139,28 @@ CorruptionBack
   index: -1
 CozyFire
   rotate: false
-  xy: 2014, 1980
+  xy: 1956, 192
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Crate
   rotate: false
-  xy: 2014, 1912
+  xy: 1546, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Crimsand
   rotate: false
-  xy: 260, 52
+  xy: 1610, 126
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Crimsand
+CrimsandIcon
   rotate: false
-  xy: 1384, 1182
+  xy: 1566, 12
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -174,103 +174,103 @@ CrimsonBack
   index: -1
 CrimsonGrass
   rotate: false
-  xy: 776, 2
+  xy: 1768, 426
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-CrimsonGrass
+CrimsonGrassIcon
   rotate: false
-  xy: 1384, 1110
+  xy: 1584, 12
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Crimstone
   rotate: false
-  xy: 1610, 126
+  xy: 1768, 226
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Crimstone
+CrimstoneIcon
   rotate: false
-  xy: 1572, 12
+  xy: 1384, 1146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Dangersense
   rotate: false
-  xy: 1784, 42
+  xy: 2014, 1708
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 DayBloom
   rotate: false
-  xy: 1560, 100
+  xy: 1560, 82
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
-DayBloom
+DayBloomIcon
   rotate: false
-  xy: 1554, 12
+  xy: 1614, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-DayBloomSeeds
+DayBloomSeedsIcon
   rotate: false
-  xy: 1376, 224
+  xy: 1170, 2
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 DeathWeed
   rotate: false
-  xy: 1664, 226
+  xy: 1560, 64
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
-DeathWeed
+DeathWeedIcon
   rotate: false
-  xy: 1650, 24
+  xy: 238, 15
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-DeathWeedSeeds
+DeathWeedSeedsIcon
   rotate: false
-  xy: 1352, 220
+  xy: 1974, 104
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 Dirt
   rotate: false
-  xy: 1664, 176
+  xy: 1768, 376
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Dirt
+DirtIcon
   rotate: false
-  xy: 1610, 76
-  size: 256, 48
-  orig: 256, 48
-  offset: 0, 0
-  index: -1
-Dirt
-  rotate: false
-  xy: 1686, 24
+  xy: 1384, 1182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 DirtWall
+  rotate: false
+  xy: 518, 52
+  size: 256, 48
+  orig: 256, 48
+  offset: 0, 0
+  index: -1
+DirtWallIcon
   rotate: false
   xy: 1730, 244
   size: 24, 24
@@ -279,56 +279,56 @@ DirtWall
   index: -1
 DryadsBlessing
   rotate: false
-  xy: 1546, 30
+  xy: 2014, 1946
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Ebonsand
   rotate: false
-  xy: 1768, 426
+  xy: 1768, 276
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
 Ash
   rotate: false
-  xy: 1768, 426
+  xy: 1768, 276
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Ebonsand
+EbonsandIcon
   rotate: false
-  xy: 40, 7
+  xy: 1384, 1164
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-Ash
+AshIcon
   rotate: false
-  xy: 40, 7
+  xy: 1384, 1164
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Ebonstone
   rotate: false
-  xy: 1768, 326
+  xy: 1610, 76
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Ebonstone
+EbonstoneIcon
   rotate: false
-  xy: 1722, 24
+  xy: 1386, 228
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Endurance
   rotate: false
-  xy: 1922, 192
+  xy: 1352, 230
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -342,7 +342,7 @@ EyeOfCthulhu
   index: -1
 Featherfall
   rotate: false
-  xy: 1990, 192
+  xy: 1974, 124
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -354,30 +354,30 @@ FireBlossom
   orig: 48, 16
   offset: 0, 0
   index: -1
-FireBlossom
+FireBlossomIcon
   rotate: false
-  xy: 1704, 24
+  xy: 1386, 246
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-FireBlossomSeeds
+FireBlossomSeedsIcon
   rotate: false
-  xy: 1974, 104
+  xy: 1974, 84
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 Fishing
   rotate: false
-  xy: 1956, 192
+  xy: 1940, 124
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Flipper
   rotate: false
-  xy: 68, 17
+  xy: 1974, 158
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -389,7 +389,7 @@ ForestBack
   orig: 1024, 600
   offset: 0, 0
   index: -1
-Gel
+GelIcon
   rotate: false
   xy: 1922, 176
   size: 16, 14
@@ -398,12 +398,12 @@ Gel
   index: -1
 Gills
   rotate: false
-  xy: 2014, 1334
+  xy: 1614, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-GoldCoin
+GoldCoinIcon
   rotate: false
   xy: 1350, 1084
   size: 12, 16
@@ -419,28 +419,28 @@ GoldHP
   index: -1
 Grass
   rotate: false
-  xy: 1194, 68
+  xy: 776, 52
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Grass
+GrassIcon
   rotate: false
-  xy: 1632, 24
+  xy: 1548, 12
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Gravity
   rotate: false
-  xy: 2014, 1368
+  xy: 1580, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GreenSlime
   rotate: false
-  xy: 1664, 244
+  xy: 2, 25
   size: 64, 24
   orig: 64, 24
   offset: 0, 0
@@ -454,98 +454,98 @@ HP
   index: -1
 Happy
   rotate: false
-  xy: 1682, 42
+  xy: 1940, 158
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 HealthBar
   rotate: false
-  xy: 2, 11
+  xy: 1444, 16
   size: 36, 12
   orig: 36, 12
   offset: 0, 0
   index: -1
 HealthBarFrame
   rotate: false
-  xy: 1444, 16
+  xy: 2, 11
   size: 36, 12
   orig: 36, 12
   offset: 0, 0
   index: -1
-Heart
+HeartCrystalIcon
+  rotate: false
+  xy: 1940, 66
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+HeartIcon
   rotate: false
   xy: 1644, 198
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-HeartCrystal
-  rotate: false
-  xy: 1352, 240
-  size: 22, 22
-  orig: 22, 22
-  offset: 0, 0
-  index: -1
 HeartLamp
   rotate: false
-  xy: 2014, 1436
+  xy: 1512, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Heartreach
   rotate: false
-  xy: 2014, 1742
+  xy: 1682, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Honey
   rotate: false
-  xy: 102, 17
+  xy: 1610, 184
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Hunter
   rotate: false
-  xy: 1974, 158
+  xy: 2014, 1606
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 IconCorruption
   rotate: false
-  xy: 1132, 82
+  xy: 1132, 22
   size: 60, 58
   orig: 60, 58
   offset: 0, 0
   index: -1
 IconCrimson
   rotate: false
-  xy: 1132, 22
+  xy: 1070, 80
   size: 60, 58
   orig: 60, 58
   offset: 0, 0
   index: -1
 IconHallowCorruption
   rotate: false
-  xy: 1070, 80
+  xy: 1070, 20
   size: 60, 58
   orig: 60, 58
   offset: 0, 0
   index: -1
 IconHallowCrimson
   rotate: false
-  xy: 1070, 20
+  xy: 1132, 82
   size: 60, 58
   orig: 60, 58
   offset: 0, 0
   index: -1
 Inferno
   rotate: false
-  xy: 2014, 1572
+  xy: 102, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -559,121 +559,114 @@ InventoryBack
   index: -1
 InventorySlot1
   rotate: false
-  xy: 1248, 14
+  xy: 1356, 14
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 InventorySlot2
   rotate: false
-  xy: 1506, 64
+  xy: 1302, 14
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 InventorySlot3
   rotate: false
-  xy: 1452, 64
+  xy: 1248, 14
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 InventorySlot4
   rotate: false
-  xy: 1302, 14
+  xy: 1506, 64
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 InventorySlot5
   rotate: false
-  xy: 1194, 14
+  xy: 1452, 64
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 InventorySlotFavorite
   rotate: false
-  xy: 1356, 14
+  xy: 1194, 14
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 Invisibility
   rotate: false
-  xy: 1818, 42
+  xy: 2014, 1674
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-IronPickaxe
+IronPickaxeIcon
   rotate: false
-  xy: 1940, 90
+  xy: 2014, 1538
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Ironskin
   rotate: false
-  xy: 2014, 1470
+  xy: 1478, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 JungleGrass
   rotate: false
-  xy: 1768, 276
+  xy: 260, 52
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-JungleGrass
+JungleGrassIcon
   rotate: false
-  xy: 1500, 12
+  xy: 1384, 1200
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-JungleGrassSeeds
+JungleGrassSeedsIcon
   rotate: false
-  xy: 1974, 64
+  xy: 1940, 46
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 Lifeforce
   rotate: false
-  xy: 1940, 124
+  xy: 1750, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 LivingWood
   rotate: false
-  xy: 1768, 376
+  xy: 1352, 168
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
 Lovestruck
   rotate: false
-  xy: 1940, 56
+  xy: 1444, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 MagicPower
   rotate: false
-  xy: 136, 17
+  xy: 2014, 1844
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-Mana
-  rotate: false
-  xy: 1644, 178
-  size: 18, 18
-  orig: 18, 18
   offset: 0, 0
   index: -1
 ManaCrystal
@@ -683,86 +676,93 @@ ManaCrystal
   orig: 22, 24
   offset: 0, 0
   index: -1
+ManaIcon
+  rotate: false
+  xy: 1644, 178
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
 ManaRegeneration
   rotate: false
-  xy: 1750, 42
+  xy: 2014, 1742
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Mining
   rotate: false
-  xy: 2014, 1776
+  xy: 1410, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 MoonGlow
   rotate: false
-  xy: 1560, 64
+  xy: 1070, 2
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
-MoonGlow
+MoonGlowIcon
   rotate: false
-  xy: 1384, 1200
+  xy: 1384, 1128
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-MoonGlowSeeds
+MoonGlowSeedsIcon
   rotate: false
-  xy: 1974, 84
+  xy: 1940, 26
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 Mud
   rotate: false
-  xy: 1768, 226
+  xy: 260, 2
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Mud
+MudIcon
   rotate: false
-  xy: 238, 33
+  xy: 1704, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 NightOwl
   rotate: false
-  xy: 1974, 124
+  xy: 2014, 1878
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-NullItem
+NullItemIcon
   rotate: false
-  xy: 1536, 12
+  xy: 1722, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 ObsidianSkin
   rotate: false
-  xy: 1940, 158
+  xy: 2014, 1640
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 PeaceCandle
   rotate: false
-  xy: 170, 17
+  xy: 1940, 90
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-PlatinumCoin
+PlatinumCoinIcon
   rotate: false
-  xy: 1852, 58
+  xy: 1852, 40
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
@@ -795,261 +795,254 @@ PlayerFeet
   orig: 40, 1120
   offset: 0, 0
   index: -1
-PlayerHair11
-  rotate: false
-  xy: 1888, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair12
-  rotate: false
-  xy: 1762, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair13
-  rotate: false
-  xy: 1804, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair15
-  rotate: false
-  xy: 1700, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair16
-  rotate: false
-  xy: 1426, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair17
-  rotate: false
-  xy: 1468, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair19
-  rotate: false
-  xy: 1742, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair2
-  rotate: false
-  xy: 1658, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair20
-  rotate: false
-  xy: 1720, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair22
-  rotate: false
-  xy: 1826, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair23
-  rotate: false
-  xy: 1972, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair24
-  rotate: false
-  xy: 1196, 142
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair26
+PlayerHair1
   rotate: false
   xy: 1868, 476
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair27
-  rotate: false
-  xy: 1322, 264
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair28
-  rotate: false
-  xy: 1238, 264
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair3
-  rotate: false
-  xy: 1616, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair30
-  rotate: false
-  xy: 1364, 316
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair31
-  rotate: false
-  xy: 1280, 264
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair32
-  rotate: false
-  xy: 1028, 140
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair33
-  rotate: false
-  xy: 1910, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair34
-  rotate: false
-  xy: 1406, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair35
-  rotate: false
-  xy: 1552, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair36
-  rotate: false
-  xy: 1384, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair37
-  rotate: false
-  xy: 1952, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair38
-  rotate: false
-  xy: 1448, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair39
-  rotate: false
-  xy: 1594, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair4
-  rotate: false
-  xy: 1930, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair41
-  rotate: false
-  xy: 1490, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair42
-  rotate: false
-  xy: 1636, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair43
-  rotate: false
-  xy: 1070, 140
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair45
-  rotate: false
-  xy: 1532, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair46
-  rotate: false
-  xy: 1678, 1262
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair47
-  rotate: false
-  xy: 1112, 142
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair49
-  rotate: false
-  xy: 1574, 476
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair5
+PlayerHair11
   rotate: false
   xy: 1784, 476
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair50
+PlayerHair12
+  rotate: false
+  xy: 1322, 264
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair13
+  rotate: false
+  xy: 1888, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair15
+  rotate: false
+  xy: 1826, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair16
+  rotate: false
+  xy: 1364, 316
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair17
+  rotate: false
+  xy: 1280, 264
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair18
+  rotate: false
+  xy: 1028, 140
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair19
+  rotate: false
+  xy: 1510, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair2
+  rotate: false
+  xy: 1406, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair20
+  rotate: false
+  xy: 1636, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair21
+  rotate: false
+  xy: 1532, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair22
+  rotate: false
+  xy: 1994, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair23
+  rotate: false
+  xy: 1594, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair25
+  rotate: false
+  xy: 1112, 142
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair27
+  rotate: false
+  xy: 1490, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair28
+  rotate: false
+  xy: 1678, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair29
+  rotate: false
+  xy: 1426, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair3
+  rotate: false
+  xy: 1552, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair30
+  rotate: false
+  xy: 1574, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair31
+  rotate: false
+  xy: 1720, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair32
   rotate: false
   xy: 1154, 142
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
+PlayerHair34
+  rotate: false
+  xy: 1616, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair35
+  rotate: false
+  xy: 1762, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair36
+  rotate: false
+  xy: 1196, 142
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair38
+  rotate: false
+  xy: 1658, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair39
+  rotate: false
+  xy: 1804, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair4
+  rotate: false
+  xy: 1384, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair41
+  rotate: false
+  xy: 1972, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair42
+  rotate: false
+  xy: 1468, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair43
+  rotate: false
+  xy: 1238, 264
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair46
+  rotate: false
+  xy: 1930, 1262
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair49
+  rotate: false
+  xy: 1700, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair5
+  rotate: false
+  xy: 1910, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair50
+  rotate: false
+  xy: 1742, 476
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
 PlayerHair6
   rotate: false
-  xy: 1994, 476
+  xy: 1448, 476
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
@@ -1061,9 +1054,16 @@ PlayerHair7
   orig: 40, 784
   offset: 0, 0
   index: -1
+PlayerHair8
+  rotate: false
+  xy: 1070, 140
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
 PlayerHair9
   rotate: false
-  xy: 1510, 1262
+  xy: 1952, 476
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
@@ -1084,14 +1084,14 @@ PlayerHead
   index: -1
 PurpleIce
   rotate: false
-  xy: 1352, 118
+  xy: 1664, 176
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-PurpleIce
+PurpleIceIcon
   rotate: false
-  xy: 1614, 24
+  xy: 1686, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1105,54 +1105,54 @@ Radial
   index: -1
 Rage
   rotate: false
-  xy: 1580, 30
+  xy: 2014, 1368
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 RedIce
   rotate: false
-  xy: 776, 52
+  xy: 1194, 68
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-RedIce
+RedIceIcon
   rotate: false
-  xy: 238, 15
+  xy: 1650, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Regeneration
   rotate: false
-  xy: 1610, 184
+  xy: 1818, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Sand
   rotate: false
-  xy: 260, 2
+  xy: 776, 2
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Sand
+SandIcon
   rotate: false
-  xy: 1384, 1146
+  xy: 1530, 12
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Shine
   rotate: false
-  xy: 2014, 1674
+  xy: 1784, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-SilverCoin
+SilverCoinIcon
   rotate: false
   xy: 1350, 1068
   size: 12, 14
@@ -1161,21 +1161,21 @@ SilverCoin
   index: -1
 SilverThorn
   rotate: false
-  xy: 1560, 82
+  xy: 1714, 226
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
-SilverThorn
+SilverThornIcon
   rotate: false
-  xy: 1384, 1164
+  xy: 1384, 1110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-SilverThornSeeds
+SilverThornSeedsIcon
   rotate: false
-  xy: 1170, 2
+  xy: 1506, 10
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
@@ -1194,30 +1194,30 @@ Snow
   orig: 256, 256
   offset: 0, 0
   index: -1
-Snow
+SnowIcon
   rotate: false
-  xy: 1668, 24
+  xy: 238, 33
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Sonar
   rotate: false
-  xy: 2014, 1810
+  xy: 1922, 192
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Spelunker
   rotate: false
-  xy: 2014, 1300
+  xy: 1648, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 StarInABottle
   rotate: false
-  xy: 2014, 1266
+  xy: 1716, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1229,140 +1229,140 @@ Stone
   orig: 256, 49
   offset: 0, 0
   index: -1
-Stone
+StoneIcon
   rotate: false
-  xy: 1482, 12
+  xy: 1758, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Summoning
   rotate: false
-  xy: 1716, 42
+  xy: 2014, 1776
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Swiftness
   rotate: false
-  xy: 2014, 1708
+  xy: 1990, 192
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Thorns
   rotate: false
-  xy: 1614, 42
+  xy: 2014, 1810
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Titan
   rotate: false
-  xy: 1512, 30
+  xy: 2014, 1572
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Torch
+TorchIcon
   rotate: false
-  xy: 1852, 40
+  xy: 1852, 58
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
   index: -1
 Trash
   rotate: false
-  xy: 2014, 1402
+  xy: 2014, 1266
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-ViciousMushroom
-  rotate: false
-  xy: 1384, 1240
-  size: 20, 20
-  orig: 20, 20
-  offset: 0, 0
-  index: -1
-VileMushroom
+ViciousMushroomIcon
   rotate: false
   xy: 1384, 1218
   size: 20, 20
   orig: 20, 20
   offset: 0, 0
   index: -1
+VileMushroomIcon
+  rotate: false
+  xy: 1384, 1240
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 Warmth
   rotate: false
-  xy: 1478, 30
+  xy: 2014, 1980
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WaterLeaf
   rotate: false
-  xy: 1714, 226
+  xy: 1664, 226
   size: 48, 16
   orig: 48, 16
   offset: 0, 0
   index: -1
-WaterLeaf
+WaterLeafIcon
   rotate: false
-  xy: 1384, 1128
+  xy: 1668, 24
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-WaterLeafSeeds
+WaterLeafSeedsIcon
   rotate: false
-  xy: 1940, 36
+  xy: 1482, 10
   size: 22, 18
   orig: 22, 18
   offset: 0, 0
   index: -1
 WaterWalking
   rotate: false
-  xy: 1364, 282
+  xy: 2014, 1470
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WellFed
   rotate: false
-  xy: 2014, 1946
+  xy: 2014, 1402
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wood
   rotate: false
-  xy: 518, 2
+  xy: 1768, 326
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
-Wood
+WoodIcon
   rotate: false
   xy: 1194, 118
   size: 24, 22
   orig: 24, 22
   offset: 0, 0
   index: -1
-WoodenHammer
+WoodenHammerIcon
   rotate: false
-  xy: 2014, 1878
+  xy: 2014, 1912
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-WoodenSword
+WoodenSwordIcon
   rotate: false
-  xy: 2014, 1844
+  xy: 2014, 1436
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-WorkBench
+WorkBenchIcon
   rotate: false
   xy: 1364, 264
   size: 32, 16
@@ -1371,7 +1371,7 @@ WorkBench
   index: -1
 Wrath
   rotate: false
-  xy: 1648, 42
+  xy: 68, 17
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1396,86 +1396,86 @@ HeartCrystal
   orig: 36, 396
   offset: 0, 0
   index: -1
-PlayerHair1
-  rotate: false
-  xy: 212, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
 PlayerHair10
-  rotate: false
-  xy: 464, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair14
-  rotate: false
-  xy: 254, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair18
-  rotate: false
-  xy: 296, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair21
-  rotate: false
-  xy: 338, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair25
-  rotate: false
-  xy: 380, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair29
   rotate: false
   xy: 422, 2
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair40
+PlayerHair14
+  rotate: false
+  xy: 464, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair24
+  rotate: false
+  xy: 128, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair26
   rotate: false
   xy: 2, 2
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair44
-  rotate: false
-  xy: 86, 2
-  size: 40, 784
-  orig: 40, 784
-  offset: 0, 0
-  index: -1
-PlayerHair48
+PlayerHair33
   rotate: false
   xy: 44, 2
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair51
+PlayerHair37
+  rotate: false
+  xy: 86, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair40
+  rotate: false
+  xy: 212, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair44
+  rotate: false
+  xy: 254, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair45
   rotate: false
   xy: 170, 2
   size: 40, 784
   orig: 40, 784
   offset: 0, 0
   index: -1
-PlayerHair8
+PlayerHair47
   rotate: false
-  xy: 128, 2
+  xy: 338, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair48
+  rotate: false
+  xy: 296, 2
+  size: 40, 784
+  orig: 40, 784
+  offset: 0, 0
+  index: -1
+PlayerHair51
+  rotate: false
+  xy: 380, 2
   size: 40, 784
   orig: 40, 784
   offset: 0, 0

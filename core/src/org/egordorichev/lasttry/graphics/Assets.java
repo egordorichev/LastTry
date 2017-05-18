@@ -47,7 +47,7 @@ public class Assets {
 		}).start();
 	}
 
-	public static TextureRegion getTextureRegion(String name) {
+	public static TextureRegion getTexture(String name) {
 		return textures.findRegion(name);
 	}
 

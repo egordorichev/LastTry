@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class SilverThorn extends Plant {
     public SilverThorn() {
-        super(ItemID.silverThorn, "Silver Thorn", Assets.getTextureRegion(Textures.silverThornIcon), Assets.getTextureRegion(Textures.silverThorn));
+        super(ItemID.silverThorn, "Silver Thorn", Assets.getTexture(Textures.silverThornIcon), Assets.getTexture(Textures.silverThorn));
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class DayBloom extends Plant {
     public DayBloom() {
-        super(ItemID.dayBloom, "Day Bloom", Assets.getTextureRegion(Textures.dayBloomIcon), Assets.getTextureRegion(Textures.dayBloom));
+        super(ItemID.dayBloom, "Day Bloom", Assets.getTexture(Textures.dayBloomIcon), Assets.getTexture(Textures.dayBloom));
     }
 
     @Override

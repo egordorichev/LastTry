@@ -27,7 +27,7 @@ public class BlockGround extends Block {
 	public void renderBlock(int x, int y, byte binary) {
 		short variant = 1; // TODO: FIXME: replace  with var
 
-		Graphics.batch.draw(this.tiles[binary][variant], x * SIZE, y * SIZE);
+		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
 		if (this.renderCracks()) {
 			byte hp = Globals.world.blocks.getHP(x, y);

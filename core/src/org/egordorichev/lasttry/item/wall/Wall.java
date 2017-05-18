@@ -19,6 +19,9 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 	public Wall(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, texture);
 
+		System.out.println(texture);
+		System.out.println(tiles);
+
 		this.tiles = tiles.split(Block.SIZE, Block.SIZE);
 		this.power = requiredPower;
 	}
@@ -44,7 +47,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		int variant = 1;
 		int binary = Block.calculateBinary(t, r, b, l);
 
-		Graphics.batch.draw(this.tiles[binary][variant], x * Block.SIZE, y * Block.SIZE);
+		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
 		if (this.renderCracks()) {
 			byte hp = Globals.world.walls.getHP(x, y);

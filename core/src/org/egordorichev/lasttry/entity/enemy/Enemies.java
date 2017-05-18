@@ -21,7 +21,7 @@ public class Enemies {
 
         try {
             JsonReader jsonReader = new JsonReader();
-            JsonValue root = jsonReader.parse(Gdx.files.internal("enemies/standard.json"));
+            JsonValue root = jsonReader.parse(Gdx.files.internal("data/enemies/standard.json"));
 
             for (JsonValue enemy : root) {
 	            try {

@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.ItemID;
 
 public class DeathWeed extends Plant {
     public DeathWeed() {
-        super(ItemID.deathWeed, "Death Weed", Assets.getTextureRegion(Textures.deathWeedIcon), Assets.getTextureRegion(Textures.deathWeed));
+        super(ItemID.deathWeed, "Death Weed", Assets.getTexture(Textures.deathWeedIcon), Assets.getTexture(Textures.deathWeed));
     }
 
     @Override

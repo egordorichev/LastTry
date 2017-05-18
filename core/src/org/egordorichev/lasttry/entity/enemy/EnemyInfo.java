@@ -160,7 +160,7 @@ public class EnemyInfo {
 			}
 		}
 
-		this.image = Assets.getTextureRegion(this.texture);
+		this.image = Assets.getTexture(this.texture);
 
 		if (root.has("animation")) {
 			JsonValue animation = root.get("animation");

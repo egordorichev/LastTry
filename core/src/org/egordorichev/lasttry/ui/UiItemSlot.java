@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.items.*;
 
 public class UiItemSlot extends UiComponent {
-    private static TextureRegion inventorySlot5 = Assets.getTextureRegion(Textures.inventorySlot5);
+    private static TextureRegion inventorySlot5 = Assets.getTexture(Textures.inventorySlot5);
 	private boolean active;
     private TextureRegion texture;
     public ItemHolder itemHolder;
@@ -45,18 +45,18 @@ public class UiItemSlot extends UiComponent {
             case AMMO:
             case COIN:
             case TRASH:
-                this.texture = Assets.getTextureRegion(Textures.inventorySlot1);
+                this.texture = Assets.getTexture(Textures.inventorySlot1);
             break;
             case ACCESSORY:
             case ARMOR:
-                this.texture = Assets.getTextureRegion(Textures.inventorySlot2);
+                this.texture = Assets.getTexture(Textures.inventorySlot2);
             break;
             case VANITY:
             case VANITY_ACCESSORY:
-                this.texture = Assets.getTextureRegion(Textures.inventorySlot3);
+                this.texture = Assets.getTexture(Textures.inventorySlot3);
             break;
             case DYE:
-                this.texture = Assets.getTextureRegion(Textures.inventorySlot4);
+                this.texture = Assets.getTexture(Textures.inventorySlot4);
             break;
         }
 
