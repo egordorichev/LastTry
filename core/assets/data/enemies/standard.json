@@ -1,7 +1,7 @@
 {
 	"Green Slime" : {
 		"ai" : 1,
-		"texture" : "GreenSlime.png",
+		"texture" : "GreenSlime",
 		"damage" : [ 6, 12, 118 ],
 		"hp" : [ 14, 28, 338 ],
 		"defense" : [ 0, 0, 0 ],
@@ -70,7 +70,7 @@
 
 	"Blue Slime" : {
 		"copy" : "Green Slime",
-		"texture" : "BlueSlime.png",
+		"texture" : "BlueSlime",
 		"damage" : [ 7, 14, 74 ],
 		"hp" : [ 25, 50, 330 ],
 		"defense" : [ 2, 2, 2 ],
@@ -79,7 +79,7 @@
 
 	"Zombie" : {
 		"ai" : 2,
-		"texture" : "Zombie.png",
+		"texture" : "Zombie",
 		"damage" : [ 14, 28, 50 ],
 		"hp" : [ 45, 90, 198 ],
 		"defense" : [ 6, 6, 6 ],
@@ -143,7 +143,7 @@
 
 	"Bald Zombie" : {
 		"copy" : "Zombie",
-		"texture" : "BaldZombie.png",
+		"texture" : "BaldZombie",
 		"damage" : [ 15, 30, 54 ],
 		"hp" : [ 40, 80, 176 ],
 		"defense" : [ 5, 5, 5 ],
@@ -152,7 +152,7 @@
 
 	"Slimed Zombie" : {
 		"copy" : "Zombie",
-		"texture" : "SlimedZombie.png",
+		"texture" : "SlimedZombie",
 		"damage" : [ 13, 26, 40 ],
 		"hp" : [ 40, 80, 176 ],
 		"defense" : [ 6, 6, 6 ],
