@@ -6,9 +6,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
 public class BlockGround extends Block {
-	public BlockGround(short id, String name, ToolPower requiredPower,
-			TextureRegion texture, TextureRegion tiles) {
-
+	public BlockGround(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, true, requiredPower, texture, tiles);
 	}
 
@@ -29,10 +27,7 @@ public class BlockGround extends Block {
 	public void renderBlock(int x, int y, byte binary) {
 		short variant = 1; // TODO: FIXME: replace  with var
 
-		Graphics.batch.draw(this.tiles, x * Block.SIZE,
-			y * Block.SIZE, Block.SIZE, Block.SIZE,
-			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-			Block.SIZE, false, false);
+		Graphics.batch.draw(this.tiles[binary][variant], x * SIZE, y * SIZE);
 
 		if (this.renderCracks()) {
 			byte hp = Globals.world.blocks.getHP(x, y);

@@ -74,13 +74,12 @@ public class Plant extends Block {
         int tx = 0;
 
         if (hp >= GROW_THRESHOLD + 1) {
-            tx = 32;
+            tx = 1;
         } else if (hp == GROW_THRESHOLD) {
-            tx = 16;
+            tx = 2;
         }
 
-        Graphics.batch.draw(this.tiles, x * Block.SIZE, (Globals.world.getHeight() - y - 1) * Block.SIZE,
-            tx, 0, Block.SIZE, Block.SIZE);
+        Graphics.batch.draw(this.tiles[tx][0], x * Block.SIZE, y * Block.SIZE);
 	}
 
     @Override

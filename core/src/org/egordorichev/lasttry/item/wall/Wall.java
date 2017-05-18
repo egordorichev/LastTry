@@ -13,13 +13,13 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Wall extends org.egordorichev.lasttry.item.Item {
-	protected TextureRegion tiles;
+	protected TextureRegion[][] tiles;
 	protected ToolPower power;
 
 	public Wall(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, texture);
 
-		this.tiles = tiles;
+		this.tiles = tiles.split(Block.SIZE, Block.SIZE);
 		this.power = requiredPower;
 	}
 
@@ -44,10 +44,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		int variant = 1;
 		int binary = Block.calculateBinary(t, r, b, l);
 
-		Graphics.batch.draw(this.tiles, x * Block.SIZE,
-			y * Block.SIZE, Block.SIZE, Block.SIZE,
-			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-			Block.SIZE, false, false);
+		Graphics.batch.draw(this.tiles[binary][variant], x * Block.SIZE, y * Block.SIZE);
 
 		if (this.renderCracks()) {
 			byte hp = Globals.world.walls.getHP(x, y);

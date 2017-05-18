@@ -26,8 +26,7 @@ public class MultiTileBlock extends Block {
 		if (first) {
 		    short variant = 1;
 
-		    Graphics.batch.draw(this.tiles, x * Block.SIZE,
-				(Globals.world.getHeight() - y - 1) * Block.SIZE);
+		    // Graphics.batch.draw(this.tiles, x * Block.SIZE, y * Block.SIZE); : TODO: fixme
 	    }
     }
 

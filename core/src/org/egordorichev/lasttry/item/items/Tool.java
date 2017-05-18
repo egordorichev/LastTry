@@ -105,7 +105,7 @@ public class Tool extends Item {
 	private Rectangle generateEquippedPlayerHitBox() {
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
 		final TextureRegion itemTextureRegion = this.getTextureRegion();
-		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getWidth(), itemTextureRegion.getHeight());
+		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getRegionWidth(), itemTextureRegion.getRegionHeight());
 
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x+toolHitBox.x,
 			playerHitBox.y+toolHitBox.y,

@@ -26,18 +26,16 @@ public class ShortSword extends MeleeWeapon {
 			return;
 		}
 
-		float width = this.texture.getWidth();
-		float height = this.texture.getHeight();
+		float width = this.texture.getRegionWidth();
+		float height = this.texture.getRegionHeight();
 		float angle = -45f;
 
 		if (Globals.player.physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX() - width,
-				Globals.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
-				(int) height, true, false);
+				Globals.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle);
 		} else {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
-				(int) height, false, false);
+				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
 		}
 	}
 }

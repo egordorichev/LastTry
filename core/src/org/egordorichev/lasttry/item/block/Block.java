@@ -18,16 +18,17 @@ public class Block extends Item {
 
 	protected boolean solid;
 	protected ToolPower power;
-	protected TextureRegion tiles;
+	protected TextureRegion[][] tiles;
 	protected int width = 1;
 	protected int height = 1;
 
 	public Block(short id, String name, boolean solid, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, texture);
 		this.power = requiredPower;
-		this.tiles = tiles;
 		this.solid = solid;
 		this.useSpeed = 30;
+
+		this.tiles = tiles.split(SIZE, SIZE);
 	}
 
 	@Override
@@ -38,14 +39,21 @@ public class Block extends Item {
 	public static byte calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
 		byte result = 0;
 
-		if (top)
+		if (top) {
 			result += 1;
-		if (right)
+		}
+
+		if (right) {
 			result += 2;
-		if (bottom)
+		}
+
+		if (bottom) {
 			result += 4;
-		if (left)
+		}
+
+		if (left) {
 			result += 8;
+		}
 
 		return result;
 	}
@@ -109,10 +117,7 @@ public class Block extends Item {
 	public void renderBlock(int x, int y, byte binary) {
 		short variant = 1; // TODO: FIXME: replace with var
 
-		Graphics.batch.draw(this.tiles, x * Block.SIZE,
-			y * Block.SIZE, Block.SIZE, Block.SIZE,
-			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-			Block.SIZE, false, false);
+		Graphics.batch.draw(this.tiles[binary][variant], x * SIZE, y * SIZE);
 
 		if (this.renderCracks()) {
 			byte hp = Globals.world.blocks.getHP(x, y);
