@@ -19,9 +19,6 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 	public Wall(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
 		super(id, name, texture);
 
-		System.out.println(texture);
-		System.out.println(tiles);
-
 		this.tiles = tiles.split(Block.SIZE, Block.SIZE);
 		this.power = requiredPower;
 	}
