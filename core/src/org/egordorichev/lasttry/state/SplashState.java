@@ -24,6 +24,11 @@ public class SplashState implements State {
 
 	@Override
 	public void render(float delta) {
+		Graphics.batch.setColor(1, 1, 1, this.alpha);
+		Graphics.batch.draw(this.splash, (Gdx.graphics.getWidth() - this.splash.getWidth()) / 2,
+				(Gdx.graphics.getHeight() - this.splash.getHeight()) / 2);
+		Graphics.batch.setColor(1, 1, 1, 1);
+
 		if (this.state != 2 && Assets.isLoaded()) {
 			this.state = 2;
 		}
@@ -46,11 +51,6 @@ public class SplashState implements State {
 				LastTry.instance.setScreen(new LoadState());
 			}
 		}
-
-		Graphics.batch.setColor(1, 1, 1, this.alpha);
-		Graphics.batch.draw(this.splash, (Gdx.graphics.getWidth() - this.splash.getWidth()) / 2,
-			(Gdx.graphics.getHeight() - this.splash.getHeight()) / 2);
-		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
