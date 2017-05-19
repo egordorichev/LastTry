@@ -29,23 +29,30 @@ public class SplashState implements State {
 				(Gdx.graphics.getHeight() - this.splash.getHeight()) / 2);
 		Graphics.batch.setColor(1, 1, 1, 1);
 
-		if (this.state != 2 && Assets.isLoaded()) {
+		boolean loaded = Assets.update();
+
+		if (loaded && !LastTry.release ) {
+			this.alpha = 0f;
 			this.state = 2;
+
+			Graphics.load();
+			LastTry.instance.setScreen(new LoadState());
+			return;
 		}
 
 		if (this.state == 0) {
 			this.alpha += 0.01f;
 
-			if (this.alpha > 1f) {
+			if (this.alpha > 1f && loaded) {
 				this.alpha = 1f;
 				this.state = 1;
 			}
-		} else if (this.state == 2) {
+		} else if (this.state == 1) {
 			this.alpha -= 0.01f;
 
 			if (this.alpha < 0f) {
 				this.alpha = 0f;
-				this.state = 3;
+				this.state = 2;
 
 				Graphics.load();
 				LastTry.instance.setScreen(new LoadState());
