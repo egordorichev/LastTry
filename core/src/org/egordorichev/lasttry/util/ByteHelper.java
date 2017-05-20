@@ -6,7 +6,7 @@ public class ByteHelper {
 	}
 
 	public static int getBitValue(byte data, byte bit) {
-		return (data & (1 << bit));
+		return (data & (1 << bit)) > 0 ? 1 : 0;
 	}
 
 	public static byte setBit(byte data, byte bit, boolean value) {

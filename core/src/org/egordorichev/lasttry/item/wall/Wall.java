@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Wall extends org.egordorichev.lasttry.item.Item {
@@ -40,18 +41,16 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		boolean b = Globals.world.walls.getID(x, y - 1) == this.id;
 		boolean l = Globals.world.walls.getID(x - 1, y) == this.id;
 
-		// TODO: FIXME: replace with variable
-		int variant = 1;
+		byte hp = Globals.world.walls.getHP(x, y);
+		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 		int binary = Block.calculateBinary(t, r, b, l);
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
-		if (this.renderCracks()) {
-			byte hp = Globals.world.walls.getHP(x, y);
+		hp = (byte) (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2);
 
-			if (hp < Block.MAX_HP) {
-				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-			}
+		if (this.renderCracks() && hp < Block.MAX_HP) {
+			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 	}
 

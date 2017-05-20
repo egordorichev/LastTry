@@ -106,6 +106,8 @@ public class UiItemSlot extends UiComponent {
 				- this.back.getRegionHeight()) / 2);
 			Graphics.batch.setColor(1, 1, 1, 1);
 		}
+
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	public void setItemCount(int count) {

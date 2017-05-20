@@ -82,9 +82,11 @@ public class Chunk {
 			return;
 		}
 
+		int n = LastTry.random.nextInt(2) + 1;
+
 		this.data.blocks[x + y * SIZE] = id;
-		this.data.blocksHealth[x + y * SIZE] = ByteHelper.create(true, true, LastTry.random.nextBoolean(),
-			true, false, false, false, false);
+		this.data.blocksHealth[x + y * SIZE] = ByteHelper.create(true, true, (n == 1 || n == 3),
+				(n == 2), false, false, false, false);
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
@@ -143,7 +145,10 @@ public class Chunk {
 			return;
 		}
 
-		this.data.wallsHealth[x + y * SIZE] = Block.MAX_HP;
+		int n = LastTry.random.nextInt(2) + 1;
+
+		this.data.wallsHealth[x + y * SIZE] = ByteHelper.create(true, true, (n == 1 || n == 3),
+				(n == 2), false, false, false, false);
 		this.data.walls[x + y * SIZE] = id;
 	}
 

@@ -24,11 +24,11 @@ public class BlockGround extends Block {
 	@Override
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.world.blocks.getHP(x, y);
-		int variant = ByteHelper.getBitValue(hp, (byte) 3) + ByteHelper.getBitValue(hp, (byte) 4) * 2;
-
-		System.out.println(variant);
+		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
+
+		hp = (byte) (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2);
 
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
