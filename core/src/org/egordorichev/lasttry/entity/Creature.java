@@ -23,11 +23,17 @@ public class Creature extends Entity {
 
 	@Override
 	public void render() {
-		super.render();
-
+		// TODO: Should this reset be placed somewhere else in case the same
+		// logic applies to more than just creatures?
+		//
+		// Reset entity color.
+		// Prevents the previous entity's coloring from interfering with this
+		// one's.
+		Graphics.batch.setColor(1, 1, 1, 1);
 		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
 			this.renderHealthBar();
 		}
+		super.render();
 	}
 
 	protected void renderHealthBar() {
@@ -44,10 +50,12 @@ public class Creature extends Entity {
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-//		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
-//			mapped, 12, 0, 0, mapped, 12, false, false);
-//		Graphics.batch.setColor(1, 1, 1, 1);
-//		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
+		// Graphics.batch.draw(Graphics.healthBarTexture, x + 2,
+		// this.physics.getY() - 20,
+		// mapped, 12, 0, 0, mapped, 12, false, false);
+		// Graphics.batch.setColor(1, 1, 1, 1);
+		// Graphics.batch.draw(Graphics.healthBarFrameTexture, x,
+		// this.physics.getY() - 20);
 	}
 
 	@Override
