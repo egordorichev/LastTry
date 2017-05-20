@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
 	public static final int SIZE = 16;
-	public static final byte MAX_HP = 4;
+	public static final byte MAX_HP = 3;
 
 	protected boolean solid;
 	protected ToolPower power;
