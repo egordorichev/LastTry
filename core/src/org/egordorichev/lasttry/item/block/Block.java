@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
+import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Block extends Item {
@@ -115,16 +116,13 @@ public class Block extends Item {
 	}
 
 	public void renderBlock(int x, int y, byte binary) {
-		short variant = 1; // TODO: FIXME: replace with var
+		byte hp = Globals.world.blocks.getHP(x, y);
+		int variant = ByteHelper.getBitValue(hp, (byte) 3) + ByteHelper.getBitValue(hp, (byte) 4) * 2;
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
-		if (this.renderCracks()) {
-			byte hp = Globals.world.blocks.getHP(x, y);
-
-			if (hp < Block.MAX_HP) {
-				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-			}
+		if (this.renderCracks() && hp < Block.MAX_HP) {
+			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 	}
 

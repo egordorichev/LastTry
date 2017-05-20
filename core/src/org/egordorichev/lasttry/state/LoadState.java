@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class LoadState implements State {
     private boolean loaded = false;
-    private String loadString = "";
+    private String loadString = "Loading...";
 
     public LoadState() {
         new Thread(new Runnable() {
@@ -63,11 +63,13 @@ public class LoadState implements State {
             return;
         }
 
-        for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
+	    int height = Gdx.graphics.getHeight();
+
+	    for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
+            Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height, 1000, 0, 1, 1024, false, false);
         }
 
-        Assets.f22.draw(Graphics.batch, this.loadString, 0, 0);
+        Assets.f22.draw(Graphics.batch, this.loadString, 100, height / 2 - 11);
         LastTry.ui.render();
     }
 

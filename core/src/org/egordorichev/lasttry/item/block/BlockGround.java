@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.util.ByteHelper;
 
 public class BlockGround extends Block {
 	public BlockGround(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
@@ -20,21 +21,17 @@ public class BlockGround extends Block {
 		return calculateBinary(t, r, b, l);
 	}
 
-	/**
-	 * Overridden so blocks of the same type merge.
-	 */
 	@Override
 	public void renderBlock(int x, int y, byte binary) {
-		short variant = 1; // TODO: FIXME: replace  with var
+		byte hp = Globals.world.blocks.getHP(x, y);
+		int variant = ByteHelper.getBitValue(hp, (byte) 3) + ByteHelper.getBitValue(hp, (byte) 4) * 2;
+
+		System.out.println(variant);
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
-		if (this.renderCracks()) {
-			byte hp = Globals.world.blocks.getHP(x, y);
-
-			if (hp < Block.MAX_HP) {
-				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-			}
+		if (this.renderCracks() && hp < Block.MAX_HP) {
+			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 	}
 }

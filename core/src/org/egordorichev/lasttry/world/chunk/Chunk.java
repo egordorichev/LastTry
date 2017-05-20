@@ -1,10 +1,13 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
+import org.egordorichev.lasttry.util.ByteHelper;
+import org.egordorichev.lasttry.util.Util;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -80,7 +83,8 @@ public class Chunk {
 		}
 
 		this.data.blocks[x + y * SIZE] = id;
-		this.data.blocksHealth[x + y * SIZE] = Block.MAX_HP;
+		this.data.blocksHealth[x + y * SIZE] = ByteHelper.create(true, true, LastTry.random.nextBoolean(),
+			true, false, false, false, false);
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
