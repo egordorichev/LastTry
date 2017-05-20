@@ -33,7 +33,11 @@ public class EntityManager {
 	}
 
 	public void render() {
-		Rectangle camera = new Rectangle(Camera.game.position.x - 16, Camera.game.position.y - 16, Gdx.graphics.getWidth() + 32, Gdx.graphics.getHeight());
+		int halfWidth = Gdx.graphics.getWidth() / 2;
+		int halfHeight = Gdx.graphics.getHeight() / 2;
+
+		Rectangle camera = new Rectangle(Camera.game.position.x - 16 - halfWidth, Camera.game.position.y - 16 - halfHeight,
+			Camera.game.position.x + halfWidth + 32, Camera.game.position.y + halfHeight + 32);
 
 		for (Entity entity : this.entities) {
 			if (entity.physics.getHitbox().intersects(camera)) {

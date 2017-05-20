@@ -28,6 +28,7 @@ public class SpawnSystem {
         if(Globals.environment.currentBiome == null){
             return;
         }
+
         this.biome = Globals.environment.currentBiome; // Get user biome
         this.refreshTriggered();
     }
