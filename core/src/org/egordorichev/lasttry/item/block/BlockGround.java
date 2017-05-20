@@ -27,7 +27,6 @@ public class BlockGround extends Block {
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
-
 		hp = (byte) (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2);
 
 		if (this.renderCracks() && hp < Block.MAX_HP) {
