@@ -111,7 +111,7 @@ public class Chunk {
 			return;
 		}
 
-		if (hp == 0) {
+		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
 			Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
 
 			if (block != null) {
@@ -173,7 +173,7 @@ public class Chunk {
 			return;
 		}
 
-		if (hp == 0) {
+		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
 			Wall wall = (Wall) Item.fromID(this.data.blocks[x + y * SIZE]);
 
 			if (wall != null) {
