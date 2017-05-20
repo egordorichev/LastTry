@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.graphics;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,9 @@ public class Animation {
 	    }
     }
 
-    public void setTextureRegion(TextureRegion texture) {
+    public void setTexture(TextureRegion texture) {
 	    for (AnimationFrame frame : this.frames) {
-			frame.region.setRegion(texture);
+			frame.region.setTexture(texture.getTexture());
 	    }
     }
 

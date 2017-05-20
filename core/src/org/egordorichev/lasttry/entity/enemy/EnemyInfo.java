@@ -241,7 +241,7 @@ public class EnemyInfo {
 
 		for (int i = 0; i < this.animations.length; i++) {
 			enemy.graphics.animations[i] = this.animations[i].copy();
-			enemy.graphics.animations[i].setTextureRegion(this.image);
+			enemy.graphics.animations[i].setTexture(this.image);
 		}
 
 		for (int i = 0; i < this.drops.size(); i++) {
