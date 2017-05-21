@@ -1,15 +1,9 @@
 package org.egordorichev.lasttry.graphics.lighting;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
-import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.util.Camera;
-
 public class Lighting {
 	private static FrameBuffer fbo;
 
@@ -20,7 +14,7 @@ public class Lighting {
 	public static Texture light;
 
 	public static void init(int width, int height) {
-		
+
 	}
 
 	public static void begin() {

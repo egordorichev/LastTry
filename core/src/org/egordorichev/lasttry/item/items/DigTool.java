@@ -50,7 +50,7 @@ public class DigTool extends Tool {
 
 		if (Globals.player.physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, -angle + 90.0f);
+				Globals.player.physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
 		} else {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
 				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);

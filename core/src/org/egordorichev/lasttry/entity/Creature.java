@@ -1,7 +1,10 @@
 package org.egordorichev.lasttry.entity;
 
+import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.util.Util;
 
 public class Creature extends Entity {
@@ -22,28 +25,26 @@ public class Creature extends Entity {
 		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
-	public void onHit(int damage) {
+	public void hit(int damage) {
+		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO: crit?
+			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
+
 		// TODO: Determine where the damage code should be
 		// Should creatures share this logic or does this only apply to enemies?
 
-		stats.modifyHP(damage);
-		stats.setInvulnTime(ATTACK_INVULN_TIME);
-		
-		// TODO: Knockback effect when damaged. Force depends on damage.d
+		this.stats.modifyHP(-damage);
+		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+
+		// TODO: Knockback effect when damaged. Force depends on damage.
 	}
 
 	@Override
 	public void render() {
-		// TODO: Should this reset be placed somewhere else in case the same
-		// logic applies to more than just creatures?
-		//
-		// Reset entity color.
-		// Prevents the previous entity's coloring from interfering with this
-		// one's.
-		Graphics.batch.setColor(1, 1, 1, 1);
 		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
 			this.renderHealthBar();
 		}
+
 		super.render();
 	}
 
@@ -61,12 +62,13 @@ public class Creature extends Entity {
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-		// Graphics.batch.draw(Graphics.healthBarTexture, x + 2,
-		// this.physics.getY() - 20,
-		// mapped, 12, 0, 0, mapped, 12, false, false);
-		// Graphics.batch.setColor(1, 1, 1, 1);
-		// Graphics.batch.draw(Graphics.healthBarFrameTexture, x,
-		// this.physics.getY() - 20);
+		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
+			mapped, 12, 0, 0, mapped, 12, false, false);
+			Graphics.batch.setColor(1, 1, 1, 1);
+			Graphics.batch.draw(Graphics.healthBarFrameTexture, x,
+			this.physics.getY() - 20);
+
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
@@ -80,7 +82,6 @@ public class Creature extends Entity {
 			this.die();
 		}
 	}
-	
 
 	public boolean isInvulnrable() {
 		return this.stats.getInvulnTime() > 0;

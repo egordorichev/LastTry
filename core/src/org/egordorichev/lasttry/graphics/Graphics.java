@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Graphics {
 	public static TextureRegion[] tileCracks;
 	public static Texture skyTexture;
-    public static TextureRegion healthBarTexture;
-    public static TextureRegion healthBarFrameTexture;
+    public static Texture healthBarTexture;
+    public static Texture healthBarFrameTexture;
     public static SpriteBatch batch;
 
     public static void load() {
@@ -23,7 +23,7 @@ public class Graphics {
 		}
 
 	    skyTexture = new Texture(Gdx.files.internal(Textures.sky));
-	    healthBarTexture = Assets.getTexture(Textures.healthBar);
-	    healthBarFrameTexture = Assets.getTexture(Textures.healthBarFrame);
+	    healthBarTexture =  new Texture(Gdx.files.internal(Textures.healthBar));
+	    healthBarFrameTexture =  new Texture(Gdx.files.internal(Textures.healthBarFrame));
 	}
 }

@@ -38,8 +38,8 @@ public class Enemy extends CreatureWithAI {
 	}
 
 	@Override
-	public void onHit(int damage) {
-		super.onHit(damage);
+	public void hit(int damage) {
+		super.hit(damage);
 	}
 
 	@Override

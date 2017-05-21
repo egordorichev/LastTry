@@ -1,9 +1,11 @@
 package org.egordorichev.lasttry.entity.player;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
+import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Creature {

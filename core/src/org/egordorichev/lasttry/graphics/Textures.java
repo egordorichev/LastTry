@@ -140,8 +140,8 @@ public class Textures {
 	public static final String starInABottleBuff = "StarInABottle";
 
 	public static final String sky = "Sky.png";
-	public static final String healthBar = "HealthBar";
-	public static final String healthBarFrame = "HealthBarFrame";
+	public static final String healthBar = "HealthBar.png";
+	public static final String healthBarFrame = "HealthBarFrame.png";
 
 	public static final String corruptionWorld = "IconCorruption";
 	public static final String crimsonWorld = "IconCrimson";

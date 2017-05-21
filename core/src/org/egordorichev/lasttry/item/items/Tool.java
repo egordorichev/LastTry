@@ -110,13 +110,8 @@ public class Tool extends Item {
 	}
 
 	private void inflictDamageOnEnemy(final Enemy enemy) {
-		int damage = -this.calculateDamageToInflict(enemy);
-		enemy.onHit(damage);
-
-		// enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
-		// TODO Right now knock back velocity is a Magic Number. In the future,
-		// knockback will be based on weapon choice.
-		// enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
+		int damage = this.calculateDamageToInflict(enemy);
+		enemy.hit(damage);
 	}
 
 	private int calculateDamageToInflict(final Enemy enemy) {
@@ -124,18 +119,11 @@ public class Tool extends Item {
 
 		if (this.criticalStrikeChanceActive()) {
 			weaponDamage = weaponDamage * 2;
-			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage),
-					(int) enemy.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-					(int) enemy.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
-		} else {
-			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage),
-					(int) enemy.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-					(int) enemy.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 		}
 
 		weaponDamage = weaponDamage - enemy.stats.getDefense() / 2;
 
-		if (weaponDamage < 0) {
+		if (weaponDamage < 1) {
 			weaponDamage = 1; // Min damage!
 		}
 
