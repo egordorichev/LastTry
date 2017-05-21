@@ -90,6 +90,39 @@ public class UiInventory extends UiComponent {
 		InputManager.multiplexer.addProcessor(new InputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
+				switch (keycode) {
+					case Keys.HOTBAR_SLOT_0:
+						setHotbarSlot(0);
+					break;
+					case Keys.HOTBAR_SLOT_1:
+						setHotbarSlot(1);
+					break;
+					case Keys.HOTBAR_SLOT_2:
+						setHotbarSlot(2);
+					break;
+					case Keys.HOTBAR_SLOT_3:
+						setHotbarSlot(3);
+					break;
+					case Keys.HOTBAR_SLOT_4:
+						setHotbarSlot(4);
+					break;
+					case Keys.HOTBAR_SLOT_5:
+						setHotbarSlot(5);
+					break;
+					case Keys.HOTBAR_SLOT_6:
+						setHotbarSlot(6);
+					break;
+					case Keys.HOTBAR_SLOT_7:
+						setHotbarSlot(7);
+					break;
+					case Keys.HOTBAR_SLOT_8:
+						setHotbarSlot(8);
+					break;
+					case Keys.HOTBAR_SLOT_9:
+						setHotbarSlot(9);
+					break;
+				}
+
 				return false;
 			}
 
@@ -175,39 +208,6 @@ public class UiInventory extends UiComponent {
 				}
 			}
 		}
-
-		switch (InputManager.getCurrentKeyDown()) {
-			case Keys.HOTBAR_SLOT_0:
-				setHotbarSlot(0);
-			break;
-			case Keys.HOTBAR_SLOT_1:
-				setHotbarSlot(1);
-			break;
-			case Keys.HOTBAR_SLOT_2:
-				setHotbarSlot(2);
-			break;
-			case Keys.HOTBAR_SLOT_3:
-				setHotbarSlot(3);
-			break;
-			case Keys.HOTBAR_SLOT_4:
-				setHotbarSlot(4);
-			break;
-			case Keys.HOTBAR_SLOT_5:
-				setHotbarSlot(5);
-			break;
-			case Keys.HOTBAR_SLOT_6:
-				setHotbarSlot(6);
-			break;
-			case Keys.HOTBAR_SLOT_7:
-				setHotbarSlot(7);
-			break;
-			case Keys.HOTBAR_SLOT_8:
-				setHotbarSlot(8);
-			break;
-			case Keys.HOTBAR_SLOT_9:
-				setHotbarSlot(9);
-			break;
-		}
 	}
 
 	@Override
@@ -267,20 +267,14 @@ public class UiInventory extends UiComponent {
 	}
 
 	public Item getItem(int index) {
-		ItemHolder holder = this.getItemHolder(index);
-
-		if (holder == null) {
-			return null;
-		}
-
-		return holder.getItem();
+		return this.getItemHolder(index).getItem();
 	}
 
 	public boolean add(ItemHolder holder) { // TODO: check if item is already in inventory
 		for (int i = 0; i < 88; i++) {
 			UiItemSlot slot = this.slots[i];
 
-			if (slot.getItem() == null || slot.getItemCount() >= slot.getItem().getMaxInStack()) {
+			if (slot.isEmpty() || slot.getItemCount() >= slot.getItem().getMaxInStack()) {
 				continue;
 			}
 
@@ -312,23 +306,14 @@ public class UiInventory extends UiComponent {
 
 	public UiItemSlot getFirstFreeSlot(UiItemSlot.Type type) {
 		switch (type) {
-			case ACCESSORY:
-				return this.getFirstFreeSlot(68, 73);
-			case AMMO:
-				return this.getFirstFreeSlot(54, 58);
-			case ANY:
-			default:
-				return this.getFirstFreeSlot(0, 50); // Main inventory
-			case COIN:
-				return this.getFirstFreeSlot(50, 54);
-			case ARMOR:
-				return this.getFirstFreeSlot(59, 62);
-			case TRASH:
-				return null;
-			case DYE:
-				return this.getFirstFreeSlot(78, 83);
-			case VANITY:
-				return this.getFirstFreeSlot(73, 78);
+			case ACCESSORY: return this.getFirstFreeSlot(68, 73);
+			case AMMO: return this.getFirstFreeSlot(54, 58);
+			case ANY: default: return this.getFirstFreeSlot(0, 50); // Main inventory
+			case COIN: return this.getFirstFreeSlot(50, 54);
+			case ARMOR: return this.getFirstFreeSlot(59, 62);
+			case TRASH: return null;
+			case DYE: return this.getFirstFreeSlot(78, 83);
+			case VANITY: return this.getFirstFreeSlot(73, 78);
 		}
 	}
 
@@ -338,7 +323,7 @@ public class UiInventory extends UiComponent {
 		}
 
 		for (int i = start; i < end; i++) {
-			if (this.slots[i].getItem() == null) {
+			if (this.slots[i].isEmpty()) {
 				return this.slots[i];
 			}
 		}
@@ -348,7 +333,7 @@ public class UiInventory extends UiComponent {
 
 	private void setHotbarSlot(int slot) throws IllegalArgumentException{
 		if(slot > 10){
-			throw new IllegalArgumentException("slot is out of range");
+			throw new IllegalArgumentException("Slot is out of range");
 		}
 
 		slots[currentSlot].setActive(false);
