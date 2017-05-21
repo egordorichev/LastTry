@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.Util;
 
 public class Creature extends Entity {
+	protected static final int ATTACK_INVULN_TIME = 10;
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
 	public CreatureEffectsComponent effects;
@@ -21,9 +22,16 @@ public class Creature extends Entity {
 		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
+	public void onHit(int damage) {
+		// TODO: Determine where the damage code should be
+		// Should creatures share this logic or does this only apply to enemies?
 
-	public void onHit(int damage) {}
-	
+		stats.modifyHP(damage);
+		stats.setInvulnTime(ATTACK_INVULN_TIME);
+		
+		// TODO: Knockback effect when damaged. Force depends on damage.d
+	}
+
 	@Override
 	public void render() {
 		// TODO: Should this reset be placed somewhere else in case the same
@@ -71,5 +79,10 @@ public class Creature extends Entity {
 		if (this.stats.getHp() == 0) {
 			this.die();
 		}
+	}
+	
+
+	public boolean isInvulnrable() {
+		return this.stats.getInvulnTime() > 0;
 	}
 }

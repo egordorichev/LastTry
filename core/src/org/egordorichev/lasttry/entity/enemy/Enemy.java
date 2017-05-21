@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Enemy extends CreatureWithAI {
-	private static final int ATTACK_INVULN_TIME = 10;
 	protected String name;
 	protected int spawnWeight = 1;
-	protected int invulrableTicks;
 	protected List<Drop> drops = new ArrayList<>();
 	protected Creature target;
 
@@ -33,10 +31,6 @@ public class Enemy extends CreatureWithAI {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
-		// Decrement invulnrable ticks
-		if (invulrableTicks > 0) {
-			invulrableTicks--;
-		}
 	}
 
 	public boolean canSpawn() {
@@ -46,11 +40,6 @@ public class Enemy extends CreatureWithAI {
 	@Override
 	public void onHit(int damage) {
 		super.onHit(damage);
-		// TODO: Determine where the damage code should be
-		// Should creatures share this logic or does this only apply to enemies?
-		stats.modifyHP(damage);
-		invulrableTicks = ATTACK_INVULN_TIME;
-		// TODO: Knockback effect when damaged. Force depends on damage.
 	}
 
 	@Override
@@ -74,10 +63,6 @@ public class Enemy extends CreatureWithAI {
 
 	protected void onPlayerCollision(Player player) {
 		// TODO: hit the player
-	}
-
-	public boolean isInvulnrable() {
-		return invulrableTicks > 0;
 	}
 
 	public Creature getTarget() {
