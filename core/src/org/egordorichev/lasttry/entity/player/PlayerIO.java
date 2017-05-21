@@ -31,12 +31,11 @@ public class PlayerIO {
 			FileReader stream = new FileReader(fileName);
 
 			int version = stream.readInt32();
-
-			if (version > VERSION) {
-				Log.error("Trying to load unknown player.");
-				LastTry.abort();
-			} else if (version < VERSION) {
-				Log.error("Trying to load old player.");
+			boolean isCurrent = version == VERSION;
+			boolean isFuture = version > VERSION;
+			if (!isCurrent) {
+				String tense = isFuture ? "future" : "past";
+				Log.error("Failed loading " + tense + " version: " + version + ", current version is: " + VERSION);
 				LastTry.abort();
 			}
 
