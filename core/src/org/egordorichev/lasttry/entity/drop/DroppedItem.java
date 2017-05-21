@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 
 public class DroppedItem extends Creature {
-	private static final float ATTRACTION_RANGE = 6;
+	private static final float ATTRACTION_RANGE = 100;
 	private final ItemHolder holder;
 	private TextureRegion texture;
 
