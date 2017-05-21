@@ -13,6 +13,7 @@ public class DesktopLauncher {
         config.width = 800;
         config.height = 600;
 		config.vSyncEnabled = true;
+		config.resizable = false;
 	    config.addIcon("Icon.png", Files.FileType.Internal);
 
 	    if (args.length > 0 && args[0].equals("-d")) {

@@ -1,5 +1,37 @@
 package org.egordorichev.lasttry.graphics.lighting;
 
-public class Lighting {
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector3;
+import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.Camera;
 
+public class Lighting {
+	private static FrameBuffer fbo;
+
+	public static ShaderProgram ambientShader;
+	public static ShaderProgram defaultShader;
+	public static final float ambientIntensity = .7f;
+	public static final Vector3 ambientColor = new Vector3(0.3f, 0.3f, 0.7f);
+	public static Texture light;
+
+	public static void init(int width, int height) {
+		
+	}
+
+	public static void begin() {
+
+	}
+
+	public static void end() {
+
+	}
+
+	public static void render() {
+
+	}
 }
