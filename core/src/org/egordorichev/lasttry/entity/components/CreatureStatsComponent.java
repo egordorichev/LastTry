@@ -5,7 +5,7 @@ import org.egordorichev.lasttry.entity.Creature;
 public class CreatureStatsComponent extends CreatureComponent {
 	private int hp;
 	private int maxHp;
-	protected int invulnTime;
+	private int invulnTime;
 	private int mana;
 	private int maxMana;
 	private int defense;
