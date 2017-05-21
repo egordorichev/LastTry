@@ -48,7 +48,6 @@ public class DroppedItem extends Creature {
 			} else {
 				Globals.player.inventory.add(this.holder);
 			}
-
 			Globals.entityManager.markForRemoval(this);
 		}
 	}
