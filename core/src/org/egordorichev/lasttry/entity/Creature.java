@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.Util;
 
 public class Creature extends Entity {
+	protected static final int ATTACK_INVULN_TIME = 10;
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
 	public CreatureEffectsComponent effects;
@@ -21,13 +22,29 @@ public class Creature extends Entity {
 		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
+	public void onHit(int damage) {
+		// TODO: Determine where the damage code should be
+		// Should creatures share this logic or does this only apply to enemies?
+
+		stats.modifyHP(damage);
+		stats.setInvulnTime(ATTACK_INVULN_TIME);
+		
+		// TODO: Knockback effect when damaged. Force depends on damage.d
+	}
+
 	@Override
 	public void render() {
-		super.render();
-
+		// TODO: Should this reset be placed somewhere else in case the same
+		// logic applies to more than just creatures?
+		//
+		// Reset entity color.
+		// Prevents the previous entity's coloring from interfering with this
+		// one's.
+		Graphics.batch.setColor(1, 1, 1, 1);
 		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
 			this.renderHealthBar();
 		}
+		super.render();
 	}
 
 	protected void renderHealthBar() {
@@ -44,10 +61,12 @@ public class Creature extends Entity {
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-//		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
-//			mapped, 12, 0, 0, mapped, 12, false, false);
-//		Graphics.batch.setColor(1, 1, 1, 1);
-//		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
+		// Graphics.batch.draw(Graphics.healthBarTexture, x + 2,
+		// this.physics.getY() - 20,
+		// mapped, 12, 0, 0, mapped, 12, false, false);
+		// Graphics.batch.setColor(1, 1, 1, 1);
+		// Graphics.batch.draw(Graphics.healthBarFrameTexture, x,
+		// this.physics.getY() - 20);
 	}
 
 	@Override
@@ -60,5 +79,10 @@ public class Creature extends Entity {
 		if (this.stats.getHp() == 0) {
 			this.die();
 		}
+	}
+	
+
+	public boolean isInvulnrable() {
+		return this.stats.getInvulnTime() > 0;
 	}
 }

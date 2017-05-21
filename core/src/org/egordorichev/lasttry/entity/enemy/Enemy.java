@@ -15,59 +15,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Enemy extends CreatureWithAI {
-    protected String name;
+	protected String name;
 	protected int spawnWeight = 1;
-    protected List<Drop> drops = new ArrayList<>();
+	protected List<Drop> drops = new ArrayList<>();
 	protected Creature target;
 
-    public Enemy(AI ai, String name) {
-        super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
+	public Enemy(AI ai, String name) {
+		super(new EnemyPhysicsComponent(), new CreatureGraphicsComponent(), ai);
 
-        this.name = name;
-        this.target = Globals.player;
-	    this.setZIndex(Layers.enemy);
-    }
+		this.name = name;
+		this.target = Globals.player;
+		this.setZIndex(Layers.enemy);
+	}
 
-    @Override
-    public void update(int dt) {
-        super.update(dt);
-    }
+	@Override
+	public void update(int dt) {
+		super.update(dt);
+	}
 
-    public boolean canSpawn(){
-        return this.ai.ai.canSpawn();
-    }
+	public boolean canSpawn() {
+		return this.ai.ai.canSpawn();
+	}
 
-    @Override
-    public void onDeath() {
-        for (Drop drop : this.drops) {
-	        if (LastTry.random.nextInt(drop.getChance()) == 0) {
-                DroppedItem droppedItem = new DroppedItem(drop.createHolder());
+	@Override
+	public void onHit(int damage) {
+		super.onHit(damage);
+	}
 
-		        System.out.println(droppedItem.getHolder().getItem().getID() + ":" + droppedItem.getHolder().getCount());
+	@Override
+	public void onDeath() {
+		for (Drop drop : this.drops) {
+			if (LastTry.random.nextInt(drop.getChance()) == 0) {
+				DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-		        Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
-		            (int) this.physics.getCenterY());
-            }
-        }
-    }
+				System.out
+						.println(droppedItem.getHolder().getItem().getID() + ":" + droppedItem.getHolder().getCount());
+
+				Globals.entityManager.spawn(droppedItem, (int) this.physics.getCenterX(),
+						(int) this.physics.getCenterY());
+			}
+		}
+	}
 
 	public void setTarget(Creature target) {
 		this.target = target;
 	}
 
 	protected void onPlayerCollision(Player player) {
-        // TODO: hit the player
-    }
+		// TODO: hit the player
+	}
 
 	public Creature getTarget() {
-		return this.target;
+		return target;
 	}
 
 	public String getName() {
-        return this.name;
-    }
+		return name;
+	}
 
-    public int getSpawnWeight() {
-    	return this.spawnWeight;
-    }
+	public int getSpawnWeight() {
+		return spawnWeight;
+	}
 }
