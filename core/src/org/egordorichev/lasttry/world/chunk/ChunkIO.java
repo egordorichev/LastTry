@@ -68,7 +68,7 @@ public class ChunkIO {
 			return null;
 		}
 	}
-
+	
 	public static Chunk generate(int x, int y) {
 		new Thread(new Runnable() {
 			@Override
@@ -86,7 +86,6 @@ public class ChunkIO {
 				Log.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
-
 		return new EmptyChunk(new Vector2(x, y));
 	}
 

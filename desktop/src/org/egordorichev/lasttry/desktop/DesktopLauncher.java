@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import org.egordorichev.lasttry.LastTry;
 
 public class DesktopLauncher {
@@ -15,7 +16,6 @@ public class DesktopLauncher {
 		config.vSyncEnabled = true;
 		config.resizable = false;
 	    config.addIcon("Icon.png", Files.FileType.Internal);
-
 	    if (args.length > 0 && args[0].equals("-d")) {
 			LastTry.release = false;
 			// Print the stack-trace when the program exits
