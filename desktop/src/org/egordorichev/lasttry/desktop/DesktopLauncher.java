@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.LastTry;
 
 public class DesktopLauncher {
     /** App main */
-    public static void main(String[] args) {
+    public static void main(String[] args) {    	
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
         config.width = 800;
@@ -18,8 +18,16 @@ public class DesktopLauncher {
 
 	    if (args.length > 0 && args[0].equals("-d")) {
 			LastTry.release = false;
+			// Print the stack-trace when the program exits
+		    System.setSecurityManager(new ExitDumper());
 		}
-
         new LwjglApplication(new LastTry(), config);
+    }
+    
+    private static class ExitDumper extends SecurityManager {
+    	@Override
+    	public void checkExit(int status) {
+    		Thread.dumpStack();
+    	}
     }
 }
