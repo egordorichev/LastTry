@@ -21,6 +21,9 @@ public class Creature extends Entity {
 		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
+
+	public void onHit(int damage) {}
+	
 	@Override
 	public void render() {
 		// TODO: Should this reset be placed somewhere else in case the same

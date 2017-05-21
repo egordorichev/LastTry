@@ -93,11 +93,11 @@ public class Tool extends Item {
 
         activeEnemies.stream().forEach(enemy -> {
 
-            // if(enemy.() == false) { : TODO invulnerable enemies
+            if(!enemy.isInvulnrable()) {
                 if (equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
                     inflictDamageOnEnemy(enemy);
                 }
-            // }
+            }
         });
     }
 
@@ -116,7 +116,9 @@ public class Tool extends Item {
 	}
 
 	private void inflictDamageOnEnemy(final Enemy enemy) {
-		enemy.stats.modifyHP(-this.calculateDamageToInflict(enemy));
+		int damage = -this.calculateDamageToInflict(enemy);
+		enemy.onHit(damage);
+		
 
 		// enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
 		// TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
