@@ -77,7 +77,12 @@ public class ItemHolder {
     public Item getItem() {
         return this.item;
     }
+
     public Modifier getModifier() {
         return this.modifier;
+    }
+
+    public boolean isEmpty() {
+        return this.item == null || this.count == 0;
     }
 }
