@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.Creature;
 public class CreatureStatsComponent extends CreatureComponent {
 	private int hp;
 	private int maxHp;
+	private int invulnTime;
 	private int mana;
 	private int maxMana;
 	private int defense;
@@ -16,6 +17,10 @@ public class CreatureStatsComponent extends CreatureComponent {
 
 	public void update(int dt) {
 		// TODO: regen
+		// Decrement invulnrable ticks
+		if (invulnTime > 0) {
+			invulnTime--;
+		}
 	}
 
 	public void set(int maxHp, int maxMana, int defense, int damage) {
@@ -51,7 +56,7 @@ public class CreatureStatsComponent extends CreatureComponent {
 		this.maxMana = Math.max(0, this.maxMana + amount);
 
 		if (this.mana > this.maxMana) {
-			this.maxMana = this.maxMana;
+			this.mana = this.maxMana;
 		}
 
 		return this.maxMana;
@@ -73,6 +78,14 @@ public class CreatureStatsComponent extends CreatureComponent {
 
 	public int getMaxHP() {
 		return this.maxHp;
+	}
+
+	public int getInvulnTime() {
+		return invulnTime;
+	}
+
+	public void setInvulnTime(int invulnTime) {
+		this.invulnTime = invulnTime;
 	}
 
 	public int getDefense() {
