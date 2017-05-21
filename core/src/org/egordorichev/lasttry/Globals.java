@@ -17,10 +17,10 @@ public class Globals {
     public static SpawnSystem spawnSystem;
     public static EntityManager entityManager;
     public static ChunkGcManager chunkGcManager;
-	public static UiChat chat;
+    public static UiChat chat;
 
     public static void dispose() {
-        if(player != null){
+        if (player != null){
             PlayerIO.save();
         }
 
