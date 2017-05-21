@@ -2,8 +2,6 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.component.Component;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;

@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.player;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.entity.player.skin.*;

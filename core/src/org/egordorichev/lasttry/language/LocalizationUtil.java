@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class LocalizationUtil {
-	public static void localize(Class clazz, Class ... targetClazz){
+	public static void localize(Class<?> clazz, Class<?> ... targetClazz){
 		List<Field> localizableFields = new ArrayList<>();
 
 		for (int i = 0; i < clazz.getFields().length; i++){

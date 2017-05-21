@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
