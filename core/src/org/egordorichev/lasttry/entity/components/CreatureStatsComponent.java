@@ -95,4 +95,12 @@ public class CreatureStatsComponent extends CreatureComponent {
 	public int getDamage() {
 		return this.damage;
 	}
+
+	public int getMana() {
+		return this.mana;
+	}
+
+	public int getMaxMana() {
+		return this.maxMana;
+	}
 }

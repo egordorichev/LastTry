@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final int VERSION = 0;
+	public static final int VERSION = 1;
 
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
@@ -41,6 +41,7 @@ public class PlayerIO {
 			}
 
 			Globals.player = new Player(playerName);
+			Globals.player.stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				short id = stream.readInt16();
@@ -92,7 +93,10 @@ public class PlayerIO {
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
+
 			stream.writeInt32(VERSION);
+			stream.writeInt16((short) Globals.player.stats.getMaxHP());
+			stream.writeInt16((short) Globals.player.stats.getMaxMana());
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				ItemHolder holder = Globals.player.inventory.getItemHolder(i);
