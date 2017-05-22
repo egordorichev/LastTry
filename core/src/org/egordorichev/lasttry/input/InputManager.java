@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 
@@ -14,22 +13,7 @@ public class InputManager {
     private static int currentButton = -1;
 
     static {
-        multiplexer.addProcessor(new InputProcessor() {
-            @Override
-            public boolean keyDown(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyUp(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyTyped(char character) {
-                return false;
-            }
-
+        multiplexer.addProcessor(new DefaultInputProcessor() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 currentButton = button;
@@ -39,22 +23,6 @@ public class InputManager {
             @Override
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
                 currentButton = -1;
-                return false;
-            }
-
-            @Override
-            @Deprecated
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                return false;
-            }
-
-            @Override
-            public boolean mouseMoved(int screenX, int screenY) {
-                return false;
-            }
-
-            @Override
-            public boolean scrolled(int amount) {
                 return false;
             }
         });
