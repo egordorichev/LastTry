@@ -31,6 +31,14 @@ public class Item {
 	public boolean use() {
 		return false;
 	}
+
+	/**
+	 * Updates the item.
+	 * 
+	 * @param owner
+	 *            Entity holding the item.
+	 * @param dt
+	 */
 	public void update(InventoryOwner owner, int dt) {
 		if (this.isReady()) {
 			return;
@@ -48,6 +56,12 @@ public class Item {
 		return false;
 	}
 
+	/**
+	 * Called when the item has been updated.
+	 * 
+	 * @param owner
+	 *            Entity holding the item.
+	 */
 	protected void onUpdate(InventoryOwner owner) {
 
 	}
