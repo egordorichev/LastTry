@@ -59,6 +59,15 @@ public class Plant extends Block {
 		return (byte) (ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2);
 	}
 
+	protected static void setGrowLevel(byte level, int x, int y) {
+		byte hp = Globals.world.blocks.getHP(x, y);
+
+		hp = ByteHelper.setBit(hp, (byte) 2, ByteHelper.bitIsSet(level, (byte) 0));
+		hp = ByteHelper.setBit(hp, (byte) 3, ByteHelper.bitIsSet(level, (byte) 1));
+
+		Globals.world.blocks.setHP(hp, x, y);
+    }
+
 	public static short getSeedsFor(short id) {
     	switch (id) {
 		    case ItemID.dayBloom: return ItemID.dayBloomSeeds;
@@ -75,7 +84,7 @@ public class Plant extends Block {
 
 	@Override
     public void renderBlock(int x, int y, byte binary) {
-        int hp = Globals.world.blocks.getHP(x, y);
+        int hp = getGrowLevel(x, y);
 
         int tx = 0;
 

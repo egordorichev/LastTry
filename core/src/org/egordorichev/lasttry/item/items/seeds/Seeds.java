@@ -47,4 +47,9 @@ public class Seeds extends Item {
 	public int getMaxInStack() {
 		return 99;
 	}
+
+    @Override
+    public boolean isAutoUse() {
+        return true;
+    }
 }

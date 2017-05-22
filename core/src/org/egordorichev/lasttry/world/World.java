@@ -2,7 +2,9 @@ package org.egordorichev.lasttry.world;
 
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
 import org.egordorichev.lasttry.world.components.WorldChunksComponent;
@@ -10,7 +12,7 @@ import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
 import org.egordorichev.lasttry.world.components.WorldWallsComponent;
 
 public class World {
-	public static final int UPDATE_DELAY = 20;
+	public static final int UPDATE_DELAY = 1;
 
 	public WorldFlagsComponent flags;
 	public WorldChunksComponent chunks;
@@ -27,6 +29,13 @@ public class World {
 		this.flags = new WorldFlagsComponent(this, flags);
 		this.blocks = new WorldBlocksComponent(this);
 		this.walls = new WorldWallsComponent(this);
+
+		Util.runInThread(new Callable() {
+			@Override
+			public void call() {
+				 update();
+			}
+		}, UPDATE_DELAY);
 	}
 
 	public void render() {

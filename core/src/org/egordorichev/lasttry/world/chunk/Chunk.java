@@ -20,7 +20,6 @@ public class Chunk {
 	private LocalDateTime lastAccessedTime;
 	private UUID uniqueChunkId;
 
-
 	public Chunk(ChunkData data, Vector2 position) {
 		this.updateLastAccessedTime();
 		this.data = data;
