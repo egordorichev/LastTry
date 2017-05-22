@@ -204,6 +204,7 @@ public class UiItemSlot extends UiComponent {
 	@Override
 	protected void onStateChange() {
 		UiInventory inventory = Globals.player.getInventory();
+
 		if (this.state == State.MOUSE_DOWN && inventory.isOpen()) {
 			if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
 				if (this.isEmpty() || inventory.currentItem.isEmpty()) {
@@ -219,16 +220,36 @@ public class UiItemSlot extends UiComponent {
 						this.swapWithCurrent();
 					}
 				} else if (this.type == Type.TRASH) {
-					if (inventory.currentItem.getItem() == null) {
+					if (inventory.currentItem.isEmpty()) {
 						inventory.currentItem = this.itemHolder;
 						this.itemHolder = new ItemHolder(null, 0);
 					} else {
 						this.itemHolder = inventory.currentItem;
 						inventory.currentItem = new ItemHolder(null, 0);
 					}
+				} else {
+					this.swapWithCurrent();
 				}
-			} else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
+			} else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT) && !this.isEmpty()) {
+				if (inventory.currentItem.isEmpty() && this.getItemCount() > 0) {
+					inventory.currentItem = new ItemHolder(this.itemHolder.getItem(), 1);
 
+					if (this.itemHolder.getCount() <= 1) {
+						this.itemHolder = new ItemHolder(null, 0);
+					} else {
+						this.itemHolder.setCount(this.itemHolder.getCount() - 1);
+					}
+				} else if (this.getItemID() == inventory.currentItem.getItem().getID()
+						&& inventory.currentItem.getCount() < this.itemHolder.getItem().getMaxInStack()
+						&& this.getItemCount() > 0) {
+
+					inventory.currentItem.setCount(inventory.currentItem.getCount() + 1);
+					this.itemHolder.setCount(this.itemHolder.getCount() - 1);
+
+					if (this.itemHolder.getCount() <= 0) {
+						this.itemHolder = new ItemHolder(null, 0);
+					}
+				}
 			}
 		}
 	}
