@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Util;
 
 public class Plant extends Block {
@@ -45,12 +46,17 @@ public class Plant extends Block {
 	}
 
 	public static boolean isBlooming(int x, int y) {
-    	return Globals.world.blocks.getHP(x, y) > GROW_THRESHOLD;
+    	return getGrowLevel(x, y) > GROW_THRESHOLD;
 	}
 
 
 	public static boolean hasGrown(int x, int y) {
-		return Globals.world.blocks.getHP(x, y) >= GROW_THRESHOLD;
+		return getGrowLevel(x, y) >= GROW_THRESHOLD;
+	}
+
+	protected static byte getGrowLevel(int x, int y) {
+		byte hp = Globals.world.blocks.getHP(x, y);
+		return (byte) (ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2);
 	}
 
 	public static short getSeedsFor(short id) {

@@ -27,7 +27,7 @@ public class SilverThorn extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = Globals.world.blocks.getID(x, y);
+        int hp = getGrowLevel(x, y);
 
         if (hp > Plant.GROW_THRESHOLD) {
             Globals.world.blocks.setHP((byte) (Plant.GROW_THRESHOLD + 1), x, y);

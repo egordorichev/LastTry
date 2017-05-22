@@ -27,7 +27,7 @@ public class WaterLeaf extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = Globals.world.blocks.getHP(x, y);
+        int hp = getGrowLevel(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD) {
             if (Globals.environment.isRaining()) {

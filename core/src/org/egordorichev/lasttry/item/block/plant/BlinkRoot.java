@@ -13,7 +13,7 @@ public class BlinkRoot extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        byte hp = Globals.world.blocks.getHP(x, y);
+        byte hp = getGrowLevel(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD + 1 && LastTry.random.nextInt(3) == 0) {
             Globals.world.blocks.setHP(Plant.GROW_THRESHOLD, x, y);

@@ -16,11 +16,13 @@ public class DesktopLauncher {
 		config.vSyncEnabled = true;
 		config.resizable = false;
 	    config.addIcon("Icon.png", Files.FileType.Internal);
+
 	    if (args.length > 0 && args[0].equals("-d")) {
 			LastTry.release = false;
 			// Print the stack-trace when the program exits
-		    System.setSecurityManager(new ExitDumper());
+		    // System.setSecurityManager(new ExitDumper()); // FIXME: exception on linux
 		}
+
         new LwjglApplication(new LastTry(), config);
     }
     

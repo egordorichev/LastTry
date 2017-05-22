@@ -12,7 +12,7 @@ public class MoonGlow extends Plant {
 
     @Override
     public void updateBlock(int x, int y) {
-        int hp = Globals.world.blocks.getID(x, y);
+        int hp = getGrowLevel(x, y);
 
         if (hp >= Plant.GROW_THRESHOLD) {
             if (Globals.environment.time.isNight()) {
