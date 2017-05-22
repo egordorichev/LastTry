@@ -54,6 +54,9 @@ public class EntityManager {
 	public void update(int dt) {
 		for (Entity entity : this.clearList) {
 			this.entities.remove(entity);
+			if (entity instanceof Enemy) {
+				this.enemyEntities.remove(entity);
+			}
 		}
 
 		this.clearList.clear();
@@ -133,10 +136,6 @@ public class EntityManager {
 
 	public void markForRemoval(Entity entity) {
 		this.clearList.add(entity);
-
-		if (entity instanceof Enemy) {
-			enemyEntities.remove(entity);
-		}
 	}
 
 	public List<Entity> getEntities() {
