@@ -4,12 +4,13 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
+import org.egordorichev.lasttry.ui.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
 
-public class Player extends Creature {
+public class Player extends Creature implements InventoryOwner {
 	public static final int INVENTORY_SIZE = 88;
 
-	public UiInventory inventory;
+	private UiInventory inventory;
 	private PlayerInputComponent input;
 	private String name;
 
@@ -19,9 +20,9 @@ public class Player extends Creature {
 		this.input = new PlayerInputComponent(this);
 		this.stats.set(100, 20, 0, 0);
 		this.name = name;
-		this.inventory = new UiInventory(INVENTORY_SIZE);
+		this.setInventory(new UiInventory(INVENTORY_SIZE, this));
 
-		LastTry.ui.add(this.inventory);
+		LastTry.ui.add(this.getInventory());
 
 		this.setZIndex(Layers.player);
 	}
@@ -31,8 +32,8 @@ public class Player extends Creature {
 		super.update(dt);
 		this.input.update(dt);
 
-		if (this.inventory.currentItem != null && this.inventory.currentItem.getItem() != null) {
-			this.inventory.currentItem.getItem().update(dt);
+		if (this.getInventory().currentItem != null && this.getInventory().currentItem.getItem() != null) {
+			this.getInventory().currentItem.getItem().update(this, dt);
 		}
 	}
 
@@ -42,5 +43,15 @@ public class Player extends Creature {
 
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public UiInventory getInventory() {
+		return inventory;
+	}
+
+	@Override
+	public void setInventory(UiInventory inventory) {
+		this.inventory = inventory;
 	}
 }

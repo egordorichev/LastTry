@@ -19,7 +19,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
-		ItemHolder holder = Globals.player.inventory.getActiveHolder();
+		ItemHolder holder = Globals.player.getInventory().getActiveHolder();
 
 		if (holder.getItem() != null) {
 			holder.getItem().renderAnimation();

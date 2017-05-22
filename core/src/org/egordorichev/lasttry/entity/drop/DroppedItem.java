@@ -52,7 +52,7 @@ public class DroppedItem extends Creature {
 			} else if (this.holder.getItem() == Items.mana) {
 				Globals.player.stats.modifyMana(20 * this.holder.getCount());
 			} else {
-				Globals.player.inventory.add(this.holder);
+				Globals.player.getInventory().add(this.holder);
 			}
 			Globals.entityManager.markForRemoval(this);
 		}

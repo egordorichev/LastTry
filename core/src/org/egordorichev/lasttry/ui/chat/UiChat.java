@@ -49,7 +49,7 @@ public class UiChat extends UiPanel {
 					if (item == null) {
 						print("Unknown item");
 					} else {
-						Globals.player.inventory.add(new ItemHolder(item, count));
+						Globals.player.getInventory().add(new ItemHolder(item, count));
 					}
 				}			
 			}

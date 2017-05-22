@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.ui.InventoryOwner;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Item {
@@ -29,8 +31,7 @@ public class Item {
 	public boolean use() {
 		return false;
 	}
-
-	public void update(int dt) {
+	public void update(InventoryOwner owner, int dt) {
 		if (this.isReady()) {
 			return;
 		}

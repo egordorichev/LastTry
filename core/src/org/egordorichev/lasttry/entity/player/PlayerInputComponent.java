@@ -35,7 +35,7 @@ public class PlayerInputComponent extends CreatureComponent {
 		}
 
 		if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
-			((Player) this.creature).inventory.toggle();
+			((Player) this.creature).getInventory().toggle();
 		}
 	}
 }

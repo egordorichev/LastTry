@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -21,18 +22,23 @@ public class UiInventory extends UiComponent {
 	 * 
 	 * NOT The item indicated by currentSlot.
 	 * 
-	 * TODO: Better name to reflect this. 
+	 * TODO: Better name to reflect this.
 	 * 
 	 * TODO: Actual documentation
 	 */
 	public ItemHolder currentItem = new ItemHolder(null, 0);
+	/**
+	 * The entity that owns the inventory.
+	 */
+	private InventoryOwner owner;
+
 	public int currentSlot = 0;
 	public UiItemSlot[] slots;
 	private boolean open;
 
-	public UiInventory(int size) {
+	public UiInventory(int size, InventoryOwner owner) {
 		super(new Rectangle(0, 0, 0, 0));
-
+		this.owner = owner;
 		this.slots = new UiItemSlot[88];
 		this.open = false;
 
@@ -44,15 +50,18 @@ public class UiInventory extends UiComponent {
 		}
 
 		for (int i = 10; i < 50; i++) { // Main inventory
-			this.slots[i] = new UiItemSlot(new Rectangle(x + (i % 10) * 54, y + 54 * (i / 10), 52, 52), UiItemSlot.Type.ANY);
+			this.slots[i] = new UiItemSlot(new Rectangle(x + (i % 10) * 54, y + 54 * (i / 10), 52, 52),
+					UiItemSlot.Type.ANY);
 		}
 
 		for (int i = 50; i < 54; i++) { // Coins
-			this.slots[i] = new UiItemSlot(new Rectangle(x + 542, y + 100 + (i - 50) * 34, 32, 32), UiItemSlot.Type.COIN);
+			this.slots[i] = new UiItemSlot(new Rectangle(x + 542, y + 100 + (i - 50) * 34, 32, 32),
+					UiItemSlot.Type.COIN);
 		}
 
 		for (int i = 54; i < 58; i++) { // Ammo
-			this.slots[i] = new UiItemSlot(new Rectangle(x + 576, y + 100 + (i - 54) * 34, 32, 32), UiItemSlot.Type.AMMO);
+			this.slots[i] = new UiItemSlot(new Rectangle(x + 576, y + 100 + (i - 54) * 34, 32, 32),
+					UiItemSlot.Type.AMMO);
 		}
 
 		// Trash
@@ -61,12 +70,14 @@ public class UiInventory extends UiComponent {
 
 		for (int i = 59; i < 62; i++) { // Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 280 + (i - 59) * 54, 52, 52), UiItemSlot.Type.ARMOR,
-					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 68 - (i - 59) * 34, 34, 34));
+					Origin.BOTTOM_RIGHT,
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 68 - (i - 59) * 34, 34, 34));
 		}
 
 		for (int i = 62; i < 65; i++) { // Vanity Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 280 + (i - 62) * 54, 52, 52), UiItemSlot.Type.VANITY,
-					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 170 - (i - 62) * 34, 34, 34));
+					Origin.BOTTOM_RIGHT,
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 170 - (i - 62) * 34, 34, 34));
 		}
 
 		for (int i = 65; i < 68; i++) { // Armor Dye
@@ -81,7 +92,8 @@ public class UiInventory extends UiComponent {
 
 		for (int i = 73; i < 78; i++) { // Vanity Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 10 + (i - 73) * 54, 52, 52),
-					UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 0, 34, 34));
+					UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT,
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 0, 34, 34));
 		}
 
 		for (int i = 78; i < 83; i++) { // Accessories Dyes
@@ -100,35 +112,35 @@ public class UiInventory extends UiComponent {
 			@Override
 			public boolean keyDown(int keycode) {
 				switch (keycode) {
-					case Keys.HOTBAR_SLOT_0:
-						setHotbarSlot(0);
+				case Keys.HOTBAR_SLOT_0:
+					setHotbarSlot(0);
 					break;
-					case Keys.HOTBAR_SLOT_1:
-						setHotbarSlot(1);
+				case Keys.HOTBAR_SLOT_1:
+					setHotbarSlot(1);
 					break;
-					case Keys.HOTBAR_SLOT_2:
-						setHotbarSlot(2);
+				case Keys.HOTBAR_SLOT_2:
+					setHotbarSlot(2);
 					break;
-					case Keys.HOTBAR_SLOT_3:
-						setHotbarSlot(3);
+				case Keys.HOTBAR_SLOT_3:
+					setHotbarSlot(3);
 					break;
-					case Keys.HOTBAR_SLOT_4:
-						setHotbarSlot(4);
+				case Keys.HOTBAR_SLOT_4:
+					setHotbarSlot(4);
 					break;
-					case Keys.HOTBAR_SLOT_5:
-						setHotbarSlot(5);
+				case Keys.HOTBAR_SLOT_5:
+					setHotbarSlot(5);
 					break;
-					case Keys.HOTBAR_SLOT_6:
-						setHotbarSlot(6);
+				case Keys.HOTBAR_SLOT_6:
+					setHotbarSlot(6);
 					break;
-					case Keys.HOTBAR_SLOT_7:
-						setHotbarSlot(7);
+				case Keys.HOTBAR_SLOT_7:
+					setHotbarSlot(7);
 					break;
-					case Keys.HOTBAR_SLOT_8:
-						setHotbarSlot(8);
+				case Keys.HOTBAR_SLOT_8:
+					setHotbarSlot(8);
 					break;
-					case Keys.HOTBAR_SLOT_9:
-						setHotbarSlot(9);
+				case Keys.HOTBAR_SLOT_9:
+					setHotbarSlot(9);
 					break;
 				}
 
@@ -190,10 +202,10 @@ public class UiInventory extends UiComponent {
 	}
 
 	private void updateItem() {
-		if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT) ||
-				InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
+		if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)
+				|| InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
 
-			if(this.open) {
+			if (this.open) {
 				return;
 			}
 
@@ -202,13 +214,12 @@ public class UiInventory extends UiComponent {
 			if (holder != null) {
 				Item item = holder.getItem();
 
-				if(item != null && item.isReady() && (item.isAutoUse()
-						|| InputManager.mouseButtonJustPressed())) {
+				if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())) {
 
-					if(item.use()) {
+					if (item.use()) {
 						int count = holder.getCount();
 
-						if(count == 1) {
+						if (count == 1) {
 							slots[currentSlot].setItemHolder(new ItemHolder(null, 0));
 						} else {
 							holder.setCount(count - 1);
@@ -229,12 +240,13 @@ public class UiInventory extends UiComponent {
 		if (item == null) {
 			Assets.f22.draw(Graphics.batch, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
 		} else {
-			item.update((int) Gdx.graphics.getDeltaTime() * 1000000);
+			item.update(owner, (int) Gdx.graphics.getDeltaTime() * 1000000);
 
 			Modifier modifier = this.slots[this.currentSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
-				Assets.f22.draw(Graphics.batch, String.format("%s %s", modifier.getName(), item.getName()), 10, Gdx.graphics.getHeight() - 8);
+				Assets.f22.draw(Graphics.batch, String.format("%s %s", modifier.getName(), item.getName()), 10,
+						Gdx.graphics.getHeight() - 8);
 			} else {
 				Assets.f22.draw(Graphics.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
 			}
@@ -251,7 +263,8 @@ public class UiInventory extends UiComponent {
 		}
 
 		if (currentItem != null) {
-			currentItem.renderAt((int) InputManager.getMousePosition().x + 16, Gdx.graphics.getHeight() - (int) InputManager.getMousePosition().y - 16);
+			currentItem.renderAt((int) InputManager.getMousePosition().x + 16,
+					Gdx.graphics.getHeight() - (int) InputManager.getMousePosition().y - 16);
 		}
 	}
 
@@ -279,7 +292,8 @@ public class UiInventory extends UiComponent {
 		return this.getItemHolder(index).getItem();
 	}
 
-	public boolean add(ItemHolder holder) { // TODO: check if item is already in inventory
+	public boolean add(ItemHolder holder) { // TODO: check if item is already in
+											// inventory
 		for (int i = 0; i < 88; i++) {
 			UiItemSlot slot = this.slots[i];
 
@@ -315,14 +329,23 @@ public class UiInventory extends UiComponent {
 
 	public UiItemSlot getFirstFreeSlot(UiItemSlot.Type type) {
 		switch (type) {
-			case ACCESSORY: return this.getFirstFreeSlot(68, 73);
-			case AMMO: return this.getFirstFreeSlot(54, 58);
-			case ANY: default: return this.getFirstFreeSlot(0, 50); // Main inventory
-			case COIN: return this.getFirstFreeSlot(50, 54);
-			case ARMOR: return this.getFirstFreeSlot(59, 62);
-			case TRASH: return null;
-			case DYE: return this.getFirstFreeSlot(78, 83);
-			case VANITY: return this.getFirstFreeSlot(73, 78);
+		case ACCESSORY:
+			return this.getFirstFreeSlot(68, 73);
+		case AMMO:
+			return this.getFirstFreeSlot(54, 58);
+		case ANY:
+		default:
+			return this.getFirstFreeSlot(0, 50); // Main inventory
+		case COIN:
+			return this.getFirstFreeSlot(50, 54);
+		case ARMOR:
+			return this.getFirstFreeSlot(59, 62);
+		case TRASH:
+			return null;
+		case DYE:
+			return this.getFirstFreeSlot(78, 83);
+		case VANITY:
+			return this.getFirstFreeSlot(73, 78);
 		}
 	}
 
@@ -340,8 +363,8 @@ public class UiInventory extends UiComponent {
 		return null;
 	}
 
-	private void setHotbarSlot(int slot) throws IllegalArgumentException{
-		if(slot > 10){
+	private void setHotbarSlot(int slot) throws IllegalArgumentException {
+		if (slot > 10) {
 			throw new IllegalArgumentException("Slot is out of range");
 		}
 
@@ -366,7 +389,7 @@ public class UiInventory extends UiComponent {
 		return open;
 	}
 
-	public UiItemSlot[] getSlots(){
+	public UiItemSlot[] getSlots() {
 		return slots;
 	}
 }

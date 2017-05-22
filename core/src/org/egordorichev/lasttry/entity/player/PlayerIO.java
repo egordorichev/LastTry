@@ -46,7 +46,7 @@ public class PlayerIO {
 				short id = stream.readInt16();
 
 				if (id != 0) {
-					ItemHolder holder = Globals.player.inventory.getItemHolder(i);
+					ItemHolder holder = Globals.player.getInventory().getItemHolder(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
 
@@ -98,7 +98,7 @@ public class PlayerIO {
 			stream.writeInt16((short) Globals.player.stats.getMaxMana());
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				ItemHolder holder = Globals.player.inventory.getItemHolder(i);
+				ItemHolder holder = Globals.player.getInventory().getItemHolder(i);
 
 				if (holder.getItem() == null) {
 					stream.writeInt16(ItemID.none);
@@ -127,9 +127,9 @@ public class PlayerIO {
 	public static Player generate(String name) {
 		Player player = new Player(name);
 
-		player.inventory.add(new ItemHolder(Items.copperShortSword, 1));
-		player.inventory.add(new ItemHolder(Items.copperPickaxe, 1));
-		player.inventory.add(new ItemHolder(Items.copperAxe, 1));
+		player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
+		player.getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
+		player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
 
 		return player; // TODO
 	}
