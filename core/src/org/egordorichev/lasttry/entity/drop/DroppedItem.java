@@ -97,8 +97,11 @@ public class DroppedItem extends Creature {
 		// this.die() causes only THIS item to die
 		//
 		// what the fuck??
-		other.holder.setCount(this.holder.getCount() + other.holder.getCount());
-		this.die();
+		int sum = this.holder.getCount() + other.holder.getCount();
+		if (sum <= other.holder.getItem().getMaxInStack()) {
+			other.holder.setCount(sum);
+			this.die();
+		}
 	}
 
 	public ItemHolder getHolder() {
