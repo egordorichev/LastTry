@@ -3,11 +3,17 @@ package org.egordorichev.lasttry.entity.drop;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.List;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.util.Rectangle;
 
 public class DroppedItem extends Creature {
 	private static final float ATTRACTION_RANGE = 100;
@@ -25,6 +31,7 @@ public class DroppedItem extends Creature {
 	@Override
 	public void render() {
 		Graphics.batch.draw(this.texture, this.physics.getX(), this.physics.getY());
+		Assets.f18.draw(Graphics.batch, String.valueOf(this.holder.getCount()), this.physics.getX(), this.physics.getY());
 	}
 
 	@Override
@@ -32,6 +39,7 @@ public class DroppedItem extends Creature {
 		this.physics.update(dt);
 		this.updateAttraction(dt);
 		this.checkPlayerAbsorbtion(dt);
+		this.packRelated(dt);
 	}
 
 	/**
@@ -66,6 +74,33 @@ public class DroppedItem extends Creature {
 			float distPow = (float) Math.pow(dist, 3);
 			this.physics.getVelocity().add(p2.sub(p1).scl(-attraction, -attraction).scl(1f / distPow));
 		}
+	}
+
+	/**
+	 * Packs items of the same type into a single item.
+	 * 
+	 * @param dt
+	 */
+	private void packRelated(int dt) {
+		List<Entity> entities = Globals.entityManager.getEntities();
+		entities.stream().filter(e -> !e.equals(this))
+				.filter(e -> physics.getHitbox().intersects(e.physics.getHitbox()))
+				.filter(e -> e instanceof DroppedItem).map(e -> ((DroppedItem) e))
+				.filter(i -> holder.getItem().getID() == i.holder.getItem().getID()).forEach(i -> consume(i));
+	}
+
+	/**
+	 * Merges this and the other item together.
+	 * 
+	 * @param other
+	 */
+	private void consume(DroppedItem other) {
+		// other.die() causes BOTH items to die
+		// this.die() causes only THIS item to die
+		//
+		// what the fuck??
+		other.holder.setCount(this.holder.getCount() + other.holder.getCount());
+		this.die();
 	}
 
 	public ItemHolder getHolder() {
