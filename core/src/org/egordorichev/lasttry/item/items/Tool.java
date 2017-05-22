@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;
@@ -97,7 +98,7 @@ public class Tool extends Item {
 	}
 
 	private Rectangle generateToolHitbox() {
-		final int offsetDistance = 1;
+		final int offsetDistance = (int) Math.round(Block.SIZE*1.5);
 		final int dir = Globals.player.physics.getDirection() == Direction.LEFT ? -1 : 1;
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
 		final TextureRegion itemTextureRegion = this.getTextureRegion();
