@@ -12,12 +12,12 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.InventoryOwner;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;
 
 public class Tool extends Item {
+	private static final float KNOCKBACK_MAX_POWER = 10F;
 	protected boolean autoSwing;
 	protected float criticalStrikeChance;
 	protected float baseDamage; // All tools have melee damage
@@ -100,11 +100,11 @@ public class Tool extends Item {
 		activeEnemies.stream().forEach(enemy -> {
 			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
 				int damage = this.calculateDamageToInflict(enemy);
-
-				Vector2 diff = cowner.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
 				float knockPower = damage * -0.04F;
-				Log.debug(diff.toString());
-				enemy.physics.getVelocity().add(diff.scl(knockPower));
+				Vector2 diff = cowner.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
+				Vector2 force = diff.scl(knockPower);
+				force.limit(KNOCKBACK_MAX_POWER);
+				enemy.physics.getVelocity().add(force);
 				inflictDamageOnEnemy(enemy, damage);
 			}
 		});
