@@ -15,8 +15,6 @@ public class DayBloom extends Plant {
 	public void updateBlock(int x, int y) {
 		int hp = getGrowLevel(x, y);
 
-		System.out.println(hp);
-
 		if (hp >= Plant.GROW_THRESHOLD) {
             if (Globals.environment.time.isDay() && LastTry.random.nextInt(10) != 0) {
 				setGrowLevel((byte) (Plant.GROW_THRESHOLD + 1), x, y);

@@ -90,9 +90,11 @@ public class Plant extends Block {
 
 	@Override
     public void renderBlock(int x, int y, byte binary) {
-        int hp = getGrowLevel(x, y);
+        byte hp = getGrowLevel(x, y);
 
-        int tx = 0;
+		// System.out.println(hp);
+
+		int tx = 0;
 
         if (hp >= GROW_THRESHOLD + 1) {
             tx = 1;
