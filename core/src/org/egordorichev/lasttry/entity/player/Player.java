@@ -32,7 +32,7 @@ public class Player extends Creature {
 		this.input.update(dt);
 
 		if (this.inventory.currentItem != null && this.inventory.currentItem.getItem() != null) {
-		    this.inventory.currentItem.getItem().update(dt);
+			this.inventory.currentItem.getItem().update(dt);
 		}
 	}
 

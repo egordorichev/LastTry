@@ -22,10 +22,15 @@ public class Sword extends MeleeWeapon {
 
         return false;
     }
+    
+    @Override
+    public boolean canBeUsed(){
+    	return this.isReady() && this.isAutoSwing() && Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+    }
 
     @Override
     public void update(int dt) {
-        if (this.isReady() && this.isAutoSwing() && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (canBeUsed()) {
             this.use();
         }
 

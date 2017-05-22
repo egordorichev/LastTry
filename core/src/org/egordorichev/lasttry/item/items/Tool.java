@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item.items;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -47,8 +48,8 @@ public class Tool extends Item {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-
-		handleToolAttack();
+		
+		this.onToolAttack();
 	}
 
 	public int getPickaxePower() {
@@ -84,9 +85,9 @@ public class Tool extends Item {
 		return this.rarity;
 	}
 
-	private void handleToolAttack() {
+	public void onToolAttack() {
 		List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
-		Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
+		Rectangle equippedPlayerHitBox = generateToolHitbox();
 
 		activeEnemies.stream().forEach(enemy -> {
 			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
@@ -95,7 +96,9 @@ public class Tool extends Item {
 		});
 	}
 
-	private Rectangle generateEquippedPlayerHitBox() {
+	private Rectangle generateToolHitbox() {
+		final int offsetDistance = 1;
+		final int dir = Globals.player.physics.getDirection() == Direction.LEFT ? -1 : 1;
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
 		final TextureRegion itemTextureRegion = this.getTextureRegion();
 		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getRegionWidth(),
@@ -104,8 +107,7 @@ public class Tool extends Item {
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x + toolHitBox.x,
 				playerHitBox.y + toolHitBox.y, playerHitBox.width + toolHitBox.width,
 				playerHitBox.height + toolHitBox.height);
-
-		return equippedPlayerHitbox;
+		return equippedPlayerHitbox.offset(dir * offsetDistance, 0);
 	}
 
 	private void inflictDamageOnEnemy(final Enemy enemy) {
