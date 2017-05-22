@@ -64,7 +64,7 @@ public class GamePlayState implements State {
 			}
 
 			if (InputManager.isKeyJustDown(Keys.OPEN_CHAT)) {
-				Globals.chat.open();
+			    Globals.chat.toggle();
 			}
 		}
 

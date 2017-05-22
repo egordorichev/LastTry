@@ -1,9 +1,11 @@
 package org.egordorichev.lasttry.entity.player;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.CreatureComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
+import org.egordorichev.lasttry.ui.UiInventory;
 
 public class PlayerInputComponent extends CreatureComponent {
 	public PlayerInputComponent(Player player) {
@@ -35,7 +37,8 @@ public class PlayerInputComponent extends CreatureComponent {
 		}
 
 		if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
-			((Player) this.creature).getInventory().toggle();
+		    UiInventory inv = ((Player) this.creature).getInventory();
+		    inv.toggle();
 		}
 	}
 }

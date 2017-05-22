@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -17,7 +18,7 @@ import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.language.Language;
 
-public class UiInventory extends UiComponent {
+public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen {
 	/**
 	 * The item that the user has clicked and is following the mouse.
 	 * 
@@ -41,7 +42,6 @@ public class UiInventory extends UiComponent {
 		super(new Rectangle(0, 0, 0, 0));
 		this.owner = owner;
 		this.slots = new UiItemSlot[88];
-		this.open = false;
 
 		int x = 10;
 		int y = 30;
@@ -176,7 +176,7 @@ public class UiInventory extends UiComponent {
 		if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)
 				|| InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
 
-			if (this.open) {
+			if (this.isOpen()) {
 				return;
 			}
 
@@ -227,7 +227,7 @@ public class UiInventory extends UiComponent {
 			this.slots[i].render();
 		}
 
-		if (this.open) {
+		if (this.isOpen()) {
 			for (int i = 10; i < 88; i++) {
 				this.slots[i].render();
 			}
@@ -344,23 +344,29 @@ public class UiInventory extends UiComponent {
 		slots[currentSlot].setActive(true);
 	}
 
-	public void open() {
+	@Override
+	public void onUIOpen() {
 		this.open = true;
 	}
 
-	public void close() {
+	@Override
+	public void onUIClose() {
 		this.open = false;
 	}
 
-	public void toggle() {
-		this.open = !this.open;
-	}
-
-	public boolean isOpen() {
-		return open;
-	}
+	
+	
 
 	public UiItemSlot[] getSlots() {
 		return slots;
 	}
+
+	@Override
+    public boolean isOpen() {
+        return open;
+    }
+    @Override
+    public void setOpen(boolean open) {
+       this.open = open;
+    }
 }
