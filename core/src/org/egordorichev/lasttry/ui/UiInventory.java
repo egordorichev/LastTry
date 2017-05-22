@@ -2,13 +2,13 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
+import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.Item;
@@ -108,7 +108,7 @@ public class UiInventory extends UiComponent {
 
 		this.slots[currentSlot].setActive(true);
 
-		InputManager.multiplexer.addProcessor(new InputProcessor() {
+		InputManager.multiplexer.addProcessor(new DefaultInputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
 				switch (keycode) {
@@ -144,36 +144,6 @@ public class UiInventory extends UiComponent {
 					break;
 				}
 
-				return false;
-			}
-
-			@Override
-			public boolean keyUp(int keycode) {
-				return false;
-			}
-
-			@Override
-			public boolean keyTyped(char character) {
-				return false;
-			}
-
-			@Override
-			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				return false;
-			}
-
-			@Override
-			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				return false;
-			}
-
-			@Override
-			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				return false;
-			}
-
-			@Override
-			public boolean mouseMoved(int screenX, int screenY) {
 				return false;
 			}
 
