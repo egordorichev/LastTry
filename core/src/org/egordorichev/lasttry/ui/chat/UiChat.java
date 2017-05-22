@@ -142,8 +142,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
             @Override
             public void onEnter() {
                 String text = getText();
-                if (text.charAt(0) == GARBAGE && text.charAt(1) == '/') {
-                    // TODO: Wtf is char(13) doing at the beginning of a / string?
+                // FIXME: WTF invisible characters
+                //
+                // Something is REALLY weird with invisible characters
+                if (text.substring(0, 3).contains("/")) {
+                    // TODO: Wtf is char(13) doing at the beginning of a string?
                     text = text.substring(text.indexOf("/")+1);
                     commands.runInput(text);
                 } else{
