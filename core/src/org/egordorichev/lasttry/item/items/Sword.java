@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.Rarity;
+import org.egordorichev.lasttry.ui.InventoryOwner;
 
 public class Sword extends MeleeWeapon {
     public Sword(short id, String name, Rarity rarity, float baseDamage, int useSpeed, TextureRegion texture) {
@@ -22,10 +23,15 @@ public class Sword extends MeleeWeapon {
 
         return false;
     }
+    
+    @Override
+    public boolean canBeUsed(){
+    	return this.isReady() && this.isAutoSwing() && Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+    }
 
     @Override
-    public void update(int dt) {
-        if (this.isReady() && this.isAutoSwing() && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+    public void update(InventoryOwner owner, int dt) {
+        if (canBeUsed()) {
             this.use();
         }
 

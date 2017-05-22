@@ -1,11 +1,6 @@
 package org.egordorichev.lasttry.util;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
 import org.egordorichev.lasttry.LastTry;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.input.InputManager;
 import java.io.File;
 import java.util.concurrent.*;
 
@@ -57,9 +52,9 @@ public class Util {
 					public void run() {
 						callable.call();
 					}
-				}, delay, timeUnit)
-				;
-
+				}, delay, timeUnit);
+		
+		// TODO: execute scheduledFuture 
 	}
 
 	public static boolean fileExists(String path) {

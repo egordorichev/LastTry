@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
@@ -199,32 +198,33 @@ public class UiItemSlot extends UiComponent {
 	}
 
 	public void swapWithCurrent() {
-		Globals.player.inventory.currentItem = this.swapItems(Globals.player.inventory.currentItem);
+		Globals.player.getInventory().currentItem = this.swapItems(Globals.player.getInventory().currentItem);
 	}
 
 	@Override
 	protected void onStateChange() {
-		if (this.state == State.MOUSE_DOWN && Globals.player.inventory.isOpen()) {
+		UiInventory inventory = Globals.player.getInventory();
+		if (this.state == State.MOUSE_DOWN && inventory.isOpen()) {
 			if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
-				if (this.isEmpty() || Globals.player.inventory.currentItem.isEmpty()) {
+				if (this.isEmpty() || inventory.currentItem.isEmpty()) {
 					this.swapWithCurrent();
-				} else if (Globals.player.inventory.currentItem.getItem().getID() == this.getItemID()) {
-					int count = Globals.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
+				} else if (inventory.currentItem.getItem().getID() == this.getItemID()) {
+					int count = inventory.currentItem.getCount() + this.itemHolder.getCount();
 					int max = this.itemHolder.getItem().getMaxInStack();
 
 					if (count <= max) {
 						this.itemHolder.setCount(count);
-						Globals.player.inventory.currentItem = new ItemHolder(null, 0);
+						inventory.currentItem = new ItemHolder(null, 0);
 					} else {
 						this.swapWithCurrent();
 					}
 				} else if (this.type == Type.TRASH) {
-					if (Globals.player.inventory.currentItem.getItem() == null) {
-						Globals.player.inventory.currentItem = this.itemHolder;
+					if (inventory.currentItem.getItem() == null) {
+						inventory.currentItem = this.itemHolder;
 						this.itemHolder = new ItemHolder(null, 0);
 					} else {
-						this.itemHolder = Globals.player.inventory.currentItem;
-						Globals.player.inventory.currentItem = new ItemHolder(null, 0);
+						this.itemHolder = inventory.currentItem;
+						inventory.currentItem = new ItemHolder(null, 0);
 					}
 				}
 			} else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {

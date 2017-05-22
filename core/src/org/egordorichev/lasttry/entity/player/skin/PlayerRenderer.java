@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.egordorichev.lasttry.graphics.Assets;
 
 public class PlayerRenderer {
 	public static final int TEXTURE_WIDTH = 40;

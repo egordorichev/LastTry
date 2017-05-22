@@ -2,8 +2,6 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.component.Component;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -64,9 +62,12 @@ public class PhysicsComponent extends EntityComponent {
 
 	private void updateXVelocity() {
 		if (this.velocity.x != 0) {
-			Rectangle newHitbox = new Rectangle(this.hitbox.x + this.position.x, this.hitbox.y + this.position.y,
-				this.hitbox.width, this.hitbox.height);
-
+			
+			Rectangle newHitbox = new Rectangle(
+					this.hitbox.x + this.position.x, 
+					this.hitbox.y + this.position.y,
+					this.hitbox.width, 
+					this.hitbox.height);
 			newHitbox.x += this.velocity.x;
 
 			if (!this.solid) {
@@ -77,7 +78,7 @@ public class PhysicsComponent extends EntityComponent {
 
 					if (Globals.world.isColliding(newHitbox.offset(0, step))) {
 						this.velocity.x = 0;
-						this.onBlockHit();
+						this.onBlockCollide();
 					} else {
 						this.position.x += this.velocity.x;
 						this.position.y += Block.SIZE / 2;
@@ -106,12 +107,12 @@ public class PhysicsComponent extends EntityComponent {
 				this.position.y += this.velocity.y;
 			} else {
 				this.velocity.y = 0;
-				this.onBlockHit();
+				this.onBlockCollide();
 			}
 		}
 	}
 
-	protected void onBlockHit() {
+	protected void onBlockCollide() {
 		// TODO: callback?
 	}
 

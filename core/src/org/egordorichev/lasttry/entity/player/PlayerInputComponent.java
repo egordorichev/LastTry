@@ -8,9 +8,20 @@ import org.egordorichev.lasttry.input.Keys;
 public class PlayerInputComponent extends CreatureComponent {
 	public PlayerInputComponent(Player player) {
 		super(player);
+		
+		// TODO: fire-once actions.
+		/*
+		InputManager.multiplexer.addProcessor(new DefaultInputProcessor(){
+			@Override
+			public boolean keyDown(int keycode) {
+				creature.onAttack();
+				return false;
+			}
+		});
+		*/
 	}
 
-	public void update(int dt) {
+	public void update(int dt) {		
 		if (InputManager.isKeyDown(Keys.JUMP)) {
 			this.creature.physics.jump();
 		}
@@ -24,7 +35,7 @@ public class PlayerInputComponent extends CreatureComponent {
 		}
 
 		if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
-			((Player) this.creature).inventory.toggle();
+			((Player) this.creature).getInventory().toggle();
 		}
 	}
 }

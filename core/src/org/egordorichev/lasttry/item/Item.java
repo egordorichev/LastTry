@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.ui.InventoryOwner;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Item {
@@ -30,13 +32,20 @@ public class Item {
 		return false;
 	}
 
-	public void update(int dt) {
+	/**
+	 * Updates the item.
+	 * 
+	 * @param owner
+	 *            Entity holding the item.
+	 * @param dt
+	 */
+	public void update(InventoryOwner owner, int dt) {
 		if (this.isReady()) {
 			return;
 		}
 
 		this.useDelay = Math.max(0, this.useDelay - 1);
-		this.onUpdate();
+		this.onUpdate(owner);
 
 		if (this.isReady()) {
 			this.onUseEnd();
@@ -47,7 +56,13 @@ public class Item {
 		return false;
 	}
 
-	protected void onUpdate() {
+	/**
+	 * Called when the item has been updated.
+	 * 
+	 * @param owner
+	 *            Entity holding the item.
+	 */
+	protected void onUpdate(InventoryOwner owner) {
 
 	}
 

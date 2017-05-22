@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Rarity;
-import org.egordorichev.lasttry.item.block.Block;
 
 public class ShortSword extends MeleeWeapon {
 	public ShortSword(short id, String name, Rarity rarity, float baseDamage, int useSpeed, TextureRegion texture) {

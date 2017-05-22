@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.player;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.entity.player.skin.*;
@@ -20,7 +19,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
-		ItemHolder holder = Globals.player.inventory.getActiveHolder();
+		ItemHolder holder = Globals.player.getInventory().getActiveHolder();
 
 		if (holder.getItem() != null) {
 			holder.getItem().renderAnimation();

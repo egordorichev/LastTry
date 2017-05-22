@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
-import org.egordorichev.lasttry.util.Util;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -53,8 +52,6 @@ public class Chunk {
 				}
 			}
 		}
-
-		this.updateLastAccessedTime();
 	}
 
 	private void updateLastAccessedTime() {
@@ -110,7 +107,7 @@ public class Chunk {
 		if (!this.isInside(x, y)) {
 			return;
 		}
-
+		this.updateLastAccessedTime();
 		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
 			Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
 
@@ -144,7 +141,7 @@ public class Chunk {
 		if (!this.isInside(x, y)) {
 			return;
 		}
-
+		this.updateLastAccessedTime();
 		int n = LastTry.random.nextInt(2) + 1;
 
 		this.data.wallsHealth[x + y * SIZE] = ByteHelper.create(true, true, (n == 1 || n == 3),
@@ -172,6 +169,7 @@ public class Chunk {
 		if (!this.isInside(x, y)) {
 			return;
 		}
+		this.updateLastAccessedTime();
 
 		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
 			Wall wall = (Wall) Item.fromID(this.data.blocks[x + y * SIZE]);
@@ -189,38 +187,26 @@ public class Chunk {
 	}
 
 	public ChunkData getData() {
-		this.updateLastAccessedTime();
-
 		return this.data;
 	}
 
 	public int getGridX() {
-		this.updateLastAccessedTime();
-
 		return (int) this.position.x;
 	}
 
 	public int getGridY() {
-		this.updateLastAccessedTime();
-
 		return (int) this.position.y;
 	}
 
 	public int getX() {
-		this.updateLastAccessedTime();
-
 		return (int) this.position.x * SIZE;
 	}
 
 	public int getY() {
-		this.updateLastAccessedTime();
-
 		return (int) this.position.y * SIZE;
 	}
 
 	private boolean isInside(int x, int y) {
-		this.updateLastAccessedTime();
-
 		return (x >= 0 && x < SIZE && y >= 0 && y < SIZE);
 	}
 

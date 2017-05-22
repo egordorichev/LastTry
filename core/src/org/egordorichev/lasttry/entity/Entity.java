@@ -32,7 +32,11 @@ public class Entity {
 		this.physics.update(dt);
 	}
 
-	// In Pixels!
+	/**
+	 * Spawn the entity in the world at the given X and Y coordinates in pixels.
+	 * @param x
+	 * @param y
+	 */
 	public void spawn(int x, int y) {
 		if (this.active) {
 			return;

@@ -12,7 +12,7 @@ import java.util.*;
 public class Debug {
 	private boolean enabled;
 	private int uniqueCounter;
-	private Map<Integer, GenericContainer.UniqueTypePair> messagesToBePrinted = new LinkedHashMap<>();
+	private Map<Integer, GenericContainer.UniqueTypePair<String, Integer>> messagesToBePrinted = new LinkedHashMap<>();
 
 	public Debug() {
 		this.enabled = !LastTry.release;

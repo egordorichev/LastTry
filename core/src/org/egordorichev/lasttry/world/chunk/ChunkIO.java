@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
@@ -68,7 +67,7 @@ public class ChunkIO {
 			return null;
 		}
 	}
-
+	
 	public static Chunk generate(int x, int y) {
 		new Thread(new Runnable() {
 			@Override
@@ -86,7 +85,6 @@ public class ChunkIO {
 				Log.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
-
 		return new EmptyChunk(new Vector2(x, y));
 	}
 

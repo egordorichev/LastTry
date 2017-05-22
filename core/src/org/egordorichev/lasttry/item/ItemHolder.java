@@ -57,6 +57,7 @@ public class ItemHolder {
 	public void setCount(int count) {
     	if (this.item == null) {
     		this.count = 0;
+    		return;
 	    }
 
     	if (count > this.item.getMaxInStack()) {

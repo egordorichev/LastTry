@@ -28,7 +28,7 @@ public class Plant extends Block {
 	@Override
 	public void die(int x, int y) {
 		if (hasGrown(x, y)) {
-			Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
+			Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
 				y * Block.SIZE - Block.SIZE / 2);
 		}
 
@@ -36,7 +36,7 @@ public class Plant extends Block {
 			short seeds = getSeedsFor(this.id);
 
 			if (seeds != 0) {
-				Globals.entityManager.spawn(new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
+				Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
 					x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 			}
 		}

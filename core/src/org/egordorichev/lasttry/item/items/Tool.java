@@ -1,17 +1,23 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
-import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
+import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.ui.InventoryOwner;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;
 
 public class Tool extends Item {
+	private static final float KNOCKBACK_MAX_POWER = 10F;
 	protected boolean autoSwing;
 	protected float criticalStrikeChance;
 	protected float baseDamage; // All tools have melee damage
@@ -46,10 +52,10 @@ public class Tool extends Item {
 	}
 
 	@Override
-	protected void onUpdate() {
-		super.onUpdate();
-
-		handleToolAttack();
+	protected void onUpdate(InventoryOwner owner) {
+		super.onUpdate(owner);
+		
+		this.onToolAttack(owner);
 	}
 
 	public int getPickaxePower() {
@@ -85,18 +91,28 @@ public class Tool extends Item {
 		return this.rarity;
 	}
 
-	private void handleToolAttack() {
+	public void onToolAttack(InventoryOwner owner) {
+		Creature cowner = (Creature) owner;
+		
 		List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
-		Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
+		Rectangle equippedPlayerHitBox = generateToolHitbox();
 
 		activeEnemies.stream().forEach(enemy -> {
 			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
-				inflictDamageOnEnemy(enemy);
+				int damage = this.calculateDamageToInflict(enemy);
+				float knockPower = damage * -0.04F;
+				Vector2 diff = cowner.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
+				Vector2 force = diff.scl(knockPower);
+				force.limit(KNOCKBACK_MAX_POWER);
+				enemy.physics.getVelocity().add(force);
+				inflictDamageOnEnemy(enemy, damage);
 			}
 		});
 	}
 
-	private Rectangle generateEquippedPlayerHitBox() {
+	private Rectangle generateToolHitbox() {
+		final int offsetDistance = (int) Math.round(Block.SIZE*1.5);
+		final int dir = Globals.player.physics.getDirection() == Direction.LEFT ? -1 : 1;
 		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
 		final TextureRegion itemTextureRegion = this.getTextureRegion();
 		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getRegionWidth(),
@@ -105,12 +121,10 @@ public class Tool extends Item {
 		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x + toolHitBox.x,
 				playerHitBox.y + toolHitBox.y, playerHitBox.width + toolHitBox.width,
 				playerHitBox.height + toolHitBox.height);
-
-		return equippedPlayerHitbox;
+		return equippedPlayerHitbox.offset(dir * offsetDistance, 0);
 	}
 
-	private void inflictDamageOnEnemy(final Enemy enemy) {
-		int damage = this.calculateDamageToInflict(enemy);
+	private void inflictDamageOnEnemy(final Enemy enemy, int damage) {
 		enemy.hit(damage);
 	}
 

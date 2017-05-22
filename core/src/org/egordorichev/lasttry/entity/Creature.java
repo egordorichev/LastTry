@@ -26,9 +26,10 @@ public class Creature extends Entity {
 	}
 
 	public void hit(int damage) {
-		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO: crit?
-			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
+		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO:
+																		// crit?
+				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		// TODO: Determine where the damage code should be
 		// Should creatures share this logic or does this only apply to enemies?
@@ -37,6 +38,8 @@ public class Creature extends Entity {
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
 
 		// TODO: Knockback effect when damaged. Force depends on damage.
+		// TODO: Rework this method so the source of the attack is known.
+		// The source is needed to calculate the direction of the knockback
 	}
 
 	@Override
@@ -62,11 +65,10 @@ public class Creature extends Entity {
 		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
-		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20,
-			mapped, 12, 0, 0, mapped, 12, false, false);
-			Graphics.batch.setColor(1, 1, 1, 1);
-			Graphics.batch.draw(Graphics.healthBarFrameTexture, x,
-			this.physics.getY() - 20);
+		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20, mapped, 12, 0, 0, mapped, 12,
+				false, false);
+		Graphics.batch.setColor(1, 1, 1, 1);
+		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
 
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}

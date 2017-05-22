@@ -11,7 +11,6 @@ import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.ByteHelper;
-import org.egordorichev.lasttry.util.Rectangle;
 
 public class Wall extends org.egordorichev.lasttry.item.Item {
 	protected TextureRegion[][] tiles;
@@ -32,7 +31,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 	}
 
 	public void die(int x, int y) {
-		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}
 
 	public void renderWall(int x, int y) {

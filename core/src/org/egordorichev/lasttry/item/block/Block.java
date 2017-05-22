@@ -72,7 +72,7 @@ public class Block extends Item {
 	}
 
 	public void die(int x, int y) {
-		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}
 
 	public boolean canBePlaced(int x, int y) {

@@ -1,7 +1,11 @@
 package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.enemy.Enemies;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
@@ -36,8 +40,9 @@ public class EntityManager {
 		int halfWidth = Gdx.graphics.getWidth() / 2;
 		int halfHeight = Gdx.graphics.getHeight() / 2;
 
-		Rectangle camera = new Rectangle(Camera.game.position.x - 16 - halfWidth, Camera.game.position.y - 16 - halfHeight,
-			Camera.game.position.x + halfWidth + 32, Camera.game.position.y + halfHeight + 32);
+		Rectangle camera = new Rectangle(Camera.game.position.x - 16 - halfWidth,
+				Camera.game.position.y - 16 - halfHeight, Camera.game.position.x + halfWidth + 32,
+				Camera.game.position.y + halfHeight + 32);
 
 		for (Entity entity : this.entities) {
 			if (entity.physics.getHitbox().intersects(camera)) {
@@ -49,6 +54,9 @@ public class EntityManager {
 	public void update(int dt) {
 		for (Entity entity : this.clearList) {
 			this.entities.remove(entity);
+			if (entity instanceof Enemy) {
+				this.enemyEntities.remove(entity);
+			}
 		}
 
 		this.clearList.clear();
@@ -68,6 +76,28 @@ public class EntityManager {
 		this.entities.add(entity);
 		this.sort();
 
+		return entity;
+	}
+
+	public Entity spawnBlockDrop(DroppedItem item, int x, int y) {
+		Entity entity = spawn(item, x, y);
+		
+		// calculate velocity to pop dropped item away from blocks
+		Vector2 popVelocity = new Vector2();
+		float power = 2f;
+		int tileX = (x / Block.SIZE);
+		int tileY = (y / Block.SIZE);
+		for (int k = -1; k <= 1; k++) {
+			for (int j = -1; j <= 1; j++) {
+				int x1 = tileX + k;
+				int y1 = tileY + j;
+				if (Globals.world.blocks.get(x1, y1) == null) {
+					popVelocity.add(k * power, j * power);
+				}
+			}
+		}
+		// Apply pop velocity
+		entity.physics.getVelocity().add(popVelocity);
 		return entity;
 	}
 
@@ -106,10 +136,6 @@ public class EntityManager {
 
 	public void markForRemoval(Entity entity) {
 		this.clearList.add(entity);
-
-		if (entity instanceof Enemy){
-			enemyEntities.remove(entity);
-		}
 	}
 
 	public List<Entity> getEntities() {
@@ -122,10 +148,11 @@ public class EntityManager {
 
 	private synchronized void attemptDespawnEnemies() {
 		try {
-			for (int i = 0; i < this.enemyEntities.size(); i++){
+			for (int i = 0; i < this.enemyEntities.size(); i++) {
 				CreatureWithAI creatureWithAI = enemyEntities.get(i);
 
-				// Acquire a read only lock, source: http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+				// Acquire a read only lock, source:
+				// http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
 				ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
 
 				readOnlyLock.readLock().lock();
@@ -136,4 +163,5 @@ public class EntityManager {
 			LastTry.handleException(e);
 		}
 	}
+
 }

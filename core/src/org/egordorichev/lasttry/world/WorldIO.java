@@ -105,6 +105,7 @@ public class WorldIO {
 				case SMALL: stream.writeByte((byte) 0); break;
 				case MEDIUM: stream.writeByte((byte) 1); break;
 				case LARGE: stream.writeByte((byte) 2); break;
+				case DEVEXTRALARGE: break;
 			}
 
 			stream.writeBoolean(Globals.world.flags.isHardmode());
