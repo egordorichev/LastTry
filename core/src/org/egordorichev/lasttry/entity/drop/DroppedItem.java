@@ -8,12 +8,10 @@ import java.util.List;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
-import org.egordorichev.lasttry.util.Rectangle;
 
 public class DroppedItem extends Creature {
 	private static final float ATTRACTION_RANGE = 100;
