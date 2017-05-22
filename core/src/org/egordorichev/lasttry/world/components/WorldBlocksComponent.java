@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
@@ -58,7 +59,7 @@ public class WorldBlocksComponent extends WorldComponent {
 
 		chunk.setBlockHP(hp, x, y);
 
-		if (hp == 0) {
+		if (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2 == 0) {
 			this.updateNeighbors(x, y);
 		}
 	}

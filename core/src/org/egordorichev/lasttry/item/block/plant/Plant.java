@@ -21,7 +21,7 @@ public class Plant extends Block {
 
 	@Override
 	public void onNeighborChange(int x, int y, int nx, int ny) {
-		if (ny == y + 1 && x == nx) {
+		if (ny == y - 1 && x == nx) {
 			this.die(x, y);
 		}
 	}
@@ -56,7 +56,10 @@ public class Plant extends Block {
 
 	protected static byte getGrowLevel(int x, int y) {
 		byte hp = Globals.world.blocks.getHP(x, y);
-		return (byte) (ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2);
+
+		return (byte) (ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2
+			+ ByteHelper.getBitValue(hp, (byte) 4) * 4 + ByteHelper.getBitValue(hp, (byte) 5) * 8
+			+ ByteHelper.getBitValue(hp, (byte) 6) * 16);
 	}
 
 	protected static void setGrowLevel(byte level, int x, int y) {
@@ -64,6 +67,9 @@ public class Plant extends Block {
 
 		hp = ByteHelper.setBit(hp, (byte) 2, ByteHelper.bitIsSet(level, (byte) 0));
 		hp = ByteHelper.setBit(hp, (byte) 3, ByteHelper.bitIsSet(level, (byte) 1));
+		hp = ByteHelper.setBit(hp, (byte) 4, ByteHelper.bitIsSet(level, (byte) 2));
+		hp = ByteHelper.setBit(hp, (byte) 5, ByteHelper.bitIsSet(level, (byte) 3));
+		hp = ByteHelper.setBit(hp, (byte) 6, ByteHelper.bitIsSet(level, (byte) 4));
 
 		Globals.world.blocks.setHP(hp, x, y);
     }
@@ -94,7 +100,7 @@ public class Plant extends Block {
             tx = 2;
         }
 
-        Graphics.batch.draw(this.tiles[tx][0], x * Block.SIZE, y * Block.SIZE);
+        Graphics.batch.draw(this.tiles[0][tx], x * Block.SIZE, y * Block.SIZE);
 	}
 
     @Override
