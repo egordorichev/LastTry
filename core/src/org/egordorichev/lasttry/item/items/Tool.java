@@ -1,13 +1,18 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.ui.InventoryOwner;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;
@@ -47,10 +52,10 @@ public class Tool extends Item {
 	}
 
 	@Override
-	protected void onUpdate() {
-		super.onUpdate();
+	protected void onUpdate(InventoryOwner owner) {
+		super.onUpdate(owner);
 		
-		this.onToolAttack();
+		this.onToolAttack(owner);
 	}
 
 	public int getPickaxePower() {
@@ -86,13 +91,21 @@ public class Tool extends Item {
 		return this.rarity;
 	}
 
-	public void onToolAttack() {
+	public void onToolAttack(InventoryOwner owner) {
+		Creature cowner = (Creature) owner;
+		
 		List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
 		Rectangle equippedPlayerHitBox = generateToolHitbox();
 
 		activeEnemies.stream().forEach(enemy -> {
 			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
-				inflictDamageOnEnemy(enemy);
+				int damage = this.calculateDamageToInflict(enemy);
+
+				Vector2 diff = cowner.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
+				float knockPower = damage * -0.04F;
+				Log.debug(diff.toString());
+				enemy.physics.getVelocity().add(diff.scl(knockPower));
+				inflictDamageOnEnemy(enemy, damage);
 			}
 		});
 	}
@@ -111,8 +124,7 @@ public class Tool extends Item {
 		return equippedPlayerHitbox.offset(dir * offsetDistance, 0);
 	}
 
-	private void inflictDamageOnEnemy(final Enemy enemy) {
-		int damage = this.calculateDamageToInflict(enemy);
+	private void inflictDamageOnEnemy(final Enemy enemy, int damage) {
 		enemy.hit(damage);
 	}
 

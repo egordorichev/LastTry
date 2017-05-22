@@ -37,7 +37,7 @@ public class Item {
 		}
 
 		this.useDelay = Math.max(0, this.useDelay - 1);
-		this.onUpdate();
+		this.onUpdate(owner);
 
 		if (this.isReady()) {
 			this.onUseEnd();
@@ -48,7 +48,7 @@ public class Item {
 		return false;
 	}
 
-	protected void onUpdate() {
+	protected void onUpdate(InventoryOwner owner) {
 
 	}
 
