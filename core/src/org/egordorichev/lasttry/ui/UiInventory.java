@@ -16,6 +16,15 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.language.Language;
 
 public class UiInventory extends UiComponent {
+	/**
+	 * The item that the user has clicked and is following the mouse.
+	 * 
+	 * NOT The item indicated by currentSlot.
+	 * 
+	 * TODO: Better name to reflect this. 
+	 * 
+	 * TODO: Actual documentation
+	 */
 	public ItemHolder currentItem = new ItemHolder(null, 0);
 	public int currentSlot = 0;
 	public UiItemSlot[] slots;
