@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.item;
 
-import org.egordorichev.lasttry.ui.InventoryOwner;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Item {

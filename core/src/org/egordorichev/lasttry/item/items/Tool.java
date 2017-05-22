@@ -8,10 +8,10 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
 import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.item.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.ui.InventoryOwner;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
-import org.egordorichev.lasttry.ui.InventoryOwner;
+import org.egordorichev.lasttry.item.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
 
 public class Player extends Creature implements InventoryOwner {
