@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.util;
 
 import org.egordorichev.lasttry.LastTry;
 import java.io.File;
+import java.util.Locale;
 import java.util.concurrent.*;
 
 public class Util {
@@ -69,5 +70,9 @@ public class Util {
 		}
 
 		return true;
+	}
+	
+	public static boolean isWindows() {
+		return  System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win");
 	}
 }
