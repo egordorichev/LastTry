@@ -16,7 +16,6 @@ import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
-import org.egordorichev.lasttry.util.Log;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -138,14 +137,13 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
     @Override
     public void addComponents() {
         this.input = new UiTextInput(new Rectangle(10, 20, 400, 20), Origin.BOTTOM_LEFT) {
-            private final int GARBAGE = 13;
             @Override
             public void onEnter() {
                 String text = getText();
                 // FIXME: WTF invisible characters
                 //
                 // Something is REALLY weird with invisible characters
-                if (text.substring(0, 3).contains("/")) {
+                if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
                     // TODO: Wtf is char(13) doing at the beginning of a string?
                     text = text.substring(text.indexOf("/")+1);
                     commands.runInput(text);
