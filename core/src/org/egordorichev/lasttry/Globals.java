@@ -7,18 +7,44 @@ import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
+import org.egordorichev.lasttry.world.biome.BiomeMap;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class Globals {
+    /**
+     * Used in world generation. Associates a biome to coordinates on a graph.
+     * Coordinates are in temperature and humidity, both ranging from 1-100.
+     */
+    public static final BiomeMap biomeMap = new BiomeMap();
+    /**
+     * The current world.
+     */
     public static World world;
+    /**
+     * The player instance.
+     */
     public static Player player;
     public static Environment environment;
     public static SpawnSystem spawnSystem;
+    /**
+     * The entity manager. Handles rendering, updating, item-dropping, etc. of
+     * all loaded entities.
+     */
     public static EntityManager entityManager;
+    /**
+     * The chunk garbage collector.
+     */
     public static ChunkGcManager chunkGcManager;
+    /**
+     * The chat UI.
+     */
     public static UiChat chat;
+    /**
+     * The currently displayed screen. If the current screen is null, then the
+     * player is in-game with no overlay menus.
+     */
     private static UiScreen currentScreen;
 
     public static void dispose() {
@@ -32,7 +58,8 @@ public class Globals {
     }
 
     /**
-     * Returns the current UiScreen being rendered.
+     * Returns the current UiScreen being rendered. If the current screen is
+     * null, then the player is in-game with no overlay menus.
      * 
      * @return
      */

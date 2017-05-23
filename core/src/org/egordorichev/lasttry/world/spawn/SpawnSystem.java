@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -76,7 +77,7 @@ public class SpawnSystem {
             return;
         }
 
-        ArrayList<Enemy> eligibleEnemiesForSpawn = EnemySpawnComponent.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
+        List<Enemy> eligibleEnemiesForSpawn = EnemySpawnComponent.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
 
         if (eligibleEnemiesForSpawn.size() == 0) {
             return;
@@ -85,7 +86,7 @@ public class SpawnSystem {
         }
     }
 
-    private void spawnTriggered(final ArrayList<Enemy> eligibleEnemiesForSpawn) {
+    private void spawnTriggered(final List<Enemy> eligibleEnemiesForSpawn) {
         Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
 
         Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
@@ -104,7 +105,7 @@ public class SpawnSystem {
 
     }
 
-    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, ArrayList<Enemy> enemiesInActiveArea) {
+    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, List<Enemy> enemiesInActiveArea) {
         // TODO Expensive calculation
         // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
         this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawnComponent.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
