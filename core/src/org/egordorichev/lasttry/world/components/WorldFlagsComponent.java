@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.world.World;
-
+    
 public class WorldFlagsComponent extends WorldComponent {
 	public static final int CRIMSON = 1;
 	public static final int HARDMODE = 2;

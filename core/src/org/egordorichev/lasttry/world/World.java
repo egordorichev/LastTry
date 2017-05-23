@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.world;
 
+import java.util.Random;
+
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
@@ -14,17 +16,26 @@ import org.egordorichev.lasttry.world.components.WorldWallsComponent;
 public class World {
 	public static final int UPDATE_DELAY = 1;
 
-	public WorldFlagsComponent flags;
-	public WorldChunksComponent chunks;
-	public WorldBlocksComponent blocks;
-	public WorldWallsComponent walls;
-	private Size size;
-	private String name;
+	public final WorldFlagsComponent flags;
+	public final WorldChunksComponent chunks;
+	public final WorldBlocksComponent blocks;
+	public final WorldWallsComponent walls;
+	/**
+	 * Random instance, used for terrain generation. Since it's associated with
+	 * the world seed, it will provide the same results every time if the seed
+	 * is the same.
+	 */
+	public final Random random;
 
-	public World(String name, Size size, int flags) {
+	private final Size size;
+	private final String name;
+	private final int seed;
+
+	public World(String name, Size size, int flags, int seed) {
 		this.size = size;
 		this.name = name;
-
+		this.seed = seed;
+		this.random = new Random(seed);
 		this.chunks = new WorldChunksComponent(this);
 		this.flags = new WorldFlagsComponent(this, flags);
 		this.blocks = new WorldBlocksComponent(this);
@@ -33,7 +44,7 @@ public class World {
 		Util.runInThread(new Callable() {
 			@Override
 			public void call() {
-				 update();
+				update();
 			}
 		}, UPDATE_DELAY);
 	}
@@ -60,6 +71,10 @@ public class World {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public int getSeed() {
+		return seed;
 	}
 
 	// GridPoints
@@ -96,13 +111,13 @@ public class World {
 
 		return false;
 	}
-	
 
 	public enum Size {
-		SMALL("Small", 4096, 1024),//Small contains 64 chunks
-		MEDIUM("Medium", 6144, 2048), //Medium contains 192 chunks
-		LARGE("Large", 8192, 2304), //Large contains 288 chunks
-		DEVEXTRALARGE("Dev: Extra Large", 16384, 4608); //Dev Extra Large contains 1152 chunks
+		SMALL("Small", 4096, 1024), // Small contains 64 chunks
+		MEDIUM("Medium", 6144, 2048), // Medium contains 192 chunks
+		LARGE("Large", 8192, 2304), // Large contains 288 chunks
+		DEVEXTRALARGE("Dev: Extra Large", 16384, 4608); // Dev Extra Large
+														// contains 1152 chunks
 
 		private String name;
 		private short width;
@@ -131,9 +146,9 @@ public class World {
 
 		public short getMaxChunks() {
 
-			int maxChunks = (width/Chunk.SIZE)*(short)(height/ Chunk.SIZE);
+			int maxChunks = (width / Chunk.SIZE) * (short) (height / Chunk.SIZE);
 
-			return (short)maxChunks;
+			return (short) maxChunks;
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class TaskCaveGenBubble extends GeneratorTask {
@@ -11,7 +10,7 @@ public class TaskCaveGenBubble extends GeneratorTask {
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
-                solidMap[x][y] = LastTry.random.nextBoolean();
+                solidMap[x][y] = generator.world.random.nextBoolean();
             }
         }
 

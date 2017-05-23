@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 
 public class TaskTerrainGen extends GeneratorTask {
@@ -16,7 +15,7 @@ public class TaskTerrainGen extends GeneratorTask {
         int min = height - 250;
 
         for (int i = 0; i < width; i++) {
-            points[i] = LastTry.random.nextInt((max - min) + 1) + min;
+            points[i] = generator.world.random.nextInt((max - min) + 1) + min;
         }
 
         for (int j = 0; j < 100; j++) {

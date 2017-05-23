@@ -23,7 +23,7 @@ public class LastTry extends Game {
 	/** LastTry version */
 	public static final Version version = new Version(0.0, 17, "alpha");
 	
-	/** Random instance */
+	/** Random instance. This is not to be used in repeatable systems such as world generation */
 	public static final Random random = new Random();
 
 	/** Last Try instance */

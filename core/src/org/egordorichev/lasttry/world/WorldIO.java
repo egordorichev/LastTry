@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	public static void load(String name) {
 		String fileName = getSaveName(name);
@@ -29,7 +29,7 @@ public class WorldIO {
 			FileReader stream = new FileReader(fileName);
 
 			int version = stream.readInt32();
-
+			int seed = stream.readInt32();
 			if (version > VERSION) {
 				Log.error("Trying to load unknown world.");
 				LastTry.abort();
@@ -57,7 +57,7 @@ public class WorldIO {
 			Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
-			Globals.world = new World(name, size, flags);
+			Globals.world = new World(name, size, flags, seed);
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -65,7 +65,7 @@ public class WorldIO {
 		Log.debug("Done loading world " + name + "!");
 	}
 
-	public static World generate(String name, World.Size size, int flags) {
+	public static World generate(String name, World.Size size, int flags, int seed) {
 		File dir = new File("data/worlds/");
 
 		if (!dir.exists()) {
@@ -78,7 +78,7 @@ public class WorldIO {
 			file.mkdir();
 		}
 
-		return new WorldGenerator(name, size, flags).generate();
+		return new WorldGenerator(name, size, flags, seed).generate();
 		// return new World(name, size, flags);
 	}
 
@@ -89,7 +89,7 @@ public class WorldIO {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-			} catch(IOException exception) {
+			} catch (IOException exception) {
 				Log.error("Failed to create save file for the world " + Globals.world.getName() + "!");
 				LastTry.abort();
 			}
@@ -100,12 +100,20 @@ public class WorldIO {
 		try {
 			FileWriter stream = new FileWriter(fileName);
 			stream.writeInt32(VERSION);
+			stream.writeInt32(Globals.world.getSeed());
 
 			switch (Globals.world.getSize()) {
-				case SMALL: stream.writeByte((byte) 0); break;
-				case MEDIUM: stream.writeByte((byte) 1); break;
-				case LARGE: stream.writeByte((byte) 2); break;
-				case DEVEXTRALARGE: break;
+			case SMALL:
+				stream.writeByte((byte) 0);
+				break;
+			case MEDIUM:
+				stream.writeByte((byte) 1);
+				break;
+			case LARGE:
+				stream.writeByte((byte) 2);
+				break;
+			case DEVEXTRALARGE:
+				break;
 			}
 
 			stream.writeBoolean(Globals.world.flags.isHardmode());

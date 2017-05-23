@@ -10,6 +10,9 @@ public class TaskCaveGenSimplex extends GeneratorTask {
         // TODO: Let the user choose these variables when generating a world.
         int caveBiasDepth = 20;
         int octaves = 4;
+        // TODO: Better offset math than this
+        int seedXOffset = generator.world.getSeed();
+        int seedYOffset = generator.world.getSeed();
         float roughness = 0.5f;
         float scale = 1f / 20f;
         float cut = 0.0f;
@@ -20,7 +23,7 @@ public class TaskCaveGenSimplex extends GeneratorTask {
             for (int y = 0; y < generator.getWorldHeight(); y++) {
             
                 // Get noise value at the coordinates
-                float f = SimplexNoise.octavedNoise(x, y, octaves, roughness, scale);
+                float f = SimplexNoise.octavedNoise(x+seedXOffset, y+seedYOffset, octaves, roughness, scale);
                 if (y >= antiCaveBiasHeight) {
                     // Average the value with a negative number to lessen the
                     // effect of cave generation above (Y = antiCaveBiasHeight)

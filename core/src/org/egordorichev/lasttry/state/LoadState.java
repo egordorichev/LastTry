@@ -33,7 +33,10 @@ public class LoadState implements State {
                         if (WorldIO.saveExists("test")) {
                         	WorldIO.load("test");
                         } else {
-                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0);
+                            // TODO: Seed generation
+                            // Allow the user to generate the world seed
+                            int seed = 1337;
+                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0, seed);
                         }
 
                         loadString = "Loading player...";

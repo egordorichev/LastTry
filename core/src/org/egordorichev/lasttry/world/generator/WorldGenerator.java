@@ -10,12 +10,12 @@ public class WorldGenerator {
 	public World world;
 	private List<GeneratorTask> tasks = new ArrayList<>();
 
-	public WorldGenerator(String name, World.Size size, int flags) {
-		this.world = new World(name, size, flags);
+	public WorldGenerator(String name, World.Size size, int flags, int seed) {
+		this.world = new World(name, size, flags, seed);
 		Globals.world = this.world;
-
 		this.tasks.add(new TaskTerrainGen());
 		this.tasks.add(new TaskCaveGenSimplex());
+		//this.tasks.add(new TaskFoilageGen());
 	}
 
 	public void addTask(GeneratorTask task) {
