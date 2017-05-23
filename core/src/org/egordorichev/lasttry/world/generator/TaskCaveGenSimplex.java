@@ -6,15 +6,19 @@ public class TaskCaveGenSimplex extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {
-        int antiCaveBiasHeight = 820;
+        // TODO: These numbers shouldn't be hard-coded
+        // TODO: Let the user choose these variables when generating a world.
+        int caveBiasDepth = 20;
         int octaves = 4;
         float roughness = 0.5f;
         float scale = 1f / 20f;
         float cut = 0.0f;
         boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
 
-        for (int y = 0; y < generator.getWorldHeight(); y++) {
-            for (int x = 0; x < generator.getWorldWidth(); x++) {
+        for (int x = 0; x < generator.getWorldWidth(); x++) {
+            int antiCaveBiasHeight = generator.getHighest(x) - caveBiasDepth;
+            for (int y = 0; y < generator.getWorldHeight(); y++) {
+            
                 // Get noise value at the coordinates
                 float f = SimplexNoise.octavedNoise(x, y, octaves, roughness, scale);
                 if (y >= antiCaveBiasHeight) {

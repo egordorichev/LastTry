@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.World;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,4 +42,13 @@ public class WorldGenerator {
 	public int getWorldHeight() {
 		return this.world.getHeight();
 	}
+
+    public int getHighest(int x) {
+        for (int y = getWorldHeight(); y > 0; y--){
+            if (this.world.blocks.getID(x, y) != ItemID.none){
+                return y;
+            }
+        }
+        return 0;
+    }
 }
