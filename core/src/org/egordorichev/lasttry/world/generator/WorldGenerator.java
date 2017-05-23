@@ -14,7 +14,7 @@ public class WorldGenerator {
 		Globals.world = this.world;
 
 		this.tasks.add(new TaskTerrainGen());
-		this.tasks.add(new TaskCaveGen());
+		this.tasks.add(new TaskCaveGenSimplex());
 	}
 
 	public void addTask(GeneratorTask task) {

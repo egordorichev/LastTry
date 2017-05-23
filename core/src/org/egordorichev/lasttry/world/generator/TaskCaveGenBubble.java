@@ -3,20 +3,20 @@ package org.egordorichev.lasttry.world.generator;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 
-public class TaskCaveGen extends GeneratorTask {
+public class TaskCaveGenBubble extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {
-        boolean[][] terrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
+        boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
-                terrain[x][y] = LastTry.random.nextBoolean();
+                solidMap[x][y] = LastTry.random.nextBoolean();
             }
         }
 
         for (int i = 0; i < 8; i++) {
-            terrain = this.nextStep(generator, terrain);
+            solidMap = this.nextStep(generator, solidMap);
         }
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
@@ -25,10 +25,10 @@ public class TaskCaveGen extends GeneratorTask {
                     continue;
                 }
 
-                if (!terrain[x][y]) {
+                if (!solidMap[x][y]) {
                     generator.world.blocks.set(ItemID.none, x, y);
                 } else {
-                    int neighbors = this.calculateNeighbors(generator, terrain, x, y);
+                    int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
 
                     if (neighbors != 8) {
                         generator.world.blocks.set(ItemID.grassBlock, x, y);
@@ -39,7 +39,7 @@ public class TaskCaveGen extends GeneratorTask {
     }
 
     private boolean[][] nextStep(WorldGenerator generator, boolean[][] terrain) {
-        boolean[][] newTerrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
+        boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
@@ -47,33 +47,33 @@ public class TaskCaveGen extends GeneratorTask {
 
                 if (terrain[x][y]) {
                     if (neighbors < 3) {
-                        newTerrain[x][y] = false;
+                        solidMap[x][y] = false;
                     } else {
-                        newTerrain[x][y] = true;
+                        solidMap[x][y] = true;
                     }
                 } else {
                     if (neighbors > 4) {
-                        newTerrain[x][y] = true;
+                        solidMap[x][y] = true;
                     } else {
-                        newTerrain[x][y] = false;
+                        solidMap[x][y] = false;
                     }
                 }
             }
         }
 
-        return newTerrain;
+        return solidMap;
     }
-
     private int calculateNeighbors(WorldGenerator generator, boolean[][] terrain, int x, int y) {
         int neighbors = 0;
-
+        int w = generator.getWorldWidth();
+        int h = generator.getWorldHeight();
         for (int j = y - 1; j < y + 2; j++) {
             for (int i = x - 1; i < x + 2; i++) {
                 if (i == x && j == y) {
                     continue;
                 }
 
-                if (i < 0 || j < 0 || i >= generator.getWorldWidth() || j >= generator.getWorldHeight()) {
+                if (i < 0 || j < 0 || i >= w || j >= h) {
                     neighbors++;
                     continue;
                 }
