@@ -38,16 +38,23 @@ public class LastTry extends Game {
 	/** Shows, if this is a release */
 	public static boolean release = true;
 
-	/** Creates first-priority instances */
+	/** Screen dimensions */
+    private final int width, height;
+
+	public LastTry(int width, int height) {
+       this.width = width;this.height=height;
+    }
+
+    /** Creates first-priority instances */
 	@Override
 	public void create() {
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
 
 		instance = this;
 
-		Camera.create(800, 600);
+		Camera.create(width, height);
 		Language.load(new Locale("en", "US"));
-		Lighting.init(800, 600);
+		Lighting.init(width, height);
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
 		Gdx.graphics.setTitle(this.getRandomWindowTitle());

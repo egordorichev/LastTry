@@ -19,6 +19,7 @@ public class DesktopLauncher {
         config.width = 800;
         config.height = 600;
         config.vSyncEnabled = true;
+        config.fullscreen = false;
         config.resizable = false;
         config.addIcon("Icon.png", Files.FileType.Internal);
 
@@ -35,9 +36,12 @@ public class DesktopLauncher {
             if (argList.contains("-wd")) {
                 Util.delete(new File("data" + File.separator + "worlds"));
             }
+            if (argList.contains("-f")) {
+                config.fullscreen = true;
+            }
         }
 
-        new LwjglApplication(new LastTry(), config);
+        new LwjglApplication(new LastTry(config.width, config.height), config);
     }
 
     private static class ExitDumper extends SecurityManager {
