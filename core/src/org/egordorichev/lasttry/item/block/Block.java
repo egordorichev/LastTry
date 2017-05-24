@@ -27,7 +27,7 @@ public class Block extends Item {
 		super(id, name, texture);
 		this.power = requiredPower;
 		this.solid = solid;
-		this.useSpeed = 30;
+		this.useDelayMax = 30;
 
 		this.tiles = tiles.split(SIZE, SIZE);
 	}

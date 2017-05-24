@@ -46,7 +46,7 @@ public class DigTool extends Tool {
 
 		float width = this.texture.getRegionWidth();
 		float height = this.texture.getRegionHeight();
-		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
+		float angle = Util.map(this.useDelay, 0, this.useDelayMax, -70.0f, 45.0f);
 
 		if (Globals.player.physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),

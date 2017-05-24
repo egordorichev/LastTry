@@ -6,7 +6,17 @@ import org.egordorichev.lasttry.ui.UiInventory;
  * Interface applied to creatures that hold inventories.
  */
 public interface InventoryOwner {
-	UiInventory getInventory();
+    /**
+     * The inventory the owner can pull up.
+     * 
+     * @return
+     */
+    UiInventory getInventory();
 
-	void setInventory(UiInventory inventory);
+    /**
+     * Sets the entity's inventory.
+     * 
+     * @param inventory
+     */
+    void setInventory(UiInventory inventory);
 }
