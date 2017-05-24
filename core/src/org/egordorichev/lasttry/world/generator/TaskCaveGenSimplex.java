@@ -6,13 +6,13 @@ public class TaskCaveGenSimplex extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {
+        // TODO: Better offset math than this
+        int seedXOffset = generator.world.getSeed();
+        int seedYOffset = generator.world.getSeed();
         // TODO: These numbers shouldn't be hard-coded
         // TODO: Let the user choose these variables when generating a world.
         int caveBiasDepth = 20;
         int octaves = 4;
-        // TODO: Better offset math than this
-        int seedXOffset = generator.world.getSeed();
-        int seedYOffset = generator.world.getSeed();
         float roughness = 0.5f;
         float scale = 1f / 20f;
         float cut = 0.0f;

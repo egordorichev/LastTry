@@ -6,9 +6,8 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 
 public class BiomeMap {
-    /**
-     * 
-     */
+    public static final int TEMP_MAX = 100;
+    public static final int HUMID_MAX = 100;
     private final List<Biome> biomes = new ArrayList<>();
 
     public void register(Biome biome) {
