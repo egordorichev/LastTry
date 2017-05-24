@@ -5,7 +5,7 @@ import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.world.biome.Biome;
 
-public class BiomeAnimationComponent extends Component {
+public class BiomeAnimationComponent implements Component {
 	private Biome biome;
     private TextureRegion backgroundTextureRegion;
 	private float alpha = 0;
@@ -34,8 +34,8 @@ public class BiomeAnimationComponent extends Component {
     public boolean fadeOutIsDone() {
     	return this.alpha < 0.01f;
     }
-
-    public void renderBackground() {
+    @Override
+    public void render() {
         Graphics.batch.setColor(1, 1, 1, this.alpha);
         Graphics.batch.draw(this.backgroundTextureRegion, 0, 0);
         Graphics.batch.setColor(1, 1, 1, 1);

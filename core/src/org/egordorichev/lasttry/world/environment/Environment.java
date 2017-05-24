@@ -13,11 +13,12 @@ import org.egordorichev.lasttry.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Environment {
 	public int[] blockCount;
 	public WorldTime time;
-	public ArrayList<Event> events = new ArrayList<Event>();
+	public List<Event> events = new ArrayList<>();
 	public Biome currentBiome;
 	public Biome lastBiome;
 
@@ -47,11 +48,11 @@ public class Environment {
 		}
 
 		if (this.currentBiome != null) {
-			this.currentBiome.animation.renderBackground();
+			this.currentBiome.animation.render();
 		}
 
 		if (this.lastBiome != null) {
-			this.lastBiome.animation.renderBackground();
+			this.lastBiome.animation.render();
 		}
 	}
 
@@ -156,7 +157,7 @@ public class Environment {
 		}
 	}
 
-	public ArrayList<Event> getCurrentEvents() {
+	public List<Event> getCurrentEvents() {
 		return this.events;
 	}
 }

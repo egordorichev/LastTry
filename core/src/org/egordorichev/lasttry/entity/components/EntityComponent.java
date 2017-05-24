@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity.components;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.entity.Entity;
 
-public class EntityComponent extends Component {
+public class EntityComponent implements Component {
 	protected Entity entity;
 
 	public EntityComponent(Entity entity) {
@@ -13,11 +13,11 @@ public class EntityComponent extends Component {
 	public EntityComponent() {
 		// Unsafe!
 	}
-
+	@Override
 	public void render() {
 
 	}
-
+	@Override
 	public void update(int dt) {
 
 	}
