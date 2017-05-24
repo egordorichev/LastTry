@@ -42,14 +42,12 @@ public class BiomeAnimationComponent implements Component {
     @Override
     public void render() {
         int i = 0;
-        int w = this.backgroundTextureRegion.getRegionWidth();
-        int scaledW = (int) (Globals.resolution.x * 2);
+        int w = 0;
         do {
             draw(i);
             w += this.backgroundTextureRegion.getRegionWidth();
             i++;
-            //Log.error(w + ":" + Globals.resolution.x);
-        } while (scaledW> w);
+        } while (Globals.resolution.x > w);
     }
 
     public void draw(int offset) {
