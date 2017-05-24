@@ -12,6 +12,8 @@ import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Globals {
     /**
      * Used in world generation. Associates a biome to coordinates on a graph.
@@ -28,6 +30,8 @@ public class Globals {
     public static Player player;
     public static Environment environment;
     public static SpawnSystem spawnSystem;
+    public static Vector2 resolution;
+
     /**
      * The entity manager. Handles rendering, updating, item-dropping, etc. of
      * all loaded entities.

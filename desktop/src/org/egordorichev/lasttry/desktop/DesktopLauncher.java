@@ -18,8 +18,12 @@ public class DesktopLauncher {
 
         config.width = 800;
         config.height = 600;
+        
+        config.width = 1920;
+        config.height = 1080;
+        
         config.vSyncEnabled = true;
-        config.fullscreen = false;
+        config.fullscreen = true;
         config.resizable = false;
         config.addIcon("Icon.png", Files.FileType.Internal);
 
