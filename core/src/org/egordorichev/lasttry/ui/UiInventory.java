@@ -183,16 +183,13 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
             if (holder != null) {
                 Item item = holder.getItem();
 
-                if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())) {
-
-                    if (item.use()) {
-                        int count = holder.getCount();
-
-                        if (count == 1) {
-                            slots[activeSlot].setItemHolder(new ItemHolder(null, 0));
-                        } else {
-                            holder.setCount(count - 1);
-                        }
+                if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())
+                        && item.use()) {
+                    int count = holder.getCount();
+                    if (count == 1) {
+                        slots[activeSlot].setItemHolder(new ItemHolder(null, 0));
+                    } else {
+                        holder.setCount(count - 1);
                     }
                 }
             }
@@ -236,8 +233,6 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
                     Gdx.graphics.getHeight() - (int) InputManager.getMousePosition().y - 16);
         }
     }
-
-   
 
     @Override
     public UiItemSlot getFirstFreeSlot(UiItemSlot.Type type) {
