@@ -1,6 +1,4 @@
-package org.egordorichev.lasttry.item;
-
-import org.egordorichev.lasttry.ui.UiInventory;
+package org.egordorichev.lasttry.inventory;
 
 /**
  * Interface applied to creatures that hold inventories.
@@ -11,12 +9,12 @@ public interface InventoryOwner {
      * 
      * @return
      */
-    UiInventory getInventory();
+    Inventory getInventory();
 
     /**
      * Sets the entity's inventory.
      * 
      * @param inventory
      */
-    void setInventory(UiInventory inventory);
+    void setInventory(Inventory inventory);
 }

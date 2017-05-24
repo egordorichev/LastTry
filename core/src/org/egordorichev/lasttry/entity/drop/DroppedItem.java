@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
 
 public class DroppedItem extends Creature {

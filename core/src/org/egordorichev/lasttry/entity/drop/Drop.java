@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity.drop;
 
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 import java.util.concurrent.ThreadLocalRandom;
