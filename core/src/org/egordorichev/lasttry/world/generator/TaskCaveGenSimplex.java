@@ -61,29 +61,4 @@ public class TaskCaveGenSimplex extends GeneratorTask {
             }
         }
     }
-
-    private int calculateNeighbors(WorldGenerator generator, boolean[][] solidMap, int x, int y) {
-        int neighbors = 0;
-        int w = generator.getWorldWidth();
-        int h = generator.getWorldHeight();
-        for (int j = y - 1; j < y + 2; j++) {
-            for (int i = x - 1; i < x + 2; i++) {
-                if (i == x && j == y) {
-                    continue;
-                }
-
-                if (i < 0 || j < 0 || i >= w || j >= h) {
-                    neighbors++;
-                    continue;
-                }
-
-                if (solidMap[i][j]) {
-                    neighbors++;
-                }
-            }
-        }
-
-        return neighbors;
-    }
-
 }
