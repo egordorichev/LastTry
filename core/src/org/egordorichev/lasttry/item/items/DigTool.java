@@ -19,7 +19,7 @@ public class DigTool extends Tool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Block block = Globals.world.blocks.get(x, y);
+		Block block = Globals.getWorld().getBlock(x, y);
 
 		if (block == null) {
 			return false;
@@ -28,10 +28,10 @@ public class DigTool extends Tool {
 		ToolPower power = block.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = Globals.world.blocks.getHP(x, y);
+			byte hp = Globals.getWorld().getBlockHP(x, y);
 
 			if (hp > 0) {
-				Globals.world.blocks.setHP((byte) (hp - 1), x, y);
+				Globals.getWorld().setBlockHP((byte) (hp - 1), x, y);
 			}
 		}
 
@@ -46,7 +46,7 @@ public class DigTool extends Tool {
 
 		float width = this.texture.getRegionWidth();
 		float height = this.texture.getRegionHeight();
-		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
+		float angle = Util.map(this.useDelay, 0, this.useDelayMax, -70.0f, 45.0f);
 
 		if (Globals.player.physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),

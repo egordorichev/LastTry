@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
-public class Lighting {
+public class ShaderLighting {
 	private static FrameBuffer fbo;
 
 	public static ShaderProgram ambientShader;

@@ -34,8 +34,8 @@ public class Seeds extends Item {
                 return false;
             }
 
-            Globals.world.blocks.set(this.plant.getID(), x, y);
-            Globals.world.blocks.setHP((byte) 1, x, y);
+            Globals.getWorld().setBlock(this.plant.getID(), x, y);
+            Globals.getWorld().setBlockHP((byte) 1, x, y);
 
             return true;
         }

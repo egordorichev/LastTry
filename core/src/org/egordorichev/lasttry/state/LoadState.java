@@ -28,21 +28,25 @@ public class LoadState implements State {
                         Globals.spawnSystem = new SpawnSystem();
                         loadString = "Loading environment...";
                         Globals.environment = new Environment();
+                        loadString = "Loading player...";
+                        if (PlayerIO.saveExists("test")) {
+                            PlayerIO.load("test");
+                        } else {
+                            Globals.player = PlayerIO.generate("test");
+                        }
+                        
                         loadString = "Loading world...";
-
                         if (WorldIO.saveExists("test")) {
                         	WorldIO.load("test");
                         } else {
-                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0);
+                            // TODO: Seed generation
+                            // Allow the user to generate the world seed
+                            int seed = 1337;
+                        	Globals.setWorld(WorldIO.generate("test", World.Size.SMALL, 0, seed));
                         }
 
-                        loadString = "Loading player...";
-
-                        if (PlayerIO.saveExists("test")) {
-	                        PlayerIO.load("test");
-                        } else {
-	                        Globals.player = PlayerIO.generate("test");
-                        }
+                       
+                        Globals.getWorld().initLights();
 
                         loaded = true;
                     }

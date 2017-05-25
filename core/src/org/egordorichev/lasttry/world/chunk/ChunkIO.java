@@ -81,7 +81,7 @@ public class ChunkIO {
 					}
 				}
 
-				Globals.world.chunks.set(new Chunk(data, new Vector2(x, y)), x, y);
+				Globals.getWorld().getChunks().set(new Chunk(data, new Vector2(x, y)), x, y);
 				Log.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
@@ -101,7 +101,7 @@ public class ChunkIO {
 			}
 		}
 
-		Chunk chunk = Globals.world.chunks.get(x, y);
+		Chunk chunk = Globals.getWorld().getChunks().get(x, y);
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
@@ -130,6 +130,6 @@ public class ChunkIO {
 	}
 
 	private static String getSaveName(int x, int y) {
-		return "data/worlds/" + Globals.world.getName() + "/" + x + ":" + y + ".cnk";
+		return "data/worlds/" + Globals.getWorld().getName() + "/" + x + ":" + y + ".cnk";
 	}
 }

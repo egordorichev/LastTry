@@ -8,51 +8,52 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModLoader {
     /**
-     * HashMap of loaded mops.
-     * Key - String, Mod name.
-     * Value - Mod, Mod object.
+     * Map of loaded mods.
+     * <hr>
+     * Key - String, Mod name.<br>
+     * Value - Mod, Mod object.<br>
      */
-    private HashMap<String, Mod> modHashMap = new HashMap<>();
+    private Map<String, Mod> modMap = new HashMap<>();
 
     /** Lookups and loads all mods from "mods" directory */
     public void load() {
-		File modDirectory = new File("data/mods/");
+        File modDirectory = new File("data/mods/");
 
-		if (!modDirectory.mkdir()) {
-			try {
-				modDirectory.createNewFile();
-			} catch (Exception exception) {
-				Crash.report(Thread.currentThread(), exception);
-			}
-		} else {
-			Log.info("There's no mods directory so one will be created!");
-		}
+        if (!modDirectory.mkdir()) {
+            try {
+                modDirectory.mkdirs();
+            } catch (Exception exception) {
+                Crash.report(Thread.currentThread(), exception);
+            }
+        } else {
+            Log.info("There's no mods directory so one will be created!");
+        }
 
-		File[] mods = modDirectory.listFiles();
-
-        for (int i = 0; i < mods.length; i++) {
-            if (!mods[i].getName().endsWith(".jar")) {
+        File[] mods = modDirectory.listFiles();
+        for (File file : modDirectory.listFiles()) {
+            if (!file.getName().endsWith(".jar")) {
                 continue;
             }
 
-            this.loadMod(mods[i]);
+            this.loadMod(file);
         }
     }
 
     /**
-     * Loads single mod
-     * @param file mod file
+     * Loads single mod from the given file.
+     * 
+     * @param file
+     *            Mod to load.
      */
     private void loadMod(File file) {
         try (JarFile jarFile = new JarFile(file)) {
-            URL[] urls = new URL[]{
-            		new URL("jar:file:" + file.getAbsolutePath() + "!/")
-            };
+            URL[] urls = new URL[] { new URL("jar:file:" + file.getAbsolutePath() + "!/") };
 
             URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
             Enumeration<JarEntry> enumeration = jarFile.entries();
@@ -73,29 +74,30 @@ public class ModLoader {
                     Mod mod = (Mod) aClass.newInstance();
                     mod.onLoad();
 
-                    this.modHashMap.put(mod.getName(), mod);
+                    this.modMap.put(mod.getName(), mod);
                 }
             }
         } catch (Exception exception) {
             LastTry.handleException(exception);
-	        Log.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
+            Log.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
         }
     }
 
     /** Unloads all mods */
     public void unload() {
-        this.modHashMap.entrySet().forEach(modHashMapKey -> {
-        	modHashMap.get(modHashMapKey).onUnload();
+        this.modMap.entrySet().forEach(modHashMapKey -> {
+            modMap.get(modHashMapKey).onUnload();
         });
 
-        this.modHashMap.clear();
+        this.modMap.clear();
     }
 
     /**
-     * @param name mod name to lookup
+     * @param name
+     *            mod name to lookup
      * @return mod with given name, or null, if it is not found
      */
     public Mod getMod(final String name) {
-        return modHashMap.get(name);
+        return modMap.get(name);
     }
 }

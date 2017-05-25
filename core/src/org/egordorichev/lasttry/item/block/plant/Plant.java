@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
@@ -42,7 +42,7 @@ public class Plant extends Block {
 			}
 		}
 
-		Globals.world.blocks.set(ItemID.none, x, y);
+		Globals.getWorld().setBlock(ItemID.none, x, y);
 	}
 
 	public static boolean isBlooming(int x, int y) {
@@ -55,7 +55,7 @@ public class Plant extends Block {
 	}
 
 	protected static byte getGrowLevel(int x, int y) {
-		byte hp = Globals.world.blocks.getHP(x, y);
+		byte hp = Globals.getWorld().getBlockHP(x, y);
 
 		return (byte) (ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2
 			+ ByteHelper.getBitValue(hp, (byte) 4) * 4 + ByteHelper.getBitValue(hp, (byte) 5) * 8
@@ -63,7 +63,7 @@ public class Plant extends Block {
 	}
 
 	protected static void setGrowLevel(byte level, int x, int y) {
-		byte hp = Globals.world.blocks.getHP(x, y);
+		byte hp = Globals.getWorld().getBlockHP(x, y);
 
 		hp = ByteHelper.setBit(hp, (byte) 2, ByteHelper.bitIsSet(level, (byte) 0));
 		hp = ByteHelper.setBit(hp, (byte) 3, ByteHelper.bitIsSet(level, (byte) 1));
@@ -71,7 +71,7 @@ public class Plant extends Block {
 		hp = ByteHelper.setBit(hp, (byte) 5, ByteHelper.bitIsSet(level, (byte) 3));
 		hp = ByteHelper.setBit(hp, (byte) 6, ByteHelper.bitIsSet(level, (byte) 4));
 
-		Globals.world.blocks.setHP(hp, x, y);
+		Globals.getWorld().setBlockHP(hp, x, y);
     }
 
 	public static short getSeedsFor(short id) {
@@ -111,7 +111,7 @@ public class Plant extends Block {
     }
 
     public boolean canBeGrownAt(int x, int y) {
-        short id = Globals.world.blocks.getID(x, y);
+        short id = Globals.getWorld().getBlockID(x, y);
 
         if (id != ItemID.none) {
             return false;

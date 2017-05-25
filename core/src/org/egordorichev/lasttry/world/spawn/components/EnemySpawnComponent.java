@@ -35,11 +35,11 @@ public class EnemySpawnComponent {
         return false;
     }
 
-    public static int calcSpawnWeightOfActiveEnemies(final ArrayList<Enemy> enemiesInActiveArea) {
+    public static int calcSpawnWeightOfActiveEnemies(final List<Enemy> enemiesInActiveArea) {
         return enemiesInActiveArea.stream().mapToInt(enemy->enemy.getSpawnWeight()).sum();
     }
 
-    public static Enemy retrieveRandomEnemy(ArrayList<Enemy> eligibleEnemiesForSpawning) {
+    public static Enemy retrieveRandomEnemy(List<Enemy> eligibleEnemiesForSpawning) {
         int randomIndex = LastTry.random.nextInt(eligibleEnemiesForSpawning.size());
         return eligibleEnemiesForSpawning.get(randomIndex);
     }

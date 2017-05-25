@@ -63,11 +63,11 @@ public class GridComponent {
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         circleAreaComponent.setMinYActiveAreaGridPoint(Math.max(0, tcy - 2));
-        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.world.getHeight() - 1, tcy + twh + 3));
+        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.getWorld().getHeight() - 1, tcy + twh + 3));
 
         // Checking to make y values is not less than 0
         circleAreaComponent.setMinXActiveAreaGridPoint(Math.max(0, tcx - 2));
-        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(Globals.world.getWidth() - 1, tcx + tww + 2));
+        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(Globals.getWorld().getWidth() - 1, tcx + tww + 2));
 
         // Active zone is 6 greater
         // TODO Must check that it is not out of bou

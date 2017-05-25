@@ -14,26 +14,26 @@ public class Log {
     private static boolean enabled;
 
     public synchronized static void debug(String message) {
-        printMessage(ANSI_GREEN + "DEBUG", message);
+        printMessage(fmt(ANSI_GREEN) + "DEBUG", message);
     }
 
     public synchronized static void warn(String message) {
-        printMessage(ANSI_PURPLE + "WARN", message);
+        printMessage(fmt(ANSI_PURPLE) + "WARN", message);
     }
 
     public synchronized static void error(String message) {
-        printMessage(ANSI_RED + "ERROR", message);
+        printMessage(fmt(ANSI_RED) + "ERROR", message);
     }
 
     public synchronized static void info(String message) {
-        printMessage(ANSI_BLUE + "INFO", message);
+        printMessage(fmt(ANSI_BLUE) + "INFO", message);
     }
 
     private synchronized static void printMessage(String start, String message) {
         System.out.print(start + " ");
         printPath(Thread.currentThread().getStackTrace());
 		System.out.print(":" + Thread.currentThread().getStackTrace()[3].getLineNumber());
-        System.out.println(" " + message + ANSI_RESET);
+        System.out.println(" " + message + fmt(ANSI_RESET));
         System.out.flush();
     }
 
@@ -51,5 +51,9 @@ public class Log {
 
     public static boolean isEnabled() {
         return enabled;
+    }
+    
+    private static String fmt(String color){
+        return Util.isWindows() ? "" : color;
     }
 }

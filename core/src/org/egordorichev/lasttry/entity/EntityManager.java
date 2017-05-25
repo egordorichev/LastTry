@@ -28,7 +28,7 @@ public class EntityManager {
 	// private List<Gore> gores = new ArrayList<>(); : TODO
 
 	public EntityManager() {
-		Util.runInThread(new Callable() {
+		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
 				attemptDespawnEnemies();
@@ -91,7 +91,7 @@ public class EntityManager {
 			for (int j = -1; j <= 1; j++) {
 				int x1 = tileX + k;
 				int y1 = tileY + j;
-				if (Globals.world.blocks.get(x1, y1) == null) {
+				if (Globals.getWorld().getBlock(x1, y1) == null) {
 					popVelocity.add(k * power, j * power);
 				}
 			}
