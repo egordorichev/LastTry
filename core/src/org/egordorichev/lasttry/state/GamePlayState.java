@@ -24,8 +24,8 @@ public class GamePlayState implements State {
 	public GamePlayState() {
 		this.hpTextureRegion = Assets.getTexture(Textures.hp);
 
-		int spawnX = Globals.world.getWidth() / 2 * Block.SIZE;
-		int spawnY = (Globals.world.getHeight() - 10) * Block.SIZE;
+		int spawnX = Globals.getWorld().getWidth() / 2 * Block.SIZE;
+		int spawnY = (Globals.getWorld().getHeight() - 10) * Block.SIZE;
 
 		Globals.entityManager = new EntityManager();
 		Globals.entityManager.spawn(Globals.player, spawnX, spawnY);
@@ -58,6 +58,7 @@ public class GamePlayState implements State {
 		if (!paused) {
 			Globals.environment.update((int) delta);
 			Globals.entityManager.update((int) delta);
+			Globals.getWorld().updateLight((int) delta);
 
 			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
 				LastTry.debug.toggle();
@@ -78,8 +79,9 @@ public class GamePlayState implements State {
 		Camera.game.update();
 		Graphics.batch.setProjectionMatrix(Camera.game.combined);
 
-		Globals.world.render();
+		Globals.getWorld().render();
 		Globals.entityManager.render();
+        Globals.getWorld().renderLights();
 
 		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
 

@@ -57,7 +57,7 @@ public class WorldIO {
 			Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
-			Globals.world = new World(name, size, flags, seed);
+			Globals.setWorld(new World(name, size, flags, seed));
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -83,26 +83,26 @@ public class WorldIO {
 	}
 
 	public static void save() {
-		String fileName = getSaveName(Globals.world.getName());
+		String fileName = getSaveName(Globals.getWorld().getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
-				Log.error("Failed to create save file for the world " + Globals.world.getName() + "!");
+				Log.error("Failed to create save file for the world " + Globals.getWorld().getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving world " + Globals.world.getName() + "...");
+		Log.debug("Saving world " + Globals.getWorld().getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
 			stream.writeInt32(VERSION);
-			stream.writeInt32(Globals.world.getSeed());
+			stream.writeInt32(Globals.getWorld().getSeed());
 
-			switch (Globals.world.getSize()) {
+			switch (Globals.getWorld().getSize()) {
 			case SMALL:
 				stream.writeByte((byte) 0);
 				break;
@@ -116,21 +116,21 @@ public class WorldIO {
 				break;
 			}
 
-			stream.writeBoolean(Globals.world.flags.isHardmode());
-			stream.writeBoolean(Globals.world.flags.isExpertMode());
-			stream.writeBoolean(Globals.world.flags.evilIsCrimson());
+			stream.writeBoolean(Globals.getWorld().getFlags().isHardmode());
+			stream.writeBoolean(Globals.getWorld().getFlags().isExpertMode());
+			stream.writeBoolean(Globals.getWorld().getFlags().evilIsCrimson());
 
 			stream.writeByte(Globals.environment.time.getHour());
 			stream.writeByte(Globals.environment.time.getMinute());
 
 			stream.close();
 
-			Globals.world.chunks.save();
+			Globals.getWorld().getChunks().save();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving world " + Globals.world.getName() + "!");
+		Log.debug("Done saving world " + Globals.getWorld().getName() + "!");
 	}
 
 	public static boolean saveExists(String name) {

@@ -12,11 +12,12 @@ public class WorldGenerator {
 
 	public WorldGenerator(String name, World.Size size, int flags, int seed) {
 		this.world = new World(name, size, flags, seed);
-		Globals.world = this.world;
+		Globals.setWorld(this.world);
 		this.tasks.add(new TaskTerrainGen());
 		this.tasks.add(new TaskCaveGenSimplex());
 		//this.tasks.add(new TaskBiomeTestGen());
 		//this.tasks.add(new TaskFoilageGen());
+	    //this.tasks.add(new TaskLightGen());
 	}
 
 	public void addTask(GeneratorTask task) {
@@ -46,7 +47,7 @@ public class WorldGenerator {
 
     public int getHighest(int x) {
         for (int y = getWorldHeight(); y > 0; y--){
-            if (this.world.blocks.getID(x, y) != ItemID.none){
+            if (this.world.getBlockID(x, y) != ItemID.none){
                 return y;
             }
         }

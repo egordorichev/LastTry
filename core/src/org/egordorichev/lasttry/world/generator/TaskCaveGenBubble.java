@@ -20,17 +20,17 @@ public class TaskCaveGenBubble extends GeneratorTask {
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
-                if (generator.world.blocks.getID(x, y) != ItemID.dirtBlock) {
+                if (generator.world.getBlockID(x, y) != ItemID.dirtBlock) {
                     continue;
                 }
 
                 if (!solidMap[x][y]) {
-                    generator.world.blocks.set(ItemID.none, x, y);
+                    generator.world.setBlock(ItemID.none, x, y);
                 } else {
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
 
                     if (neighbors != 8) {
-                        generator.world.blocks.set(ItemID.grassBlock, x, y);
+                        generator.world.setBlock(ItemID.grassBlock, x, y);
                     }
                 }
             }

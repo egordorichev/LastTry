@@ -23,7 +23,7 @@ public class Globals {
     /**
      * The current world.
      */
-    public static World world;
+    private static World world;
     /**
      * The player instance.
      */
@@ -31,7 +31,6 @@ public class Globals {
     public static Environment environment;
     public static SpawnSystem spawnSystem;
     public static Vector2 resolution;
-
     /**
      * The entity manager. Handles rendering, updating, item-dropping, etc. of
      * all loaded entities.
@@ -51,12 +50,15 @@ public class Globals {
      */
     private static UiScreen currentScreen;
 
+    /**
+     * Clean up and save player and world data.
+     */
     public static void dispose() {
         if (player != null) {
             PlayerIO.save();
         }
 
-        if (world != null) {
+        if (getWorld() != null) {
             WorldIO.save();
         }
     }
@@ -91,5 +93,16 @@ public class Globals {
         }
         // Set the next screen
         Globals.currentScreen = newScreen;
+    }
+
+    public static World getWorld() {
+        return world;
+    }
+
+    public static void setWorld(World world) {
+        Globals.world = world;
+        // TODO: While not a normal vanilla feature of Terraria, I think having
+        // multiple dimensions would be cool.
+        // Kinda like the Minecraft Mystcraft mod.
     }
 }

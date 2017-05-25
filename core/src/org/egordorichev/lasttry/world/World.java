@@ -2,153 +2,293 @@ package org.egordorichev.lasttry.world;
 
 import java.util.Random;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.chunk.Chunk;
-import org.egordorichev.lasttry.world.components.WorldBlocksComponent;
-import org.egordorichev.lasttry.world.components.WorldChunksComponent;
-import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
-import org.egordorichev.lasttry.world.components.WorldWallsComponent;
+import org.egordorichev.lasttry.world.components.*;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class World {
-	public static final int UPDATE_DELAY = 1;
+    public static final int UPDATE_DELAY = 1;
 
-	public final WorldFlagsComponent flags;
-	public final WorldChunksComponent chunks;
-	public final WorldBlocksComponent blocks;
-	public final WorldWallsComponent walls;
-	/**
-	 * Random instance, used for terrain generation. Since it's associated with
-	 * the world seed, it will provide the same results every time if the seed
-	 * is the same.
-	 */
-	public final Random random;
+    private final WorldFlagsComponent flags;
+    private final WorldChunksComponent chunks;
+    private final WorldBlocksComponent blocks;
+    private final WorldWallsComponent walls;
+    private final WorldLightingComponent light;
+    /**
+     * Random instance, used for terrain generation. Since it's associated with
+     * the world seed, it will provide the same results every time if the seed
+     * is the same.
+     */
+    public final Random random;
+    /**
+     * World size.
+     */
+    private final Size size;
+    /**
+     * World name.
+     */
+    private final String name;
+    /**
+     * World seed, used for terrain generation.
+     */
+    private final int seed;
+    /**
+     * Boolean flag for if light needs to be recalculated near the player.
+     */
+    private boolean lightDirty;
 
-	private final Size size;
-	private final String name;
-	private final int seed;
+    public World(String name, Size size, int flags, int seed) {
+        this.size = size;
+        this.name = name;
+        this.seed = seed;
+        this.random = new Random(seed);
+        this.chunks = new WorldChunksComponent(this);
+        this.flags = new WorldFlagsComponent(this, flags);
+        this.blocks = new WorldBlocksComponent(this);
+        this.walls = new WorldWallsComponent(this);
+        this.light = new WorldLightingComponent(this);
 
-	public World(String name, Size size, int flags, int seed) {
-		this.size = size;
-		this.name = name;
-		this.seed = seed;
-		this.random = new Random(seed);
-		this.chunks = new WorldChunksComponent(this);
-		this.flags = new WorldFlagsComponent(this, flags);
-		this.blocks = new WorldBlocksComponent(this);
-		this.walls = new WorldWallsComponent(this);
+        Util.runDelayedThreadSeconds(new Callable() {
+            @Override
+            public void call() {
+                update();
+            }
+        }, UPDATE_DELAY);
+    }
 
-		Util.runInThread(new Callable() {
-			@Override
-			public void call() {
-				update();
-			}
-		}, UPDATE_DELAY);
-	}
+    public void renderLights() {
+        this.light.render();
+    }
 
-	public void render() {
-		this.chunks.render();
-	}
+    public void render() {
+        this.getChunks().render();
+    }
 
-	public void update() {
-		this.chunks.update();
-	}
+    public void updateLight(int dt) {
+        if (lightDirty) {
+            this.light.update(dt);
+            lightDirty = false;
+        }
+    }
 
-	public short getWidth() {
-		return this.size.getWidth();
-	}
+    /**
+     * Create the light map for the entire world.
+     */
+    public void initLights() {
+        this.light.init();
+    }
 
-	public short getHeight() {
-		return this.size.getHeight();
-	}
+    /**
+     * Called when a block is broken.
+     * 
+     * @param x
+     * @param y
+     */
+    public void onBlockBreak(int x, int y) {
+        // update lighting
+        if (closeToPlayer(x, y)) {
+            lightDirty = true;
+        }
+    }
 
-	public Size getSize() {
-		return this.size;
-	}
+    /**
+     * Called when a wall is broken.
+     * 
+     * @param x
+     * @param y
+     */
+    public void onWallBreak(int x, int y) {
+        // update lighting
+        if (closeToPlayer(x, y)) {
+            lightDirty = true;
+        }
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    /**
+     * Boolean checking of the given coordinates are near the player. Used
+     * primarily if checking if lighting should be re-calculated from a block
+     * modification event.
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    private boolean closeToPlayer(int x, int y) {
+        return Globals.player.physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
+    }
 
-	public int getSeed() {
-		return seed;
-	}
+    public void update() {
+        this.getChunks().update();
+    }
+    
+    public WorldChunksComponent getChunks() {
+        return chunks;
+    }
 
-	// GridPoints
-	public boolean isInside(int x, int y) {
-		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
-	}
+    public WorldFlagsComponent getFlags() {
+        return flags;
+    }
 
-	public boolean isColliding(Rectangle bounds) {
-		Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
-		gridBounds.x /= Block.SIZE;
-		gridBounds.y /= Block.SIZE;
-		gridBounds.width /= Block.SIZE;
-		gridBounds.height /= Block.SIZE;
+    public short getWidth() {
+        return this.size.getWidth();
+    }
 
-		for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
-			for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
-				if (!this.isInside(x, y)) {
-					return true;
-				}
+    public short getHeight() {
+        return this.size.getHeight();
+    }
 
-				Block block = (Block) Item.fromID(this.blocks.getID(x, y));
+    public Size getSize() {
+        return this.size;
+    }
 
-				if (block == null || !block.isSolid()) {
-					continue;
-				}
+    public String getName() {
+        return this.name;
+    }
 
-				Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE);
+    public int getSeed() {
+        return seed;
+    }
 
-				if (blockRect.intersects(bounds)) {
-					return true;
-				}
-			}
-		}
+    public Block getBlock(int x, int y) {
+        return blocks.get(x, y);
+    }
 
-		return false;
-	}
+    public short getBlockID(int x, int y) {
+        return blocks.getID(x, y);
+    }
 
-	public enum Size {
-		SMALL("Small", 4096, 1024), // Small contains 64 chunks
-		MEDIUM("Medium", 6144, 2048), // Medium contains 192 chunks
-		LARGE("Large", 8192, 2304), // Large contains 288 chunks
-		DEVEXTRALARGE("Dev: Extra Large", 16384, 4608); // Dev Extra Large
-														// contains 1152 chunks
+    public void setBlock(short id, int x, int y) {
+        blocks.set(id, x, y);
+        // update lighting
+        if (closeToPlayer(x, y)) {
+            lightDirty = true;
+        }
+    }
 
-		private String name;
-		private short width;
-		private short height;
-		private short maxChunks;
+    public byte getBlockHP(int x, int y) {
+        return blocks.getHP(x, y);
+    }
 
-		Size(String name, int width, int height) {
-			this.name = name;
-			this.width = (short) width;
-			this.height = (short) height;
-			this.maxChunks = (short) maxChunks;
-		}
+    public void setBlockHP(byte hp, int x, int y) {
+        blocks.setHP(hp, x, y);
+    }
 
-		@Override
-		public String toString() {
-			return this.name;
-		}
+    public byte getLight(int x, int y) {
+        return blocks.getLight(x, y);
+    }
 
-		public short getWidth() {
-			return this.width;
-		}
+    public void setLight(int x, int y, byte light) {
+        blocks.setLight(x, y, light);
+    }
 
-		public short getHeight() {
-			return this.height;
-		}
+    public Wall getWall(int x, int y) {
+        return walls.get(x, y);
+    }
 
-		public short getMaxChunks() {
+    public short getWallID(int x, int y) {
+        return walls.getID(x, y);
+    }
 
-			int maxChunks = (width / Chunk.SIZE) * (short) (height / Chunk.SIZE);
+    public byte getWallHP(int x, int y) {
+        return walls.getHP(x, y);
+    }
 
-			return (short) maxChunks;
-		}
-	}
+    public void setWallHP(byte hp, int x, int y) {
+        walls.setHP(hp, x, y);
+    }
+
+    public void setWall(short id, int x, int y) {
+        walls.set(id, x, y);
+        // update lighting
+        if (closeToPlayer(x, y)) {
+            lightDirty = true;
+        }
+    }
+
+    // GridPoints
+    public boolean isInside(int x, int y) {
+        return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
+    }
+
+    public boolean isColliding(Rectangle bounds) {
+        Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
+        gridBounds.x /= Block.SIZE;
+        gridBounds.y /= Block.SIZE;
+        gridBounds.width /= Block.SIZE;
+        gridBounds.height /= Block.SIZE;
+
+        for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
+            for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
+                if (!this.isInside(x, y)) {
+                    return true;
+                }
+
+                Block block = (Block) Item.fromID(this.blocks.getID(x, y));
+
+                if (block == null || !block.isSolid()) {
+                    continue;
+                }
+
+                Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE);
+
+                if (blockRect.intersects(bounds)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+  
+
+    public enum Size {
+        SMALL("Small", 4096, 1024), // Small contains 64 chunks
+        MEDIUM("Medium", 6144, 2048), // Medium contains 192 chunks
+        LARGE("Large", 8192, 2304), // Large contains 288 chunks
+        DEVEXTRALARGE("Dev: Extra Large", 16384, 4608); // Dev Extra Large
+                                                        // contains 1152 chunks
+
+        private String name;
+        private short width;
+        private short height;
+        private short maxChunks;
+
+        Size(String name, int width, int height) {
+            this.name = name;
+            this.width = (short) width;
+            this.height = (short) height;
+            this.maxChunks = (short) maxChunks;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+        public short getWidth() {
+            return this.width;
+        }
+
+        public short getHeight() {
+            return this.height;
+        }
+
+        public short getMaxChunks() {
+
+            int maxChunks = (width / Chunk.SIZE) * (short) (height / Chunk.SIZE);
+
+            return (short) maxChunks;
+        }
+    }
+
 }

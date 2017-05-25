@@ -30,7 +30,7 @@ public class Environment {
 		this.blockCount = new int[ItemID.count];
 		this.time = new WorldTime((byte) 8, (byte) 15);
 
-		Util.runInThread(new Callable() {
+		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
 				updateBiome();
@@ -57,7 +57,7 @@ public class Environment {
 	}
 
 	public void update(int dt) {
-		if (Globals.world == null) {
+		if (Globals.getWorld() == null) {
 			return;
 		}
 
@@ -116,7 +116,7 @@ public class Environment {
 	}
 
 	private void updateBiome() {
-		if (Globals.world == null) {
+		if (Globals.getWorld() == null) {
 			return;
 		}
 
@@ -128,15 +128,15 @@ public class Environment {
 		int tcy = (int) ((Camera.game.position.y - windowHeight / 2) / Block.SIZE);
 
 		int minY = Math.max(0, tcy - 2);
-		int maxY = Math.min(Globals.world.getHeight() - 1, tcy + twh + 3);
+		int maxY = Math.min(Globals.getWorld().getHeight() - 1, tcy + twh + 3);
 		int minX = Math.max(0, tcx - 2);
-		int maxX = Math.min(Globals.world.getWidth() - 1, tcx + tww + 2);
+		int maxX = Math.min(Globals.getWorld().getWidth() - 1, tcx + tww + 2);
 
 		Arrays.fill(this.blockCount, 0);
 
 		for (int y = minY; y < maxY; y++) {
 			for (int x = minX; x < maxX; x++) {
-				this.blockCount[Globals.world.blocks.getID(x, y)] += 1;
+				this.blockCount[Globals.getWorld().getBlockID(x, y)] += 1;
 			}
 		}
 

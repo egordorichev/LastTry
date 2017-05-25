@@ -16,7 +16,7 @@ public class FireBlossom extends Plant {
 			return false;
 		}
 
-		short id = Globals.world.blocks.getID(x, y + 1);
+		short id = Globals.getWorld().getBlockID(x, y + 1);
 
 		if (id == ItemID.ashBlock) {
 			return true;

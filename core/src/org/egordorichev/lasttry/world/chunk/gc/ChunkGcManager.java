@@ -46,7 +46,7 @@ public class ChunkGcManager {
     }
 
     public synchronized int getCurrentlyLoadedChunks() {
-    	return Globals.world.chunks.getImmutableLoadedChunks().size();
+    	return Globals.getWorld().getChunks().getImmutableLoadedChunks().size();
     }
 
     public synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
@@ -64,7 +64,7 @@ public class ChunkGcManager {
                 Log.debug("Chunk GC thread has started, time limit has expired");
 
                     //On wakeup, we run a chunk gc immediately based on a ChunkGC level we receive based on the current loaded chunks level
-                    ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getImmutableLoadedChunks().size());
+                    ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.getWorld().getChunks().getImmutableLoadedChunks().size());
 
                     ChunkGc chunkGcThread = new ChunkGc(chunkGCLevelForCurrentGc);
                     chunkGcThread.onWakeUp();
@@ -82,7 +82,7 @@ public class ChunkGcManager {
                 Log.debug("Chunk GC thread has started, time limit has expired");
 
                 //On wakeup, we run a chunk gc immediately based on a ChunkGC level we receive based on the current loaded chunks level
-                ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.world.chunks.getImmutableLoadedChunks().size());
+                ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc.calcGcLevel(Globals.getWorld().getChunks().getImmutableLoadedChunks().size());
 
                 ChunkGc chunkGcThread = new ChunkGc(chunkGCLevelForCurrentGc);
                 chunkGcThread.onWakeUp();

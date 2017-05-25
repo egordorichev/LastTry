@@ -32,15 +32,16 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 
 	public void die(int x, int y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.getWorld().onWallBreak(x, y);
 	}
 
 	public void renderWall(int x, int y) {
-		boolean t = Globals.world.walls.getID(x, y + 1) == this.id;
-		boolean r = Globals.world.walls.getID(x + 1, y) == this.id;
-		boolean b = Globals.world.walls.getID(x, y - 1) == this.id;
-		boolean l = Globals.world.walls.getID(x - 1, y) == this.id;
+		boolean t = Globals.getWorld().getWallID(x, y + 1) == this.id;
+		boolean r = Globals.getWorld().getWallID(x + 1, y) == this.id;
+		boolean b = Globals.getWorld().getWallID(x, y - 1) == this.id;
+		boolean l = Globals.getWorld().getWallID(x - 1, y) == this.id;
 
-		byte hp = Globals.world.walls.getHP(x, y);
+		byte hp = Globals.getWorld().getWallHP(x, y);
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 		int binary = Block.calculateBinary(t, r, b, l);
 
@@ -58,7 +59,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.world.walls.getID(x, y) == ItemID.none) {
+		if (this.canBePlaced(x, y) && Globals.getWorld().getWallID(x, y) == ItemID.none) {
 			this.place(x, y);
 
 			return true;
@@ -77,7 +78,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 	}
 
 	public void place(int x, int y) {
-		Globals.world.walls.set(this.id, x, y);
+		Globals.getWorld().setWall(this.id, x, y);
 	}
 
 	public boolean canBePlaced(int x, int y) {
@@ -90,13 +91,13 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 			return false;
 		}
 
-		Wall t = Globals.world.walls.get(x, y + 1);
-		Wall b = Globals.world.walls.get(x, y - 1);
-		Wall l = Globals.world.walls.get(x + 1, y);
-		Wall r = Globals.world.walls.get(x - 1, y);
+		Wall t = Globals.getWorld().getWall(x, y + 1);
+		Wall b = Globals.getWorld().getWall(x, y - 1);
+		Wall l = Globals.getWorld().getWall(x + 1, y);
+		Wall r = Globals.getWorld().getWall(x - 1, y);
 
 		if (t == null && b == null && r == null && l == null) {
-			Block block = Globals.world.blocks.get(x, y);
+			Block block = Globals.getWorld().getBlock(x, y);
 
 			if (block == null) {
 				return false;

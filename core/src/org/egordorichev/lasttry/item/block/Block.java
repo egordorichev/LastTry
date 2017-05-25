@@ -73,6 +73,7 @@ public class Block extends Item {
 
 	public void die(int x, int y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.getWorld().onBlockBreak(x,y);
 	}
 
 	public boolean canBePlaced(int x, int y) {
@@ -85,15 +86,15 @@ public class Block extends Item {
 			return false;
 		}
 
-		Block t = Globals.world.blocks.get(x, y + 1);
-		Block b = Globals.world.blocks.get(x, y - 1);
-		Block l = Globals.world.blocks.get(x + 1, y);
-		Block r = Globals.world.blocks.get(x - 1, y);
+		Block t = Globals.getWorld().getBlock(x, y + 1);
+		Block b = Globals.getWorld().getBlock(x, y - 1);
+		Block l = Globals.getWorld().getBlock(x + 1, y);
+		Block r = Globals.getWorld().getBlock(x - 1, y);
 
 		if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
 				(r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
 
-			Wall wall = Globals.world.walls.get(x, y);
+			Wall wall = Globals.getWorld().getWall(x, y);
 
 			if (wall == null) {
 				return false;
@@ -104,19 +105,19 @@ public class Block extends Item {
 	}
 
 	public void place(int x, int y) {
-		Globals.world.blocks.set(this.id, x, y);
+		Globals.getWorld().setBlock(this.id, x, y);
 	}
 
 	public byte calculateBinary(int x, int y) {
-		boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
-		boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
-		boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
-		boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
+		boolean t = Globals.getWorld().getBlockID(x, y + 1) == this.id;
+		boolean r = Globals.getWorld().getBlockID(x + 1, y) == this.id;
+		boolean b = Globals.getWorld().getBlockID(x, y - 1) == this.id;
+		boolean l = Globals.getWorld().getBlockID(x - 1, y) == this.id;
 		return Block.calculateBinary(t, r, b, l);
 	}
 
 	public void renderBlock(int x, int y, byte binary) {
-		byte hp = Globals.world.blocks.getHP(x, y);
+		byte hp = Globals.getWorld().getBlockHP(x, y);
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
@@ -137,7 +138,7 @@ public class Block extends Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.world.blocks.getID(x, y) == ItemID.none) {
+		if (this.canBePlaced(x, y) && Globals.getWorld().getBlockID(x, y) == ItemID.none) {
 			Rectangle rectangle = Globals.player.physics.getHitbox();
 
 			if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,

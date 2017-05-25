@@ -73,10 +73,10 @@ public class PhysicsComponent extends EntityComponent {
 			if (!this.solid) {
 				this.position.x += this.velocity.x;
 			} else {
-				if (Globals.world.isColliding(newHitbox)) {
+				if (Globals.getWorld().isColliding(newHitbox)) {
 					float step = Block.SIZE * STEP_HEIGHT;
 
-					if (Globals.world.isColliding(newHitbox.offset(0, step))) {
+					if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
 						this.velocity.x = 0;
 						this.onBlockCollide();
 					} else {
@@ -103,7 +103,7 @@ public class PhysicsComponent extends EntityComponent {
 
 			newHitbox.y += this.velocity.y;
 
-			if (!this.solid || !Globals.world.isColliding(newHitbox)) {
+			if (!this.solid || !Globals.getWorld().isColliding(newHitbox)) {
 				this.position.y += this.velocity.y;
 			} else {
 				this.velocity.y = 0;
@@ -153,6 +153,10 @@ public class PhysicsComponent extends EntityComponent {
 
 	public int getGridY() {
 		return (int) this.position.y / Block.SIZE;
+	}
+	
+	public Vector2 getGridPosition(){
+	    return new Vector2(getGridX(), getGridY());
 	}
 
 	public float getX() {

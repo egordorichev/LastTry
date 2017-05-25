@@ -221,6 +221,13 @@ Dangersense
   orig: 32, 32
   offset: 0, 0
   index: -1
+Darkness
+  rotate: false
+  xy: 1032, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1 
 DayBloom
   rotate: false
   xy: 168, 33

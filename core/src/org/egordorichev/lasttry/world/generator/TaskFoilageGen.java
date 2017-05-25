@@ -10,13 +10,13 @@ public class TaskFoilageGen extends GeneratorTask {
         // Small plants
         for (int x = 0; x < generator.getWorldWidth(); x += generator.world.random.nextInt(5)) {
             int y = generator.getHighest(x);
-            generator.world.blocks.set(ItemID.ashBlock, x, y);
+            generator.world.setBlock(ItemID.ashBlock, x, y);
         }
 
         // Larger plants
         for (int x = 0; x < generator.getWorldWidth(); x += generator.world.random.nextInt(10)) {
             int y = generator.getHighest(x);
-            generator.world.blocks.set(ItemID.crimstoneBlock, x, y);
+            generator.world.setBlock(ItemID.crimstoneBlock, x, y);
         }
     }
 

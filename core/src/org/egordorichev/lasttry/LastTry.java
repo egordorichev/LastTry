@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.graphics.*;
-import org.egordorichev.lasttry.graphics.lighting.Lighting;
+import org.egordorichev.lasttry.graphics.lighting.ShaderLighting;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
@@ -62,7 +62,7 @@ public class LastTry extends Game {
 
         Camera.create(width, height);
         Language.load(new Locale("en", "US"));
-        Lighting.init(width, height);
+        ShaderLighting.init(width, height);
 
         Gdx.input.setInputProcessor(InputManager.multiplexer);
         Gdx.graphics.setTitle(this.getRandomWindowTitle());
@@ -87,7 +87,9 @@ public class LastTry extends Game {
     public void resize(int width, int height) {
         super.resize(width, height);
         Camera.resize(width, height);
-        Lighting.init(width, height);
+        ShaderLighting.init(width, height);
+        Globals.resolution.x = width;
+        Globals.resolution.y = height;
     }
 
     /** Renders and updates the game */
@@ -103,7 +105,7 @@ public class LastTry extends Game {
 
         Graphics.batch.end();
 
-        Lighting.render();
+        ShaderLighting.render();
     }
 
     /** Handles game exit */

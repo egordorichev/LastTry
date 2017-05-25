@@ -30,7 +30,7 @@ public class MultiTileBlock extends Block {
 	public void place(int x, int y) {
 		for (int j = y; j < y + this.height; j++) {
 			for (int i = x; i < x + this.width; i++) {
-				Globals.world.blocks.set(this.id, i, j);
+				Globals.getWorld().setBlock(this.id, i, j);
 			}
 		}
 	}

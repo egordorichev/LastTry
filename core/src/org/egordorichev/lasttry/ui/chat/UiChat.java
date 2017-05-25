@@ -104,7 +104,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
                         break;
                     case "list":
                         print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
-                                + Globals.world.getSize().getMaxChunks());
+                                + Globals.getWorld().getSize().getMaxChunks());
                         break;
                     default:
                         print("/chunks [gc / list]");

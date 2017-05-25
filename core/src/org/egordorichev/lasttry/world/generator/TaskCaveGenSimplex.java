@@ -41,21 +41,21 @@ public class TaskCaveGenSimplex extends GeneratorTask {
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
                 // Skip existing air blocks
-                if (generator.world.blocks.getID(x, y) == ItemID.none) {
+                if (generator.world.getBlockID(x, y) == ItemID.none) {
                     continue;
                 }
                 // Insert caves
                 if (!solidMap[x][y]) {
-                    generator.world.blocks.set(ItemID.none, x, y);
+                    generator.world.setBlock(ItemID.none, x, y);
                 } else {
                     // For non caves, apply grass borders.
                     // Cut off any blocks with too few neighbors to prevent
                     // the some of the floating blocks.
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
                     if (neighbors <= 3) {
-                        generator.world.blocks.set(ItemID.none, x, y);
+                        generator.world.setBlock(ItemID.none, x, y);
                     } else if (neighbors != 8) {
-                        generator.world.blocks.set(ItemID.grassBlock, x, y);
+                        generator.world.setBlock(ItemID.grassBlock, x, y);
                     }
                 }
             }

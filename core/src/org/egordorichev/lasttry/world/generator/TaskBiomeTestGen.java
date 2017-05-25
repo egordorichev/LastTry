@@ -21,7 +21,7 @@ public class TaskBiomeTestGen extends GeneratorTask {
         float scale = 1f / biomeSize;
         for (int x = 0; x < generator.getWorldWidth(); x++) {
             for (int y = 0; y < generator.getWorldHeight(); y++) {
-                if (generator.world.blocks.getID(x, y) != ItemID.none) {
+                if (generator.world.getBlockID(x, y) != ItemID.none) {
                     float n1 = SimplexNoise.octavedNoise(x + tempXOffset, y + tempYOffset, octaves, roughness, scale);
                     float n2 = SimplexNoise.octavedNoise(-x + humidXOffset, -y + humidYOffset, octaves, roughness,
                             scale);
@@ -30,15 +30,15 @@ public class TaskBiomeTestGen extends GeneratorTask {
                     Biome biome = Globals.biomeMap.getClosest(temperature, humidity);
 
                     if (biome == Biome.desert) {
-                        generator.world.blocks.set(ItemID.sandBlock, x, y);
+                        generator.world.setBlock(ItemID.sandBlock, x, y);
                     } else if (biome == Biome.forest) {
-                        generator.world.blocks.set(ItemID.grassBlock, x, y);
+                        generator.world.setBlock(ItemID.grassBlock, x, y);
                     } else if (biome == Biome.crimson) {
-                        generator.world.blocks.set(ItemID.crimstoneBlock, x, y);
+                        generator.world.setBlock(ItemID.crimstoneBlock, x, y);
                     } else if (biome == Biome.crimsonDesert) {
-                        generator.world.blocks.set(ItemID.crimsandBlock, x, y);
+                        generator.world.setBlock(ItemID.crimsandBlock, x, y);
                     } else if (biome == Biome.corruption || biome == Biome.corruptDesert) {
-                        generator.world.blocks.set(ItemID.ashBlock, x, y);
+                        generator.world.setBlock(ItemID.ashBlock, x, y);
                     }
                 }
             }

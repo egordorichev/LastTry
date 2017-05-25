@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
+import java.awt.Rectangle;
 import java.util.*;
 
 
@@ -31,7 +32,7 @@ public class WorldChunksComponent extends WorldComponent {
 		this.size = world.getWidth() * world.getHeight();
 		this.chunks = new Chunk[this.size];
 
-		Util.runInThread(new Callable() {
+		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
 				updateLogic();
@@ -50,21 +51,10 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void render() {
-		int windowWidth = Gdx.graphics.getWidth();
-		int windowHeight = Gdx.graphics.getHeight();
-		int tww = windowWidth / Block.SIZE;
-		int twh = windowHeight / Block.SIZE;
-		int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
-		int tcy = (int) ((Camera.game.position.y - windowHeight / 2) / Block.SIZE);
-
-		int minY = Math.max(0, tcy - 2);
-		int maxY = Math.min(this.world.getHeight() - 1, tcy + twh + 3);
-		int minX = Math.max(0, tcx - 2);
-		int maxX = Math.min(this.world.getWidth() - 1, tcx + tww + 2);
-
-		for (int y = minY; y < maxY; y++) {
-			for (int x = minX; x < maxX; x++) {
-				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+        Rectangle blocksRect = Camera.getBlocksOnScreen();
+		for (int y = blocksRect.y; y < blocksRect.y  +blocksRect.height; y++) {
+			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
+				Block block = (Block) Item.fromID(this.world.getBlockID(x, y));
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);
@@ -72,7 +62,7 @@ public class WorldChunksComponent extends WorldComponent {
 					byte binary = block.calculateBinary(x, y);
 
 					if (binary != 15) {
-						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+						Wall wall = (Wall) Item.fromID(this.world.getWallID(x, y));
 
 						if (wall != null) {
 							wall.renderWall(x, y);
@@ -81,7 +71,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 				 	block.renderBlock(x, y, binary);
 				} else {
-					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+					Wall wall = (Wall) Item.fromID(this.world.getWallID(x, y));
 
 					if (wall != null) {
 						wall.renderWall(x, y);
@@ -192,8 +182,8 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void save() {
-		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {
-			for (int x = 0; x < Globals.world.getWidth() / Chunk.SIZE; x++) {
+		for (int y = 0; y < Globals.getWorld().getHeight() / Chunk.SIZE; y++) {
+			for (int x = 0; x < Globals.getWorld().getWidth() / Chunk.SIZE; x++) {
 				if (this.get(x, y) != null) {
 					ChunkIO.save(x, y);
 				}

@@ -224,11 +224,11 @@ public class EnemyInfo {
 		int defense = this.damage[0];
 		int damage = this.damage[0];
 
-		if (Globals.world.flags.isHardmode()) {
+		if (Globals.getWorld().getFlags().isHardmode()) {
 			hp = this.hp[2];
 			defense = this.defense[2];
 			damage = this.damage[2];
-		} else if (Globals.world.flags.isExpertMode()) {
+		} else if (Globals.getWorld().getFlags().isExpertMode()) {
 			hp = this.hp[1];
 			defense = this.defense[1];
 			damage = this.damage[1];

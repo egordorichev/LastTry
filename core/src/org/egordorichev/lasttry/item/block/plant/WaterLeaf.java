@@ -16,7 +16,7 @@ public class WaterLeaf extends Plant {
 			return false;
 		}
 
-		short id = Globals.world.blocks.getHP(x, y - 1);
+		short id = Globals.getWorld().getBlockHP(x, y - 1);
 
 		if (id != ItemID.sandBlock) {
 			return false;
