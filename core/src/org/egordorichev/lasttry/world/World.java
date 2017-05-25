@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world;
 import java.util.Random;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
@@ -16,7 +17,7 @@ import org.egordorichev.lasttry.world.components.*;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
-    public static final int UPDATE_DELAY = 1;
+    public static final int UPDATE_DELAY_SECONDS = 1;
 
     private final WorldFlagsComponent flags;
     private final WorldChunksComponent chunks;
@@ -62,11 +63,13 @@ public class World {
             public void call() {
                 update();
             }
-        }, UPDATE_DELAY);
+        }, UPDATE_DELAY_SECONDS);
     }
 
     public void renderLights() {
-        this.light.render();
+       if (!LastTry.noLight){
+           this.light.render();
+       }
     }
 
     public void render() {
@@ -74,7 +77,7 @@ public class World {
     }
 
     public void updateLight(int dt) {
-        if (lightDirty) {
+        if (!LastTry.noLight && lightDirty) {
             this.light.update(dt);
             lightDirty = false;
         }
@@ -84,7 +87,9 @@ public class World {
      * Create the light map for the entire world.
      */
     public void initLights() {
-        this.light.init();
+        if (!LastTry.noLight){
+            this.light.init();
+        }
     }
 
     /**
@@ -123,6 +128,9 @@ public class World {
      * @return
      */
     private boolean closeToPlayer(int x, int y) {
+        if (LastTry.noLight){
+            return false;
+        }
         return Globals.player.physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
     }
 
@@ -217,6 +225,10 @@ public class World {
     // GridPoints
     public boolean isInside(int x, int y) {
         return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
+    }
+    
+    public Vector2 updateVelocity(Vector2 pos, Vector2 vel){
+        return vel;
     }
 
     public boolean isColliding(Rectangle bounds) {
