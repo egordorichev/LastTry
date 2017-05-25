@@ -36,7 +36,7 @@ public class WorldChunksComponent extends WorldComponent {
 			public void call() {
 				updateLogic();
 			}
-		}, World.UPDATE_DELAY);
+		}, World.UPDATE_DELAY_SECONDS);
 	}
 
 	public void update() {

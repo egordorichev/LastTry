@@ -43,6 +43,9 @@ public class LastTry extends Game {
     /** Shows, if this is a release */
     public static boolean release = true;
 
+    /** Light disable */
+    public static boolean noLight;
+
     /** Screen dimensions */
     public final int width;
 

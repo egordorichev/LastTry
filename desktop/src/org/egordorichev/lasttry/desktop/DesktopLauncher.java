@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.Util;
@@ -26,7 +27,6 @@ public class DesktopLauncher {
         config.fullscreen = false;
         config.resizable = false;
         config.addIcon("Icon.png", Files.FileType.Internal);
-
         if (args.length > 0) {
             List<String> argList = Arrays.asList(args);
             if (argList.contains("-d")) {
@@ -42,6 +42,8 @@ public class DesktopLauncher {
             }
             if (argList.contains("-f")) {
                 config.fullscreen = true;
+            }if (argList.contains("-nl")) {
+                LastTry.noLight = true;
             }
         }
 
