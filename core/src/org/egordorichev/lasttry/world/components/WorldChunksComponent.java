@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.world.components;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;

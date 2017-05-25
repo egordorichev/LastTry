@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.player;
 
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.CreatureComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.input.InputManager;

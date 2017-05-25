@@ -59,7 +59,7 @@ public class Item {
      *            Entity holding the item.
      * @param dt
      */
-    public void update(InventoryOwner owner, int dt) {
+    public void update(InventoryOwner<?> owner, int dt) {
         if (this.isReady()) {
             return;
         }
@@ -86,7 +86,7 @@ public class Item {
      * @param owner
      *            Entity holding the item.
      */
-    protected void onUpdate(InventoryOwner owner) {
+    protected void onUpdate(InventoryOwner<?> owner) {
 
     }
 

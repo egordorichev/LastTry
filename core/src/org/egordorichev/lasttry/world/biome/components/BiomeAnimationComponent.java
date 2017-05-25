@@ -3,10 +3,8 @@ package org.egordorichev.lasttry.world.biome.components;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.Biome;
 
 public class BiomeAnimationComponent implements Component {

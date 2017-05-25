@@ -7,8 +7,9 @@ import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
+import org.egordorichev.lasttry.ui.UiItemSlot;
 
-public class Player extends Creature implements InventoryOwner {
+public class Player extends Creature implements InventoryOwner<UiItemSlot> {
     public static final int INVENTORY_SIZE = 88;
     private UiInventory inventory;
     private PlayerInputComponent input;
@@ -54,7 +55,8 @@ public class Player extends Creature implements InventoryOwner {
     }
 
     @Override
-    public void setInventory(Inventory inventory) {
+    public void setInventory(Inventory<UiItemSlot> inventory) {
         this.inventory = (UiInventory) inventory;
+        
     }
 }

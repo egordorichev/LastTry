@@ -143,7 +143,7 @@ public interface Inventory<Slot extends InventorySlot> {
      * 
      * @return
      */
-    InventoryOwner getOwner();
+    InventoryOwner<Slot> getOwner();
 
     /**
      * Returns the item slot at the given index.

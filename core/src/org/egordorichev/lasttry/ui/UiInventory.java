@@ -28,7 +28,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
     /**
      * The entity that owns the inventory.
      */
-    private InventoryOwner owner;
+    private InventoryOwner<UiItemSlot> owner;
     /**
      * The active slot on the hotbar.
      */
@@ -36,7 +36,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
     public UiItemSlot[] slots;
     private boolean open;
 
-    public UiInventory(int size, InventoryOwner owner) {
+    public UiInventory(int size, InventoryOwner<UiItemSlot> owner) {
         super(new Rectangle(0, 0, 0, 0));
         this.owner = owner;
         this.slots = new UiItemSlot[88];
@@ -292,7 +292,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
     }
 
     @Override
-    public InventoryOwner getOwner() {
+    public InventoryOwner<UiItemSlot> getOwner() {
         return owner;
     }
 

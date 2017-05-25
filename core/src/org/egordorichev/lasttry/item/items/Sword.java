@@ -31,7 +31,7 @@ public class Sword extends MeleeWeapon {
     }
 
     @Override
-    public void update(InventoryOwner owner, int dt) {
+    public void update(InventoryOwner<?> owner, int dt) {
         if (canBeUsed()) {
             this.use();
         }

@@ -74,7 +74,7 @@ public class Tool extends Item {
     }
 
     @Override
-    protected void onUpdate(InventoryOwner owner) {
+    protected void onUpdate(InventoryOwner<?> owner) {
         super.onUpdate(owner);
         // Check if entities should be hit.
         this.onToolAttack(owner);
@@ -129,7 +129,7 @@ public class Tool extends Item {
         return this.rarity;
     }
 
-    public void onToolAttack(InventoryOwner owner) {
+    public void onToolAttack(InventoryOwner<?> owner) {
         Creature cowner = (Creature) owner;
 
         // Get the list of enemies
