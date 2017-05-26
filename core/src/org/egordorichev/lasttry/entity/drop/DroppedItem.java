@@ -13,7 +13,6 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
-import org.egordorichev.lasttry.util.Log;
 
 public class DroppedItem extends Creature {
 	private static final float ATTRACTION_RANGE = 100;
@@ -42,7 +41,7 @@ public class DroppedItem extends Creature {
 		this.graphics.update(dt);
 		this.updateAttraction(dt);
 		this.checkPlayerAbsorbtion(dt);
-		//this.packRelated(dt);
+		this.packRelated(dt);
 	}
 
 	/**
@@ -73,7 +72,7 @@ public class DroppedItem extends Creature {
 		Vector2 p2 = physics.getPosition().cpy();
 		float dist = p1.dst(p2);
 		if (dist < ATTRACTION_RANGE) {
-			float attraction = 200f;
+			float attraction = 100f;
 			float distPow = (float) Math.pow(dist, 2);
 			this.physics.getVelocity().add(p2.sub(p1).scl(-attraction, -attraction).scl(1f / distPow));
 			
