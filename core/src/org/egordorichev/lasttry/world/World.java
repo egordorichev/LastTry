@@ -144,20 +144,17 @@ public class World {
      */
     public float distToHorizontalCollision(Rectangle hitbox, float velocityX) {
         Rectangle tmp = hitbox.copy();
-        boolean collision = false;
+        boolean collision = isColliding(tmp);
         boolean negativeMotion = velocityX < 0;
         int direction = negativeMotion ? -1 : 1;
         float change = direction * Block.SIZE;
         float distance = 0f;
-        while (collision) {
+        while (!collision) {
             tmp.x += change;
             distance += change;
             collision = isColliding(tmp);
         }
-        if (distance == 0) {
-            return 0;
-        }
-        return (distance - change);
+        return distance;
     }
 
     /**
@@ -170,20 +167,17 @@ public class World {
      */
     public float distToVerticalCollision(Rectangle hitbox, float velocityY) {
         Rectangle tmp = hitbox.copy();
-        boolean collision = false;
+        boolean collision = isColliding(tmp);
         boolean negativeMotion = velocityY < 0;
         int direction = negativeMotion ? -1 : 1;
         float change = direction * Block.SIZE;
         float distance = 0f;
-        while (collision) {
+        while (!collision) {
             tmp.y += change;
             distance += change;
             collision = isColliding(tmp);
         }
-        if (distance == 0) {
-            return 0;
-        }
-        return (distance - change);
+        return distance;
     }
 
     /**

@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.entity.components;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -75,8 +77,7 @@ public class PhysicsComponent extends EntityComponent {
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.x != 0) {
             Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
-            Rectangle newHitbox = originalHitbox.copy();
-            newHitbox.x += this.velocity.x;
+            Rectangle newHitbox = originalHitbox.copy().offset(this.velocity.x, 0);
             // If collide, do step logic
             // Else, move normally
             if (Globals.getWorld().isColliding(newHitbox)) {
@@ -85,14 +86,22 @@ public class PhysicsComponent extends EntityComponent {
                 if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
                     // Step will collide, set horizontal velocity
                     // so they will walk only up to the wall but no further.
-                    this.velocity.x = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
+                    float offset = this.velocity.x > 0 ? Block.SIZE : -Block.SIZE;
+                    float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
+                    this.velocity.x = distToCollision - offset;
                     this.onBlockCollide();
                 } else {
                     // Step will succed.
                     this.velocity.x /= 2;
                     this.position.y += step;
                 }
-            }
+            } else {
+                // Prevent wall clipping with high speeds
+                float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
+                if (Math.abs(distToCollision) < Math.abs(this.velocity.x)) {
+                   this.velocity.x = distToCollision;
+                }
+            } 
         }
         this.position.x += this.velocity.x;
 
@@ -112,14 +121,21 @@ public class PhysicsComponent extends EntityComponent {
         if (this.solid && this.velocity.y != 0) {
             Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
             boolean falling = this.velocity.y < 0;
-            Rectangle newHitbox = originalHitbox.copy();
-            newHitbox.y += this.velocity.y;
+            Rectangle newHitbox = originalHitbox.copy().offset(0, this.velocity.y);
             // If collides, on reset vertical motion, call onCollide
             // Else move normally.
             if (Globals.getWorld().isColliding(newHitbox)) {
                 if (falling) {
                     // Hits ground
-                    this.velocity.y = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
+                    float offset = this.velocity.y > 0 ? Block.SIZE : -Block.SIZE;
+                    float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
+                    if (distToCollision != 0){
+                        // there is some space to move, so move
+                        this.velocity.y =  distToCollision - offset;
+                    } else {
+                        // Already colliding, stay on the ground.
+                        this.velocity.y = 0;
+                    }
                     this.onBlockCollide();
                 } else {
                     // Hits ceiling
@@ -131,7 +147,13 @@ public class PhysicsComponent extends EntityComponent {
                     }
                     this.onBlockCollide();
                 }
-            }
+            } else {
+                // Prevent floor clipping with high speeds
+                float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
+                if (Math.abs(distToCollision) < Math.abs(this.velocity.y)) {
+                   this.velocity.y = distToCollision;
+                }
+            } 
         }
         this.position.y += this.velocity.y;
     }
