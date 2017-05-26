@@ -3,10 +3,7 @@ package org.egordorichev.lasttry.entity.components;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
-import org.egordorichev.lasttry.entity.drop.DroppedItem;
-import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class PhysicsComponent extends EntityComponent {

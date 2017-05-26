@@ -25,13 +25,11 @@ public class PlayerInputComponent extends CreatureComponent {
         }
 
         if (InputManager.isKeyDown(Keys.MOVE_LEFT)) {
-            for (int i = 0; i < 2; i++)
-                this.creature.physics.move(PhysicsComponent.Direction.LEFT);
+            this.creature.physics.move(PhysicsComponent.Direction.LEFT);
         }
 
         if (InputManager.isKeyDown(Keys.MOVE_RIGHT)) {
-            for (int i = 0; i < 2; i++)
-                this.creature.physics.move(PhysicsComponent.Direction.RIGHT);
+            this.creature.physics.move(PhysicsComponent.Direction.RIGHT);
         }
 
         if (InputManager.isKeyJustDown(Keys.OPEN_INVENTORY)) {
