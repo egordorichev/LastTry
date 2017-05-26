@@ -43,12 +43,24 @@ public class PhysicsComponent extends EntityComponent {
         if (!this.entity.isActive()) {
             return;
         }
-
-        if (this.solid) {
-            this.velocity.y -= 0.4f;
-        }
         this.updateXVelocity();
         this.updateYVelocity();
+        this.pushOutOfBlocks();
+    }
+
+    private void pushOutOfBlocks() {
+        Rectangle box = this.hitbox.copy().offset(this.position);
+        if (Globals.getWorld().isColliding(box)) {
+            if (!Globals.getWorld().isColliding(box.offset(Block.SIZE, 0))) {
+                this.position.x += Block.SIZE / 4;
+            } else if (!Globals.getWorld().isColliding(box.offset(-Block.SIZE, 0))) {
+                this.position.x -= Block.SIZE / 4;
+            } else if (!Globals.getWorld().isColliding(box.offset(0, Block.SIZE))) {
+                this.position.y += Block.SIZE / 4;
+            } else if (!Globals.getWorld().isColliding(box.offset(0, -Block.SIZE))) {
+                this.position.y -= Block.SIZE / 4;
+            }
+        }
     }
 
     public void jump() {
@@ -60,28 +72,30 @@ public class PhysicsComponent extends EntityComponent {
     }
 
     private void updateXVelocity() {
-        if (!this.solid) {
-            // Non solids move regardless
-            this.position.x += this.velocity.x;
-        } else if (this.velocity.x != 0) {
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.position.x, this.hitbox.y + this.position.y,
-                    this.hitbox.width, this.hitbox.height);
+        // Non-solids skip adjustment and collision checks
+        if (this.solid && this.velocity.x != 0) {
+            Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
+            Rectangle newHitbox = originalHitbox.copy();
             newHitbox.x += this.velocity.x;
             // If collide, do step logic
             // Else, move normally
             if (Globals.getWorld().isColliding(newHitbox)) {
+                // Test if can step
                 float step = Block.SIZE * STEP_HEIGHT;
                 if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
-                    this.velocity.x = 0;
+                    // Step will collide, set horizontal velocity
+                    // so they will walk only up to the wall but no further.
+                    this.velocity.x = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
                     this.onBlockCollide();
                 } else {
-                    this.position.x += this.velocity.x;
-                    this.position.y += Block.SIZE / 2;
+                    // Step will succed.
+                    this.velocity.x /= 2;
+                    this.position.y += step;
                 }
-            } else {
-                this.position.x += this.velocity.x;
             }
         }
+        this.position.x += this.velocity.x;
+
         // Slow down horizontal velocity
         this.velocity.x *= 0.8;
         if (Math.abs(this.velocity.x) < STOP_VELOCITY) {
@@ -90,30 +104,36 @@ public class PhysicsComponent extends EntityComponent {
     }
 
     private void updateYVelocity() {
-        if (!this.solid) {
-            // Non solids move regardless
-            this.position.y += this.velocity.y;
-        } else if (this.velocity.y != 0) {
+        if (this.solid) {
+            // Apply gravity
+            this.velocity.y -= 0.4f;
+        }
+        // Non-solids skip adjustment and collision checks
+        if (this.solid && this.velocity.y != 0) {
+            Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
             boolean falling = this.velocity.y < 0;
-            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.position.x, this.hitbox.y + this.position.y,
-                    this.hitbox.width, this.hitbox.height);
+            Rectangle newHitbox = originalHitbox.copy();
             newHitbox.y += this.velocity.y;
             // If collides, on reset vertical motion, call onCollide
             // Else move normally.
             if (Globals.getWorld().isColliding(newHitbox)) {
                 if (falling) {
                     // Hits ground
-                    this.velocity.y = 0;
+                    this.velocity.y = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
                     this.onBlockCollide();
                 } else {
                     // Hits ceiling
-                    this.velocity.y = -1;
+                    float speed = -0.5f;
+                    if (Globals.getWorld().isColliding(originalHitbox.copy().offset(0, speed))) {
+                        this.velocity.y = 0;
+                    } else {
+                        this.velocity.y = speed;
+                    }
                     this.onBlockCollide();
                 }
-            } else {
-                this.position.y += this.velocity.y;
             }
         }
+        this.position.y += this.velocity.y;
     }
 
     protected void onBlockCollide() {

@@ -6,12 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.util.Log;
 
 public class DroppedItem extends Creature {
 	private static final float ATTRACTION_RANGE = 100;
@@ -29,15 +31,18 @@ public class DroppedItem extends Creature {
 	@Override
 	public void render() {
 		Graphics.batch.draw(this.texture, this.physics.getX(), this.physics.getY());
-		Assets.f18.draw(Graphics.batch, String.valueOf(this.holder.getCount()), this.physics.getX(), this.physics.getY());
+		if (LastTry.debug.isEnabled()){
+		    Assets.f18.draw(Graphics.batch, String.valueOf(this.holder.getCount()), this.physics.getX(), this.physics.getY());
+		}
 	}
 
 	@Override
 	public void update(int dt) {
 		this.physics.update(dt);
+		this.graphics.update(dt);
 		this.updateAttraction(dt);
 		this.checkPlayerAbsorbtion(dt);
-		this.packRelated(dt);
+		//this.packRelated(dt);
 	}
 
 	/**
@@ -68,9 +73,12 @@ public class DroppedItem extends Creature {
 		Vector2 p2 = physics.getPosition().cpy();
 		float dist = p1.dst(p2);
 		if (dist < ATTRACTION_RANGE) {
-			float attraction = 1000f;
-			float distPow = (float) Math.pow(dist, 3);
+			float attraction = 200f;
+			float distPow = (float) Math.pow(dist, 2);
 			this.physics.getVelocity().add(p2.sub(p1).scl(-attraction, -attraction).scl(1f / distPow));
+			
+			boolean isAttractionStrong = this.physics.getVelocity().len() > 0.5;
+			this.physics.setSolid(!isAttractionStrong);
 		}
 	}
 

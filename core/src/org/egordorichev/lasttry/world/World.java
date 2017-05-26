@@ -67,9 +67,9 @@ public class World {
     }
 
     public void renderLights() {
-       if (!LastTry.noLight){
-           this.light.render();
-       }
+        if (!LastTry.noLight) {
+            this.light.render();
+        }
     }
 
     public void render() {
@@ -87,7 +87,7 @@ public class World {
      * Create the light map for the entire world.
      */
     public void initLights() {
-        if (!LastTry.noLight){
+        if (!LastTry.noLight) {
             this.light.init();
         }
     }
@@ -128,16 +128,104 @@ public class World {
      * @return
      */
     private boolean closeToPlayer(int x, int y) {
-        if (LastTry.noLight){
+        if (LastTry.noLight) {
             return false;
         }
         return Globals.player.physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
     }
 
+    /**
+     * Given a hitbox, returns the distance in the direction of the given
+     * velocity for there to be a collision.
+     * 
+     * @param hitbox
+     * @param velocityX
+     * @return
+     */
+    public float distToHorizontalCollision(Rectangle hitbox, float velocityX) {
+        Rectangle tmp = hitbox.copy();
+        boolean collision = false;
+        boolean negativeMotion = velocityX < 0;
+        int direction = negativeMotion ? -1 : 1;
+        float change = direction * Block.SIZE;
+        float distance = 0f;
+        while (collision) {
+            tmp.x += change;
+            distance += change;
+            collision = isColliding(tmp);
+        }
+        if (distance == 0) {
+            return 0;
+        }
+        return (distance - change);
+    }
+
+    /**
+     * Given a hitbox, returns the distance in the direction of the given
+     * velocity for there to be a collision.
+     * 
+     * @param hitbox
+     * @param velocityY
+     * @return
+     */
+    public float distToVerticalCollision(Rectangle hitbox, float velocityY) {
+        Rectangle tmp = hitbox.copy();
+        boolean collision = false;
+        boolean negativeMotion = velocityY < 0;
+        int direction = negativeMotion ? -1 : 1;
+        float change = direction * Block.SIZE;
+        float distance = 0f;
+        while (collision) {
+            tmp.y += change;
+            distance += change;
+            collision = isColliding(tmp);
+        }
+        if (distance == 0) {
+            return 0;
+        }
+        return (distance - change);
+    }
+
+    /**
+     * Checks if the given bounds intersect with any blocks.
+     * 
+     * @param bounds
+     * @return
+     */
+    public boolean isColliding(Rectangle bounds) {
+        Rectangle gridBounds = bounds.copy();
+        gridBounds.x /= Block.SIZE;
+        gridBounds.y /= Block.SIZE;
+        gridBounds.width /= Block.SIZE;
+        gridBounds.height /= Block.SIZE;
+
+        for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
+            for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
+                if (!this.isInside(x, y)) {
+                    return true;
+                }
+
+                Block block = (Block) Item.fromID(this.blocks.getID(x, y));
+
+                if (block == null || !block.isSolid()) {
+                    continue;
+                }
+
+                Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE);
+
+                if (blockRect.intersects(bounds)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public void update() {
         this.getChunks().update();
     }
-    
+
     public WorldChunksComponent getChunks() {
         return chunks;
     }
@@ -226,42 +314,6 @@ public class World {
     public boolean isInside(int x, int y) {
         return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
     }
-    
-    public Vector2 updateVelocity(Vector2 pos, Vector2 vel){
-        return vel;
-    }
-
-    public boolean isColliding(Rectangle bounds) {
-        Rectangle gridBounds = new Rectangle(bounds.x, bounds.y, bounds.width, bounds.height);
-        gridBounds.x /= Block.SIZE;
-        gridBounds.y /= Block.SIZE;
-        gridBounds.width /= Block.SIZE;
-        gridBounds.height /= Block.SIZE;
-
-        for (int y = (int) gridBounds.y - 1; y < gridBounds.y + gridBounds.height + 1; y++) {
-            for (int x = (int) gridBounds.x - 1; x < gridBounds.x + gridBounds.width + 1; x++) {
-                if (!this.isInside(x, y)) {
-                    return true;
-                }
-
-                Block block = (Block) Item.fromID(this.blocks.getID(x, y));
-
-                if (block == null || !block.isSolid()) {
-                    continue;
-                }
-
-                Rectangle blockRect = new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE);
-
-                if (blockRect.intersects(bounds)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-  
 
     public enum Size {
         SMALL("Small", 4096, 1024), // Small contains 64 chunks
@@ -302,5 +354,4 @@ public class World {
             return (short) maxChunks;
         }
     }
-
 }
