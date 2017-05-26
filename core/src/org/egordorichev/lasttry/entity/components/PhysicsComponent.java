@@ -88,7 +88,11 @@ public class PhysicsComponent extends EntityComponent {
                     // so they will walk only up to the wall but no further.
                     float offset = this.velocity.x > 0 ? Block.SIZE : -Block.SIZE;
                     float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
-                    this.velocity.x = distToCollision - offset;
+                    if (distToCollision != 0){
+                        this.velocity.x =  distToCollision - offset;
+                    } else {
+                        this.velocity.x = 0;
+                    }
                     this.onBlockCollide();
                 } else {
                     // Step will succed.
