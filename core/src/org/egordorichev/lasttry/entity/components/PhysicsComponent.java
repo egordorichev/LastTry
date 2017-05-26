@@ -47,7 +47,6 @@ public class PhysicsComponent extends EntityComponent {
         if (this.solid) {
             this.velocity.y -= 0.4f;
         }
-
         this.updateXVelocity();
         this.updateYVelocity();
     }
@@ -61,53 +60,58 @@ public class PhysicsComponent extends EntityComponent {
     }
 
     private void updateXVelocity() {
-        if (this.velocity.x != 0) {
-            
-            Rectangle newHitbox = new Rectangle(
-                    this.hitbox.x + this.position.x, 
-                    this.hitbox.y + this.position.y,
-                    this.hitbox.width, 
-                    this.hitbox.height);
+        if (!this.solid) {
+            // Non solids move regardless
+            this.position.x += this.velocity.x;
+        } else if (this.velocity.x != 0) {
+            Rectangle newHitbox = new Rectangle(this.hitbox.x + this.position.x, this.hitbox.y + this.position.y,
+                    this.hitbox.width, this.hitbox.height);
             newHitbox.x += this.velocity.x;
-
-            if (!this.solid) {
-                this.position.x += this.velocity.x;
-            } else {
-                if (Globals.getWorld().isColliding(newHitbox)) {
-                    float step = Block.SIZE * STEP_HEIGHT;
-
-                    if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
-                        this.velocity.x = 0;
-                        this.onBlockCollide();
-                    } else {
-                        this.position.x += this.velocity.x;
-                        this.position.y += Block.SIZE / 2;
-                    }
+            // If collide, do step logic
+            // Else, move normally
+            if (Globals.getWorld().isColliding(newHitbox)) {
+                float step = Block.SIZE * STEP_HEIGHT;
+                if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
+                    this.velocity.x = 0;
+                    this.onBlockCollide();
                 } else {
                     this.position.x += this.velocity.x;
+                    this.position.y += Block.SIZE / 2;
                 }
+            } else {
+                this.position.x += this.velocity.x;
             }
-
-            this.velocity.x *= 0.8;
-
-            if (Math.abs(this.velocity.x) < STOP_VELOCITY) {
-                this.velocity.x = 0;
-            }
+        }
+        // Slow down horizontal velocity
+        this.velocity.x *= 0.8;
+        if (Math.abs(this.velocity.x) < STOP_VELOCITY) {
+            this.velocity.x = 0;
         }
     }
 
     private void updateYVelocity() {
-        if (this.velocity.y != 0) {
+        if (!this.solid) {
+            // Non solids move regardless
+            this.position.y += this.velocity.y;
+        } else if (this.velocity.y != 0) {
+            boolean falling = this.velocity.y < 0;
             Rectangle newHitbox = new Rectangle(this.hitbox.x + this.position.x, this.hitbox.y + this.position.y,
-                this.hitbox.width, this.hitbox.height);
-
+                    this.hitbox.width, this.hitbox.height);
             newHitbox.y += this.velocity.y;
-
-            if (!this.solid || !Globals.getWorld().isColliding(newHitbox)) {
-                this.position.y += this.velocity.y;
+            // If collides, on reset vertical motion, call onCollide
+            // Else move normally.
+            if (Globals.getWorld().isColliding(newHitbox)) {
+                if (falling) {
+                    // Hits ground
+                    this.velocity.y = 0;
+                    this.onBlockCollide();
+                } else {
+                    // Hits ceiling
+                    this.velocity.y = -1;
+                    this.onBlockCollide();
+                }
             } else {
-                this.velocity.y = 0;
-                this.onBlockCollide();
+                this.position.y += this.velocity.y;
             }
         }
     }
