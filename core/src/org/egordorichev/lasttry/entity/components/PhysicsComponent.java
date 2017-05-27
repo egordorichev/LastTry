@@ -133,6 +133,7 @@ public class PhysicsComponent extends EntityComponent {
     private void updateXVelocity() {
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.x != 0) {
+            // this.pushOutOfBlocks(Util.random(1, 5));
             Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
             boolean collidesOriginal = collides(originalHitbox);
             // If stepping, handle smoothed movement
@@ -145,10 +146,9 @@ public class PhysicsComponent extends EntityComponent {
                 // head is not occupied by a block, keep moving diagonally.
                 if (collidesOriginal && !collides(head.offset(dir * Block.SIZE * 0.9f, Block.SIZE * 0.9f))) {
                     // Move diagonally.
-                    this.position.y += Math.abs(this.velocity.x);
+                    this.position.y += Math.abs(this.velocity.x) / 2;
                 } else {
-                    // Only set stepping if movement smoothing is enabled.
-                    this.isStepping = this.useSmoothMoves;
+                    this.isStepping = false;
                     this.position.y += 2;
                     this.position.x -= dir * 2;
                     this.pushOutOfBlocks(1);

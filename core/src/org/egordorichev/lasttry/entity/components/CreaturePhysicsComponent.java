@@ -47,7 +47,7 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 	public void update(int dt) {
 		super.update(dt);
 
-		if (this.velocity.y < 0) {
+		if (this.velocity.y < -1.6) {
 			this.creature.state.set(CreatureStateComponent.State.FALLING);
 		} else if (this.velocity.y == 0 && (this.creature.state.get() == CreatureStateComponent.State.FALLING || this.creature.state.get() == CreatureStateComponent.State.JUMPING)) {
 			this.creature.state.set(CreatureStateComponent.State.IDLE);
