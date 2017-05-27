@@ -3,8 +3,11 @@ package org.egordorichev.lasttry.entity.components;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.player.Player;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Util;
 
 public class PhysicsComponent extends EntityComponent {
     public enum Direction {
@@ -44,22 +47,55 @@ public class PhysicsComponent extends EntityComponent {
         }
         this.updateXVelocity();
         this.updateYVelocity();
-        this.pushOutOfBlocks();
+        this.pushOutOfBlocks(1);
     }
 
-    private void pushOutOfBlocks() {
-        Rectangle box = this.hitbox.copy().offset(this.position);
+    /**
+     * Pushes the player out of blocks.
+     * 
+     * @param i
+     *            Higher values = more fine tune pushes.
+     * @return If the player has been pushed.
+     */
+    private boolean pushOutOfBlocks(int i) {
+        Rectangle box = this.hitbox.copy().offset(this.position).offset(0, 0.05f);
+        float offsetSize = Block.SIZE;
+        boolean pushed = false;
         if (Globals.getWorld().isColliding(box)) {
-            if (!Globals.getWorld().isColliding(box.offset(Block.SIZE, 0))) {
-                this.position.x += Block.SIZE / 4;
-            } else if (!Globals.getWorld().isColliding(box.offset(-Block.SIZE, 0))) {
-                this.position.x -= Block.SIZE / 4;
-            } else if (!Globals.getWorld().isColliding(box.offset(0, Block.SIZE))) {
-                this.position.y += Block.SIZE / 4;
-            } else if (!Globals.getWorld().isColliding(box.offset(0, -Block.SIZE))) {
-                this.position.y -= Block.SIZE / 4;
+            float cut = (float) (4 * Math.sqrt(i * 2));
+            float checkOffset = offsetSize / i;
+            float positionOffset = offsetSize / cut;
+            if (!Globals.getWorld().isColliding(box.offset(0, checkOffset))) {
+                this.position.y += positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(0, -checkOffset))) {
+                this.position.y -= positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, 0))) {
+                this.position.x += positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, 0))) {
+                this.position.x -= positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, checkOffset))) {
+                this.position.x += positionOffset;
+                this.position.y += positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, -checkOffset))) {
+                this.position.x += positionOffset;
+                this.position.y -= positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, checkOffset))) {
+                this.position.x -= positionOffset;
+                this.position.y += positionOffset;
+                pushed = true;
+            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, -checkOffset))) {
+                this.position.x -= positionOffset;
+                this.position.y -= positionOffset;
+                pushed = true;
             }
         }
+        return pushed;
     }
 
     public void jump() {
@@ -84,9 +120,10 @@ public class PhysicsComponent extends EntityComponent {
                     // Step will collide, set horizontal velocity
                     // so they will walk only up to the wall but no further.
                     float offset = this.velocity.x > 0 ? Block.SIZE : -Block.SIZE;
-                    float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
-                    if (distToCollision != 0){
-                        this.velocity.x =  distToCollision - offset;
+                    float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox,
+                            this.velocity.x);
+                    if (distToCollision != 0) {
+                        this.velocity.x = distToCollision - offset;
                     } else {
                         this.velocity.x = 0;
                     }
@@ -100,9 +137,9 @@ public class PhysicsComponent extends EntityComponent {
                 // Prevent wall clipping with high speeds
                 float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
                 if (Math.abs(distToCollision) < Math.abs(this.velocity.x)) {
-                   this.velocity.x = distToCollision;
+                    this.velocity.x = distToCollision;
                 }
-            } 
+            }
         }
         this.position.x += this.velocity.x;
 
@@ -130,9 +167,9 @@ public class PhysicsComponent extends EntityComponent {
                     // Hits ground
                     float offset = this.velocity.y > 0 ? Block.SIZE : -Block.SIZE;
                     float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
-                    if (distToCollision != 0){
+                    if (distToCollision != 0) {
                         // there is some space to move, so move
-                        this.velocity.y =  distToCollision - offset;
+                        this.velocity.y = distToCollision - offset;
                     } else {
                         // Already colliding, stay on the ground.
                         this.velocity.y = 0;
@@ -152,9 +189,9 @@ public class PhysicsComponent extends EntityComponent {
                 // Prevent floor clipping with high speeds
                 float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
                 if (Math.abs(distToCollision) < Math.abs(this.velocity.y)) {
-                   this.velocity.y = distToCollision;
+                    this.velocity.y = distToCollision;
                 }
-            } 
+            }
         }
         this.position.y += this.velocity.y;
     }
@@ -177,9 +214,25 @@ public class PhysicsComponent extends EntityComponent {
         this.position.y = y;
     }
 
-    public void setSize(int width, int height) {
+    public void setSize(float width, float height) {
         this.size.x = width;
         this.size.y = height;
+    }
+
+    public void setWidth(float width) {
+        this.size.x = width;
+    }
+
+    public void setHeight(float height) {
+        this.size.y = height;
+    }
+
+    public float getWidth() {
+        return this.size.x;
+    }
+
+    public float getHeight() {
+        return this.size.y;
     }
 
     public boolean isFlipped() {
