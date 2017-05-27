@@ -24,6 +24,19 @@ public class PhysicsComponent extends EntityComponent {
     protected Direction direction = Direction.RIGHT;
     protected float speed = 1.0f;
     protected boolean solid = true;
+    /**
+     * Boolean indiciating if the entity is in the midst of stepping <i>(And
+     * thus requires different logic checks to ensure they smoothly step through
+     * a block rather than teleport on top of it)</i>
+     */
+    private boolean isStepping;
+    /**
+     * Boolean indicating if the entity is to use smooth stepping. <br>
+     * If set to true movements such as stepping up blocks will be smoothed.<br>
+     * If set to false, stepping will be instant and faster, but look more
+     * jarring.
+     */
+    private boolean useSmoothMoves = true;
 
     public PhysicsComponent(Entity entity) {
         super(entity);
@@ -58,43 +71,54 @@ public class PhysicsComponent extends EntityComponent {
      * @return If the player has been pushed.
      */
     private boolean pushOutOfBlocks(int i) {
-        Rectangle box = this.hitbox.copy().offset(this.position).offset(0, 0.05f);
+        Rectangle box = this.hitbox.copy().offset(this.position);
         float offsetSize = Block.SIZE;
         boolean pushed = false;
-        if (Globals.getWorld().isColliding(box)) {
+        if (collides(box)) {
             float cut = (float) (4 * Math.sqrt(i * 2));
             float checkOffset = offsetSize / i;
             float positionOffset = offsetSize / cut;
-            if (!Globals.getWorld().isColliding(box.offset(0, checkOffset))) {
-                this.position.y += positionOffset;
+            float dy = 0, dx = 0;
+            if (!collides(box.offset(0, checkOffset))) {
+                dy += positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(0, -checkOffset))) {
-                this.position.y -= positionOffset;
+            } else if (!collides(box.offset(0, -checkOffset))) {
+                dy -= positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, 0))) {
-                this.position.x += positionOffset;
+            } else if (!collides(box.offset(checkOffset, 0))) {
+                dx += positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, 0))) {
-                this.position.x -= positionOffset;
+            } else if (!collides(box.offset(-checkOffset, 0))) {
+                dx -= positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, checkOffset))) {
-                this.position.x += positionOffset;
-                this.position.y += positionOffset;
+            } else if (!collides(box.offset(checkOffset, checkOffset))) {
+                dx += positionOffset;
+                dy += positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(checkOffset, -checkOffset))) {
-                this.position.x += positionOffset;
-                this.position.y -= positionOffset;
+            } else if (!collides(box.offset(checkOffset, -checkOffset))) {
+                dx += positionOffset;
+                dy -= positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, checkOffset))) {
-                this.position.x -= positionOffset;
-                this.position.y += positionOffset;
+            } else if (!collides(box.offset(-checkOffset, checkOffset))) {
+                dx -= positionOffset;
+                dy += positionOffset;
                 pushed = true;
-            } else if (!Globals.getWorld().isColliding(box.offset(-checkOffset, -checkOffset))) {
-                this.position.x -= positionOffset;
-                this.position.y -= positionOffset;
+            } else if (!collides(box.offset(-checkOffset, -checkOffset))) {
+                dx -= positionOffset;
+                dy -= positionOffset;
                 pushed = true;
             }
+            if (this.useSmoothMoves && this.isStepping) {
+                if (dy > 0) {
+                    dy = 0;
+                }
+                if (dx != 0) {
+                    dx = 0;
+                }
+            }
+            this.position.add(dx, dy);
         }
+
         return pushed;
     }
 
@@ -110,13 +134,35 @@ public class PhysicsComponent extends EntityComponent {
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.x != 0) {
             Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
+            boolean collidesOriginal = collides(originalHitbox);
+            // If stepping, handle smoothed movement
+            if (this.useSmoothMoves && this.isStepping) {
+                int dir = this.velocity.x > 0 ? 1 : -1;
+                Rectangle head = this.hitbox.copy().offset(this.position);
+                head.y += Block.SIZE;
+                head.height = Block.SIZE;
+                // If currently in a step and the next expected position of the
+                // head is not occupied by a block, keep moving diagonally.
+                if (collidesOriginal && !collides(head.offset(dir * Block.SIZE * 0.9f, Block.SIZE * 0.9f))) {
+                    // Move diagonally.
+                    this.position.y += Math.abs(this.velocity.x);
+                } else {
+                    // Only set stepping if movement smoothing is enabled.
+                    this.isStepping = this.useSmoothMoves;
+                    this.position.y += 2;
+                    this.position.x -= dir * 2;
+                    this.pushOutOfBlocks(1);
+                }
+            } else if (collidesOriginal) {
+                this.pushOutOfBlocks(Util.random(1, 6));
+            }
             Rectangle newHitbox = originalHitbox.copy().offset(this.velocity.x, 0);
             // If collide, do step logic
             // Else, move normally
-            if (Globals.getWorld().isColliding(newHitbox)) {
+            if (collides(newHitbox)) {
                 // Test if can step
                 float step = Block.SIZE * STEP_HEIGHT;
-                if (Globals.getWorld().isColliding(newHitbox.offset(0, step))) {
+                if (collides(newHitbox.offset(0, step))) {
                     // Step will collide, set horizontal velocity
                     // so they will walk only up to the wall but no further.
                     float offset = this.velocity.x > 0 ? Block.SIZE : -Block.SIZE;
@@ -124,16 +170,25 @@ public class PhysicsComponent extends EntityComponent {
                             this.velocity.x);
                     if (distToCollision != 0) {
                         this.velocity.x = distToCollision - offset;
-                    } else {
+                    } else if (!this.isStepping) {
                         this.velocity.x = 0;
                     }
                     this.onBlockCollide();
                 } else {
-                    // Step will succed.
-                    this.velocity.x /= 2;
-                    this.position.y += step;
+                    // Step will succeed.
+                    if (this.useSmoothMoves) {
+                        // Step into the block and enable stepping logic.
+                        this.position.y += 4;
+                        this.velocity.x *= 0.9f;
+                        this.isStepping = true;
+                    } else {
+                        // Teleport on top of the block.
+                        this.velocity.x /= 2;
+                        this.position.y += step;
+                    }
+
                 }
-            } else {
+            } else if (!this.isStepping) {
                 // Prevent wall clipping with high speeds
                 float distToCollision = Globals.getWorld().distToHorizontalCollision(originalHitbox, this.velocity.x);
                 if (Math.abs(distToCollision) < Math.abs(this.velocity.x)) {
@@ -157,16 +212,16 @@ public class PhysicsComponent extends EntityComponent {
         }
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.y != 0) {
-            Rectangle originalHitbox = this.hitbox.copy().offset(this.position);
+            Rectangle boxO = this.hitbox.copy().offset(this.position);
             boolean falling = this.velocity.y < 0;
-            Rectangle newHitbox = originalHitbox.copy().offset(0, this.velocity.y);
+            Rectangle boxV = boxO.copy().offset(0, this.velocity.y);
             // If collides, on reset vertical motion, call onCollide
             // Else move normally.
-            if (Globals.getWorld().isColliding(newHitbox)) {
+            if (collides(boxV)) {
                 if (falling) {
                     // Hits ground
                     float offset = this.velocity.y > 0 ? Block.SIZE : -Block.SIZE;
-                    float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
+                    float distToCollision = Globals.getWorld().distToVerticalCollision(boxO, this.velocity.y);
                     if (distToCollision != 0) {
                         // there is some space to move, so move
                         this.velocity.y = distToCollision - offset;
@@ -178,7 +233,7 @@ public class PhysicsComponent extends EntityComponent {
                 } else {
                     // Hits ceiling
                     float speed = -0.5f;
-                    if (Globals.getWorld().isColliding(originalHitbox.copy().offset(0, speed))) {
+                    if (collides(boxO.copy().offset(0, speed))) {
                         this.velocity.y = 0;
                     } else {
                         this.velocity.y = speed;
@@ -187,13 +242,27 @@ public class PhysicsComponent extends EntityComponent {
                 }
             } else {
                 // Prevent floor clipping with high speeds
-                float distToCollision = Globals.getWorld().distToVerticalCollision(originalHitbox, this.velocity.y);
+                float distToCollision = Globals.getWorld().distToVerticalCollision(boxO, this.velocity.y);
                 if (Math.abs(distToCollision) < Math.abs(this.velocity.y)) {
                     this.velocity.y = distToCollision;
                 }
             }
         }
         this.position.y += this.velocity.y;
+    }
+
+    /**
+     * Shorthand for
+     * 
+     * <pre>
+     * Globals.getWorld().isColliding(rect)
+     * </pre>
+     * 
+     * @param rect
+     * @return
+     */
+    private boolean collides(Rectangle rect) {
+        return Globals.getWorld().isColliding(rect);
     }
 
     protected void onBlockCollide() {
