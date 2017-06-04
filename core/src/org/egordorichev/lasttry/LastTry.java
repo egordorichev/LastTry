@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
-
+import org.egordorichev.lasttry.util.Log;
 import java.util.Random;
 import java.util.Locale;
 
@@ -44,6 +44,8 @@ public class LastTry extends Game {
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
 
 		instance = this;
+
+		Log.debug("Random seed is " + Args.seed);
 
 		Camera.create(800, 600);
 		Language.load(new Locale("en", "US"));
@@ -100,8 +102,8 @@ public class LastTry extends Game {
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-        String[] split = Language.text.get("windowTitles").split("//");
-        return split[random.nextInt(split.length)] + " " + version.toString();
+		String[] split = Language.text.get("windowTitles").split("//");
+		return split[random.nextInt(split.length)] + " " + version.toString();
 	}
 
 	/**

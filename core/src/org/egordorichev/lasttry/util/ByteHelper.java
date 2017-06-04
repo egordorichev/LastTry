@@ -35,4 +35,16 @@ public class ByteHelper {
 
 		return data;
 	}
+
+	public static byte getSum(byte data, byte start, byte end) {
+		byte sum = 0;
+		byte mod = 1;
+
+		for (byte i = start; i <= end; i++) {
+			sum += getBitValue(data, i) * mod;
+			mod *= 2;
+		}
+
+		return sum;
+	}
 }

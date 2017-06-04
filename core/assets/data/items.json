@@ -1,0 +1,35 @@
+{
+	"lt:dirt" : {
+		"type" : 0
+	},
+
+	"lt:grass" : {
+		"type" : 1
+	},
+
+	"lt:copper_coin" : {
+		"type" : 2,
+		"cost" : 1
+	},
+
+	"lt:silver_coin" : {
+		"type" : 2,
+		"cost" : 100
+	},
+
+	"lt:gold_coin" : {
+		"type" : 2,
+		"cost" : 10000
+	},
+
+	"lt:platinum_coin" : {
+		"type" : 2,
+		"cost" : 1000000
+	},
+
+	"lt:copper_pickaxe" : {
+		"type" : 3,
+		"speed" : 22,
+		"damage" : 4
+	}
+}
