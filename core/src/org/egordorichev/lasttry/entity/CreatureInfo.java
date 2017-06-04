@@ -1,9 +1,9 @@
-package org.egordorichev.lasttry.entity.enemy;
+package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
+import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Animation;
@@ -14,14 +14,15 @@ import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.ArrayList;
 
-public class EnemyInfo {
-	public short ai = 0;
+public class CreatureInfo {
+	public AI ai;
 	public int[] hp = new int[3];
 	public int[] defense = new int[3];
 	public int[] damage = new int[3];
 	public float[] kbResist = new float[3];
 	public float speed = 1;
-	public String texture = "";
+	public byte spawnWeight = 1;
+	public byte type = 1;
 	public String name;
 	public TextureRegion image;
 	public ArrayList<Drop> drops = new ArrayList<>();
@@ -30,7 +31,7 @@ public class EnemyInfo {
 	public Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
 	private boolean copied = false;
 
-	public EnemyInfo(JsonValue root, String name) throws Exception {
+	public CreatureInfo(JsonValue root, String name) throws Exception {
 		this.name = name;
 
 		for (int i = 0; i < this.animations.length; i++) {
@@ -42,7 +43,7 @@ public class EnemyInfo {
 				String from = root.getString("copy");
 
 				if (from.equals(name)) {
-					throw new Exception("You can't copy enemy from it self");
+					throw new Exception("You can't copy creature from it self");
 				}
 
 				this.copy(from);
@@ -57,17 +58,18 @@ public class EnemyInfo {
 	private void copy(String from) throws Exception {
 		this.copied = true;
 
-		EnemyInfo info = Enemies.ENEMY_CACHE.get(from);
+		CreatureInfo info = Creatures.CREATURE_CACHE.get(from);
 
 		if (info == null) {
-			throw new Exception("Enemy for copy " + from + " is not found");
+			throw new Exception("Creature for copy " + from + " is not found");
 		}
 
 		this.hp = info.hp.clone();
 		this.defense = info.defense.clone();
 		this.damage = info.damage.clone();
-		this.texture = info.texture;
 		this.speed = info.speed;
+		this.spawnWeight = info.spawnWeight;
+		this.type = info.type;
 
 		for (Drop drop : info.drops) {
 			this.drops.add(drop.clone());
@@ -96,20 +98,32 @@ public class EnemyInfo {
 			this.damage = root.get("damage").asIntArray();
 		}
 
-		if (root.has("texture")) {
-			this.texture = root.get("texture").asString();
-		}
-
 		if (root.has("speed")) {
 			this.speed = root.get("speed").asFloat();
 		}
 
+		short ai = 0;
+
 		if (root.has("ai")) {
-			this.ai = root.get("ai").asShort();
+			ai = root.get("ai").asShort();
 		}
 
 		if (root.has("ai")) {
-			this.ai = root.get("ai").asShort();
+			ai = root.get("ai").asShort();
+		}
+
+		if (this.ai == null) {
+			throw new Exception("AI with id " + ai + " is not found");
+		} else {
+			this.ai = AI.fromID(ai);
+		}
+
+		if (root.has("spawnWeight")) {
+			this.spawnWeight = root.get("spawnWeight").asByte();
+		}
+
+		if (root.has("type")) {
+			this.type = root.get("type").asByte();
 		}
 
 		if (root.has("kbResist")) {
@@ -160,7 +174,7 @@ public class EnemyInfo {
 			}
 		}
 
-		this.image = Assets.getTexture(this.texture);
+		this.image = Assets.getTexture(this.name);
 
 		if (root.has("animation")) {
 			JsonValue animation = root.get("animation");
@@ -217,8 +231,8 @@ public class EnemyInfo {
 		}
 	}
 
-	public Enemy create() {
-		Enemy enemy = new Enemy(AI.fromID(this.ai), this.name);
+	public Creature create() {
+		/*Enemy creature = new Enemy(this.ai, this.name);
 
 		int hp = this.hp[0];
 		int defense = this.damage[0];
@@ -234,20 +248,34 @@ public class EnemyInfo {
 			damage = this.damage[1];
 		}
 
-		enemy.stats.set(hp, 0, defense, damage);
-		enemy.physics.setHitbox(this.hitbox.copy());
-		enemy.physics.setSize((int) this.renderBounds.width, (int) this.renderBounds.height);
-		enemy.physics.setSpeed(this.speed);
+		creature.stats.set(hp, 0, defense, damage);
+		creature.physics.setHitbox(this.hitbox.copy());
+		creature.physics.setSize((int) this.renderBounds.width, (int) this.renderBounds.height);
+		creature.physics.setSpeed(this.speed);
 
 		for (int i = 0; i < this.animations.length; i++) {
-			enemy.graphics.animations[i] = this.animations[i].copy();
-			enemy.graphics.animations[i].setTexture(this.image);
+			creature.graphics.animations[i] = this.animations[i].copy();
+			creature.graphics.animations[i].setTexture(this.image);
 		}
 
 		for (int i = 0; i < this.drops.size(); i++) {
-			enemy.drops.add(this.drops.get(i).clone());
+			creature.drops.add(this.drops.get(i).clone());
 		}
 
-		return enemy;
+		creature.setSpawnWeight(spawnWeight);
+
+		return creature;*/
+
+		switch (this.type) {
+			case 0: // Creature
+
+			break;
+			case 1: // Enemy
+
+			break;
+			// todo: npc's
+		}
+
+		return null;
 	}
 }

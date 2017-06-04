@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.core;
 
 import org.egordorichev.lasttry.entity.ai.AIs;
-import org.egordorichev.lasttry.entity.enemy.Enemies;
+import org.egordorichev.lasttry.entity.Creatures;
 import org.egordorichev.lasttry.item.Items;
 
 public class Bootstrap {
@@ -20,6 +20,6 @@ public class Bootstrap {
 
 		Items.load();
 		AIs.load();
-		Enemies.load();
+		Creatures.load();
 	}
 }

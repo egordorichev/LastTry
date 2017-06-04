@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
-import org.egordorichev.lasttry.entity.enemy.Enemies;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -20,7 +18,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EntityManager {
 	private List<Entity> entities = new ArrayList<>();
-	private List<Enemy> enemyEntities = new ArrayList<>();
+	private List<Creature> creatureEntities = new ArrayList<>();
 	private List<Entity> clearList = new ArrayList<>();
 	private static EntityComparator comparator = new EntityComparator();
 
@@ -54,8 +52,9 @@ public class EntityManager {
 	public void update(int dt) {
 		for (Entity entity : this.clearList) {
 			this.entities.remove(entity);
-			if (entity instanceof Enemy) {
-				this.enemyEntities.remove(entity);
+
+			if (entity instanceof Creature) {
+				this.creatureEntities.remove(entity);
 			}
 		}
 
@@ -118,18 +117,6 @@ public class EntityManager {
 		Collections.sort(this.entities, comparator);
 	}
 
-	public Enemy spawnEnemy(String name, int x, int y) {
-		Enemy enemy = Enemies.create(name);
-
-		if (enemy == null) {
-			return null;
-		}
-
-		this.enemyEntities.add(enemy);
-		this.spawn(enemy, x, y);
-		return enemy;
-	}
-
 	public void remove(Entity entity) {
 		this.entities.remove(entity);
 	}
@@ -142,21 +129,21 @@ public class EntityManager {
 		return entities;
 	}
 
-	public List<Enemy> getEnemyEntities() {
-		return enemyEntities;
+	public List<Creature> getCreatureEntities() {
+		return creatureEntities;
 	}
 
 	private synchronized void attemptDespawnEnemies() {
 		try {
-			for (int i = 0; i < this.enemyEntities.size(); i++) {
-				CreatureWithAI creatureWithAI = enemyEntities.get(i);
+			for (int i = 0; i < this.creatureEntities.size(); i++) {
+				Creature creature = creatureEntities.get(i);
 
 				// Acquire a read only lock, source:
 				// http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
 				ReadWriteLock readOnlyLock = new ReentrantReadWriteLock();
 
 				readOnlyLock.readLock().lock();
-				creatureWithAI.tryToDespawn();
+				creature.tryToDespawn();
 				readOnlyLock.readLock().unlock();
 			}
 		} catch (Exception e) {

@@ -2,12 +2,14 @@ package org.egordorichev.lasttry.world.spawn;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
-import org.egordorichev.lasttry.world.spawn.components.EnemySpawnComponent;
+import org.egordorichev.lasttry.world.spawn.components.CreatureSpawnComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
 
@@ -20,101 +22,100 @@ import java.util.Optional;
  * Created by LogoTie on 17/04/2017.
  */
 public class SpawnSystem {
-    private  Biome biome;
-    private int spawnWeightOfCurrentlyActiveEnemies;
-    private CircleAreaComponent playerActiveArea;
-    private int enemiesInActiveAreaCount;
+	private  Biome biome;
+	private int spawnWeightOfCurrentlyActiveEnemies;
+	private CircleAreaComponent playerActiveArea;
+	private int enemiesInActiveAreaCount;
 
-    public void update() {
-        if(Globals.environment.currentBiome == null){
-            return;
-        }
+	public void update() {
+		if(Globals.environment.currentBiome == null){
+			return;
+		}
 
-        this.biome = Globals.environment.currentBiome; // Get user biome
-        this.refreshTriggered();
-    }
+		this.biome = Globals.environment.currentBiome; // Get user biome
+		this.refreshTriggered();
+	}
 
-    //The following three methods are exposed for the debugger.
-    public int getSpawnWeightOfCurrentlyActiveEnemies() {
-        return spawnWeightOfCurrentlyActiveEnemies;
-    }
+	//The following three methods are exposed for the debugger.
+	public int getSpawnWeightOfCurrentlyActiveEnemies() {
+		return spawnWeightOfCurrentlyActiveEnemies;
+	}
 
-    public int getEnemiesInActiveAreaCount() {
-        return enemiesInActiveAreaCount;
-    }
+	public int getEnemiesInActiveAreaCount() {
+		return enemiesInActiveAreaCount;
+	}
 
-    public int getRemainingSpawnWeightOfBiome() {
-        return biome.getSpawnMax() - spawnWeightOfCurrentlyActiveEnemies;
-    }
+	public int getRemainingSpawnWeightOfBiome() {
+		return biome.getSpawnMax() - spawnWeightOfCurrentlyActiveEnemies;
+	}
 
-    private void refreshTriggered() {
+	private void refreshTriggered() {
 
-        final int maxSpawns = this.biome.getSpawnMax();
+		final int maxSpawns = this.biome.getSpawnMax();
 
-        final int origSpawnRate = this.biome.getSpawnRate();
+		final int origSpawnRate = this.biome.getSpawnRate();
 
-        playerActiveArea = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
+		playerActiveArea = GridComponent.retrieveActiveAreaCircle(Globals.environment.time);
 
-        ArrayList<Enemy> enemiesInActiveArea = EnemySpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
+		ArrayList<Creature> creaturesInActiveArea = CreatureSpawnComponent.generateEnemiesInActiveArea(playerActiveArea);
 
-        enemiesInActiveAreaCount = enemiesInActiveArea.size();
+		enemiesInActiveAreaCount = creaturesInActiveArea.size();
 
-        //Calculate if any enemy is less than or equal to the remaining max space of the biome
-        final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, enemiesInActiveArea);
+		//Calculate if any enemy is less than or equal to the remaining max space of the biome
+		final boolean spaceForNewEnemy = this.ableToSpawnNewEnemy(maxSpawns, creaturesInActiveArea);
 
-        if(spaceForNewEnemy){
-            this.spawnRequested(origSpawnRate, maxSpawns);
-        }else{
-            return;
-        }
-    }
+		if(spaceForNewEnemy){
+			this.spawnRequested(origSpawnRate, maxSpawns);
+		}else{
+			return;
+		}
+	}
 
-    private void spawnRequested(final int origSpawnRate, final int maxSpawns) {
-        //Calculate spawn rate based on certain rules.
-        final float spawnRateFinal = SpawnRateComponent.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
+	private void spawnRequested(final int origSpawnRate, final int maxSpawns) {
+		//Calculate spawn rate based on certain rules.
+		final float spawnRateFinal = SpawnRateComponent.calculateSpawnRate(origSpawnRate, spawnWeightOfCurrentlyActiveEnemies, maxSpawns);
 
-        if (!EnemySpawnComponent.shouldEnemySpawn(spawnRateFinal)) {
-            return;
-        }
+		if (!CreatureSpawnComponent.shouldCreatureSpawn(spawnRateFinal)) {
+			return;
+		}
 
-        List<Enemy> eligibleEnemiesForSpawn = EnemySpawnComponent.retrieveEligibleSpawnEnemies(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
+		List<String> eligibleCreaturesForSpawn = CreatureSpawnComponent.retrieveEligibleSpawnCreatures(maxSpawns-spawnWeightOfCurrentlyActiveEnemies);
 
-        if (eligibleEnemiesForSpawn.size() == 0) {
-            return;
-        }else{
-            this.spawnTriggered(eligibleEnemiesForSpawn);
-        }
-    }
+		if (eligibleCreaturesForSpawn.size() == 0) {
+			return;
+		}else{
+			this.spawnTriggered(eligibleCreaturesForSpawn);
+		}
+	}
 
-    private void spawnTriggered(final List<Enemy> eligibleEnemiesForSpawn) {
-        Enemy enemyToBeSpawned = EnemySpawnComponent.retrieveRandomEnemy(eligibleEnemiesForSpawn);
+	private void spawnTriggered(final List<String> eligibleCreaturesForSpawn) {
+		Creature creatureToBeSpawned = Creatures.create(CreatureSpawnComponent.retrieveRandomCreature(eligibleCreaturesForSpawn));
+		Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
 
-        Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
+		if(optionalSuitableXySpawnPoint.isPresent()){
+			int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
+			int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 
-        if(optionalSuitableXySpawnPoint.isPresent()){
-            int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
-            int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
+			Globals.entityManager.spawn(creatureToBeSpawned, xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint * Block.SIZE);
+			LastTry.debug.print("Spawn has been triggered");
+		}else{
+			LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
+			return;
+		}
 
-            Globals.entityManager.spawnEnemy(enemyToBeSpawned.getName(), xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint *Block.SIZE);
-            LastTry.debug.print("Spawn has been triggered");
-        }else{
-            LastTry.debug.print("Enemy eligible spawn counter expired, unable to find suitable point to spawn enemy");
+	}
 
-            return;
-        }
+	private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, List<Creature> enemiesInActiveArea) {
+		// TODO Expensive calculation
+		// TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
 
-    }
+		this.spawnWeightOfCurrentlyActiveEnemies = CreatureSpawnComponent.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
 
-    private boolean ableToSpawnNewEnemy(int maxSpawnsOfBiome, List<Enemy> enemiesInActiveArea) {
-        // TODO Expensive calculation
-        // TODO Reached 49 and got stuck as there is no monster with spawn weight of 1, wasting calculations.
-        this.spawnWeightOfCurrentlyActiveEnemies = EnemySpawnComponent.calcSpawnWeightOfActiveEnemies(enemiesInActiveArea);
+		if (spawnWeightOfCurrentlyActiveEnemies >= maxSpawnsOfBiome) {
+			return false;
+		}
 
-        if(spawnWeightOfCurrentlyActiveEnemies>=maxSpawnsOfBiome){
-            return false;
-        }
-
-        return true;
-    }
+		return true;
+	}
 
 }

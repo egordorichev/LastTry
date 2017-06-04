@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.world.spawn.components;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.CreatureWithAI;
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
@@ -171,10 +171,10 @@ public class GridComponent {
         return rotatedXyPoints;
     }
 
-    public static boolean isCreatureInPlayerActiveArea(CreatureWithAI creatureWithAI, CircleAreaComponent area) {
+    public static boolean isCreatureInPlayerActiveArea(Creature creature, CircleAreaComponent area) {
         // Get block co ordinates of enemy
-        int enemyBlockGridX = creatureWithAI.physics.getGridX();
-        int enemyBlockGridY = creatureWithAI.physics.getGridY();
+        int enemyBlockGridX = creature.physics.getGridX();
+        int enemyBlockGridY = creature.physics.getGridY();
 
         boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
 

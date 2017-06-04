@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.entity.enemy.Enemies;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
@@ -70,21 +71,21 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
                 }
             }
         });
-        this.commands.register(new Command("spawn", "Spawn in an entity", CMDCategory.DEBUG) {
+        this.commands.register(new Command("spawn", "Spawn in an creature", CMDCategory.DEBUG) {
             @Override
             public void onRun(String[] args) {
                 if (args.length != 1 && args.length != 2) {
-                    print("/spawn [enemy name] (count)");
+                    print("/spawn [creature name] (count)");
                 } else {
                     String name = args[0].replace("\"", "");
-                    Enemy enemy = Enemies.create(name);
+                    Creature creature = Creatures.create(name);
                     int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
-                    if (enemy == null) {
-                        print("Unknown enemy");
+                    if (creature == null) {
+                        print("Unknown creature");
                     } else {
                         for (int i = 0; i < count; i++) {
-                            Globals.entityManager.spawnEnemy(name, (int) Globals.player.physics.getX(),
+                            Globals.entityManager.spawn(creature, (int) Globals.player.physics.getX(),
                                     (int) Globals.player.physics.getY());
                         }
                     }

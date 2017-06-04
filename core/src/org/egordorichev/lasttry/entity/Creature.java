@@ -3,12 +3,21 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
+import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.util.Util;
+import org.egordorichev.lasttry.world.WorldTime;
+import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
+import org.egordorichev.lasttry.world.spawn.components.GridComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Creature extends Entity {
 	protected static final int ATTACK_INVULN_TIME = 10;
+	protected int spawnWeight = 1;
+	public CreatureDropsComponent drops = new CreatureDropsComponent();
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
 	public CreatureEffectsComponent effects;
@@ -26,8 +35,7 @@ public class Creature extends Entity {
 	}
 
 	public void hit(int damage) {
-		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO:
-																		// crit?
+		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO: crit?
 				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
 				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
@@ -87,5 +95,29 @@ public class Creature extends Entity {
 
 	public boolean isInvulnrable() {
 		return this.stats.getInvulnTime() > 0;
+	}
+
+	@Override
+	public void onDeath() {
+		this.drops.drop();
+	}
+
+	public void tryToDespawn() {
+		try {
+			final WorldTime currentTime = Globals.environment.time;
+			final CircleAreaComponent playerActiveArea = GridComponent.retrieveActiveAreaCircle(currentTime);
+			final boolean isEnemyInActiveArea = GridComponent.isCreatureInPlayerActiveArea(this, playerActiveArea);
+
+			if(!isEnemyInActiveArea){
+				Globals.entityManager.markForRemoval(this);
+			}
+
+		} catch (Exception e){
+			LastTry.handleException(e);
+		}
+	}
+
+	public int getSpawnWeight() {
+		return spawnWeight;
 	}
 }

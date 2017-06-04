@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
+import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -133,7 +133,7 @@ public class Tool extends Item {
         Creature cowner = (Creature) owner;
 
         // Get the list of enemies
-        List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
+        List<Creature> activeEnemies = Globals.entityManager.getCreatureEntities();
 
         // Get the hitbox that the tool takes up
         Rectangle equippedPlayerHitBox = generateToolHitbox();
@@ -149,7 +149,7 @@ public class Tool extends Item {
         });
     }
 
-    private void applyKnockback(Creature attacker, Enemy enemy, int damage) {
+    private void applyKnockback(Creature attacker, Creature enemy, int damage) {
         float knockPower = damage * -0.04F;
         Vector2 diff = attacker.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
         Vector2 force = diff.scl(knockPower);
@@ -157,7 +157,7 @@ public class Tool extends Item {
         enemy.physics.getVelocity().add(force);
     }
 
-    private void inflictDamageOnEnemy(final Enemy enemy, int damage) {
+    private void inflictDamageOnEnemy(final Creature enemy, int damage) {
         enemy.hit(damage);
     }
 
@@ -176,7 +176,7 @@ public class Tool extends Item {
         return finalHitbox.offset(dir * offsetDistance, 0);
     }
 
-    private int calculateDamageToInflict(final Enemy enemy) {
+    private int calculateDamageToInflict(final Creature enemy) {
         int weaponDamage = Math.round(this.baseDamage);
 
         if (this.criticalStrikeChanceActive()) {
