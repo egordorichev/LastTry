@@ -81,6 +81,8 @@ public abstract class Command {
     public void onFail(Exception e) {
         if (e instanceof NumberFormatException) {
             Log.error("Failed to parse numeric input");
+        } if (e instanceof IndexOutOfBoundsException) {
+            Log.error("Failed IOOBE");
         } else {
             e.printStackTrace();
         }

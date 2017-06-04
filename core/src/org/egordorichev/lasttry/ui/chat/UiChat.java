@@ -56,11 +56,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
         this.commands.register(new Command("give", "Gives the player an item", CMDCategory.GAME) {
             @Override
             public void onRun(String[] args) {
-                if (args.length != 2 && args.length != 3) {
+                if (args.length != 1 && args.length != 2) {
                     print("/give [item id] (count)");
                 } else {
                     Item item = Item.fromID(Integer.valueOf(args[1]));
-                    int count = args.length == 2 ? 1 : Integer.valueOf(args[2]);
+                    int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
                     if (item == null) {
                         print("Unknown item");
@@ -73,12 +73,12 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
         this.commands.register(new Command("spawn", "Spawn in an entity", CMDCategory.DEBUG) {
             @Override
             public void onRun(String[] args) {
-                if (args.length != 2 && args.length != 3) {
+                if (args.length != 1 && args.length != 2) {
                     print("/spawn [enemy name] (count)");
                 } else {
-                    String name = args[1].replace("\"", "");
+                    String name = args[0].replace("\"", "");
                     Enemy enemy = Enemies.create(name);
-                    int count = args.length == 2 ? 1 : Integer.valueOf(args[2]);
+                    int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
                     if (enemy == null) {
                         print("Unknown enemy");
@@ -94,7 +94,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
         this.commands.register(new Command("chunks", "Chunk debug information", CMDCategory.DEBUG) {
             @Override
             public void onRun(String[] args) {
-                if (args.length == 1) {
+                if (args.length == 0) {
                     print("/chunks [gc / list]");
                 } else {
                     switch (args[1]) {

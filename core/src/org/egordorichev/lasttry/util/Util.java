@@ -118,4 +118,8 @@ public class Util {
         rectangle.height += expansion * 2;
     }
 
+    public static boolean inRange(float value, float min, float max) {
+        return value >= min && value <= max;
+    }
+
 }
