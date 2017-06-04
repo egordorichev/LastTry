@@ -78,6 +78,8 @@ public class Args {
 				case "-f":
 					config.fullscreen = true;
 				break;
+				default:
+					throw new Exception("Unknown arg " + arg);
 			}
 		}
 	}
