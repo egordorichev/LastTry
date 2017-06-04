@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Creatures;
 import org.egordorichev.lasttry.entity.Enemy;
@@ -22,215 +23,221 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 300;
-    private boolean open;
-    private UiTextInput input;
-    /**
-     * Lines to display in chat.
-     */
-    private List<ChatLine> lines = new ArrayList<>();
-    /**
-     * Command handler used for storing commands and simplifying invocation of
-     * them.
-     */
-    private final CommandHandler commands = new CommandHandler();
+	public static final int WIDTH = 400;
+	public static final int HEIGHT = 300;
+	private boolean open;
+	private UiTextInput input;
+	/**
+	 * Lines to display in chat.
+	 */
+	private List<ChatLine> lines = new ArrayList<>();
+	/**
+	 * Command handler used for storing commands and simplifying invocation of
+	 * them.
+	 */
+	private final CommandHandler commands = new CommandHandler();
 
-    public UiChat() {
-        super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
-        this.initCommands();
-    }
+	public UiChat() {
+		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
+		this.initCommands();
+	}
 
-    private void initCommands() {
-        // TODO: Hide commands based on user permissions.
-        this.commands.register(new Command("help", "Shows a list of existing chat commands", CMDCategory.GAME) {
-            @Override
-            public void onRun(String[] args) {
-                // TODO: Hide commands based on user permissions.
-                //
-                // Streamed sorting + print consumer because it's shorter
-                // than a for loop.
-                commands.getCommands().stream().sorted(commands.getSorter())
-                        .forEach((c) -> printf("%-8s - %s\n", c.getHandle(), c.getDescription()));
-            }
-        });
-        this.commands.register(new Command("give", "Gives the player an item", CMDCategory.GAME) {
-            @Override
-            public void onRun(String[] args) {
-                if (args.length != 1 && args.length != 2) {
-                    print("/give [item id] (count)");
-                } else {
-                    Item item = Item.fromID(Integer.valueOf(args[1]));
-                    int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
+	private void initCommands() {
+		// TODO: Hide commands based on user permissions.
+		this.commands.register(new Command("help", "Shows a list of existing chat commands", CMDCategory.GAME) {
+			@Override
+			public void onRun(String[] args) {
+				// TODO: Hide commands based on user permissions.
+				//
+				// Streamed sorting + print consumer because it's shorter
+				// than a for loop.
+				commands.getCommands().stream().sorted(commands.getSorter())
+						.forEach((c) -> printf("%-8s - %s\n", c.getHandle(), c.getDescription()));
+			}
+		});
+		this.commands.register(new Command("give", "Gives the player an item", CMDCategory.GAME) {
+			@Override
+			public void onRun(String[] args) {
+				if (args.length != 1 && args.length != 2) {
+					print("/give [item id] (count)");
+				} else {
+					Item item = Item.fromID(Integer.valueOf(args[1]));
+					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
-                    if (item == null) {
-                        print("Unknown item");
-                    } else {
-                        Globals.player.getInventory().add(new ItemHolder(item, count));
-                    }
-                }
-            }
-        });
-        this.commands.register(new Command("spawn", "Spawn in an creature", CMDCategory.DEBUG) {
-            @Override
-            public void onRun(String[] args) {
-                if (args.length != 1 && args.length != 2) {
-                    print("/spawn [creature name] (count)");
-                } else {
-                    String name = args[0].replace("\"", "");
-                    Creature creature = Creatures.create(name);
-                    int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
+					if (item == null) {
+						print("Unknown item");
+					} else {
+						Globals.player.getInventory().add(new ItemHolder(item, count));
+					}
+				}
+			}
+		});
+		this.commands.register(new Command("spawn", "Spawn in an creature", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				if (args.length != 1 && args.length != 2) {
+					print("/spawn [creature name] (count)");
+				} else {
+					String name = args[0].replace("\"", "");
+					Creature creature = Creatures.create(name);
+					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
-                    if (creature == null) {
-                        print("Unknown creature");
-                    } else {
-                        for (int i = 0; i < count; i++) {
-                            Globals.entityManager.spawn(creature, (int) Globals.player.physics.getX(),
-                                    (int) Globals.player.physics.getY());
-                        }
-                    }
-                }
-            }
-        });
-        this.commands.register(new Command("chunks", "Chunk debug information", CMDCategory.DEBUG) {
-            @Override
-            public void onRun(String[] args) {
-                if (args.length == 0) {
-                    print("/chunks [gc / list]");
-                } else {
-                    switch (args[1]) {
-                    case "gc":
-                        Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
-                        print("Running instant chunk GC...");
-                        break;
-                    case "list":
-                        print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
-                                + Globals.getWorld().getSize().getMaxChunks());
-                        break;
-                    default:
-                        print("/chunks [gc / list]");
-                    }
-                }
-            }
-        });
-        this.commands.register(new Command("heal", "Heals the player", CMDCategory.ADMININSTRATION) {
-            @Override
-            public void onRun(String[] args) {
-                Globals.player.stats.modifyHP(+1000);
-            }
-        });
-        this.commands.register(new Command("day", "Sets the time to day", CMDCategory.ADMININSTRATION) {
-            @Override
-            public void onRun(String[] args) {
-                Globals.environment.time.setHour((byte) 4);
-                Globals.environment.time.setMinute((byte) 30);
-            }
-        });
-        this.commands.register(new Command("night", "Sets the time to night", CMDCategory.ADMININSTRATION) {
-            @Override
-            public void onRun(String[] args) {
-                Globals.environment.time.setHour((byte) 20);
-                Globals.environment.time.setMinute((byte) 30);
-            }
-        });
-    }
+					if (creature == null) {
+						print("Unknown creature");
+					} else {
+						for (int i = 0; i < count; i++) {
+							Globals.entityManager.spawn(creature, (int) Globals.player.physics.getX(),
+								(int) Globals.player.physics.getY());
+						}
+					}
+				}
+			}
+		});
+		this.commands.register(new Command("chunks", "Chunk debug information", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				if (args.length == 0) {
+					print("/chunks [gc / list]");
+				} else {
+					switch (args[1]) {
+					case "gc":
+						Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
+						print("Running instant chunk GC...");
+					break;
+					case "list":
+						print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
+							+ Globals.getWorld().getSize().getMaxChunks());
+					break;
+					default:
+						print("/chunks [gc / list]");
+					}
+				}
+			}
+		});
+		this.commands.register(new Command("heal", "Heals the player", CMDCategory.ADMININSTRATION) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.player.stats.modifyHP(+1000);
+			}
+		});
+		this.commands.register(new Command("day", "Sets the time to day", CMDCategory.ADMININSTRATION) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.environment.time.setHour((byte) 4);
+				Globals.environment.time.setMinute((byte) 30);
+			}
+		});
+		this.commands.register(new Command("night", "Sets the time to night", CMDCategory.ADMININSTRATION) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.environment.time.setHour((byte) 20);
+				Globals.environment.time.setMinute((byte) 30);
+			}
+		});
+		this.commands.register(new Command("light", "Toggles lights", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				LastTry.noLight = !LastTry.noLight;
+			}
+		});
+	}
 
-    @Override
-    public void addComponents() {
-        this.input = new UiTextInput(new Rectangle(10, 20, 400, 20), Origin.BOTTOM_LEFT) {
-            @Override
-            public void onEnter() {
-                String text = getText();
-                // FIXME: WTF invisible characters
-                //
-                // Something is REALLY weird with invisible characters
-                if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
-                    // TODO: Wtf is char(13) doing at the beginning of a string?
-                    text = text.substring(text.indexOf("/")+1);
-                    commands.runInput(text);
-                } else{
-                    // TODO: Player chat
-                    print("<Player>" + text);
-                }
-                
-                clear();
-            }
-        };
+	@Override
+	public void addComponents() {
+		this.input = new UiTextInput(new Rectangle(10, 20, 400, 20), Origin.BOTTOM_LEFT) {
+			@Override
+			public void onEnter() {
+				String text = getText();
+				// FIXME: WTF invisible characters
+				//
+				// Something is REALLY weird with invisible characters
+				if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
+					// TODO: Wtf is char(13) doing at the beginning of a string?
+					text = text.substring(text.indexOf("/")+1);
+					commands.runInput(text);
+				} else{
+					// TODO: Player chat
+					print("<Player>" + text);
+				}
 
-        this.input.setFont(Assets.f18);
-        this.input.setIgnoreInput(true);
+				clear();
+			}
+		};
 
-        this.add(this.input);
-    }
+		this.input.setFont(Assets.f18);
+		this.input.setIgnoreInput(true);
 
-    @Override
-    public void render() {
-        
-        if (this.open) {
-            super.render();
-        }
+		this.add(this.input);
+	}
 
-        for (int i = this.lines.size() - 1; i >= 0; i--) {
-            ChatLine line = this.lines.get(i);
+	@Override
+	public void render() {
 
-            if (line.shouldBeRemoved()) {
-                this.lines.remove(i);
-            }
+		if (this.open) {
+			super.render();
+		}
 
-            Assets.f18.draw(Graphics.batch, line.text, 10, 40 + i * 20);
-        }
+		for (int i = this.lines.size() - 1; i >= 0; i--) {
+			ChatLine line = this.lines.get(i);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Globals.setCurrentScreen(null);
-        }
-    }
+			if (line.shouldBeRemoved()) {
+				this.lines.remove(i);
+			}
 
-    /**
-     * Prints the objects to chat in the format given.
-     * 
-     * @param format
-     *            Format to use.
-     * @param args
-     *            Objects to print.
-     */
-    public void printf(String format, Object... args) {
-        String text = String.format(format, args);
-        print(text);
-    }
+			Assets.f18.draw(Graphics.batch, line.text, 10, 40 + i * 20);
+		}
 
-    /**
-     * Prints the text to chat.
-     * 
-     * @param text
-     *            Text to print.
-     */
-    public void print(String text) {
-        this.lines.add(0, new ChatLine(text));
-    }
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			Globals.setCurrentScreen(null);
+		}
+	}
 
-    @Override
-    public void onUIOpen() {
-        this.input.setIgnoreInput(false);
-        this.input.type("/");
+	/**
+	 * Prints the objects to chat in the format given.
+	 *
+	 * @param format
+	 *            Format to use.
+	 * @param args
+	 *            Objects to print.
+	 */
+	public void printf(String format, Object... args) {
+		String text = String.format(format, args);
+		print(text);
+	}
 
-        GamePlayState.stop();
-    }
+	/**
+	 * Prints the text to chat.
+	 *
+	 * @param text
+	 *            Text to print.
+	 */
+	public void print(String text) {
+		this.lines.add(0, new ChatLine(text));
+	}
 
-    @Override
-    public void onUIClose() {
-        this.input.setIgnoreInput(true);
-        this.input.clear();
+	@Override
+	public void onUIOpen() {
+		this.input.setIgnoreInput(false);
+		this.input.type("/");
 
-        GamePlayState.play();
-    }
+		GamePlayState.stop();
+	}
 
-    @Override
-    public boolean isOpen() {
-        return this.open;
-    }
+	@Override
+	public void onUIClose() {
+		this.input.setIgnoreInput(true);
+		this.input.clear();
 
-    @Override
-    public void setOpen(boolean open) {
-        this.open = open;
-    }
+		GamePlayState.play();
+	}
+
+	@Override
+	public boolean isOpen() {
+		return this.open;
+	}
+
+	@Override
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
 }
