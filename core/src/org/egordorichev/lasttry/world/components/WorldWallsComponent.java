@@ -63,10 +63,10 @@ public class WorldWallsComponent extends WorldComponent {
 			return null;
 		}
 
-		Chunk chunk = this.world.chunks.getFor(x, y);
+		Chunk chunk = this.world.getChunks().getFor(x, y);
 
 		if (chunk == null) {
-			Globals.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
+			Globals.getWorld().getChunks().load(x / Chunk.SIZE, y / Chunk.SIZE);
 			return null;
 		}
 

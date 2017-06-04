@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.entity.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
-import org.egordorichev.lasttry.item.ItemHolder;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private TextureRegion texture;
@@ -19,7 +19,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
-		ItemHolder holder = Globals.player.getInventory().getActiveHolder();
+		ItemHolder holder = Globals.player.getInventory().getActiveItem();
 
 		if (holder.getItem() != null) {
 			holder.getItem().renderAnimation();

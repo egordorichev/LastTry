@@ -24,7 +24,7 @@ public class GrassSeeds extends Item {
         int y = LastTry.getMouseYInWorld() / Block.SIZE;
         // TODO: Distance checks from cursor coordinates to player coordinates
 
-        short id = Globals.world.blocks.getID(x, y);
+        short id = Globals.getWorld().getBlockID(x, y);
 
         // Check if the plant can be placed.
         if (this.grass.canBeGrownAt(id)) {
@@ -36,8 +36,8 @@ public class GrassSeeds extends Item {
                 return false;
             }
 
-            Globals.world.blocks.set(this.grass.getID(), x, y);
-            Globals.world.blocks.set((byte) 1, x, y);
+            Globals.getWorld().setBlock(this.grass.getID(), x, y);
+            Globals.getWorld().setBlock((byte) 1, x, y);
 
             return true;
         }

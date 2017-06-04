@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.util;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Rectangle {
     public float x;
     public float y;
@@ -31,7 +33,9 @@ public class Rectangle {
         return (this.x < rect.x + rect.width && this.x + this.width > rect.x && this.y < rect.y + rect.height
                 && this.y + this.height > rect.y);
     }
-
+    public Rectangle offset(Vector2 position) {
+        return offset(position.x, position.y);
+    }
     public Rectangle offset(float x, float y) {
         return offset(x, y, 0, 0);
     }

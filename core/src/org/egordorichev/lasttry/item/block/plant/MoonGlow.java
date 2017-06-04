@@ -31,7 +31,7 @@ public class MoonGlow extends Plant {
 			return false;
 		}
 
-		short id = Globals.world.blocks.getHP(x, y - 1);
+		short id = Globals.getWorld().getBlockHP(x, y - 1);
 
 		if (id != ItemID.jungleGrassBlock) {
 			return false;

@@ -3,8 +3,9 @@ package org.egordorichev.lasttry.item.items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Rarity;
-import org.egordorichev.lasttry.ui.InventoryOwner;
 
 public class Sword extends MeleeWeapon {
     public Sword(short id, String name, Rarity rarity, float baseDamage, int useSpeed, TextureRegion texture) {
@@ -30,7 +31,7 @@ public class Sword extends MeleeWeapon {
     }
 
     @Override
-    public void update(InventoryOwner owner, int dt) {
+    public void update(InventoryOwner<?> owner, int dt) {
         if (canBeUsed()) {
             this.use();
         }

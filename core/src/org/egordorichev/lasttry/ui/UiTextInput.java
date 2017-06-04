@@ -1,8 +1,9 @@
 package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
+
+import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 
@@ -17,7 +18,7 @@ public class UiTextInput extends UiTextLabel {
     public UiTextInput(Rectangle rectangle, Origin origin) {
         super(rectangle, origin, "|");
 
-        InputManager.multiplexer.addProcessor(new InputProcessor() {
+        InputManager.multiplexer.addProcessor(new DefaultInputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
             	if (ignoreInput) {
@@ -37,11 +38,6 @@ public class UiTextInput extends UiTextLabel {
             }
 
             @Override
-            public boolean keyUp(int keycode) {
-                return false;
-            }
-
-            @Override
             public boolean keyTyped(char character) {
 	            if (ignoreInput) {
 		            return false;
@@ -54,31 +50,6 @@ public class UiTextInput extends UiTextLabel {
                 text += character;
                 setLabel(text + "|");
 
-                return false;
-            }
-
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                return false;
-            }
-
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                return false;
-            }
-
-            @Override
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                return false;
-            }
-
-            @Override
-            public boolean mouseMoved(int screenX, int screenY) {
-                return false;
-            }
-
-            @Override
-            public boolean scrolled(int amount) {
                 return false;
             }
         });

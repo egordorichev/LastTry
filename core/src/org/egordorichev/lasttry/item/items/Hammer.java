@@ -22,7 +22,7 @@ public class Hammer extends DigTool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Wall wall = Globals.world.walls.get(x, y);
+		Wall wall = Globals.getWorld().getWall(x, y);
 
 		if (wall == null) {
 			return false;
@@ -31,10 +31,10 @@ public class Hammer extends DigTool {
 		ToolPower power = wall.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = Globals.world.walls.getHP(x, y);
+			byte hp = Globals.getWorld().getWallHP(x, y);
 
 			if (hp > 0) {
-				Globals.world.walls.setHP((byte) (hp - 1), x, y);
+				Globals.getWorld().setWallHP((byte) (hp - 1), x, y);
 			}
 		}
 

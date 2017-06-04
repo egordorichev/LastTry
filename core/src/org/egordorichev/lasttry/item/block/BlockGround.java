@@ -13,17 +13,17 @@ public class BlockGround extends Block {
 
 	@Override
 	public byte calculateBinary(int x, int y) {
-		boolean t = Globals.world.blocks.get(x, y + 1) instanceof BlockGround;
-		boolean r = Globals.world.blocks.get(x + 1, y) instanceof BlockGround;
-		boolean b = Globals.world.blocks.get(x, y - 1) instanceof BlockGround;
-		boolean l = Globals.world.blocks.get(x - 1, y) instanceof BlockGround;
+		boolean t = Globals.getWorld().getBlock(x, y + 1) instanceof BlockGround;
+		boolean r = Globals.getWorld().getBlock(x + 1, y) instanceof BlockGround;
+		boolean b = Globals.getWorld().getBlock(x, y - 1) instanceof BlockGround;
+		boolean l = Globals.getWorld().getBlock(x - 1, y) instanceof BlockGround;
 
 		return calculateBinary(t, r, b, l);
 	}
 
 	@Override
 	public void renderBlock(int x, int y, byte binary) {
-		byte hp = Globals.world.blocks.getHP(x, y);
+		byte hp = Globals.getWorld().getBlockHP(x, y);
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);

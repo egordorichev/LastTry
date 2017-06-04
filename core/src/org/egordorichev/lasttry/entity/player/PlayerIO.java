@@ -2,8 +2,8 @@ package org.egordorichev.lasttry.entity.player;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.modifier.Modifier;
@@ -46,7 +46,7 @@ public class PlayerIO {
 				short id = stream.readInt16();
 
 				if (id != 0) {
-					ItemHolder holder = Globals.player.getInventory().getItemHolder(i);
+					ItemHolder holder = Globals.player.getInventory().getItemInSlot(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
 
@@ -98,7 +98,7 @@ public class PlayerIO {
 			stream.writeInt16((short) Globals.player.stats.getMaxMana());
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				ItemHolder holder = Globals.player.getInventory().getItemHolder(i);
+				ItemHolder holder = Globals.player.getInventory().getItemInSlot(i);
 
 				if (holder.getItem() == null) {
 					stream.writeInt16(ItemID.none);

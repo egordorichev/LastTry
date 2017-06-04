@@ -17,33 +17,37 @@ public class LoadState implements State {
 	private boolean loaded = false;
 	private String loadString = "Loading...";
 
-	public LoadState() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Gdx.app.postRunnable(new Runnable() {
-					@Override
-					public void run() {
-						Bootstrap.load();
-						loadString = "Loading spawn system...";
-						Globals.spawnSystem = new SpawnSystem();
-						loadString = "Loading environment...";
-						Globals.environment = new Environment();
-						loadString = "Loading world...";
+    public LoadState() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+	                    Bootstrap.load();
+                        loadString = "Loading spawn system...";
+                        Globals.spawnSystem = new SpawnSystem();
+                        loadString = "Loading environment...";
+                        Globals.environment = new Environment();
+                        loadString = "Loading player...";
 
-						if (WorldIO.saveExists(Args.world)) {
-							WorldIO.load(Args.world);
-						} else {
-							Globals.world = WorldIO.generate(Args.world, World.Size.SMALL, 0);
-						}
+                        if (PlayerIO.saveExists(Args.player)) {
+                            PlayerIO.load(Args.player);
+                        } else {
+                            Globals.player = PlayerIO.generate(Args.player);
+                        }
+                        
+                        loadString = "Loading world...";
+                        if (WorldIO.saveExists(Args.world)) {
+                        	WorldIO.load(Args.world);
+                        } else {
+                            // TODO: Seed generation
+                            // Allow the user to generate the world seed
+                            int seed = 1337;
+                        	Globals.setWorld(WorldIO.generate(Args.world, World.Size.SMALL, 0, seed));
+                        }
 
-						loadString = "Loading player...";
-
-						if (PlayerIO.saveExists(Args.player)) {
-							PlayerIO.load(Args.player);
-						} else {
-							Globals.player = PlayerIO.generate(Args.player);
-						}
+                        Globals.getWorld().initLights();
 
 						loaded = true;
 					}

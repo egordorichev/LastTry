@@ -64,10 +64,10 @@ public class EvilBlock extends BlockGround {
             return;
         }
 
-        Block block = (Block) Item.fromID(Globals.world.blocks.getID(nx, ny));
+        Block block = (Block) Item.fromID(Globals.getWorld().getBlockID(nx, ny));
 
         if (block != null && EvilBlock.canBeInfected(block.getID())) {
-            Globals.world.blocks.set(EvilBlock.getInfectIDFor(this.id, block.getID()), nx, ny);
+            Globals.getWorld().setBlock(EvilBlock.getInfectIDFor(this.id, block.getID()), nx, ny);
         }
     }
 }

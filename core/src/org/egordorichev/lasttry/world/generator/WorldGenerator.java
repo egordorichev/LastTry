@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.World;
 import java.util.ArrayList;
@@ -11,12 +10,14 @@ public class WorldGenerator {
 	public World world;
 	private List<GeneratorTask> tasks = new ArrayList<>();
 
-	public WorldGenerator(String name, World.Size size, int flags) {
-		this.world = new World(name, size, flags);
-		Globals.world = this.world;
-
-		this.addSurfaceGenerator();
-		// this.addCavesGenerator();
+	public WorldGenerator(String name, World.Size size, int flags, int seed) {
+		this.world = new World(name, size, flags, seed);
+		Globals.setWorld(this.world);
+		this.tasks.add(new TaskTerrainGen());
+		this.tasks.add(new TaskCaveGenSimplex());
+		//this.tasks.add(new TaskBiomeTestGen());
+		//this.tasks.add(new TaskFoilageGen());
+	    //this.tasks.add(new TaskLightGen());
 	}
 
 	public void addTask(GeneratorTask task) {
@@ -32,139 +33,8 @@ public class WorldGenerator {
 	}
 
 	public World generate() {
-		this.runTasks();
-
+		this.tasks.forEach(t -> t.run(this));
 		return this.world;
-	}
-
-	private void addSurfaceGenerator() {
-		this.tasks.add(0, new GeneratorTask() { // Terrain
-			@Override
-			public void run(WorldGenerator generator) {
-				int width = generator.getWorldWidth();
-				int height = generator.getWorldHeight();
-
-				double[] points = new double[width];
-
-				int max = height - 100;
-				int min = height - 250;
-
-				for (int i = 0; i < width; i++) {
-					points[i] = LastTry.random.nextInt((max - min) + 1) + min;
-				}
-
-				for (int j = 0; j < 100; j++) {
-					for (int i = 1; i < width - 1; i++) {
-						points[i] = (points[i - 1] + points[i + 1]) / 2;
-					}
-				}
-
-				for (int x = 0; x < width; x++) {
-					int yMax = (int) points[x];
-
-					for (int y = 0; y < height; y++) {
-						if (y == yMax) {
-							generator.world.blocks.set(ItemID.grassBlock, x, y);
-						} else if (y < yMax) {
-							generator.world.blocks.set(ItemID.dirtBlock, x, y);
-							generator.world.walls.set(ItemID.dirtWall, x, y);
-						}
-					}
-				}
-			}
-		});
-	}
-
-	private void addCavesGenerator() {
-		this.tasks.add(new GeneratorTask() {
-			@Override
-			public void run(WorldGenerator generator) {
-				boolean[][] terrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
-
-				for (int y = 0; y < generator.getWorldHeight(); y++) {
-					for (int x = 0; x < generator.getWorldWidth(); x++) {
-						terrain[x][y] = LastTry.random.nextBoolean();
-					}
-				}
-
-				for (int i = 0; i < 8; i++) {
-					terrain = this.nextStep(generator, terrain);
-				}
-
-				for (int y = 0; y < generator.getWorldHeight(); y++) {
-					for (int x = 0; x < generator.getWorldWidth(); x++) {
-						if (generator.world.blocks.getID(x, y) != ItemID.dirtBlock) {
-							continue;
-						}
-
-						if (!terrain[x][y]) {
-							generator.world.blocks.set(ItemID.none, x, y);
-						} else {
-							int neighbors = this.calculateNeighbors(generator, terrain, x, y);
-
-							if (neighbors != 8) {
-								generator.world.blocks.set(ItemID.grassBlock, x, y);
-							}
-						}
-					}
-				}
-			}
-
-			private boolean[][] nextStep(WorldGenerator generator, boolean[][] terrain) {
-				boolean[][] newTerrain = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
-
-				for (int y = 0; y < generator.getWorldHeight(); y++) {
-					for (int x = 0; x < generator.getWorldWidth(); x++) {
-						int neighbors = this.calculateNeighbors(generator, terrain, x, y);
-
-						if (terrain[x][y]) {
-							if (neighbors < 3) {
-								newTerrain[x][y] = false;
-							} else {
-								newTerrain[x][y] = true;
-							}
-						} else {
-							if (neighbors > 4) {
-								newTerrain[x][y] = true;
-							} else {
-								newTerrain[x][y] = false;
-							}
-						}
-					}
-				}
-
-				return newTerrain;
-			}
-
-			private int calculateNeighbors(WorldGenerator generator, boolean[][] terrain, int x, int y) {
-				int neighbors = 0;
-
-				for (int j = y - 1; j < y + 2; j++) {
-					for (int i = x - 1; i < x + 2; i++) {
-						if (i == x && j == y) {
-							continue;
-						}
-
-						if (i < 0 || j < 0 || i >= generator.getWorldWidth() || j >= generator.getWorldHeight()) {
-							neighbors++;
-							continue;
-						}
-
-						if (terrain[i][j]) {
-							neighbors++;
-						}
-					}
-				}
-
-				return neighbors;
-			}
-		});
-	}
-
-	private void runTasks() {
-		for (GeneratorTask task : this.tasks) {
-			task.run(this);
-		}
 	}
 
 	public int getWorldWidth() {
@@ -174,4 +44,13 @@ public class WorldGenerator {
 	public int getWorldHeight() {
 		return this.world.getHeight();
 	}
+
+    public int getHighest(int x) {
+        for (int y = getWorldHeight(); y > 0; y--){
+            if (this.world.getBlockID(x, y) != ItemID.none){
+                return y;
+            }
+        }
+        return 0;
+    }
 }
