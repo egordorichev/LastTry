@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.state.GamePlayState;
 import org.egordorichev.lasttry.ui.UiPanel;
 import org.egordorichev.lasttry.ui.UiScreen;
@@ -138,6 +139,37 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				LastTry.noLight = !LastTry.noLight;
+			}
+		});
+		this.commands.register(new Command("kill", "Kills the player", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.player.die(); // todo: fatal
+			}
+		});
+		this.commands.register(new Command("clear", "Clears your inventory", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.player.getInventory().clear();
+			}
+		});
+		this.commands.register(new Command("devset", "Gives you a dev set", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.player.getInventory().clear();
+				Globals.player.getInventory().add(new ItemHolder(Items.superpick, 1));
+				Globals.player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
+				Globals.player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
+			}
+		});
+
+		this.commands.register(new Command("startset", "Gives you a start set", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.player.getInventory().clear();
+				Globals.player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
+				Globals.player.getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
+				Globals.player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
 			}
 		});
 	}
