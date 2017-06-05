@@ -57,6 +57,15 @@ public class Item {
 		String className = root.getString("type", "org.egordorichev.lasttry.item.Item");
 
 		try {
+			return createInstance(root, className);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			throw new Exception("Failed to parse " + root.name());
+		}
+	}
+
+	public static Item createInstance(JsonValue root, String className) throws Exception {
+		try {
 			Class itemClass = Class.forName(className);
 
 			Class[] types = { String.class };
@@ -70,8 +79,6 @@ public class Item {
 			return item;
 		} catch (ClassNotFoundException exception) {
 			throw new Exception("Class " + className + " is not found");
-		} catch (Exception exception) {
-			throw new Exception("Failed to parse " + root.name());
 		}
 	}
 

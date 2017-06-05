@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item.items;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.DamageType;
 
 public class Weapon extends Tool {
@@ -12,7 +13,17 @@ public class Weapon extends Tool {
         super(id);
     }
 
-	public DamageType getDamageType() {
+    @Override
+    protected void loadFields(JsonValue root) {
+        super.loadFields(root);
+
+        this.baseDamage = root.getFloat("damage", 1);
+        this.criticalStrikeChance = root.getFloat("criticalStrikeChance", 1);
+        this.autoSwing = root.getBoolean("autoSwing", true);
+        this.damageType = DamageType.valueOf(root.getString("damageType", "melee").toUpperCase());
+    }
+
+    public DamageType getDamageType() {
         return this.damageType;
     }
 

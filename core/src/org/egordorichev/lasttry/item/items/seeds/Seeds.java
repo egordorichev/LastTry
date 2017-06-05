@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item.items.seeds;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -13,6 +14,17 @@ public class Seeds extends Item {
 	public Seeds(String id) {
 		super(id);
     }
+
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		try {
+			this.plant = (Plant) Item.createInstance(root, root.getString("spreads", "org.egordorichev.lasttry.item.block.plant.DayBloom"));
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
 
 	@Override
 	public boolean use() {

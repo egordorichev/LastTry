@@ -1,12 +1,13 @@
 package org.egordorichev.lasttry.item.items;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.Item;
 
 public class Ammo extends Item {
     /**
      * Ammo damage
      */
-    protected int damage;
+    protected short damage;
     /**
      * Ammo type
      */
@@ -14,6 +15,14 @@ public class Ammo extends Item {
 
     public Ammo(String id) {
         super(id);
+    }
+
+    @Override
+    protected void loadFields(JsonValue root) {
+        super.loadFields(root);
+
+	    this.type = Type.valueOf(root.getString("type", "bullet").toUpperCase());
+	    this.damage = root.getShort("damage", (short) 0);
     }
 
     /**
@@ -30,7 +39,7 @@ public class Ammo extends Item {
      *
      * @return ammo damage.
      */
-    public int getDamage() {
+    public short getDamage() {
         return this.damage;
     }
 

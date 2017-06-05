@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.wall;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -17,7 +18,19 @@ public class Wall extends Item {
 
 	public Wall(String id) {
 		super(id);
+	}
 
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		short power[] = { 10, 0, 0 };
+
+		if (root.has("power")) {
+			power = root.get("power").asShortArray();
+		}
+
+		this.power = new ToolPower(power[0], power[1], power[2]);
 		this.tiles = this.texture.split(Block.SIZE, Block.SIZE);
 	}
 
@@ -27,10 +40,10 @@ public class Wall extends Item {
 	}
 
 	public void renderWall(int x, int y) {
-		boolean t = Globals.getWorld().walls.getID(x, y + 1) == this.id;
-		boolean r = Globals.getWorld().walls.getID(x + 1, y) == this.id;
-		boolean b = Globals.getWorld().walls.getID(x, y - 1) == this.id;
-		boolean l = Globals.getWorld().walls.getID(x - 1, y) == this.id;
+		boolean t = Globals.getWorld().walls.getID(x, y + 1).equals(this.id);
+		boolean r = Globals.getWorld().walls.getID(x + 1, y).equals(this.id);
+		boolean b = Globals.getWorld().walls.getID(x, y - 1).equals(this.id);
+		boolean l = Globals.getWorld().walls.getID(x - 1, y).equals(this.id);
 
 		byte hp = Globals.getWorld().walls.getHP(x, y);
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;

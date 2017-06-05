@@ -12,7 +12,7 @@ public class Sword extends MeleeWeapon {
     @Override
     public boolean use() {
         if (this.isReady()) {
-
+            // TODO
         }
 
         return false;
