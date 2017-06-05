@@ -58,12 +58,12 @@
 	
 	"lt:work_bench" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.WorkBench",
-		"size" : [ 2, 1 ]
+		"size" : [ 2, 1 ],
 	},
 	
 	"lt:furnance" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.Furnance",
-		"size" : [ 2, 2 ]
+		"size" : [ 2, 2 ],
 		"level" : 0
 	},
 	
