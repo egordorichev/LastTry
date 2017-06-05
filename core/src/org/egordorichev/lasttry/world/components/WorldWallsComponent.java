@@ -16,17 +16,17 @@ public class WorldWallsComponent extends WorldComponent {
 		return (Wall) Item.fromID(this.getID(x, y));
 	}
 
-	public short getID(int x, int y) {
+	public String getID(int x, int y) {
 		Chunk chunk = this.getChunk(x, y);
 
 		if (chunk == null) {
-			return ItemID.none;
+			return "";
 		}
 
 		return chunk.getWall(x, y);
 	}
 
-	public void set(short id, int x, int y) {
+	public void set(String id, int x, int y) {
 		Chunk chunk = this.getChunk(x, y);
 
 		if (chunk == null) {
@@ -62,10 +62,10 @@ public class WorldWallsComponent extends WorldComponent {
 			return null;
 		}
 
-		Chunk chunk = this.world.getChunks().getFor(x, y);
+		Chunk chunk = this.world.chunks.getFor(x, y);
 
 		if (chunk == null) {
-			Globals.getWorld().getChunks().load(x / Chunk.SIZE, y / Chunk.SIZE);
+			Globals.getWorld().chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
 			return null;
 		}
 

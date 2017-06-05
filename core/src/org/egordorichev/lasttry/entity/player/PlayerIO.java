@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
@@ -41,9 +41,9 @@ public class PlayerIO {
 			Globals.getPlayer().stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				short id = stream.readInt16();
+				String id = stream.readString();
 
-				if (id != 0) {
+				if (!id.isEmpty()) {
 					ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
@@ -99,9 +99,9 @@ public class PlayerIO {
 				ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 
 				if (holder.getItem() == null) {
-					stream.writeInt16(ItemID.none);
+					stream.writeString("");
 				} else {
-					stream.writeInt16(holder.getItem().getID());
+					stream.writeString(holder.getItem().getID());
 					stream.writeInt16((short) holder.getCount());
 
 					if (holder.getModifier() != null) {
@@ -125,11 +125,11 @@ public class PlayerIO {
 	public static Player generate(String name) {
 		Player player = new Player(name);
 
-		player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-		player.getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
-		player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
 
-		return player; // TODO
+		return player;
 	}
 
 	public static boolean saveExists(String name) {

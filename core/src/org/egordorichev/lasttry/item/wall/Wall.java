@@ -27,12 +27,12 @@ public class Wall extends Item {
 	}
 
 	public void renderWall(int x, int y) {
-		boolean t = Globals.getWorld().getWallID(x, y + 1) == this.id;
-		boolean r = Globals.getWorld().getWallID(x + 1, y) == this.id;
-		boolean b = Globals.getWorld().getWallID(x, y - 1) == this.id;
-		boolean l = Globals.getWorld().getWallID(x - 1, y) == this.id;
+		boolean t = Globals.getWorld().walls.getID(x, y + 1) == this.id;
+		boolean r = Globals.getWorld().walls.getID(x + 1, y) == this.id;
+		boolean b = Globals.getWorld().walls.getID(x, y - 1) == this.id;
+		boolean l = Globals.getWorld().walls.getID(x - 1, y) == this.id;
 
-		byte hp = Globals.getWorld().getWallHP(x, y);
+		byte hp = Globals.getWorld().walls.getHP(x, y);
 		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
 		int binary = Block.calculateBinary(t, r, b, l);
 
@@ -50,7 +50,7 @@ public class Wall extends Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.getWorld().getWallID(x, y).isEmpty()) {
+		if (this.canBePlaced(x, y) && Globals.getWorld().walls.getID(x, y).isEmpty()) {
 			this.place(x, y);
 
 			return true;
@@ -69,7 +69,7 @@ public class Wall extends Item {
 	}
 
 	public void place(int x, int y) {
-		Globals.getWorld().setWall(this.id, x, y);
+		Globals.getWorld().walls.set(this.id, x, y);
 	}
 
 	public boolean canBePlaced(int x, int y) {
@@ -82,13 +82,13 @@ public class Wall extends Item {
 			return false;
 		}
 
-		Wall t = Globals.getWorld().getWall(x, y + 1);
-		Wall b = Globals.getWorld().getWall(x, y - 1);
-		Wall l = Globals.getWorld().getWall(x + 1, y);
-		Wall r = Globals.getWorld().getWall(x - 1, y);
+		Wall t = Globals.getWorld().walls.get(x, y + 1);
+		Wall b = Globals.getWorld().walls.get(x, y - 1);
+		Wall l = Globals.getWorld().walls.get(x + 1, y);
+		Wall r = Globals.getWorld().walls.get(x - 1, y);
 
 		if (t == null && b == null && r == null && l == null) {
-			Block block = Globals.getWorld().getBlock(x, y);
+			Block block = Globals.getWorld().blocks.get(x, y);
 
 			if (block == null) {
 				return false;

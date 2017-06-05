@@ -46,7 +46,7 @@ public class WorldGenerator {
 
     public int getHighest(int x) {
         for (int y = getWorldHeight(); y > 0; y--){
-            if (this.world.getBlockID(x, y) != ItemID.none){
+            if (this.world.blocks.getID(x, y).isEmpty()) {
                 return y;
             }
         }

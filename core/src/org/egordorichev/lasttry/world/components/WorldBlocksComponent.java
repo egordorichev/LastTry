@@ -12,8 +12,7 @@ public class WorldBlocksComponent extends WorldComponent {
         super(world);
     }
 
-    // grid points
-
+    // In grid points
     public Block get(int x, int y) {
         return (Block) Item.fromID(this.getID(x, y));
     }
@@ -38,17 +37,17 @@ public class WorldBlocksComponent extends WorldComponent {
         chunk.setLight(light, x, y);
     }
 
-    public short getID(int x, int y) {
+    public String getID(int x, int y) {
         Chunk chunk = this.getChunk(x, y);
 
         if (chunk == null) {
-            return ItemID.none;
+            return "";
         }
 
         return chunk.getBlock(x, y);
     }
 
-    public void set(short id, int x, int y) {
+    public void set(String id, int x, int y) {
         Chunk chunk = this.getChunk(x, y);
 
         if (chunk == null) {
@@ -88,10 +87,10 @@ public class WorldBlocksComponent extends WorldComponent {
             return null;
         }
 
-        Chunk chunk = this.world.getChunks().getFor(x, y);
+        Chunk chunk = this.world.chunks.getFor(x, y);
 
         if (chunk == null) {
-            Globals.getWorld().getChunks().load(x / Chunk.SIZE, y / Chunk.SIZE);
+            Globals.getWorld().chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
             return null;
         }
 

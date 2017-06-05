@@ -24,24 +24,25 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 		this.itemHolder = new ItemHolder(null, 0);
 		this.type = type;
 		this.back = back;
+
 		switch (this.type) {
-		case ANY:
-		case AMMO:
-		case COIN:
-		case TRASH:
-			this.texture = Assets.getTexture(Textures.inventorySlot1);
-			break;
-		case ACCESSORY:
-		case ARMOR:
-			this.texture = Assets.getTexture(Textures.inventorySlot2);
-			break;
-		case VANITY:
-		case VANITY_ACCESSORY:
-			this.texture = Assets.getTexture(Textures.inventorySlot3);
-			break;
-		case DYE:
-			this.texture = Assets.getTexture(Textures.inventorySlot4);
-			break;
+			case ANY:
+			case AMMO:
+			case COIN:
+			case TRASH:
+				this.texture = Assets.getTexture(Textures.inventorySlot1);
+				break;
+			case ACCESSORY:
+			case ARMOR:
+				this.texture = Assets.getTexture(Textures.inventorySlot2);
+				break;
+			case VANITY:
+			case VANITY_ACCESSORY:
+				this.texture = Assets.getTexture(Textures.inventorySlot3);
+				break;
+			case DYE:
+				this.texture = Assets.getTexture(Textures.inventorySlot4);
+				break;
 		}
 
 		this.active = false;
@@ -103,7 +104,7 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 					this.itemHolder = new ItemHolder(null, 0);
 				} if (this.isEmpty() || inventory.getSelectedItem().isEmpty()) {
 					this.swapWithCurrent();
-				} else if (inventory.getSelectedItem().getItem().getID() == this.getItemID()) {
+				} else if (inventory.getSelectedItem().getItem().getID().equals(this.getItemID())) {
 					int count = inventory.getSelectedItem().getCount() + this.itemHolder.getCount();
 					int max = this.itemHolder.getItem().getMaxInStack();
 

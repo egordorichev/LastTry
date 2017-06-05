@@ -90,7 +90,7 @@ public class EntityManager {
 			for (int j = -1; j <= 1; j++) {
 				int x1 = tileX + k;
 				int y1 = tileY + j;
-				if (Globals.getWorld().getBlock(x1, y1) == null) {
+				if (Globals.getWorld().blocks.get(x1, y1) == null) {
 					popVelocity.add(k * power, j * power);
 				}
 			}

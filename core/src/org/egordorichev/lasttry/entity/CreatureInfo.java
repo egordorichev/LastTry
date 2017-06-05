@@ -152,7 +152,7 @@ public class CreatureInfo {
 			JsonValue drops = root.get("drop");
 
 			for (JsonValue drop : drops) {
-				Item item = Item.fromID(drop.getShort("id"));
+				Item item = Item.fromID(drop.getString("id"));
 
 				if (item == null) {
 					throw new Exception("Item with id " + drop.getShort("id") + " is not found");
@@ -238,11 +238,11 @@ public class CreatureInfo {
 		int defense = this.damage[0];
 		int damage = this.damage[0];
 
-		if (Globals.getWorld().getFlags().isHardmode()) {
+		if (Globals.getWorld().flags.isHardmode()) {
 			hp = this.hp[2];
 			defense = this.defense[2];
 			damage = this.damage[2];
-		} else if (Globals.getWorld().getFlags().isExpertMode()) {
+		} else if (Globals.getWorld().flags.isExpertMode()) {
 			hp = this.hp[1];
 			defense = this.defense[1];
 			damage = this.damage[1];

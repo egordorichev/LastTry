@@ -115,7 +115,7 @@ public class Globals {
 		 * Kinda like the Minecraft Mystcraft mod.
 		 */
 	}
-	
+
 	public static Player getPlayer() {
 		return player;
 	}

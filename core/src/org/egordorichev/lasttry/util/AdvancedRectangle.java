@@ -86,14 +86,6 @@ public class AdvancedRectangle {
         return true;
     }
 
-    public void debugSetItemsOnPoints(){
-        Globals.getWorld().setBlock(ItemID.grassBlock, this.topLeftPoint.getX()/16,this.topLeftPoint.getY()/16);
-        Globals.getWorld().setBlock(ItemID.grassBlock, this.topRightPoint.getX()/16,this.topRightPoint.getY()/16);
-        Globals.getWorld().setBlock(ItemID.grassBlock, this.bottomLeftPoint.getX()/16,this.bottomLeftPoint.getY()/16);
-        Globals.getWorld().setBlock(ItemID.grassBlock, this.bottomRightPoint.getX()/16,this.bottomRightPoint.getY()/16);
-    }
-
-
     /**
      * Stores x and y points, with an identifier describing the point.
      */

@@ -17,7 +17,6 @@ import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -60,7 +59,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				if (args.length != 1 && args.length != 2) {
 					print("/give [item id] (count)");
 				} else {
-					Item item = Item.fromID(Integer.valueOf(args[0]));
+					Item item = Item.fromID(args[0]);
 					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
 					if (item == null) {
@@ -155,9 +154,9 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().getInventory().clear();
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.superpick, 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperAxe, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:superpick"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
 			}
 		});
 
@@ -165,9 +164,9 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().getInventory().clear();
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperAxe, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
 			}
 		});
 	}

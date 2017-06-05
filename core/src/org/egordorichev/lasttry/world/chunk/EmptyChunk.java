@@ -8,7 +8,7 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public void setBlock(short id, int globalX, int globalY) {
+	public void setBlock(String id, int globalX, int globalY) {
 
 	}
 
@@ -18,7 +18,7 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public void setWall(short id, int globalX, int globalY) {
+	public void setWall(String id, int globalX, int globalY) {
 
 	}
 
@@ -28,8 +28,8 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public short getBlock(int globalX, int globalY) {
-		return ItemID.none;
+	public String getBlock(int globalX, int globalY) {
+		return "";
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public short getWall(int globalX, int globalY) {
-		return ItemID.none;
+	public String getWall(int globalX, int globalY) {
+		return "";
 	}
 
 	@Override

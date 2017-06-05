@@ -2,18 +2,11 @@ package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import org.egordorichev.lasttry.item.Rarity;
 
 public class Sword extends MeleeWeapon {
-    public Sword(short id, String name, Rarity rarity, float baseDamage, int useSpeed, TextureRegion texture) {
-        super(id, name, rarity, baseDamage, useSpeed, texture);
-    }
-
-    public Sword(short id, String name, float baseDamage, int useSpeed, TextureRegion texture) {
-        this(id, name, Rarity.WHITE, baseDamage, useSpeed, texture);
+    public Sword(String id) {
+        super(id);
     }
 
     @Override

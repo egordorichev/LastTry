@@ -107,7 +107,6 @@ public class LastTry extends Game {
         super.render();
 
         Graphics.batch.end();
-
         ShaderLighting.render();
     }
 

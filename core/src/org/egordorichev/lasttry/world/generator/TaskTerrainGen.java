@@ -27,10 +27,10 @@ public class TaskTerrainGen extends GeneratorTask {
 
             for (int y = 0; y < height; y++) {
                 if (y == yMax) {
-                    generator.world.setBlock(ItemID.grassBlock, x, y);
+                    generator.world.blocks.set("lt:grass", x, y);
                 } else if (y < yMax) {
-                    generator.world.setBlock(ItemID.dirtBlock, x, y);
-                    generator.world.setWall(ItemID.dirtWall, x, y);
+                    generator.world.blocks.set("lt:dirt", x, y);
+                    generator.world.walls.set("lt:dirt_wall", x, y);
                 }
             }
         }

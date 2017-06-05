@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.Item;
 
 public class Armor extends Item {
@@ -13,11 +12,8 @@ public class Armor extends Item {
      */
     protected Slot slot;
 
-    public Armor(short id, String name, int defense, Slot slot, TextureRegion texture) {
-        super(id, name, texture);
-
-        this.defense = defense;
-        this.slot = slot;
+    public Armor(String id) {
+        super(id);
     }
 
     /**

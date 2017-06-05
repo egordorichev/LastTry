@@ -7,48 +7,51 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
 public class Biome {
-    // TODO: Have biomes as JSON files
-    // Allow users to create custom biomes
-    public static Biome forest = new ForestBiome();
-    public static Biome desert = new DesertBiome();
-    public static Biome corruption = new CorruptionBiome();
-    public static Biome crimson = new CrimsonBiome();
-    public static Biome corruptDesert = new CorruptDesertBiome();
-    public static Biome crimsonDesert = new CrimsonDesertBiome();
+	/*
+	 *TODO: Have biomes as JSON files
+	 * Allow users to create custom biomes
+	 */
 
-    public BiomeAnimationComponent animation;
+	public static Biome forest = new ForestBiome();
+	public static Biome desert = new DesertBiome();
+	public static Biome corruption = new CorruptionBiome();
+	public static Biome crimson = new CrimsonBiome();
+	public static Biome corruptDesert = new CorruptDesertBiome();
+	public static Biome crimsonDesert = new CrimsonDesertBiome();
 
-    protected String name;
+	public BiomeAnimationComponent animation;
 
-    private SpawnInfo spawnInfo;
-    private Vector2 biomeVec;
+	protected String name;
 
-    public Biome(String name, SpawnInfo spawnInfo, TextureRegion backgroundTextureRegion, int temperature,
-            int humidity) {
-        this.name = name;
-        this.spawnInfo = spawnInfo;
-        this.biomeVec = new Vector2(temperature, humidity);
-        this.animation = new BiomeAnimationComponent(this, backgroundTextureRegion);
-        Globals.biomeMap.register(this);
-    }
+	private SpawnInfo spawnInfo;
+	private Vector2 biomeVec;
 
-    public Vector2 getBiomeVector() {
-        return biomeVec;
-    }
+	public Biome(String name, SpawnInfo spawnInfo, TextureRegion backgroundTextureRegion, int temperature,
+			int humidity) {
+		this.name = name;
+		this.spawnInfo = spawnInfo;
+		this.biomeVec = new Vector2(temperature, humidity);
+		this.animation = new BiomeAnimationComponent(this, backgroundTextureRegion);
+		Globals.biomeMap.register(this);
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public Vector2 getBiomeVector() {
+		return biomeVec;
+	}
 
-    public int getSpawnRate() {
-        return spawnInfo.spawnRate;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public int getSpawnMax() {
-        return spawnInfo.spawnMax;
-    }
+	public int getSpawnRate() {
+		return spawnInfo.spawnRate;
+	}
 
-    // TODO To be implemented
-    public static void preload() {}
+	public int getSpawnMax() {
+		return spawnInfo.spawnMax;
+	}
 
+	public static void preload() {
+
+	}
 }

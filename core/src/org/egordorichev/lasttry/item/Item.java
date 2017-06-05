@@ -158,7 +158,7 @@ public class Item {
 	}
 
 	public static Item fromID(String id) {
-		if (id.isEmpty() || id.equals("lt:null")) {
+		if (id.isEmpty()) {
 			return null;
 		}
 

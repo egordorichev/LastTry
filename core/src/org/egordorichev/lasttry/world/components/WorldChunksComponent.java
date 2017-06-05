@@ -10,10 +10,8 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
-
 import java.awt.Rectangle;
 import java.util.*;
-
 
 /**
  * Methods that alter any of the collections that contain Chunks, are synchronized.
@@ -53,7 +51,7 @@ public class WorldChunksComponent extends WorldComponent {
         Rectangle blocksRect = Camera.getBlocksOnScreen();
 		for (int y = blocksRect.y; y < blocksRect.y  +blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-				Block block = (Block) Item.fromID(this.world.getBlockID(x, y));
+				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);
@@ -61,7 +59,7 @@ public class WorldChunksComponent extends WorldComponent {
 					byte binary = block.calculateBinary(x, y);
 
 					if (binary != 15) {
-						Wall wall = (Wall) Item.fromID(this.world.getWallID(x, y));
+						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
 
 						if (wall != null) {
 							wall.renderWall(x, y);
@@ -70,7 +68,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 				 	block.renderBlock(x, y, binary);
 				} else {
-					Wall wall = (Wall) Item.fromID(this.world.getWallID(x, y));
+					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
 
 					if (wall != null) {
 						wall.renderWall(x, y);
@@ -100,15 +98,6 @@ public class WorldChunksComponent extends WorldComponent {
 
 		this.chunks[index] = chunk;
 	}
-
-	//todo is this needed? as we seem to handle null whenever we use chunks
-//	public boolean isLoaded(int index) {
-//		if (!this.isInside(index)) {
-//			return false;
-//		}
-//
-//		return this.chunks[index] != null;
-//	}
 
 	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
@@ -142,42 +131,31 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
-	//todo may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	// TODO: may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
 	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
+		loadedChunks.removeIf(loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
 
-		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
-
-		for(int i=0; i<chunks.length; i++){
-
+		for (int i = 0; i < chunks.length; i++){
 			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
-
 			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
-			
 		}
 	}
 
 	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
-
 		optionalChunk.ifPresent(chunk -> {
-
 			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
 				chunks[index] = null;
 			}
-
 		});
-
 	}
 
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
-	//todo return immutable object?
+	// TODO: return immutable object?
 	public synchronized List<Chunk> getImmutableLoadedChunks() {
-
-		List<Chunk> immutableLoadedChunksList = Collections.unmodifiableList(loadedChunks);
-
-		return immutableLoadedChunksList;
+		return Collections.unmodifiableList(loadedChunks);
 	}
 
 	public void save() {

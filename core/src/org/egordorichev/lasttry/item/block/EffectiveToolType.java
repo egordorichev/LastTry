@@ -8,8 +8,8 @@ import org.egordorichev.lasttry.item.Item;
 public enum EffectiveToolType {
     PICKAXE, AXE, HAMMER;
 
-    public static EffectiveToolType lookup(short blockID) {
-        if (blockID == 0) {
+    public static EffectiveToolType lookup(String blockID) {
+        if (blockID.isEmpty()) {
             return null;
         }
 
