@@ -1,36 +1,107 @@
 {
 	"lt:dirt" : {
-		"type" : 1
+		"type" : "org.egordorichev.lasttry.item.block.Block"
 	},
 
 	"lt:grass" : {
-		"type" : 2,
-		"grows" : [ 1 ]
+		"type" : "org.egordorichev.lasttry.item.block.plant.Grass"
 	},
 
 	"lt:copper_coin" : {
-		"type" : 3,
+		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 1
 	},
 
 	"lt:silver_coin" : {
-		"type" : 3,
+		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 100
 	},
 
 	"lt:gold_coin" : {
-		"type" : 3,
+		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 10000
 	},
 
 	"lt:platinum_coin" : {
-		"type" : 3,
+		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 1000000
 	},
 
 	"lt:copper_pickaxe" : {
-		"type" : 4,
+		"type" : "org.egordorichev.lasttry.item.items.Pickaxe",
 		"speed" : 22,
-		"damage" : 4
+		"damage" : 4,
+		"power" : [ 50, 0, 0 ]
+	},
+
+	"lt:copper_axe" : {
+		"type" : "org.egordorichev.lasttry.item.items.Axe",
+		"speed" : 22,
+		"damage" : 3,
+		"power" : [ 0, 50, 0 ]
+	},
+
+	"lt:copper_shortsword" : {
+		"type" : "org.egordorichev.lasttry.item.items.ShortSword",
+		"speed" : 22,
+		"damage" : 5
+	},
+
+	"lt:magic_mirrow" : {
+		"type" : "org.egordorichev.lasttry.item.items.MagicMirrow",
+		"speed" : 20
+	},
+
+	"lt:stone" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:work_bench" : {
+		"type" : "org.egordorichev.lasttry.item.block.station.WorkBench",
+		"size" : [ 2, 1 ],
+	},
+
+	"lt:furnance" : {
+		"type" : "org.egordorichev.lasttry.item.block.station.Furnance",
+		"size" : [ 2, 2 ],
+		"level" : 0
+	},
+
+	"lt:anvil" : {
+		"type" : "org.egordorichev.lasttry.item.block.station.Anvil",
+		"size" : [ 2, 2 ],
+		"level" : 0
+	},
+
+	"lt:copper_ore" : {
+		"type" : "org.egordorichev.lasttry.item.items.Ore"
+	},
+
+	"lt:iron_ore" : {
+		"type" : "org.egordorichev.lasttry.item.items.Ore"
+	},
+
+	"lt:silver_ore" : {
+		"type" : "org.egordorichev.lasttry.item.items.Ore"
+	},
+
+	"lt:gold_ore" : {
+		"type" : "org.egordorichev.lasttry.item.items.Ore"
+	},
+
+	"lt:copper_bar" : {
+		"type" : "org.egordorichev.lasttry.item.items.Bar"
+	},
+
+	"lt:iron_bar" : {
+		"type" : "org.egordorichev.lasttry.item.items.Bar"
+	},
+
+	"lt:silver_bar" : {
+		"type" : "org.egordorichev.lasttry.item.items.Bar"
+	},
+
+	"lt:gold_bar" : {
+		"type" : "org.egordorichev.lasttry.item.items.Bar"
 	}
 }

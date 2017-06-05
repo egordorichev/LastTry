@@ -30,13 +30,16 @@ public class Block extends Item {
 		this.tiles = this.texture.split(SIZE, SIZE);
 	}
 
-	public static Item load(JsonValue root) {
-		Block block = new Block(root.name());
+	@Override
+	protected void loadFields(JsonValue root) {
+		short[] power = { 10, 0, 0 };
 
-		block.power = requiredPower;
-		block.solid = solid;
+		if (root.has("power")) {
+			power = root.asShortArray();
+		}
 
-		return block;
+		this.power = new ToolPower(power[0], power[1], power[3]);
+		this.solid = root.getBoolean("solid", true);
 	}
 
 	@Override
@@ -116,10 +119,10 @@ public class Block extends Item {
 	}
 
 	public byte calculateBinary(int x, int y) {
-		boolean t = Globals.getWorld().getBlockID(x, y + 1) == this.id;
-		boolean r = Globals.getWorld().getBlockID(x + 1, y) == this.id;
-		boolean b = Globals.getWorld().getBlockID(x, y - 1) == this.id;
-		boolean l = Globals.getWorld().getBlockID(x - 1, y) == this.id;
+		boolean t = Globals.getWorld().getBlockID(x, y + 1).equals(this.id);
+		boolean r = Globals.getWorld().getBlockID(x + 1, y).equals(this.id);
+		boolean b = Globals.getWorld().getBlockID(x, y - 1).equals(this.id);
+		boolean l = Globals.getWorld().getBlockID(x - 1, y).equals(this.id);
 		return Block.calculateBinary(t, r, b, l);
 	}
 

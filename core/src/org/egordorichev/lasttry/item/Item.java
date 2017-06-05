@@ -11,6 +11,8 @@ import org.egordorichev.lasttry.item.items.Coin;
 import org.egordorichev.lasttry.item.items.Pickaxe;
 import org.egordorichev.lasttry.language.Language;
 
+import java.lang.reflect.Constructor;
+
 public class Item {
 	/**
 	 * Item identifier.
@@ -51,18 +53,30 @@ public class Item {
 		this.texture = Assets.getTexture(this.id);
 	}
 
-	public static Item load(JsonValue root) {
-		Item item;
+	public static Item load(JsonValue root) throws Exception {
+		String className = root.getString("type", "org.egordorichev.lasttry.item.Item");
 
-		switch (root.getByte("type", (byte) 0)) {
-			case 0: default: item = new Item(root.getString(root.name()));
-			case 1: item = Block.load(root);
-			case 2: item = Grass.load(root);
-			case 3: item = Coin.load(root);
-			case 4: item = Pickaxe.load(root);
+		try {
+			Class itemClass = Class.forName(className);
+
+			Class[] types = { String.class };
+			Constructor constructor = itemClass.getConstructor(types);
+
+			Object[] parameters = { root.name() };
+
+			Item item = (Item) constructor.newInstance(parameters);
+			item.loadFields(root);
+
+			return item;
+		} catch (ClassNotFoundException exception) {
+			throw new Exception("Class " + className + " is not found");
+		} catch (Exception exception) {
+			throw new Exception("Failed to parse " + root.name());
 		}
+	}
 
-		return item;
+	protected void loadFields(JsonValue root) {
+
 	}
 
 	public boolean use() {
