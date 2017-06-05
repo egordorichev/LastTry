@@ -6,26 +6,19 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.util.ByteHelper;
 
-public class Wall extends org.egordorichev.lasttry.item.Item {
+public class Wall extends Item {
 	protected TextureRegion[][] tiles;
 	protected ToolPower power;
 
-	public Wall(short id, String name, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
-		super(id, name, texture);
+	public Wall(String id) {
+		super(id);
 
-		this.tiles = tiles.split(Block.SIZE, Block.SIZE);
-		this.power = requiredPower;
-	}
-
-	public static Wall getForBlockID(int id) {
-		switch (id) {
-			case ItemID.none: default: return null;
-			case ItemID.dirtBlock: return (Wall) Items.dirtWall;
-		}
+		this.tiles = this.texture.split(Block.SIZE, Block.SIZE);
 	}
 
 	public void die(int x, int y) {
@@ -57,7 +50,7 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.getWorld().getWallID(x, y) == ItemID.none) {
+		if (this.canBePlaced(x, y) && Globals.getWorld().getWallID(x, y).isEmpty()) {
 			this.place(x, y);
 
 			return true;
@@ -80,12 +73,12 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 	}
 
 	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
+		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
 
 		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
 
-		if (length > Globals.player.getItemUseRadius()) {
+		if (length > Globals.getPlayer().getItemUseRadius()) {
 			return false;
 		}
 

@@ -66,7 +66,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 					if (item == null) {
 						print("Unknown item");
 					} else {
-						Globals.player.getInventory().add(new ItemHolder(item, count));
+						Globals.getPlayer().getInventory().add(new ItemHolder(item, count));
 					}
 				}
 			}
@@ -85,8 +85,8 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 						print("Unknown creature");
 					} else {
 						for (int i = 0; i < count; i++) {
-							Globals.entityManager.spawn(creature, (int) Globals.player.physics.getX(),
-								(int) Globals.player.physics.getY());
+							Globals.entityManager.spawn(creature, (int) Globals.getPlayer().physics.getX(),
+								(int) Globals.getPlayer().physics.getY());
 						}
 					}
 				}
@@ -116,7 +116,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 		this.commands.register(new Command("heal", "Heals the player", CMDCategory.ADMININSTRATION) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.stats.modifyHP(+1000);
+				Globals.getPlayer().stats.modifyHP(+1000);
 			}
 		});
 		this.commands.register(new Command("day", "Sets the time to day", CMDCategory.ADMININSTRATION) {
@@ -142,32 +142,32 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 		this.commands.register(new Command("kill", "Kills the player", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.die(); // todo: fatal
+				Globals.getPlayer().die(); // todo: fatal
 			}
 		});
 		this.commands.register(new Command("clear", "Clears your inventory", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.getInventory().clear();
+				Globals.getPlayer().getInventory().clear();
 			}
 		});
 		this.commands.register(new Command("devset", "Gives you a dev set", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.getInventory().clear();
-				Globals.player.getInventory().add(new ItemHolder(Items.superpick, 1));
-				Globals.player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-				Globals.player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
+				Globals.getPlayer().getInventory().clear();
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.superpick, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperShortSword, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperAxe, 1));
 			}
 		});
 
 		this.commands.register(new Command("startset", "Gives you a start set", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.getInventory().clear();
-				Globals.player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-				Globals.player.getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
-				Globals.player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
+				Globals.getPlayer().getInventory().clear();
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperShortSword, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(Items.copperAxe, 1));
 			}
 		});
 	}
@@ -218,7 +218,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			Globals.setCurrentScreen(null);
+			Globals.setScreen(null);
 		}
 	}
 

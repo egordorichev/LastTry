@@ -86,12 +86,12 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 	}
 
 	public void swapWithCurrent() {
-		Globals.player.getInventory().setSelectedItem(this.swapItems(Globals.player.getInventory().getSelectedItem()));
+		Globals.getPlayer().getInventory().setSelectedItem(this.swapItems(Globals.getPlayer().getInventory().getSelectedItem()));
 	}
 
 	@Override
 	protected void onStateChange() {
-		UiInventory inventory = Globals.player.getInventory();
+		UiInventory inventory = Globals.getPlayer().getInventory();
 		if (this.state == State.MOUSE_DOWN && inventory.isOpen()) {
 			if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
 				if (InputManager.isKeyDown(Input.Keys.SHIFT_LEFT)) {
@@ -99,7 +99,7 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 						return;
 					}
 
-					Globals.player.getInventory().trash(this.itemHolder);
+					Globals.getPlayer().getInventory().trash(this.itemHolder);
 					this.itemHolder = new ItemHolder(null, 0);
 				} if (this.isEmpty() || inventory.getSelectedItem().isEmpty()) {
 					this.swapWithCurrent();

@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -165,8 +164,8 @@ public class Tool extends Item {
         // Distance to offset from the player
         final int offsetDistance = (int) Math.round(Block.SIZE * 1.1);
         // Direction the player is facing
-        final int dir = Globals.player.physics.getDirection() == Direction.LEFT ? -1 : 1;
-        final Rectangle playerHitBox = Globals.player.physics.getHitbox();
+        final int dir = Globals.getPlayer().physics.getDirection() == Direction.LEFT ? -1 : 1;
+        final Rectangle playerHitBox = Globals.getPlayer().physics.getHitbox();
         final TextureRegion itemTextureRegion = this.getTextureRegion();
         final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getRegionWidth(),
                 itemTextureRegion.getRegionHeight());

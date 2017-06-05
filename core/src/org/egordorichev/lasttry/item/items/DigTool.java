@@ -48,12 +48,12 @@ public class DigTool extends Tool {
 		float height = this.texture.getRegionHeight();
 		float angle = Util.map(this.useDelay, 0, this.useDelayMax, -70.0f, 45.0f);
 
-		if (Globals.player.physics.isFlipped()) {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
+		if (Globals.getPlayer().physics.isFlipped()) {
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
 		} else {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
 		}
 	}
 }

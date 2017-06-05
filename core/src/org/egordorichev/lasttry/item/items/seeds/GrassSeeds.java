@@ -30,7 +30,7 @@ public class GrassSeeds extends Item {
         if (this.grass.canBeGrownAt(id)) {
             // Check if the plant intersects the player's hitbox
             // TODO: Check other entities in the world
-            Rectangle rectangle = Globals.player.physics.getHitbox();
+            Rectangle rectangle = Globals.getPlayer().physics.getHitbox();
 
             if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
                 return false;

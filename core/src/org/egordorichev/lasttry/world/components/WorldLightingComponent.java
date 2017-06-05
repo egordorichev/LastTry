@@ -53,7 +53,7 @@ public class WorldLightingComponent implements Component {
         Rectangle blocksRect = Camera.getBlocksOnScreen();
         // Expand beyond camera so the player doesn't run into non-updated areas
         try {
-            Util.expand(blocksRect, (int) (Globals.player.physics.getVelocity().len() * 10));
+            Util.expand(blocksRect, (int) (Globals.getPlayer().physics.getVelocity().len() * 10));
         } catch (Exception e) {
             Util.expand(blocksRect, 20);
         }

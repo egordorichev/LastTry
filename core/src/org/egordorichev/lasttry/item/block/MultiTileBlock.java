@@ -34,12 +34,12 @@ public class MultiTileBlock extends Block {
 
 	@Override
 	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
+		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
 
 		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
 
-		if (length > Globals.player.getItemUseRadius()) {
+		if (length > Globals.getPlayer().getItemUseRadius()) {
 			return false;
 		}
 

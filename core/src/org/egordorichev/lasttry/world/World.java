@@ -131,7 +131,7 @@ public class World {
         if (LastTry.noLight) {
             return false;
         }
-        return Globals.player.physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
+        return Globals.getPlayer().physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
     }
 
     /**

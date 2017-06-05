@@ -1,19 +1,11 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
-import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
-import org.egordorichev.lasttry.entity.drop.Drop;
-import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.entity.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Enemy extends CreatureWithAI {
 	protected String name;
@@ -23,7 +15,7 @@ public class Enemy extends CreatureWithAI {
 		super(new CreaturePhysicsComponent(), new CreatureGraphicsComponent(), ai);
 
 		this.name = name;
-		this.target = Globals.player;
+		this.target = Globals.getPlayer();
 		this.setZIndex(Layers.enemy);
 	}
 

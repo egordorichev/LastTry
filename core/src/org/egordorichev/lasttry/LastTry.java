@@ -16,7 +16,7 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.util.Log;
+
 import java.util.Random;
 import java.util.Locale;
 
@@ -134,7 +134,7 @@ public class LastTry extends Game {
      * @return mouse X coordinate, under the world
      */
     public static int getMouseXInWorld() {
-        return (int) (Globals.player.physics.getCenterX() - Gdx.graphics.getWidth() / 2
+        return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
                 + InputManager.getMousePosition().x);
     }
 
@@ -144,7 +144,7 @@ public class LastTry extends Game {
      * @return mouse Y coordinate, under the world
      */
     public static int getMouseYInWorld() {
-        return (int) (Globals.player.physics.getCenterY() + Gdx.graphics.getHeight() / 2
+        return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
                 - InputManager.getMousePosition().y);
     }
 

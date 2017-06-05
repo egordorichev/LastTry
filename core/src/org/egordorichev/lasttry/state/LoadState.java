@@ -34,7 +34,7 @@ public class LoadState implements State {
                         if (PlayerIO.saveExists(Args.player)) {
                             PlayerIO.load(Args.player);
                         } else {
-                            Globals.player = PlayerIO.generate(Args.player);
+                            Globals.setPlayer(PlayerIO.generate(Args.player));
                         }
                         
                         loadString = "Loading world...";

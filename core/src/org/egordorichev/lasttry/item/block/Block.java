@@ -87,12 +87,12 @@ public class Block extends Item {
 	}
 
 	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
+		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
 
 		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
 
-		if (length > Globals.player.getItemUseRadius()) {
+		if (length > Globals.getPlayer().getItemUseRadius()) {
 			return false;
 		}
 
@@ -149,7 +149,7 @@ public class Block extends Item {
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
 		if (this.canBePlaced(x, y) && Globals.getWorld().getBlockID(x, y) == ItemID.none) {
-			Rectangle rectangle = Globals.player.physics.getHitbox();
+			Rectangle rectangle = Globals.getPlayer().physics.getHitbox();
 
 			if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,
 					this.height * SIZE))) {

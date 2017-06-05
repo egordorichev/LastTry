@@ -50,13 +50,13 @@ public class DroppedItem extends Creature {
      * @param dt
      */
     private void checkPlayerAbsorbtion(int dt) {
-        if (this.physics.getHitbox().intersects(Globals.player.physics.getHitbox())) {
+        if (this.physics.getHitbox().intersects(Globals.getPlayer().physics.getHitbox())) {
             if (this.holder.getItem() == Items.heart) {
-                Globals.player.stats.modifyHP(20 * this.holder.getCount());
+                Globals.getPlayer().stats.modifyHP(20 * this.holder.getCount());
             } else if (this.holder.getItem() == Items.mana) {
-                Globals.player.stats.modifyMana(20 * this.holder.getCount());
+                Globals.getPlayer().stats.modifyMana(20 * this.holder.getCount());
             } else {
-                Globals.player.getInventory().add(this.holder);
+                Globals.getPlayer().getInventory().add(this.holder);
             }
             Globals.entityManager.markForRemoval(this);
         }
@@ -68,7 +68,7 @@ public class DroppedItem extends Creature {
      * @param dt
      */
     private void updateAttraction(int dt) {
-        Vector2 p1 = Globals.player.physics.getPosition().cpy();
+        Vector2 p1 = Globals.getPlayer().physics.getPosition().cpy();
         Vector2 p2 = physics.getPosition().cpy();
         float dist = p1.dst(p2);
         boolean inRange = dist < ATTRACTION_RANGE;
