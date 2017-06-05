@@ -71,7 +71,7 @@
 		"type" : "org.egordorichev.lasttry.item.block.station.Anvil",
 		"size" : [ 2, 2 ],
 		"level" : 0
-	}
+	},
 	
 	"lt:copper_ore" : {
 		"type" : "org.egordorichev.lasttry.item.items.Ore"
