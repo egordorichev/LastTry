@@ -58,7 +58,7 @@
 
 	"lt:work_bench" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.WorkBench",
-		"size" : [ 2, 1 ],
+		"size" : [ 2, 1 ]
 	},
 
 	"lt:furnance" : {
@@ -103,5 +103,46 @@
 
 	"lt:gold_bar" : {
 		"type" : "org.egordorichev.lasttry.item.items.Bar"
+	},
+
+	"lt:chest" : {
+		"type" : "org.egordorichev.lasttry.item.block.Chest",
+		"size" : [ 2, 2 ]
+	},
+
+	"lt:sand" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:ebonstone" : {
+		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
+	},
+
+	"lt:ebonsand" : {
+		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
+	},
+
+	"lt:crimstone" : {
+		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
+	},
+
+	"lt:crimsand" : {
+		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
+	},
+
+	"lt:ash" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:mud" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:snow" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:ice" : {
+		"type" : "org.egordorichev.lasttry.item.block.Block"
 	}
 }
