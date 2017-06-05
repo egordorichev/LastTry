@@ -4,7 +4,8 @@
 	},
 
 	"lt:grass" : {
-		"type" : "org.egordorichev.lasttry.item.block.plant.Grass"
+		"type" : "org.egordorichev.lasttry.item.block.plant.Grass",
+		"spreads" : [ "lt:dirt" ]
 	},
 
 	"lt:copper_coin" : {
