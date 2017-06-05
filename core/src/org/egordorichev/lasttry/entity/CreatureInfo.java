@@ -112,10 +112,10 @@ public class CreatureInfo {
 			ai = root.get("ai").asShort();
 		}
 
+		this.ai = AI.fromID(ai);
+
 		if (this.ai == null) {
 			throw new Exception("AI with id " + ai + " is not found");
-		} else {
-			this.ai = AI.fromID(ai);
 		}
 
 		if (root.has("spawnWeight")) {

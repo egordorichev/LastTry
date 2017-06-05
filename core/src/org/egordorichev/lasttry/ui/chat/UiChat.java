@@ -62,7 +62,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				if (args.length != 1 && args.length != 2) {
 					print("/give [item id] (count)");
 				} else {
-					Item item = Item.fromID(Integer.valueOf(args[1]));
+					Item item = Item.fromID(Integer.valueOf(args[0]));
 					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
 					if (item == null) {
@@ -187,9 +187,9 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 					// TODO: Wtf is char(13) doing at the beginning of a string?
 					text = text.substring(text.indexOf("/")+1);
 					commands.runInput(text);
-				} else{
+				} else {
 					// TODO: Player chat
-					print("<Player>" + text);
+					print("<Player> " + text);
 				}
 
 				clear();
