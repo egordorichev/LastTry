@@ -6,6 +6,7 @@ public class BlockHelper {
 	public static PlainBlockHelper plain = new PlainBlockHelper();
 	public static NullBlockHelper empty = new NullBlockHelper();
 	public static MTBHelper mtb = new MTBHelper();
+	public static PlantHelper plant = new PlantHelper();
 
 	public byte getHP(byte data) {
 		return ByteHelper.getSum(data, (byte) 0, (byte) 1);
