@@ -26,17 +26,7 @@ public class DeathWeed extends Plant {
 	}
 
 	@Override
-	public void updateBlock(int x, int y) {
-		int hp = getGrowLevel(x, y);
-
-		if (hp >= Plant.GROW_THRESHOLD) {
-			if (Globals.environment.isBloodMoon()) {
-				setGrowLevel((byte) (Plant.GROW_THRESHOLD + 1), x, y);
-			} else {
-				setGrowLevel((byte) (Plant.GROW_THRESHOLD), x, y);
-			}
-		} else {
-			setGrowLevel((byte) (hp + 1), x, y);
-		}
+	protected boolean canBloom() {
+		return Globals.environment.isBloodMoon();
 	}
 }

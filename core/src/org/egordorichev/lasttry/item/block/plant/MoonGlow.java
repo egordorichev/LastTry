@@ -11,21 +11,6 @@ public class MoonGlow extends Plant {
 	}
 
 	@Override
-	public void updateBlock(int x, int y) {
-		int hp = getGrowLevel(x, y);
-
-		if (hp >= Plant.GROW_THRESHOLD) {
-			if (Globals.environment.time.isNight()) {
-				setGrowLevel((byte) (Plant.GROW_THRESHOLD + 1), x, y);
-			} else {
-				setGrowLevel((byte) (Plant.GROW_THRESHOLD), x, y);
-			}
-		} else {
-			setGrowLevel((byte) (hp + 1), x, y);
-		}
-	}
-
-	@Override
 	public boolean canBeGrownAt(int x, int y) {
 		if (!super.canBeGrownAt(x, y)) {
 			return false;
@@ -38,5 +23,10 @@ public class MoonGlow extends Plant {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected boolean canBloom() {
+		return Globals.environment.time.isNight();
 	}
 }

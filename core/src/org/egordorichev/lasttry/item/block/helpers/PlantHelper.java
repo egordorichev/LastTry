@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item.block.helpers;
 
+import org.egordorichev.lasttry.item.block.plant.Plant;
 import org.egordorichev.lasttry.util.ByteHelper;
 
 public class PlantHelper extends BlockHelper {
@@ -20,5 +21,13 @@ public class PlantHelper extends BlockHelper {
 		data = ByteHelper.setBit(data, (byte) 4, ByteHelper.bitIsSet(level, (byte) 4));
 
 		return data;
+	}
+
+	public boolean isBlooming(byte data) {
+		return this.getGrowLevel(data) > Plant.GROW_THRESHOLD;
+	}
+
+	public boolean hasGrown(byte data) {
+		return this.getGrowLevel(data) >= Plant.GROW_THRESHOLD;
 	}
 }

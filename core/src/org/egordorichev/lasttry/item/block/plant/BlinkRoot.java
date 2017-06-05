@@ -12,19 +12,6 @@ public class BlinkRoot extends Plant {
 	}
 
 	@Override
-	public void updateBlock(int x, int y) {
-		byte hp = getGrowLevel(x, y);
-
-		if (hp >= Plant.GROW_THRESHOLD + 1 && LastTry.random.nextInt(3) == 0) {
-			setGrowLevel(Plant.GROW_THRESHOLD, x, y);
-		} else if (hp == Plant.GROW_THRESHOLD || hp == Plant.GROW_THRESHOLD + 1) {
-			setGrowLevel(Plant.GROW_THRESHOLD, x, y);
-		} else if (hp < Plant.GROW_THRESHOLD) {
-			setGrowLevel((byte) (hp + 1), x, y);
-		}
-	}
-
-	@Override
 	public boolean canBeGrownAt(int x, int y) {
 		if (!super.canBeGrownAt(x, y)) {
 			return false;
@@ -37,5 +24,10 @@ public class BlinkRoot extends Plant {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected boolean canBloom() {
+		return LastTry.random.nextInt(3) == 0;
 	}
 }
