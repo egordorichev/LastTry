@@ -4,7 +4,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class DayBloom extends Plant {
 	public DayBloom() {

@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.World;
 import java.util.ArrayList;
 import java.util.List;

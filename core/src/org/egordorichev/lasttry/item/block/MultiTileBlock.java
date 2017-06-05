@@ -51,7 +51,9 @@ public class MultiTileBlock extends Block {
 			}
 		}
 
-		return true;
+		// todo: no placing in air
+
+		return false;
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class MultiTileBlock extends Block {
 
 				hp = BlockHelper.mtb.setX(hp, (byte) (i - x));
 				hp = BlockHelper.mtb.setY(hp, (byte) (j - y));
-				
+
 				Globals.getWorld().setBlockHP(hp, i, j);
 			}
 		}

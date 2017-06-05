@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.item.block.plant;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class WaterLeaf extends Plant {
 	public WaterLeaf() {

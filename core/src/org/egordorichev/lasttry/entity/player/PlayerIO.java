@@ -4,8 +4,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;

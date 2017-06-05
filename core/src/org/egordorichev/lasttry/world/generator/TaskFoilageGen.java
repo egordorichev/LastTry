@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.item.ItemID;
-
 public class TaskFoilageGen extends GeneratorTask {
 
     @Override

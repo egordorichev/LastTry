@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.item.block.plant;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.BlockGround;
 import org.egordorichev.lasttry.item.items.ToolPower;

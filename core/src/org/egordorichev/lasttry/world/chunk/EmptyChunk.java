@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class EmptyChunk extends Chunk {
 	public EmptyChunk(Vector2 position) {

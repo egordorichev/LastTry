@@ -1,13 +1,13 @@
 package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
@@ -23,13 +23,20 @@ public class Block extends Item {
 	protected int width = 1;
 	protected int height = 1;
 
-	public Block(short id, String name, boolean solid, ToolPower requiredPower, TextureRegion texture, TextureRegion tiles) {
-		super(id, name, texture);
-		this.power = requiredPower;
-		this.solid = solid;
-		this.useDelayMax = 30;
+	public Block(String id) {
+		super(id);
 
-		this.tiles = tiles.split(SIZE, SIZE);
+		this.useDelayMax = 30;
+		this.tiles = this.texture.split(SIZE, SIZE);
+	}
+
+	public static Item load(JsonValue root) {
+		Block block = new Block(root.name());
+
+		block.power = requiredPower;
+		block.solid = solid;
+
+		return block;
 	}
 
 	@Override

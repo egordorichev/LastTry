@@ -1,8 +1,8 @@
 package org.egordorichev.lasttry.core;
 
+import org.egordorichev.lasttry.Items;
 import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.Creatures;
-import org.egordorichev.lasttry.item.Items;
 
 public class Bootstrap {
 	private static boolean loaded = false;

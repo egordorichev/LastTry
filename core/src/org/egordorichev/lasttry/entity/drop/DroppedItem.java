@@ -12,7 +12,6 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
-import org.egordorichev.lasttry.item.Items;
 
 public class DroppedItem extends Creature {
     private static final float ATTRACTION_RANGE = 60;

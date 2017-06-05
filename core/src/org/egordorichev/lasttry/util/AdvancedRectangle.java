@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.util;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 
 /**

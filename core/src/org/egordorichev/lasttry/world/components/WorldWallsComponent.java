@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.world.World;

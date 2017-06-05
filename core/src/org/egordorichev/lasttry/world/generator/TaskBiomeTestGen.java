@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.biome.BiomeMap;
 

@@ -1,140 +1,157 @@
 package org.egordorichev.lasttry.item;
 
+import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.Items;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.block.plant.Grass;
+import org.egordorichev.lasttry.item.items.Coin;
+import org.egordorichev.lasttry.item.items.Pickaxe;
+import org.egordorichev.lasttry.language.Language;
 
 public class Item {
-    /**
-     * Item identifier.
-     */
-    protected short id;
-    /**
-     * Item display name.
-     */
-    protected String name;
-    /**
-     * Item texture.
-     */
-    protected TextureRegion texture;
-    /**
-     * Item's rarity. More rare items can sell for higher prices and generally
-     * have better stats than their more common counter-parts.
-     */
-    protected Rarity rarity;
-    /**
-     * Delay until the item can be used again.
-     */
-    protected float useDelay;
-    /**
-     * Maximum delay time. See {@link #useDelay} for the current delay
-     * remaining.
-     */
-    protected int useDelayMax;
+	/**
+	 * Item identifier.
+	 */
+	protected String id;
+	/**
+	 * Item display name.
+	 */
+	protected String name;
+	/**
+	 * Item texture.
+	 */
+	protected TextureRegion texture;
+	/**
+	 * Item's rarity. More rare items can sell for higher prices and generally
+	 * have better stats than their more common counter-parts.
+	 */
+	protected Rarity rarity;
+	/**
+	 * Delay until the item can be used again.
+	 */
+	protected float useDelay;
+	/**
+	 * Maximum delay time. See {@link #useDelay} for the current delay
+	 * remaining.
+	 */
+	protected int useDelayMax;
 
-    public Item(short id, String name, Rarity rarity, TextureRegion texture) {
-        if (Items.ITEM_CACHE[id] != null) {
-            throw new RuntimeException("Item with id " + id + " already exists.");
-        }
+	public Item(String id) {
+		if (Items.ITEM_CACHE.containsKey(id)) {
+			throw new RuntimeException("Item with id " + id + " already exists.");
+		}
 
-        Items.ITEM_CACHE[id] = this;
+		Items.ITEM_CACHE.put(id, this);
 
-        this.texture = texture;
-        this.id = id;
-        this.name = name;
-    }
+		this.id = id;
+		this.name = Language.text.get(this.id);
+		this.texture = Assets.getTexture(this.id);
+	}
 
-    public Item(short id, String name, TextureRegion texture) {
-        this(id, name, Rarity.WHITE, texture);
-    }
+	public static Item load(JsonValue root) {
+		Item item;
 
-    public boolean use() {
-        return false;
-    }
+		switch (root.getByte("type", (byte) 0)) {
+			case 0: default: item = new Item(root.getString(root.name()));
+			case 1: item = Block.load(root);
+			case 2: item = Grass.load(root);
+			case 3: item = Coin.load(root);
+			case 4: item = Pickaxe.load(root);
+		}
 
-    /**
-     * Updates the item.
-     * 
-     * @param owner
-     *            Entity holding the item.
-     * @param dt
-     */
-    public void update(InventoryOwner<?> owner, int dt) {
-        if (this.isReady()) {
-            return;
-        }
+		return item;
+	}
 
-        if (this.useDelay > 0) {
-            this.useDelay--;
-        } else {
-            this.useDelay = 0;
-        }
-        this.onUpdate(owner);
+	public boolean use() {
+		return false;
+	}
 
-        if (this.isReady()) {
-            this.onUseEnd();
-        }
-    }
+	/**
+	 * Updates the item.
+	 *
+	 * @param owner
+	 *            Entity holding the item.
+	 * @param dt
+	 */
+	public void update(InventoryOwner<?> owner, int dt) {
+		if (this.isReady()) {
+			return;
+		}
 
-    protected boolean onUse() {
-        return false;
-    }
+		if (this.useDelay > 0) {
+			this.useDelay--;
+		} else {
+			this.useDelay = 0;
+		}
+		this.onUpdate(owner);
 
-    /**
-     * Called when the item has been updated.
-     * 
-     * @param owner
-     *            Entity holding the item.
-     */
-    protected void onUpdate(InventoryOwner<?> owner) {
+		if (this.isReady()) {
+			this.onUseEnd();
+		}
+	}
 
-    }
+	protected boolean onUse() {
+		return false;
+	}
 
-    protected boolean onUseEnd() {
-        return false;
-    }
+	/**
+	 * Called when the item has been updated.
+	 *
+	 * @param owner
+	 *            Entity holding the item.
+	 */
+	protected void onUpdate(InventoryOwner<?> owner) {
 
-    public void renderAnimation() {
+	}
 
-    }
+	protected boolean onUseEnd() {
+		return false;
+	}
 
-    public short getID() {
-        return this.id;
-    }
+	public void renderAnimation() {
 
-    public Rarity getRarity() {
-        return this.rarity;
-    }
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public String getID() {
+		return this.id;
+	}
 
-    public TextureRegion getTextureRegion() {
-        return this.texture;
-    }
+	public Rarity getRarity() {
+		return this.rarity;
+	}
 
-    public boolean canBeUsed() {
-        return true;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public boolean isAutoUse() {
-        return false;
-    }
+	public TextureRegion getTextureRegion() {
+		return this.texture;
+	}
 
-    public boolean isReady() {
-        return this.useDelay == 0;
-    }
+	public boolean canBeUsed() {
+		return true;
+	}
 
-    public static Item fromID(int id) {
-        if (id <= 0 || id >= ItemID.count) {
-            return null;
-        }
+	public boolean isAutoUse() {
+		return false;
+	}
 
-        return Items.ITEM_CACHE[id];
-    }
+	public boolean isReady() {
+		return this.useDelay == 0;
+	}
 
-    public int getMaxInStack() {
-        return 999;
-    }
+	public static Item fromID(String id) {
+		if (id.isEmpty() || id.equals("lt:null")) {
+			return null;
+		}
+
+		return Items.ITEM_CACHE.get(id);
+	}
+
+	public int getMaxInStack() {
+		return 999;
+	}
 }
