@@ -30,6 +30,20 @@
 	"lt:copper_pickaxe" : {
 		"type" : 3,
 		"speed" : 22,
-		"damage" : 4
+		"damage" : 4,
+		"power" : [ 50, 0, 0 ]
+	},
+	
+	"lt:copper_axe" : {
+		"type" : 4,
+		"speed" : 22,
+		"damage" : 3,
+		"power" : [ 0, 50, 0 ]
+	},
+	
+	"lt:copper_shortsword" : {
+		"type" : 5,
+		"speed" : 22,
+		"damage" : 5
 	}
 }
