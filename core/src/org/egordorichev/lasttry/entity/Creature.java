@@ -13,7 +13,7 @@ import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 public class Creature extends Entity {
 	protected static final int ATTACK_INVULN_TIME = 10;
 	protected int spawnWeight = 1;
-	public CreatureDropsComponent drops = new CreatureDropsComponent();
+	public CreatureDropsComponent drops = new CreatureDropsComponent(this);
 	public CreatureStatsComponent stats;
 	public CreatureStateComponent state;
 	public CreatureEffectsComponent effects;

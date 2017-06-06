@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
+
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
@@ -231,7 +233,7 @@ public class CreatureInfo {
 	}
 
 	public Creature create() {
-		/*Enemy creature = new Enemy(this.ai, this.name);
+		Enemy creature = new Enemy(this.ai, this.name);
 
 		int hp = this.hp[0];
 		int defense = this.damage[0];
@@ -258,13 +260,15 @@ public class CreatureInfo {
 		}
 
 		for (int i = 0; i < this.drops.size(); i++) {
+			creature.drops.drop();
 			creature.drops.add(this.drops.get(i).clone());
 		}
 
-		creature.setSpawnWeight(spawnWeight);
+		//creature.setSpawnWeight(spawnWeight);
 
-		return creature;*/
+		return creature;
 
+		/*
 		switch (this.type) {
 			case 0: // Creature
 
@@ -275,6 +279,6 @@ public class CreatureInfo {
 			// todo: npc's
 		}
 
-		return null;
+		return null;*/
 	}
 }

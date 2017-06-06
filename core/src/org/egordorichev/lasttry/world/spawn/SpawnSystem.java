@@ -88,13 +88,12 @@ public class SpawnSystem {
 	}
 
 	private void spawnTriggered(final List<String> eligibleCreaturesForSpawn) {
-		Creature creatureToBeSpawned = Creatures.create(CreatureSpawnComponent.retrieveRandomCreature(eligibleCreaturesForSpawn));
 		Optional<GenericContainer.Pair<Integer>> optionalSuitableXySpawnPoint = GridComponent.generateEligibleEnemySpawnPoint(playerActiveArea);
 
 		if(optionalSuitableXySpawnPoint.isPresent()){
+			Creature creatureToBeSpawned = Creatures.create(CreatureSpawnComponent.retrieveRandomCreature(eligibleCreaturesForSpawn));
 			int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
 			int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
-
 			Globals.entityManager.spawn(creatureToBeSpawned, xEnemySpawnPoint * Block.SIZE, yEnemySpawnPoint * Block.SIZE);
 			LastTry.debug.print("Spawn has been triggered");
 		}else{
