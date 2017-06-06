@@ -145,5 +145,9 @@
 
 	"lt:ice" : {
 		"type" : "org.egordorichev.lasttry.item.block.Block"
+	},
+
+	"lt:gel" : {
+		"type" : "org.egordorichev.lasttry.item.Item"
 	}
 }
