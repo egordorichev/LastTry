@@ -38,6 +38,7 @@ public class LoadState implements State {
                         }
                         
                         loadString = "Loading world...";
+
                         if (WorldIO.saveExists(Args.world)) {
                         	WorldIO.load(Args.world);
                         } else {

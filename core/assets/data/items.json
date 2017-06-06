@@ -62,8 +62,8 @@
 		"size" : [ 2, 1 ]
 	},
 
-	"lt:furnance" : {
-		"type" : "org.egordorichev.lasttry.item.block.station.Furnance",
+	"lt:furnace" : {
+		"type" : "org.egordorichev.lasttry.item.block.station.Furnace",
 		"size" : [ 2, 2 ],
 		"level" : 0
 	},

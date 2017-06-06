@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
@@ -28,6 +29,7 @@ public class Block extends Item {
 
 		this.useDelayMax = 30;
 		this.tiles = this.texture.split(SIZE, SIZE);
+		this.texture = Assets.getTexture(this.id + "_icon");
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class Block extends Item {
 			power = root.asShortArray();
 		}
 
-		this.power = new ToolPower(power[0], power[1], power[3]);
+		this.power = new ToolPower(power[0], power[1], power[2]);
 		this.solid = root.getBoolean("solid", true);
 	}
 

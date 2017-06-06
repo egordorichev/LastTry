@@ -29,7 +29,7 @@ public class Items {
 
 			for (JsonValue item : root) {
 				try {
-					ITEM_CACHE.put(item.name(), Item.load(root));
+					ITEM_CACHE.put(item.name(), Item.load(item));
 				} catch (Exception exception) {
 					Log.error("Failed to parse " + item.name());
 					exception.printStackTrace();
