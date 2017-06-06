@@ -130,7 +130,6 @@ public class Tool extends Item {
 
     public void onToolAttack(InventoryOwner<?> owner) {
         Creature cowner = (Creature) owner;
-
         // Get the list of enemies
         List<Creature> activeEnemies = Globals.entityManager.getCreatureEntities();
 
