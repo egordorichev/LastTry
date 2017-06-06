@@ -27,6 +27,8 @@ public class Block extends Item {
 	public Block(String id) {
 		super(id);
 
+		System.out.println(id);
+
 		this.useDelayMax = 30;
 		this.tiles = this.texture.split(SIZE, SIZE);
 		this.texture = Assets.getTexture(this.id + "_icon");

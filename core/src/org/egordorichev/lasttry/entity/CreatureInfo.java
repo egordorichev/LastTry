@@ -155,7 +155,7 @@ public class CreatureInfo {
 				Item item = Item.fromID(drop.getString("id"));
 
 				if (item == null) {
-					throw new Exception("Item with id " + drop.getShort("id") + " is not found");
+					throw new Exception("Item with id " + drop.getString("id") + " is not found");
 				}
 
 				short chance = drop.getShort("chance", (short) 1);
