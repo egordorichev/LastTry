@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.item.block.plant;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
@@ -10,9 +9,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.item.block.helpers.PlantHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
-import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Util;
 
 public class Plant extends Block {

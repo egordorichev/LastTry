@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Animation;

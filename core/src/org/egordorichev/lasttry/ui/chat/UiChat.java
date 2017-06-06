@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Creatures;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
@@ -139,12 +138,13 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				LastTry.noLight = !LastTry.noLight;
+				// TODO: If light has not been setup, do that.
 			}
 		});
 		this.commands.register(new Command("kill", "Kills the player", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.player.die(); // todo: fatal
+				Globals.player.die(); // TODO: fatal
 			}
 		});
 		this.commands.register(new Command("clear", "Clears your inventory", CMDCategory.DEBUG) {
