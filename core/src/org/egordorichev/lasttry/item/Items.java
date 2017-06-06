@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry;
+package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
@@ -25,7 +25,7 @@ public class Items {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(Gdx.files.internal("data/creatures.json"));
+			JsonValue root = jsonReader.parse(Gdx.files.internal("data/items.json"));
 
 			for (JsonValue item : root) {
 				try {

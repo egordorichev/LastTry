@@ -6,6 +6,4 @@ public class WorkingStation extends MultiTileBlock {
 	public WorkingStation(String id) {
 		super(id);
 	}
-
-	// TODO
 }

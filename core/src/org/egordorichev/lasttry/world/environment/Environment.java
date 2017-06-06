@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.world.environment;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.Items;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
@@ -10,8 +9,9 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.biome.Biomes;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,9 +23,9 @@ public class Environment {
 	public Biome lastBiome;
 
 	public Environment() {
-		this.currentBiome = Biome.forest;
+		this.currentBiome = Biomes.get("lt:forest");
 		this.currentBiome.animation.fadeInFast();
-		this.lastBiome = Biome.forest;
+		this.lastBiome = Biomes.get("lt:forest");
 		this.blockCount = new HashMap<>();
 		this.time = new WorldTime((byte) 8, (byte) 15);
 
@@ -143,7 +143,10 @@ public class Environment {
 		}
 
 		this.lastBiome = this.currentBiome;
-		this.currentBiome = Biome.forest;
+
+		// TODO: calculate biome
+
+		this.currentBiome = Biomes.get("lt:forest");
 	}
 
 	public List<Event> getCurrentEvents() {

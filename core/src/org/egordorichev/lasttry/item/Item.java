@@ -1,14 +1,9 @@
 package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.utils.JsonValue;
-import org.egordorichev.lasttry.Items;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.plant.Grass;
-import org.egordorichev.lasttry.item.items.Coin;
-import org.egordorichev.lasttry.item.items.Pickaxe;
 import org.egordorichev.lasttry.language.Language;
 
 import java.lang.reflect.Constructor;
@@ -79,6 +74,9 @@ public class Item {
 			return item;
 		} catch (ClassNotFoundException exception) {
 			throw new Exception("Class " + className + " is not found");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			throw exception;
 		}
 	}
 

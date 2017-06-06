@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item.block;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
@@ -13,6 +14,21 @@ public class MultiTileBlock extends Block {
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 		Graphics.batch.draw(this.tiles[BlockHelper.mtb.getY(hp)][BlockHelper.mtb.getX(hp)], x * Block.SIZE, y * Block.SIZE);
+	}
+
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		if (root.has("size")) {
+			JsonValue size = root.get("size");
+
+			this.width = size.get(0).asByte();
+			this.width = size.get(1).asByte();
+		} else {
+			this.width = 2;
+			this.height = 2;
+		}
 	}
 
 	public int getGridWidth() {

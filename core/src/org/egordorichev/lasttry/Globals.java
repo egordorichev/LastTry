@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
-import org.egordorichev.lasttry.world.biome.BiomeMap;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
@@ -15,11 +14,6 @@ import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 import com.badlogic.gdx.math.Vector2;
 
 public class Globals {
-	/**
-	 * Used in world generation. Associates a biome to coordinates on a graph.
-	 * Coordinates are in temperature and humidity, both ranging from 1-100.
-	 */
-	public static final BiomeMap biomeMap = new BiomeMap();
 	/**
 	 * The current world.
 	 */
