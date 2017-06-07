@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
@@ -180,11 +181,11 @@ public class Block extends Item {
 	 */
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
-		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
+		byte variant = BlockHelper.plain.getVariant(hp);
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
-		hp = (byte) (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2);
+		hp = BlockHelper.plain.getHP(hp);
 
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);

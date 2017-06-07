@@ -11,10 +11,17 @@ import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.ByteHelper;
 
 public class Wall extends Item {
+	/**
+	 * Wall tiles (not icons!)
+	 */
 	protected TextureRegion[][] tiles;
+	/**
+	 * Required tool power to break this wall
+	 */
 	protected ToolPower power;
 
 	public Wall(String id) {
@@ -25,6 +32,10 @@ public class Wall extends Item {
 		this.texture = Assets.getTexture(this.id + "_icon");
 	}
 
+	/**
+	 * Loads fields from given wall root
+	 * @param root Wall root
+	 */
 	@Override
 	protected void loadFields(JsonValue root) {
 		super.loadFields(root);
@@ -38,24 +49,47 @@ public class Wall extends Item {
 		this.power = new ToolPower(power[0], power[1], power[2]);
 	}
 
+	/**
+	 * Callback, called on wall death
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
 	public void die(int x, int y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 		Globals.getWorld().onWallBreak(x, y);
 	}
 
-	public void renderWall(int x, int y) {
-		boolean t = Globals.getWorld().walls.getID(x, y + 1).equals(this.id);
-		boolean r = Globals.getWorld().walls.getID(x + 1, y).equals(this.id);
-		boolean b = Globals.getWorld().walls.getID(x, y - 1).equals(this.id);
-		boolean l = Globals.getWorld().walls.getID(x - 1, y).equals(this.id);
+	/**
+	 * Creates byte, representing wall neighbors
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 * @return Byte, representing wall neighbors
+	 */
+	public byte calculateBinary(int x, int y) {
+		boolean t = Globals.getWorld().blocks.getID(x, y + 1).equals(this.id);
+		boolean r = Globals.getWorld().blocks.getID(x + 1, y).equals(this.id);
+		boolean b = Globals.getWorld().blocks.getID(x, y - 1).equals(this.id);
+		boolean l = Globals.getWorld().blocks.getID(x - 1, y).equals(this.id);
 
+		return ByteHelper.create(t, r, b, l, false, false, false , false);
+	}
+
+	/**
+	 * Renders wall at given position
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
+	public void renderWall(int x, int y) {
 		byte hp = Globals.getWorld().walls.getHP(x, y);
-		int variant = ByteHelper.getBitValue(hp, (byte) 2) + ByteHelper.getBitValue(hp, (byte) 3) * 2;
-		int binary = Block.calculateBinary(t, r, b, l);
+		byte variant = WallHelper.getVariant(hp);
+		byte binary = calculateBinary(x, y);
 
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
-		hp = (byte) (ByteHelper.getBitValue(hp, (byte) 0) + ByteHelper.getBitValue(hp, (byte) 1) * 2);
+		hp = WallHelper.getHP(hp);
 
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
@@ -76,6 +110,9 @@ public class Wall extends Item {
 		return false;
 	}
 
+	/**
+	 * @return Render wall cracks
+	 */
 	protected boolean renderCracks() {
 		return true;
 	}
@@ -85,10 +122,23 @@ public class Wall extends Item {
 		return true;
 	}
 
+	/**
+	 * Places the wall of self type in given position
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
 	public void place(int x, int y) {
 		Globals.getWorld().walls.set(this.id, x, y);
 	}
 
+	/**
+	 * Returns, if wall can be used
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 * @return If wall can be used
+	 */
 	public boolean canBePlaced(int x, int y) {
 		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
 		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
@@ -115,6 +165,9 @@ public class Wall extends Item {
 		return true;
 	}
 
+	/**
+	 * @return Required tool power to break this wall
+	 */
 	public ToolPower getRequiredPower() {
 		return this.power;
 	}
