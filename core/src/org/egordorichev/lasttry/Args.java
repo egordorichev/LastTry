@@ -9,10 +9,25 @@ public class Args {
 	public static String player = "test";
 	public static int seed = 512;
 
+	/**
+	 * Current argument index
+	 */
 	private static int i;
+	/**
+	 * Current argument
+	 */
 	private static String arg;
+	/**
+	 * Arguments
+	 */
 	private static String[] arguments;
 
+	/**
+	 * Parses given arguments
+	 * @param args arguments, received by main()
+	 * @param config App config
+	 * @throws Exception Exception, containing a parse error
+	 */
 	public static void parse(String[] args, LwjglApplicationConfiguration config) throws Exception {
 		arguments = args;
 
@@ -63,12 +78,18 @@ public class Args {
 		}
 	}
 
+	/**
+	 * Checks, that there is one more argument, otherwise, throws an Exception
+	 * @param error Error message for the Exception
+	 * @throws Exception Thrown if there is no more arguments
+	 */
 	private static void checkForArgument(String error) throws Exception {
 		if (arguments.length - 1 == i) {
 			throw new Exception(error);
 		}
 	}
 
+	/** Used for dumping thread */
 	private static class ExitDumper extends SecurityManager {
 		@Override
 		public void checkExit(int status) {
