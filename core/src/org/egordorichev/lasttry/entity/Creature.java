@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
-import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.util.Util;
@@ -11,15 +10,27 @@ import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Creature extends Entity {
 	protected static final int ATTACK_INVULN_TIME = 10;
+	/**
+	 * Creature spawn weight
+	 */
 	protected int spawnWeight = 1;
+	/**
+	 * Drops handler
+	 */
 	public CreatureDropsComponent drops = new CreatureDropsComponent();
+	/**
+	 * Stats handler
+	 */
 	public CreatureStatsComponent stats;
+	/**
+	 * State handler
+	 */
 	public CreatureStateComponent state;
+	/**
+	 * Effects handler
+	 */
 	public CreatureEffectsComponent effects;
 
 	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
@@ -34,22 +45,20 @@ public class Creature extends Entity {
 		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
+	/**
+	 * Hits the creature
+	 * @param damage HP to remove from health
+	 */
 	public void hit(int damage) {
 		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO: crit?
-				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
-
-		// TODO: Determine where the damage code should be
-		// Should creatures share this logic or does this only apply to enemies?
+			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		this.stats.modifyHP(-damage);
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
-
-		// TODO: Knockback effect when damaged. Force depends on damage.
-		// TODO: Rework this method so the source of the attack is known.
-		// The source is needed to calculate the direction of the knockback
 	}
 
+	/** Renders the creature */
 	@Override
 	public void render() {
 		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
@@ -59,6 +68,7 @@ public class Creature extends Entity {
 		super.render();
 	}
 
+	/** Renders the health bar */
 	protected void renderHealthBar() {
 		float hp = (float) this.stats.getHp() / (float) this.stats.getMaxHP();
 
@@ -81,18 +91,23 @@ public class Creature extends Entity {
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
+	/** Updates the creature */
 	@Override
 	public void update(int dt) {
 		super.update(dt);
 
 		this.graphics.update(dt);
 		this.stats.update(dt);
+		this.effects.update(dt);
 
 		if (this.stats.getHp() == 0) {
 			this.die();
 		}
 	}
 
+	/**
+	 * @return Creature can't be damaged
+	 */
 	public boolean isInvulnrable() {
 		return this.stats.getInvulnTime() > 0;
 	}
@@ -102,6 +117,7 @@ public class Creature extends Entity {
 		this.drops.drop();
 	}
 
+	/** Tries to despawn creature */
 	public void tryToDespawn() {
 		try {
 			final WorldTime currentTime = Globals.environment.time;
@@ -117,6 +133,9 @@ public class Creature extends Entity {
 		}
 	}
 
+	/**
+	 * @return Creature spawn weight
+	 */
 	public int getSpawnWeight() {
 		return spawnWeight;
 	}

@@ -20,4 +20,11 @@ public class CreatureWithAI extends Creature {
 		super.update(dt);
 		this.ai.update(dt);
 	}
+
+	/**
+	 * @return Creature can spawn
+	 */
+	public boolean canSpawn() {
+		return this.ai.ai.canSpawn();
+	}
 }
