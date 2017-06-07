@@ -7,7 +7,10 @@ public interface Component {
 
 	}
 
-	/** Being called on update */
+	/**
+	 * Being called on update
+	 * @param dt Time, past since last update
+	 */
 	default void update(int dt) {
 
 	}

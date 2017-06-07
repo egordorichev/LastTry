@@ -41,11 +41,18 @@ public class Block extends Item {
 	protected int height = 1;
 
 	public Block(String id) {
+		this(id, true);
+	}
+
+	public Block(String id, boolean loadIcon) {
 		super(id);
 
 		this.useDelayMax = 30;
 		this.tiles = this.texture.split(SIZE, SIZE);
-		this.texture = Assets.getTexture(this.id + "_icon");
+
+		if (loadIcon) {
+			this.texture = Assets.getTexture(this.id + "_icon");
+		}
 	}
 
 	/**

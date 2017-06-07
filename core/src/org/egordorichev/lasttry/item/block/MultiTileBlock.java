@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 
 public class MultiTileBlock extends Block {
 	public MultiTileBlock(String id) {
-		super(id);
+		super(id, false);
 	}
 
 	@Override

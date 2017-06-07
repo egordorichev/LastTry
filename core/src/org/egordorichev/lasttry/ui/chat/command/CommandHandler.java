@@ -24,7 +24,7 @@ public class CommandHandler {
 	/**
 	 * Storage for commands:
 	 *
-	 * Format <cmd, instance>
+	 * Format &lt;cmd, instance&gt;
 	 */
 	private final Map<String, Command> commands = new HashMap<>();
 
@@ -83,7 +83,7 @@ public class CommandHandler {
 	 * executes it. If a valid command cannot be found the method returns false.
 	 * A successful execution will return true.
 	 *
-	 * @param handle
+	 * @param in
 	 *            Handle of the command to run.
 	 * @return True if run was successful. False otherwise.
 	 */
@@ -123,7 +123,7 @@ public class CommandHandler {
 	/**
 	 * Return a collection of available commands.
 	 *
-	 * @return Collection<Command>
+	 * @return Collection &lt;Command&gt;
 	 */
 	public Collection<Command> getCommands() {
 		return commands.values();

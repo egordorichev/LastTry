@@ -145,20 +145,19 @@ public class AdvancedRectangle {
 
 
     /**
-     * Checks if the x & y points received are within the rectangle area
+     * Checks if the x and y points received are within the rectangle area
      *
      * @param x pixel x co ordinate
      * @param y pixel y co ordinate
      * @return boolean indicating whether the pixel is within.
      */
     public boolean isXyPointsWithinRectangle(float x, float y) {
-
-        //Converts pixel co ordinates to grid style co oridnates
+        // Converts pixel co ordinates to grid style co oridnates
         int blockXPoint = convertToBlock(Math.round(x));
         int blockYPoint = convertToBlock(Math.round(y));
 
-        //TODO Swap this on Y axis reflection
-        //If the y point is less than top y point & x point less than bottom x point
+        // TODO Swap this on Y axis reflection
+        // If the y point is less than top y point & x point less than bottom x point
         if(blockYPoint>topLeftPoint.getY()&&blockXPoint<bottomRightPoint.getX()) {
             return true;
         }
