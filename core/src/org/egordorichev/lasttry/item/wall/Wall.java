@@ -31,8 +31,8 @@ public class Wall extends Item {
 
 		short power[] = { 10, 0, 0 };
 
-		if (root.has("power")) {
-			power = root.get("power").asShortArray();
+		if (root.has("requiredPower")) {
+			power = root.get("requiredPower").asShortArray();
 		}
 
 		this.power = new ToolPower(power[0], power[1], power[2]);
