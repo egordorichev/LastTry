@@ -22,142 +22,145 @@ import java.util.Locale;
 
 /** Main game class */
 public class LastTry extends Game {
-    /** LastTry version */
-    public static final Version version = new Version(0.0, 17, "alpha");
+	/** LastTry version */
+	public static final Version version = new Version(0.0, 17, "alpha");
 
-    /**
-     * Random instance. This is not to be used in repeatable systems such as
-     * world generation
-     */
-    public static final Random random = new Random();
+	/**
+	 * Random instance. This is not to be used in repeatable systems such as
+	 * world generation
+	 */
+	public static final Random random = new Random();
 
-    /** Last Try instance */
-    public static LastTry instance;
+	/** Last Try instance */
+	public static LastTry instance;
 
-    /** Ui manager */
-    public static UiManager ui;
+	/** Ui manager */
+	public static UiManager ui;
 
-    /** Debug helper */
-    public static Debug debug;
+	/** Debug helper */
+	public static Debug debug;
 
-    /** Shows, if this is a release */
-    public static boolean release = true;
+	/** Shows, if this is a release */
+	public static boolean release = true;
 
-    /** Light disable */
-    public static boolean noLight;
+	/** Light disable */
+	public static boolean noLight;
 
-    /** Screen dimensions */
-    public final int width;
+	/** Screen dimensions */
+	public final int width;
 
-    private final int height;
+	private final int height;
 
-    public LastTry(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
+	public LastTry(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
 
-    /** Creates first-priority instances */
-    @Override
-    public void create() {
-        Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
-        Globals.resolution = new Vector2(width, height);
-        instance = this;
+	/** Creates first-priority instances */
+	@Override
+	public void create() {
+		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
+		Globals.resolution = new Vector2(width, height);
+		instance = this;
 
-        Camera.create(width, height);
-        Language.load(new Locale("en", "US"));
-        ShaderLighting.init(width, height);
+		Camera.create(width, height);
+		Language.load(new Locale("en", "US"));
+		ShaderLighting.init(width, height);
 
-        Gdx.input.setInputProcessor(InputManager.multiplexer);
-        Gdx.graphics.setTitle(this.getRandomWindowTitle());
+		Gdx.input.setInputProcessor(InputManager.multiplexer);
+		Gdx.graphics.setTitle(this.getRandomWindowTitle());
 
-        Graphics.batch = new SpriteBatch();
+		Graphics.batch = new SpriteBatch();
 
-        debug = new Debug();
-        ui = new UiManager();
+		debug = new Debug();
+		ui = new UiManager();
 
-        this.setScreen(new SplashState());
-    }
+		this.setScreen(new SplashState());
+	}
 
-    /**
-     * Handles window resize
-     * 
-     * @param width
-     *            new window width
-     * @param height
-     *            new window height
-     */
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-        Camera.resize(width, height);
-        ShaderLighting.init(width, height);
-        Globals.resolution.x = width;
-        Globals.resolution.y = height;
-    }
+	/**
+	 * Handles window resize
+	 *
+	 * @param width
+	 *            new window width
+	 * @param height
+	 *            new window height
+	 */
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		Camera.resize(width, height);
+		ShaderLighting.init(width, height);
+		Globals.resolution.x = width;
+		Globals.resolution.y = height;
+	}
 
-    /** Renders and updates the game */
-    @Override
-    public void render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+	/** Renders and updates the game */
+	@Override
+	public void render() {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 
-        Graphics.batch.enableBlending();
-        Graphics.batch.begin();
+		Graphics.batch.enableBlending();
+		Graphics.batch.begin();
 
-        super.render();
+		super.render();
 
-        Graphics.batch.end();
-        ShaderLighting.render();
-    }
+		Graphics.batch.end();
+		ShaderLighting.render();
+	}
 
-    /** Handles game exit */
-    @Override
-    public void dispose() {
-        Globals.dispose();
-        Assets.dispose();
-    }
+	/** Handles game exit */
+	@Override
+	public void dispose() {
+		Globals.dispose();
+		Assets.dispose();
+	}
 
-    /**
-     * Returns random title for game the window
-     * 
-     * @return random title for game the window
-     */
-    private String getRandomWindowTitle() {
-        String[] split = Language.text.get("windowTitles").split("//");
-        return split[random.nextInt(split.length)] + " " + version.toString();
-    }
+	/**
+	 * Returns random title for game the window
+	 *
+	 * @return random title for game the window
+	 */
+	private String getRandomWindowTitle() {
+		String[] split = Language.text.get("windowTitles").split("//");
+		return split[random.nextInt(split.length)] + " " + version.toString();
+	}
 
-    /**
-     * Returns mouse X coordinate, under the world
-     * 
-     * @return mouse X coordinate, under the world
-     */
-    public static int getMouseXInWorld() {
-        return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
-                + InputManager.getMousePosition().x);
-    }
+	/**
+	 * Returns mouse X coordinate, under the world
+	 *
+	 * @return mouse X coordinate, under the world
+	 */
+	public static int getMouseXInWorld() {
+		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
+			+ InputManager.getMousePosition().x);
+	}
 
-    /**
-     * Returns mouse Y coordinate, under the world
-     * 
-     * @return mouse Y coordinate, under the world
-     */
-    public static int getMouseYInWorld() {
-        return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
-                - InputManager.getMousePosition().y);
-    }
+	/**
+	 * Returns mouse Y coordinate, under the world
+	 *
+	 * @return mouse Y coordinate, under the world
+	 */
+	public static int getMouseYInWorld() {
+		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
+			- InputManager.getMousePosition().y);
+	}
 
-    /**
-     * Handles exception, if it is critical, exits the game
-     * 
-     * @param exception
-     *            exception to handle
-     */
-    public static void handleException(Exception exception) {
-        Crash.report(Thread.currentThread(), exception);
-    }
+	/**
+	 * Handles exception, if it is critical, exits the game
+	 *
+	 * @param exception
+	 *            exception to handle
+	 */
+	public static void handleException(Exception exception) {
+		Crash.report(Thread.currentThread(), exception);
+	}
 
-    public static void abort() {
-        System.exit(1);
-    }
+	/**
+	 * Aborts the process
+	 */
+	public static void abort() {
+		System.exit(1);
+	}
 }
