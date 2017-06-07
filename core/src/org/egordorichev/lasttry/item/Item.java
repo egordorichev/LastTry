@@ -48,6 +48,13 @@ public class Item {
 		this.texture = Assets.getTexture(this.id);
 	}
 
+	/**
+	 * Loads item from given json root
+	 *
+	 * @param root Item root
+	 * @return New item
+	 * @throws Exception Exception containing a error message
+	 */
 	public static Item load(JsonValue root) throws Exception {
 		String className = root.getString("type", "org.egordorichev.lasttry.item.Item");
 
@@ -59,6 +66,14 @@ public class Item {
 		}
 	}
 
+	/**
+	 * Creates Item class and initialization it
+	 *
+	 * @param root Item root
+	 * @param className Class name to create (like org.egordorichev.lasttry.item.Item)
+	 * @return New Item instance
+	 * @throws Exception Exception containing error message
+	 */
 	public static Item createInstance(JsonValue root, String className) throws Exception {
 		try {
 			Class itemClass = Class.forName(className);
@@ -80,10 +95,18 @@ public class Item {
 		}
 	}
 
+	/**
+	 * Loads fields from root
+	 *
+	 * @param root
+	 */
 	protected void loadFields(JsonValue root) {
 
 	}
 
+	/**
+	 * @return Can the item be used (can depend on night / day and other)
+	 */
 	public boolean use() {
 		return false;
 	}
@@ -105,6 +128,7 @@ public class Item {
 		} else {
 			this.useDelay = 0;
 		}
+
 		this.onUpdate(owner);
 
 		if (this.isReady()) {
@@ -112,6 +136,11 @@ public class Item {
 		}
 	}
 
+	/**
+	 * Callback, called when the item is used
+	 *
+	 * @return If item needs to be removed from inventory
+	 */
 	protected boolean onUse() {
 		return false;
 	}
@@ -126,42 +155,74 @@ public class Item {
 
 	}
 
-	protected boolean onUseEnd() {
-		return false;
+	/**
+	 * Callback, called when the item stopes to being used
+	 */
+	protected void onUseEnd() {
+
 	}
 
+	/**
+	 * Renders item animation
+	 */
 	public void renderAnimation() {
 
 	}
 
+	/**
+	 * @return Item ID
+	 */
 	public String getID() {
 		return this.id;
 	}
 
+	/**
+	 * @return Item rarity
+	 */
 	public Rarity getRarity() {
 		return this.rarity;
 	}
 
+	/**
+	 * @return Item name
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * @return Item texture
+	 */
 	public TextureRegion getTextureRegion() {
 		return this.texture;
 	}
 
+	/**
+	 * @return If the item can be used
+	 */
 	public boolean canBeUsed() {
 		return true;
 	}
 
+	/**
+	 * @return Item will keep being used, while holding the mouse button
+	 */
 	public boolean isAutoUse() {
 		return false;
 	}
 
+	/**
+	 * @return Item is ready for another use
+	 */
 	public boolean isReady() {
 		return this.useDelay == 0;
 	}
 
+	/**
+	 * Returns Item with given id or null, if it is not found
+	 * @param id Item id
+	 * @return Item with given id or null, if it is not found
+	 */
 	public static Item fromID(String id) {
 		if (id.isEmpty()) {
 			return null;
@@ -170,6 +231,9 @@ public class Item {
 		return Items.ITEM_CACHE.get(id);
 	}
 
+	/**
+	 * @return Max items in one stack
+	 */
 	public int getMaxInStack() {
 		return 999;
 	}
