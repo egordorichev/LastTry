@@ -149,5 +149,9 @@
 
 	"lt:gel" : {
 		"type" : "org.egordorichev.lasttry.item.Item"
+	},
+
+	"lt:dirt_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
 	}
 }
