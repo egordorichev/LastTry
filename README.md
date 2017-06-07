@@ -1,4 +1,4 @@
-![Logo](https://github.com/egordorichev/LastTry/blob/8e7ee6c22752d3543375ef19d39dd988e8ec1cfd/core/assets/logo.png?raw=true "Logo")
+# LastTry
 
 [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![codebeat badge](https://codebeat.co/badges/92d0acff-0fd0-438b-b7a8-f40390f995df)](https://codebeat.co/projects/github-com-egordorichev-lasttry-dev) [![Code Climate](https://codeclimate.com/github/egordorichev/LastTry.png)](https://codeclimate.com/github/egordorichev/LastTry)
 
@@ -27,6 +27,10 @@ You should end up with a jar, placed in `desktop/build/libs/`. Run it.
 ### TODO
 
 [TODO list can be found here](https://trello.com/b/MgdX6wA4/game-lasttry).
+
+### Docs
+
+[Docs can be found here](https://egordorichev.github.io/ltdocs/index.html)
 
 ### Liecense
 
