@@ -16,7 +16,6 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.util.Log;
 import java.util.Random;
 import java.util.Locale;
 

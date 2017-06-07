@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
-import org.egordorichev.lasttry.entity.Enemy;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -131,7 +130,6 @@ public class Tool extends Item {
 
     public void onToolAttack(InventoryOwner<?> owner) {
         Creature cowner = (Creature) owner;
-
         // Get the list of enemies
         List<Creature> activeEnemies = Globals.entityManager.getCreatureEntities();
 

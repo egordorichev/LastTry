@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
@@ -14,7 +13,7 @@ public class Args {
 	private static String arg;
 	private static String[] arguments;
 
-	public static void parse(String[] args, LwjglApplicationConfiguration config) throws Exception {
+	public static void parse(String[] args, Object config) throws Exception {
 		arguments = args;
 
 		/*
@@ -76,7 +75,7 @@ public class Args {
 					LastTry.noLight = true;
 				break;
 				case "-f":
-					config.fullscreen = true;
+					set(config, "fullscreen", true);
 				break;
 				default:
 					throw new Exception("Unknown arg " + arg);
@@ -84,7 +83,21 @@ public class Args {
 		}
 	}
 
-	private static void checkForArgument(String error) throws Exception {
+	private static void set(Object instance, String field, boolean value) {
+	    // THIS IS TEMPORARY
+	    // The issue is AFAIK the core gradle doesn't load the following:
+	    //
+	    // com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+	    //
+	    // So do we update the gradle file or change the way its passed?
+	    try {
+            instance.getClass().getDeclaredField(field).set(instance, value);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void checkForArgument(String error) throws Exception {
 		if (arguments.length - 1 == i) {
 			throw new Exception(error);
 		}

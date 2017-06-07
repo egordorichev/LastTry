@@ -27,6 +27,8 @@ public class Crash {
 
 		System.err.println("--- END CRASH REPORT ---");
 		System.err.flush();
+		// TODO: 
+		System.exit(0);
 	}
 
 	private static String printMemoryUsage() {

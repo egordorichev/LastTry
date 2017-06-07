@@ -10,10 +10,6 @@ public class CreatureComponent implements Component {
 		this.setCreature(creature);
 	}
 
-	public CreatureComponent() {
-		// Unsafe!
-	}
-
 	@Override
 	public void render() {
 
