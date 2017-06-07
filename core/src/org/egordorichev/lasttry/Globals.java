@@ -10,7 +10,6 @@ import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
-
 import com.badlogic.gdx.math.Vector2;
 
 public class Globals {
@@ -97,23 +96,38 @@ public class Globals {
 		Globals.currentScreen = newScreen;
 	}
 
+	/**
+	 * @return Current world
+	 */
 	public static World getWorld() {
 		return world;
 	}
 
+	/**
+	 * Sets current world
+	 * @param world World to be set as current
+	 */
 	public static void setWorld(World world) {
 		Globals.world = world;
 
-		/* TODO: While not a normal vanilla feature of Terraria, I think having
+		/*
+		 * TODO: While not a normal vanilla feature of Terraria, I think having
 		 * multiple dimensions would be cool.
 		 * Kinda like the Minecraft Mystcraft mod.
 		 */
 	}
 
+	/**
+	 * @return Current player
+	 */
 	public static Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Sets the current player
+	 * @param player Player to be set as current
+	 */
 	public static void setPlayer(Player player) {
 		Globals.player = player;
 	}
