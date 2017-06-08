@@ -1,0 +1,85 @@
+{
+	"lt:forest" : {
+		"required" : [],
+		"level" : 0,
+		"temperature" : 23,
+		"humidity" : 30,
+		"maxSpawns" : 5,
+		"spawnRate" : 800
+	},
+
+	"lt:desert" : {
+		"required" : [
+			{
+				"id" : [ "lt:sand" ],
+				"count" : 1000
+			}
+		],
+
+		"level" : 1,
+		"temperature" : 90,
+		"humidity" : 5,
+		"maxSpawns" : 7,
+		"spawnRate" : 180
+	},
+
+	"lt:corruption" : {
+		"required" : [
+			{
+				"id" : [ "lt:ebonstone" ],
+				"count" : 200
+			}
+		],
+
+		"level" : 3,
+		"temperature" : 30,
+		"humidity" : 50,
+		"maxSpawns" : 5,
+		"spawnRate" : 390
+	},
+
+	"lt:crimson" : {
+		"required" : [
+			{
+				"id" : [ "lt:crimstone" ],
+				"count" : 200
+			}
+		],
+
+		"level" : 3,
+		"temperature" : 30,
+		"humidity" : 30,
+		"maxSpawns" : 6,
+		"spawnRate" : 390
+	},
+
+	"lt:corruption_desert" : {
+		"required" : [
+			{
+				"id" : [ "lt:ebonsand" ],
+				"count" : 1000
+			}
+		],
+
+		"level" : 2,
+		"temperature" : 60,
+		"humidity" : 10,
+		"maxSpawns" : 6,
+		"spawnRate" : 390
+	},
+
+	"lt:crimson_desert" : {
+		"required" : [
+			{
+				"id" : [ "lt:crimsand" ],
+				"count" : 1000
+			}
+		],
+
+		"level" : 2,
+		"temperature" : 100,
+		"humidity" : 0,
+		"maxSpawns" : 6,
+		"spawnRate" : 390
+	}
+}

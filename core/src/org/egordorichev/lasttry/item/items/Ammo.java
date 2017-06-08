@@ -1,23 +1,28 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.Item;
 
 public class Ammo extends Item {
     /**
      * Ammo damage
      */
-    protected int damage;
+    protected short damage;
     /**
      * Ammo type
      */
     protected Type type;
 
-    public Ammo(short id, String name, int damage, Type type, TextureRegion texture) {
-        super(id, name, texture);
+    public Ammo(String id) {
+        super(id);
+    }
 
-        this.damage = damage;
-        this.type = type;
+    @Override
+    protected void loadFields(JsonValue root) {
+        super.loadFields(root);
+
+	    this.type = Type.valueOf(root.getString("type", "bullet").toUpperCase());
+	    this.damage = root.getShort("damage", (short) 0);
     }
 
     /**
@@ -34,7 +39,7 @@ public class Ammo extends Item {
      *
      * @return ammo damage.
      */
-    public int getDamage() {
+    public short getDamage() {
         return this.damage;
     }
 

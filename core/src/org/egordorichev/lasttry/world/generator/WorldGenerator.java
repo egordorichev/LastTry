@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.world.World;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +12,10 @@ public class WorldGenerator {
 	public WorldGenerator(String name, World.Size size, int flags, int seed) {
 		this.world = new World(name, size, flags, seed);
 		Globals.setWorld(this.world);
-		this.tasks.add(new TaskTerrainGen());
-		this.tasks.add(new TaskCaveGenSimplex());
+		this.tasks.add(new TerrainGeneratorTask());
+		this.tasks.add(new CaveGeneratorSimplexTask());
 		//this.tasks.add(new TaskBiomeTestGen());
-		//this.tasks.add(new TaskFoilageGen());
+		//this.tasks.add(new FoilageGeneratorTask());
 	    //this.tasks.add(new TaskLightGen());
 	}
 
@@ -47,7 +46,7 @@ public class WorldGenerator {
 
     public int getHighest(int x) {
         for (int y = getWorldHeight(); y > 0; y--){
-            if (this.world.getBlockID(x, y) != ItemID.none){
+            if (this.world.blocks.getID(x, y) == null) {
                 return y;
             }
         }

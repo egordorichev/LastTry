@@ -1,20 +1,14 @@
 package org.egordorichev.lasttry.item.items;
 
-
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
+import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 
 public class Hammer extends DigTool {
-	public Hammer(short id, String name, Rarity rarity, float baseDamage, int power, int useSpeed, TextureRegion texture) {
-		super(id, name, rarity, baseDamage, ToolPower.hammer(power), useSpeed, texture);
-	}
-
-	public Hammer(short id, String name, float baseDamage, int power, int useSpeed, TextureRegion texture) {
-		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
+	public Hammer(String id) {
+		super(id);
 	}
 
 	@Override
@@ -22,7 +16,7 @@ public class Hammer extends DigTool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Wall wall = Globals.getWorld().getWall(x, y);
+		Wall wall = Globals.getWorld().walls.get(x, y);
 
 		if (wall == null) {
 			return false;
@@ -31,10 +25,10 @@ public class Hammer extends DigTool {
 		ToolPower power = wall.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = Globals.getWorld().getWallHP(x, y);
+			byte hp = Globals.getWorld().walls.getHP(x, y);
 
 			if (hp > 0) {
-				Globals.getWorld().setWallHP((byte) (hp - 1), x, y);
+				Globals.getWorld().walls.setHP(WallHelper.setHP(hp, (byte) (WallHelper.getHP(hp) - 1)), x, y);
 			}
 		}
 

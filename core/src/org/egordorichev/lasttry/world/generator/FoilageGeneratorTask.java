@@ -1,8 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.item.ItemID;
-
-public class TaskFoilageGen extends GeneratorTask {
+public class FoilageGeneratorTask extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {
@@ -10,13 +8,13 @@ public class TaskFoilageGen extends GeneratorTask {
         // Small plants
         for (int x = 0; x < generator.getWorldWidth(); x += generator.world.random.nextInt(5)) {
             int y = generator.getHighest(x);
-            generator.world.setBlock(ItemID.ashBlock, x, y);
+            generator.world.blocks.set("lt:ash", x, y);
         }
 
         // Larger plants
         for (int x = 0; x < generator.getWorldWidth(); x += generator.world.random.nextInt(10)) {
             int y = generator.getHighest(x);
-            generator.world.setBlock(ItemID.crimstoneBlock, x, y);
+            generator.world.blocks.set("lt:ash", x, y);
         }
     }
 

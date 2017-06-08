@@ -4,8 +4,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
@@ -14,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
@@ -39,14 +37,14 @@ public class PlayerIO {
 				LastTry.abort();
 			}
 
-			Globals.player = new Player(playerName);
-			Globals.player.stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
+			Globals.setPlayer(new Player(playerName));
+			Globals.getPlayer().stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				short id = stream.readInt16();
+				String id = stream.readString();
 
-				if (id != 0) {
-					ItemHolder holder = Globals.player.getInventory().getItemInSlot(i);
+				if (id != null) {
+					ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
 
@@ -76,34 +74,34 @@ public class PlayerIO {
 			dir.mkdir();
 		}
 
-		String fileName = getSaveName(Globals.player.getName());
+		String fileName = getSaveName(Globals.getPlayer().getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
-				Log.error("Failed to create save file for the player " + Globals.player.getName() + "!");
+				Log.error("Failed to create save file for the player " + Globals.getPlayer().getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving player " + Globals.player.getName() + "...");
+		Log.debug("Saving player " + Globals.getPlayer().getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
 
 			stream.writeInt32(VERSION);
-			stream.writeInt16((short) Globals.player.stats.getMaxHP());
-			stream.writeInt16((short) Globals.player.stats.getMaxMana());
+			stream.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
+			stream.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				ItemHolder holder = Globals.player.getInventory().getItemInSlot(i);
+				ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 
 				if (holder.getItem() == null) {
-					stream.writeInt16(ItemID.none);
+					stream.writeString("");
 				} else {
-					stream.writeInt16(holder.getItem().getID());
+					stream.writeString(holder.getItem().getID());
 					stream.writeInt16((short) holder.getCount());
 
 					if (holder.getModifier() != null) {
@@ -121,17 +119,17 @@ public class PlayerIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving player " + Globals.player.getName() + "!");
+		Log.debug("Done saving player " + Globals.getPlayer().getName() + "!");
 	}
 
 	public static Player generate(String name) {
 		Player player = new Player(name);
 
-		player.getInventory().add(new ItemHolder(Items.copperShortSword, 1));
-		player.getInventory().add(new ItemHolder(Items.copperPickaxe, 1));
-		player.getInventory().add(new ItemHolder(Items.copperAxe, 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
+		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
 
-		return player; // TODO
+		return player;
 	}
 
 	public static boolean saveExists(String name) {

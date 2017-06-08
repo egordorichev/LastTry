@@ -21,10 +21,8 @@ public abstract class Effect {
         Graphics.batch.draw(this.texture, x, y);
     }
 
-
     public abstract void apply(Creature creature);
     public abstract void remove(Creature creature);
-
 
     public void update(Creature creature, int dt) {
 

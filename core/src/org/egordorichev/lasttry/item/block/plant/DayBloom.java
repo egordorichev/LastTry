@@ -2,13 +2,11 @@ package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class DayBloom extends Plant {
-	public DayBloom() {
-		super(ItemID.dayBloom, "Day Bloom", Assets.getTexture(Textures.dayBloomIcon), Assets.getTexture(Textures.dayBloom));
+
+	public DayBloom(String id) {
+		super(id);
 	}
 
 	@Override
@@ -17,13 +15,8 @@ public class DayBloom extends Plant {
 			return false;
 		}
 
-		short id = Globals.getWorld().getBlockID(x, y - 1);
-
-		if (id != ItemID.grassBlock) {
-			return false;
-		}
-
-		return true;
+		String id = Globals.getWorld().blocks.getID(x, y - 1);
+		return id.equals("lt:dirt");
 	}
 
 	@Override

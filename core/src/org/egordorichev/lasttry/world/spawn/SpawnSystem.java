@@ -12,7 +12,6 @@ import org.egordorichev.lasttry.world.spawn.components.CreatureSpawnComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
 import org.egordorichev.lasttry.world.spawn.components.SpawnRateComponent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

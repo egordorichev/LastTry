@@ -6,7 +6,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
@@ -26,14 +25,14 @@ public class WorldLightingComponent implements Component {
     public void init() {
         for (int y = 0; y < Globals.getWorld().getHeight(); y++) {
             for (int x = 0; x < Globals.getWorld().getWidth(); x++) {
-                boolean hasBlock = world.getBlockID(x, y) != ItemID.none;
+                boolean hasBlock = world.blocks.getID(x, y) == null;
                 byte light = MAX_LIGHT;
 
                 if (hasBlock) {
                     light -= calculateNeighbors(x, y);
                 }
 
-                world.setLight(x, y, light);
+                world.blocks.setLight(x, y, light);
             }
         }
     }
@@ -54,21 +53,21 @@ public class WorldLightingComponent implements Component {
         Rectangle blocksRect = Camera.getBlocksOnScreen();
         // Expand beyond camera so the player doesn't run into non-updated areas
         try {
-            Util.expand(blocksRect, (int) (Globals.player.physics.getVelocity().len() * 10));
+            Util.expand(blocksRect, (int) (Globals.getPlayer().physics.getVelocity().len() * 10));
         } catch (Exception e) {
             Util.expand(blocksRect, 20);
         }
         // Calculate light for blocks on the screen
         for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
             for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-                boolean hasBlock = world.getBlockID(x, y) != ItemID.none;
-                boolean hasWall = world.getWallID(x, y) != ItemID.none;
+                boolean hasBlock = world.blocks.getID(x, y) == null;
+                boolean hasWall = world.walls.getID(x, y) == null;
                 byte light = MAX_LIGHT;
                 if (hasBlock) {
                     light -= calculateNeighbors(x, y);
                 }
 
-                world.setLight(x, y, light);
+                world.blocks.setLight(x, y, light);
             }
         }
     }
@@ -79,7 +78,7 @@ public class WorldLightingComponent implements Component {
         Rectangle blocksRect = Camera.getBlocksOnScreen();
         for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
             for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-                renderBlock(x, y, world.getLight(x, y));
+                renderBlock(x, y, world.blocks.getLight(x, y));
             }
         }
     }
@@ -99,10 +98,10 @@ public class WorldLightingComponent implements Component {
                     continue;
                 }
 
-                if (world.getBlockID(i, j) != ItemID.none) {
+                if (world.blocks.getID(i, j) == null) {
                     neighbors++;
                 }
-                if (world.getWallID(i, j) != ItemID.none) {
+                if (world.walls.getID(i, j) == null) {
                     neighbors += 0.5f;
                 }
             }
