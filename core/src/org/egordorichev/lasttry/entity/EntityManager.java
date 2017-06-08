@@ -71,7 +71,12 @@ public class EntityManager {
 	}
 
 	public Entity spawn(Entity entity, int x, int y) {
+		if (entity == null) {
+			return null;
+		}
+
 		entity.spawn(x, y);
+
 		this.entities.add(entity);
 		this.sort();
 

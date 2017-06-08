@@ -224,7 +224,7 @@ public class Item {
 	 * @return Item with given id or null, if it is not found
 	 */
 	public static Item fromID(String id) {
-		if (id.isEmpty()) {
+		if (id == null || id.isEmpty()) {
 			return null;
 		}
 

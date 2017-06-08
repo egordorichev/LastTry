@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-public class TaskCaveGenSimplex extends GeneratorTask {
+public class CaveGeneratorSimplexTask extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {

@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-public class TaskFoilageGen extends GeneratorTask {
+public class FoilageGeneratorTask extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {

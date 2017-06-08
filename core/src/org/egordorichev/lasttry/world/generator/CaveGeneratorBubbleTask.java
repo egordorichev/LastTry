@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-public class TaskCaveGenBubble extends GeneratorTask {
+public class CaveGeneratorBubbleTask extends GeneratorTask {
     @Override
     public void run(WorldGenerator generator) {
         boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];

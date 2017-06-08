@@ -12,10 +12,10 @@ public class WorldGenerator {
 	public WorldGenerator(String name, World.Size size, int flags, int seed) {
 		this.world = new World(name, size, flags, seed);
 		Globals.setWorld(this.world);
-		this.tasks.add(new TaskTerrainGen());
-		this.tasks.add(new TaskCaveGenSimplex());
+		this.tasks.add(new TerrainGeneratorTask());
+		this.tasks.add(new CaveGeneratorSimplexTask());
 		//this.tasks.add(new TaskBiomeTestGen());
-		//this.tasks.add(new TaskFoilageGen());
+		//this.tasks.add(new FoilageGeneratorTask());
 	    //this.tasks.add(new TaskLightGen());
 	}
 
