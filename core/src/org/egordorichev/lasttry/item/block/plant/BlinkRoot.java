@@ -2,13 +2,10 @@ package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class BlinkRoot extends Plant {
-	public BlinkRoot() {
-		super(ItemID.blinkRoot, "Blink Root", Assets.getTexture(Textures.blinkRootIcon), Assets.getTexture(Textures.blinkRoot));
+	public BlinkRoot(String id) {
+		super(id);
 	}
 
 	@Override
@@ -17,13 +14,8 @@ public class BlinkRoot extends Plant {
 			return false;
 		}
 
-		short id = Globals.getWorld().getBlockID(x, y - 1);
-
-		if (id != ItemID.dirtBlock && id != ItemID.mudBlock) {
-			return false;
-		}
-
-		return true;
+		String id = Globals.getWorld().blocks.getID(x, y - 1);
+		return !(!id.equals("lt:dirt") && !id.equals("lt:mud"));
 	}
 
 	@Override

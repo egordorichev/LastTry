@@ -157,8 +157,8 @@ public class GridComponent {
 
     public static GenericContainer.Pair<Integer> retrieveRotatedGridPoints(int distance, int angle) {
 
-        int playerXGridPoint = Globals.player.physics.getGridX();
-        int playerYGridPoint = Globals.player.physics.getGridY();
+        int playerXGridPoint = Globals.getPlayer().physics.getGridX();
+        int playerYGridPoint = Globals.getPlayer().physics.getGridY();
 
         //Move point by distance
         //Source: http://stackoverflow.com/questions/41465581/move-point-in-cartesian-coordinate-through-distance-in-the-given-direction

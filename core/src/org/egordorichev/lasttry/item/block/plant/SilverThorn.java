@@ -1,13 +1,10 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class SilverThorn extends Plant {
-	public SilverThorn() {
-		super(ItemID.silverThorn, "Silver Thorn", Assets.getTexture(Textures.silverThornIcon), Assets.getTexture(Textures.silverThorn));
+	public SilverThorn(String id) {
+		super(id);
 	}
 
 	@Override
@@ -16,12 +13,7 @@ public class SilverThorn extends Plant {
 			return false;
 		}
 
-		short id = Globals.getWorld().getBlockID(x, y - 1);
-
-		if (id == ItemID.iceBlock || id == ItemID.snowBlock) {
-			return true;
-		}
-
-		return false;
+		String id = Globals.getWorld().blocks.getID(x, y - 1);
+		return id.equals("lt:snow") || id.equals("lt:ice");
 	}
 }

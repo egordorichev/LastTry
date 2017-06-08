@@ -1,13 +1,10 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class FireBlossom extends Plant {
-	public FireBlossom() {
-		super(ItemID.fireBlossom, "Fire Blossom", Assets.getTexture(Textures.fireBlossomIcon), Assets.getTexture(Textures.fireBlossom));
+	public FireBlossom(String id) {
+		super(id);
 	}
 
 	@Override
@@ -16,13 +13,9 @@ public class FireBlossom extends Plant {
 			return false;
 		}
 
-		short id = Globals.getWorld().getBlockID(x, y + 1);
+		String id = Globals.getWorld().blocks.getID(x, y + 1);
+		return id.equals("lt:ash");
 
-		if (id == ItemID.ashBlock) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

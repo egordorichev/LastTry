@@ -79,7 +79,6 @@ public class WorldIO {
 		}
 
 		return new WorldGenerator(name, size, flags, seed).generate();
-		// return new World(name, size, flags);
 	}
 
 	public static void save() {
@@ -103,29 +102,27 @@ public class WorldIO {
 			stream.writeInt32(Globals.getWorld().getSeed());
 
 			switch (Globals.getWorld().getSize()) {
-			case SMALL:
-				stream.writeByte((byte) 0);
+				case SMALL:
+					stream.writeByte((byte) 0);
 				break;
-			case MEDIUM:
-				stream.writeByte((byte) 1);
+				case MEDIUM:
+					stream.writeByte((byte) 1);
 				break;
-			case LARGE:
-				stream.writeByte((byte) 2);
-				break;
-			case DEVEXTRALARGE:
+				case LARGE:
+					stream.writeByte((byte) 2);
 				break;
 			}
 
-			stream.writeBoolean(Globals.getWorld().getFlags().isHardmode());
-			stream.writeBoolean(Globals.getWorld().getFlags().isExpertMode());
-			stream.writeBoolean(Globals.getWorld().getFlags().evilIsCrimson());
+			stream.writeBoolean(Globals.getWorld().flags.isHardmode());
+			stream.writeBoolean(Globals.getWorld().flags.isExpertMode());
+			stream.writeBoolean(Globals.getWorld().flags.evilIsCrimson());
 
 			stream.writeByte(Globals.environment.time.getHour());
 			stream.writeByte(Globals.environment.time.getMinute());
 
 			stream.close();
 
-			Globals.getWorld().getChunks().save();
+			Globals.getWorld().chunks.save();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}

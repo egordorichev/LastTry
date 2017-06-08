@@ -13,7 +13,7 @@ public class Creatures {
 
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to access enemies class before bootstrap");
+			Log.error("Trying to load enemies before bootstrap");
 			return;
 		}
 

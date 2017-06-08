@@ -6,10 +6,10 @@ public interface UiToggleScreen extends UiScreen {
     default void toggle() {
         if (isOpen()){
             // Close the current screen
-            Globals.setCurrentScreen(null);
+            Globals.setScreen(null);
         } else {
             // Set the screen to this
-            Globals.setCurrentScreen(this);
+            Globals.setScreen(this);
         }
     }
 }

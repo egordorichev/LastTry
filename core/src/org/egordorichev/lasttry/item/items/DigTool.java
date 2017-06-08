@@ -1,16 +1,15 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.util.Util;
 
 public class DigTool extends Tool {
-	public DigTool(short id, String name, Rarity rarity, float baseDamage, ToolPower power, int useSpeed, TextureRegion texture) {
-		super(id, name, rarity, baseDamage, power, useSpeed, texture);
+	public DigTool(String id) {
+		super(id);
 		this.autoSwing = true;
 	}
 
@@ -19,7 +18,7 @@ public class DigTool extends Tool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Block block = Globals.getWorld().getBlock(x, y);
+		Block block = Globals.getWorld().blocks.get(x, y);
 
 		if (block == null) {
 			return false;
@@ -28,10 +27,10 @@ public class DigTool extends Tool {
 		ToolPower power = block.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = Globals.getWorld().getBlockHP(x, y);
+			byte hp = Globals.getWorld().blocks.getHP(x, y);
 
 			if (hp > 0) {
-				Globals.getWorld().setBlockHP((byte) (hp - 1), x, y);
+				Globals.getWorld().blocks.setHP(BlockHelper.plain.setHP(hp, (byte) (BlockHelper.plain.getHP(hp) - 1)), x, y);
 			}
 		}
 
@@ -48,12 +47,12 @@ public class DigTool extends Tool {
 		float height = this.texture.getRegionHeight();
 		float angle = Util.map(this.useDelay, 0, this.useDelayMax, -70.0f, 45.0f);
 
-		if (Globals.player.physics.isFlipped()) {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
+		if (Globals.getPlayer().physics.isFlipped()) {
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
 		} else {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
 		}
 	}
 }

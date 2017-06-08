@@ -38,7 +38,7 @@ public class ChunkGc {
     }
 
     private List<Chunk> retrieveMutableLoadedChunks() {
-        List<Chunk> loadedChunks = Globals.getWorld().getChunks().getImmutableLoadedChunks();
+        List<Chunk> loadedChunks = Globals.getWorld().chunks.getImmutableLoadedChunks();
         List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
         Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
 
@@ -69,12 +69,12 @@ public class ChunkGc {
     private void freeChunks(List<UUID> idsOfChunksToBeFreed) {
         //free chunks
         idsOfChunksToBeFreed.stream().forEach(uniqueIdOfChunkToBeFreed -> {
-            Globals.getWorld().getChunks().removeChunk(uniqueIdOfChunkToBeFreed);
+            Globals.getWorld().chunks.removeChunk(uniqueIdOfChunkToBeFreed);
         });
     }
 
     private void startUp() {
-        assert Globals.getWorld().getChunks().getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
+        assert Globals.getWorld().chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
 
         //Set flag in gc manager, signalling a chunk gc is in progress
         setChunkGcInProgressFlag(true);

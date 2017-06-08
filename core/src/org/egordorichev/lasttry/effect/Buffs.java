@@ -99,7 +99,7 @@ public class Buffs {
         wrath = new Buff("Wrath", "10% increased damage", Assets.getTexture(Textures.wrathBuff));
         wellFed = new Buff("Well Fed", "Minor improvements to all stats", Assets.getTexture(Textures.wellFedBuff));
         cozyFire = new Buff("Cozy Fire", "Life regeneration is slightly increased", Assets.getTexture(Textures.cozyFireBuff));
-        dryadsBlessing = new Buff("Dryad's Blessing", "The power of nature protects you", Assets.getTexture(Textures.dryadsBlessingBuff));
+        dryadsBlessing = new Buff("Dryad's Blessing", "The requiredPower of nature protects you", Assets.getTexture(Textures.dryadsBlessingBuff));
         happy = new Buff("Happy!", "Movement speed increased and enemy spawns reduced", Assets.getTexture(Textures.happyBuff));
         heartLamp = new Buff("Heart Lamp", "Life regeneration is increased", Assets.getTexture(Textures.heartLampBuff));
         honey = new Buff("Honey", "Life regeneration is increased", Assets.getTexture(Textures.honeyBuff));

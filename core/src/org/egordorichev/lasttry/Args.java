@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.util.Util;
-
 import java.io.File;
 
 public class Args {
@@ -9,32 +8,27 @@ public class Args {
 	public static String player = "test";
 	public static int seed = 512;
 
+	/**
+	 * Current argument index
+	 */
 	private static int i;
+	/**
+	 * Current argument
+	 */
 	private static String arg;
+	/**
+	 * Arguments
+	 */
 	private static String[] arguments;
 
+	/**
+	 * Parses given arguments
+	 * @param args arguments, received by main()
+	 * @param config App config
+	 * @throws Exception Exception, containing a parse error
+	 */
 	public static void parse(String[] args, Object config) throws Exception {
 		arguments = args;
-
-		/*
-		if (args.length > 0) {
-            List<String> argList = Arrays.asList(args);
-            if (argList.contains("-d")) {
-                LastTry.release = false;
-                if (Util.isWindows()) {
-                    System.setSecurityManager(new ExitDumper());
-                }
-            }
-            if (argList.contains("-wd")) {
-                Util.delete(new File("data" + File.separator + "worlds"));
-            }
-            if (argList.contains("-f")) {
-                config.fullscreen = true;
-            }if (argList.contains("-nl")) {
-                LastTry.noLight = true;
-            }
-        }
-		 */
 
 		for (i = 0; i < args.length; i++) {
 			arg = args[i];
@@ -97,12 +91,18 @@ public class Args {
         }
     }
 
-    private static void checkForArgument(String error) throws Exception {
+	/**
+	 * Checks, that there is one more argument, otherwise, throws an Exception
+	 * @param error Error message for the Exception
+	 * @throws Exception Thrown if there is no more arguments
+	 */
+	private static void checkForArgument(String error) throws Exception {
 		if (arguments.length - 1 == i) {
 			throw new Exception(error);
 		}
 	}
 
+	/** Used for dumping thread */
 	private static class ExitDumper extends SecurityManager {
 		@Override
 		public void checkExit(int status) {

@@ -1,9 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.item.ItemID;
-
-public class TaskCaveGenBubble extends GeneratorTask {
-
+public class CaveGeneratorBubbleTask extends GeneratorTask {
     @Override
     public void run(WorldGenerator generator) {
         boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
@@ -20,17 +17,17 @@ public class TaskCaveGenBubble extends GeneratorTask {
 
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
-                if (generator.world.getBlockID(x, y) != ItemID.dirtBlock) {
+                if (generator.world.blocks.getID(x, y).equals("lt:dirt")) {
                     continue;
                 }
 
                 if (!solidMap[x][y]) {
-                    generator.world.setBlock(ItemID.none, x, y);
+                    generator.world.blocks.set("", x, y);
                 } else {
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
 
                     if (neighbors != 8) {
-                        generator.world.setBlock(ItemID.grassBlock, x, y);
+                        generator.world.blocks.set("lt:grass", x, y);
                     }
                 }
             }
@@ -62,6 +59,4 @@ public class TaskCaveGenBubble extends GeneratorTask {
 
         return solidMap;
     }
-   
-
 }

@@ -5,7 +5,6 @@ public class SpawnInfo {
      * How often mobs spawn
      */
     public int spawnRate;
-
     /**
      * Max mobs
      */

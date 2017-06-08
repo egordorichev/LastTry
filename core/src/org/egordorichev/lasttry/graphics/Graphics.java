@@ -17,7 +17,7 @@ public class Graphics {
 
 		for (int x = 0; x < 6; x++) {
 			for (int y = 0; y < 4; y++) {
-				tileCracks[x * 4 + y] = new TextureRegion(new Texture(Gdx.files.internal("TileCracks.png")), x * 18, y * 18, 18, 18);
+				tileCracks[x * 4 + y] = new TextureRegion(new Texture(Gdx.files.internal("TileCracks.png")), x * 16, y * 16, 16, 16);
 			}
 		}
 
