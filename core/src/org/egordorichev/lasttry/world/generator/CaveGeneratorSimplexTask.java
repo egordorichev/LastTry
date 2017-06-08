@@ -39,7 +39,7 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
                 // Skip existing air blocks
-                if (generator.world.blocks.getID(x, y).isEmpty()) {
+                if (generator.world.blocks.getID(x, y) == null) {
                     continue;
                 }
                 // Insert caves

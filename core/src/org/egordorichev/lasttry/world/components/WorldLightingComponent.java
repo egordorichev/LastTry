@@ -25,7 +25,7 @@ public class WorldLightingComponent implements Component {
     public void init() {
         for (int y = 0; y < Globals.getWorld().getHeight(); y++) {
             for (int x = 0; x < Globals.getWorld().getWidth(); x++) {
-                boolean hasBlock = world.blocks.getID(x, y).isEmpty();
+                boolean hasBlock = world.blocks.getID(x, y) == null;
                 byte light = MAX_LIGHT;
 
                 if (hasBlock) {
@@ -60,8 +60,8 @@ public class WorldLightingComponent implements Component {
         // Calculate light for blocks on the screen
         for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
             for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-                boolean hasBlock = world.blocks.getID(x, y).isEmpty();
-                boolean hasWall = world.walls.getID(x, y).isEmpty();
+                boolean hasBlock = world.blocks.getID(x, y) == null;
+                boolean hasWall = world.walls.getID(x, y) == null;
                 byte light = MAX_LIGHT;
                 if (hasBlock) {
                     light -= calculateNeighbors(x, y);
@@ -98,10 +98,10 @@ public class WorldLightingComponent implements Component {
                     continue;
                 }
 
-                if (world.blocks.getID(i, j).isEmpty()) {
+                if (world.blocks.getID(i, j) == null) {
                     neighbors++;
                 }
-                if (world.walls.getID(i, j).isEmpty()) {
+                if (world.walls.getID(i, j) == null) {
                     neighbors += 0.5f;
                 }
             }

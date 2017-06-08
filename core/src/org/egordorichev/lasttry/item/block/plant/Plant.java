@@ -98,6 +98,6 @@ public class Plant extends Block {
 
 	public boolean canBeGrownAt(int x, int y) {
 		String id = Globals.getWorld().blocks.getID(x, y);
-		return id.isEmpty();
+		return id == null;
 	}
 }

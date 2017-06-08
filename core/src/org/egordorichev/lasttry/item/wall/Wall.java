@@ -101,7 +101,7 @@ public class Wall extends Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.getWorld().walls.getID(x, y).isEmpty()) {
+		if (this.canBePlaced(x, y) && Globals.getWorld().walls.getID(x, y) == null) {
 			this.place(x, y);
 
 			return true;
