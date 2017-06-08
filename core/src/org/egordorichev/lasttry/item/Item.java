@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.item;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
+import org.egordorichev.lasttry.item.block.Block;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.language.Language;
 
@@ -167,6 +169,39 @@ public class Item {
 	 */
 	public void renderAnimation() {
 
+	}
+	
+
+	/**
+	 * Determines if the current texture can be connected to the texture of the
+	 * item indicated by the given item ID.
+	 * 
+	 * @param itemID
+	 * @return
+	 */
+	protected boolean canConnect(String itemID) {
+		if (itemID == null) {
+			return false;
+		}
+		Item i1 = Item.fromID(itemID);
+		if (i1 == null) {
+			return false;
+		}
+		return canConnect(i1);
+	}
+
+	/**
+	 * Checks if the current block has a texture that connects to the other
+	 * item.
+	 * 
+	 * @param other
+	 * @return
+	 */
+	protected boolean canConnect(Item other) {
+		if (other == null){
+			return false;
+		}
+		return true;//this.id.equals(other.id);
 	}
 
 	/**

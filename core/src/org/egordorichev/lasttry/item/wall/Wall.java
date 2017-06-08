@@ -67,13 +67,14 @@ public class Wall extends Item {
 	 * @param y Wall Y
 	 * @return Byte, representing wall neighbors
 	 */
-	public byte calculateBinary(int x, int y) {
-		boolean t =(this.id).equals( Globals.getWorld().blocks.getID(x, y + 1));
-		boolean r =(this.id).equals( Globals.getWorld().blocks.getID(x + 1, y));
-		boolean b =(this.id).equals( Globals.getWorld().blocks.getID(x, y - 1));
-		boolean l =(this.id).equals( Globals.getWorld().blocks.getID(x - 1, y));
 
-		return ByteHelper.create(t, r, b, l, false, false, false , false);
+	public byte calculateBinary(int x, int y) {
+		boolean t = canConnect(Globals.getWorld().walls.getID(x, y + 1));
+		boolean r = canConnect(Globals.getWorld().walls.getID(x + 1, y));
+		boolean b = canConnect(Globals.getWorld().walls.getID(x, y - 1));
+		boolean l = canConnect(Globals.getWorld().walls.getID(x - 1, y));
+
+		return ByteHelper.create(t, r, b, l, false, false, false, false);
 	}
 
 	/**
