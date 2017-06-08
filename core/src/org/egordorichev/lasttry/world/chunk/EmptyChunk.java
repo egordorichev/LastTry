@@ -29,7 +29,7 @@ public class EmptyChunk extends Chunk {
 
 	@Override
 	public String getBlock(int globalX, int globalY) {
-		return "";
+		return null;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class EmptyChunk extends Chunk {
 
 	@Override
 	public String getWall(int globalX, int globalY) {
-		return "";
+		return null;
 	}
 
 	@Override

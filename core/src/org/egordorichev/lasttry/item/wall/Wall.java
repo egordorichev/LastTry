@@ -68,10 +68,10 @@ public class Wall extends Item {
 	 * @return Byte, representing wall neighbors
 	 */
 	public byte calculateBinary(int x, int y) {
-		boolean t = Globals.getWorld().blocks.getID(x, y + 1).equals(this.id);
-		boolean r = Globals.getWorld().blocks.getID(x + 1, y).equals(this.id);
-		boolean b = Globals.getWorld().blocks.getID(x, y - 1).equals(this.id);
-		boolean l = Globals.getWorld().blocks.getID(x - 1, y).equals(this.id);
+		boolean t =(this.id).equals( Globals.getWorld().blocks.getID(x, y + 1));
+		boolean r =(this.id).equals( Globals.getWorld().blocks.getID(x + 1, y));
+		boolean b =(this.id).equals( Globals.getWorld().blocks.getID(x, y - 1));
+		boolean l =(this.id).equals( Globals.getWorld().blocks.getID(x - 1, y));
 
 		return ByteHelper.create(t, r, b, l, false, false, false , false);
 	}

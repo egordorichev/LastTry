@@ -190,7 +190,7 @@ public class Block extends Item {
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 		byte variant = PlainBlockHelper.getVariant(hp);
-
+		
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
 		hp = BlockHelper.plain.getHP(hp);
@@ -212,7 +212,7 @@ public class Block extends Item {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		if (this.canBePlaced(x, y) && Globals.getWorld().blocks.getID(x, y) == "") {
+		if (this.canBePlaced(x, y) && Globals.getWorld().blocks.getID(x, y) == null) {
 			Rectangle rectangle = Globals.getPlayer().physics.getHitbox();
 
 			if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,

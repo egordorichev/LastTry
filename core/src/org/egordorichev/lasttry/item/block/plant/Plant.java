@@ -41,7 +41,7 @@ public class Plant extends Block {
 			}
 		}
 
-		Globals.getWorld().blocks.set("", x, y);
+		Globals.getWorld().blocks.set(null, x, y);
 	}
 
 	public static String getSeedsFor(String id) {
@@ -53,7 +53,7 @@ public class Plant extends Block {
 			case "lt:fire_blossom": return "lt:fire_blossom_seeds";
 			case "lt:water_leaf": return "lt:water_leaf_seeds";
 			case "lt:silver_thorn": return "lt:silver_thorn_seeds";
-			default: return "";
+			default: return null;
 		}
 	}
 
