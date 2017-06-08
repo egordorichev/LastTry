@@ -1,5 +1,5 @@
 {
-	"GreenSlime" : {
+	"lt:green_slime" : {
 		"ai" : 1,
 		"type" : 0,
 		"damage" : [ 6, 12, 118 ],
