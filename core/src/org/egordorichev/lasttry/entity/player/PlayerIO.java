@@ -43,7 +43,7 @@ public class PlayerIO {
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				String id = stream.readString();
 
-				if (!id.isEmpty()) {
+				if (id != null && !id.isEmpty()) {
 					ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 					holder.setItem(Item.fromID(id));
 					holder.setCount(stream.readInt16());
