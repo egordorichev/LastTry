@@ -42,7 +42,7 @@ public class Tool extends Item {
 	 * The tool's effectiveness against materials requiring axe,pickaxe,and
 	 * hammer tools.
 	 */
-	protected ToolPower power;
+	protected ToolPower power = ToolPower.DEFAULT;
 
 	public Tool(String id) {
 		super(id);
