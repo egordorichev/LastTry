@@ -7,7 +7,7 @@ public class PlainBlockHelper extends BlockHelper {
 		return ByteHelper.bitIsSet(data, (byte) 5);
 	}
 
-	public static byte getVariant(byte data) {
+	public byte getVariant(byte data) {
 		if (slopeIsPresent(data)) {
 			return 0;
 		}
@@ -15,7 +15,7 @@ public class PlainBlockHelper extends BlockHelper {
 		return ByteHelper.getSum(data, (byte) 2, (byte) 3);
 	}
 
-	public static byte getSlope(byte data) {
+	public  byte getSlope(byte data) {
 		if (!slopeIsPresent(data)) {
 			return 0;
 		}

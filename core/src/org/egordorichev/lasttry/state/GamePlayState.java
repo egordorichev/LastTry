@@ -56,9 +56,12 @@ public class GamePlayState implements State {
 			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
 		if (!paused) {
-			Globals.environment.update((int) delta);
-			Globals.entityManager.update((int) delta);
-			Globals.getWorld().updateLight((int) delta);
+			// TODO: This is a shitty fix. Delta is usually 0.013f per tick (on average)
+			// casting it to int always gives 0, which breaks a lot of shit.
+			int dt = (int) (delta * 100f);
+			Globals.environment.update(dt);
+			Globals.entityManager.update(dt);
+			Globals.getWorld().updateLight(dt);
 
 			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
 				LastTry.debug.toggle();

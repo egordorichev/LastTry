@@ -22,6 +22,7 @@ public class DesktopLauncher {
 			Args.parse(args, config);
 		} catch (Exception exception) {
 			exception.printStackTrace();
+			return; // Important!
 		}
 
 		new LwjglApplication(new LastTry(config.width, config.height), config);

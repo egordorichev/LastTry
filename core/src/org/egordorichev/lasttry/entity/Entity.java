@@ -45,7 +45,8 @@ public class Entity {
 	 * @param dt Time from last update
 	 */
 	public void update(int dt) {
-		if (dt == 0) { // No time had passed
+		// No time had passed
+		if (dt == 0) { 
 			return;
 		}
 

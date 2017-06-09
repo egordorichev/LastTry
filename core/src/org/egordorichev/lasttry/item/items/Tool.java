@@ -37,12 +37,12 @@ public class Tool extends Item {
 	/**
 	 * The base damage delt to entities when stuck by the tool.
 	 */
-	protected float baseDamage;
+	public float baseDamage;
 	/**
 	 * The tool's effectiveness against materials requiring axe,pickaxe,and
 	 * hammer tools.
 	 */
-	protected ToolPower power;
+	public ToolPower power = ToolPower.DEFAULT;
 
 	public Tool(String id) {
 		super(id);
@@ -55,6 +55,7 @@ public class Tool extends Item {
 		}
 
 		this.useDelay = this.useDelayMax;
+
 		return this.onUse();
 	}
 
@@ -163,7 +164,6 @@ public class Tool extends Item {
 
 	private int calculateDamageToInflict(final Creature enemy) {
 		int weaponDamage = Math.round(this.baseDamage);
-
 		if (this.criticalStrikeChanceActive()) {
 			weaponDamage = weaponDamage * 2;
 		}

@@ -1,8 +1,6 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
 
 public class FireBlossom extends Plant {
 	public FireBlossom(String id) {

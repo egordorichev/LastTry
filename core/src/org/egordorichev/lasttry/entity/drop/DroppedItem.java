@@ -109,6 +109,11 @@ public class DroppedItem extends Creature {
 			this.die();
 		}
 	}
+	
+	@Override
+	public boolean isInvulnrable() {
+		return true;
+	}
 
 	public ItemHolder getHolder() {
 		return holder;

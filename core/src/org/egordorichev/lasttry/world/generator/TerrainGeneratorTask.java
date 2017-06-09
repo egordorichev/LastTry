@@ -24,7 +24,6 @@ public class TerrainGeneratorTask extends GeneratorTask {
 
 		for (int x = 0; x < width; x++) {
 			int yMax = (int) points[x];
-
 			for (int y = 0; y < height; y++) {
 				if (y == yMax) {
 					generator.world.blocks.set("lt:grass", x, y);
