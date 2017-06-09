@@ -39,9 +39,14 @@ public class DroppedItem extends Creature {
 	public void update(int dt) {
 		this.physics.update(dt);
 		this.graphics.update(dt);
-		this.updateAttraction(dt);
-		this.checkPlayerAbsorbtion(dt);
-		this.packRelated(dt);
+
+		if (this.holder.getItem().isUnobtainable()) {
+			Globals.entityManager.markForRemoval(this);
+		} else {
+			this.updateAttraction(dt);
+			this.checkPlayerAbsorbtion(dt);
+			this.packRelated(dt);
+		}
 	}
 
 	/**
@@ -58,7 +63,6 @@ public class DroppedItem extends Creature {
 			} else {
 				Globals.getPlayer().getInventory().add(this.holder);
 			}
-			Globals.entityManager.markForRemoval(this);
 		}
 	}
 

@@ -3,13 +3,9 @@ package org.egordorichev.lasttry.item;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import org.egordorichev.lasttry.item.items.Tool;
-import org.egordorichev.lasttry.item.items.ToolPower;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Log;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.MissingResourceException;
@@ -43,6 +39,10 @@ public class Item {
 	 * properly.
 	 */
 	protected int useDelayMax = 50;
+	/**
+	 * If is set to true, item can be obtained only in the dev mode
+	 */
+	protected boolean unobtainable = false;
 
 	public Item(String id) {
 		if (Items.ITEM_CACHE.containsKey(id)) {
@@ -123,7 +123,9 @@ public class Item {
 	 * @param root
 	 */
 	protected void loadFields(JsonValue root) {
-
+		if (root.has("unobtainable")) {
+			this.unobtainable = root.getBoolean("unobtainable");
+		}
 	}
 
 	/**
@@ -270,6 +272,13 @@ public class Item {
 	 */
 	public boolean isReady() {
 		return this.useDelay == 0;
+	}
+
+	/**
+	 * @return Item can't be obtained in not dev mode
+	 */
+	public boolean isUnobtainable() {
+		return this.unobtainable;
 	}
 
 	/**
