@@ -82,19 +82,8 @@ public class MultiTileBlock extends Block {
 	}
 
 	@Override
-	public void die(int x, int y) {
-		byte data = Globals.getWorld().blocks.getHP(x, y);
-		byte tx = BlockHelper.mtb.getX(data);
-		byte ty = BlockHelper.mtb.getY(data);
-		short sx = (short) (x);
-		short sy = (short) (y);
-
-		for (int j = sy - 1; j < sy + this.height - 1; j++) {
-			for (int i = sx + 1; i < sx + this.width + 1; i++) {
-				Globals.getWorld().blocks.set("lt:sand", i, j);
-			}
-		}
-
+	public void die(int x, int y) { // TODO: kill other
+		Globals.getWorld().blocks.set(null, x, y);
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}
 }

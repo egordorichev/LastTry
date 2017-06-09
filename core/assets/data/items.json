@@ -120,7 +120,7 @@
 	},
 
 	"lt:sand" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
 	"lt:ebonstone" : {
@@ -140,19 +140,19 @@
 	},
 
 	"lt:ash" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
 	"lt:mud" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
 	"lt:snow" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
 	"lt:ice" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
 	"lt:gel" : {
