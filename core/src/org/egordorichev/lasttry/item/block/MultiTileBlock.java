@@ -6,8 +6,8 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 
 public class MultiTileBlock extends Block {
-	public MultiTileBlock(String id) {
-		super(id, false);
+	public MultiTileBlock(String id, boolean loadIcon) {
+		super(id, loadIcon);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class MultiTileBlock extends Block {
 			JsonValue size = root.get("size");
 
 			this.width = size.get(0).asByte();
-			this.width = size.get(1).asByte();
+			this.height = size.get(1).asByte();
 		} else {
 			this.width = 2;
 			this.height = 2;
@@ -60,7 +60,7 @@ public class MultiTileBlock extends Block {
 
 		// todo: no placing in air
 
-		return false;
+		return true;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class MultiTileBlock extends Block {
 				byte hp = 0;
 
 				hp = BlockHelper.mtb.setX(hp, (byte) (i - x));
-				hp = BlockHelper.mtb.setY(hp, (byte) (j - y));
+				hp = BlockHelper.mtb.setY(hp, (byte) (this.texture.getRegionHeight() / Block.SIZE - (j - y) - 1));
 
 				Globals.getWorld().blocks.setHP(hp, i, j);
 			}

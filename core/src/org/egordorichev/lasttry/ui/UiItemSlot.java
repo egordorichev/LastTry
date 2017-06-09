@@ -122,6 +122,8 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 						this.itemHolder = inventory.getSelectedItem();
 						inventory.setSelectedItem(new ItemHolder(null, 0));
 					}
+				} else {
+					this.swapWithCurrent();
 				}
 			} else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
 

@@ -72,13 +72,13 @@
 
 	"lt:furnace" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.Furnace",
-		"size" : [ 2, 2 ],
+		"size" : [ 3, 2 ],
 		"level" : 0
 	},
 
 	"lt:anvil" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.Anvil",
-		"size" : [ 2, 2 ],
+		"size" : [ 2, 1 ],
 		"level" : 0
 	},
 
