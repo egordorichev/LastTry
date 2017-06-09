@@ -91,7 +91,7 @@ public class GamePlayState implements State {
 		int mouseX = (int) InputManager.getMousePosition().x;
 		int mouseY = (int) InputManager.getMousePosition().y;
 
-		int hp = Globals.getPlayer().stats.getHp();
+		int hp = Globals.getPlayer().stats.getHP();
 		int x = Gdx.graphics.getWidth() - 200;
 
 		Assets.f22.draw(Graphics.batch, String.format(Language.text.get("hp") + ": %d/%d", hp, Globals.getPlayer().stats.getMaxHP()), x,

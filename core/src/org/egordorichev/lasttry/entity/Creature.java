@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.particle.DamageParticle;
+import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
@@ -32,17 +33,28 @@ public class Creature extends Entity {
 	 * Effects handler
 	 */
 	public CreatureEffectsComponent effects;
+	/**
+	 * Creature id (for ex. lt:green_slime)
+	 */
+	protected String id;
+	/**
+	 * Creature name (for ex. Green Slime)
+	 */
+	protected String name;
 
-	public Creature(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
+	public Creature(String id, CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
 		super(physics, graphics);
+
+		this.id = id;
+		this.name = Language.text.get(this.id);
 
 		this.stats = new CreatureStatsComponent(this);
 		this.state = new CreatureStateComponent(this);
 		this.effects = new CreatureEffectsComponent(this);
 	}
 
-	public Creature() {
-		this(new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
+	public Creature(String id) {
+		this(id, new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
 	}
 
 	/**
@@ -61,7 +73,7 @@ public class Creature extends Entity {
 	/** Renders the creature */
 	@Override
 	public void render() {
-		if (this.stats.getHp() != this.stats.getMaxHP() && this.stats.getHp() != 0) {
+		if (this.stats.getHP() != this.stats.getMaxHP() && this.stats.getHP() != 0) {
 			this.renderHealthBar();
 		}
 
@@ -70,7 +82,7 @@ public class Creature extends Entity {
 
 	/** Renders the health bar */
 	protected void renderHealthBar() {
-		float hp = (float) this.stats.getHp() / (float) this.stats.getMaxHP();
+		float hp = (float) this.stats.getHP() / (float) this.stats.getMaxHP();
 
 		if (hp < 0.3f) {
 			Graphics.batch.setColor(1, 0, 0, 1);
@@ -80,7 +92,7 @@ public class Creature extends Entity {
 			Graphics.batch.setColor(0, 1, 0, 1);
 		}
 
-		int mapped = (int) Util.map(this.stats.getHp(), 0, this.stats.getMaxHP(), 0, 26);
+		int mapped = (int) Util.map(this.stats.getHP(), 0, this.stats.getMaxHP(), 0, 26);
 		int x = (int) (this.physics.getX() + (this.physics.getSize().x - 28) / 2);
 
 		Graphics.batch.draw(Graphics.healthBarTexture, x + 2, this.physics.getY() - 20, mapped, 12, 0, 0, mapped, 12,
@@ -100,7 +112,7 @@ public class Creature extends Entity {
 		this.stats.update(dt);
 		this.effects.update(dt);
 
-		if (this.stats.getHp() == 0) {
+		if (this.stats.getHP() == 0) {
 			this.die();
 		}
 	}
@@ -138,5 +150,19 @@ public class Creature extends Entity {
 	 */
 	public int getSpawnWeight() {
 		return spawnWeight;
+	}
+
+	/**
+	 * @return Creature name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return Creature ID
+	 */
+	public String getID() {
+		return id;
 	}
 }

@@ -8,8 +8,8 @@ import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 public class CreatureWithAI extends Creature {
 	public AiComponent ai;
 
-	public CreatureWithAI(CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics, AI ai) {
-		super(physics, graphics);
+	public CreatureWithAI(String id, CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics, AI ai) {
+		super(id, physics, graphics);
 
 		this.ai = new AiComponent(this, ai);
 		this.ai.ai.init(this);

@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -35,6 +37,8 @@ public class EntityManager {
 	}
 
 	public void render() {
+		boolean displayedStats = false;
+
 		int halfWidth = Gdx.graphics.getWidth() / 2;
 		int halfHeight = Gdx.graphics.getHeight() / 2;
 
@@ -42,9 +46,20 @@ public class EntityManager {
 				Camera.game.position.y - 16 - halfHeight, Camera.game.position.x + halfWidth + 32,
 				Camera.game.position.y + halfHeight + 32);
 
+		Rectangle mouse = new Rectangle(Gdx.input.getX() + camera.x,
+				(Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y, 16, 16);
+
 		for (Entity entity : this.entities) {
 			if (entity.physics.getHitbox().intersects(camera)) {
 				entity.render();
+
+				if (!displayedStats && entity instanceof Creature && entity.physics.getHitbox().intersects(mouse)) {
+					Creature creature = ((Creature) entity);
+
+					Assets.f18.draw(Graphics.batch, creature.getName(), entity.physics.getX(), entity.physics.getY() - 10);
+					Assets.f18.draw(Graphics.batch, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), entity.physics.getX(), entity.physics.getY() - 30);
+					displayedStats = true;
+				}
 			}
 		}
 	}

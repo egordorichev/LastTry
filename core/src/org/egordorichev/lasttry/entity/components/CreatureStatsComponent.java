@@ -72,7 +72,7 @@ public class CreatureStatsComponent extends CreatureComponent {
 		return this.damage;
 	}
 
-	public int getHp() {
+	public int getHP() {
 		return this.hp;
 	}
 

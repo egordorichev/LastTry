@@ -16,7 +16,7 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
     private String name;
 
     public Player(String name) {
-        super(new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
+        super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
 
         this.input = new PlayerInputComponent(this);
         this.stats.set(100, 20, 0, 0);

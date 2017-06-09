@@ -233,7 +233,7 @@ public class CreatureInfo {
 	}
 
 	public Creature create() {
-		Enemy creature = new Enemy(this.ai, this.name);
+		Enemy creature = new Enemy(this.name, this.ai);
 
 		int hp = this.hp[0];
 		int defense = this.damage[0];

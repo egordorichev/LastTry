@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ChunkIO {
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 
 	// In Grid points
 	public static Chunk load(int x, int y) {
@@ -50,6 +50,8 @@ public class ChunkIO {
 				}
 			}
 
+			boolean unloadable = stream.readBoolean();
+
 			if (!stream.readBoolean()) {
 				Log.error("Verification failed!");
 				LastTry.abort();
@@ -58,7 +60,10 @@ public class ChunkIO {
 			stream.close();
 			Log.debug("Done loading chunk " + x + ":" + y + "!");
 
-			return new Chunk(data, new Vector2(x, y));
+			Chunk chunk = new Chunk(data, new Vector2(x, y));
+			chunk.setUnloadable(unloadable);
+
+			return chunk;
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 			LastTry.abort();
@@ -119,6 +124,7 @@ public class ChunkIO {
 				}
 			}
 
+			stream.writeBoolean(chunk.isUnloadable());
 			stream.writeBoolean(true);
 			stream.close();
 		} catch (Exception exception) {

@@ -5,7 +5,7 @@ import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 
 public class Npc extends CreatureWithAI {
-	public Npc() {
-		super(new CreaturePhysicsComponent(), new NpcGraphicsComponent(), AIs.none); // todo: npc ai
+	public Npc(String id) {
+		super(id, new CreaturePhysicsComponent(), new NpcGraphicsComponent(), AIs.none); // todo: npc ai
 	}
 }

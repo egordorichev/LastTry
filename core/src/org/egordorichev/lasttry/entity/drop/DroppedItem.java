@@ -13,7 +13,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 
-public class DroppedItem extends Creature {
+public class DroppedItem extends Entity {
 	private static final float ATTRACTION_RANGE = 60;
 	private final ItemHolder holder;
 	private TextureRegion texture;
@@ -43,9 +43,10 @@ public class DroppedItem extends Creature {
 		if (this.holder.getItem().isUnobtainable()) {
 			Globals.entityManager.markForRemoval(this);
 		} else {
-			this.updateAttraction(dt);
-			this.checkPlayerAbsorbtion(dt);
-			this.packRelated(dt);
+
+		this.updateAttraction(dt);
+		this.checkPlayerAbsorbtion(dt);
+		this.packRelated(dt);
 		}
 	}
 
@@ -94,7 +95,7 @@ public class DroppedItem extends Creature {
 		entities.stream().filter(e -> !e.equals(this))
 				.filter(e -> physics.getHitbox().intersects(e.physics.getHitbox()))
 				.filter(e -> e instanceof DroppedItem).map(e -> ((DroppedItem) e))
-				.filter(i -> holder.getItem().getID() == i.holder.getItem().getID()).forEach(i -> consume(i));
+				.filter(i -> holder.getItem().getID().equals(i.holder.getItem().getID())).forEach(i -> consume(i));
 	}
 
 	/**
@@ -112,11 +113,6 @@ public class DroppedItem extends Creature {
 			other.holder.setCount(sum);
 			this.die();
 		}
-	}
-	
-	@Override
-	public boolean isInvulnrable() {
-		return true;
 	}
 
 	public ItemHolder getHolder() {
