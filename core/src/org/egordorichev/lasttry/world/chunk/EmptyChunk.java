@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.item.ItemID;
 
 public class EmptyChunk extends Chunk {
 	public EmptyChunk(Vector2 position) {
@@ -9,7 +8,7 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public void setBlock(short id, int globalX, int globalY) {
+	public void setBlock(String id, int globalX, int globalY) {
 
 	}
 
@@ -19,7 +18,7 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public void setWall(short id, int globalX, int globalY) {
+	public void setWall(String id, int globalX, int globalY) {
 
 	}
 
@@ -29,8 +28,8 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public short getBlock(int globalX, int globalY) {
-		return ItemID.none;
+	public String getBlock(int globalX, int globalY) {
+		return null;
 	}
 
 	@Override
@@ -39,8 +38,8 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public short getWall(int globalX, int globalY) {
-		return ItemID.none;
+	public String getWall(int globalX, int globalY) {
+		return null;
 	}
 
 	@Override

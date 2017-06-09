@@ -93,7 +93,7 @@ public class ChunkGcCalc {
     private static int getFilledChunksPercent() {
         double maxChunksSize = Globals.getWorld().getSize().getMaxChunks();
 
-        double loadedChunksSize = Globals.getWorld().getChunks().getImmutableLoadedChunks().size();
+        double loadedChunksSize = Globals.getWorld().chunks.getImmutableLoadedChunks().size();
 
         if(loadedChunksSize<=MINIMUMLOADEDCHUNKS){
             return 0;

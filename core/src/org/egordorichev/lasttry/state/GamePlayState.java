@@ -28,7 +28,7 @@ public class GamePlayState implements State {
 		int spawnY = (Globals.getWorld().getHeight() - 10) * Block.SIZE;
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.player, spawnX, spawnY);
+		Globals.entityManager.spawn(Globals.getPlayer(), spawnX, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
@@ -56,9 +56,12 @@ public class GamePlayState implements State {
 			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
 		if (!paused) {
-			Globals.environment.update((int) delta);
-			Globals.entityManager.update((int) delta);
-			Globals.getWorld().updateLight((int) delta);
+			// TODO: This is a shitty fix. Delta is usually 0.013f per tick (on average)
+			// casting it to int always gives 0, which breaks a lot of shit.
+			int dt = (int) (delta * 100f);
+			Globals.environment.update(dt);
+			Globals.entityManager.update(dt);
+			Globals.getWorld().updateLight(dt);
 
 			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
 				LastTry.debug.toggle();
@@ -72,9 +75,9 @@ public class GamePlayState implements State {
 		Globals.environment.render();
 
 		Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-			Globals.player.physics.getCenterX());
+			Globals.getPlayer().physics.getCenterX());
 
-		Camera.game.position.y = Math.max(0, Globals.player.physics.getCenterY());
+		Camera.game.position.y = Math.max(0, Globals.getPlayer().physics.getCenterY());
 
 		Camera.game.update();
 		Graphics.batch.setProjectionMatrix(Camera.game.combined);
@@ -88,10 +91,10 @@ public class GamePlayState implements State {
 		int mouseX = (int) InputManager.getMousePosition().x;
 		int mouseY = (int) InputManager.getMousePosition().y;
 
-		int hp = Globals.player.stats.getHp();
+		int hp = Globals.getPlayer().stats.getHp();
 		int x = Gdx.graphics.getWidth() - 200;
 
-		Assets.f22.draw(Graphics.batch, String.format(Language.text.get("hp") + ": %d/%d", hp, Globals.player.stats.getMaxHP()), x,
+		Assets.f22.draw(Graphics.batch, String.format(Language.text.get("hp") + ": %d/%d", hp, Globals.getPlayer().stats.getMaxHP()), x,
 				Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {
@@ -99,7 +102,7 @@ public class GamePlayState implements State {
 		}
 
 		LastTry.ui.render();
-		Globals.player.effects.render();
+		Globals.getPlayer().effects.render();
 		LastTry.debug.render();
 	}
 

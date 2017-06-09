@@ -1,8 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.item.ItemID;
-
-public class TaskCaveGenSimplex extends GeneratorTask {
+public class CaveGeneratorSimplexTask extends GeneratorTask {
 
     @Override
     public void run(WorldGenerator generator) {
@@ -41,21 +39,21 @@ public class TaskCaveGenSimplex extends GeneratorTask {
         for (int y = 0; y < generator.getWorldHeight(); y++) {
             for (int x = 0; x < generator.getWorldWidth(); x++) {
                 // Skip existing air blocks
-                if (generator.world.getBlockID(x, y) == ItemID.none) {
+                if (generator.world.blocks.getID(x, y) == null) {
                     continue;
                 }
                 // Insert caves
                 if (!solidMap[x][y]) {
-                    generator.world.setBlock(ItemID.none, x, y);
+                    generator.world.blocks.set(null, x, y);
                 } else {
                     // For non caves, apply grass borders.
                     // Cut off any blocks with too few neighbors to prevent
                     // the some of the floating blocks.
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
                     if (neighbors <= 3) {
-                        generator.world.setBlock(ItemID.none, x, y);
+                        generator.world.blocks.set(null, x, y);
                     } else if (neighbors != 8) {
-                        generator.world.setBlock(ItemID.grassBlock, x, y);
+                        generator.world.blocks.set("lt:grass", x, y);
                     }
                 }
             }

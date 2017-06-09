@@ -3,31 +3,30 @@ package org.egordorichev.lasttry.world.environment;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
+import org.egordorichev.lasttry.world.biome.Biomes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Environment {
-	public int[] blockCount;
+	public HashMap<String, Short> blockCount;
 	public WorldTime time;
 	public List<Event> events = new ArrayList<>();
 	public Biome currentBiome;
 	public Biome lastBiome;
 
 	public Environment() {
-		this.currentBiome = Biome.forest;
+		this.currentBiome = Biomes.get("lt:forest");
 		this.currentBiome.animation.fadeInFast();
-		this.lastBiome = Biome.forest;
-
-		this.blockCount = new int[ItemID.count];
+		this.lastBiome = Biomes.get("lt:forest");
+		this.blockCount = new HashMap<>();
 		this.time = new WorldTime((byte) 8, (byte) 15);
 
 		Util.runDelayedThreadSeconds(new Callable() {
@@ -132,29 +131,22 @@ public class Environment {
 		int minX = Math.max(0, tcx - 2);
 		int maxX = Math.min(Globals.getWorld().getWidth() - 1, tcx + tww + 2);
 
-		Arrays.fill(this.blockCount, 0);
+		this.blockCount.clear();
 
 		for (int y = minY; y < maxY; y++) {
 			for (int x = minX; x < maxX; x++) {
-				this.blockCount[Globals.getWorld().getBlockID(x, y)] += 1;
+				String id = Globals.getWorld().blocks.getID(x, y);
+				short count = blockCount.containsKey(id) ? blockCount.get(id) : 0;
+
+				blockCount.put(id, (short) (count + 1)); // TODO: this is a heavy call
 			}
 		}
 
 		this.lastBiome = this.currentBiome;
 
-		if (this.blockCount[ItemID.ebonstoneBlock] + this.blockCount[ItemID.vileMushroom] >= 200) {
-			this.currentBiome = Biome.corruption;
-		} else if (this.blockCount[ItemID.crimstoneBlock] + this.blockCount[ItemID.viciousMushroom] >= 200) {
-			this.currentBiome = Biome.corruption;
-		} else if (this.blockCount[ItemID.ebonsandBlock] >= 1000) {
-			this.currentBiome = Biome.corruption;
-		} else if (this.blockCount[ItemID.crimsandBlock] >= 1000) {
-			this.currentBiome = Biome.corruption;
-		} else if (this.blockCount[ItemID.sandBlock] >= 1000) {
-			this.currentBiome = Biome.corruption;
-		} else {
-			this.currentBiome = Biome.forest;
-		}
+		// TODO: calculate biome
+
+		this.currentBiome = Biomes.get("lt:forest");
 	}
 
 	public List<Event> getCurrentEvents() {

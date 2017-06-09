@@ -1,8 +1,7 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.DamageType;
-import org.egordorichev.lasttry.item.Rarity;
 
 public class Weapon extends Tool {
     protected DamageType damageType;
@@ -10,17 +9,21 @@ public class Weapon extends Tool {
     protected boolean autoSwing;
 	protected float criticalStrikeChance;
 
-    public Weapon(short id, String name, Rarity rarity, float baseDamage, DamageType damageType, int useSpeed, TextureRegion texture) {
-        super(id, name, rarity, baseDamage, new ToolPower(0, 0, 0), useSpeed, texture);
-
-        this.damageType = damageType;
+    public Weapon(String id) {
+        super(id);
     }
 
-    public Weapon(short id, String name, float baseDamage, DamageType damageType, int useSpeed, TextureRegion texture) {
-        this(id, name, Rarity.WHITE, baseDamage, damageType, useSpeed, texture);
+    @Override
+    protected void loadFields(JsonValue root) {
+        super.loadFields(root);
+
+        this.baseDamage = root.getFloat("damage", 1);
+        this.criticalStrikeChance = root.getFloat("criticalStrikeChance", 1);
+        this.autoSwing = root.getBoolean("autoSwing", true);
+        this.damageType = DamageType.valueOf(root.getString("damageType", "melee").toUpperCase());
     }
 
-	public DamageType getDamageType() {
+    public DamageType getDamageType() {
         return this.damageType;
     }
 

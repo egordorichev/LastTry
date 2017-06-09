@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.items;
 
 public class ToolPower {
+	public static final ToolPower DEFAULT = new ToolPower(0, 0, 0);
 	public short pickaxe;
 	public short axe;
 	public short hammer;

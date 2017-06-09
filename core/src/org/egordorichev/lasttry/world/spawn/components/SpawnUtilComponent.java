@@ -86,7 +86,7 @@ public class SpawnUtilComponent {
 
     private static boolean isPointOccupied(final int xGridSpawnPoint, final int yGridSpawnPoint) {
 
-        Block blockAtXyPoint = Globals.getWorld().getBlock(xGridSpawnPoint, yGridSpawnPoint);
+        Block blockAtXyPoint = Globals.getWorld().blocks.get(xGridSpawnPoint, yGridSpawnPoint);
 
         boolean isPointOccupied = blockAtXyPoint == null ? false : true;
 

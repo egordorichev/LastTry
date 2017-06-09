@@ -28,7 +28,7 @@ public class SlimeAI extends AI {
 
 			creature.ai.setMax((int) ((MAX / 2) + (Math.random() * MAX / 2)));
 
-			int dir = Float.compare(Globals.player.physics.getCenterX(), creature.physics.getCenterX());
+			int dir = Float.compare(Globals.getPlayer().physics.getCenterX(), creature.physics.getCenterX());
 
 			if (dir < 0) {
 				creature.ai.setData((short) 0);

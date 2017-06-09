@@ -1,5 +1,5 @@
 {
-	"GreenSlime" : {
+	"lt:green_slime" : {
 		"ai" : 1,
 		"type" : 0,
 		"damage" : [ 6, 12, 118 ],
@@ -10,11 +10,11 @@
 
 		"drop" : [
 			{
-				"id" : 11,
+				"id" : "lt:gel",
 				"count" : [ 1, 3 ]
 			},
 			{
-				"id" : 4,
+				"id" : "lt:copper_coin",
 				"count" : [ 1, 100 ]
 			}
 		],

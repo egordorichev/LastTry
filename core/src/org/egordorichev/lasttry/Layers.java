@@ -1,5 +1,8 @@
 package org.egordorichev.lasttry;
 
+/**
+ * Represents entities z-index
+ */
 public class Layers {
 	public static final int world = 1;
 	public static final int entity = 2;

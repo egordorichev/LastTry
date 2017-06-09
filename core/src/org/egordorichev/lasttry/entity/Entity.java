@@ -5,10 +5,21 @@ import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class Entity {
+	/**
+	 * Entity is alive
+	 */
 	protected boolean active = false;
+	/**
+	 * Entity z-index (bigger == higher)
+	 */
 	protected int zIndex = 0;
-
+	/**
+	 * Physics controller
+	 */
 	public PhysicsComponent physics;
+	/**
+	 * Graphics controller
+	 */
 	public GraphicsComponent graphics;
 
 	public Entity(PhysicsComponent physics, GraphicsComponent graphics) {
@@ -24,11 +35,21 @@ public class Entity {
 		this.graphics = new GraphicsComponent(this);
 	}
 
+	/** Renders entity */
 	public void render() {
 		this.graphics.render();
 	}
 
+	/**
+	 * Updates entity
+	 * @param dt Time from last update
+	 */
 	public void update(int dt) {
+		// No time had passed
+		if (dt == 0) { 
+			return;
+		}
+
 		this.physics.update(dt);
 	}
 
@@ -48,6 +69,9 @@ public class Entity {
 		this.onSpawn();
 	}
 
+	/**
+	 * Kills the entity
+	 */
 	public void die() {
 		if (!this.active) {
 			return;
@@ -59,22 +83,34 @@ public class Entity {
 		Globals.entityManager.markForRemoval(this);
 	}
 
+	/**
+	 * Sets entity z-index
+	 * @param zIndex New z-index
+	 */
 	public void setZIndex(int zIndex) {
 		this.zIndex = zIndex;
 	}
 
+	/**
+	 * @return Entity z-index
+	 */
 	public int getZIndex() {
 		return this.zIndex;
 	}
 
+	/** Callback, called on spawn */
 	protected void onSpawn() {
 
 	}
 
+	/** Callback, called on death */
 	protected void onDeath() {
 
 	}
 
+	/**
+	 * @return Entity is alive
+	 */
 	public boolean isActive() {
 		return this.active;
 	}

@@ -39,11 +39,11 @@ public interface InventorySlot {
      * 
      * @return ID of content.
      */
-    default short getItemID() {
+    default String getItemID() {
         Item item = this.getItem();
 
         if (item == null) {
-            return 0;
+            return null;
         }
 
         return item.getID();

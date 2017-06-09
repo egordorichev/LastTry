@@ -12,6 +12,13 @@ public class BlockHelper {
 		return ByteHelper.getSum(data, (byte) 0, (byte) 1);
 	}
 
+	public byte setHP(byte data, byte hp) {
+		data = ByteHelper.setBit(data, (byte) 0, ByteHelper.bitIsSet(hp, (byte) 0));
+		data = ByteHelper.setBit(data, (byte) 1, ByteHelper.bitIsSet(hp, (byte) 1));
+
+		return data;
+	}
+
 	public boolean isActivated(byte data) {
 		return ByteHelper.bitIsSet(data, (byte) 7);
 	}

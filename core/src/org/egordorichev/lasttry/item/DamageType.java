@@ -1,19 +1,21 @@
 package org.egordorichev.lasttry.item;
 
+/** Weapon damage type */
 public enum DamageType {
-    MELEE("Melee"),
-    RANGED("Randged"),
-    MAGIC("Magic"),
-    SUMMON("Summon"),
-    THROWING("Throwing");
+	MELEE("Melee"),
+	RANGED("Randged"),
+	MAGIC("Magic"),
+	SUMMON("Summon"),
+	THROWING("Throwing");
 
-    private String name;
+	/** Damage type name */
+	private String name;
 
-    DamageType(String name) {
-        this.name = name;
-    }
+	DamageType(String name) {
+		this.name = name;
+	}
 
-    public String toString() {
-        return this.name;
-    }
+	public String toString() {
+		return this.name;
+	}
 }

@@ -1,23 +1,28 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.Item;
 
 public class Armor extends Item {
     /**
      * Defense, provided by this armor piece.
      */
-    protected int defense;
+    protected short defense;
     /**
      * The slot that the armor can be placed in.
      */
     protected Slot slot;
 
-    public Armor(short id, String name, int defense, Slot slot, TextureRegion texture) {
-        super(id, name, texture);
+    public Armor(String id) {
+        super(id);
+    }
 
-        this.defense = defense;
-        this.slot = slot;
+    @Override
+    protected void loadFields(JsonValue root) {
+        super.loadFields(root);
+
+        this.slot = Slot.valueOf(root.getString("slot", "body").toUpperCase());
+        this.defense = root.getShort("defense", (short) 10);
     }
 
     /**
@@ -25,7 +30,7 @@ public class Armor extends Item {
      *
      * @return armor defense
      */
-    public int getDefense() {
+    public short getDefense() {
         return this.defense;
     }
 

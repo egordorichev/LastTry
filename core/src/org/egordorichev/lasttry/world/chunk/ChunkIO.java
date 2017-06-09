@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.world.chunk;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
@@ -12,15 +11,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class ChunkIO {
-	public static final int VERSION = 0;
+	public static final int VERSION = 1;
 
-	//Grid co ordinates
+	// In Grid points
 	public static Chunk load(int x, int y) {
 		String fileName = getSaveName(x, y);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
-			Log.debug("Chunk does not exist, generating a new one...");
 			return generate(x, y);
 		}
 
@@ -45,9 +43,9 @@ public class ChunkIO {
 				for (short cx = 0; cx < Chunk.SIZE; cx++) {
 					int index = cx + cy * Chunk.SIZE;
 
-					data.blocks[index] = stream.readInt16();
+					data.blocks[index] = stream.readString();
 					data.blocksHealth[index] = stream.readByte();
-					data.walls[index] = stream.readInt16();
+					data.walls[index] = stream.readString();
 					data.wallsHealth[index] = stream.readByte();
 				}
 			}
@@ -77,11 +75,11 @@ public class ChunkIO {
 
 				for (int y = 0; y < Chunk.SIZE; y++) {
 					for (int x = 0; x < Chunk.SIZE; x++) {
-						data.blocks[x + y * Chunk.SIZE] = ItemID.none;
+						data.blocks[x + y * Chunk.SIZE] = null;
 					}
 				}
 
-				Globals.getWorld().getChunks().set(new Chunk(data, new Vector2(x, y)), x, y);
+				Globals.getWorld().chunks.set(new Chunk(data, new Vector2(x, y)), x, y);
 				Log.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
@@ -101,7 +99,7 @@ public class ChunkIO {
 			}
 		}
 
-		Chunk chunk = Globals.getWorld().getChunks().get(x, y);
+		Chunk chunk = Globals.getWorld().chunks.get(x, y);
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
@@ -114,9 +112,9 @@ public class ChunkIO {
 				for (short cx = 0; cx < Chunk.SIZE; cx++) {
 					int index = cx + cy * Chunk.SIZE;
 
-					stream.writeInt16(data.blocks[index]);
+					stream.writeString(data.blocks[index]);
 					stream.writeByte(data.blocksHealth[index]);
-					stream.writeInt16(data.walls[index]);
+					stream.writeString(data.walls[index]);
 					stream.writeByte(data.wallsHealth[index]);
 				}
 			}

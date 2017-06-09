@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.world.chunk;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.MultiTileBlock;
 import org.egordorichev.lasttry.item.block.plant.Plant;
@@ -59,23 +58,23 @@ public class Chunk {
 		this.lastAccessedTime = LocalDateTime.now();
 	}
 
-	public short getBlock(int globalX, int globalY) {
+	public String getBlock(int globalX, int globalY) {
 		return this.getBlockInside(globalX - this.getX(), globalY - this.getY());
 	}
 
-	public short getBlockInside(int x, int y) {
+	public String getBlockInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return ItemID.none;
+			return null;
 		}
 
 		return this.data.blocks[x + y * SIZE];
 	}
 
-	public void setBlock(short id, int globalX, int globalY) {
+	public void setBlock(String id, int globalX, int globalY) {
 		this.setBlockInside(id, globalX - this.getX(), globalY - this.getY());
 	}
 
-	public void setBlockInside(short id, int x, int y) {
+	public void setBlockInside(String id, int x, int y) {
 		if (!this.isInside(x, y)) {
 			return;
 		}
@@ -84,7 +83,7 @@ public class Chunk {
 
 		this.data.blocks[x + y * SIZE] = id;
 		this.data.blocksHealth[x + y * SIZE] = ByteHelper.create(true, true, (n == 1 || n == 3), (n == 2), false, false,
-				false, false);
+			false, false);
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
@@ -93,8 +92,7 @@ public class Chunk {
 
 	public byte getBlockHPInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-
-			return ItemID.none;
+			return 0;
 		}
 
 		return this.data.blocksHealth[x + y * SIZE];
@@ -119,7 +117,7 @@ public class Chunk {
 				return;
 			}
 
-			this.setBlockInside(ItemID.none, x, y);
+			this.setBlockInside(null, x, y);
 
 			if (block != null) {
 				block.die(x + this.getX(), y + this.getY());
@@ -129,23 +127,23 @@ public class Chunk {
 		}
 	}
 
-	public short getWall(int globalX, int globalY) {
+	public String getWall(int globalX, int globalY) {
 		return this.getWallInside(globalX - this.getX(), globalY - this.getY());
 	}
 
-	public short getWallInside(int x, int y) {
+	public String getWallInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return ItemID.none;
+			return null;
 		}
 
 		return this.data.walls[x + y * SIZE];
 	}
 
-	public void setWall(short id, int globalX, int globalY) {
+	public void setWall(String id, int globalX, int globalY) {
 		this.setWallInside(id, globalX - this.getX(), globalY - this.getY());
 	}
 
-	public void setWallInside(short id, int x, int y) {
+	public void setWallInside(String id, int x, int y) {
 		if (!this.isInside(x, y)) {
 			return;
 		}
@@ -163,7 +161,7 @@ public class Chunk {
 
 	public byte getWallHPInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return ItemID.none;
+			return 0;
 		}
 
 		return this.data.wallsHealth[x + y * SIZE];
@@ -186,7 +184,7 @@ public class Chunk {
 				wall.die(x + this.getX(), y + this.getY());
 			}
 
-			this.setWallInside(ItemID.none, x, y);
+			this.setWallInside(null, x, y);
 		} else {
 			this.data.wallsHealth[x + y * SIZE] = hp;
 		}
@@ -200,7 +198,7 @@ public class Chunk {
 
 	private byte getLightInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return ItemID.none;
+			return 0;
 		}
 
 		return this.data.light[x + y * SIZE];
