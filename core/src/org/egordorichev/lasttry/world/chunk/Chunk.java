@@ -64,7 +64,7 @@ public class Chunk {
 
 	public String getBlockInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return "";
+			return null;
 		}
 
 		return this.data.blocks[x + y * SIZE];
@@ -117,7 +117,7 @@ public class Chunk {
 				return;
 			}
 
-			this.setBlockInside("", x, y);
+			this.setBlockInside(null, x, y);
 
 			if (block != null) {
 				block.die(x + this.getX(), y + this.getY());
@@ -133,7 +133,7 @@ public class Chunk {
 
 	public String getWallInside(int x, int y) {
 		if (!this.isInside(x, y)) {
-			return "";
+			return null;
 		}
 
 		return this.data.walls[x + y * SIZE];
@@ -184,7 +184,7 @@ public class Chunk {
 				wall.die(x + this.getX(), y + this.getY());
 			}
 
-			this.setWallInside("", x, y);
+			this.setWallInside(null, x, y);
 		} else {
 			this.data.wallsHealth[x + y * SIZE] = hp;
 		}

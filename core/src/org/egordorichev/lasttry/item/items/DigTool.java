@@ -5,7 +5,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Util;
 
 public class DigTool extends Tool {

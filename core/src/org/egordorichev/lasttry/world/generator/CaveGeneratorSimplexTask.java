@@ -44,14 +44,14 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
                 }
                 // Insert caves
                 if (!solidMap[x][y]) {
-                    generator.world.blocks.set("", x, y);
+                    generator.world.blocks.set(null, x, y);
                 } else {
                     // For non caves, apply grass borders.
                     // Cut off any blocks with too few neighbors to prevent
                     // the some of the floating blocks.
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
                     if (neighbors <= 3) {
-                        generator.world.blocks.set("", x, y);
+                        generator.world.blocks.set(null, x, y);
                     } else if (neighbors != 8) {
                         generator.world.blocks.set("lt:grass", x, y);
                     }

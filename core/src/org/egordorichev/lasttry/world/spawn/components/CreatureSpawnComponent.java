@@ -10,8 +10,8 @@ import java.util.List;
 
 public class CreatureSpawnComponent {
     // availableMaxSpawn is an int denoting the remaining spawn value allowed for a new spawn in the biome
-    public static ArrayList<String> retrieveEligibleSpawnCreatures(final int availableMaxSpawn) {
-        final ArrayList<String> eligibleCreaturesForSpawn = new ArrayList<>();
+    public static List<String> retrieveEligibleSpawnCreatures(final int availableMaxSpawn) {
+        final List<String> eligibleCreaturesForSpawn = new ArrayList<>();
 
         Creatures.CREATURE_CACHE.keySet().stream().forEach(creatureKey -> {
 	        if(Creatures.canSpawn(creatureKey, availableMaxSpawn)){
@@ -43,10 +43,10 @@ public class CreatureSpawnComponent {
         return eligibleCreaturesForSpawning.get(randomIndex);
     }
 
-    public static ArrayList<Creature> generateEnemiesInActiveArea(CircleAreaComponent playerActiveArea) {
+    public static List<Creature> generateEnemiesInActiveArea(CircleAreaComponent playerActiveArea) {
         // Must clear the list each time, as it has no way of knowing if an entity has died so we must rebuild
         // each time to ensure we have an up to date list
-        ArrayList<Creature> enemiesInActiveArea = new ArrayList<>();
+        List<Creature> enemiesInActiveArea = new ArrayList<>();
         List<Creature> creatureEntities = Globals.entityManager.getCreatureEntities();
 
         creatureEntities.stream().forEach(creature -> {

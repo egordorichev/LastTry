@@ -22,7 +22,7 @@ public class CaveGeneratorBubbleTask extends GeneratorTask {
                 }
 
                 if (!solidMap[x][y]) {
-                    generator.world.blocks.set("", x, y);
+                    generator.world.blocks.set(null, x, y);
                 } else {
                     int neighbors = this.calculateNeighbors(generator, solidMap, x, y);
 

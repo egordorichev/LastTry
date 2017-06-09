@@ -1,6 +1,6 @@
 {
 	"lt:dirt" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
 	},
 
 	"lt:grass" : {
@@ -32,14 +32,14 @@
 		"type" : "org.egordorichev.lasttry.item.items.Pickaxe",
 		"speed" : 22,
 		"damage" : 4,
-		"power" : [ 50, 0, 0 ]
+		"power" : [ 35, 0, 0 ]
 	},
 
 	"lt:copper_axe" : {
 		"type" : "org.egordorichev.lasttry.item.items.Axe",
 		"speed" : 22,
 		"damage" : 3,
-		"power" : [ 0, 50, 0 ]
+		"power" : [ 0, 35, 0 ]
 	},
 
 	"lt:copper_shortsword" : {

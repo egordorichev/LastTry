@@ -136,6 +136,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				LastTry.noLight = !LastTry.noLight;
+				// TODO: If light has not been setup, do that.
 			}
 		});
 		this.commands.register(new Command("kill", "Kills the player", CMDCategory.DEBUG) {

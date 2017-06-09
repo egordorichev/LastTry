@@ -19,7 +19,7 @@ public class Creature extends Entity {
 	/**
 	 * Drops handler
 	 */
-	public CreatureDropsComponent drops = new CreatureDropsComponent();
+	public CreatureDropsComponent drops = new CreatureDropsComponent(this);
 	/**
 	 * Stats handler
 	 */

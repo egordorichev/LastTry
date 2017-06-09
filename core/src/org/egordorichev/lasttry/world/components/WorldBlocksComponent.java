@@ -41,7 +41,7 @@ public class WorldBlocksComponent extends WorldComponent {
         Chunk chunk = this.getChunk(x, y);
 
         if (chunk == null) {
-            return "";
+            return null;
         }
 
         return chunk.getBlock(x, y);

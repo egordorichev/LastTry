@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.egordorichev.lasttry.util.Util;
 import java.io.File;
 
@@ -28,7 +27,7 @@ public class Args {
 	 * @param config App config
 	 * @throws Exception Exception, containing a parse error
 	 */
-	public static void parse(String[] args, LwjglApplicationConfiguration config) throws Exception {
+	public static void parse(String[] args, Object config) throws Exception {
 		arguments = args;
 
 		for (i = 0; i < args.length; i++) {
@@ -66,17 +65,31 @@ public class Args {
 					checkForArgument("Expected player name after -p");
 					player = args[++i];
 				break;
-				case "-nl":
-					LastTry.noLight = true;
+				case "-el":
+					LastTry.noLight = false;
 				break;
 				case "-f":
-					config.fullscreen = true;
+					set(config, "fullscreen", true);
 				break;
 				default:
 					throw new Exception("Unknown arg " + arg);
 			}
 		}
 	}
+
+	private static void set(Object instance, String field, boolean value) {
+	    // THIS IS TEMPORARY
+	    // The issue is AFAIK the core gradle doesn't load the following:
+	    //
+	    // com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+	    //
+	    // So do we update the gradle file or change the way its passed?
+	    try {
+            instance.getClass().getDeclaredField(field).set(instance, value);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/**
 	 * Checks, that there is one more argument, otherwise, throws an Exception

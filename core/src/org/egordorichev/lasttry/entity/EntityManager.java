@@ -65,7 +65,7 @@ public class EntityManager {
 			entity.update(dt);
 
 			if (!entity.isActive()) {
-				this.entities.remove(i);
+				this.clearList.add(entity);
 			}
 		}
 	}
@@ -78,6 +78,10 @@ public class EntityManager {
 		entity.spawn(x, y);
 
 		this.entities.add(entity);
+
+		if (entity != Globals.getPlayer() && entity instanceof Creature) {
+			this.creatureEntities.add((Creature) entity);
+		}
 		this.sort();
 
 		return entity;
@@ -85,7 +89,7 @@ public class EntityManager {
 
 	public Entity spawnBlockDrop(DroppedItem item, int x, int y) {
 		Entity entity = spawn(item, x, y);
-		
+
 		// calculate velocity to pop dropped item away from blocks
 		Vector2 popVelocity = new Vector2();
 		float power = 2f;
@@ -103,19 +107,6 @@ public class EntityManager {
 		// Apply pop velocity
 		entity.physics.getVelocity().add(popVelocity);
 		return entity;
-	}
-
-	private static class EntityComparator implements Comparator<Entity> {
-		@Override
-		public int compare(Entity o, Entity t1) {
-			if (o.getZIndex() > t1.getZIndex()) {
-				return 1;
-			} else if (o.getZIndex() < t1.getZIndex()) {
-				return -1;
-			}
-
-			return 0;
-		}
 	}
 
 	private void sort() {
@@ -153,6 +144,19 @@ public class EntityManager {
 			}
 		} catch (Exception e) {
 			LastTry.handleException(e);
+		}
+	}
+
+	private static class EntityComparator implements Comparator<Entity> {
+		@Override
+		public int compare(Entity o, Entity t1) {
+			if (o.getZIndex() > t1.getZIndex()) {
+				return 1;
+			} else if (o.getZIndex() < t1.getZIndex()) {
+				return -1;
+			}
+
+			return 0;
 		}
 	}
 

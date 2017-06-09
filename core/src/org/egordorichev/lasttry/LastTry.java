@@ -16,7 +16,6 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
-
 import java.util.Random;
 import java.util.Locale;
 
@@ -44,7 +43,7 @@ public class LastTry extends Game {
 	public static boolean release = true;
 
 	/** Light disable */
-	public static boolean noLight;
+	public static boolean noLight = true;
 
 	/** Screen dimensions */
 	public final int width;

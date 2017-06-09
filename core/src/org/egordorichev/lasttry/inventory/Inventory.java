@@ -177,6 +177,9 @@ public interface Inventory<Slot extends InventorySlot> {
 	 */
 	int getMaxInventorySize();
 
+	/**
+	 * Clears the inventory of all items.
+	 */
 	default public void clear() {
 		for (int i = 0; i < getMaxInventorySize(); i++) {
 			getSlot(i).setItemHolder(new ItemHolder(null, 0));

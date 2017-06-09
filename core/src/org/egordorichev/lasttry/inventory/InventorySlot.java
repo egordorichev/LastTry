@@ -43,7 +43,7 @@ public interface InventorySlot {
         Item item = this.getItem();
 
         if (item == null) {
-            return "";
+            return null;
         }
 
         return item.getID();

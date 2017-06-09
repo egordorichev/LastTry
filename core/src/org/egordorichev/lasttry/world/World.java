@@ -85,7 +85,7 @@ public class World {
 	}
 
 	public void updateLight(int dt) {
-		if (!LastTry.noLight && lightDirty) {
+		if (!LastTry.noLight) {
 			this.light.update(dt);
 			lightDirty = false;
 		}
@@ -96,7 +96,7 @@ public class World {
 	 */
 	public void initLights() {
 		if (!LastTry.noLight) {
-			this.light.init();
+			this.light.updateNearPlayer();
 		}
 	}
 
