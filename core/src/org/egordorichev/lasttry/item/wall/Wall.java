@@ -13,6 +13,7 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.ByteHelper;
+import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
 public class Wall extends Item {
 	/**
@@ -88,6 +89,13 @@ public class Wall extends Item {
 		byte variant = WallHelper.getVariant(hp);
 		byte binary = calculateBinary(x, y);
 
+		
+		float light  = 1f;
+		// Update light leven
+		if (!LastTry.noLight){
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		}
+		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
 		hp = WallHelper.getHP(hp);
@@ -95,6 +103,8 @@ public class Wall extends Item {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
+		
+		Graphics.batch.setColor(1f,1f,1f,1f);
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
+
+import java.awt.Color;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
@@ -14,6 +17,7 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
 public class Block extends Item {
 	public static final int SIZE = 16;
@@ -212,6 +216,12 @@ public class Block extends Item {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 		byte variant = BlockHelper.plain.getVariant(hp);
 
+		float light  = 1f;
+		// Update light leven
+		if (!LastTry.noLight){
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		}
+		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
 
 		hp = BlockHelper.plain.getHP(hp);
@@ -219,6 +229,7 @@ public class Block extends Item {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
+		Graphics.batch.setColor(1f,1f,1f,1f);
 	}
 
 	/**

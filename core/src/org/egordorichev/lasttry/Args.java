@@ -65,8 +65,8 @@ public class Args {
 					checkForArgument("Expected player name after -p");
 					player = args[++i];
 				break;
-				case "-nl":
-					LastTry.noLight = true;
+				case "-el":
+					LastTry.noLight = false;
 				break;
 				case "-f":
 					set(config, "fullscreen", true);
