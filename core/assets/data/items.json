@@ -161,5 +161,9 @@
 
 	"lt:dirt_wall" : {
 		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
+
+	"lt:chunk_loader" : {
+		"type" : "org.egordorichev.lasttry.item.block.ChunkLoader"
 	}
 }

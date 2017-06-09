@@ -97,17 +97,17 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				if (args.length == 0) {
 					print("/chunks [gc / list]");
 				} else {
-					switch (args[1]) {
-					case "gc":
-						Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
-						print("Running instant chunk GC...");
-					break;
-					case "list":
-						print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
-							+ Globals.getWorld().getSize().getMaxChunks());
-					break;
-					default:
-						print("/chunks [gc / list]");
+					switch (args[0]) {
+						case "gc":
+							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
+							print("Running instant chunk GC...");
+						break;
+						case "list":
+							print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
+								+ Globals.getWorld().getSize().getMaxChunks());
+						break;
+						default:
+							print("/chunks [gc / list]");
 					}
 				}
 			}

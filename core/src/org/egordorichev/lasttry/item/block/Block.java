@@ -217,10 +217,12 @@ public class Block extends Item {
 		byte variant = BlockHelper.plain.getVariant(hp);
 
 		float light  = 1f;
+
 		// Update light leven
 		if (!LastTry.noLight){
 			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
 		}
+
 		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][0], x * SIZE, y * SIZE);
 
@@ -229,6 +231,7 @@ public class Block extends Item {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
+
 		Graphics.batch.setColor(1f,1f,1f,1f);
 	}
 
