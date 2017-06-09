@@ -40,7 +40,7 @@ public class DroppedItem extends Entity {
 		this.physics.update(dt);
 		this.graphics.update(dt);
 
-		if (this.holder.getItem().isUnobtainable()) {
+		if (this.holder.getItem().isUnobtainable() && LastTry.release) {
 			Globals.entityManager.markForRemoval(this);
 		} else {
 

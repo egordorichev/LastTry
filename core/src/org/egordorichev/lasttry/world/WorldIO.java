@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
-	public static final int VERSION = 2;
+	public static final byte VERSION = 3;
 
 	public static void load(String name) {
 		String fileName = getSaveName(name);
@@ -28,8 +28,9 @@ public class WorldIO {
 		try {
 			FileReader stream = new FileReader(fileName);
 
-			int version = stream.readInt32();
+			int version = stream.readByte();
 			int seed = stream.readInt32();
+
 			if (version > VERSION) {
 				Log.error("Trying to load unknown world.");
 				LastTry.abort();
@@ -98,7 +99,7 @@ public class WorldIO {
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
-			stream.writeInt32(VERSION);
+			stream.writeByte(VERSION);
 			stream.writeInt32(Globals.getWorld().getSeed());
 
 			switch (Globals.getWorld().getSize()) {

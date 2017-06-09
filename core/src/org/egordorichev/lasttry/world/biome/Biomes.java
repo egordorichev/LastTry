@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.util.Log;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Biomes {
@@ -52,6 +54,19 @@ public class Biomes {
 			exception.printStackTrace();
 			Log.error("Failed to load biomes");
 		}
+
+		Collections.sort(BIOME_CACHE, new Comparator<Biome>() {
+			@Override
+			public int compare(Biome biome1, Biome biome2) {
+				if (biome1.getLevel() > biome2.getLevel()) {
+					return 1;
+				} else if (biome1.getLevel() < biome2.getLevel()) {
+					return -1;
+				}
+
+				return 0;
+			}
+		});
 	}
 
 	/**

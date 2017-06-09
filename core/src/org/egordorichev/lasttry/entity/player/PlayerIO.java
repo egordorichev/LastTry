@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final int VERSION = 2;
+	public static final byte VERSION = 3;
 
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
@@ -28,9 +28,10 @@ public class PlayerIO {
 		try {
 			FileReader stream = new FileReader(fileName);
 
-			int version = stream.readInt32();
+			int version = stream.readByte();
 			boolean isCurrent = version == VERSION;
 			boolean isFuture = version > VERSION;
+
 			if (!isCurrent) {
 				String tense = isFuture ? "future" : "past";
 				Log.error("Failed loading " + tense + " version: " + version + ", current version is: " + VERSION);
@@ -91,7 +92,7 @@ public class PlayerIO {
 		try {
 			FileWriter stream = new FileWriter(fileName);
 
-			stream.writeInt32(VERSION);
+			stream.writeByte(VERSION);
 			stream.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
 			stream.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
 
