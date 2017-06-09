@@ -13,7 +13,7 @@ public class EmptyChunk extends Chunk {
 	}
 
 	@Override
-	public void setBlockHP(byte hp, int globalX, int globalY) {
+	public void setBlockHP(byte hp, int globalX, int globalY, boolean die) {
 
 	}
 

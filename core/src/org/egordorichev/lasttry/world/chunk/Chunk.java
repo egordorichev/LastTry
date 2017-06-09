@@ -99,25 +99,21 @@ public class Chunk {
 		return this.data.blocksHealth[x + y * SIZE];
 	}
 
-	public void setBlockHP(byte hp, int globalX, int globalY) {
-		this.setBlockHPInside(hp, globalX - this.getX(), globalY - this.getY());
+	public void setBlockHP(byte hp, int globalX, int globalY, boolean die) {
+		this.setBlockHPInside(hp, globalX - this.getX(), globalY - this.getY(), die);
 	}
 
-	public void setBlockHPInside(byte hp, int x, int y) {
+	public void setBlockHPInside(byte hp, int x, int y, boolean die) {
 		if (!this.isInside(x, y)) {
 			return;
 		}
 
 		this.updateLastAccessedTime();
 
-		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
+		if (die) {
 			Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
 
-			if (block instanceof MultiTileBlock || block instanceof Plant) { // no hp
-				this.data.blocksHealth[x + y * SIZE] = hp;
-				return;
-			}
-
+			this.data.blocksHealth[x + y * SIZE] = hp;
 			this.setBlockInside(null, x, y);
 
 			if (block != null) {

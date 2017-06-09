@@ -2,7 +2,9 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 
 public class MultiTileBlock extends Block {
@@ -72,10 +74,27 @@ public class MultiTileBlock extends Block {
 				byte hp = 0;
 
 				hp = BlockHelper.mtb.setX(hp, (byte) (i - x));
-				hp = BlockHelper.mtb.setY(hp, (byte) (this.texture.getRegionHeight() / Block.SIZE - (j - y) - 1));
+				hp = BlockHelper.mtb.setY(hp, (byte) (this.height - (j - y) - 1));
 
 				Globals.getWorld().blocks.setHP(hp, i, j);
 			}
 		}
+	}
+
+	@Override
+	public void die(int x, int y) {
+		byte data = Globals.getWorld().blocks.getHP(x, y);
+		byte tx = BlockHelper.mtb.getX(data);
+		byte ty = BlockHelper.mtb.getY(data);
+		short sx = (short) (x);
+		short sy = (short) (y);
+
+		for (int j = sy - 1; j < sy + this.height - 1; j++) {
+			for (int i = sx + 1; i < sx + this.width + 1; i++) {
+				Globals.getWorld().blocks.set("lt:sand", i, j);
+			}
+		}
+
+		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}
 }

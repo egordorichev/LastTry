@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -61,6 +62,8 @@ public class LastTry extends Game {
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
 		Globals.resolution = new Vector2(width, height);
 		instance = this;
+		
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("Cursor.png")), 0, 0));
 
 		Camera.create(width, height);
 		Language.load(new Locale("en", "US"));
