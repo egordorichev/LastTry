@@ -164,7 +164,6 @@ public class Tool extends Item {
 
 	private int calculateDamageToInflict(final Creature enemy) {
 		int weaponDamage = Math.round(this.baseDamage);
-
 		if (this.criticalStrikeChanceActive()) {
 			weaponDamage = weaponDamage * 2;
 		}

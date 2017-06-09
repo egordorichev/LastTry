@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.item;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.Tool;
 import org.egordorichev.lasttry.item.items.ToolPower;
 
@@ -77,7 +76,7 @@ public class Item {
 					tool.useDelayMax = root.getInt("speed");
 				}
 				if (root.has("damage")) {
-					tool.baseDamage = root.getInt("speed");
+					tool.baseDamage = root.getInt("damage");
 				}
 				if (root.has("power")) {
 					int[] pow = root.get("power").asIntArray();
