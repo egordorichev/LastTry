@@ -222,7 +222,7 @@ public class Block extends Item {
 			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
 		}
 		Graphics.batch.setColor(light, light, light, 1f);
-		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
+		Graphics.batch.draw(this.tiles[variant][0], x * SIZE, y * SIZE);
 
 		hp = BlockHelper.plain.getHP(hp);
 

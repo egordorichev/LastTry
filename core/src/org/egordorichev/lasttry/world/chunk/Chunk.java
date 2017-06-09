@@ -20,6 +20,7 @@ public class Chunk {
 	private Vector2 position;
 	private LocalDateTime lastAccessedTime;
 	private UUID uniqueChunkId;
+	private boolean unloadable = true;
 
 	public Chunk(ChunkData data, Vector2 position) {
 		this.updateLastAccessedTime();
@@ -246,5 +247,13 @@ public class Chunk {
 
 	public LocalDateTime getLastAccessedTime() {
 		return this.lastAccessedTime;
+	}
+
+	public boolean isUnloadable() {
+		return this.unloadable;
+	}
+
+	public void setUnloadable(boolean unloadable) {
+		this.unloadable = unloadable;
 	}
 }
