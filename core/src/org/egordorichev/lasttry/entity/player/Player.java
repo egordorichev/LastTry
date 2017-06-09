@@ -33,8 +33,10 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
         super.update(dt);
         this.input.update(dt);
         
-        // TODO: What does this even do?
-        // Commenting it out seems to change nothing.
+        if (this.getInventory().getActiveItem() != null && this.getInventory().getActiveItem().getItem() != null) {
+            this.getInventory().getActiveItem().getItem().update(this, dt);
+        }
+        
         if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
             this.getInventory().getSelectedItem().getItem().update(this, dt);
         }

@@ -10,7 +10,6 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.item.block.helpers.PlainBlockHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
