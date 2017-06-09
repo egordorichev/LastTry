@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item.items;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
@@ -46,6 +47,22 @@ public class Tool extends Item {
 
 	public Tool(String id) {
 		super(id);
+	}
+
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		if (root.has("speed")) {
+			this.useDelayMax = root.getInt("speed");
+		}
+		if (root.has("damage")) {
+			this.baseDamage = root.getInt("damage");
+		}
+		if (root.has("power")) {
+			int[] pow = root.get("power").asIntArray();
+			this.power = new ToolPower(pow[0], pow[1], pow[2]);
+		}
 	}
 
 	@Override

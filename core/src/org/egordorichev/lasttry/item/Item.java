@@ -8,8 +8,11 @@ import org.egordorichev.lasttry.item.items.ToolPower;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.language.Language;
+import org.egordorichev.lasttry.util.Log;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.MissingResourceException;
 
 public class Item {
 	/**
@@ -66,26 +69,9 @@ public class Item {
 		String className = root.getString("type", "org.egordorichev.lasttry.item.Item");
 
 		try {
-			System.out.println(root.name);
-			Item instance = createInstance(root, className);
-			// TODO: Do this properly.
-			// this is done for quick testing
-			if (instance instanceof Tool) {
-				Tool tool = ((Tool) instance);
-				if (root.has("speed")) {
-					tool.useDelayMax = root.getInt("speed");
-				}
-				if (root.has("damage")) {
-					tool.baseDamage = root.getInt("damage");
-				}
-				if (root.has("power")) {
-					int[] pow = root.get("power").asIntArray();
-					tool.power = new ToolPower(pow[0], pow[1], pow[2]);
-				}
-			}
-			return instance;
+			return createInstance(root, className);
 		} catch (Exception exception) {
-			exception.printStackTrace();
+			Log.error(exception.getMessage());
 			throw new Exception("Failed to parse " + root.name());
 		}
 	}
@@ -116,8 +102,17 @@ public class Item {
 			return item;
 		} catch (ClassNotFoundException exception) {
 			throw new Exception("Class " + className + " is not found");
+		} catch (InvocationTargetException exception) {
+			Throwable cause = exception.getCause();
+
+			if (cause instanceof MissingResourceException) {
+				throw new Exception(root.name() + " registry is not found in current locale");
+			} else if (cause instanceof NullPointerException) {
+				throw new Exception("NPE in " + root.name() + ". Did you add right texture?");
+			} else {
+				throw new Exception("Failed to parse class for " + root.name());
+			}
 		} catch (Exception exception) {
-			exception.printStackTrace();
 			throw exception;
 		}
 	}

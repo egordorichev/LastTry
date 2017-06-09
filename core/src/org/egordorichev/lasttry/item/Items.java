@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Items {
@@ -32,7 +33,6 @@ public class Items {
 					ITEM_CACHE.put(item.name(), Item.load(item));
 				} catch (Exception exception) {
 					Log.error("Failed to parse " + item.name());
-					exception.printStackTrace();
 				}
 			}
 		} catch (Exception exception) {
