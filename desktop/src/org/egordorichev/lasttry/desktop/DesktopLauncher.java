@@ -1,10 +1,8 @@
 package org.egordorichev.lasttry.desktop;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.graphics.Pixmap;
 import org.egordorichev.lasttry.Args;
 import org.egordorichev.lasttry.LastTry;
 
