@@ -23,81 +23,95 @@ public class Args {
 
 	/**
 	 * Parses given arguments
-	 * @param args arguments, received by main()
-	 * @param config App config
-	 * @throws Exception Exception, containing a parse error
+	 * 
+	 * @param args
+	 *            arguments, received by main()
+	 * @param config
+	 *            App config
+	 * @throws Exception
+	 *             Exception, containing a parse error
 	 */
 	public static void parse(String[] args, Object config) throws Exception {
 		arguments = args;
 
+		boolean exitDump = false;
 		for (i = 0; i < args.length; i++) {
 			arg = args[i];
-
 			switch (arg) {
-				case "-d":
-					LastTry.release = false;
+			case "-d":
+				LastTry.release = false;
+				break;
+			case "-dw":
+				Util.delete(new File("data" + File.separator + "worlds"));
+				break;
+			case "-dp":
+				Util.delete(new File("data" + File.separator + "players"));
+				break;
+			case "-s":
+				checkForArgument("Expected seed after -s");
 
-					if (Util.isWindows()) {
-						System.setSecurityManager(new ExitDumper());
-					}
+				try {
+					seed = Integer.valueOf(args[++i]);
+					LastTry.random.setSeed(seed);
+				} catch (Exception exception) {
+					throw new Exception("Seed is not a valid number");
+				}
 				break;
-				case "-dw":
-					Util.delete(new File("data" + File.separator + "worlds"));
+			case "-w":
+				checkForArgument("Expected world name after -w");
+				world = args[++i];
 				break;
-				case "-dp":
-					Util.delete(new File("data" + File.separator + "players"));
+			case "-p":
+				checkForArgument("Expected player name after -p");
+				player = args[++i];
 				break;
-				case "-s":
-					checkForArgument("Expected seed after -s");
+			case "-el":
+				LastTry.noLight = false;
+				break;
 
-					try {
-						seed = Integer.valueOf(args[++i]);
-						LastTry.random.setSeed(seed);
-					} catch (Exception exception) {
-						throw new Exception("Seed is not a valid number");
-					}
+			case "-nl":
+				LastTry.noLight = true;
 				break;
-				case "-w":
-					checkForArgument("Expected world name after -w");
-					world = args[++i];
+
+			case "-extd":
+				exitDump = true;
 				break;
-				case "-p":
-					checkForArgument("Expected player name after -p");
-					player = args[++i];
+			case "-f":
+				set(config, "fullscreen", true);
 				break;
-				case "-el":
-					LastTry.noLight = false;
-				break;
-				case "-f":
-					set(config, "fullscreen", true);
-				break;
-				case "-nl":
-					LastTry.noLight = true;
-				break;
-				default:
-					throw new Exception("Unknown arg " + arg);
+			default:
+				throw new Exception("Unknown arg " + arg);
+			}
+
+		}
+		if (!LastTry.release && exitDump) {
+			if (Util.isWindows()) {
+				System.setSecurityManager(new ExitDumper());
 			}
 		}
 	}
 
 	private static void set(Object instance, String field, boolean value) {
-	    // THIS IS TEMPORARY
-	    // The issue is AFAIK the core gradle doesn't load the following:
-	    //
-	    // com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-	    //
-	    // So do we update the gradle file or change the way its passed?
-	    try {
-            instance.getClass().getDeclaredField(field).set(instance, value);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }
-    }
+		// THIS IS TEMPORARY
+		// The issue is AFAIK the core gradle doesn't load the following:
+		//
+		// com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+		//
+		// So do we update the gradle file or change the way its passed?
+		try {
+			instance.getClass().getDeclaredField(field).set(instance, value);
+		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Checks, that there is one more argument, otherwise, throws an Exception
-	 * @param error Error message for the Exception
-	 * @throws Exception Thrown if there is no more arguments
+	 * 
+	 * @param error
+	 *            Error message for the Exception
+	 * @throws Exception
+	 *             Thrown if there is no more arguments
 	 */
 	private static void checkForArgument(String error) throws Exception {
 		if (arguments.length - 1 == i) {

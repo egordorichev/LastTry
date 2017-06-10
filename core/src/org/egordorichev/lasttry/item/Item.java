@@ -42,7 +42,7 @@ public class Item {
 	/**
 	 * If is set to true, item can be obtained only in the dev mode
 	 */
-	protected boolean unobtainable = false;
+	protected boolean unobtainable;
 
 	public Item(String id) {
 		if (Items.ITEM_CACHE.containsKey(id)) {

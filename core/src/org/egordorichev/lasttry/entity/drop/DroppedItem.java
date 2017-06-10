@@ -31,7 +31,7 @@ public class DroppedItem extends Entity {
 		Graphics.batch.draw(this.texture, this.physics.getX(), this.physics.getY());
 		if (LastTry.debug.isEnabled()) {
 			Assets.f18.draw(Graphics.batch, String.valueOf(this.holder.getCount()), this.physics.getX(),
-				this.physics.getY());
+					this.physics.getY());
 		}
 	}
 
@@ -39,15 +39,12 @@ public class DroppedItem extends Entity {
 	public void update(int dt) {
 		this.physics.update(dt);
 		this.graphics.update(dt);
-
-		if (this.holder.getItem().isUnobtainable() && LastTry.release) {
+		if (this.holder.getItem().isUnobtainable()) {
 			Globals.entityManager.markForRemoval(this);
-		} else {
-
+		}
 		this.updateAttraction(dt);
 		this.checkPlayerAbsorbtion(dt);
 		this.packRelated(dt);
-		}
 	}
 
 	/**
@@ -64,6 +61,7 @@ public class DroppedItem extends Entity {
 			} else {
 				Globals.getPlayer().getInventory().add(this.holder);
 			}
+			Globals.entityManager.markForRemoval(this);
 		}
 	}
 
@@ -93,6 +91,7 @@ public class DroppedItem extends Entity {
 	private void packRelated(int dt) {
 		List<Entity> entities = Globals.entityManager.getEntities();
 		entities.stream().filter(e -> !e.equals(this))
+				.filter(e -> e.isActive())
 				.filter(e -> physics.getHitbox().intersects(e.physics.getHitbox()))
 				.filter(e -> e instanceof DroppedItem).map(e -> ((DroppedItem) e))
 				.filter(i -> holder.getItem().getID().equals(i.holder.getItem().getID())).forEach(i -> consume(i));
@@ -111,7 +110,8 @@ public class DroppedItem extends Entity {
 		int sum = this.holder.getCount() + other.holder.getCount();
 		if (sum <= other.holder.getItem().getMaxInStack()) {
 			other.holder.setCount(sum);
-			this.die();
+			active = false;
+			Globals.entityManager.markForRemoval(this);
 		}
 	}
 
