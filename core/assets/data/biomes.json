@@ -1,12 +1,6 @@
 {
 	"lt:forest" : {
-		"required" : [
-			{
-				"id" : [ "lt:sand" ],
-				"count" : 1000
-			}
-		],
-
+		"required" : [],
 		"level" : 0,
 		"temperature" : 23,
 		"humidity" : 30,

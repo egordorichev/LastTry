@@ -138,8 +138,8 @@ public class Environment {
 			for (int x = minX; x < maxX; x++) {
 				String id = Globals.getWorld().blocks.getID(x, y);
 
-				// short count = blockCount.containsKey(id) ? blockCount.get(id) : 0;
-				// blockCount.put(id, (short) (count + 1)); // FIXME: store count!
+				short count = blockCount.containsKey(id) ? blockCount.get(id) : 0;
+				blockCount.put(id, (short) (count + 1));
 			}
 		}
 
@@ -147,18 +147,13 @@ public class Environment {
 
 		for (Biome biome : Biomes.BIOME_CACHE) {
 			boolean canBeSet = true;
-			Log.error("Checking " + biome.getID());
 
 			for (Biome.Holder holder : biome.getRequired()) {
 				short count = 0;
 
-				Log.error(biome.getID() + " required : " + holder.count);
-
 				for (String id : holder.items) {
-					// count += this.blockCount.get(id); FIXME: ruins all!
+					count += blockCount.containsKey(id) ? this.blockCount.get(id) : 0;
 				}
-
-				Log.error(biome.getID() + " got count : " + count);
 
 				if (count < holder.count) {
 					canBeSet = false;
@@ -166,11 +161,8 @@ public class Environment {
 				}
 			}
 
-			Log.error("Done checking " + biome.getID());
-
 			if (canBeSet) {
 				this.currentBiome = biome;
-				Log.error("Biome is set to " + biome.getID());
 				break;
 			}
 		}
