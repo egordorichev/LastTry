@@ -84,10 +84,8 @@ public class Args {
 			}
 
 		}
-		if (!LastTry.release && exitDump) {
-			if (Util.isWindows()) {
-				System.setSecurityManager(new ExitDumper());
-			}
+		if (!LastTry.release && exitDump && Util.isWindows()) {
+			System.setSecurityManager(new ExitDumper());
 		}
 	}
 
