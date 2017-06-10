@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
@@ -136,17 +137,43 @@ public class Environment {
 		for (int y = minY; y < maxY; y++) {
 			for (int x = minX; x < maxX; x++) {
 				String id = Globals.getWorld().blocks.getID(x, y);
-				short count = blockCount.containsKey(id) ? blockCount.get(id) : 0;
 
-				blockCount.put(id, (short) (count + 1)); // TODO: this is a heavy call
+				// short count = blockCount.containsKey(id) ? blockCount.get(id) : 0;
+				// blockCount.put(id, (short) (count + 1)); // FIXME: store count!
 			}
 		}
 
 		this.lastBiome = this.currentBiome;
 
-		// TODO: calculate biome
+		for (Biome biome : Biomes.BIOME_CACHE) {
+			boolean canBeSet = true;
+			Log.error("Checking " + biome.getID());
 
-		this.currentBiome = Biomes.get("lt:forest");
+			for (Biome.Holder holder : biome.getRequired()) {
+				short count = 0;
+
+				Log.error(biome.getID() + " required : " + holder.count);
+
+				for (String id : holder.items) {
+					// count += this.blockCount.get(id); FIXME: ruins all!
+				}
+
+				Log.error(biome.getID() + " got count : " + count);
+
+				if (count < holder.count) {
+					canBeSet = false;
+					break;
+				}
+			}
+
+			Log.error("Done checking " + biome.getID());
+
+			if (canBeSet) {
+				this.currentBiome = biome;
+				Log.error("Biome is set to " + biome.getID());
+				break;
+			}
+		}
 	}
 
 	public List<Event> getCurrentEvents() {

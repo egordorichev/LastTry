@@ -54,9 +54,9 @@ public class ChunkIO {
 						data.walls[index] = data.walls[index - 1];
 						data.wallsHealth[index] = stream.readByte();
 					} else {
-						data.blocks[index] = (stream.readBoolean()) ? stream.readString() : null;
+						data.blocks[index] = stream.readString();
 						data.blocksHealth[index] = stream.readByte();
-						data.walls[index] = (stream.readBoolean()) ? stream.readString() : null;
+						data.walls[index] = stream.readString();
 						data.wallsHealth[index] = stream.readByte();
 
 						if (stream.readBoolean()) {
@@ -114,22 +114,9 @@ public class ChunkIO {
 				for (short cx = 0; cx < Chunk.SIZE; cx++) {
 					int index = cx + cy * Chunk.SIZE;
 
-					if (data.blocks[index] == null) {
-						stream.writeBoolean(false);
-					} else {
-						stream.writeBoolean(true);
-						stream.writeString(data.blocks[index]);
-					}
-
+					stream.writeString(data.blocks[index]);
 					stream.writeByte(data.blocksHealth[index]);
-
-					if (data.walls[index] == null) {
-						stream.writeBoolean(false);
-					} else {
-						stream.writeBoolean(true);
-						stream.writeString(data.walls[index]);
-					}
-
+					stream.writeString(data.walls[index]);
 					stream.writeByte(data.wallsHealth[index]);
 
 					stream.writeBoolean(false); // TODO: RLE!

@@ -42,7 +42,7 @@ public class Biomes {
 			for (JsonValue biome : root) {
 				try {
 					Biome b = new Biome(biome.name());
-					b.loadFields(root);
+					b.loadFields(biome);
 
 					BIOME_CACHE.add(b);
 				} catch (Exception exception) {
@@ -55,12 +55,12 @@ public class Biomes {
 			Log.error("Failed to load biomes");
 		}
 
-		Collections.sort(BIOME_CACHE, new Comparator<Biome>() {
+		BIOME_CACHE.sort(new Comparator<Biome>() {
 			@Override
 			public int compare(Biome biome1, Biome biome2) {
-				if (biome1.getLevel() > biome2.getLevel()) {
+				if (biome1.getLevel() < biome2.getLevel()) {
 					return 1;
-				} else if (biome1.getLevel() < biome2.getLevel()) {
+				} else if (biome1.getLevel() > biome2.getLevel()) {
 					return -1;
 				}
 

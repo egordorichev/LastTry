@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.world.biome;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
 public class Biome {
@@ -23,6 +25,15 @@ public class Biome {
 	 * Biome priority (bigger - higher)
 	 */
 	private byte level = 0;
+	/**
+	 * Biome required items
+	 */
+	private Holder[] required;
+
+	public static class Holder {
+		public String[] items;
+		public short count;
+	}
 
 	public Biome(String id) {
 		this.id = id;
@@ -39,6 +50,32 @@ public class Biome {
 		this.biomeVector = new Vector2(root.getShort("temperature", (short) 20),
 			root.getShort("humidity", (short) 30));
 		this.level = root.getByte("level", (byte) 0);
+
+		if (root.has("required")) {
+			JsonValue required = root.get("required");
+			this.required = new Holder[required.size];
+
+			for (int i = 0; i < this.required.length; i++) {
+				JsonValue holder = required.get(i);
+
+				this.required[i] = new Holder();
+
+				if (holder.has("id")) {
+					JsonValue ids = holder.get("id");
+					this.required[i].items = new String[ids.size];
+
+					for (int j = 0; j < ids.size; j++) {
+						this.required[i].items[j] = ids.getString(j);
+					}
+				} else {
+					this.required[i].items = new String[0];
+				}
+
+				this.required[i].count = holder.getShort("count", (short) 1);
+			}
+		} else {
+			this.required = new Holder[0];
+		}
 	}
 
 	/**
@@ -74,5 +111,12 @@ public class Biome {
 	 */
 	public byte getLevel() {
 		return this.level;
+	}
+
+	/**
+	 * @return Required items
+	 */
+	public Holder[] getRequired() {
+		return this.required;
 	}
 }
