@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -41,6 +40,7 @@ public class DroppedItem extends Entity {
 		this.graphics.update(dt);
 		if (this.holder.getItem().isUnobtainable()) {
 			Globals.entityManager.markForRemoval(this);
+			return;
 		}
 		this.updateAttraction(dt);
 		this.checkPlayerAbsorbtion(dt);
