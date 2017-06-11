@@ -127,8 +127,8 @@ public class CreatureInfo {
 			this.type = root.get("type").asByte();
 		}
 
-		if (root.has("kbResist")) {
-			this.kbResist = root.get("kbResist").asFloatArray();
+		if (root.has("kb_resist")) {
+			this.kbResist = root.get("kb_resist").asFloatArray();
 		}
 
 		if (root.has("hitbox")) {

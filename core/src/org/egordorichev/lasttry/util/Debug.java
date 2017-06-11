@@ -23,13 +23,13 @@ public class Debug {
 			return;
 		}
 
-		Assets.f18.draw(Graphics.batch, Gdx.graphics.getFramesPerSecond() + " FPS", 10, 20);
-		Assets.f18.draw(Graphics.batch, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 10, 50);
+		Assets.f18.draw(Graphics.batch, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
+		Assets.f18.draw(Graphics.batch, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
 		Assets.f18.draw(Graphics.batch, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
-		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 10, 70);
-		Assets.f18.draw(Graphics.batch, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 10, 90);
-		Assets.f18.draw(Graphics.batch, "Current Biome: " + Globals.environment.currentBiome.getID(), 10, 110);
-		Assets.f18.draw(Graphics.batch, "Current world time: " + Globals.environment.time.toString(true), 10, 130);
+		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
+		Assets.f18.draw(Graphics.batch, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
+		Assets.f18.draw(Graphics.batch, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
+		Assets.f18.draw(Graphics.batch, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
 
 		if (messagesToBePrinted.keySet().size() == 0) {
 			return;

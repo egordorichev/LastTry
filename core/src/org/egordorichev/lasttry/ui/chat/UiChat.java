@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.ui.chat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
@@ -25,6 +26,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public static final int HEIGHT = 300;
 	private boolean open;
 	private UiTextInput input;
+	private TextureRegion back;
 	/**
 	 * Lines to display in chat.
 	 */
@@ -38,6 +40,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
 		this.initCommands();
+		this.back = Assets.getTexture("ChatBack");
 	}
 
 	private void initCommands() {
@@ -174,7 +177,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 
 	@Override
 	public void addComponents() {
-		this.input = new UiTextInput(new Rectangle(10, 20, 400, 20), Origin.BOTTOM_LEFT) {
+		this.input = new UiTextInput(new Rectangle(15, 25, 400, 20), Origin.BOTTOM_LEFT) {
 			@Override
 			public void onEnter() {
 				String text = getText();
@@ -202,8 +205,8 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 
 	@Override
 	public void render() {
-
 		if (this.open) {
+			Graphics.batch.draw(this.back, 5, 5);
 			super.render();
 		}
 
@@ -214,7 +217,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				this.lines.remove(i);
 			}
 
-			Assets.f18.draw(Graphics.batch, line.text, 10, 40 + i * 20);
+			Assets.f18.draw(Graphics.batch, line.text, 10, 55 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
