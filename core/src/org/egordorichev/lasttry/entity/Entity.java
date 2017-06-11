@@ -42,11 +42,13 @@ public class Entity {
 
 	/**
 	 * Updates entity
-	 * @param dt Time from last update
+	 * 
+	 * @param dt
+	 *            Time from last update
 	 */
 	public void update(int dt) {
 		// No time had passed
-		if (dt == 0) { 
+		if (dt == 0) {
 			return;
 		}
 
@@ -55,6 +57,7 @@ public class Entity {
 
 	/**
 	 * Spawn the entity in the world at the given X and Y coordinates in pixels.
+	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -85,7 +88,9 @@ public class Entity {
 
 	/**
 	 * Sets entity z-index
-	 * @param zIndex New z-index
+	 * 
+	 * @param zIndex
+	 *            New z-index
 	 */
 	public void setZIndex(int zIndex) {
 		this.zIndex = zIndex;

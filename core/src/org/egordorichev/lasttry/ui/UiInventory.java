@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -214,9 +215,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 
 		if (item == null) {
 			Util.drawWithShadow(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
-		} else {
-			item.update(owner, (int) Gdx.graphics.getDeltaTime() * 1000000);
-
+		} else  {
 			Modifier modifier = this.slots[this.activeSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {

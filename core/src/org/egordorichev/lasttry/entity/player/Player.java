@@ -40,8 +40,15 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
-		this.input.update(dt);
 
+		if (!this.isActive()) {
+			return;
+		}
+
+		this.input.update(dt);
+		if (this.getInventory().getActiveItem() != null && this.getInventory().getActiveItem().getItem() != null) {
+			this.getInventory().getActiveItem().getItem().update(this, dt);
+		}
 		if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
 			this.getInventory().getSelectedItem().getItem().update(this, dt);
 		}

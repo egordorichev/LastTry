@@ -74,6 +74,9 @@ public class Creature extends Entity {
 
 		this.stats.modifyHP(-damage);
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+		if (this.stats.getHP() <= 0){
+			this.die();
+		}
 	}
 
 	/** Renders the creature */
@@ -112,6 +115,10 @@ public class Creature extends Entity {
 	@Override
 	public void update(int dt) {
 		super.update(dt);
+
+		if (!this.isActive()) {
+			return;
+		}
 
 		this.graphics.update(dt);
 		this.stats.update(dt);
