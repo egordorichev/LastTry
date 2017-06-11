@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ChunkIO {
-	public static final byte VERSION = 3;
+	public static final byte VERSION = 4;
 
 	public static Chunk load(int x, int y) {
 		String fileName = getSaveName(x, y);
@@ -145,6 +145,6 @@ public class ChunkIO {
 	}
 
 	private static String getSaveName(int x, int y) {
-		return "data/worlds/" + Globals.getWorld().getName() + "/" + x + ":" + y + ".cnk";
+		return "data/worlds/" + Globals.getWorld().getName() + "/" + x + "." + y + ".cnk";
 	}
 }
