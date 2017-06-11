@@ -17,7 +17,7 @@ public class Tile extends Item {
 			return false;
 		}
 
-		return true;// this.id.equals(other.id);
+		return true;
 	}
 
 	/**
@@ -31,10 +31,13 @@ public class Tile extends Item {
 		if (itemID == null) {
 			return false;
 		}
+
 		Item i1 = Item.fromID(itemID);
+
 		if (i1 == null) {
 			return false;
 		}
+
 		return canConnect(i1);
 	}
 }

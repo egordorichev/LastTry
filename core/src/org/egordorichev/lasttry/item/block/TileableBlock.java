@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.item.block;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
@@ -44,5 +45,10 @@ public class TileableBlock extends Block {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 		Graphics.batch.setColor(1f,1f,1f,1f);
+	}
+
+	@Override
+	protected boolean canConnect(Item other) {
+		return other == this;
 	}
 }
