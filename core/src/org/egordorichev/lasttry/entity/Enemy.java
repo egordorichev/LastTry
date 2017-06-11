@@ -21,6 +21,6 @@ public class Enemy extends CreatureWithAI {
 
 	/** Called on player collision */
 	protected void onPlayerCollision(Player player) {
-		// TODO: hit the player
+		player.hit(this.stats.getDamage());
 	}
 }

@@ -117,7 +117,7 @@ public class Chunk {
 			this.setBlockInside(null, x, y);
 
 			if (block != null) {
-				block.die(x + this.getX(), y + this.getY());
+				block.die((short) (x + this.getX()), (short) (y + this.getY()));
 			}
 		} else {
 			this.data.blocksHealth[x + y * SIZE] = hp;

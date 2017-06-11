@@ -55,7 +55,7 @@ public class WorldBlocksComponent extends WorldComponent {
 		}
 
 		chunk.setBlock(id, x, y);
-		this.updateNeighbors(x, y);
+		this.updateNeighbors((short) x, (short) y);
 	}
 
 	public byte getHP(int x, int y) {
@@ -78,7 +78,7 @@ public class WorldBlocksComponent extends WorldComponent {
 		chunk.setBlockHP(hp, x, y, die);
 
 		if (die) {
-			this.updateNeighbors(x, y);
+			this.updateNeighbors((short) x, (short) y);
 		}
 	}
 
@@ -101,9 +101,9 @@ public class WorldBlocksComponent extends WorldComponent {
 		return chunk;
 	}
 
-	private void updateNeighbors(int x, int y) {
-		for (int by = y - 1; by < y + 2; by++) {
-			for (int bx = x - 1; bx < x + 2; bx++) {
+	private void updateNeighbors(short x, short y) {
+		for (short by = (short) (y - 1); by < y + 2; by++) {
+			for (short bx = (short) (x - 1); bx < x + 2; bx++) {
 				Block block = this.get(bx, by);
 
 				if (block != null) {

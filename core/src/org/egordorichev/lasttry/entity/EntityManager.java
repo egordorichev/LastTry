@@ -85,6 +85,10 @@ public class EntityManager {
 			if (!entity.isActive()) {
 				this.clearList.add(entity);
 			}
+
+			if (entity instanceof Enemy && entity.physics.getHitbox().intersects(Globals.getPlayer().physics.getHitbox())) {
+				((Enemy) entity).onPlayerCollision(Globals.getPlayer());
+			}
 		}
 	}
 

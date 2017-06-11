@@ -42,13 +42,8 @@ public class MultiTileBlock extends Block {
 	}
 
 	@Override
-	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
-
-		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
-
-		if (length > Globals.getPlayer().getItemUseRadius()) {
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
 			return false;
 		}
 
@@ -66,7 +61,7 @@ public class MultiTileBlock extends Block {
 	}
 
 	@Override
-	public void place(int x, int y) {
+	public boolean use(short x, short y) {
 		for (int j = y; j < y + this.height; j++) {
 			for (int i = x; i < x + this.width; i++) {
 				Globals.getWorld().blocks.set(this.id, i, j);
@@ -79,10 +74,12 @@ public class MultiTileBlock extends Block {
 				Globals.getWorld().blocks.setHP(hp, i, j);
 			}
 		}
+
+		return true;
 	}
 
 	@Override
-	public void die(int x, int y) { // TODO: kill other
+	public void die(short x, short y) { // TODO: kill other
 		Globals.getWorld().blocks.set(null, x, y);
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 	}

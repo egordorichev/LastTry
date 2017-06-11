@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.Textures;
@@ -15,6 +17,7 @@ import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.language.Language;
 
@@ -183,13 +186,18 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 			if (holder != null) {
 				Item item = holder.getItem();
 
-				if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())
-						&& item.use()) {
-					int count = holder.getCount();
-					if (count == 1) {
-						slots[activeSlot].setItemHolder(new ItemHolder(null, 0));
-					} else {
-						holder.setCount(count - 1);
+				if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())) {
+					short x = (short) (LastTry.getMouseXInWorld() / Block.SIZE);
+					short y = (short) (LastTry.getMouseYInWorld() / Block.SIZE);
+
+					if (item.canBeUsed(x, y) && item.use(x, y)) {
+						int count = holder.getCount();
+
+						if (count == 1) {
+							slots[activeSlot].setItemHolder(new ItemHolder(null, 0));
+						} else {
+							holder.setCount(count - 1);
+						}
 					}
 				}
 			}

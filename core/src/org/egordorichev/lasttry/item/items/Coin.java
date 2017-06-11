@@ -21,7 +21,7 @@ public class Coin extends Item {
 	}
 
 	@Override
-	public boolean canBeUsed() {
+	public boolean canBeUsed(short x, short y) {
 		return false;
 	}
 

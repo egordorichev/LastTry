@@ -9,13 +9,14 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Tile;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
-public class Wall extends Item {
+public class Wall extends Tile {
 	/**
 	 * Wall tiles (not icons!)
 	 */
@@ -70,10 +71,10 @@ public class Wall extends Item {
 	 */
 
 	public byte calculateBinary(int x, int y) {
-		boolean t = canConnect(Globals.getWorld().walls.getID(x, y + 1));
-		boolean r = canConnect(Globals.getWorld().walls.getID(x + 1, y));
-		boolean b = canConnect(Globals.getWorld().walls.getID(x, y - 1));
-		boolean l = canConnect(Globals.getWorld().walls.getID(x - 1, y));
+		boolean t = this.canConnect(Globals.getWorld().walls.getID(x, y + 1));
+		boolean r = this.canConnect(Globals.getWorld().walls.getID(x + 1, y));
+		boolean b = this.canConnect(Globals.getWorld().walls.getID(x, y - 1));
+		boolean l = this.canConnect(Globals.getWorld().walls.getID(x - 1, y));
 
 		return ByteHelper.create(t, r, b, l, false, false, false, false);
 	}
@@ -108,13 +109,9 @@ public class Wall extends Item {
 	}
 
 	@Override
-	public boolean use() {
-		int x = LastTry.getMouseXInWorld() / Block.SIZE;
-		int y = LastTry.getMouseYInWorld() / Block.SIZE;
-
-		if (this.canBePlaced(x, y) && Globals.getWorld().walls.getID(x, y) == null) {
+	public boolean use(short x, short y) {
+		if (Globals.getWorld().walls.getID(x, y) == null) {
 			this.place(x, y);
-
 			return true;
 		}
 
@@ -150,13 +147,9 @@ public class Wall extends Item {
 	 * @param y Wall Y
 	 * @return If wall can be used
 	 */
-	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
-
-		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
-
-		if (length > Globals.getPlayer().getItemUseRadius()) {
+	@Override
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
 			return false;
 		}
 

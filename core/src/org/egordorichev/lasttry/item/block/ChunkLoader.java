@@ -13,17 +13,20 @@ public class ChunkLoader extends Block {
 	}
 
 	@Override
-	public void die(int x, int y) {
+	public void die(short x, short y) {
 		super.die(x, y);
 		Chunk chunk = Globals.getWorld().chunks.getFor(x, y);
 		chunk.setUnloadable(false);
 	}
 
 	@Override
-	public void place(int x, int y) {
-		super.place(x, y);
+	public boolean use(short x, short y) {
+		super.use(x, y);
+
 		Chunk chunk = Globals.getWorld().chunks.getFor(x, y);
 		chunk.setUnloadable(true);
+
+		return true;
 	}
 
 	@Override

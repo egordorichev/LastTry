@@ -66,13 +66,12 @@ public class Tool extends Item {
 	}
 
 	@Override
-	public boolean use() {
+	public boolean use(short x, short y) {
 		if (!this.isReady()) {
 			return false;
 		}
 
 		this.useDelay = this.useDelayMax;
-
 		return this.onUse();
 	}
 

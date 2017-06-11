@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Tile;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
@@ -19,7 +20,7 @@ import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
-public class Block extends Item {
+public class Block extends Tile {
 	public static final int SIZE = 16;
 	public static final byte MAX_HP = 3;
 
@@ -118,7 +119,7 @@ public class Block extends Item {
 	 * @param ny
 	 *            Neighbor Y
 	 */
-	public void onNeighborChange(int x, int y, int nx, int ny) {
+	public void onNeighborChange(short x, short y, short nx, short ny) {
 
 	}
 
@@ -130,7 +131,7 @@ public class Block extends Item {
 	 * @param y
 	 *            Block Y
 	 */
-	public void die(int x, int y) {
+	public void die(short x, short y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
 		Globals.getWorld().onBlockBreak(x, y);
 	}
@@ -144,13 +145,12 @@ public class Block extends Item {
 	 *            Block Y
 	 * @return If this block can be placed at given position
 	 */
-	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
+			return false;
+		}
 
-		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
-
-		if (length > Globals.getPlayer().getItemUseRadius()) {
+		if (Globals.getWorld().blocks.getID(x, y) != null) {
 			return false;
 		}
 
@@ -170,18 +170,6 @@ public class Block extends Item {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Places block of self type at given position
-	 *
-	 * @param x
-	 *            New block X
-	 * @param y
-	 *            New block Y
-	 */
-	public void place(int x, int y) {
-		Globals.getWorld().blocks.set(this.id, x, y);
 	}
 
 	/**
@@ -218,7 +206,7 @@ public class Block extends Item {
 
 		float light  = 1f;
 
-		// Update light leven
+		// Update light levev
 		if (!LastTry.noLight){
 			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
 		}
@@ -243,24 +231,9 @@ public class Block extends Item {
 	}
 
 	@Override
-	public boolean use() {
-		int x = LastTry.getMouseXInWorld() / Block.SIZE;
-		int y = LastTry.getMouseYInWorld() / Block.SIZE;
-
-		if (this.canBePlaced(x, y) && Globals.getWorld().blocks.getID(x, y) == null) {
-			Rectangle rectangle = Globals.getPlayer().physics.getHitbox();
-
-			if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE, this.height * SIZE))) {
-
-				return false;
-			}
-
-			this.place(x, y);
-
-			return true;
-		}
-
-		return false;
+	public boolean use(short x, short y) {
+		Globals.getWorld().blocks.set(this.id, x, y);
+		return true;
 	}
 
 	/**

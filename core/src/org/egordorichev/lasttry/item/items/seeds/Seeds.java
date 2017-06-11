@@ -27,27 +27,18 @@ public class Seeds extends Item {
 	}
 
 	@Override
-	public boolean use() {
-		// Get world position to place block at
-		int x = LastTry.getMouseXInWorld() / Block.SIZE;
-		int y = LastTry.getMouseYInWorld() / Block.SIZE;
-		// TODO: Distance checks from cursor coordinates to player coordinates
+	public boolean use(short x, short y) {
+		Globals.getWorld().blocks.set(this.plant.getID(), x, y);
+		return true;
+	}
 
-		// Check if the plant can be placed.
-		if (this.plant.canBeGrownAt(x, y)) {
-			// Check if the plant intersects the player's hitbox
-			// TODO: Check other entities in the world
-			Rectangle rectangle = Globals.getPlayer().physics.getHitbox();
-
-			if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
-				return false;
-			}
-
-			Globals.getWorld().blocks.set(this.plant.getID(), x, y);
-			return true;
+	@Override
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
+			return false;
 		}
 
-		return false;
+		return this.plant.canBeGrownAt(x, y);
 	}
 
 	@Override

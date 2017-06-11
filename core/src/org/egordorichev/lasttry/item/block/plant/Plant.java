@@ -17,14 +17,14 @@ public class Plant extends Block {
 	}
 
 	@Override
-	public void onNeighborChange(int x, int y, int nx, int ny) {
+	public void onNeighborChange(short x, short y, short nx, short ny) {
 		if (ny == y - 1 && x == nx) {
 			this.die(x, y);
 		}
 	}
 
 	@Override
-	public void die(int x, int y) {
+	public void die(short x, short y) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 
 		if (BlockHelper.plant.isBlooming(hp)) {

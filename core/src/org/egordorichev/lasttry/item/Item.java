@@ -1,9 +1,11 @@
 package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Log;
 import java.lang.reflect.Constructor;
@@ -34,11 +36,9 @@ public class Item {
 	protected float useDelay;
 	/**
 	 * Maximum delay time. See {@link #useDelay} for the current delay
-	 * remaining. <br>
-	 * TODO: 50 IS A TEMPORARY VALUE. This value needs to be assigned somewhere
-	 * properly.
+	 * remaining.
 	 */
-	protected int useDelayMax = 50;
+	protected int useDelayMax = 100;
 	/**
 	 * If is set to true, item can be obtained only in the dev mode
 	 */
@@ -119,19 +119,25 @@ public class Item {
 
 	/**
 	 * Loads fields from root
-	 *
 	 * @param root
 	 */
 	protected void loadFields(JsonValue root) {
 		if (root.has("unobtainable")) {
 			this.unobtainable = root.getBoolean("unobtainable");
 		}
+
+		if (root.has("rarity")) {
+			this.rarity = Rarity.valueOf(root.getString("rarity").toUpperCase());
+		}
 	}
 
 	/**
+	 * @param x Use X
+	 * @param y Use Y
+	 *
 	 * @return Can the item be used (can depend on night / day and other)
 	 */
-	public boolean use() {
+	public boolean use(short x, short y) {
 		return false;
 	}
 
@@ -162,7 +168,6 @@ public class Item {
 
 	/**
 	 * Callback, called when the item is used
-	 *
 	 * @return If item needs to be removed from inventory
 	 */
 	protected boolean onUse() {
@@ -194,38 +199,6 @@ public class Item {
 	}
 
 	/**
-	 * Determines if the current texture can be connected to the texture of the
-	 * item indicated by the given item ID.
-	 * 
-	 * @param itemID
-	 * @return
-	 */
-	protected boolean canConnect(String itemID) {
-		if (itemID == null) {
-			return false;
-		}
-		Item i1 = Item.fromID(itemID);
-		if (i1 == null) {
-			return false;
-		}
-		return canConnect(i1);
-	}
-
-	/**
-	 * Checks if the current block has a texture that connects to the other
-	 * item.
-	 * 
-	 * @param other
-	 * @return
-	 */
-	protected boolean canConnect(Item other) {
-		if (other == null) {
-			return false;
-		}
-		return true;// this.id.equals(other.id);
-	}
-
-	/**
 	 * @return Item ID
 	 */
 	public String getID() {
@@ -254,9 +227,26 @@ public class Item {
 	}
 
 	/**
+	 * @param x Use X
+	 * @param y Use Y
 	 * @return If the item can be used
 	 */
-	public boolean canBeUsed() {
+	public boolean canBeUsed(short x, short y) {
+		if (!this.hasRadius()) {
+			return true;
+		}
+
+		int dx = (int) Globals.getPlayer().physics.getCenterX() / Block.SIZE - x;
+		int dy = (int) Globals.getPlayer().physics.getCenterY() / Block.SIZE - y;
+
+		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
+		return (length <= Globals.getPlayer().getItemUseRadius());
+	}
+
+	/**
+	 * @return Item has use radius
+	 */
+	public boolean hasRadius() {
 		return true;
 	}
 

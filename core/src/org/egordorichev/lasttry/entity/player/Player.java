@@ -10,51 +10,56 @@ import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
-    public static final int INVENTORY_SIZE = 88;
-    private UiInventory inventory;
-    private PlayerInputComponent input;
-    private String name;
+	public static final int INVENTORY_SIZE = 88;
+	private UiInventory inventory;
+	private PlayerInputComponent input;
+	private String name;
 
-    public Player(String name) {
-        super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
+	public Player(String name) {
+		super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
 
-        this.input = new PlayerInputComponent(this);
-        this.stats.set(100, 20, 0, 0);
-        this.name = name;
-        this.setInventory(new UiInventory(INVENTORY_SIZE, this));
+		this.input = new PlayerInputComponent(this);
+		this.stats.set(100, 20, 0, 0);
+		this.name = name;
+		this.setInventory(new UiInventory(INVENTORY_SIZE, this));
 
-        LastTry.ui.add(this.getInventory());
+		LastTry.ui.add(this.getInventory());
 
-        this.setZIndex(Layers.player);
-    }
+		this.setZIndex(Layers.player);
+	}
 
-    @Override
-    public void update(int dt) {
-        super.update(dt);
-        this.input.update(dt);
-        
-        if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
-            this.getInventory().getSelectedItem().getItem().update(this, dt);
-        }
-    }
+	@Override
+	public void die() {
+		super.die();
+		// TODO: dead screen
+	}
 
-    public int getItemUseRadius() {
-        // TODO: modify
-        return 10;
-    }
+	@Override
+	public void update(int dt) {
+		super.update(dt);
+		this.input.update(dt);
 
-    public String getName() {
-        return this.name;
-    }
+		if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
+			this.getInventory().getSelectedItem().getItem().update(this, dt);
+		}
+	}
 
-    @Override
-    public UiInventory getInventory() {
-        return inventory;
-    }
+	public int getItemUseRadius() {
+		// TODO: modify
+		return 10;
+	}
 
-    @Override
-    public void setInventory(Inventory<UiItemSlot> inventory) {
-        this.inventory = (UiInventory) inventory;
-        
-    }
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
+	public UiInventory getInventory() {
+		return inventory;
+	}
+
+	@Override
+	public void setInventory(Inventory<UiItemSlot> inventory) {
+		this.inventory = (UiInventory) inventory;
+	}
 }
