@@ -23,7 +23,7 @@ import java.util.Locale;
 /** Main game class */
 public class LastTry extends Game {
 	/** LastTry version */
-	public static final Version version = new Version(0.0, 17, "alpha");
+	public static final Version version = new Version(0.0, 18, "alpha");
 
 	/**
 	 * Random instance. This is not to be used in repeatable systems such as
