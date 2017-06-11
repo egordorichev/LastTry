@@ -29,7 +29,7 @@ public class InputManager {
     }
 
     public static boolean isKeyDown(int key) {
-    	if (Globals.chat.isOpen()) {
+    	if (key != Keys.DEBUG_MODE && Globals.chat.isOpen()) {
     		return false;
 	    }
 
@@ -45,7 +45,7 @@ public class InputManager {
     }
 
     public static boolean isKeyJustDown(int key) {
-	    if (Globals.chat.isOpen()) {
+	    if (key != Keys.DEBUG_MODE && Globals.chat.isOpen()) {
 		    return false;
 	    }
 

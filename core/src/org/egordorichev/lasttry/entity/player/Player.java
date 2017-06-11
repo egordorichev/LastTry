@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.player;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
@@ -31,6 +32,8 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void die() {
 		super.die();
+
+		Globals.chat.print(this.name + " is dead");
 		// TODO: dead screen
 	}
 

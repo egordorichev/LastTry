@@ -63,13 +63,13 @@ public class GamePlayState implements State {
 			Globals.entityManager.update(dt);
 			Globals.getWorld().updateLight(dt);
 
-			if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
-				LastTry.debug.toggle();
-			}
-
 			if (InputManager.isKeyJustDown(Keys.OPEN_CHAT)) {
 			    Globals.chat.toggle();
 			}
+		}
+
+		if (InputManager.isKeyJustDown(Keys.DEBUG_MODE)) {
+			LastTry.debug.toggle();
 		}
 
 		Globals.environment.render();
