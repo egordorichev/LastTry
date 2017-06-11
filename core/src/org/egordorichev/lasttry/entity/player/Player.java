@@ -9,9 +9,12 @@ import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
+import org.egordorichev.lasttry.util.Log;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	public static final int INVENTORY_SIZE = 88;
+	public static final int RESPAWN_DELAY = 100;
+	private int respawnTime = RESPAWN_DELAY;
 	private UiInventory inventory;
 	private PlayerInputComponent input;
 	private String name;
@@ -30,18 +33,11 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	}
 
 	@Override
-	public void die() {
-		super.die();
-
-		Globals.chat.print(this.name + " is dead");
-		// TODO: dead screen
-	}
-
-	@Override
 	public void update(int dt) {
 		super.update(dt);
 
 		if (!this.isActive()) {
+			updateRespawn();
 			return;
 		}
 
@@ -52,6 +48,46 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
 			this.getInventory().getSelectedItem().getItem().update(this, dt);
 		}
+	}
+
+	/**
+	 * Update respawn logic.
+	 */
+	private void updateRespawn() {
+		if (respawnTime > 0) {
+			respawnTime--;
+		} else if (respawnTime == 0) {
+			// Reset respawn time for next death
+			respawnTime = RESPAWN_DELAY;
+			// Notify the player has been respawned
+			Globals.chat.print(this.name + " respawned");
+			// Reset position and health
+			this.physics.setPosition(Globals.getWorld().spawnX, Globals.getWorld().spawnY);
+			this.stats.modifyHP(this.stats.getMaxHP());
+			this.active = true;
+		}
+	}
+
+	@Override
+	public void onDeath() {
+		super.onDeath();
+
+		Globals.chat.print(this.name + " is dead");
+		// TODO: dead screen
+	}
+	
+	@Override
+	public void render(){
+		if (this.isActive()) {
+			super.render();
+		}
+	}
+
+	@Override
+	public void die() {
+		// Overridden so the player is not marked for removal.
+		this.active = false;
+		this.onDeath();
 	}
 
 	public int getItemUseRadius() {

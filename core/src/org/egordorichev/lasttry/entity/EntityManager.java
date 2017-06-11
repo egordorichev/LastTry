@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -82,7 +81,7 @@ public class EntityManager {
 			Entity entity = this.entities.get(i);
 			entity.update(dt);
 
-			if (!entity.isActive()) {
+			if (!entity.isActive() && entity != Globals.getPlayer()) {
 				this.clearList.add(entity);
 			}
 
