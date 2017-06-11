@@ -56,8 +56,11 @@ public class EntityManager {
 				if (!displayedStats && entity instanceof Creature && entity.physics.getHitbox().intersects(mouse)) {
 					Creature creature = ((Creature) entity);
 
-					Assets.f18.draw(Graphics.batch, creature.getName(), entity.physics.getX(), entity.physics.getY() - 10);
-					Assets.f18.draw(Graphics.batch, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), entity.physics.getX(), entity.physics.getY() - 30);
+					float x = Gdx.input.getX() + camera.x + 36;
+					float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y;
+
+					Assets.f18.draw(Graphics.batch, creature.getName(), x, y);
+					Assets.f18.draw(Graphics.batch, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), x, y - 20);
 					displayedStats = true;
 				}
 			}
