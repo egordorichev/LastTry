@@ -175,7 +175,7 @@ public class CreatureInfo {
 			}
 		}
 
-		this.image = Assets.getTexture(this.name);
+		this.image = Assets.getTexture(this.name.replace(':', '_'));
 
 		if (root.has("animation")) {
 			JsonValue animation = root.get("animation");

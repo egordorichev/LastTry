@@ -55,7 +55,7 @@ public class Block extends Item {
 		this.tiles = this.texture.split(SIZE, SIZE);
 
 		if (loadIcon) {
-			this.texture = Assets.getTexture(this.id + "_icon");
+			this.texture = Assets.getTexture(this.id.replace(':', '_') + "_icon");
 		}
 	}
 

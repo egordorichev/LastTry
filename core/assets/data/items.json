@@ -65,8 +65,8 @@
 		"type" : "org.egordorichev.lasttry.item.block.Block"
 	},
 
-	"lt:work_bench" : {
-		"type" : "org.egordorichev.lasttry.item.block.station.WorkBench",
+	"lt:workbench" : {
+		"type" : "org.egordorichev.lasttry.item.block.station.Workbench",
 		"size" : [ 2, 1 ]
 	},
 

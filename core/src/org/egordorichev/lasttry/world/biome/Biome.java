@@ -37,7 +37,7 @@ public class Biome {
 
 	public Biome(String id) {
 		this.id = id;
-		this.animation = new BiomeAnimationComponent(this, Assets.getTexture(this.id));
+		this.animation = new BiomeAnimationComponent(this, Assets.getTexture(this.id.replace(':', '_')));
 	}
 
 	/**

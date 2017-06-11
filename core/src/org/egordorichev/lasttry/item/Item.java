@@ -53,7 +53,7 @@ public class Item {
 
 		this.id = id;
 		this.name = Language.text.get(this.id);
-		this.texture = Assets.getTexture(this.id);
+		this.texture = Assets.getTexture(this.id.replace(':', '_'));
 	}
 
 	/**

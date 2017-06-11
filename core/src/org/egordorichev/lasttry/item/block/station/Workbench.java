@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.item.block.station;
 
-public class WorkBench extends WorkingStation {
-	public WorkBench(String id) {
+public class Workbench extends WorkingStation {
+	public Workbench(String id) {
 		super(id, false);
 
 		// TODO: solid top
