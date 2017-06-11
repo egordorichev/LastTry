@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.util;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 import java.awt.Rectangle;
 import java.io.File;
@@ -8,118 +10,130 @@ import java.util.Locale;
 import java.util.concurrent.*;
 
 public class Util {
-    public static float map(float value, float inMin, float inMax, float outMin, float outMax) {
-        return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-    }
+	public static float map(float value, float inMin, float inMax, float outMin, float outMax) {
+		return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+	}
 
-    public static int random(int min, int max) {
-        return LastTry.random.nextInt((max - min) + 1) + min;
-    }
+	public static int random(int min, int max) {
+		return LastTry.random.nextInt((max - min) + 1) + min;
+	}
 
-    /**
-     * Runs the callable in a thread on repeat. The exectuon is delayed each
-     * time by the given time in seconds.
-     * 
-     * @param callable
-     *            thread to run
-     * @param time
-     *            delay in seconds, before next run
-     */
-    public static void runDelayedThreadSeconds(Callable callable, int time) {
-        ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+	/**
+	 * Runs the callable in a thread on repeat. The exectuon is delayed each
+	 * time by the given time in seconds.
+	 *
+	 * @param callable
+	 *            thread to run
+	 * @param time
+	 *            delay in seconds, before next run
+	 */
+	public static void runDelayedThreadSeconds(Callable callable, int time) {
+		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
-        scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                callable.call();
-            }
-        }, 0, time, TimeUnit.SECONDS);
-    }
+		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			}
+		}, 0, time, TimeUnit.SECONDS);
+	}
 
-    /**
-     * Runs the callable in a thread on repeat. The exectuon is delayed each
-     * time by the given time in milliseconds.
-     * 
-     * @param callable
-     *            thread to run
-     * @param time
-     *            delay in milliseconds, before next run
-     */
-    public static void runDelayedThreadMillis(Callable callable, int time) {
-        ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+	/**
+	 * Runs the callable in a thread on repeat. The exectuon is delayed each
+	 * time by the given time in milliseconds.
+	 *
+	 * @param callable
+	 *            thread to run
+	 * @param time
+	 *            delay in milliseconds, before next run
+	 */
+	public static void runDelayedThreadMillis(Callable callable, int time) {
+		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
-        scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                callable.call();
-            }
-        }, 0, time, TimeUnit.MILLISECONDS);
-    }
+		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			}
+		}, 0, time, TimeUnit.MILLISECONDS);
+	}
 
-    public static void oneTimeRunInThread(Callable callable) {
+	public static void oneTimeRunInThread(Callable callable) {
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-                callable.call();
-            };
-        });
-    }
+		executorService.submit(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			};
+		});
+	}
 
-    public static void futureOneTimeRunInThread(Callable callable, long delay, TimeUnit timeUnit) {
+	public static void futureOneTimeRunInThread(Callable callable, long delay, TimeUnit timeUnit) {
 
-        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-        ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(new Runnable() {
-            @Override
-            public void run() {
-                callable.call();
-            }
-        }, delay, timeUnit);
+		ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			}
+		}, delay, timeUnit);
 
-        // TODO: execute scheduledFuture
-    }
+		// TODO: execute scheduledFuture
+	}
 
-    public static boolean fileExists(String path) {
-        File file = new File(path);
+	public static boolean fileExists(String path) {
+		File file = new File(path);
 
-        if (!file.exists()) {
-            return false;
-        }
+		if (!file.exists()) {
+			return false;
+		}
 
-        if (file.length() == 0) {
-            return false;
-        }
+		if (file.length() == 0) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public static void delete(File file) {
-        if (file.exists()) {
-            if (file.isDirectory()) {
-                for (File child : file.listFiles()) {
-                    delete(child);
-                }
-            }
-            file.delete();
-        }
-    }
+	public static void delete(File file) {
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				for (File child : file.listFiles()) {
+					delete(child);
+				}
+			}
+			file.delete();
+		}
+	}
 
-    public static boolean isWindows() {
-        return System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win");
-    }
+	public static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win");
+	}
 
-    public static void expand(Rectangle rectangle, int expansion) {
-        rectangle.x -= expansion;
-        rectangle.y -= expansion;
-        rectangle.width += expansion * 2;
-        rectangle.height += expansion * 2;
-    }
+	public static void expand(Rectangle rectangle, int expansion) {
+		rectangle.x -= expansion;
+		rectangle.y -= expansion;
+		rectangle.width += expansion * 2;
+		rectangle.height += expansion * 2;
+	}
 
-    public static boolean inRange(float value, float min, float max) {
-        return value >= min && value <= max;
-    }
+	public static boolean inRange(float value, float min, float max) {
+		return value >= min && value <= max;
+	}
 
+	public static void printWithOutline(BitmapFont font, String text, int x, int y) {
+		font.setColor(0.4f, 0.4f, 0.4f, 1);
+
+		for (int j = -1; j < 2; j++) {
+			for (int i = -1; i < 2; i++) {
+				font.draw(Graphics.batch, text, x + i, y + j);
+			}
+		}
+
+		font.setColor(1, 1, 1, 1);
+		font.draw(Graphics.batch, text, x, y);
+	}
 }

@@ -20,6 +20,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.language.Language;
+import org.egordorichev.lasttry.util.Util;
 
 public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen, Inventory<UiItemSlot> {
 	/**
@@ -212,7 +213,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		Item item = this.slots[this.activeSlot].getItem();
 
 		if (item == null) {
-			Assets.f22.draw(Graphics.batch, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
+			Util.printWithOutline(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
 		} else {
 			item.update(owner, (int) Gdx.graphics.getDeltaTime() * 1000000);
 
