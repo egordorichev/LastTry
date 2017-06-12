@@ -232,15 +232,18 @@ public class PhysicsComponent extends EntityComponent {
                     // Hits ground
                     float offset = this.velocity.y > 0 ? Block.SIZE : -Block.SIZE;
                     float distToCollision = Globals.getWorld().distToVerticalCollision(boxO, this.velocity.y);
-                    if (distToCollision > -0.1f && distToCollision < 0.1f) {
+
+                    if (distToCollision < -0.1f || distToCollision > 0.1f) {
+	                    if (this.velocity.y != -0.4f) {
+		                    this.onGroundHit.call();
+	                    }
+                    }
+
+                    if (distToCollision != 0) {
                         // there is some space to move, so move
                         this.velocity.y = distToCollision - offset;
                     } else {
                         // Already colliding, stay on the ground.
-						if (this.velocity.y != -0.4f) {
-							this.onGroundHit.call();
-						}
-
 	                    this.velocity.y = 0;
                     }
                 } else {
