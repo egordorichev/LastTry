@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.language;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.core.Crash;
 
-import java.io.*;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class LocalizationUtil {
-	public static void localize(Class<?> clazz, Class<?> ... targetClazz){
+	public static void localize(Class<?> clazz, Class<?>... targetClazz) {
 		List<Field> localizableFields = new ArrayList<>();
 
-		for (int i = 0; i < clazz.getFields().length; i++){
+		for (int i = 0; i < clazz.getFields().length; i++) {
 			Field field = clazz.getFields()[i];
 
-			for (int j = 0; j < targetClazz.length; j++){
-				if(Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()) && field.getType() == targetClazz[j]){
+			for (int j = 0; j < targetClazz.length; j++) {
+				if (Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()) && field.getType() == targetClazz[j]) {
 					localizableFields.add(field);
 					break;
 				}
@@ -37,10 +37,10 @@ public final class LocalizationUtil {
 				.append(".java")
 				.append("\n");
 
-		for (int i = 0; i < localizableFields.size(); i++){
+		for (int i = 0; i < localizableFields.size(); i++) {
 			Field field = localizableFields.get(i);
 
-			text.append("\t").append(field.getName()).append(" = ").append(capitalize(field.getName()).replaceAll("(\\p{Ll})(\\p{Lu})","$1 $2")).append("\n");
+			text.append("\t").append(field.getName()).append(" = ").append(capitalize(field.getName()).replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2")).append("\n");
 		}
 
 		try {
@@ -50,7 +50,7 @@ public final class LocalizationUtil {
 		}
 	}
 
-	private static String capitalize(String string){
+	private static String capitalize(String string) {
 		return Character.toUpperCase(string.charAt(0)) + string.substring(1);
 	}
 }

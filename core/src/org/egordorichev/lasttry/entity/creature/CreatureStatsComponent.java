@@ -1,6 +1,4 @@
-package org.egordorichev.lasttry.entity.components;
-
-import org.egordorichev.lasttry.entity.Creature;
+package org.egordorichev.lasttry.entity.creature;
 
 public class CreatureStatsComponent extends CreatureComponent {
 	private int hp;

@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Debug {
 	private boolean enabled;
@@ -26,7 +26,7 @@ public class Debug {
 		Util.drawWithShadow(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
 		Util.drawWithShadow(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
 		Util.drawWithShadow(Assets.f18, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
-		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
+				+ ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
 		Util.drawWithShadow(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
 		Util.drawWithShadow(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
 		Util.drawWithShadow(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
@@ -46,7 +46,7 @@ public class Debug {
 		int gameTicksCounter = currentMessagePair.getValue2();
 
 		// If game ticks counter equals 0, means no more ticks should be allocated to rendering the message
-		if(gameTicksCounter == 0){
+		if (gameTicksCounter == 0) {
 			messagesToBePrinted.remove(currentMessageKey);
 			return;
 		}
@@ -91,7 +91,7 @@ public class Debug {
 	public void print(String message) {
 
 		//If tab debug counter is false, we do not add a print message as then the debug tab will only show old messages
-		if(enabled==false){
+		if (enabled == false) {
 			return;
 		}
 

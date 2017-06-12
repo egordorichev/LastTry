@@ -1,12 +1,23 @@
 package org.egordorichev.lasttry.effect;
 
-import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.creature.Creature;
 
 public class EffectData {
+	/**
+	 * Effect, witch is being handled
+	 */
 	private Effect effect;
-	private int currentTime;
-	private int totalTime;
+	/**
+	 * Time, left for the effect
+	 */
+	private int time;
+	/**
+	 * Creature, who has the effect
+	 */
 	private Creature creature;
+	/**
+	 * Effect has ended
+	 */
 	private boolean done;
 
 	public EffectData(Creature creature, Effect effect, int time) {
@@ -16,19 +27,31 @@ public class EffectData {
 		this.effect.apply(this.creature);
 	}
 
+	/**
+	 * Renders effect icon
+	 *
+	 * @param x Render X
+	 * @param y Render Y
+	 */
 	public void render(int x, int y) {
 		this.effect.render(x, y);
 	}
 
+	/**
+	 * Updates effect
+	 *
+	 * @param dt Time, since last update
+	 * @return Effect is done
+	 */
 	public boolean update(int dt) {
 		if (this.done) {
 			return true;
 		}
 
-		this.currentTime--;
+		this.time--;
 		this.effect.update(this.creature, dt);
 
-		if (this.currentTime == 0) {
+		if (this.time == 0) {
 			this.done = true;
 			this.effect.remove(this.creature);
 			return true;
@@ -37,15 +60,25 @@ public class EffectData {
 		return false;
 	}
 
+	/**
+	 * Sets effect time
+	 *
+	 * @param time New time
+	 */
 	public void setTime(int time) {
-		this.currentTime = time * 60;
-		this.totalTime = time * 60;
+		this.time = time * 60;
 	}
 
+	/**
+	 * @return The effect
+	 */
 	public Effect getEffect() {
 		return this.effect;
 	}
 
+	/**
+	 * @return Effect is done
+	 */
 	public boolean isDone() {
 		return this.done;
 	}

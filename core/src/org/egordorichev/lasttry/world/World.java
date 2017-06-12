@@ -1,14 +1,18 @@
 package org.egordorichev.lasttry.world;
 
-import java.util.Random;
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.*;
+import org.egordorichev.lasttry.util.Callable;
+import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.*;
-import com.badlogic.gdx.math.Vector2;
+
+import java.util.Random;
 
 public class World {
 	public static final int UPDATE_DELAY_SECONDS = 20; // Should be 20 by default

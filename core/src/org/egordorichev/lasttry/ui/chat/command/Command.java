@@ -67,21 +67,20 @@ public abstract class Command {
 	/**
 	 * Called when the command is run.
 	 *
-	 * @param args
-	 *            Arguments for the command's execution.
+	 * @param args Arguments for the command's execution.
 	 */
 	public abstract void onRun(String[] args);
 
 	/**
 	 * Called when the {@link #onRun(String[]) execution} encounters an error.
 	 *
-	 * @param e
-	 *            Exception thrown.
+	 * @param e Exception thrown.
 	 */
 	public void onFail(Exception e) {
 		if (e instanceof NumberFormatException) {
 			Log.error("Failed to parse numeric input");
-		} if (e instanceof IndexOutOfBoundsException) {
+		}
+		if (e instanceof IndexOutOfBoundsException) {
 			Log.error("Failed IOOBE");
 			e.printStackTrace();
 		} else {
@@ -93,8 +92,7 @@ public abstract class Command {
 	 * Generates a string warning that the command entered was not given enough
 	 * arguments.
 	 *
-	 * @param argFmt
-	 *            The proper argument format.
+	 * @param argFmt The proper argument format.
 	 * @return Error message.
 	 */
 	protected String lackArgsErr(String argFmt) {

@@ -1,16 +1,11 @@
-package org.egordorichev.lasttry.entity.ai.ais;
+package org.egordorichev.lasttry.ai.ais;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.ai.AI;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
-import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.ai.AIID;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class ZombieAI extends AI {
-	public ZombieAI() {
-		super(AIID.zombie);
-	}
-
 	@Override
 	public void init(CreatureWithAI creature) {
 		creature.ai.setMax(3600);

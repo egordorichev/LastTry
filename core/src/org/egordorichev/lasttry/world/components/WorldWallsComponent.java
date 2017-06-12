@@ -30,7 +30,7 @@ public class WorldWallsComponent extends WorldComponent {
 		Chunk chunk = this.getChunk(x, y);
 
 		if (chunk == null) {
-			return ;
+			return;
 		}
 
 		chunk.setWall(id, x, y);

@@ -1,8 +1,8 @@
-package org.egordorichev.lasttry.entity.components;
+package org.egordorichev.lasttry.entity.creature;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.graphics.Animation;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
@@ -28,7 +28,7 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 	@Override
 	public void render() {
 		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY(),
-			this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
+				this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
 	}
 
 	@Override

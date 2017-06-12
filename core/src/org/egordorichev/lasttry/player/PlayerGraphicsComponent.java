@@ -3,12 +3,13 @@ package org.egordorichev.lasttry.player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.entity.components.*;
-import org.egordorichev.lasttry.player.skin.*;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.entity.creature.CreatureGraphicsComponent;
+import org.egordorichev.lasttry.entity.creature.CreatureStateComponent;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.inventory.ItemHolder;
-
-import java.util.Random;
+import org.egordorichev.lasttry.player.skin.PlayerRenderInfo;
+import org.egordorichev.lasttry.player.skin.PlayerRenderer;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private TextureRegion texture;
@@ -28,9 +29,9 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 		}
 
 		this.animations[this.creature.state.get().getID()].render(
-			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
-			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
-			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
+				this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
+				this.creature.physics.getSize().x, this.creature.physics.getSize().y,
+				(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
 	}
 
 	private void setupAnimations() {

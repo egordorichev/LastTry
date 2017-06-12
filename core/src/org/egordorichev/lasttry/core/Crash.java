@@ -11,12 +11,13 @@ import java.util.List;
 
 public class Crash {
 	private static String ERROR_MESSAGE = "LastTry had stopped running, because it encountered a problem.\n"
-		+ "\nPlease, copy and report the entire text to email egordorichev@gmail.com or\n"
-		+ "submit an issue https://github.com/egordorichev/LastTry/issues\n\n";
+			+ "\nPlease, copy and report the entire text to email egordorichev@gmail.com or\n"
+			+ "submit an issue https://github.com/egordorichev/LastTry/issues\n\n";
 
 	/**
 	 * Handles all exceptions
-	 * @param thread Thread, where exception happened
+	 *
+	 * @param thread    Thread, where exception happened
 	 * @param throwable Throwable
 	 */
 	public static void report(Thread thread, Throwable throwable) {
@@ -57,7 +58,7 @@ public class Crash {
 	 */
 	private static String getMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
-		
+
 		long i = runtime.maxMemory();
 		long j = runtime.totalMemory();
 		long k = runtime.freeMemory();
@@ -87,6 +88,6 @@ public class Crash {
 			}
 		}
 
-		return String.format("%d total; %s", new Object[] { Integer.valueOf(i), stringbuilder.toString() });
+		return String.format("%d total; %s", new Object[]{Integer.valueOf(i), stringbuilder.toString()});
 	}
 }

@@ -17,14 +17,14 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
-	private final TextureRegion hpTextureRegion;
 	private static boolean paused = false;
+	private final TextureRegion hpTextureRegion;
 
 	public GamePlayState() {
 		this.hpTextureRegion = Assets.getTexture(Textures.hp);
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int)Globals.getPlayer().getSpawnPoint().y * Block.SIZE);
+		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int) Globals.getPlayer().getSpawnPoint().y * Block.SIZE);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
@@ -47,7 +47,7 @@ public class GamePlayState implements State {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+				(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
 
 		if (!paused) {
 			// TODO: This is a shitty fix. Delta is usually 0.013f per tick (on average)
@@ -58,7 +58,7 @@ public class GamePlayState implements State {
 			Globals.getWorld().updateLight(dt);
 
 			if (InputManager.isKeyJustDown(Keys.OPEN_CHAT)) {
-			    Globals.chat.toggle();
+				Globals.chat.toggle();
 			}
 		}
 
@@ -69,7 +69,7 @@ public class GamePlayState implements State {
 		Globals.environment.render();
 
 		Camera.game.position.x = Math.max(Gdx.graphics.getWidth() / 2,
-			Globals.getPlayer().physics.getCenterX());
+				Globals.getPlayer().physics.getCenterX());
 
 		Camera.game.position.y = Math.max(0, Globals.getPlayer().physics.getCenterY());
 
@@ -78,7 +78,7 @@ public class GamePlayState implements State {
 
 		Globals.getWorld().render();
 		Globals.entityManager.render();
-        Globals.getWorld().renderLights();
+		Globals.getWorld().renderLights();
 
 		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
 

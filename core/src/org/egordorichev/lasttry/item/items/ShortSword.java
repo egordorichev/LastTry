@@ -24,10 +24,10 @@ public class ShortSword extends MeleeWeapon {
 
 		if (Globals.getPlayer().physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
-				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, 135f);
+					Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, 135f);
 		} else {
 			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
-				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, -45f);
+					Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, -45f);
 		}
 	}
 }

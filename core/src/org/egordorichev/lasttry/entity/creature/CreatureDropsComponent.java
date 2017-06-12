@@ -1,8 +1,7 @@
-package org.egordorichev.lasttry.entity.components;
+package org.egordorichev.lasttry.entity.creature;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 
@@ -10,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreatureDropsComponent extends CreatureComponent {
-	
+
+	private List<Drop> drops = new ArrayList<>();
+
 	public CreatureDropsComponent(Creature creature) {
 		super(creature);
 	}
 
-	private List<Drop> drops = new ArrayList<>();
-	
-	public void add(Drop drop){
+	public void add(Drop drop) {
 		this.drops.add(drop);
 	}
 

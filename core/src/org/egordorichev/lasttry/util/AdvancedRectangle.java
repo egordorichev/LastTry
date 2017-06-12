@@ -6,163 +6,166 @@ import org.egordorichev.lasttry.item.block.Block;
 /**
  * A rectangle object where the x, y co ordinates are placed in the center.
  * The adv
- *
+ * <p>
  * Created by Admin on 18/04/2017.
  */
 public class AdvancedRectangle {
 
-    //Enums identifying the individual points
-    private enum PointsIdent{
-        TOPLEFT, BOTTOMLEFT, TOPRIGHT, BOTTOMRIGHT;
-    }
+	//Center points for the rectangle
+	private int x, y;
+	//Amount of space we want between the points and all sides.
+	private int boundaryInBlocks;
+	//Sides for the rectangle
+	private Side top, bottom, left, right;
+	//Points
+	private xyPoint topRightPoint, bottomRightPoint, topLeftPoint, bottomLeftPoint;
 
-    //Enums identifying the sides
-    private enum SidesIdent{
-        TOP, BOTTOM, LEFT, RIGHT;
-    }
+	/**
+	 * Creates a rectangle with the points in the center and a space of 'boundaryInBlock' between character and all
+	 * sides.
+	 *
+	 * @param x                x point pixels
+	 * @param y                y point pixels
+	 * @param boundaryInBlocks boundary in blocks
+	 */
+	public AdvancedRectangle(float x, float y, int boundaryInBlocks) {
+		this.x = Math.round(x);
+		this.y = Math.round(y);
+		this.boundaryInBlocks = boundaryInBlocks;
+		generatePoints();
+	}
 
-    //Center points for the rectangle
-    private int x,y;
+	/**
+	 * Generates the appropriate points based on the block boundary.
+	 */
+	private void generatePoints() {
 
-    //Amount of space we want between the points and all sides.
-    private int boundaryInBlocks;
+		int boundaryInPixels = this.boundaryInBlocks * Block.SIZE;
 
-    //Sides for the rectangle
-    private Side top, bottom, left, right;
+		//TODO Swap these on y axis reflection
+		this.topRightPoint = new xyPoint(x + boundaryInPixels, y - boundaryInPixels, PointsIdent.TOPRIGHT);
 
-    //Points
-    private xyPoint topRightPoint, bottomRightPoint, topLeftPoint, bottomLeftPoint;
+		this.bottomRightPoint = new xyPoint(x + boundaryInPixels, y + boundaryInPixels, PointsIdent.BOTTOMRIGHT);
 
-    /**
-     * Creates a rectangle with the points in the center and a space of 'boundaryInBlock' between character and all
-     * sides.
-     *
-     * @param x x point pixels
-     * @param y y point pixels
-     * @param boundaryInBlocks boundary in blocks
-     */
-    public AdvancedRectangle(float x, float y, int boundaryInBlocks){
-        this.x = Math.round(x); this.y = Math.round(y); this.boundaryInBlocks = boundaryInBlocks;
-        generatePoints();
-    }
+		this.topLeftPoint = new xyPoint(x - boundaryInPixels, y - boundaryInPixels, PointsIdent.TOPLEFT);
 
-    /**
-     * Generates the appropriate points based on the block boundary.
-     */
-    private void generatePoints(){
+		this.bottomLeftPoint = new xyPoint(x - boundaryInPixels, y + boundaryInPixels, PointsIdent.BOTTOMLEFT);
 
-        int boundaryInPixels = this.boundaryInBlocks * Block.SIZE;
+		this.top = new Side(this.topRightPoint, this.topLeftPoint, SidesIdent.TOP);
+		this.bottom = new Side(this.bottomRightPoint, this.bottomLeftPoint, SidesIdent.BOTTOM);
+		this.left = new Side(this.topLeftPoint, this.bottomLeftPoint, SidesIdent.LEFT);
+		this.right = new Side(this.topRightPoint, this.bottomRightPoint, SidesIdent.RIGHT);
 
-        //TODO Swap these on y axis reflection
-        this.topRightPoint = new xyPoint(x+boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPRIGHT);
+	}
 
-        this.bottomRightPoint = new xyPoint(x+boundaryInPixels, y+boundaryInPixels,PointsIdent.BOTTOMRIGHT);
+	/**
+	 * Returns a boolean indicating whether all sides of the rectangle,  are in the boundary
+	 *
+	 * @return Boolean
+	 */
+	public boolean allSidesInBoundary() {
 
-        this.topLeftPoint = new xyPoint(x-boundaryInPixels, y-boundaryInPixels, PointsIdent.TOPLEFT);
+		Side[] sides = {this.top, this.bottom, this.left, this.right};
 
-        this.bottomLeftPoint = new xyPoint(x-boundaryInPixels, y+boundaryInPixels, PointsIdent.BOTTOMLEFT);
+		for (Side side : sides) {
+			if (!side.isSideInBoundary()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-        this.top = new Side(this.topRightPoint, this.topLeftPoint, SidesIdent.TOP);
-        this.bottom = new Side(this.bottomRightPoint, this.bottomLeftPoint, SidesIdent.BOTTOM);
-        this.left = new Side(this.topLeftPoint, this.bottomLeftPoint, SidesIdent.LEFT);
-        this.right = new Side(this.topRightPoint, this.bottomRightPoint, SidesIdent.RIGHT);
+	/**
+	 * Convert co ordinate point to a block co ordinate point.
+	 *
+	 * @param xPoint x point co ordinate
+	 * @return block point co oridnate in int
+	 */
+	private int convertToBlock(int xPoint) {
+		return xPoint / Block.SIZE;
+	}
 
-    }
+	/**
+	 * Checks if the x and y points received are within the rectangle area
+	 *
+	 * @param x pixel x co ordinate
+	 * @param y pixel y co ordinate
+	 * @return boolean indicating whether the pixel is within.
+	 */
+	public boolean isXyPointsWithinRectangle(float x, float y) {
+		// Converts pixel co ordinates to grid style co oridnates
+		int blockXPoint = convertToBlock(Math.round(x));
+		int blockYPoint = convertToBlock(Math.round(y));
 
-    /**
-     * Returns a boolean indicating whether all sides of the rectangle,  are in the boundary
-     *
-     * @return Boolean
-     */
-    public boolean allSidesInBoundary(){
+		// TODO Swap this on Y axis reflection
+		// If the y point is less than top y point & x point less than bottom x point
+		if (blockYPoint > topLeftPoint.getY() && blockXPoint < bottomRightPoint.getX()) {
+			return true;
+		}
 
-        Side[] sides = {this.top, this.bottom, this.left, this.right};
+		return false;
+	}
 
-        for(Side side: sides){
-            if(!side.isSideInBoundary()){
-                return false;
-            }
-        }
-        return true;
-    }
+	//Enums identifying the individual points
+	private enum PointsIdent {
+		TOPLEFT, BOTTOMLEFT, TOPRIGHT, BOTTOMRIGHT;
+	}
 
-    /**
-     * Stores x and y points, with an identifier describing the point.
-     */
-    private class xyPoint{
-        private GenericContainer.Triple<Integer, PointsIdent> specificXyPoint;
+	//Enums identifying the sides
+	private enum SidesIdent {
+		TOP, BOTTOM, LEFT, RIGHT;
+	}
 
-        xyPoint(int x, int y, PointsIdent pointIdentifier){
-            this.specificXyPoint = new GenericContainer.Triple<>();
-            this.specificXyPoint.set(x, y, pointIdentifier);
-        }
+	/**
+	 * Stores x and y points, with an identifier describing the point.
+	 */
+	private class xyPoint {
+		private GenericContainer.Triple<Integer, PointsIdent> specificXyPoint;
 
-        public int getX() {return this.specificXyPoint.getX();}
+		xyPoint(int x, int y, PointsIdent pointIdentifier) {
+			this.specificXyPoint = new GenericContainer.Triple<>();
+			this.specificXyPoint.set(x, y, pointIdentifier);
+		}
 
-        public int getY() {return this.specificXyPoint.getY();}
-    }
+		public int getX() {
+			return this.specificXyPoint.getX();
+		}
 
-    /**
-     *A side object, contains of two xy points and an identifier describing the side
-     */
-    private class Side{
-        private xyPoint first, second;
-        private SidesIdent side;
+		public int getY() {
+			return this.specificXyPoint.getY();
+		}
+	}
 
-        Side(xyPoint first, xyPoint second, SidesIdent side){
-            this.first = first;
-            this.second = second;
-            this.side = side;
-        }
+	/**
+	 * A side object, contains of two xy points and an identifier describing the side
+	 */
+	private class Side {
+		private xyPoint first, second;
+		private SidesIdent side;
 
-        /**
-         * Checks if both points describing the side are in boundary.
-         *
-         * @return boolean describing whether both points are in the boundary.
-         */
-        public boolean isSideInBoundary(){
+		Side(xyPoint first, xyPoint second, SidesIdent side) {
+			this.first = first;
+			this.second = second;
+			this.side = side;
+		}
 
-            xyPoint[] sidePoints = {first, second};
+		/**
+		 * Checks if both points describing the side are in boundary.
+		 *
+		 * @return boolean describing whether both points are in the boundary.
+		 */
+		public boolean isSideInBoundary() {
 
-            for(xyPoint sidePoint: sidePoints){
-                if(!Globals.getWorld().isInside(convertToBlock(sidePoint.getX()), convertToBlock(sidePoint.getY()))){
-                    return false;
-                }
-            }
+			xyPoint[] sidePoints = {first, second};
 
-            return true;
-        }
-    }
+			for (xyPoint sidePoint : sidePoints) {
+				if (!Globals.getWorld().isInside(convertToBlock(sidePoint.getX()), convertToBlock(sidePoint.getY()))) {
+					return false;
+				}
+			}
 
-    /**
-     * Convert co ordinate point to a block co ordinate point.
-     * @param xPoint x point co ordinate
-     * @return block point co oridnate in int
-     */
-    private int convertToBlock(int xPoint){
-        return xPoint/Block.SIZE;
-    }
-
-
-    /**
-     * Checks if the x and y points received are within the rectangle area
-     *
-     * @param x pixel x co ordinate
-     * @param y pixel y co ordinate
-     * @return boolean indicating whether the pixel is within.
-     */
-    public boolean isXyPointsWithinRectangle(float x, float y) {
-        // Converts pixel co ordinates to grid style co oridnates
-        int blockXPoint = convertToBlock(Math.round(x));
-        int blockYPoint = convertToBlock(Math.round(y));
-
-        // TODO Swap this on Y axis reflection
-        // If the y point is less than top y point & x point less than bottom x point
-        if(blockYPoint>topLeftPoint.getY()&&blockXPoint<bottomRightPoint.getX()) {
-            return true;
-        }
-
-        return false;
-    }
+			return true;
+		}
+	}
 
 }

@@ -13,20 +13,22 @@ public class EntityComponent implements Component {
 	public EntityComponent() {
 		// Unsafe!
 	}
+
 	@Override
 	public void render() {
 
 	}
+
 	@Override
 	public void update(int dt) {
 
 	}
 
-	public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-
 	public Entity getEntity() {
 		return this.entity;
+	}
+
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
 }

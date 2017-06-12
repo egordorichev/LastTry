@@ -31,7 +31,7 @@ public class SplashState implements State {
 
 		boolean loaded = Assets.update();
 
-		if (loaded && !LastTry.release ) {
+		if (loaded && !LastTry.release) {
 			this.alpha = 0f;
 			this.state = 2;
 

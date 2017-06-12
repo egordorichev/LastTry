@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.world.components;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.ByteHelper;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 

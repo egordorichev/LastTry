@@ -3,8 +3,6 @@ package org.egordorichev.lasttry.world.biome;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
 public class Biome {
@@ -30,11 +28,6 @@ public class Biome {
 	 */
 	private Holder[] required;
 
-	public static class Holder {
-		public String[] items;
-		public short count;
-	}
-
 	public Biome(String id) {
 		this.id = id;
 		this.animation = new BiomeAnimationComponent(this, Assets.getTexture(this.id.replace(':', '_')));
@@ -42,13 +35,14 @@ public class Biome {
 
 	/**
 	 * Loads fields from json
+	 *
 	 * @param root Biome node
 	 */
 	public void loadFields(JsonValue root) {
 		this.spawnInfo = new SpawnInfo(root.getShort("spawnRate", (short) 700),
-			root.getShort("maxSpawns", (short) 5));
+				root.getShort("maxSpawns", (short) 5));
 		this.biomeVector = new Vector2(root.getShort("temperature", (short) 20),
-			root.getShort("humidity", (short) 30));
+				root.getShort("humidity", (short) 30));
 		this.level = root.getByte("level", (byte) 0);
 
 		if (root.has("required")) {
@@ -118,5 +112,10 @@ public class Biome {
 	 */
 	public Holder[] getRequired() {
 		return this.required;
+	}
+
+	public static class Holder {
+		public String[] items;
+		public short count;
 	}
 }

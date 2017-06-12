@@ -2,15 +2,14 @@ package org.egordorichev.lasttry.world.generator;
 
 /**
  * Simplex noise in 2D, 3D and 4D
- * 
+ * <p>
  * <a href=http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf>
  * University - Department of Science and Technology</a>
- *
  */
 public class SimplexNoise {
-	private static int grad3[][] = { { 1, 1, 0 }, { -1, 1, 0 }, { 1, -1, 0 }, { -1, -1, 0 }, { 1, 0, 1 }, { -1, 0, 1 },
-			{ 1, 0, -1 }, { -1, 0, -1 }, { 0, 1, 1 }, { 0, -1, 1 }, { 0, 1, -1 }, { 0, -1, -1 } };
-	private static int p[] = { 151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30,
+	private static int grad3[][] = {{1, 1, 0}, {-1, 1, 0}, {1, -1, 0}, {-1, -1, 0}, {1, 0, 1}, {-1, 0, 1},
+			{1, 0, -1}, {-1, 0, -1}, {0, 1, 1}, {0, -1, 1}, {0, 1, -1}, {0, -1, -1}};
+	private static int p[] = {151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30,
 			69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117,
 			35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71, 134, 139,
 			48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245, 40,
@@ -21,7 +20,7 @@ public class SimplexNoise {
 			224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179, 162, 241,
 			81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121, 50,
 			45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156,
-			180 };
+			180};
 	// To remove the need for index wrapping, double the permutation table
 	// length
 	private static int perm[] = new int[512];
@@ -48,16 +47,15 @@ public class SimplexNoise {
 	 * 2D Simplex noise with parameters for iterations <i>(Octaves)</i>, noise
 	 * roughness, and coordinate scaling.
 	 *
-	 * @author matheus23 - <a href=
-	 *         "http://www.java-gaming.org/topics/generating-2d-perlin-noise/31637/msg/294195/view.html#msg294195">
-	 *         post link</a>
-	 *
 	 * @param x
 	 * @param y
 	 * @param octaves
 	 * @param roughness
 	 * @param scale
 	 * @return float in range [-1,1]
+	 * @author matheus23 - <a href=
+	 * "http://www.java-gaming.org/topics/generating-2d-perlin-noise/31637/msg/294195/view.html#msg294195">
+	 * post link</a>
 	 */
 	public static float octavedNoise(float x, float y, int octaves, float roughness, float scale) {
 		float noiseSum = 0;
@@ -97,7 +95,7 @@ public class SimplexNoise {
 		// For the 2D case, the simplex shape is an equilateral triangle.
 		// Determine which simplex we are in.
 		int i1, j1; // Offsets for second (middle) corner of simplex in (i,j)
-					// coords
+		// coords
 		if (x0 > y0) {
 			i1 = 1;
 			j1 = 0;
@@ -106,14 +104,14 @@ public class SimplexNoise {
 			i1 = 0;
 			j1 = 1;
 		} // upper triangle, YX order: (0,0)->(0,1)->(1,1)
-		  // A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
-		  // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
-		  // c = (3-sqrt(3))/6
+		// A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
+		// a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
+		// c = (3-sqrt(3))/6
 		double x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed
-								  // coords
+		// coords
 		double y1 = y0 - j1 + G2;
 		double x2 = x0 - 1.0 + 2.0 * G2; // Offsets for last corner in (x,y)
-										 // unskewed coords
+		// unskewed coords
 		double y2 = y0 - 1.0 + 2.0 * G2;
 		// Work out the hashed gradient indices of the three simplex corners
 		int ii = i & 255;
@@ -127,7 +125,7 @@ public class SimplexNoise {
 		else {
 			t0 *= t0;
 			n0 = t0 * t0 * dot(grad3[gi0], x0, y0); // (x,y) of grad3 used for
-													// 2D gradient
+			// 2D gradient
 		}
 		double t1 = 0.5 - x1 * x1 - y1 * y1;
 		if (t1 < 0) n1 = 0.0;
@@ -159,7 +157,7 @@ public class SimplexNoise {
 		// Skew the input space to determine which simplex cell we're in
 		final double F3 = 1.0 / 3.0;
 		double s = (xin + yin + zin) * F3; // Very nice and simple skew factor
-										   // for 3D
+		// for 3D
 		int i = fastfloor(xin + s);
 		int j = fastfloor(yin + s);
 		int k = fastfloor(zin + s);
@@ -175,7 +173,7 @@ public class SimplexNoise {
 		// tetrahedron.
 		// Determine which simplex we are in.
 		int i1, j1, k1; // Offsets for second corner of simplex in (i,j,k)
-						// coords
+		// coords
 		int i2, j2, k2; // Offsets for third corner of simplex in (i,j,k) coords
 		if (x0 >= y0) {
 			if (y0 >= z0) {
@@ -238,11 +236,11 @@ public class SimplexNoise {
 		double y1 = y0 - j1 + G3;
 		double z1 = z0 - k1 + G3;
 		double x2 = x0 - i2 + 2.0 * G3; // Offsets for third corner in (x,y,z)
-										// coords
+		// coords
 		double y2 = y0 - j2 + 2.0 * G3;
 		double z2 = z0 - k2 + 2.0 * G3;
 		double x3 = x0 - 1.0 + 3.0 * G3; // Offsets for last corner in (x,y,z)
-										 // coords
+		// coords
 		double y3 = y0 - 1.0 + 3.0 * G3;
 		double z3 = z0 - 1.0 + 3.0 * G3;
 		// Work out the hashed gradient indices of the four simplex corners

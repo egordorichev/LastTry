@@ -2,22 +2,17 @@ package org.egordorichev.lasttry.item.block;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
-
-import java.awt.Color;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Tile;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
-import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
 public class Block extends Tile {
@@ -62,13 +57,12 @@ public class Block extends Tile {
 
 	/**
 	 * Loads block info from root
-	 * 
-	 * @param root
-	 *            Block root node
+	 *
+	 * @param root Block root node
 	 */
 	@Override
 	protected void loadFields(JsonValue root) {
-		short[] power = { 10, 0, 0 };
+		short[] power = {10, 0, 0};
 
 		if (root.has("requiredPower")) {
 			power = root.asShortArray();
@@ -86,10 +80,8 @@ public class Block extends Tile {
 	/**
 	 * Updates block animation
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void updateBlockStyle(int x, int y) {
 		/* TODO: if block has animation, update it */
@@ -98,10 +90,8 @@ public class Block extends Tile {
 	/**
 	 * Updates block (one in World.UPDATE_TIME seconds)
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void updateBlock(int x, int y) {
 
@@ -110,14 +100,10 @@ public class Block extends Tile {
 	/**
 	 * Callback, called on neighbor change
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
-	 * @param nx
-	 *            Neighbor X
-	 * @param ny
-	 *            Neighbor Y
+	 * @param x  Block X
+	 * @param y  Block Y
+	 * @param nx Neighbor X
+	 * @param ny Neighbor Y
 	 */
 	public void onNeighborChange(short x, short y, short nx, short ny) {
 
@@ -126,10 +112,8 @@ public class Block extends Tile {
 	/**
 	 * Callback, called on block destroy
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void die(short x, short y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
@@ -138,11 +122,9 @@ public class Block extends Tile {
 
 	/**
 	 * Returns, if this block can be placed at given position
-	 * 
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 *
+	 * @param x Block X
+	 * @param y Block Y
 	 * @return If this block can be placed at given position
 	 */
 	public boolean canBeUsed(short x, short y) {
@@ -175,10 +157,8 @@ public class Block extends Tile {
 	/**
 	 * Creates byte, representing block neighbors
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 * @return Byte, representing block neighbors
 	 */
 	public byte calculateBinary(int x, int y) {
@@ -193,22 +173,19 @@ public class Block extends Tile {
 	/**
 	 * Renders this block at given position
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
-	 * @param binary
-	 *            Byte, representing block neighbors
+	 * @param x      Block X
+	 * @param y      Block Y
+	 * @param binary Byte, representing block neighbors
 	 */
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 		byte variant = BlockHelper.plain.getVariant(hp);
 
-		float light  = 1f;
+		float light = 1f;
 
 		// Update light levev
-		if (!LastTry.noLight){
-			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		if (!LastTry.noLight) {
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / (WorldLightingComponent.MAX_LIGHT);
 		}
 
 		Graphics.batch.setColor(light, light, light, 1f);
@@ -220,7 +197,7 @@ public class Block extends Tile {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 
-		Graphics.batch.setColor(1f,1f,1f,1f);
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
 	/**

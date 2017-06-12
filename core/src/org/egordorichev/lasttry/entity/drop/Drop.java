@@ -28,7 +28,7 @@ public class Drop {
 	}
 
 	public ItemHolder createHolder() {
-		return new ItemHolder(this.item, ThreadLocalRandom.current().nextInt(this.minAmount, this.maxAmount+ 1), Modifier.random(this.item));
+		return new ItemHolder(this.item, ThreadLocalRandom.current().nextInt(this.minAmount, this.maxAmount + 1), Modifier.random(this.item));
 	}
 
 	public Item getItem() {

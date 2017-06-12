@@ -1,13 +1,12 @@
 package org.egordorichev.lasttry.world.components;
 
-import java.awt.Rectangle;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.generator.WorldGenerator;
+
+import java.awt.*;
 
 public class WorldLightingComponent implements Component {
 	public static final int MAX_LIGHT = 16;

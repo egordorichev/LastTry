@@ -107,7 +107,8 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 
 					Globals.getPlayer().getInventory().trash(this.itemHolder);
 					this.itemHolder = new ItemHolder(null, 0);
-				} if (this.isEmpty() || inventory.getSelectedItem().isEmpty()) {
+				}
+				if (this.isEmpty() || inventory.getSelectedItem().isEmpty()) {
 					this.swapWithCurrent();
 				} else if (inventory.getSelectedItem().getItem().getID().equals(this.getItemID())) {
 					int count = inventory.getSelectedItem().getCount() + this.itemHolder.getCount();

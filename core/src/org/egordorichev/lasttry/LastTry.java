@@ -6,23 +6,28 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.Crash;
-import org.egordorichev.lasttry.graphics.*;
+import org.egordorichev.lasttry.core.Version;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.lighting.ShaderLighting;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.language.Language;
-import java.util.Random;
-import java.util.Locale;
 
-/** Main game class */
+import java.util.Locale;
+import java.util.Random;
+
+/**
+ * Main game class
+ */
 public class LastTry extends Game {
-	/** LastTry version */
+	/**
+	 * LastTry version
+	 */
 	public static final Version version = new Version(0.0, 18, "alpha");
 
 	/**
@@ -31,22 +36,34 @@ public class LastTry extends Game {
 	 */
 	public static final Random random = new Random();
 
-	/** Last Try instance */
+	/**
+	 * Last Try instance
+	 */
 	public static LastTry instance;
 
-	/** Ui manager */
+	/**
+	 * Ui manager
+	 */
 	public static UiManager ui;
 
-	/** Debug helper */
+	/**
+	 * Debug helper
+	 */
 	public static Debug debug;
 
-	/** Shows, if this is a release */
+	/**
+	 * Shows, if this is a release
+	 */
 	public static boolean release = true;
 
-	/** Light disable */
+	/**
+	 * Light disable
+	 */
 	public static boolean noLight = true;
 
-	/** Screen dimensions */
+	/**
+	 * Screen dimensions
+	 */
 	public final int width;
 
 	private final int height;
@@ -56,7 +73,45 @@ public class LastTry extends Game {
 		this.height = height;
 	}
 
-	/** Creates first-priority instances */
+	/**
+	 * Returns mouse X coordinate, under the world
+	 *
+	 * @return mouse X coordinate, under the world
+	 */
+	public static int getMouseXInWorld() {
+		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
+				+ InputManager.getMousePosition().x);
+	}
+
+	/**
+	 * Returns mouse Y coordinate, under the world
+	 *
+	 * @return mouse Y coordinate, under the world
+	 */
+	public static int getMouseYInWorld() {
+		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
+				- InputManager.getMousePosition().y);
+	}
+
+	/**
+	 * Handles exception, if it is critical, exits the game
+	 *
+	 * @param exception exception to handle
+	 */
+	public static void handleException(Exception exception) {
+		Crash.report(Thread.currentThread(), exception);
+	}
+
+	/**
+	 * Aborts the process
+	 */
+	public static void abort() {
+		System.exit(1);
+	}
+
+	/**
+	 * Creates first-priority instances
+	 */
 	@Override
 	public void create() {
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
@@ -83,10 +138,8 @@ public class LastTry extends Game {
 	/**
 	 * Handles window resize
 	 *
-	 * @param width
-	 *            new window width
-	 * @param height
-	 *            new window height
+	 * @param width  new window width
+	 * @param height new window height
 	 */
 	@Override
 	public void resize(int width, int height) {
@@ -97,7 +150,9 @@ public class LastTry extends Game {
 		Globals.resolution.y = height;
 	}
 
-	/** Renders and updates the game */
+	/**
+	 * Renders and updates the game
+	 */
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -112,7 +167,9 @@ public class LastTry extends Game {
 		ShaderLighting.render();
 	}
 
-	/** Handles game exit */
+	/**
+	 * Handles game exit
+	 */
 	@Override
 	public void dispose() {
 		Globals.dispose();
@@ -127,42 +184,5 @@ public class LastTry extends Game {
 	private String getRandomWindowTitle() {
 		String[] split = Language.text.get("windowTitles").split("//");
 		return split[random.nextInt(split.length)] + " " + version.toString();
-	}
-
-	/**
-	 * Returns mouse X coordinate, under the world
-	 *
-	 * @return mouse X coordinate, under the world
-	 */
-	public static int getMouseXInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
-			+ InputManager.getMousePosition().x);
-	}
-
-	/**
-	 * Returns mouse Y coordinate, under the world
-	 *
-	 * @return mouse Y coordinate, under the world
-	 */
-	public static int getMouseYInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
-			- InputManager.getMousePosition().y);
-	}
-
-	/**
-	 * Handles exception, if it is critical, exits the game
-	 *
-	 * @param exception
-	 *            exception to handle
-	 */
-	public static void handleException(Exception exception) {
-		Crash.report(Thread.currentThread(), exception);
-	}
-
-	/**
-	 * Aborts the process
-	 */
-	public static void abort() {
-		System.exit(1);
 	}
 }

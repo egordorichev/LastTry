@@ -5,78 +5,77 @@ import org.egordorichev.lasttry.world.environment.Event;
 import java.util.ArrayList;
 
 public class SpawnRateComponent {
-    private enum SpawnRateMultiplier{
-        LESS_THAN_40(0.05f), LESS_THAN_60(0.025f), DEFAULT(0.0125f);
+	public static float calculateSpawnRate(int spawnRate, int spawnWeightOfCurrentlyActiveMonsters, float maxSpawns) {
+		//Get active events
+		//ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
 
-        private float multiplier;
+		//TODO Implement spawn rate rules based on events
+		spawnRate = calcSpawnRateBasedOnEvents(null, spawnRate);
+		spawnRate = calcSpawnRateBasedOnItems(spawnRate);
+		spawnRate = calcSpawnRateBasedOnTime(spawnRate);
 
-        SpawnRateMultiplier(float multiplier) {
-            this.multiplier = multiplier;
-        }
+		float spawnRateFinal = calculateSpawnRateUsingMultiplier(spawnRate, spawnWeightOfCurrentlyActiveMonsters, maxSpawns);
 
-        public float getMultiplier() {
-            return this.multiplier;
-        }
-    }
+		return spawnRateFinal;
+	}
 
-    public static float calculateSpawnRate(int spawnRate, int spawnWeightOfCurrentlyActiveMonsters, float maxSpawns) {
-        //Get active events
-        //ArrayList<Event> activeEvents = LastTry.environment.getCurrentEvents();
+	private static float calculateSpawnRateUsingMultiplier(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns) {
 
-        //TODO Implement spawn rate rules based on events
-        spawnRate = calcSpawnRateBasedOnEvents(null, spawnRate);
-        spawnRate = calcSpawnRateBasedOnItems(spawnRate);
-        spawnRate = calcSpawnRateBasedOnTime(spawnRate);
+		// Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
+		float percentChanceSpawnRate = 1 / (float) spawnRate;
 
-        float spawnRateFinal = calculateSpawnRateUsingMultiplier(spawnRate, spawnWeightOfCurrentlyActiveMonsters, maxSpawns);
+		float percentageOfSpawnRateAndActiveMonsters;
 
-        return spawnRateFinal;
-    }
+		if (spawnWeightOfCurrentlyActiveEnemies == 0) {
+			percentageOfSpawnRateAndActiveMonsters = 1;
+		} else {
+			percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
+		}
 
+		float spawnRateFloat = applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
 
-    private static float calculateSpawnRateUsingMultiplier(int spawnRate, int spawnWeightOfCurrentlyActiveEnemies, float maxSpawns) {
+		return spawnRateFloat;
+	}
 
-        // Spawn rate refers to 1 in 'Spawn Rate' chance of a monster spawning.
-        float percentChanceSpawnRate = 1/(float)spawnRate;
+	private static int calcSpawnRateBasedOnEvents(ArrayList<Event> activeEvents, int spawnRate) {
+		//TODO Implement spawn info in events
+		return spawnRate;
+	}
 
-        float percentageOfSpawnRateAndActiveMonsters;
+	private static int calcSpawnRateBasedOnTime(int spawnRate) {
+		//TODO Implement spawn info based on day
+		return spawnRate;
+	}
 
-        if (spawnWeightOfCurrentlyActiveEnemies == 0) {
-            percentageOfSpawnRateAndActiveMonsters = 1;
-        } else {
-            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
-        }
+	private static int calcSpawnRateBasedOnItems(int spawnRate) {
+		//TODO Implement spawn rate altering based on items in environment
+		return spawnRate;
+	}
 
-        float spawnRateFloat = applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);
+	public static float applyMultiplierToSpawnRate(float spawnRate, float percentageOfSpawnRateAndActiveMonsters) {
+		if (percentageOfSpawnRateAndActiveMonsters < 40) {
+			spawnRate = spawnRate * SpawnRateMultiplier.LESS_THAN_40.getMultiplier();
+		} else if (percentageOfSpawnRateAndActiveMonsters < 60) {
+			spawnRate = spawnRate * SpawnRateMultiplier.LESS_THAN_60.getMultiplier();
+		} else {
+			spawnRate = spawnRate * SpawnRateMultiplier.DEFAULT.getMultiplier();
+		}
 
-        return spawnRateFloat;
-    }
+		return spawnRate;
+	}
 
-    private static int calcSpawnRateBasedOnEvents(ArrayList<Event> activeEvents, int spawnRate) {
-        //TODO Implement spawn info in events
-        return spawnRate;
-    }
+	private enum SpawnRateMultiplier {
+		LESS_THAN_40(0.05f), LESS_THAN_60(0.025f), DEFAULT(0.0125f);
 
-    private static int calcSpawnRateBasedOnTime(int spawnRate) {
-        //TODO Implement spawn info based on day
-        return spawnRate;
-    }
+		private float multiplier;
 
-    private static int calcSpawnRateBasedOnItems(int spawnRate) {
-        //TODO Implement spawn rate altering based on items in environment
-        return spawnRate;
-    }
+		SpawnRateMultiplier(float multiplier) {
+			this.multiplier = multiplier;
+		}
 
-    public static float applyMultiplierToSpawnRate(float spawnRate, float percentageOfSpawnRateAndActiveMonsters) {
-        if (percentageOfSpawnRateAndActiveMonsters < 40) {
-            spawnRate = spawnRate * SpawnRateMultiplier.LESS_THAN_40.getMultiplier();
-        } else if (percentageOfSpawnRateAndActiveMonsters < 60) {
-            spawnRate = spawnRate * SpawnRateMultiplier.LESS_THAN_60.getMultiplier();
-        } else{
-            spawnRate = spawnRate * SpawnRateMultiplier.DEFAULT.getMultiplier();
-        }
-
-        return spawnRate;
-    }
+		public float getMultiplier() {
+			return this.multiplier;
+		}
+	}
 
 }

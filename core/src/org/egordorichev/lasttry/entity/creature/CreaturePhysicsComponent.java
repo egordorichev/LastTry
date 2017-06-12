@@ -1,7 +1,7 @@
-package org.egordorichev.lasttry.entity.components;
+package org.egordorichev.lasttry.entity.creature;
 
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
 public class CreaturePhysicsComponent extends PhysicsComponent {
 	private Creature creature;

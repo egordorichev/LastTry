@@ -10,8 +10,10 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
-import java.awt.Rectangle;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Methods that alter any of the collections that contain Chunks, are synchronized.
@@ -48,8 +50,8 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void render() {
-        Rectangle blocksRect = Camera.getBlocksOnScreen();
-		for (int y = blocksRect.y; y < blocksRect.y  +blocksRect.height; y++) {
+		Rectangle blocksRect = Camera.getBlocksOnScreen();
+		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
@@ -66,7 +68,7 @@ public class WorldChunksComponent extends WorldComponent {
 						}
 					}
 
-				 	block.renderBlock(x, y, binary);
+					block.renderBlock(x, y, binary);
 				} else {
 					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
 
@@ -144,7 +146,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
 		optionalChunk.ifPresent(chunk -> {
-			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
+			if (chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)) {
 				chunks[index] = null;
 			}
 		});

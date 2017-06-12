@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 

@@ -1,7 +1,6 @@
-package org.egordorichev.lasttry.entity.components;
+package org.egordorichev.lasttry.entity.creature;
 
 import org.egordorichev.lasttry.component.Component;
-import org.egordorichev.lasttry.entity.Creature;
 
 public class CreatureComponent implements Component {
 	protected Creature creature;
@@ -14,16 +13,17 @@ public class CreatureComponent implements Component {
 	public void render() {
 
 	}
+
 	@Override
 	public void update(int dt) {
 
 	}
 
-	public void setCreature(Creature creature) {
-		this.creature = creature;
-	}
-
 	public Creature getCreature() {
 		return this.creature;
+	}
+
+	public void setCreature(Creature creature) {
+		this.creature = creature;
 	}
 }

@@ -1,8 +1,9 @@
-package org.egordorichev.lasttry.entity;
+package org.egordorichev.lasttry.entity.creature;
 
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.components.*;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.particle.DamageParticle;
 import org.egordorichev.lasttry.item.items.Tool;
@@ -11,14 +12,9 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
-import com.badlogic.gdx.math.Vector2;
 
 public class Creature extends Entity {
 	protected static final int ATTACK_INVULN_TIME = 10;
-	/**
-	 * Creature spawn weight
-	 */
-	protected int spawnWeight = 1;
 	/**
 	 * Drops handler
 	 */
@@ -35,6 +31,10 @@ public class Creature extends Entity {
 	 * Effects handler
 	 */
 	public CreatureEffectsComponent effects;
+	/**
+	 * Creature spawn weight
+	 */
+	protected int spawnWeight = 1;
 	/**
 	 * Creature id (for ex. lt:green_slime)
 	 */
@@ -61,29 +61,33 @@ public class Creature extends Entity {
 
 	/**
 	 * Hits the creature
+	 *
 	 * @param damage HP to remove from health
 	 */
 	public void hit(int damage, boolean crit) {
 		Globals.entityManager.spawn(new DamageParticle(crit, damage),
-			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
+				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		this.stats.modifyHP(-damage);
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
-		if (this.stats.getHP() <= 0){
+		if (this.stats.getHP() <= 0) {
 			this.die();
 		}
 	}
 
 	/**
 	 * Hits the creature
+	 *
 	 * @param damage HP to remove from health
 	 */
 	public void hit(int damage) {
 		this.hit(damage, false);
 	}
 
-	/** Renders the creature */
+	/**
+	 * Renders the creature
+	 */
 	@Override
 	public void render() {
 		if (this.stats.getHP() != this.stats.getMaxHP() && this.stats.getHP() != 0) {
@@ -92,7 +96,9 @@ public class Creature extends Entity {
 		super.render();
 	}
 
-	/** Renders the health bar */
+	/**
+	 * Renders the health bar
+	 */
 	protected void renderHealthBar() {
 		float hp = (float) this.stats.getHP() / (float) this.stats.getMaxHP();
 
@@ -115,7 +121,9 @@ public class Creature extends Entity {
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
-	/** Updates the creature */
+	/**
+	 * Updates the creature
+	 */
 	@Override
 	public void update(int dt) {
 		super.update(dt);
@@ -145,7 +153,9 @@ public class Creature extends Entity {
 		this.drops.drop();
 	}
 
-	/** Tries to despawn creature */
+	/**
+	 * Tries to despawn creature
+	 */
 	public void tryToDespawn() {
 		try {
 			final WorldTime currentTime = Globals.environment.time;
@@ -169,6 +179,15 @@ public class Creature extends Entity {
 	}
 
 	/**
+	 * Sets creature spawn weight
+	 *
+	 * @param spawnWeight How much will creature "eat" from spawn rate
+	 */
+	public void setSpawnWeight(int spawnWeight) {
+		this.spawnWeight = spawnWeight;
+	}
+
+	/**
 	 * @return Creature name
 	 */
 	public String getName() {
@@ -184,11 +203,9 @@ public class Creature extends Entity {
 
 	/**
 	 * Attacks the given enemy with the given damage.
-	 * 
-	 * @param enemy
-	 *            Enemy to attack.
-	 * @param damage
-	 *            Damage to inflict.
+	 *
+	 * @param enemy  Enemy to attack.
+	 * @param damage Damage to inflict.
 	 */
 	public void attack(Creature enemy, int damage) {
 		applyKnockback(enemy, damage);
@@ -197,11 +214,9 @@ public class Creature extends Entity {
 
 	/**
 	 * Knocks the enemy back according to the given damage delt.
-	 * 
-	 * @param enemy
-	 *            Enemy to knock back.
-	 * @param damage
-	 *            Damage delt, used to compute knockback power.
+	 *
+	 * @param enemy  Enemy to knock back.
+	 * @param damage Damage delt, used to compute knockback power.
 	 */
 	private void applyKnockback(Creature enemy, int damage) {
 		float knockPower = damage * -0.04F;
@@ -209,13 +224,5 @@ public class Creature extends Entity {
 		Vector2 force = diff.scl(knockPower);
 		force.limit(Tool.KNOCKBACK_MAX_POWER);
 		enemy.physics.getVelocity().add(force);
-	}
-
-	/**
-	 * Sets creature spawn weight
-	 * @param spawnWeight How much will creature "eat" from spawn rate
-	 */
-	public void setSpawnWeight(int spawnWeight) {
-		this.spawnWeight = spawnWeight;
 	}
 }

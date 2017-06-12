@@ -31,7 +31,7 @@ public class ItemHolder {
 			Graphics.batch.draw(texture, x, y);
 
 			if (this.count > 1) {
-				Util.drawWithShadow(Assets.f18,  String.format("%d", this.count), x - 8, y + th - 8);
+				Util.drawWithShadow(Assets.f18, String.format("%d", this.count), x - 8, y + th - 8);
 			}
 		}
 	}
@@ -47,13 +47,13 @@ public class ItemHolder {
 			Graphics.batch.draw(texture, x + (width - tw) / 2, iy);
 
 			if (this.count > 1) {
-				Util.drawWithShadow(Assets.f18,  String.format("%d", this.count), x + tw / 2, iy + th / 2);
+				Util.drawWithShadow(Assets.f18, String.format("%d", this.count), x + tw / 2, iy + th / 2);
 			}
 		}
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public int getCount() {
+		return this.count;
 	}
 
 	public void setCount(int count) {
@@ -69,20 +69,20 @@ public class ItemHolder {
 		this.count = count;
 	}
 
-	public void setModifier(Modifier modifier) {
-		this.modifier = modifier;
-	}
-
-	public int getCount() {
-		return this.count;
-	}
-
 	public Item getItem() {
 		return this.item;
 	}
 
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public Modifier getModifier() {
 		return this.modifier;
+	}
+
+	public void setModifier(Modifier modifier) {
+		this.modifier = modifier;
 	}
 
 	public boolean isEmpty() {
@@ -103,7 +103,7 @@ public class ItemHolder {
 		info += this.getItem().getName();
 
 		if (this.getCount() != 1) {
-			info += " (" +  this.getCount() + ")";
+			info += " (" + this.getCount() + ")";
 		}
 
 		return info;

@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Log;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Items {
@@ -15,6 +13,7 @@ public class Items {
 	 * Items storage
 	 */
 	public static HashMap<String, Item> ITEM_CACHE = new HashMap<>();
+
 	/**
 	 * Loads items
 	 */

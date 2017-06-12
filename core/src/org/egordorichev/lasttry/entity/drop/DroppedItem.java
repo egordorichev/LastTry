@@ -2,13 +2,12 @@ package org.egordorichev.lasttry.entity.drop;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.List;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
+
+import java.util.List;
 
 public class DroppedItem extends Entity {
 	private static final float ATTRACTION_RANGE = 60;

@@ -1,12 +1,11 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
+import org.egordorichev.lasttry.entity.creature.Creature;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
@@ -22,6 +21,15 @@ public class Tool extends Item {
 	 */
 	public static final float KNOCKBACK_MAX_POWER = 10F;
 	/**
+	 * The base damage delt to entities when stuck by the tool.
+	 */
+	public float baseDamage;
+	/**
+	 * The tool's effectiveness against materials requiring axe,pickaxe,and
+	 * hammer tools.
+	 */
+	public ToolPower power = ToolPower.DEFAULT;
+	/**
 	 * Boolean indicating if the item is swung automatically when the primary
 	 * action key is held down.
 	 */
@@ -34,15 +42,6 @@ public class Tool extends Item {
 	 * </ul>
 	 */
 	protected float criticalStrikeChance;
-	/**
-	 * The base damage delt to entities when stuck by the tool.
-	 */
-	public float baseDamage;
-	/**
-	 * The tool's effectiveness against materials requiring axe,pickaxe,and
-	 * hammer tools.
-	 */
-	public ToolPower power = ToolPower.DEFAULT;
 
 	public Tool(String id) {
 		super(id);

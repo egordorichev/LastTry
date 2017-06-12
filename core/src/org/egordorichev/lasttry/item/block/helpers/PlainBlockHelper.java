@@ -15,7 +15,7 @@ public class PlainBlockHelper extends BlockHelper {
 		return ByteHelper.getSum(data, (byte) 2, (byte) 3);
 	}
 
-	public  byte getSlope(byte data) {
+	public byte getSlope(byte data) {
 		if (!slopeIsPresent(data)) {
 			return 0;
 		}

@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.item;
 
-/** Weapon damage type */
+/**
+ * Weapon damage type
+ */
 public enum DamageType {
 	MELEE("Melee"),
 	RANGED("Randged"),
@@ -8,7 +10,9 @@ public enum DamageType {
 	SUMMON("Summon"),
 	THROWING("Throwing");
 
-	/** Damage type name */
+	/**
+	 * Damage type name
+	 */
 	private String name;
 
 	DamageType(String name) {
