@@ -21,8 +21,8 @@ public class Graphics {
 			}
 		}
 
-		skyTexture = new Texture(Gdx.files.internal(Textures.sky));
-		healthBarTexture = new Texture(Gdx.files.internal(Textures.healthBar));
-		healthBarFrameTexture = new Texture(Gdx.files.internal(Textures.healthBarFrame));
+		skyTexture = new Texture(Gdx.files.internal("sky"));
+		healthBarTexture = new Texture(Gdx.files.internal("health_bar"));
+		healthBarFrameTexture = new Texture(Gdx.files.internal("health_bar_frame"));
 	}
 }

@@ -70,7 +70,8 @@ public class Creature extends Entity {
 				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		this.stats.modifyHP(-damage);
-		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+		this.stats.setInvulnerableTime(ATTACK_INVULN_TIME);
+
 		if (this.stats.getHP() <= 0) {
 			this.die();
 		}
@@ -145,7 +146,7 @@ public class Creature extends Entity {
 	 * @return Creature can't be damaged
 	 */
 	public boolean isInvulnrable() {
-		return this.stats.getInvulnTime() > 0;
+		return this.stats.getInvulnerableTime() > 0;
 	}
 
 	@Override

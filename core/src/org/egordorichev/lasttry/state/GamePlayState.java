@@ -21,7 +21,7 @@ public class GamePlayState implements State {
 	private final TextureRegion hpTextureRegion;
 
 	public GamePlayState() {
-		this.hpTextureRegion = Assets.getTexture(Textures.hp);
+		this.hpTextureRegion = Assets.getTexture("hp");
 
 		Globals.entityManager = new EntityManager();
 		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int) Globals.getPlayer().getSpawnPoint().y * Block.SIZE);

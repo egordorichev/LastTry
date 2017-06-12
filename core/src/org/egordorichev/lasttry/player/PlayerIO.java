@@ -53,7 +53,10 @@ public class PlayerIO {
 					holder.setCount(stream.readInt16());
 
 					if (stream.readBoolean()) {
-						holder.setModifier(Modifier.fromID(stream.readByte()));
+						Log.error("Modifiers are not supported yet!");
+
+						// FIXME!
+						// holder.setModifier(Modifier.fromID(stream.readByte()));
 					}
 				}
 			}
@@ -112,7 +115,10 @@ public class PlayerIO {
 
 					if (holder.getModifier() != null) {
 						stream.writeBoolean(true);
-						stream.writeByte(holder.getModifier().getID());
+						Log.error("Modifiers are not supported yet!");
+
+						// FIXME!
+						// stream.writeByte(holder.getModifier().getID());
 					} else {
 						stream.writeBoolean(false);
 					}

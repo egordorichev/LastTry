@@ -12,7 +12,7 @@ import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiItemSlot extends UiComponent implements InventorySlot {
-	private static TextureRegion inventorySlot5 = Assets.getTexture(Textures.inventorySlot5);
+	private static TextureRegion inventorySlot5 = Assets.getTexture("inventory_slot_5");
 	private boolean active;
 	private int index;
 	private TextureRegion texture;
@@ -32,18 +32,18 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 			case AMMO:
 			case COIN:
 			case TRASH:
-				this.texture = Assets.getTexture(Textures.inventorySlot1);
+				this.texture = Assets.getTexture("inventory_slot_1");
 				break;
 			case ACCESSORY:
 			case ARMOR:
-				this.texture = Assets.getTexture(Textures.inventorySlot2);
+				this.texture = Assets.getTexture("inventory_slot_2");
 				break;
 			case VANITY:
 			case VANITY_ACCESSORY:
-				this.texture = Assets.getTexture(Textures.inventorySlot3);
+				this.texture = Assets.getTexture("inventory_slot_3");
 				break;
 			case DYE:
-				this.texture = Assets.getTexture(Textures.inventorySlot4);
+				this.texture = Assets.getTexture("inventory_slot_4");
 				break;
 		}
 

@@ -1,7 +1,10 @@
 package org.egordorichev.lasttry.item.modifier;
 
+import org.egordorichev.lasttry.language.Language;
+
 public class Modifier {
 	protected String id;
+	protected String name;
 	protected int damage;
 	protected int speed;
 	protected int criticalStrikeChance;
@@ -17,6 +20,7 @@ public class Modifier {
 	                int velocity, int knockback, int mana, int movementSpeed, int defense) {
 
 		this.id = id;
+		this.name = Language.text.get(this.id);
 		this.damage = damage;
 		this.speed = speed;
 		this.criticalStrikeChance = criticalStrikeChance;
@@ -72,5 +76,9 @@ public class Modifier {
 
 	public String getID() {
 		return this.id;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 }

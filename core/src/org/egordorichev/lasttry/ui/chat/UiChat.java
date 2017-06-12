@@ -45,7 +45,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
 		this.initCommands();
-		this.back = Assets.getTexture("ChatBack");
+		this.back = Assets.getTexture("chat_back");
 	}
 
 	private void initCommands() {
@@ -197,7 +197,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().stats.setInvulnTime(2147483646);
+				Globals.getPlayer().stats.setInvulnerableTime(2147483646);
 			}
 		});
 	}
