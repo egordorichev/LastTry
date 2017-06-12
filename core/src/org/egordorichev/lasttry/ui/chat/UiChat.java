@@ -20,7 +20,6 @@ import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
 import org.egordorichev.lasttry.util.Util;
-
 import java.util.List;
 import java.util.ArrayList;
 

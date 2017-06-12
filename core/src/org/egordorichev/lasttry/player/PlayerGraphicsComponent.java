@@ -8,6 +8,8 @@ import org.egordorichev.lasttry.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 
+import java.util.Random;
+
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private TextureRegion texture;
 
@@ -19,6 +21,9 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
+		Random random = null;
+	random.toString();
+
 		ItemHolder holder = Globals.getPlayer().getInventory().getActiveItem();
 
 		if (holder.getItem() != null) {

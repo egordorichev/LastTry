@@ -25,7 +25,7 @@ public class GamePlayState implements State {
 		this.hpTextureRegion = Assets.getTexture(Textures.hp);
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int) (Globals.getPlayer().getSpawnPoint().y * Block.SIZE));
+		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int)Globals.getPlayer().getSpawnPoint().y * Block.SIZE);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 

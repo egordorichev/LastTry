@@ -11,11 +11,9 @@
 			"lt:furnace"
 		],
 
-		"result" : [
-			{
-				"id" : "lt:copper_bar",
-				"count" : 1
-			}
-		]
+		"result" : {
+			"id" : "lt:copper_bar",
+			"count" : 1
+		}
 	}
 ]
