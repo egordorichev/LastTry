@@ -47,63 +47,63 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		int y = 30;
 
 		for (int i = 0; i < 10; i++) { // Hot bar
-			this.slots[i] = new UiItemSlot(new Rectangle(x + i * 54, y, 52, 52), UiItemSlot.Type.ANY);
+			this.slots[i] = new UiItemSlot(new Rectangle(x + i * 54, y, 52, 52), UiItemSlot.Type.ANY, i);
 		}
 
 		for (int i = 10; i < 50; i++) { // Main inventory
 			this.slots[i] = new UiItemSlot(new Rectangle(x + (i % 10) * 54, y + 54 * (i / 10), 52, 52),
-					UiItemSlot.Type.ANY);
+					UiItemSlot.Type.ANY, i);
 		}
 
 		for (int i = 50; i < 54; i++) { // Coins
 			this.slots[i] = new UiItemSlot(new Rectangle(x + 542, y + 100 + (i - 50) * 34, 32, 32),
-					UiItemSlot.Type.COIN);
+					UiItemSlot.Type.COIN, i);
 		}
 
 		for (int i = 54; i < 58; i++) { // Ammo
 			this.slots[i] = new UiItemSlot(new Rectangle(x + 576, y + 100 + (i - 54) * 34, 32, 32),
-					UiItemSlot.Type.AMMO);
+					UiItemSlot.Type.AMMO, i);
 		}
 
 		// Trash
 		this.slots[58] = new UiItemSlot(new Rectangle(x + 486, y + 270, 52, 52), UiItemSlot.Type.TRASH, Origin.TOP_LEFT,
-				new TextureRegion(Assets.getTexture(Textures.trash), 0, 0, 32, 32));
+				new TextureRegion(Assets.getTexture(Textures.trash), 0, 0, 32, 32), 58);
 
 		for (int i = 59; i < 62; i++) { // Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 280 + (i - 59) * 54, 52, 52), UiItemSlot.Type.ARMOR,
 					Origin.BOTTOM_RIGHT,
-					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 68 - (i - 59) * 34, 34, 34));
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 68 - (i - 59) * 34, 34, 34), i);
 		}
 
 		for (int i = 62; i < 65; i++) { // Vanity Armor
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 280 + (i - 62) * 54, 52, 52), UiItemSlot.Type.VANITY,
 					Origin.BOTTOM_RIGHT,
-					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 170 - (i - 62) * 34, 34, 34));
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 0, 170 - (i - 62) * 34, 34, 34), i);
 		}
 
 		for (int i = 65; i < 68; i++) { // Armor Dye
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 280 + (i - 65) * 54, 52, 52), UiItemSlot.Type.DYE,
-					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 34, 0, 34, 34));
+					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 34, 0, 34, 34), i);
 		}
 
 		for (int i = 68; i < 73; i++) { // Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(10, 10 + (i - 68) * 54, 52, 52), UiItemSlot.Type.ACCESSORY,
-					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 34, 34, 34));
+					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 34, 34, 34), i);
 		}
 
 		for (int i = 73; i < 78; i++) { // Vanity Accessories
 			this.slots[i] = new UiItemSlot(new Rectangle(64, 10 + (i - 73) * 54, 52, 52),
 					UiItemSlot.Type.VANITY_ACCESSORY, Origin.BOTTOM_RIGHT,
-					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 0, 34, 34));
+					new TextureRegion(Assets.getTexture(Textures.inventoryBack), 68, 0, 34, 34), i);
 		}
 
 		for (int i = 78; i < 83; i++) { // Accessories Dyes
 			this.slots[i] = new UiItemSlot(new Rectangle(118, 10 + (i - 78) * 54, 52, 52), UiItemSlot.Type.DYE,
-					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 34, 0, 34, 34));
+					Origin.BOTTOM_RIGHT, new TextureRegion(Assets.getTexture(Textures.inventoryBack), 34, 0, 34, 34), i);
 		}
 
 		for (int i = 83; i < 88; i++) { // Equipment
-			this.slots[i] = new UiItemSlot(new Rectangle(0, 0, 52, 52), UiItemSlot.Type.ANY); // TODO
+			this.slots[i] = new UiItemSlot(new Rectangle(0, 0, 52, 52), UiItemSlot.Type.ANY, i); // TODO
 			this.slots[i].hide();
 		}
 
@@ -208,20 +208,12 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		super.render();
 		this.updateItems();
 
-		Item item = this.slots[this.activeSlot].getItem();
+		ItemHolder holder = this.slots[this.activeSlot].getItemHolder();
 
-		if (item == null) {
+		if (holder.isEmpty()) {
 			Util.drawWithShadow(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
 		} else  {
-			Modifier modifier = this.slots[this.activeSlot].getItemHolder().getModifier();
-
-			if (modifier != null) {
-			
-				Util.drawWithShadow(Assets.f22, String.format("%s %s", modifier.getName(), item.getName()), 10,
-						Gdx.graphics.getHeight() - 8);
-			} else {
-				Util.drawWithShadow(Assets.f22, item.getName(), 10, Gdx.graphics.getHeight() - 8);
-			}
+			Util.drawWithShadow(Assets.f22, holder.asInfo(), 10, Gdx.graphics.getHeight() - 8);
 		}
 
 		for (int i = 0; i < 10; i++) {

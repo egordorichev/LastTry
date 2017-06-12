@@ -10,17 +10,20 @@ import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.inventory.InventorySlot;
 import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.util.Util;
 
 public class UiItemSlot extends UiComponent implements InventorySlot {
 	private static TextureRegion inventorySlot5 = Assets.getTexture(Textures.inventorySlot5);
 	private boolean active;
+	private int index;
 	private TextureRegion texture;
 	private ItemHolder itemHolder;
 	private Type type;
 	private TextureRegion back;
 
-	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back) {
+	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back, int index) {
 		super(rectangle, origin);
+
 		this.itemHolder = new ItemHolder(null, 0);
 		this.type = type;
 		this.back = back;
@@ -46,10 +49,11 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 		}
 
 		this.active = false;
+		this.index = index;
 	}
 
-	public UiItemSlot(Rectangle rectangle, Type type) {
-		this(rectangle, type, Origin.TOP_LEFT, null);
+	public UiItemSlot(Rectangle rectangle, Type type, int index) {
+		this(rectangle, type, Origin.TOP_LEFT, null, index);
 	}
 
 	@Override
@@ -83,7 +87,9 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 			Graphics.batch.setColor(1, 1, 1, 1);
 		}
 
-		Graphics.batch.setColor(1, 1, 1, 1);
+		if (this.index < 10) {
+			Util.drawWithShadow(Assets.f18, String.valueOf((this.index == 9) ? 0 : this.index + 1), this.getX() + 6, this.getY() + this.getHeight() - 6);
+		}
 	}
 
 	public void swapWithCurrent() {

@@ -53,15 +53,21 @@ public class EntityManager {
 			if (entity.physics.getHitbox().intersects(camera)) {
 				entity.render();
 
-				if (!displayedStats && entity.active && entity instanceof Creature && entity.physics.getHitbox().intersects(mouse)) {
-					Creature creature = ((Creature) entity);
+				if (!displayedStats && entity.active && entity.physics.getHitbox().intersects(mouse)) {
+					if (entity instanceof Creature) {
+						Creature creature = ((Creature) entity);
 
-					float x = Gdx.input.getX() + camera.x + 36;
-					float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y;
+						float x = Gdx.input.getX() + camera.x + 36;
+						float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y;
 
-					Util.drawWithShadow(Assets.f18,  creature.getName(), x, y);
-					Util.drawWithShadow(Assets.f18, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), x, y - 20);
-					displayedStats = true;
+						Util.drawWithShadow(Assets.f18, creature.getName(), x, y);
+						Util.drawWithShadow(Assets.f18, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), x, y - 20);
+						displayedStats = true;
+					} else if (entity instanceof DroppedItem) {
+						DroppedItem item = ((DroppedItem) entity);
+						Util.drawWithShadow(Assets.f18, item.getHolder().asInfo(), Gdx.input.getX() + camera.x + 36, (Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y);
+						displayedStats = true;
+					}
 				}
 			}
 		}
