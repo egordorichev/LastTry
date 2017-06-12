@@ -24,15 +24,10 @@ public class GamePlayState implements State {
 	public GamePlayState() {
 		this.hpTextureRegion = Assets.getTexture(Textures.hp);
 
-		int spawnX = Globals.getWorld().getWidth() / 2 * Block.SIZE;
-		int spawnY = (Globals.getWorld().getHeight() - 10) * Block.SIZE;
-		Globals.getWorld().setSpawn(spawnX, spawnY);
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.getPlayer(), spawnX, spawnY);
+		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int) (Globals.getPlayer().getSpawnPoint().y * Block.SIZE));
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
-
-		// Globals.player.effects.applyEffect(Buffs.honey, 100);
 
 		LastTry.ui.add(Globals.chat);
 	}

@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.player.skin;
+package org.egordorichev.lasttry.player.skin;
 
 import com.badlogic.gdx.graphics.Color;
 

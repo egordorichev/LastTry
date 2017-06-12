@@ -1,10 +1,10 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.player;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
-import org.egordorichev.lasttry.entity.player.skin.*;
+import org.egordorichev.lasttry.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 

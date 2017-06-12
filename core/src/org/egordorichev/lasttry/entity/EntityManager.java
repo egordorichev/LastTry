@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.player.Player;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Rectangle;
@@ -103,6 +104,7 @@ public class EntityManager {
 		if (entity != Globals.getPlayer() && entity instanceof Creature) {
 			this.creatureEntities.add((Creature) entity);
 		}
+
 		this.sort();
 
 		return entity;

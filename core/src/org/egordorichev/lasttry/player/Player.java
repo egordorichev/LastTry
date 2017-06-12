@@ -1,5 +1,6 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.player;
 
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
@@ -7,17 +8,33 @@ import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
-import org.egordorichev.lasttry.util.Log;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	public static final int INVENTORY_SIZE = 88;
-	public static final int RESPAWN_DELAY = 100;
+	public static final int RESPAWN_DELAY = 360;
+	/**
+	 * Timer before respawn
+	 */
 	private int respawnTime = RESPAWN_DELAY;
+	/**
+	 * Inventory
+	 */
 	private UiInventory inventory;
+	/**
+	 * Input handler
+	 */
 	private PlayerInputComponent input;
+	/**
+	 * Player name
+	 */
 	private String name;
+	/**
+	 * Player spawn point
+	 */
+	private Vector2 spawnPoint = new Vector2();
 
 	public Player(String name) {
 		super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
@@ -30,6 +47,10 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		LastTry.ui.add(this.getInventory());
 
 		this.setZIndex(Layers.player);
+	}
+
+	public void tpToSpawn() {
+		this.physics.setGridPosition((int) this.spawnPoint.x, (int) this.spawnPoint.y);
 	}
 
 	@Override
@@ -107,5 +128,13 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void setInventory(Inventory<UiItemSlot> inventory) {
 		this.inventory = (UiInventory) inventory;
+	}
+
+	public void setSpawnPoint(Vector2 spawnPoint) {
+		this.spawnPoint = spawnPoint;
+	}
+
+	public Vector2 getSpawnPoint() {
+		return this.spawnPoint;
 	}
 }

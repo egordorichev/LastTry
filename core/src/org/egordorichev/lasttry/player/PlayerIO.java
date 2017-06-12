@@ -1,5 +1,6 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.player;
 
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.inventory.ItemHolder;
@@ -12,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final byte VERSION = 3;
+	public static final byte VERSION = 4;
 
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
@@ -40,6 +41,7 @@ public class PlayerIO {
 
 			Globals.setPlayer(new Player(playerName));
 			Globals.getPlayer().stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
+			Globals.getPlayer().setSpawnPoint(new Vector2(stream.readInt16(), stream.readInt16()));
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				String id = stream.readString();
@@ -95,6 +97,8 @@ public class PlayerIO {
 			stream.writeByte(VERSION);
 			stream.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
 			stream.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
+			stream.writeInt16((short) Globals.getPlayer().getSpawnPoint().x);
+			stream.writeInt16((short) Globals.getPlayer().getSpawnPoint().y);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
@@ -125,6 +129,8 @@ public class PlayerIO {
 
 	public static Player generate(String name) {
 		Player player = new Player(name);
+
+		player.setSpawnPoint(new Vector2(Globals.getWorld().getWidth() / 2, Globals.getWorld().getHeight() - 10));
 
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));

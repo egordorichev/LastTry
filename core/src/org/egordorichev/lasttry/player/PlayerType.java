@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.player;
 
 public enum PlayerType {
     SOFTCORE("Softcore"),

@@ -315,11 +315,11 @@ public class PhysicsComponent extends EntityComponent {
     }
 
     public int getGridX() {
-        return (int) this.position.x / Block.SIZE;
+        return (int) (this.position.x + 0.5) / Block.SIZE;
     }
 
     public int getGridY() {
-        return (int) this.position.y / Block.SIZE;
+        return (int) (this.position.y + 0.5) / Block.SIZE;
     }
 
     public Vector2 getGridPosition() {

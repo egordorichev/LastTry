@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.player;
+package org.egordorichev.lasttry.player;
 
 import org.egordorichev.lasttry.entity.components.CreatureComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;

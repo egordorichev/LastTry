@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
@@ -173,6 +174,21 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
+			}
+		});
+
+		this.commands.register(new Command("setspawn", "Sets spawn point to current position", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().setSpawnPoint(new Vector2(Globals.getPlayer().physics.getGridX(), Globals.getPlayer().physics.getGridY() + 1));
+				print("Spawn point set");
+			}
+		});
+
+		this.commands.register(new Command("spawn", "TP to spawn", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().tpToSpawn();
 			}
 		});
 	}
