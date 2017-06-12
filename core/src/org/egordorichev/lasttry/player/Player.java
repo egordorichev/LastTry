@@ -48,7 +48,7 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 
 		this.setZIndex(Layers.player);
 
-		this.physics.setOnGroundHit(new Callable() {
+		this.physics.setOnGroundHitCallback(new Callable() {
 			@Override
 			public void call() {
 				int damage = (int) (Math.abs(physics.getVelocity().y) - 10);

@@ -9,17 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreatureDropsComponent extends CreatureComponent {
-
+	/**
+	 * Drops list
+	 */
 	private List<Drop> drops = new ArrayList<>();
 
 	public CreatureDropsComponent(Creature creature) {
 		super(creature);
 	}
 
+	/**
+	 * Adds a drop
+	 *
+	 * @param drop Drop, to add
+	 */
 	public void add(Drop drop) {
 		this.drops.add(drop);
 	}
 
+	/**
+	 * Spawns drops on creature position
+	 */
 	public void drop() {
 		for (Drop drop : this.drops) {
 			if (LastTry.random.nextInt(drop.getChance()) == 0) {

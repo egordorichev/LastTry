@@ -6,10 +6,6 @@ import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 public class CreaturePhysicsComponent extends PhysicsComponent {
 	private Creature creature;
 
-	public CreaturePhysicsComponent(Creature creature) {
-		super(creature);
-	}
-
 	public CreaturePhysicsComponent() {
 		super();
 	}

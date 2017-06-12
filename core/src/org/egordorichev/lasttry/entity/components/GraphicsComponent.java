@@ -13,8 +13,4 @@ public class GraphicsComponent extends EntityComponent {
 	public GraphicsComponent() {
 		super();
 	}
-
-	public void render() {
-
-	}
 }

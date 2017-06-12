@@ -6,7 +6,13 @@ import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.graphics.Animation;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
+	/**
+	 * Creature texture
+	 */
 	protected TextureRegion texture;
+	/**
+	 * Creature, that is being served
+	 */
 	protected Creature creature;
 
 	public CreatureGraphicsComponent() {
@@ -20,7 +26,7 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 	}
 
 	@Override
-	public void setEntity(Entity entity) {
+	public void setEntity(Entity entity) { // Little hack ;)
 		super.setEntity(entity);
 		this.creature = (Creature) entity;
 	}
