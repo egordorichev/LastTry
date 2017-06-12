@@ -9,7 +9,7 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
         int seedYOffset = generator.world.getSeed();
         // TODO: These numbers shouldn't be hard-coded
         // TODO: Let the user choose these variables when generating a world.
-        int caveBiasDepth = 20;
+        int caveBiasDepth = 30;
         int octaves = 4;
         float roughness = 0.5f;
         float scale = 1f / 20f;

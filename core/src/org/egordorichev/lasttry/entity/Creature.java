@@ -67,8 +67,8 @@ public class Creature extends Entity {
 	 *            HP to remove from health
 	 */
 	public void hit(int damage) {
-		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO:
-																		// crit?
+		// TODO: crit?
+		Globals.entityManager.spawn(new DamageParticle(false, damage),
 				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
 				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
@@ -82,7 +82,6 @@ public class Creature extends Entity {
 		if (this.stats.getHP() != this.stats.getMaxHP() && this.stats.getHP() != 0) {
 			this.renderHealthBar();
 		}
-
 		super.render();
 	}
 
