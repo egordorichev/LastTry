@@ -5,12 +5,14 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.util.Log;
-
 import java.util.HashMap;
 
 public class Creatures {
 	public static HashMap<String, CreatureInfo> CREATURE_CACHE = new HashMap<>();
 
+	/**
+	 * Loads all creatures from json
+	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
 			Log.error("Trying to load enemies before bootstrap");
@@ -37,6 +39,12 @@ public class Creatures {
 		}
 	}
 
+	/**
+	 * Creates new creature with given name
+	 *
+	 * @param name Creature name
+	 * @return New creature or null, if it is not found
+	 */
 	public static Creature create(String name) {
 		CreatureInfo creature = CREATURE_CACHE.get(name);
 
@@ -48,6 +56,13 @@ public class Creatures {
 		return creature.create();
 	}
 
+	/**
+	 * Returns true, if creature with given name can spawn
+	 *
+	 * @param name Creature name
+	 * @param availableMaxSpawn Left spawn value
+	 * @return If creature with given name can spawn
+	 */
 	public static boolean canSpawn(String name, int availableMaxSpawn) {
 		CreatureInfo creature = CREATURE_CACHE.get(name);
 

@@ -29,7 +29,7 @@ public class Crash {
 		builder.append("\nJava version: ").append(System.getProperty("java.version")).append(", ").append(System.getProperty("java.vendor"));
 		builder.append("\nJava VM version: ").append(System.getProperty("java.vm.name")).append(" (").append(System.getProperty("java.vm.info")).append("), ").append(System.getProperty("java.vm.vendor"));
 		builder.append("\nJava VM flags: ").append(getJavaVMFlags());
-		builder.append("\nMemory: ").append(printMemoryUsage());
+		builder.append("\nMemory: ").append(getMemoryUsage());
 		builder.append("\n--- Exception cause: ---\n");
 		builder.append(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(throwable));
 		builder.append("\n--- END CRASH REPORT ---\n");
@@ -46,7 +46,10 @@ public class Crash {
 		LastTry.abort();
 	}
 
-	private static String printMemoryUsage() {
+	/**
+	 * @return Info about memory usage
+	 */
+	private static String getMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
 		
 		long i = runtime.maxMemory();
@@ -59,6 +62,9 @@ public class Crash {
 		return k + " bytes (" + j1 + " MB) / " + j + " bytes (" + i1 + " MB) up to " + i + " bytes (" + l + " MB)";
 	}
 
+	/**
+	 * @return Java flags
+	 */
 	private static String getJavaVMFlags() {
 		RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
 		List<String> list = runtimemxbean.getInputArguments();

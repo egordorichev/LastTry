@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
@@ -12,28 +11,80 @@ import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Rectangle;
-
 import java.util.ArrayList;
 
+/**
+ * Because every creature is an instance, this json handler
+ * is very different from other ones.
+ * It loads all data into CreatureInfo fields, and creates
+ * Creature from it
+ */
+
 public class CreatureInfo {
+	/**
+	 * Creature ai
+	 */
 	public AI ai;
+	/**
+	 * Info about hp: normal, expert, hardmode
+	 */
 	public int[] hp = new int[3];
+	/**
+	 * Info about defense: normal, expert, hardmode
+	 */
 	public int[] defense = new int[3];
+	/**
+	 * Info about damage: normal, expert, hardmode
+	 */
 	public int[] damage = new int[3];
+	/**
+	 * Info about resistance to knockback
+	 */
 	public float[] kbResist = new float[3];
+	/**
+	 * Creature speed
+	 */
 	public float speed = 1;
+	/**
+	 * How much spawn will creature "eat"
+	 */
 	public byte spawnWeight = 1;
+	/**
+	 * Creature type: enemy, creature, npc, etc.
+	 * TODO: replace with string?
+	 */
 	public byte type = 1;
-	public String name;
+	/**
+	 * Creature id
+	 */
+	public String id;
+	/**
+	 * Creature texture
+	 */
 	public TextureRegion image;
+	/**
+	 * Items, that creature drops on death
+	 */
 	public ArrayList<Drop> drops = new ArrayList<>();
+	/**
+	 * Creature hitbox (can be different from renderBounds)
+	 */
 	public Rectangle hitbox = new Rectangle(0, 0, 16, 16);
+	/**
+	 * Creature render bounds
+	 */
 	public Rectangle renderBounds = new Rectangle(0, 0, 16, 16);
+	/**
+	 * Animations of creature
+	 */
 	public Animation[] animations = new Animation[CreatureStateComponent.State.values().length];
+	/**
+	 * If the creature was copied from another one
+	 */
 	private boolean copied = false;
 
-	public CreatureInfo(JsonValue root, String name) throws Exception {
-		this.name = name;
+	public CreatureInfo(JsonValue root, String id) throws Exception {
+		this.id = id;
 
 		for (int i = 0; i < this.animations.length; i++) {
 			this.animations[i] = new Animation(true);
@@ -43,7 +94,7 @@ public class CreatureInfo {
 			if (root.has("copy")) {
 				String from = root.getString("copy");
 
-				if (from.equals(name)) {
+				if (from.equals(id)) {
 					throw new Exception("You can't copy creature from it self");
 				}
 
@@ -56,6 +107,12 @@ public class CreatureInfo {
 		}
 	}
 
+	/**
+	 * Copies all info from another creature
+	 *
+	 * @param from Creature, to copy from
+	 * @throws Exception Exception, containing parse error
+	 */
 	private void copy(String from) throws Exception {
 		this.copied = true;
 
@@ -86,6 +143,12 @@ public class CreatureInfo {
 		}
 	}
 
+	/**
+	 * Loads creature info from json root
+	 *
+	 * @param root Json root
+	 * @throws Exception Exception, containing parse error
+	 */
 	private void load(JsonValue root) throws Exception {
 		if (root.has("hp")) {
 			this.hp = root.get("hp").asIntArray();
@@ -175,7 +238,7 @@ public class CreatureInfo {
 			}
 		}
 
-		this.image = Assets.getTexture(this.name.replace(':', '_'));
+		this.image = Assets.getTexture(this.id.replace(':', '_'));
 
 		if (root.has("animation")) {
 			JsonValue animation = root.get("animation");
@@ -189,6 +252,11 @@ public class CreatureInfo {
 		}
 	}
 
+	/**
+	 * Loads animation with given type
+	 * @param root Json root
+	 * @param type Animation type
+	 */
 	private void loadAnimation(JsonValue root, String type) {
 		JsonValue animation = root.get(type);
 		Animation to = this.animations[this.toID(type)];
@@ -214,6 +282,12 @@ public class CreatureInfo {
 		}
 	}
 
+	/**
+	 * Loads animation from
+	 *
+	 * @param frame Json root for frame
+	 * @param to Animation, that will receive that frame
+	 */
 	private void loadFrame(JsonValue frame, Animation to) {
 		JsonValue rect = frame.get("rect");
 
@@ -221,6 +295,12 @@ public class CreatureInfo {
 			rect.get(1).asInt(), rect.get(2).asInt(), rect.get(3).asInt()), frame.getInt("time", 10)));
 	}
 
+	/**
+	 * Converts string to animation number
+	 *
+	 * @param animation String, containing animation type
+	 * @return Animation number
+	 */
 	private int toID(String animation) {
 		switch (animation) {
 			case "moving": return CreatureStateComponent.State.MOVING.getID();
@@ -232,8 +312,11 @@ public class CreatureInfo {
 		}
 	}
 
+	/**
+	 * @return New creature
+	 */
 	public Creature create() {
-		Enemy creature = new Enemy(this.name, this.ai);
+		Enemy creature = new Enemy(this.id, this.ai);
 
 		int hp = this.hp[0];
 		int defense = this.damage[0];
@@ -264,7 +347,7 @@ public class CreatureInfo {
 			creature.drops.add(this.drops.get(i).clone());
 		}
 
-		//creature.setSpawnWeight(spawnWeight);
+		creature.setSpawnWeight(spawnWeight);
 
 		return creature;
 
@@ -279,6 +362,6 @@ public class CreatureInfo {
 			// todo: npc's
 		}
 
-		return null;*/
+		return null;*/ // FIXME
 	}
 }

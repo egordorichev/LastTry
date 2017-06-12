@@ -1,8 +1,5 @@
 package org.egordorichev.lasttry.effect;
 
-/**
- * Created by Admin on 20/04/2017.
- */
 public class BuffID {
    public final static short none = 0;
    public final static short ammoReservation = 1;
@@ -50,9 +47,6 @@ public class BuffID {
    public final static short honey = 43;
    public final static short peaceCandle = 44;
    public final static short starInABottle = 45;
-    
+
    public final static short count = 46;
-
-
-
 }

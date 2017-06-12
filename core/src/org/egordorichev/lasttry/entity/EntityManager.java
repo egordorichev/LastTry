@@ -8,34 +8,40 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.player.Player;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
-
 import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class EntityManager {
-	private List<Entity> entities = new ArrayList<>();
-	private List<Creature> creatureEntities = new ArrayList<>();
-	private List<Entity> clearList = new ArrayList<>();
+public class EntityManager { // TODO: gore and blood
 	private static EntityComparator comparator = new EntityComparator();
-
 	public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
-	// private List<Gore> gores = new ArrayList<>(); : TODO
+	/**
+	 * List of active entities
+	 */
+	private List<Entity> entities = new ArrayList<>();
+	/**
+	 * List of active creatures
+	 */
+	private List<Creature> creatureEntities = new ArrayList<>();
+	/**
+	 * List of entities, marked for remove
+	 */
+	private List<Entity> clearList = new ArrayList<>();
 
 	public EntityManager() {
 		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
-				attemptDespawnEnemies();
+				attemptDespawnCreatures();
 			}
 		}, ENEMY_DESPAWN_SWEEP_INTERVAL);
 	}
 
+	/** Renders all entities */
 	public void render() {
 		boolean displayedStats = false;
 
@@ -73,6 +79,10 @@ public class EntityManager {
 		}
 	}
 
+	/**
+	 * Updates all entities
+	 * @param dt Time, past since last update
+	 */
 	public void update(int dt) {
 		for (Entity entity : this.clearList) {
 			this.entities.remove(entity);
@@ -98,6 +108,14 @@ public class EntityManager {
 		}
 	}
 
+	/**
+	 * Spawns given entity
+	 *
+	 * @param entity Entity to spawn
+	 * @param x Spawn X (in pixels)
+	 * @param y Spawn Y (in pixels)
+	 * @return Given entity
+	 */
 	public Entity spawn(Entity entity, int x, int y) {
 		if (entity == null) {
 			return null;
@@ -116,6 +134,14 @@ public class EntityManager {
 		return entity;
 	}
 
+	/**
+	 * Spawns block drop
+	 *
+	 * @param item Drop to spawn
+	 * @param x Spawn X
+	 * @param y Spawn Y
+	 * @return Given drop
+	 */
 	public Entity spawnBlockDrop(DroppedItem item, int x, int y) {
 		Entity entity = spawn(item, x, y);
 
@@ -138,27 +164,35 @@ public class EntityManager {
 		return entity;
 	}
 
+	/** Sorts entities by z-index */
 	private void sort() {
 		Collections.sort(this.entities, comparator);
 	}
 
-	public void remove(Entity entity) {
-		this.entities.remove(entity);
-	}
-
+	/**
+	 * Marks entity to be removed
+	 * @param entity Entity to be marked
+	 */
 	public void markForRemoval(Entity entity) {
 		this.clearList.add(entity);
 	}
 
+	/**
+	 * @return All entities
+	 */
 	public List<Entity> getEntities() {
 		return entities;
 	}
 
+	/**
+	 * @return All creatures
+	 */
 	public List<Creature> getCreatureEntities() {
 		return creatureEntities;
 	}
 
-	private synchronized void attemptDespawnEnemies() {
+	/** Attempts to despawn creatures */
+	private synchronized void attemptDespawnCreatures() {
 		try {
 			for (int i = 0; i < this.creatureEntities.size(); i++) {
 				Creature creature = creatureEntities.get(i);
@@ -171,8 +205,8 @@ public class EntityManager {
 				creature.tryToDespawn();
 				readOnlyLock.readLock().unlock();
 			}
-		} catch (Exception e) {
-			LastTry.handleException(e);
+		} catch (Exception exception) {
+			LastTry.handleException(exception);
 		}
 	}
 
@@ -188,5 +222,4 @@ public class EntityManager {
 			return 0;
 		}
 	}
-
 }

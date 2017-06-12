@@ -3,50 +3,50 @@ package org.egordorichev.lasttry.effect;
 import org.egordorichev.lasttry.entity.Creature;
 
 public class EffectData {
-    private Effect effect;
-    private int currentTime;
-    private int totalTime;
-    private Creature creature;
-    private boolean done;
+	private Effect effect;
+	private int currentTime;
+	private int totalTime;
+	private Creature creature;
+	private boolean done;
 
-    public EffectData(Creature creature, Effect effect, int time) {
-        this.effect = effect;
-        this.creature = creature;
-        this.setTime(time);
-        this.effect.apply(this.creature);
-    }
+	public EffectData(Creature creature, Effect effect, int time) {
+		this.effect = effect;
+		this.creature = creature;
+		this.setTime(time);
+		this.effect.apply(this.creature);
+	}
 
-    public void render(int x, int y) {
-        this.effect.render(x, y);
-    }
+	public void render(int x, int y) {
+		this.effect.render(x, y);
+	}
 
-    public boolean update(int dt) {
-        if (this.done) {
-            return true;
-        }
+	public boolean update(int dt) {
+		if (this.done) {
+			return true;
+		}
 
-        this.currentTime--;
-        this.effect.update(this.creature, dt);
+		this.currentTime--;
+		this.effect.update(this.creature, dt);
 
-        if (this.currentTime == 0) {
-            this.done = true;
-            this.effect.remove(this.creature);
-            return true;
-        }
+		if (this.currentTime == 0) {
+			this.done = true;
+			this.effect.remove(this.creature);
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public void setTime(int time) {
-        this.currentTime = time * 60;
-        this.totalTime = time * 60;
-    }
+	public void setTime(int time) {
+		this.currentTime = time * 60;
+		this.totalTime = time * 60;
+	}
 
-    public Effect getEffect() {
-        return this.effect;
-    }
+	public Effect getEffect() {
+		return this.effect;
+	}
 
-    public boolean isDone() {
-        return this.done;
-    }
+	public boolean isDone() {
+		return this.done;
+	}
 }
