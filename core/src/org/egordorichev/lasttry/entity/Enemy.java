@@ -21,6 +21,8 @@ public class Enemy extends CreatureWithAI {
 
 	/** Called on player collision */
 	protected void onPlayerCollision(Player player) {
-		player.hit(this.stats.getDamage());
+		if (player.isActive() && !player.isInvulnrable()) {
+			this.attack(player, this.stats.getDamage());
+		}
 	}
 }
