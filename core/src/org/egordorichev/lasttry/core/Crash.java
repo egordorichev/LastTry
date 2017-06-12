@@ -3,6 +3,8 @@ package org.egordorichev.lasttry.core;
 import org.egordorichev.lasttry.LastTry;
 
 import javax.swing.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.List;
@@ -31,7 +33,11 @@ public class Crash {
 		builder.append("\nJava VM flags: ").append(getJavaVMFlags());
 		builder.append("\nMemory: ").append(getMemoryUsage());
 		builder.append("\n--- Exception cause: ---\n");
-		builder.append(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(throwable));
+
+		StringWriter writer = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(writer));
+
+		builder.append(writer.toString());
 		builder.append("\n--- END CRASH REPORT ---\n");
 
 		System.err.println(builder.toString());
