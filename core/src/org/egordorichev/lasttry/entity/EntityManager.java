@@ -53,7 +53,7 @@ public class EntityManager {
 			if (entity.physics.getHitbox().intersects(camera)) {
 				entity.render();
 
-				if (!displayedStats && entity instanceof Creature && entity.physics.getHitbox().intersects(mouse)) {
+				if (!displayedStats && entity.active && entity instanceof Creature && entity.physics.getHitbox().intersects(mouse)) {
 					Creature creature = ((Creature) entity);
 
 					float x = Gdx.input.getX() + camera.x + 36;
