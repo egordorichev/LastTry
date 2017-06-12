@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
+import org.egordorichev.lasttry.util.Callable;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	public static final int INVENTORY_SIZE = 88;
@@ -47,6 +48,17 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		LastTry.ui.add(this.getInventory());
 
 		this.setZIndex(Layers.player);
+
+		this.physics.setOnGroundHit(new Callable() {
+			@Override
+			public void call() {
+				int damage = (int) (Math.abs(physics.getVelocity().y) - 10);
+
+				if (damage > 0) {
+					hit(damage);
+				}
+			}
+		});
 	}
 
 	public void tpToSpawn() {
@@ -63,9 +75,11 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		}
 
 		this.input.update(dt);
+
 		if (this.getInventory().getActiveItem() != null && this.getInventory().getActiveItem().getItem() != null) {
 			this.getInventory().getActiveItem().getItem().update(this, dt);
 		}
+
 		if (this.getInventory().getSelectedItem() != null && this.getInventory().getSelectedItem().getItem() != null) {
 			this.getInventory().getSelectedItem().getItem().update(this, dt);
 		}
@@ -83,7 +97,7 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 			// Notify the player has been respawned
 			Globals.chat.print(this.name + " respawned");
 			// Reset position and health
-			this.physics.setPosition(Globals.getWorld().spawnX, Globals.getWorld().spawnY);
+			this.tpToSpawn();
 			this.stats.modifyHP(this.stats.getMaxHP());
 			this.active = true;
 		}
