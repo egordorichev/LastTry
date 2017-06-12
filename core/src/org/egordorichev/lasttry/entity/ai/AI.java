@@ -10,7 +10,7 @@ public abstract class AI {
             throw new RuntimeException("AI with id " + id + " is already defined!");
         }
 
-        AIs.AI_CACHE[id] = this; // todo
+        AIs.AI_CACHE[id] = this;
         this.id = id;
     }
 

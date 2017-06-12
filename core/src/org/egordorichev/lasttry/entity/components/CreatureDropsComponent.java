@@ -26,12 +26,7 @@ public class CreatureDropsComponent extends CreatureComponent {
 			if (LastTry.random.nextInt(drop.getChance()) == 0) {
 				DroppedItem droppedItem = new DroppedItem(drop.createHolder());
 
-				// todo: fix
-
-				Globals.entityManager.spawn(
-						droppedItem, 
-						(int) this.creature.physics.getCenterX(),
-						(int) this.creature.physics.getCenterY());
+				Globals.entityManager.spawn(droppedItem, (int) this.creature.physics.getCenterX(), (int) this.creature.physics.getCenterY());
 			}
 		}
 	}

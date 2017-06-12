@@ -58,7 +58,7 @@ public class PhysicsComponent extends EntityComponent {
     public void setEntity(Entity entity) {
         super.setEntity(entity);
 
-        this.size = new Vector2(32, 48); // TODO: get the size
+        this.size = new Vector2(32, 48);
         this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
     }
 
