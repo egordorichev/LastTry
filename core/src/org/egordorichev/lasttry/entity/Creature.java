@@ -61,21 +61,26 @@ public class Creature extends Entity {
 
 	/**
 	 * Hits the creature
-	 * 
-	 * @param damage
-	 *            HP to remove from health
+	 * @param damage HP to remove from health
 	 */
-	public void hit(int damage) {
-		// TODO: crit?
-		Globals.entityManager.spawn(new DamageParticle(false, damage),
-				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
+	public void hit(int damage, boolean crit) {
+		Globals.entityManager.spawn(new DamageParticle(crit, damage),
+			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		this.stats.modifyHP(-damage);
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
 		if (this.stats.getHP() <= 0){
 			this.die();
 		}
+	}
+
+	/**
+	 * Hits the creature
+	 * @param damage HP to remove from health
+	 */
+	public void hit(int damage) {
+		this.hit(damage, false);
 	}
 
 	/** Renders the creature */

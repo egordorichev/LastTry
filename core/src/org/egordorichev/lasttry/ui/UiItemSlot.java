@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.inventory.InventorySlot;
 import org.egordorichev.lasttry.inventory.ItemHolder;

@@ -121,11 +121,6 @@ public class Tool extends Item {
 		return this.baseDamage;
 	}
 
-	protected float getCurrentAngle() {
-		// TODO;
-		return 0;
-	}
-
 	public Rarity getRarity() {
 		return this.rarity;
 	}

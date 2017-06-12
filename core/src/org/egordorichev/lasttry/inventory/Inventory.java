@@ -13,7 +13,6 @@ public interface Inventory<Slot extends InventorySlot> {
 	 * @return If addition was success.
 	 */
 	default boolean add(ItemHolder holder) {
-		// TODO: check if item is already in inventory
 		for (int i = 0; i < getMaxInventorySize(); i++) {
 			Slot slot = getSlot(i);
 			// If slot is empty or slot is full skip consideration.

@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
@@ -16,7 +15,6 @@ import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Util;
 

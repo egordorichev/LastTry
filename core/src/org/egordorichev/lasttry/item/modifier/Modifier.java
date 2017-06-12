@@ -1,12 +1,9 @@
 package org.egordorichev.lasttry.item.modifier;
 
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Log;
 
 public class Modifier {
-    protected String name;
-    protected byte id;
+    protected String id;
     protected int damage;
     protected int speed;
     protected int criticalStrikeChance;
@@ -18,18 +15,10 @@ public class Modifier {
     protected int movementSpeed;
     protected int defense;
 
-    public Modifier(int id, String name, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
+    public Modifier(String id, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
             int velocity, int knockback, int mana, int movementSpeed, int defense) {
 
-    	if (Modifiers.MODIFIER_CACHE[id] != null) {
-		    Log.error("Modifier with id " + id + " is already defined!");
-	        LastTry.abort();
-    	}
-
-	    Modifiers.MODIFIER_CACHE[id] = this;
-
-    	this.id = (byte) id;
-        this.name = name;
+    	this.id = id;
         this.damage = damage;
         this.speed = speed;
         this.criticalStrikeChance = criticalStrikeChance;
@@ -42,10 +31,6 @@ public class Modifier {
         this.defense = defense;
     }
 
-    public static Modifier random(Item item) {
-        // TODO: return modifier based on item type
-        return null;
-    }
 
     public int getDamage() {
         return this.damage;
@@ -87,19 +72,7 @@ public class Modifier {
         return this.defense;
     }
 
-	public byte getID() {
+	public String getID() {
 		return this.id;
 	}
-
-	public String getName() {
-        return this.name;
-    }
-
-    public static Modifier fromID(byte id) {
-	    if (id == 0) {
-		    return null;
-	    }
-
-	    return Modifiers.MODIFIER_CACHE[id];
-    }
 }
