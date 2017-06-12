@@ -156,11 +156,13 @@ public class World {
 	 */
 	public float distToHorizontalCollision(Rectangle hitbox, float velocityX) {
 		Rectangle tmp = hitbox.copy();
-		boolean collision = isColliding(tmp);
+
+			boolean collision = isColliding(tmp);
 		boolean negativeMotion = velocityX < 0;
 		int direction = negativeMotion ? -1 : 1;
 		float change = direction * Block.SIZE;
 		float distance = 0f;
+
 		while (!collision) {
 			tmp.x += change;
 			distance += change;

@@ -94,6 +94,7 @@ public class Args {
 		// com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 		//
 		// So do we update the gradle file or change the way its passed?
+
 		try {
 			instance.getClass().getDeclaredField(field).set(instance, value);
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {

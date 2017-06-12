@@ -15,7 +15,6 @@ public class Assets {
 	public static TextureAtlas textures;
 	public static AssetManager assetManager;
 
-
 	public static void load() {
 		FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
 		fontConfig.fontFileName = "font.ttf";

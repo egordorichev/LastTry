@@ -45,9 +45,13 @@ public class Item {
 	 */
 	protected boolean unobtainable;
 
-	public Item(String id) {
+	public Item(String id) throws Exception {
+		if (id.length() > 32) {
+			throw new Exception("Item id must be shorter or equal to 32 chars");
+		}
+
 		if (Items.ITEM_CACHE.containsKey(id)) {
-			throw new RuntimeException("Item with id " + id + " already exists.");
+			throw new Exception("Item with id " + id + " already exists.");
 		}
 
 		Items.ITEM_CACHE.put(id, this);

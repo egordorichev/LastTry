@@ -319,7 +319,7 @@ public class PhysicsComponent extends EntityComponent {
 	 * Sets new position (in grid points)
 	 *
 	 * @param gridX New X
-	 * @param5 gridY New Y
+	 * @param gridY New Y
 	 */
 	public void setGridPosition(float gridX, float gridY) {
 		this.position.x = gridX * Block.SIZE;
