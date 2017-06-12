@@ -11,7 +11,13 @@ import java.util.List;
 
 public class DroppedItem extends Entity {
 	private static final float ATTRACTION_RANGE = 60;
+	/**
+	 * Holder with item, that was dropped
+	 */
 	private final ItemHolder holder;
+	/**
+	 * Item texture
+	 */
 	private TextureRegion texture;
 
 	public DroppedItem(ItemHolder holder) {
@@ -54,6 +60,7 @@ public class DroppedItem extends Entity {
 			} else {
 				Globals.getPlayer().getInventory().add(this.holder);
 			}
+
 			Globals.entityManager.markForRemoval(this);
 		}
 	}
@@ -68,18 +75,20 @@ public class DroppedItem extends Entity {
 		Vector2 p2 = physics.getPosition().cpy();
 		float dist = p1.dst(p2);
 		boolean inRange = dist < ATTRACTION_RANGE;
+
 		if (inRange) {
 			float attraction = 100f;
 			float distPow = (float) Math.pow(dist, 2);
 			this.physics.getVelocity().add(p2.sub(p1).scl(-attraction, -attraction).scl(1f / distPow));
 		}
+
 		this.physics.setSolid(!inRange);
 	}
 
 	/**
 	 * Packs items of the same type into a single item.
 	 *
-	 * @param dt
+	 * @param dt Time, since last update
 	 */
 	private void packRelated(int dt) {
 		List<Entity> entities = Globals.entityManager.getEntities();
@@ -96,11 +105,15 @@ public class DroppedItem extends Entity {
 	 * @param other
 	 */
 	private void consume(DroppedItem other) {
-		// other.die() causes BOTH items to die
-		// this.die() causes only THIS item to die
-		//
-		// what??
+		/*
+		 * other.die() causes BOTH items to die
+		 * this.die() causes only THIS item to die
+		 *
+		 * what??
+		 */
+
 		int sum = this.holder.getCount() + other.holder.getCount();
+
 		if (sum <= other.holder.getItem().getMaxInStack()) {
 			other.holder.setCount(sum);
 			active = false;
@@ -108,6 +121,9 @@ public class DroppedItem extends Entity {
 		}
 	}
 
+	/**
+	 * @return Item holder
+	 */
 	public ItemHolder getHolder() {
 		return holder;
 	}

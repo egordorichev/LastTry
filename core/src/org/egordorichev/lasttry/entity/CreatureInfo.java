@@ -168,14 +168,14 @@ public class CreatureInfo {
 			this.speed = root.get("speed").asFloat();
 		}
 
-		short ai = 0;
+		String ai = "lt:none";
 
 		if (root.has("ai")) {
-			ai = root.get("ai").asShort();
+			ai = root.get("ai").asString();
 		}
 
 		if (root.has("ai")) {
-			ai = root.get("ai").asShort();
+			ai = root.get("ai").asString();
 		}
 
 		this.ai = AI.fromID(ai);
