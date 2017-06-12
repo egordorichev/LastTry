@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.item.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
@@ -145,22 +144,9 @@ public class Tool extends Item {
 		activeEnemies.stream().forEach(enemy -> {
 			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
 				int damage = this.calculateDamageToInflict(enemy);
-				applyKnockback(cowner, enemy, damage);
-				inflictDamageOnEnemy(enemy, damage);
+				cowner.attack(enemy, damage);
 			}
 		});
-	}
-
-	private void applyKnockback(Creature attacker, Creature enemy, int damage) {
-		float knockPower = damage * -0.04F;
-		Vector2 diff = attacker.physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
-		Vector2 force = diff.scl(knockPower);
-		force.limit(KNOCKBACK_MAX_POWER);
-		enemy.physics.getVelocity().add(force);
-	}
-
-	private void inflictDamageOnEnemy(final Creature enemy, int damage) {
-		enemy.hit(damage);
 	}
 
 	private Rectangle generateToolHitbox() {
