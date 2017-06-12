@@ -21,9 +21,6 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
-		Random random = null;
-	random.toString();
-
 		ItemHolder holder = Globals.getPlayer().getInventory().getActiveItem();
 
 		if (holder.getItem() != null) {
