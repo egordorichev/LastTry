@@ -90,7 +90,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 						print("Unknown creature");
 					} else {
 						for (int i = 0; i < count; i++) {
-							Globals.entityManager.spawn(creature, (int) Globals.getPlayer().physics.getX(),
+							Globals.entityManager.spawn(Creatures.create(name), (int) Globals.getPlayer().physics.getX(),
 								(int) Globals.getPlayer().physics.getY());
 						}
 					}
@@ -185,10 +185,17 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			}
 		});
 
-		this.commands.register(new Command("spawn", "TP to spawn", CMDCategory.DEBUG) {
+		this.commands.register(new Command("tospawn", "TP to spawn", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().tpToSpawn();
+			}
+		});
+
+		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().stats.setInvulnTime(2147483646);
 			}
 		});
 	}
