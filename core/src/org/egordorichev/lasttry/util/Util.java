@@ -124,8 +124,8 @@ public class Util {
 		return value >= min && value <= max;
 	}
 
-	public static void printWithOutline(BitmapFont font, String text, int x, int y) {
-		font.setColor(0.4f, 0.4f, 0.4f, 1);
+	public static void drawWithShadow(BitmapFont font, String text, float x, float y) {
+		font.setColor(0f, 0f, 0f, 1);
 
 		for (int j = -1; j < 2; j++) {
 			for (int i = -1; i < 2; i++) {

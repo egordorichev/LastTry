@@ -5,11 +5,14 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.graphics.particle.DamageParticle;
+import org.egordorichev.lasttry.item.items.Tool;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class Creature extends Entity {
 	protected static final int ATTACK_INVULN_TIME = 10;
@@ -59,15 +62,21 @@ public class Creature extends Entity {
 
 	/**
 	 * Hits the creature
-	 * @param damage HP to remove from health
+	 * 
+	 * @param damage
+	 *            HP to remove from health
 	 */
 	public void hit(int damage) {
-		Globals.entityManager.spawn(new DamageParticle(false, damage), // TODO: crit?
-			(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-			(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
+		// TODO: crit?
+		Globals.entityManager.spawn(new DamageParticle(false, damage),
+				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
 		this.stats.modifyHP(-damage);
 		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+		if (this.stats.getHP() <= 0){
+			this.die();
+		}
 	}
 
 	/** Renders the creature */
@@ -76,7 +85,6 @@ public class Creature extends Entity {
 		if (this.stats.getHP() != this.stats.getMaxHP() && this.stats.getHP() != 0) {
 			this.renderHealthBar();
 		}
-
 		super.render();
 	}
 
@@ -108,6 +116,10 @@ public class Creature extends Entity {
 	public void update(int dt) {
 		super.update(dt);
 
+		if (!this.isActive()) {
+			return;
+		}
+
 		this.graphics.update(dt);
 		this.stats.update(dt);
 		this.effects.update(dt);
@@ -136,11 +148,11 @@ public class Creature extends Entity {
 			final CircleAreaComponent playerActiveArea = GridComponent.retrieveActiveAreaCircle(currentTime);
 			final boolean isEnemyInActiveArea = GridComponent.isCreatureInPlayerActiveArea(this, playerActiveArea);
 
-			if(!isEnemyInActiveArea){
+			if (!isEnemyInActiveArea) {
 				Globals.entityManager.markForRemoval(this);
 			}
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			LastTry.handleException(e);
 		}
 	}
@@ -164,5 +176,34 @@ public class Creature extends Entity {
 	 */
 	public String getID() {
 		return id;
+	}
+
+	/**
+	 * Attacks the given enemy with the given damage.
+	 * 
+	 * @param enemy
+	 *            Enemy to attack.
+	 * @param damage
+	 *            Damage to inflict.
+	 */
+	public void attack(Creature enemy, int damage) {
+		applyKnockback(enemy, damage);
+		enemy.hit(damage);
+	}
+
+	/**
+	 * Knocks the enemy back according to the given damage delt.
+	 * 
+	 * @param enemy
+	 *            Enemy to knock back.
+	 * @param damage
+	 *            Damage delt, used to compute knockback power.
+	 */
+	private void applyKnockback(Creature enemy, int damage) {
+		float knockPower = damage * -0.04F;
+		Vector2 diff = physics.getPosition().cpy().sub(enemy.physics.getPosition().cpy());
+		Vector2 force = diff.scl(knockPower);
+		force.limit(Tool.KNOCKBACK_MAX_POWER);
+		enemy.physics.getVelocity().add(force);
 	}
 }

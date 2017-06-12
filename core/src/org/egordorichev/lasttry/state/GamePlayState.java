@@ -26,7 +26,7 @@ public class GamePlayState implements State {
 
 		int spawnX = Globals.getWorld().getWidth() / 2 * Block.SIZE;
 		int spawnY = (Globals.getWorld().getHeight() - 10) * Block.SIZE;
-
+		Globals.getWorld().setSpawn(spawnX, spawnY);
 		Globals.entityManager = new EntityManager();
 		Globals.entityManager.spawn(Globals.getPlayer(), spawnX, spawnY);
 		Globals.chunkGcManager = new ChunkGcManager();

@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.util.Util;
 
 public class DroppedItem extends Entity {
 	private static final float ATTRACTION_RANGE = 60;
@@ -29,7 +30,7 @@ public class DroppedItem extends Entity {
 	public void render() {
 		Graphics.batch.draw(this.texture, this.physics.getX(), this.physics.getY());
 		if (LastTry.debug.isEnabled()) {
-			Assets.f18.draw(Graphics.batch, String.valueOf(this.holder.getCount()), this.physics.getX(),
+			Util.drawWithShadow(Assets.f18,  String.valueOf(this.holder.getCount()), this.physics.getX(),
 					this.physics.getY());
 		}
 	}

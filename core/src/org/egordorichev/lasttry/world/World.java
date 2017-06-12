@@ -54,6 +54,10 @@ public class World {
 	 * Boolean flag for if light needs to be recalculated near the player.
 	 */
 	private boolean lightDirty;
+	/**
+	 * Spawn coordinates of the world.
+	 */
+	public int spawnX, spawnY;
 
 	public World(String name, Size size, int flags, int seed) {
 		this.size = size;
@@ -284,5 +288,10 @@ public class World {
 		public short getMaxChunks() {
 			return (short) ((width / Chunk.SIZE) * (height / Chunk.SIZE));
 		}
+	}
+
+	public void setSpawn(int spawnX, int spawnY) {
+		this.spawnX = spawnX;
+		this.spawnY = spawnY;
 	}
 }
