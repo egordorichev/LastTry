@@ -23,13 +23,13 @@ public class Debug {
 			return;
 		}
 
-		Util.printWithOutline(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
-		Util.printWithOutline(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
-		Util.printWithOutline(Assets.f18, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
+		Util.drawWithShadow(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
+		Util.drawWithShadow(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
+		Util.drawWithShadow(Assets.f18, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
 		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
-		Util.printWithOutline(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
-		Util.printWithOutline(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
-		Util.printWithOutline(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
+		Util.drawWithShadow(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
+		Util.drawWithShadow(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
+		Util.drawWithShadow(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
 
 		if (messagesToBePrinted.keySet().size() == 0) {
 			return;
@@ -51,7 +51,7 @@ public class Debug {
 			return;
 		}
 
-		Util.printWithOutline(Assets.f18, message, 10, 190);
+		Util.drawWithShadow(Assets.f18, message, 10, 190);
 
 		// Decrement counter as it has been displayed for 1 tick
 		gameTicksCounter--;

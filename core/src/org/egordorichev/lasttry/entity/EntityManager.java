@@ -59,8 +59,8 @@ public class EntityManager {
 					float x = Gdx.input.getX() + camera.x + 36;
 					float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) + camera.y;
 
-					Assets.f18.draw(Graphics.batch, creature.getName(), x, y);
-					Assets.f18.draw(Graphics.batch, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), x, y - 20);
+					Util.drawWithShadow(Assets.f18,  creature.getName(), x, y);
+					Util.drawWithShadow(Assets.f18, "HP: " + creature.stats.getHP() + "/" + creature.stats.getMaxHP(), x, y - 20);
 					displayedStats = true;
 				}
 			}

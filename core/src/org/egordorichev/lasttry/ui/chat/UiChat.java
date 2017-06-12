@@ -18,6 +18,8 @@ import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
+import org.egordorichev.lasttry.util.Util;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -209,15 +211,15 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			Graphics.batch.draw(this.back, 5, 5);
 			super.render();
 		}
-
+		
 		for (int i = this.lines.size() - 1; i >= 0; i--) {
 			ChatLine line = this.lines.get(i);
 
 			if (line.shouldBeRemoved()) {
 				this.lines.remove(i);
 			}
-
-			Assets.f18.draw(Graphics.batch, line.text, 10, 55 + i * 20);
+			
+			Util.drawWithShadow(Assets.f18, line.text, 10, 55 + i * 20);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {

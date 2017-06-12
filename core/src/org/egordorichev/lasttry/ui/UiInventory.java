@@ -213,17 +213,18 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		Item item = this.slots[this.activeSlot].getItem();
 
 		if (item == null) {
-			Util.printWithOutline(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
+			Util.drawWithShadow(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
 		} else {
 			item.update(owner, (int) Gdx.graphics.getDeltaTime() * 1000000);
 
 			Modifier modifier = this.slots[this.activeSlot].getItemHolder().getModifier();
 
 			if (modifier != null) {
-				Assets.f22.draw(Graphics.batch, String.format("%s %s", modifier.getName(), item.getName()), 10,
+			
+				Util.drawWithShadow(Assets.f22, String.format("%s %s", modifier.getName(), item.getName()), 10,
 						Gdx.graphics.getHeight() - 8);
 			} else {
-				Assets.f22.draw(Graphics.batch, item.getName(), 10, Gdx.graphics.getHeight() - 8);
+				Util.drawWithShadow(Assets.f22, item.getName(), 10, Gdx.graphics.getHeight() - 8);
 			}
 		}
 

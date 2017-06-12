@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.modifier.Modifier;
+import org.egordorichev.lasttry.util.Util;
 
 public class ItemHolder {
     private int count;
@@ -30,7 +31,7 @@ public class ItemHolder {
             Graphics.batch.draw(texture, x, y);
 
             if (this.count > 1) {
-	            Assets.f18.draw(Graphics.batch, String.format("%d", this.count), x - 8, y + th - 8);
+            	Util.drawWithShadow(Assets.f18,  String.format("%d", this.count), x - 8, y + th - 8);
             }
         }
     }
@@ -46,7 +47,7 @@ public class ItemHolder {
             Graphics.batch.draw(texture, x + (width - tw) / 2, iy);
 
             if (this.count > 1) {
-	            Assets.f18.draw(Graphics.batch, String.format("%d", this.count), x + tw / 2, iy + th / 2);
+            	Util.drawWithShadow(Assets.f18,  String.format("%d", this.count), x + tw / 2, iy + th / 2);
             }
         }
     }
