@@ -118,7 +118,7 @@ public class LastTry extends Game {
 		Globals.resolution = new Vector2(width, height);
 		instance = this;
 
-		Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("Cursor.png")), 0, 0));
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 0, 0));
 
 		Camera.create(width, height);
 		Language.load(new Locale("en", "US"));

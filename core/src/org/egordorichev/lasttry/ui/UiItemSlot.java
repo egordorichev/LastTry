@@ -12,7 +12,7 @@ import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiItemSlot extends UiComponent implements InventorySlot {
-	private static TextureRegion inventorySlot5 = Assets.getTexture("inventory_slot_5");
+	private static TextureRegion activeSlot = Assets.getTexture("inventory_slot_active");
 	private boolean active;
 	private int index;
 	private TextureRegion texture;
@@ -32,18 +32,18 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 			case AMMO:
 			case COIN:
 			case TRASH:
-				this.texture = Assets.getTexture("inventory_slot_1");
+				this.texture = Assets.getTexture("inventory_slot_normal");
 				break;
 			case ACCESSORY:
 			case ARMOR:
-				this.texture = Assets.getTexture("inventory_slot_2");
+				this.texture = Assets.getTexture("inventory_slot_green");
 				break;
 			case VANITY:
 			case VANITY_ACCESSORY:
-				this.texture = Assets.getTexture("inventory_slot_3");
+				this.texture = Assets.getTexture("inventory_slot_cyan");
 				break;
 			case DYE:
-				this.texture = Assets.getTexture("inventory_slot_4");
+				this.texture = Assets.getTexture("inventory_slot_gray");
 				break;
 		}
 
@@ -71,7 +71,7 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 		Graphics.batch.setColor(1, 1, 1, 0.8f);
 
 		if (this.active) {
-			Graphics.batch.draw(inventorySlot5, x, y, width, height);
+			Graphics.batch.draw(activeSlot, x, y, width, height);
 		} else {
 			Graphics.batch.draw(this.texture, x, y, width, height);
 		}
