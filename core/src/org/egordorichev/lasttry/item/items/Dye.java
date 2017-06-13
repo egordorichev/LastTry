@@ -19,7 +19,7 @@ public class Dye extends Item {
 
 		if (color != null) {
 			this.color = new Color(color.getByte(0), color.getByte(1),
-				color.getByte(2), color.getByte(3));
+					color.getByte(2), color.getByte(3));
 		}
 	}
 

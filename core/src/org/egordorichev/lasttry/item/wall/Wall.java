@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Tile;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
@@ -36,13 +35,14 @@ public class Wall extends Tile {
 
 	/**
 	 * Loads fields from given wall root
+	 *
 	 * @param root Wall root
 	 */
 	@Override
 	protected void loadFields(JsonValue root) {
 		super.loadFields(root);
 
-		short power[] = { 10, 0, 0 };
+		short power[] = {10, 0, 0};
 
 		if (root.has("requiredPower")) {
 			power = root.get("requiredPower").asShortArray();
@@ -90,11 +90,11 @@ public class Wall extends Tile {
 		byte variant = WallHelper.getVariant(hp);
 		byte binary = calculateBinary(x, y);
 
-		
-		float light  = 1f;
+
+		float light = 1f;
 		// Update light leven
-		if (!LastTry.noLight){
-			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		if (!LastTry.noLight) {
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / (WorldLightingComponent.MAX_LIGHT);
 		}
 		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
@@ -104,8 +104,8 @@ public class Wall extends Tile {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
-		
-		Graphics.batch.setColor(1f,1f,1f,1f);
+
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
 	@Override

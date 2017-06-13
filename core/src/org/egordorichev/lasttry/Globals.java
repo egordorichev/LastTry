@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry;
 
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.player.Player;
 import org.egordorichev.lasttry.player.PlayerIO;
@@ -10,17 +11,8 @@ import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
-import com.badlogic.gdx.math.Vector2;
 
 public class Globals {
-	/**
-	 * The current world.
-	 */
-	private static World world;
-	/**
-	 * The current player
-	 */
-	private static Player player;
 	/**
 	 * Handles biomes and events
 	 */
@@ -46,6 +38,14 @@ public class Globals {
 	 * The chat UI.
 	 */
 	public static UiChat chat;
+	/**
+	 * The current world.
+	 */
+	private static World world;
+	/**
+	 * The current player
+	 */
+	private static Player player;
 	/**
 	 * The currently displayed screen. If the current screen is null, then the
 	 * player is in-game with no overlay menus.
@@ -79,8 +79,7 @@ public class Globals {
 	 * Sets the current UiScreen. Handles the open values of the current and
 	 * to-be current screens.
 	 *
-	 * @param newScreen
-	 *            Screen to set.
+	 * @param newScreen Screen to set.
 	 */
 	public static void setScreen(UiScreen newScreen) {
 		if (Globals.currentScreen != null) {
@@ -105,6 +104,7 @@ public class Globals {
 
 	/**
 	 * Sets current world
+	 *
 	 * @param world World to be set as current
 	 */
 	public static void setWorld(World world) {
@@ -126,6 +126,7 @@ public class Globals {
 
 	/**
 	 * Sets the current player
+	 *
 	 * @param player Player to be set as current
 	 */
 	public static void setPlayer(Player player) {

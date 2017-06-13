@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
+import org.egordorichev.lasttry.entity.creature.Creature;
 import org.egordorichev.lasttry.util.Log;
+
 import java.util.HashMap;
 
 public class Creatures {
@@ -59,7 +61,7 @@ public class Creatures {
 	/**
 	 * Returns true, if creature with given name can spawn
 	 *
-	 * @param name Creature name
+	 * @param name              Creature name
 	 * @param availableMaxSpawn Left spawn value
 	 * @return If creature with given name can spawn
 	 */

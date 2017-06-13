@@ -16,6 +16,27 @@ public class Plant extends Block {
 		super(id);
 	}
 
+	public static String getSeedsFor(String id) {
+		switch (id) {
+			case "lt:day_bloom":
+				return "lt:day_bloom_seeds";
+			case "lt:blink_root":
+				return "lt:blink_root_seeds";
+			case "lt:moon_glow":
+				return "lt:moon_glow_seeds";
+			case "lt:death_weed":
+				return "lt:death_weed_seeds";
+			case "lt:fire_blossom":
+				return "lt:fire_blossom_seeds";
+			case "lt:water_leaf":
+				return "lt:water_leaf_seeds";
+			case "lt:silver_thorn":
+				return "lt:silver_thorn_seeds";
+			default:
+				return null;
+		}
+	}
+
 	@Override
 	public void onNeighborChange(short x, short y, short nx, short ny) {
 		if (ny == y - 1 && x == nx) {
@@ -29,7 +50,7 @@ public class Plant extends Block {
 
 		if (BlockHelper.plant.isBlooming(hp)) {
 			Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
-				y * Block.SIZE - Block.SIZE / 2);
+					y * Block.SIZE - Block.SIZE / 2);
 		}
 
 		if (BlockHelper.plant.hasGrown(hp)) {
@@ -37,24 +58,11 @@ public class Plant extends Block {
 
 			if (!seeds.isEmpty()) {
 				Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
-					x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
+						x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 			}
 		}
 
 		Globals.getWorld().blocks.set(null, x, y);
-	}
-
-	public static String getSeedsFor(String id) {
-		switch (id) {
-			case "lt:day_bloom": return "lt:day_bloom_seeds";
-			case "lt:blink_root": return "lt:blink_root_seeds";
-			case "lt:moon_glow": return "lt:moon_glow_seeds";
-			case "lt:death_weed": return "lt:death_weed_seeds";
-			case "lt:fire_blossom": return "lt:fire_blossom_seeds";
-			case "lt:water_leaf": return "lt:water_leaf_seeds";
-			case "lt:silver_thorn": return "lt:silver_thorn_seeds";
-			default: return null;
-		}
 	}
 
 	@Override

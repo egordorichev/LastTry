@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.item;
 
-/** Item rarity */
+/**
+ * Item rarity
+ */
 public enum Rarity {
 	WHITE,
 	GRAY,

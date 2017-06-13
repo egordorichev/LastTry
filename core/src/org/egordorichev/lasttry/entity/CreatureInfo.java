@@ -3,14 +3,16 @@ package org.egordorichev.lasttry.entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
+import org.egordorichev.lasttry.ai.AI;
+import org.egordorichev.lasttry.entity.creature.Creature;
+import org.egordorichev.lasttry.entity.creature.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Rectangle;
+
 import java.util.ArrayList;
 
 /**
@@ -166,14 +168,14 @@ public class CreatureInfo {
 			this.speed = root.get("speed").asFloat();
 		}
 
-		short ai = 0;
+		String ai = "lt:none";
 
 		if (root.has("ai")) {
-			ai = root.get("ai").asShort();
+			ai = root.get("ai").asString();
 		}
 
 		if (root.has("ai")) {
-			ai = root.get("ai").asShort();
+			ai = root.get("ai").asString();
 		}
 
 		this.ai = AI.fromID(ai);
@@ -254,6 +256,7 @@ public class CreatureInfo {
 
 	/**
 	 * Loads animation with given type
+	 *
 	 * @param root Json root
 	 * @param type Animation type
 	 */
@@ -286,13 +289,13 @@ public class CreatureInfo {
 	 * Loads animation from
 	 *
 	 * @param frame Json root for frame
-	 * @param to Animation, that will receive that frame
+	 * @param to    Animation, that will receive that frame
 	 */
 	private void loadFrame(JsonValue frame, Animation to) {
 		JsonValue rect = frame.get("rect");
 
 		to.addFrame(new AnimationFrame(new TextureRegion(this.image, rect.get(0).asInt(),
-			rect.get(1).asInt(), rect.get(2).asInt(), rect.get(3).asInt()), frame.getInt("time", 10)));
+				rect.get(1).asInt(), rect.get(2).asInt(), rect.get(3).asInt()), frame.getInt("time", 10)));
 	}
 
 	/**
@@ -303,12 +306,18 @@ public class CreatureInfo {
 	 */
 	private int toID(String animation) {
 		switch (animation) {
-			case "moving": return CreatureStateComponent.State.MOVING.getID();
-			case "jumping": return CreatureStateComponent.State.JUMPING.getID();
-			case "falling": return CreatureStateComponent.State.FALLING.getID();
-			case "dead": return CreatureStateComponent.State.DEAD.getID();
-			case "acting": return CreatureStateComponent.State.ACTING.getID();
-			default: return CreatureStateComponent.State.IDLE.getID();
+			case "moving":
+				return CreatureStateComponent.State.MOVING.getID();
+			case "jumping":
+				return CreatureStateComponent.State.JUMPING.getID();
+			case "falling":
+				return CreatureStateComponent.State.FALLING.getID();
+			case "dead":
+				return CreatureStateComponent.State.DEAD.getID();
+			case "acting":
+				return CreatureStateComponent.State.ACTING.getID();
+			default:
+				return CreatureStateComponent.State.IDLE.getID();
 		}
 	}
 

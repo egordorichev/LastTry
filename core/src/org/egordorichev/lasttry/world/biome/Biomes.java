@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.util.Log;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -71,6 +71,7 @@ public class Biomes {
 
 	/**
 	 * Returns biomes with given id
+	 *
 	 * @param id
 	 */
 	public static Biome get(String id) {

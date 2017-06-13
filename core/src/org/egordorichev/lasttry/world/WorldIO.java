@@ -105,13 +105,13 @@ public class WorldIO {
 			switch (Globals.getWorld().getSize()) {
 				case SMALL:
 					stream.writeByte((byte) 0);
-				break;
+					break;
 				case MEDIUM:
 					stream.writeByte((byte) 1);
-				break;
+					break;
 				case LARGE:
 					stream.writeByte((byte) 2);
-				break;
+					break;
 			}
 
 			stream.writeBoolean(Globals.getWorld().flags.isHardmode());

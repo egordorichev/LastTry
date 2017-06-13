@@ -19,22 +19,19 @@ public class TileableBlock extends Block {
 	/**
 	 * Renders this block at given position
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
-	 * @param binary
-	 *            Byte, representing block neighbors
+	 * @param x      Block X
+	 * @param y      Block Y
+	 * @param binary Byte, representing block neighbors
 	 */
 	@Override
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 		byte variant = BlockHelper.plain.getVariant(hp);
 
-		float light  = 1f;
+		float light = 1f;
 		// Update light leven
-		if (!LastTry.noLight){
-			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		if (!LastTry.noLight) {
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / (WorldLightingComponent.MAX_LIGHT);
 		}
 		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * SIZE, y * SIZE);
@@ -44,7 +41,7 @@ public class TileableBlock extends Block {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
-		Graphics.batch.setColor(1f,1f,1f,1f);
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
 	@Override

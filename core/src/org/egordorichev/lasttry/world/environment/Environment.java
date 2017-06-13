@@ -6,7 +6,6 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
@@ -44,7 +43,7 @@ public class Environment {
 
 		for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
 			Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height,
-				time, 0, 1, 1024, false, false);
+					time, 0, 1, 1024, false, false);
 		}
 
 		if (this.currentBiome != null) {

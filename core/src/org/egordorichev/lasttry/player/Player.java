@@ -4,11 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
-import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
+import org.egordorichev.lasttry.entity.creature.Creature;
+import org.egordorichev.lasttry.entity.creature.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
 import org.egordorichev.lasttry.util.Callable;
@@ -49,7 +48,7 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 
 		this.setZIndex(Layers.player);
 
-		this.physics.setOnGroundHit(new Callable() {
+		this.physics.setOnGroundHitCallback(new Callable() {
 			@Override
 			public void call() {
 				int damage = (int) (Math.abs(physics.getVelocity().y) - 10);
@@ -110,9 +109,9 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		Globals.chat.print(this.name + " is dead");
 		// TODO: dead screen
 	}
-	
+
 	@Override
-	public void render(){
+	public void render() {
 		if (this.isActive()) {
 			super.render();
 		}
@@ -126,7 +125,6 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	}
 
 	public int getItemUseRadius() {
-		// TODO: modify
 		return 10;
 	}
 
@@ -144,11 +142,11 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		this.inventory = (UiInventory) inventory;
 	}
 
-	public void setSpawnPoint(Vector2 spawnPoint) {
-		this.spawnPoint = spawnPoint;
-	}
-
 	public Vector2 getSpawnPoint() {
 		return this.spawnPoint;
+	}
+
+	public void setSpawnPoint(Vector2 spawnPoint) {
+		this.spawnPoint = spawnPoint;
 	}
 }

@@ -1,9 +1,10 @@
 package org.egordorichev.lasttry.entity;
 
-import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.components.AiComponent;
-import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
-import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
+import org.egordorichev.lasttry.ai.AI;
+import org.egordorichev.lasttry.ai.AiComponent;
+import org.egordorichev.lasttry.entity.creature.Creature;
+import org.egordorichev.lasttry.entity.creature.CreatureGraphicsComponent;
+import org.egordorichev.lasttry.entity.creature.CreaturePhysicsComponent;
 
 public class CreatureWithAI extends Creature {
 	public AiComponent ai;

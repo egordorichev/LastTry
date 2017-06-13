@@ -2,9 +2,9 @@ package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.entity.creature.Creature;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.item.block.Block;
@@ -12,13 +12,17 @@ import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EntityManager { // TODO: gore and blood
-	private static EntityComparator comparator = new EntityComparator();
 	public static final int ENEMY_DESPAWN_SWEEP_INTERVAL = 1;
+	private static EntityComparator comparator = new EntityComparator();
 	/**
 	 * List of active entities
 	 */
@@ -41,7 +45,9 @@ public class EntityManager { // TODO: gore and blood
 		}, ENEMY_DESPAWN_SWEEP_INTERVAL);
 	}
 
-	/** Renders all entities */
+	/**
+	 * Renders all entities
+	 */
 	public void render() {
 		boolean displayedStats = false;
 
@@ -81,6 +87,7 @@ public class EntityManager { // TODO: gore and blood
 
 	/**
 	 * Updates all entities
+	 *
 	 * @param dt Time, past since last update
 	 */
 	public void update(int dt) {
@@ -112,8 +119,8 @@ public class EntityManager { // TODO: gore and blood
 	 * Spawns given entity
 	 *
 	 * @param entity Entity to spawn
-	 * @param x Spawn X (in pixels)
-	 * @param y Spawn Y (in pixels)
+	 * @param x      Spawn X (in pixels)
+	 * @param y      Spawn Y (in pixels)
 	 * @return Given entity
 	 */
 	public Entity spawn(Entity entity, int x, int y) {
@@ -138,8 +145,8 @@ public class EntityManager { // TODO: gore and blood
 	 * Spawns block drop
 	 *
 	 * @param item Drop to spawn
-	 * @param x Spawn X
-	 * @param y Spawn Y
+	 * @param x    Spawn X
+	 * @param y    Spawn Y
 	 * @return Given drop
 	 */
 	public Entity spawnBlockDrop(DroppedItem item, int x, int y) {
@@ -164,13 +171,16 @@ public class EntityManager { // TODO: gore and blood
 		return entity;
 	}
 
-	/** Sorts entities by z-index */
+	/**
+	 * Sorts entities by z-index
+	 */
 	private void sort() {
 		Collections.sort(this.entities, comparator);
 	}
 
 	/**
 	 * Marks entity to be removed
+	 *
 	 * @param entity Entity to be marked
 	 */
 	public void markForRemoval(Entity entity) {
@@ -191,7 +201,9 @@ public class EntityManager { // TODO: gore and blood
 		return creatureEntities;
 	}
 
-	/** Attempts to despawn creatures */
+	/**
+	 * Attempts to despawn creatures
+	 */
 	private synchronized void attemptDespawnCreatures() {
 		try {
 			for (int i = 0; i < this.creatureEntities.size(); i++) {

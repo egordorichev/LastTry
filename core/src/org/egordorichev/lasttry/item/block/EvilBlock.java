@@ -16,15 +16,21 @@ public class EvilBlock extends BlockGround {
 	public static String getInfectIDFor(String fromID, String id) {
 		if (EvilBlock.isCrimsonBlock(fromID)) {
 			switch (id) {
-				case "lt:stone": return "lt:crimstone";
-				case "lt:sand": return "lt:crimsand";
-				case "lt:ice": return "lt:red_ice";
+				case "lt:stone":
+					return "lt:crimstone";
+				case "lt:sand":
+					return "lt:crimsand";
+				case "lt:ice":
+					return "lt:red_ice";
 			}
 		} else {
 			switch (id) {
-				case "lt:stone": return "lt:ebonstone";
-				case "lt:sand": return "lt:ebonsand";
-				case "lt:ice": return "lt:purple_ice";
+				case "lt:stone":
+					return "lt:ebonstone";
+				case "lt:sand":
+					return "lt:ebonsand";
+				case "lt:ice":
+					return "lt:purple_ice";
 			}
 		}
 

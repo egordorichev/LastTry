@@ -16,17 +16,13 @@ public class Recipe {
 	 */
 	private Holder result;
 
-	public static class Holder {
-		public String item;
-		public short count;
-	}
-
 	public Recipe() {
 
 	}
 
 	/**
 	 * Loads recipe from json
+	 *
 	 * @param root Json root
 	 * @throws Exception Exception containing parse error
 	 */
@@ -53,5 +49,10 @@ public class Recipe {
 		this.result = new Holder();
 		this.result.count = result.getShort("count", (short) 1);
 		this.result.item = result.getString("id", "lt:dirt"); // ;D
+	}
+
+	public static class Holder {
+		public String item;
+		public short count;
 	}
 }

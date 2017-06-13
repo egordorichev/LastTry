@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.core;
 
-/** LastTry version handler */
+/**
+ * LastTry version handler
+ */
 public class Version {
 	/**
 	 * Minor version
@@ -14,7 +16,7 @@ public class Version {
 	 * Version suffix (like "alpha")
 	 */
 	public String suffix;
-	
+
 	public Version(double major, int minor, String suffix) {
 		this.major = major;
 		this.minor = minor;

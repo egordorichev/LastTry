@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.creature.Creature;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
@@ -18,14 +18,22 @@ import org.egordorichev.lasttry.ui.UiPanel;
 import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
-import org.egordorichev.lasttry.ui.chat.command.*;
+import org.egordorichev.lasttry.ui.chat.command.CMDCategory;
+import org.egordorichev.lasttry.ui.chat.command.Command;
+import org.egordorichev.lasttry.ui.chat.command.CommandHandler;
 import org.egordorichev.lasttry.util.Util;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 300;
+	/**
+	 * Command handler used for storing commands and simplifying invocation of
+	 * them.
+	 */
+	private final CommandHandler commands = new CommandHandler();
 	private boolean open;
 	private UiTextInput input;
 	private TextureRegion back;
@@ -33,16 +41,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	 * Lines to display in chat.
 	 */
 	private List<ChatLine> lines = new ArrayList<>();
-	/**
-	 * Command handler used for storing commands and simplifying invocation of
-	 * them.
-	 */
-	private final CommandHandler commands = new CommandHandler();
 
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
 		this.initCommands();
-		this.back = Assets.getTexture("ChatBack");
+		this.back = Assets.getTexture("chat_back");
 	}
 
 	private void initCommands() {
@@ -90,7 +93,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 					} else {
 						for (int i = 0; i < count; i++) {
 							Globals.entityManager.spawn(Creatures.create(name), (int) Globals.getPlayer().physics.getX(),
-								(int) Globals.getPlayer().physics.getY());
+									(int) Globals.getPlayer().physics.getY());
 						}
 					}
 				}
@@ -106,11 +109,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 						case "gc":
 							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
 							print("Running instant chunk GC...");
-						break;
+							break;
 						case "list":
 							print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
-								+ Globals.getWorld().getSize().getMaxChunks());
-						break;
+									+ Globals.getWorld().getSize().getMaxChunks());
+							break;
 						default:
 							print("/chunks [gc / list]");
 					}
@@ -194,7 +197,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().stats.setInvulnTime(2147483646);
+				Globals.getPlayer().stats.setInvulnerableTime(2147483646);
 			}
 		});
 	}
@@ -210,7 +213,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				// Something is REALLY weird with invisible characters
 				if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
 					// TODO: Wtf is char(13) doing at the beginning of a string?
-					text = text.substring(text.indexOf("/")+1);
+					text = text.substring(text.indexOf("/") + 1);
 					commands.runInput(text);
 				} else {
 					// TODO: Player chat
@@ -233,14 +236,14 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			Graphics.batch.draw(this.back, 5, 5);
 			super.render();
 		}
-		
+
 		for (int i = this.lines.size() - 1; i >= 0; i--) {
 			ChatLine line = this.lines.get(i);
 
 			if (line.shouldBeRemoved()) {
 				this.lines.remove(i);
 			}
-			
+
 			Util.drawWithShadow(Assets.f18, line.text, 10, 55 + i * 20);
 		}
 
@@ -252,10 +255,8 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	/**
 	 * Prints the objects to chat in the format given.
 	 *
-	 * @param format
-	 *            Format to use.
-	 * @param args
-	 *            Objects to print.
+	 * @param format Format to use.
+	 * @param args   Objects to print.
 	 */
 	public void printf(String format, Object... args) {
 		String text = String.format(format, args);
@@ -265,8 +266,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	/**
 	 * Prints the text to chat.
 	 *
-	 * @param text
-	 *            Text to print.
+	 * @param text Text to print.
 	 */
 	public void print(String text) {
 		this.lines.add(0, new ChatLine(text));

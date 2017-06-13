@@ -4,33 +4,33 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.world.environment.Event;
 
 public class BloomMoon extends Event {
-    public BloomMoon() {
-        super("Blood Moon");
-    }
+	public BloomMoon() {
+		super("Blood Moon");
+	}
 
-    @Override
-    public void onStart() {
-        // TODO: modify spawn and spawn rate
-    }
+	@Override
+	public void onStart() {
+		// TODO: modify spawn and spawn rate
+	}
 
-    @Override
-    public void update(int dt) {
-        if (!Globals.environment.time.isNight()) {
-            this.end();
-        }
-    }
+	@Override
+	public void update(int dt) {
+		if (!Globals.environment.time.isNight()) {
+			this.end();
+		}
+	}
 
-    @Override
-    public void onEnd() {
-        // TODO: modify spawn and spawn rate
-    }
+	@Override
+	public void onEnd() {
+		// TODO: modify spawn and spawn rate
+	}
 
-    @Override
-    public boolean canHappen() {
-        if (Globals.environment.time.isNight()) {
-            return true;
-        }
+	@Override
+	public boolean canHappen() {
+		if (Globals.environment.time.isNight()) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

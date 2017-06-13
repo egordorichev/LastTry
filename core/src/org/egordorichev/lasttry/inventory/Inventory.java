@@ -8,12 +8,10 @@ public interface Inventory<Slot extends InventorySlot> {
 	/**
 	 * Adds the given content to the inventory.
 	 *
-	 * @param holder
-	 *            Content to add.
+	 * @param holder Content to add.
 	 * @return If addition was success.
 	 */
 	default boolean add(ItemHolder holder) {
-		// TODO: check if item is already in inventory
 		for (int i = 0; i < getMaxInventorySize(); i++) {
 			Slot slot = getSlot(i);
 			// If slot is empty or slot is full skip consideration.
@@ -51,10 +49,8 @@ public interface Inventory<Slot extends InventorySlot> {
 	 * Returns the slot with the first open spot in the given range. If no open
 	 * slot exists, null is returned.
 	 *
-	 * @param start
-	 *            First slot index.
-	 * @param end
-	 *            End slot index.
+	 * @param start First slot index.
+	 * @param end   End slot index.
 	 * @return First empty slot in range, null if no empty slots.
 	 */
 	default Slot getFirstFreeSlot(int start, int end) {
@@ -74,8 +70,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	/**
 	 * Returns the first free slot in the inventory for the given type of slot.
 	 *
-	 * @param type
-	 *            Type of slot.
+	 * @param type Type of slot.
 	 * @return
 	 */
 	Slot getFirstFreeSlot(Slot.Type type);
@@ -93,8 +88,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	 * Sets the ItemHolder at the given index.
 	 *
 	 * @param holder
-	 * @param index
-	 *            Slot index.
+	 * @param index  Slot index.
 	 */
 	default void setItemInSlot(int index, ItemHolder holder) {
 		if (index < 0 || index > getMaxInventorySize()) {
@@ -107,8 +101,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	/**
 	 * Returns the Item at the given slot index.
 	 *
-	 * @param index
-	 *            Slot index.
+	 * @param index Slot index.
 	 * @return
 	 */
 	default Item getItem(int index) {
@@ -118,8 +111,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	/**
 	 * Returns the ItemHolder at the given slot index.
 	 *
-	 * @param index
-	 *            Slot index.
+	 * @param index Slot index.
 	 * @return
 	 */
 	default ItemHolder getItemInSlot(int index) {
@@ -148,8 +140,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	/**
 	 * Returns the item slot at the given index.
 	 *
-	 * @param index
-	 *            Slot index.
+	 * @param index Slot index.
 	 * @return
 	 */
 	Slot getSlot(int index);
@@ -165,8 +156,7 @@ public interface Inventory<Slot extends InventorySlot> {
 	 * Sets the current selected item. See {@link #getSelectedItem()} for more
 	 * details.
 	 *
-	 * @param selectedItem
-	 *            Item to select.
+	 * @param selectedItem Item to select.
 	 */
 	void setSelectedItem(ItemHolder selectedItem);
 

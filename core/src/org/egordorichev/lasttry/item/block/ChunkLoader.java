@@ -33,11 +33,11 @@ public class ChunkLoader extends Block {
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 
-		float light  = 1f;
+		float light = 1f;
 
 		// Update light leven
-		if (!LastTry.noLight){
-			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		if (!LastTry.noLight) {
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / (WorldLightingComponent.MAX_LIGHT);
 		}
 
 		Graphics.batch.setColor(light, light, light, 1f);
@@ -49,6 +49,6 @@ public class ChunkLoader extends Block {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
 
-		Graphics.batch.setColor(1f,1f,1f,1f);
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 }

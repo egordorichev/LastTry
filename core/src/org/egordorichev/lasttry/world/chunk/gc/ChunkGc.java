@@ -14,8 +14,8 @@ public class ChunkGc {
 		this.currentChunkGcLevel = levelToRunChunkGcAt;
 	}
 
-	public void onWakeUp(){
-		if (currentChunkGcLevel== ChunkGcCalc.ChunkGCLevel.SLEEP){
+	public void onWakeUp() {
+		if (currentChunkGcLevel == ChunkGcCalc.ChunkGCLevel.SLEEP) {
 			Globals.chunkGcManager.scheduleChunkGc(currentChunkGcLevel);
 		} else {
 			this.beginChunkGC();
@@ -40,7 +40,7 @@ public class ChunkGc {
 	private List<Chunk> retrieveMutableLoadedChunks() {
 		List<Chunk> loadedChunks = Globals.getWorld().chunks.getImmutableLoadedChunks();
 		List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
-		Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
+		Log.debug("Amount of loaded chunks is: " + mutableLoadedChunks.size());
 
 		return mutableLoadedChunks;
 	}
@@ -53,12 +53,12 @@ public class ChunkGc {
 		this.sortBasedOnDate(loadedChunks);
 
 		int amountOfChunksToFree = currentChunkGcLevel.getChunksToFree();
-		Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
+		Log.debug("Amount of loaded chunks to free is: " + amountOfChunksToFree);
 
 		ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
 
 		//We remove the oldest chunk, which will be the first chunks.
-		for(int i = 0; i < amountOfChunksToFree; i++) {
+		for (int i = 0; i < amountOfChunksToFree; i++) {
 			Chunk chunkToBeFreed = loadedChunks.get(i);
 
 			if (chunkToBeFreed.isUnloadable()) {
@@ -77,7 +77,7 @@ public class ChunkGc {
 	}
 
 	private void startUp() {
-		assert Globals.getWorld().chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
+		assert Globals.getWorld().chunks.getImmutableLoadedChunks().size() <= ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
 
 		//Set flag in gc manager, signalling a chunk gc is in progress
 		setChunkGcInProgressFlag(true);

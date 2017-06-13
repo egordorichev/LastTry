@@ -12,14 +12,6 @@ public class ToolPower {
 		this.hammer = (short) hammer;
 	}
 
-	public boolean isEnoughFor(ToolPower power) {
-		boolean enoughForPickaxe = this.pickaxe >= power.pickaxe;
-		boolean enoughForAxe = this.axe >= power.axe;
-		boolean enoughForHammer = this.hammer >= power.hammer;
-
-		return enoughForPickaxe && enoughForAxe && enoughForHammer;
-	}
-
 	public static ToolPower pickaxe(int power) {
 		return new ToolPower(power, 0, 0);
 	}
@@ -30,5 +22,13 @@ public class ToolPower {
 
 	public static ToolPower hammer(int power) {
 		return new ToolPower(0, 0, power);
+	}
+
+	public boolean isEnoughFor(ToolPower power) {
+		boolean enoughForPickaxe = this.pickaxe >= power.pickaxe;
+		boolean enoughForAxe = this.axe >= power.axe;
+		boolean enoughForHammer = this.hammer >= power.hammer;
+
+		return enoughForPickaxe && enoughForAxe && enoughForHammer;
 	}
 }

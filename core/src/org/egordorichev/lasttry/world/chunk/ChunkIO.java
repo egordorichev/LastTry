@@ -3,8 +3,6 @@ package org.egordorichev.lasttry.world.chunk;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
@@ -95,7 +93,7 @@ public class ChunkIO {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-			} catch(IOException exception) {
+			} catch (IOException exception) {
 				Log.error("Could not create a save file for chunk " + x + ":" + y + ".");
 				LastTry.abort();
 			}

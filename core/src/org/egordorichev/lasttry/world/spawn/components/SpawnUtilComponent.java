@@ -8,93 +8,93 @@ import org.egordorichev.lasttry.world.WorldTime;
 
 public class SpawnUtilComponent {
 
-    public static int increaseAngle(int angle, int distance) {
+	public static int increaseAngle(int angle, int distance) {
 
-        if(angle==360){
-            angle = 0;
-        }
+		if (angle == 360) {
+			angle = 0;
+		}
 
-        angle++;
+		angle++;
 
-        return angle;
-    }
-
-
-    public static boolean arePointsInCircle(int x, int y, CircleAreaComponent circleArea) {
-
-        //Checking if points are in the circle
-        //Formula source: https://math.stackexchange.com/questions/198764/how-to-know-if-a-point-is-inside-a-circle
-        double cameraGridPositionXBlocks = Camera.game.position.x/Block.SIZE;
-        double cameraGridPositionYBlocks = Camera.game.position.y/Block.SIZE;
-
-        double xPointCalcs = x - cameraGridPositionXBlocks;
-        double yPointCalcs = y - cameraGridPositionYBlocks;
-
-        double xPointSquared = Math.pow(xPointCalcs,2);
-        double yPointSquared = Math.pow(yPointCalcs,2);
-
-        double result = Math.sqrt(xPointSquared+yPointSquared);
-
-        if(result>=circleArea.getCircleRadius()){
-            return false;
-        }
-
-        return true;
-    }
-
-    private static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
-
-        boolean isPointInMap = Globals.getWorld().isInside(xGridPoint, yGridPoint);
-
-        return  isPointInMap;
-    }
-
-    public static int generateRandomNumber(int minNumber, int maxNumber) {
-
-        if(maxNumber-minNumber<=0){
-            throw new IllegalArgumentException("Difference between max & min numbers is less than or equal to 0");
-        }
-
-        int randomNumber = LastTry.random.nextInt(maxNumber-minNumber)+minNumber;
-
-        return randomNumber;
-    }
+		return angle;
+	}
 
 
-    public static boolean matchingTime(WorldTime time1, WorldTime time2) {
+	public static boolean arePointsInCircle(int x, int y, CircleAreaComponent circleArea) {
 
-        if(time1.toString(false).equals(time2.toString(false))){
-            return true;
-        }
+		//Checking if points are in the circle
+		//Formula source: https://math.stackexchange.com/questions/198764/how-to-know-if-a-point-is-inside-a-circle
+		double cameraGridPositionXBlocks = Camera.game.position.x / Block.SIZE;
+		double cameraGridPositionYBlocks = Camera.game.position.y / Block.SIZE;
 
-        return false;
-    }
+		double xPointCalcs = x - cameraGridPositionXBlocks;
+		double yPointCalcs = y - cameraGridPositionYBlocks;
 
-    public static boolean isPointSuitableForSpawning(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+		double xPointSquared = Math.pow(xPointCalcs, 2);
+		double yPointSquared = Math.pow(yPointCalcs, 2);
 
-        boolean isPointOccupied = isPointOccupied(xGridSpawnPoint, yGridSpawnPoint);
+		double result = Math.sqrt(xPointSquared + yPointSquared);
 
-        boolean isPointOnMap = SpawnUtilComponent.isPointOnMap(xGridSpawnPoint, yGridSpawnPoint);
+		if (result >= circleArea.getCircleRadius()) {
+			return false;
+		}
 
-        if(isPointOccupied==false&&isPointOnMap==true){
-            //Log.debug("Suitable point found at x: "+xGridSpawnPoint+" y: "+yGridSpawnPoint);
-            return true;
-        }
+		return true;
+	}
 
-        return false;
-    }
+	private static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
 
-    private static boolean isPointOccupied(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+		boolean isPointInMap = Globals.getWorld().isInside(xGridPoint, yGridPoint);
 
-        Block blockAtXyPoint = Globals.getWorld().blocks.get(xGridSpawnPoint, yGridSpawnPoint);
+		return isPointInMap;
+	}
 
-        boolean isPointOccupied = blockAtXyPoint == null ? false : true;
+	public static int generateRandomNumber(int minNumber, int maxNumber) {
+
+		if (maxNumber - minNumber <= 0) {
+			throw new IllegalArgumentException("Difference between max & min numbers is less than or equal to 0");
+		}
+
+		int randomNumber = LastTry.random.nextInt(maxNumber - minNumber) + minNumber;
+
+		return randomNumber;
+	}
+
+
+	public static boolean matchingTime(WorldTime time1, WorldTime time2) {
+
+		if (time1.toString(false).equals(time2.toString(false))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isPointSuitableForSpawning(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+
+		boolean isPointOccupied = isPointOccupied(xGridSpawnPoint, yGridSpawnPoint);
+
+		boolean isPointOnMap = SpawnUtilComponent.isPointOnMap(xGridSpawnPoint, yGridSpawnPoint);
+
+		if (isPointOccupied == false && isPointOnMap == true) {
+			//Log.debug("Suitable point found at x: "+xGridSpawnPoint+" y: "+yGridSpawnPoint);
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean isPointOccupied(final int xGridSpawnPoint, final int yGridSpawnPoint) {
+
+		Block blockAtXyPoint = Globals.getWorld().blocks.get(xGridSpawnPoint, yGridSpawnPoint);
+
+		boolean isPointOccupied = blockAtXyPoint == null ? false : true;
 
 //        if(isPointOccupied==false){
 //            Log.debug("Empty space found at x: "+xGridSpawnPoint+" y: "+yGridSpawnPoint);
 //        }
 
-        return isPointOccupied;
-    }
+		return isPointOccupied;
+	}
 
 }

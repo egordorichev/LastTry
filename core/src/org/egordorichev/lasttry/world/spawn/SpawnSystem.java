@@ -2,8 +2,8 @@ package org.egordorichev.lasttry.world.spawn;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.creature.Creature;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.biome.Biome;

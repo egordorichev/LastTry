@@ -21,6 +21,6 @@ public class FireBlossom extends Plant {
 	@Override
 	protected boolean canBloom() {
 		return Globals.environment.time.getHour() >= 4 && Globals.environment.time.getHour() <= 7
-			&& !Globals.environment.isRaining();
+				&& !Globals.environment.isRaining();
 	}
 }

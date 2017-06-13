@@ -22,10 +22,8 @@ public class Util {
 	 * Runs the callable in a thread on repeat. The exectuon is delayed each
 	 * time by the given time in seconds.
 	 *
-	 * @param callable
-	 *            thread to run
-	 * @param time
-	 *            delay in seconds, before next run
+	 * @param callable thread to run
+	 * @param time     delay in seconds, before next run
 	 */
 	public static void runDelayedThreadSeconds(Callable callable, int time) {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -42,10 +40,8 @@ public class Util {
 	 * Runs the callable in a thread on repeat. The exectuon is delayed each
 	 * time by the given time in milliseconds.
 	 *
-	 * @param callable
-	 *            thread to run
-	 * @param time
-	 *            delay in milliseconds, before next run
+	 * @param callable thread to run
+	 * @param time     delay in milliseconds, before next run
 	 */
 	public static void runDelayedThreadMillis(Callable callable, int time) {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -66,7 +62,9 @@ public class Util {
 			@Override
 			public void run() {
 				callable.call();
-			};
+			}
+
+			;
 		});
 	}
 

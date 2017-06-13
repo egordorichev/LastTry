@@ -12,7 +12,7 @@ public class SplashState implements State {
 	private float alpha = 0;
 
 	public SplashState() {
-		this.splash = new Texture(Gdx.files.internal("Splash.png"));
+		this.splash = new Texture(Gdx.files.internal("splash.png"));
 
 		Assets.load();
 	}
@@ -31,7 +31,7 @@ public class SplashState implements State {
 
 		boolean loaded = Assets.update();
 
-		if (loaded && !LastTry.release ) {
+		if (loaded && !LastTry.release) {
 			this.alpha = 0f;
 			this.state = 2;
 

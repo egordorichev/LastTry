@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.world.biome.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.graphics.Graphics;

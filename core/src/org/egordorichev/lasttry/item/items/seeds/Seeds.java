@@ -2,18 +2,15 @@ package org.egordorichev.lasttry.item.items.seeds;
 
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.plant.Plant;
-import org.egordorichev.lasttry.util.Rectangle;
 
 public class Seeds extends Item {
 	private Plant plant;
 
 	public Seeds(String id) {
 		super(id);
-    }
+	}
 
 	@Override
 	protected void loadFields(JsonValue root) {
