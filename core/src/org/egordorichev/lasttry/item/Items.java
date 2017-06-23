@@ -15,6 +15,7 @@ public class Items {
 	 * Items storage
 	 */
 	public static HashMap<String, Item> ITEM_CACHE = new HashMap<>();
+
 	/**
 	 * Loads items
 	 */
@@ -32,7 +33,7 @@ public class Items {
 				try {
 					ITEM_CACHE.put(item.name(), Item.load(item));
 				} catch (Exception exception) {
-					Log.error("Failed to parse " + item.name());
+					Log.error(exception.getMessage());
 				}
 			}
 		} catch (Exception exception) {

@@ -5,14 +5,35 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Helper class for different effects
+ */
 public class Graphics {
+	/**
+	 * Tile cracks textures
+	 */
 	public static TextureRegion[] tileCracks;
+	/**
+	 * Skybox texture
+	 */
 	public static Texture skyTexture;
-    public static Texture healthBarTexture;
-    public static Texture healthBarFrameTexture;
-    public static SpriteBatch batch;
+	/**
+	 * Health bar texture
+	 */
+	public static Texture healthBarTexture;
+	/**
+	 * Health bar frame texture
+	 */
+	public static Texture healthBarFrameTexture;
+	/**
+	 * Sprite batch
+	 */
+	public static SpriteBatch batch;
 
-    public static void load() {
+	/**
+	 * Loads textures
+	 */
+	public static void load() {
 		tileCracks = new TextureRegion[24];
 
 		for (int x = 0; x < 6; x++) {
@@ -21,8 +42,8 @@ public class Graphics {
 			}
 		}
 
-	    skyTexture = new Texture(Gdx.files.internal(Textures.sky));
-	    healthBarTexture =  new Texture(Gdx.files.internal(Textures.healthBar));
-	    healthBarFrameTexture =  new Texture(Gdx.files.internal(Textures.healthBarFrame));
+		skyTexture = new Texture(Gdx.files.internal(Textures.sky));
+		healthBarTexture = new Texture(Gdx.files.internal(Textures.healthBar));
+		healthBarFrameTexture = new Texture(Gdx.files.internal(Textures.healthBarFrame));
 	}
 }

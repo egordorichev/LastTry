@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.util.Log;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.MissingResourceException;
@@ -54,16 +55,18 @@ public class Item {
 		this.id = id;
 		this.name = Language.text.get(this.id);
 		this.texture = Assets.getTexture(this.id.replace(':', '_'));
+
+		if (this.texture == null) {
+			throw new RuntimeException("Texture for item " + id + " is not found.");
+		}
 	}
 
 	/**
 	 * Loads item from given json root
 	 *
-	 * @param root
-	 *            Item root
+	 * @param root Item root
 	 * @return New item
-	 * @throws Exception
-	 *             Exception containing a error message
+	 * @throws Exception Exception containing a error message
 	 */
 	public static Item load(JsonValue root) throws Exception {
 		String className = root.getString("type", "org.egordorichev.lasttry.item.Item");
@@ -79,22 +82,19 @@ public class Item {
 	/**
 	 * Creates Item class and initialization it
 	 *
-	 * @param root
-	 *            Item root
-	 * @param className
-	 *            Class name to create (like org.egordorichev.lasttry.item.Item)
+	 * @param root      Item root
+	 * @param className Class name to create (like org.egordorichev.lasttry.item.Item)
 	 * @return New Item instance
-	 * @throws Exception
-	 *             Exception containing error message
+	 * @throws Exception Exception containing error message
 	 */
 	public static Item createInstance(JsonValue root, String className) throws Exception {
 		try {
 			Class<?> itemClass = Class.forName(className);
 
-			Class<?>[] types = { String.class };
+			Class<?>[] types = {String.class};
 			Constructor<?> constructor = itemClass.getConstructor(types);
 
-			Object[] parameters = { root.name() };
+			Object[] parameters = {root.name()};
 
 			Item item = (Item) constructor.newInstance(parameters);
 			item.loadFields(root);
@@ -110,7 +110,7 @@ public class Item {
 			} else if (cause instanceof NullPointerException) {
 				throw new Exception("NPE in " + root.name() + ". Did you add right texture?");
 			} else {
-				throw new Exception("Failed to parse class for " + root.name());
+				throw new Exception(cause.getMessage());
 			}
 		} catch (Exception exception) {
 			throw exception;
@@ -119,6 +119,7 @@ public class Item {
 
 	/**
 	 * Loads fields from root
+	 *
 	 * @param root
 	 */
 	protected void loadFields(JsonValue root) {
@@ -134,7 +135,6 @@ public class Item {
 	/**
 	 * @param x Use X
 	 * @param y Use Y
-	 *
 	 * @return Can the item be used (can depend on night / day and other)
 	 */
 	public boolean use(short x, short y) {
@@ -144,8 +144,7 @@ public class Item {
 	/**
 	 * Updates the item.
 	 *
-	 * @param owner
-	 *            Entity holding the item.
+	 * @param owner Entity holding the item.
 	 * @param dt
 	 */
 	public void update(InventoryOwner<?> owner, int dt) {
@@ -168,6 +167,7 @@ public class Item {
 
 	/**
 	 * Callback, called when the item is used
+	 *
 	 * @return If item needs to be removed from inventory
 	 */
 	protected boolean onUse() {
@@ -177,8 +177,7 @@ public class Item {
 	/**
 	 * Called when the item has been updated.
 	 *
-	 * @param owner
-	 *            Entity holding the item.
+	 * @param owner Entity holding the item.
 	 */
 	protected void onUpdate(InventoryOwner<?> owner) {
 
@@ -273,9 +272,8 @@ public class Item {
 
 	/**
 	 * Returns Item with given id or null, if it is not found
-	 * 
-	 * @param id
-	 *            Item id
+	 *
+	 * @param id Item id
 	 * @return Item with given id or null, if it is not found
 	 */
 	public static Item fromID(String id) {

@@ -8,14 +8,34 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
+/**
+ * Manages textures and other assets
+ */
 public class Assets {
+	/**
+	 * Small 18px font
+	 */
 	public static BitmapFont f18;
+	/**
+	 * Normal 22px font
+	 */
 	public static BitmapFont f22;
+	/**
+	 * Large 24px font
+	 */
 	public static BitmapFont f24;
+	/**
+	 * Texture atlas
+	 */
 	public static TextureAtlas textures;
+	/**
+	 * Asset manager
+	 */
 	public static AssetManager assetManager;
 
-
+	/**
+	 * Loads all assets
+	 */
 	public static void load() {
 		FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
 		fontConfig.fontFileName = "font.ttf";
@@ -37,10 +57,21 @@ public class Assets {
 		assetManager.load("textures.atlas", TextureAtlas.class);
 	}
 
+	/**
+	 * Lookups texture
+	 *
+	 * @param name Texture name
+	 * @return Texture or null
+	 */
 	public static TextureRegion getTexture(String name) {
 		return textures.findRegion(name);
 	}
 
+	/**
+	 * Updates assets
+	 *
+	 * @return Assets are loaded
+	 */
 	public static boolean update() {
 		if (assetManager.update()) {
 			textures = assetManager.get("textures.atlas", TextureAtlas.class);
@@ -50,6 +81,9 @@ public class Assets {
 		return false;
 	}
 
+	/**
+	 * Disposes assets
+	 */
 	public static void dispose() {
 		textures.dispose();
 		assetManager.dispose();
