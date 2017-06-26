@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
@@ -23,7 +24,7 @@ public class Creatures {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(System.getProperty("user.home") + "/.LastTry/data/creatures.json");
+			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/creatures.json"));
 
 			for (JsonValue creature : root) {
 				try {

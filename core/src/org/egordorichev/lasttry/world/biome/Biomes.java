@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.world.biome;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -37,7 +38,7 @@ public class Biomes {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(System.getProperty("user.home") + "/.LastTry/data/biomes.json");
+			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/biomes.json"));
 
 			for (JsonValue biome : root) {
 				try {

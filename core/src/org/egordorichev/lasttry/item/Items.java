@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
@@ -27,7 +28,7 @@ public class Items {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(System.getProperty("user.home") + "/.LastTry/data/items.json");
+			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/items.json"));
 
 			for (JsonValue item : root) {
 				try {
