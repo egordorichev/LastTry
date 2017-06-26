@@ -67,13 +67,13 @@ public class WorldIO {
 	}
 
 	public static World generate(String name, World.Size size, int flags, int seed) {
-		File dir = new File("data/worlds/");
+		File dir = new File(System.getProperty("user.home") + "/.LastTry/data/worlds/");
 
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
-		File file = new File("data/worlds/" + name + "/");
+		File file = new File(System.getProperty("user.home") + "/.LastTry/data/worlds/" + name + "/");
 
 		if (!file.exists()) {
 			file.mkdir();
@@ -137,6 +137,6 @@ public class WorldIO {
 	}
 
 	private static String getSaveName(String name) {
-		return "data/worlds/" + name + ".wld";
+		return System.getProperty("user.home") + "/.LastTry/data/worlds/" + name + ".wld";
 	}
 }

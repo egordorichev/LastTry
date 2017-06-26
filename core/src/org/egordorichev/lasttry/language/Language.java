@@ -9,7 +9,7 @@ public class Language {
     public static I18NBundle text;
     
     public static void load(Locale locale) {
-	    FileHandle baseFileHandle = Gdx.files.internal("data/languages/language");
+	    FileHandle baseFileHandle = Gdx.files.internal(System.getProperty("user.home") + "/.LastTry/data/languages/language");
 	    text = I18NBundle.createBundle(baseFileHandle, locale);
     }
 }

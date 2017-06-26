@@ -23,7 +23,7 @@ public class ModLoader {
 
     /** Lookups and loads all mods from "mods" directory */
     public void load() {
-        File modDirectory = new File("data/mods/");
+        File modDirectory = new File(System.getProperty("user.home") + "/.LastTry/data/mods/");
 
         if (!modDirectory.mkdir()) {
             try {

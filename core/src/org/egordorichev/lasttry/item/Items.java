@@ -27,7 +27,7 @@ public class Items {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(Gdx.files.internal("data/items.json"));
+			JsonValue root = jsonReader.parse(System.getProperty("user.home") + "/.LastTry/data/items.json");
 
 			for (JsonValue item : root) {
 				try {
