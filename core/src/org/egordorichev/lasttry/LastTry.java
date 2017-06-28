@@ -16,12 +16,17 @@ import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
+
 import java.util.Random;
 import java.util.Locale;
 
-/** Main game class */
+/**
+ * Main game class
+ */
 public class LastTry extends Game {
-	/** LastTry version */
+	/**
+	 * LastTry version
+	 */
 	public static final Version version = new Version(0.0, 18, "alpha");
 
 	/**
@@ -30,22 +35,34 @@ public class LastTry extends Game {
 	 */
 	public static final Random random = new Random();
 
-	/** Last Try instance */
+	/**
+	 * Last Try instance
+	 */
 	public static LastTry instance;
 
-	/** Ui manager */
+	/**
+	 * Ui manager
+	 */
 	public static UiManager ui;
 
-	/** Debug helper */
+	/**
+	 * Debug helper
+	 */
 	public static Debug debug;
 
-	/** Shows, if this is a release */
+	/**
+	 * Shows, if this is a release
+	 */
 	public static boolean release = true;
 
-	/** Light disable */
+	/**
+	 * Light disable
+	 */
 	public static boolean noLight = true;
 
-	/** Screen dimensions */
+	/**
+	 * Screen dimensions
+	 */
 	public final int width;
 
 	private final int height;
@@ -55,7 +72,9 @@ public class LastTry extends Game {
 		this.height = height;
 	}
 
-	/** Creates first-priority instances */
+	/**
+	 * Creates first-priority instances
+	 */
 	@Override
 	public void create() {
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
@@ -81,10 +100,8 @@ public class LastTry extends Game {
 	/**
 	 * Handles window resize
 	 *
-	 * @param width
-	 *            new window width
-	 * @param height
-	 *            new window height
+	 * @param width  new window width
+	 * @param height new window height
 	 */
 	@Override
 	public void resize(int width, int height) {
@@ -94,7 +111,9 @@ public class LastTry extends Game {
 		Globals.resolution.y = height;
 	}
 
-	/** Renders and updates the game */
+	/**
+	 * Renders and updates the game
+	 */
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -108,7 +127,9 @@ public class LastTry extends Game {
 		Graphics.batch.end();
 	}
 
-	/** Handles game exit */
+	/**
+	 * Handles game exit
+	 */
 	@Override
 	public void dispose() {
 		Globals.dispose();
@@ -132,7 +153,7 @@ public class LastTry extends Game {
 	 */
 	public static int getMouseXInWorld() {
 		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
-			+ InputManager.getMousePosition().x);
+				+ InputManager.getMousePosition().x);
 	}
 
 	/**
@@ -142,14 +163,13 @@ public class LastTry extends Game {
 	 */
 	public static int getMouseYInWorld() {
 		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
-			- InputManager.getMousePosition().y);
+				- InputManager.getMousePosition().y);
 	}
 
 	/**
 	 * Handles exception, if it is critical, exits the game
 	 *
-	 * @param exception
-	 *            exception to handle
+	 * @param exception exception to handle
 	 */
 	public static void handleException(Exception exception) {
 		Crash.report(Thread.currentThread(), exception);

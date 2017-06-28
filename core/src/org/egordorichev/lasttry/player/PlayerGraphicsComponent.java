@@ -14,7 +14,7 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 	private TextureRegion texture;
 
 	public PlayerGraphicsComponent() {
-		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.GREEN, Color.GREEN, 1, true); // TODO: replace it
+		PlayerRenderInfo info = new PlayerRenderInfo(1, Color.GREEN, Color.BLUE, Color.GREEN, 1, true); // TODO: replace it
 		this.texture = PlayerRenderer.generateTextureRegion(info);
 		this.setupAnimations();
 	}
