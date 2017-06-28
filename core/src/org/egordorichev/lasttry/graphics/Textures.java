@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.graphics;
 
 /**
  * Stores all textures names
+ * Will be removed soon
  */
 public class Textures {
 	public static final String hp = "HP";
