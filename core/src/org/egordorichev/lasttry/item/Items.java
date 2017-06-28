@@ -5,10 +5,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Log;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Items {
@@ -28,7 +26,7 @@ public class Items {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/items.json"));
+			JsonValue root = jsonReader.parse(Gdx.files.internal("data/items.json"));
 
 			for (JsonValue item : root) {
 				try {

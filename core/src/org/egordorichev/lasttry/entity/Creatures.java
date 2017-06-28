@@ -24,7 +24,7 @@ public class Creatures {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/creatures.json"));
+			JsonValue root = jsonReader.parse(Gdx.files.internal("data/creatures.json"));
 
 			for (JsonValue creature : root) {
 				try {

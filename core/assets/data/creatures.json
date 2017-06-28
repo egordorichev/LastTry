@@ -1,0 +1,70 @@
+{
+	"lt:green_slime" : {
+		"ai" : 1,
+		"type" : 0,
+		"damage" : [ 6, 12, 118 ],
+		"hp" : [ 14, 28, 338 ],
+		"defense" : [ 0, 0, 0 ],
+		"kb_resist" : [ 20, 3, 20 ],
+		"hitbox" : [ 0, 0, 32, 24 ],
+
+		"drop" : [
+			{
+				"id" : "lt:gel",
+				"count" : [ 1, 3 ]
+			},
+			{
+				"id" : "lt:copper_coin",
+				"count" : [ 1, 100 ]
+			}
+		],
+
+		"animation" : {
+			"idle" : {
+				"looping" : true,
+
+				"frames" : [
+					{
+						"time" : 10,
+						"rect" : [ 0, 0, 32, 24 ]
+					},
+					{
+						"time" : 10,
+						"rect" : [ 32, 0, 32, 24 ]
+					}
+				]
+			},
+
+			"jumping" : {
+				"looping" : true,
+
+				"frames" : [
+					{
+						"time" : 1,
+						"rect" : [ 32, 0, 32, 24 ]
+					}
+				]
+			},
+
+			"moving" : {
+				"copy" : "jumping"
+			},
+
+			"falling" : {
+				"copy" : "jumping"
+			},
+
+			"dead" : {
+				"looping" : false,
+				"stopped" : true,
+				"frames" : []
+			},
+
+			"acting" : {
+				"looping" : false,
+				"stopped" : true,
+				"frames" : []
+			}
+		}
+	}
+}

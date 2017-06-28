@@ -38,7 +38,7 @@ public class Biomes {
 
 		try {
 			JsonReader jsonReader = new JsonReader();
-			JsonValue root = jsonReader.parse(new FileHandle(System.getProperty("user.home") + "/.LastTry/data/biomes.json"));
+			JsonValue root = jsonReader.parse(Gdx.files.internal("data/biomes.json"));
 
 			for (JsonValue biome : root) {
 				try {

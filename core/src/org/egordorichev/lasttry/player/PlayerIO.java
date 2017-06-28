@@ -71,7 +71,7 @@ public class PlayerIO {
 	}
 
 	public static void save() {
-		File dir = new File(System.getProperty("user.home") + "/.LastTry/data/players/");
+		File dir = new File(System.getProperty("user.home") + "/.LastTry/players/");
 
 		if (!dir.exists()) {
 			dir.mkdir();
@@ -145,6 +145,6 @@ public class PlayerIO {
 	}
 
 	private static String getSaveName(String playerName) {
-		return System.getProperty("user.home") + "/.LastTry/data/players/" + playerName + ".plr";
+		return System.getProperty("user.home") + "/.LastTry/players/" + playerName + ".plr";
 	}
 }

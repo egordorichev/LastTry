@@ -1,9 +1,12 @@
 package org.egordorichev.lasttry.core;
 
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.Creatures;
 import org.egordorichev.lasttry.world.biome.Biomes;
+
+import java.io.File;
 
 /** Initializes small systems */
 public class Bootstrap {
@@ -22,6 +25,16 @@ public class Bootstrap {
 	public static void load() {
 		if (loaded) {
 			return;
+		}
+
+		try {
+			File file = new File(System.getProperty("user.home") + "/.LastTry/");
+
+			if (!file.exists() || !file.isDirectory()) {
+				file.createNewFile();
+			}
+		} catch (Exception exception) {
+			throw new RuntimeException("Couldn't open save directory. Aborting.");
 		}
 
 		loaded = true;
