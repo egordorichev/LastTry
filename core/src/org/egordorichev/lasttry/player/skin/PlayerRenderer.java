@@ -39,9 +39,9 @@ public class PlayerRenderer {
 		pixmap.drawPixmap(playerHead, 0, 0);
 		pixmap.drawPixmap(playerEyes, 0, 0);
 
-		Pixmap hair = new Pixmap(Gdx.files.internal("PlayerHair" + info.hairStyle + ".png"));
-		overlay(hair, info.hairColor);
-		pixmap.drawPixmap(hair, 0, 0);
+		// Pixmap hair = new Pixmap(Gdx.files.internal("PlayerHair" + info.hairStyle + ".png"));
+		// overlay(hair, info.hairColor);
+		// pixmap.drawPixmap(hair, 0, 0);
 
 		return new TextureRegion(new Texture(pixmap));
 	}
