@@ -17,6 +17,10 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
 import org.egordorichev.lasttry.language.Language;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Locale;
 
@@ -142,6 +146,10 @@ public class LastTry extends Game {
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
+		if (new SimpleDateFormat("MMdd").format(new Date()).equals("0629")) {
+			return "Happy Birthday!" + " " + version.toString();
+		}
+
 		String[] split = Language.text.get("windowTitles").split("//");
 		return split[random.nextInt(split.length)] + " " + version.toString();
 	}
