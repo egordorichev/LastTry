@@ -23,6 +23,10 @@ public class Item {
 	 */
 	protected String name;
 	/**
+	 * Item description
+	 */
+	protected String description;
+	/**
 	 * Item texture.
 	 */
 	protected TextureRegion texture;
@@ -129,6 +133,14 @@ public class Item {
 
 		if (root.has("rarity")) {
 			this.rarity = Rarity.valueOf(root.getString("rarity").toUpperCase());
+		}
+
+		if (root.has("description")) {
+			this.description = root.getString("description");
+		}
+
+		if (root.has("speed")) {
+			this.useDelayMax = root.getShort("speed");
 		}
 	}
 

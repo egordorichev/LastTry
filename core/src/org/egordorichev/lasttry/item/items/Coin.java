@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.Item;
 
 public class Coin extends Item {
-	protected int value;
+	protected int cost;
 
 	public Coin(String id) {
 		super(id);
@@ -13,11 +13,11 @@ public class Coin extends Item {
 	@Override
 	protected void loadFields(JsonValue root) {
 		super.loadFields(root);
-		this.value = root.getInt("value", 1);
+		this.cost = root.getInt("cost", 1);
 	}
 
-	public int getValue() {
-		return value;
+	public int getCost() {
+		return cost;
 	}
 
 	@Override
