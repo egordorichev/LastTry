@@ -18,6 +18,12 @@ public class PlayerRenderer {
 	public static Pixmap playerHands = new Pixmap(Gdx.files.internal("PlayerHands.png"));
 	public static Pixmap playerFeet = new Pixmap(Gdx.files.internal("PlayerFeet.png"));
 
+	/**
+	 * Generates texture
+	 *
+	 * @param info Player render info
+	 * @return New texture
+	 */
 	public static TextureRegion generateTextureRegion(PlayerRenderInfo info) {
 		Pixmap pixmap = new Pixmap(TEXTURE_WIDTH, TEXTURE_HEIGHT, Pixmap.Format.RGBA8888);
 
@@ -40,6 +46,12 @@ public class PlayerRenderer {
 		return new TextureRegion(new Texture(pixmap));
 	}
 
+	/**
+	 * Tints pixmap
+	 *
+	 * @param pixmap Pixmap, to tint
+	 * @param color Color, to apply
+	 */
 	private static void overlay(Pixmap pixmap, Color color) {
 		ByteBuffer bb = pixmap.getPixels();
 
@@ -52,8 +64,8 @@ public class PlayerRenderer {
 
 		byte[] pixels = new byte[pixmap.getWidth() * pixmap.getHeight() * 4];
 
-		//Overlay blend mode from:
-		//http://docs.gimp.org/en/gimp-concepts-layer-modes.html
+		// Overlay blend mode from:
+		// http://docs.gimp.org/en/gimp-concepts-layer-modes.html
 
 		for (int i = 0; i < limit; i += 4) {
 			int r = bb.get() & 0xFF;

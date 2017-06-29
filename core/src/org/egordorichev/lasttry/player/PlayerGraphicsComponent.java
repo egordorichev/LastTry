@@ -8,9 +8,10 @@ import org.egordorichev.lasttry.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 
-import java.util.Random;
-
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
+	/**
+	 * Player texture
+	 */
 	private TextureRegion texture;
 
 	public PlayerGraphicsComponent() {
@@ -35,6 +36,9 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
 	}
 
+	/**
+	 * Sets up animations
+	 */
 	private void setupAnimations() {
 		this.animations[CreatureStateComponent.State.IDLE.getID()].addFrame(new AnimationFrame(new TextureRegion(this.texture, 4, 8, 32, 48), 0));
 

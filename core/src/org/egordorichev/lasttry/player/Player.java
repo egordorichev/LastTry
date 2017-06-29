@@ -126,10 +126,12 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	}
 
 	public int getItemUseRadius() {
-		// TODO: modify
 		return 10;
 	}
 
+	/**
+	 * @return Player name
+	 */
 	public String getName() {
 		return this.name;
 	}

@@ -9,12 +9,18 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
 	public static final byte VERSION = 4;
 
+	/**
+	 * Loads player
+	 *
+	 * @param playerName Player name
+	 */
 	public static void load(String playerName) {
 		String fileName = getSaveName(playerName);
 		File file = new File(fileName);
@@ -70,6 +76,9 @@ public class PlayerIO {
 		Log.debug("Done loading player " + playerName + "!");
 	}
 
+	/**
+	 * Saves current player
+	 */
 	public static void save() {
 		File dir = new File(System.getProperty("user.home") + "/.LastTry/players/");
 
@@ -127,6 +136,12 @@ public class PlayerIO {
 		Log.debug("Done saving player " + Globals.getPlayer().getName() + "!");
 	}
 
+	/**
+	 * Generates new player
+	 *
+	 * @param name Player name
+	 * @return New player
+	 */
 	public static Player generate(String name) {
 		Player player = new Player(name);
 
@@ -139,11 +154,23 @@ public class PlayerIO {
 		return player;
 	}
 
+	/**
+	 * Player save exists
+	 *
+	 * @param name Player name
+	 * @return Save exists
+	 */
 	public static boolean saveExists(String name) {
 		File file = new File(getSaveName(name));
 		return file.exists();
 	}
 
+	/**
+	 * Returns save name
+	 *
+	 * @param playerName Player name
+	 * @return Save name
+	 */
 	private static String getSaveName(String playerName) {
 		return System.getProperty("user.home") + "/.LastTry/players/" + playerName + ".plr";
 	}
