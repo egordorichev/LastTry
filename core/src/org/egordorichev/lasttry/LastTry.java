@@ -146,7 +146,9 @@ public class LastTry extends Game {
 	 * @return random title for game the window
 	 */
 	private String getRandomWindowTitle() {
-		if (new SimpleDateFormat("MMdd").format(new Date()).equals("0629")) {
+		String date = new SimpleDateFormat("MMdd").format(new Date());
+
+		if (date.equals("0629") || date.equals("0610")) {
 			return "Happy Birthday!" + " " + version.toString();
 		}
 
