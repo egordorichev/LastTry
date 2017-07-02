@@ -14,7 +14,13 @@ import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class LoadState implements State {
+	/**
+	 * All systems are ready
+	 */
 	private boolean loaded = false;
+	/**
+	 * Displayed label
+	 */
 	private String loadString = "Loading...";
 
     public LoadState() {
@@ -57,11 +63,6 @@ public class LoadState implements State {
 	}
 
 	@Override
-	public void show() {
-
-	}
-
-	@Override
 	public void render(float delta) {
 		if (this.loaded) {
 			LastTry.instance.setScreen(new GamePlayState());
@@ -76,30 +77,5 @@ public class LoadState implements State {
 
 		Assets.f22.draw(Graphics.batch, this.loadString, 100, height / 2 - 11);
 		LastTry.ui.render();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
-	public void dispose() {
-
 	}
 }

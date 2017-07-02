@@ -7,19 +7,23 @@ import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 
 public class SplashState implements State {
+	/**
+	 * Splash texture
+	 */
 	private Texture splash;
+	/**
+	 * Current texture animation state
+	 */
 	private int state = 0;
+	/**
+	 * Splash alpha
+	 */
 	private float alpha = 0;
 
 	public SplashState() {
 		this.splash = new Texture(Gdx.files.internal("Splash.png"));
 
 		Assets.load();
-	}
-
-	@Override
-	public void show() {
-
 	}
 
 	@Override
@@ -31,7 +35,7 @@ public class SplashState implements State {
 
 		boolean loaded = Assets.update();
 
-		if (loaded && !LastTry.release ) {
+		if (loaded && !LastTry.release) {
 			this.alpha = 0f;
 			this.state = 2;
 
@@ -58,30 +62,5 @@ public class SplashState implements State {
 				LastTry.instance.setScreen(new LoadState());
 			}
 		}
-	}
-
-	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
-	public void dispose() {
-
 	}
 }
