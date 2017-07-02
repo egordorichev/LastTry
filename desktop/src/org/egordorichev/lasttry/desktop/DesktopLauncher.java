@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		config.vSyncEnabled = true;
 		config.fullscreen = false;
 		config.resizable = false;
-		config.addIcon("Icon.png", Files.FileType.Internal);
+		config.addIcon("icon.png", Files.FileType.Internal);
 
 		try {
 			Args.parse(args, config);

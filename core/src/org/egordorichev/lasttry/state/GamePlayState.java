@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.block.Block;
@@ -28,7 +27,7 @@ public class GamePlayState implements State {
 	private static boolean paused = false;
 
 	public GamePlayState() {
-		this.hpTextureRegion = Assets.getTexture(Textures.hp);
+		this.hpTextureRegion = Assets.getTexture("hp");
 
 		Globals.entityManager = new EntityManager();
 		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int)Globals.getPlayer().getSpawnPoint().y * Block.SIZE);
