@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.item.items.seeds;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -9,42 +9,45 @@ import org.egordorichev.lasttry.item.block.plant.Plant;
 import org.egordorichev.lasttry.util.Rectangle;
 
 public class Seeds extends Item {
-    private Plant plant;
+	private Plant plant;
 
-    public Seeds(short id, String name, Texture texture, Plant plant) {
-        super(id, name, texture);
-
-        this.plant = plant;
+	public Seeds(String id) {
+		super(id);
     }
 
-    @Override
-    public boolean use() {
-        // Get world position to place block at
-        int x = LastTry.getMouseXInWorld() / Block.SIZE;
-        int y = LastTry.getMouseYInWorld() / Block.SIZE;
-        // TODO: Distance checks from cursor coordinates to player coordinates
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
 
-        // Check if the plant can be placed.
-        if (this.plant.canBeGrownAt(x, y)) {
-            // Check if the plant intersects the player's hitbox
-            // TODO: Check other entities in the world
-            Rectangle rectangle = Globals.player.physics.getHitbox();
+		try {
+			this.plant = (Plant) Item.createInstance(root, root.getString("spreads", "org.egordorichev.lasttry.item.block.plant.DayBloom"));
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
 
-            if (rectangle.intersects(new Rectangle(x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE))) {
-                return false;
-            }
+	@Override
+	public boolean use(short x, short y) {
+		Globals.getWorld().blocks.set(this.plant.getID(), x, y);
+		return true;
+	}
 
-            Globals.world.blocks.set(this.plant.getID(), x, y);
-            Globals.world.blocks.setHP((byte) 1, x, y);
+	@Override
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
+			return false;
+		}
 
-            return true;
-        }
-
-        return false;
-    }
+		return this.plant.canBeGrownAt(x, y);
+	}
 
 	@Override
 	public int getMaxInStack() {
 		return 99;
+	}
+
+	@Override
+	public boolean isAutoUse() {
+		return true;
 	}
 }

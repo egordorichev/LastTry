@@ -1,67 +1,115 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.enemy.Enemy;
-import org.egordorichev.lasttry.graphics.particle.DamageParticle;
+import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.entity.components.PhysicsComponent.Direction;
+import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Rectangle;
-import org.egordorichev.lasttry.util.Log;
 
 import java.util.List;
 
 public class Tool extends Item {
+	/**
+	 * Maximum force <i>(Velocity in any given direction)</i> that an entity can
+	 * be sent flying back due to being hit.
+	 */
+	public static final float KNOCKBACK_MAX_POWER = 10F;
+	/**
+	 * Boolean indicating if the item is swung automatically when the primary
+	 * action key is held down.
+	 */
 	protected boolean autoSwing;
+	/**
+	 * Chance in percent that a strike will be critical.
+	 * <ul>
+	 * <li>100 = Always</li>
+	 * <li>0 = Never</li>
+	 * </ul>
+	 */
 	protected float criticalStrikeChance;
-	protected float baseDamage; // All tools have melee damage
-	protected ToolPower power;
+	/**
+	 * The base damage delt to entities when stuck by the tool.
+	 */
+	public float baseDamage;
+	/**
+	 * The tool's effectiveness against materials requiring axe,pickaxe,and
+	 * hammer tools.
+	 */
+	public ToolPower power = ToolPower.DEFAULT;
 
-	public Tool(short id, String name, Rarity rarity, float baseDamage, ToolPower power,
-	        int useSpeed, Texture texture) {
-
-		super(id, name, rarity, texture);
-
-		this.criticalStrikeChance = 4.0f;
-		this.autoSwing = false;
-		this.useDelay = 0.0f;
-		this.baseDamage = baseDamage;
-		this.power = power;
-		this.useSpeed = useSpeed;
-	}
-
-	public Tool(short id, String name, float baseDamage, ToolPower power,
-	       int useSpeed, Texture texture) {
-
-		this(id, name, Rarity.WHITE, baseDamage, power, useSpeed, texture);
+	public Tool(String id) {
+		super(id);
 	}
 
 	@Override
-	public boolean use() {
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		if (root.has("damage")) {
+			this.baseDamage = root.getInt("damage");
+		}
+
+		if (root.has("auto_swing")) {
+			this.autoSwing = root.getBoolean("auto_swing");
+		}
+
+		if (root.has("crit_chance")) {
+			this.criticalStrikeChance = root.getFloat("crit_chance");
+		}
+
+		if (root.has("power")) {
+			int[] pow = root.get("power").asIntArray();
+			this.power = new ToolPower(pow[0], pow[1], pow[2]);
+		}
+	}
+
+	@Override
+	public boolean use(short x, short y) {
 		if (!this.isReady()) {
 			return false;
 		}
 
-		this.useDelay = this.useSpeed;
+		this.useDelay = this.useDelayMax;
 		return this.onUse();
 	}
 
 	@Override
-	protected void onUpdate() {
-		super.onUpdate();
-
-		handleToolAttack();
+	protected void onUpdate(InventoryOwner<?> owner) {
+		super.onUpdate(owner);
+		// Check if entities should be hit.
+		this.onToolAttack(owner);
 	}
 
+	/**
+	 * Returns the tool's effectiveness against materials mined by pickaxes.
+	 *
+	 * @return Tool effectiveness.
+	 */
 	public int getPickaxePower() {
 		return this.power.pickaxe;
 	}
 
+	/**
+	 * Returns the tool's effectiveness against materials mined by axes.
+	 *
+	 * @return Tool effectiveness.
+	 */
 	public int getAxePower() {
 		return this.power.axe;
 	}
 
+	/**
+	 * Returns the tool's effectiveness against materials mined by hammers.
+	 *
+	 * @return Tool effectiveness.
+	 */
 	public int getHammerPower() {
 		return this.power.axe;
 	}
@@ -80,64 +128,57 @@ public class Tool extends Item {
 	}
 
 	protected float getCurrentAngle() {
-		return 0; // TODO;
+		// TODO;
+		return 0;
 	}
 
 	public Rarity getRarity() {
 		return this.rarity;
 	}
 
-    private void handleToolAttack() {
-        List<Enemy> activeEnemies = Globals.entityManager.getEnemyEntities();
-	    Rectangle equippedPlayerHitBox = generateEquippedPlayerHitBox();
+	public void onToolAttack(InventoryOwner<?> owner) {
+		Creature cowner = (Creature) owner;
 
-        activeEnemies.stream().forEach(enemy -> {
+		// Get the list of enemies
+		List<Creature> activeEnemies = Globals.entityManager.getCreatureEntities();
 
-            // if(enemy.() == false) { : TODO invulnerable enemies
-                if (equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
-                    inflictDamageOnEnemy(enemy);
-                }
-            // }
-        });
-    }
+		// Get the hitbox that the tool takes up
+		Rectangle equippedPlayerHitBox = generateToolHitbox();
 
-
-	private Rectangle generateEquippedPlayerHitBox() {
-		final Rectangle playerHitBox = Globals.player.physics.getHitbox();
-		final Texture itemTexture = this.getTexture();
-		final Rectangle toolHitBox = new Rectangle(0, 0, itemTexture.getWidth(), itemTexture.getHeight());
-
-		final Rectangle equippedPlayerHitbox = new Rectangle(playerHitBox.x+toolHitBox.x,
-			playerHitBox.y+toolHitBox.y,
-			playerHitBox.width+toolHitBox.width,
-			playerHitBox.height+toolHitBox.height);
-
-		return equippedPlayerHitbox;
+		// Stream the entities, check if they can be attacked.
+		// If attackable, attack them and apply knockback force.
+		activeEnemies.stream().forEach(enemy -> {
+			if (!enemy.isInvulnrable() && equippedPlayerHitBox.intersects(enemy.physics.getHitbox())) {
+				int damage = this.calculateDamageToInflict(enemy);
+				cowner.attack(enemy, damage);
+			}
+		});
 	}
 
-	private void inflictDamageOnEnemy(final Enemy enemy) {
-		enemy.stats.modifyHP(-this.calculateDamageToInflict(enemy));
-
-		// enemy.setEntityToInvulnerableTemp(Entity.InvulnerableTimerConstant.WEAPONATTACK);
-		// TODO Right now knock back velocity is a Magic Number. In the future, knockback will be based on weapon choice.
-		// enemy.applyKnockBackEffect(LastTry.player.getDirection(), 10);
+	private Rectangle generateToolHitbox() {
+		// Distance to offset from the player
+		final int offsetDistance = (int) Math.round(Block.SIZE * 1.1);
+		// Direction the player is facing
+		final int dir = Globals.getPlayer().physics.getDirection() == Direction.LEFT ? -1 : 1;
+		final Rectangle playerHitBox = Globals.getPlayer().physics.getHitbox();
+		final TextureRegion itemTextureRegion = this.getTextureRegion();
+		final Rectangle toolHitBox = new Rectangle(0, 0, itemTextureRegion.getRegionWidth(),
+				itemTextureRegion.getRegionHeight());
+		// Calculate hitbox with proper offsets
+		final Rectangle finalHitbox = new Rectangle(playerHitBox.x + toolHitBox.x, playerHitBox.y + toolHitBox.y,
+				playerHitBox.width + toolHitBox.width, playerHitBox.height + toolHitBox.height);
+		return finalHitbox.offset(dir * offsetDistance, 0);
 	}
 
-	private int calculateDamageToInflict(final Enemy enemy) {
+	private int calculateDamageToInflict(final Creature enemy) {
 		int weaponDamage = Math.round(this.baseDamage);
-
 		if (this.criticalStrikeChanceActive()) {
 			weaponDamage = weaponDamage * 2;
-			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage), (int) enemy.physics.getCenterX()
-				+ LastTry.random.nextInt(32) - 32, (int) enemy.physics.getCenterY()+ LastTry.random.nextInt(32) - 32);
-		} else {
-			Globals.entityManager.spawn(new DamageParticle(true, weaponDamage), (int) enemy.physics.getCenterX()
-				+ LastTry.random.nextInt(32) - 32, (int) enemy.physics.getCenterY()+ LastTry.random.nextInt(32) - 32);
 		}
 
 		weaponDamage = weaponDamage - enemy.stats.getDefense() / 2;
 
-		if (weaponDamage < 0) {
+		if (weaponDamage < 1) {
 			weaponDamage = 1; // Min damage!
 		}
 

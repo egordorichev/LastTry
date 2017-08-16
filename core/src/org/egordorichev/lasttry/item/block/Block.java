@@ -1,205 +1,229 @@
 package org.egordorichev.lasttry.item.block;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.ItemID;
+import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.item.Tile;
+import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.Wall;
-import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.util.ByteHelper;
+import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
-public class Block extends Item {
-    public static final int SIZE = 16;
-    public static final byte MAX_HP = 4;
-
-    /** Is the block solid */
-    protected boolean solid;
-
-    /** The tool type to use for the block */
-    protected ToolPower power;
-
-    /** The block spite-sheet */
-    protected Texture tiles;
-
-	/** Block width in tiles */
-	protected int width = 1;
-
-    /** Block height in tiles */
-    protected int height = 1;
-
-    public Block(short id, String name, boolean solid, ToolPower requiredPower, Texture texture, Texture tiles) {
-        super(id, name, texture);
-        this.power = requiredPower;
-        this.tiles = tiles;
-        this.solid = solid;
-        this.useSpeed = 30;
-    }
-
-    @Override
-    public boolean isAutoUse() {
-        return true;
-    }
+public class Block extends Tile {
+	public static final int SIZE = 16;
+	public static final byte MAX_HP = 3;
 
 	/**
-     * Calculates a number based on the edges that have blocks of the same type.
-     *
-     * @param top    Top edge matches current type.
-     * @param right  Right edge matches current type.
-     * @param bottom Bottom edge matches current type.
-     * @param left   Left edge matches current type.
-     * @return
-     */
-    public static byte calculateBinary(boolean top, boolean right, boolean bottom, boolean left) {
-        byte result = 0;
+	 * Block is collidable
+	 */
+	protected boolean solid;
+	/**
+	 * Tool requiredPower required to break this block
+	 */
+	protected ToolPower requiredPower;
+	/**
+	 * Block textures (not the icon)
+	 */
+	protected TextureRegion[][] tiles;
+	/**
+	 * Block width in tiles
+	 */
+	protected int width = 1;
+	/**
+	 * Block height in tiles
+	 */
+	protected int height = 1;
 
-        if (top)
-            result += 1;
-        if (right)
-            result += 2;
-        if (bottom)
-            result += 4;
-        if (left)
-            result += 8;
+	public Block(String id) {
+		this(id, true);
+	}
 
-        return result;
-    }
+	public Block(String id, boolean loadIcon) {
+		super(id);
 
-    /**
-     * Updates the block at given coordinates
-     *
-     * @param x X-position in the world.
-     * @param y Y-position in the world.
-     */
-    public void updateBlockStyle(int x, int y) {
-        /* TODO: if block has animation, update it */
-    }
+		this.useDelayMax = 30;
+		this.tiles = this.texture.split(SIZE, SIZE);
 
-    public void updateBlock(int x, int y) {
+		if (loadIcon) {
+			this.texture = Assets.getTexture(this.id.replace(':', '_') + "_icon");
+		}
+	}
 
-    }
+	/**
+	 * Loads block info from root
+	 *
+	 * @param root Block root node
+	 */
+	@Override
+	protected void loadFields(JsonValue root) {
+		short[] power = {10, 0, 0};
 
-    public void onNeighborChange(int x, int y, int nx, int ny) {
+		if (root.has("requiredPower")) {
+			power = root.asShortArray();
+		}
 
-    }
+		this.requiredPower = new ToolPower(power[0], power[1], power[2]);
+		this.solid = root.getBoolean("solid", true);
+	}
 
-    public void die(int x, int y) {
-		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
-    }
+	@Override
+	public boolean isAutoUse() {
+		return true;
+	}
 
-    public boolean canBePlaced(int x, int y) {
-    	int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
-    	int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
+	/**
+	 * Updates block animation
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 */
+	public void updateBlockStyle(int x, int y) {
+		/* TODO: if block has animation, update it */
+	}
 
-    	double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
+	/**
+	 * Updates block (one in World.UPDATE_TIME seconds)
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 */
+	public void updateBlock(int x, int y) {
 
-    	if (length > Globals.player.getItemUseRadius()) {
-    		return false;
-	    }
+	}
 
-	    Block t = Globals.world.blocks.get(x, y + 1);
-	    Block b = Globals.world.blocks.get(x, y - 1);
-	    Block l = Globals.world.blocks.get(x + 1, y);
-	    Block r = Globals.world.blocks.get(x - 1, y);
+	/**
+	 * Callback, called on neighbor change
+	 *
+	 * @param x  Block X
+	 * @param y  Block Y
+	 * @param nx Neighbor X
+	 * @param ny Neighbor Y
+	 */
+	public void onNeighborChange(short x, short y, short nx, short ny) {
 
-    	if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) &&
-			    (r == null || !r.isSolid()) && (l == null || !l.isSolid())) {
+	}
 
-    		Wall wall = Globals.world.walls.get(x, y);
+	/**
+	 * Callback, called on block destroy
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 */
+	public void die(short x, short y) {
+		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.getWorld().onBlockBreak(x, y);
+	}
 
-    		if (wall == null) {
-			    return false;
-		    }
-	    }
+	/**
+	 * Returns, if this block can be placed at given position
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 * @return If this block can be placed at given position
+	 */
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
+			return false;
+		}
 
-    	return true;
-    }
+		if (Globals.getWorld().blocks.getID(x, y) != null) {
+			return false;
+		}
 
-    public void place(int x, int y) {
-    	Globals.world.blocks.set(this.id, x, y);
-    }
+		Block t = Globals.getWorld().blocks.get(x, y + 1);
+		Block b = Globals.getWorld().blocks.get(x, y - 1);
+		Block l = Globals.getWorld().blocks.get(x + 1, y);
+		Block r = Globals.getWorld().blocks.get(x - 1, y);
 
-    public byte calculateBinary(int x, int y) {
-	    boolean t = Globals.world.blocks.getID(x, y + 1) == this.id;
-	    boolean r = Globals.world.blocks.getID(x + 1, y) == this.id;
-	    boolean b = Globals.world.blocks.getID(x, y - 1) == this.id;
-	    boolean l = Globals.world.blocks.getID(x - 1, y) == this.id;
-        return Block.calculateBinary(t, r, b, l);
-    }
+		if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) && (r == null || !r.isSolid())
+				&& (l == null || !l.isSolid())) {
 
-    /**
-     * Renders the block at the given coordinates.
-     * @param x X-position in the world.
-     * @param y Y-position in the world.
-     */
-    public void renderBlock(int x, int y, byte binary) {
-        short variant = 1; // TODO: FIXME: replace with var
+			Wall wall = Globals.getWorld().walls.get(x, y);
 
-	    if (binary == 15) {
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        } else {
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        }
+			if (wall == null) {
+				return false;
+			}
+		}
 
-        if (this.renderCracks()) {
-	        byte hp = Globals.world.blocks.getHP(x, y);
+		return true;
+	}
 
-	        if (hp < Block.MAX_HP) {
-				Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-	        }
-        }
-    }
+	/**
+	 * Creates byte, representing block neighbors
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 * @return Byte, representing block neighbors
+	 */
+	public byte calculateBinary(int x, int y) {
+		boolean t = canConnect(Globals.getWorld().blocks.getID(x, y + 1));
+		boolean r = canConnect(Globals.getWorld().blocks.getID(x + 1, y));
+		boolean b = canConnect(Globals.getWorld().blocks.getID(x, y - 1));
+		boolean l = canConnect(Globals.getWorld().blocks.getID(x - 1, y));
 
-    /** Returns true, if we allowed to draw cracks here */
-    protected boolean renderCracks() {
-    	return true;
-    }
+		return ByteHelper.create(t, r, b, l, false, false, false, false);
+	}
 
-    /** Attempts to place the block in the world at the player's cursor. */
-    @Override
-    public boolean use() {
-        int x = LastTry.getMouseXInWorld() / Block.SIZE;
-        int y = LastTry.getMouseYInWorld() / Block.SIZE;
+	/**
+	 * Renders this block at given position
+	 *
+	 * @param x      Block X
+	 * @param y      Block Y
+	 * @param binary Byte, representing block neighbors
+	 */
+	public void renderBlock(int x, int y, byte binary) {
+		byte hp = Globals.getWorld().blocks.getHP(x, y);
+		byte variant = BlockHelper.plain.getVariant(hp);
 
-        if (this.canBePlaced(x, y) && Globals.world.blocks.getID(x, y) == ItemID.none) {
-            Rectangle rectangle = Globals.player.physics.getHitbox();
+		float light = 1f;
 
-            if (rectangle.intersects(new Rectangle(x * SIZE, y * SIZE, this.width * SIZE,
-		            this.height * SIZE))) {
+		// Update light levev
+		if (!LastTry.noLight) {
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / (WorldLightingComponent.MAX_LIGHT);
+		}
 
-                return false;
-            }
+		Graphics.batch.setColor(light, light, light, 1f);
+		Graphics.batch.draw(this.tiles[variant][0], x * SIZE, y * SIZE);
 
-            this.place(x, y);
+		hp = BlockHelper.plain.getHP(hp);
 
-            return true;
-        }
+		if (this.renderCracks() && hp < Block.MAX_HP) {
+			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
+		}
 
-        return false;
-    }
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
+	}
 
-    /**
-     * Returns required power to break this block
-     * @return required power to break this block
-     */
-    public ToolPower getRequiredPower() {
-    	return this.power;
-    }
+	/**
+	 * @return Render tile cracks
+	 */
+	protected boolean renderCracks() {
+		return true;
+	}
 
-    /**
-     * Returns the solidity of the block.
-     * @return true if the block is solid.
-     */
-    public boolean isSolid() {
-        return this.solid;
-    }
+	@Override
+	public boolean use(short x, short y) {
+		Globals.getWorld().blocks.set(this.id, x, y);
+		return true;
+	}
+
+	/**
+	 * @return Required tool power to break this block
+	 */
+	public ToolPower getRequiredPower() {
+		return this.requiredPower;
+	}
+
+	/**
+	 * @return Block is solid
+	 */
+	public boolean isSolid() {
+		return this.solid;
+	}
 }

@@ -1,5 +1,17 @@
 package org.egordorichev.lasttry.component;
 
-public class Component {
-	// TODO
+/** Core component */
+public interface Component {
+	/** Being called on render */
+	default void render() {
+
+	}
+
+	/**
+	 * Being called on update
+	 * @param dt Time, past since last update
+	 */
+	default void update(int dt) {
+
+	}
 }

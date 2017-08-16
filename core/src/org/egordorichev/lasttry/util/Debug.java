@@ -12,7 +12,7 @@ import java.util.*;
 public class Debug {
 	private boolean enabled;
 	private int uniqueCounter;
-	private Map<Integer, GenericContainer.UniqueTypePair> messagesToBePrinted = new LinkedHashMap<>();
+	private Map<Integer, GenericContainer.UniqueTypePair<String, Integer>> messagesToBePrinted = new LinkedHashMap<>();
 
 	public Debug() {
 		this.enabled = !LastTry.release;
@@ -23,13 +23,13 @@ public class Debug {
 			return;
 		}
 
-		Assets.f18.draw(Graphics.batch, Gdx.graphics.getFramesPerSecond() + " FPS", 10, 20);
-		Assets.f18.draw(Graphics.batch, "X: " + Globals.player.physics.getGridX() + " Y: " + Globals.player.physics.getGridY(), 10, 50);
-		Assets.f18.draw(Graphics.batch, "Chunk: " + (Globals.player.physics.getGridX() / Chunk.SIZE)
-		   + ":" + (Globals.player.physics.getGridY() / Chunk.SIZE), 10, 70);
-		Assets.f18.draw(Graphics.batch, "Total amount of enemies: " + Globals.entityManager.getEnemyEntities().size(), 10, 90);
-		Assets.f18.draw(Graphics.batch, "Current Biome: " + Globals.environment.currentBiome.getName(), 10, 110);
-		Assets.f18.draw(Graphics.batch, "Current world time: " + Globals.environment.time.toString(true), 10, 130);
+		Util.drawWithShadow(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
+		Util.drawWithShadow(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
+		Util.drawWithShadow(Assets.f18, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
+		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
+		Util.drawWithShadow(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
+		Util.drawWithShadow(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
+		Util.drawWithShadow(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
 
 		if (messagesToBePrinted.keySet().size() == 0) {
 			return;
@@ -51,7 +51,7 @@ public class Debug {
 			return;
 		}
 
-		Assets.f18.draw(Graphics.batch, message, 10, 150);
+		Util.drawWithShadow(Assets.f18, message, 10, 190);
 
 		// Decrement counter as it has been displayed for 1 tick
 		gameTicksCounter--;

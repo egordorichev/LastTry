@@ -91,9 +91,9 @@ public class ChunkGcCalc {
 
     //Calculates percentage of chunks that are filled out of max chunks for world
     private static int getFilledChunksPercent() {
-        double maxChunksSize = Globals.world.getSize().getMaxChunks();
+        double maxChunksSize = Globals.getWorld().getSize().getMaxChunks();
 
-        double loadedChunksSize = Globals.world.chunks.getImmutableLoadedChunks().size();
+        double loadedChunksSize = Globals.getWorld().chunks.getImmutableLoadedChunks().size();
 
         if(loadedChunksSize<=MINIMUMLOADEDCHUNKS){
             return 0;

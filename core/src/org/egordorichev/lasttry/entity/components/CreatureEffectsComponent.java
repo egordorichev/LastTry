@@ -7,11 +7,10 @@ import org.egordorichev.lasttry.entity.Creature;
 import java.util.ArrayList;
 
 public class CreatureEffectsComponent extends CreatureComponent {
-    private Creature creature;
     protected ArrayList<EffectData> effects = new ArrayList<>();
 
     public CreatureEffectsComponent(Creature creature) {
-        this.creature = creature;
+        super(creature);
     }
 
     public void render() {

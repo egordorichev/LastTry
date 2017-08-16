@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.ai.AIID;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.world.biome.Biomes;
 
 public class SlimeAI extends AI {
 	private static final int MAX = 360;
@@ -28,7 +29,7 @@ public class SlimeAI extends AI {
 
 			creature.ai.setMax((int) ((MAX / 2) + (Math.random() * MAX / 2)));
 
-			int dir = Float.compare(Globals.player.physics.getCenterX(), creature.physics.getCenterX());
+			int dir = Float.compare(Globals.getPlayer().physics.getCenterX(), creature.physics.getCenterX());
 
 			if (dir < 0) {
 				creature.ai.setData((short) 0);
@@ -44,6 +45,6 @@ public class SlimeAI extends AI {
 
 	@Override
 	public boolean canSpawn() {
-		return Globals.environment.time.isDay();
+		return Globals.environment.time.isDay() && Globals.environment.currentBiome == Biomes.get("lt:forest");
 	}
 }

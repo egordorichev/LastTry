@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
-	public static final int VERSION = 1;
+	public static final byte VERSION = 3;
 
 	public static void load(String name) {
 		String fileName = getSaveName(name);
@@ -28,7 +28,8 @@ public class WorldIO {
 		try {
 			FileReader stream = new FileReader(fileName);
 
-			int version = stream.readInt32();
+			int version = stream.readByte();
+			int seed = stream.readInt32();
 
 			if (version > VERSION) {
 				Log.error("Trying to load unknown world.");
@@ -57,7 +58,7 @@ public class WorldIO {
 			Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
-			Globals.world = new World(name, size, flags);
+			Globals.setWorld(new World(name, size, flags, seed));
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -65,63 +66,69 @@ public class WorldIO {
 		Log.debug("Done loading world " + name + "!");
 	}
 
-	public static World generate(String name, World.Size size, int flags) {
-		File dir = new File("worlds/");
+	public static World generate(String name, World.Size size, int flags, int seed) {
+		File dir = new File(System.getProperty("user.home") + "/.LastTry/worlds/");
 
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
-		File file = new File("worlds/" + name + "/");
+		File file = new File(System.getProperty("user.home") + "/.LastTry/worlds/" + name + "/");
 
 		if (!file.exists()) {
 			file.mkdir();
 		}
 
-		return new WorldGenerator(name, size, flags).generate();
-		// return new World(name, size, flags);
+		return new WorldGenerator(name, size, flags, seed).generate();
 	}
 
 	public static void save() {
-		String fileName = getSaveName(Globals.world.getName());
+		String fileName = getSaveName(Globals.getWorld().getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-			} catch(IOException exception) {
-				Log.error("Failed to create save file for the world " + Globals.world.getName() + "!");
+			} catch (IOException exception) {
+				Log.error("Failed to create save file for the world " + Globals.getWorld().getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving world " + Globals.world.getName() + "...");
+		Log.debug("Saving world " + Globals.getWorld().getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
-			stream.writeInt32(VERSION);
+			stream.writeByte(VERSION);
+			stream.writeInt32(Globals.getWorld().getSeed());
 
-			switch (Globals.world.getSize()) {
-				case SMALL: stream.writeByte((byte) 0); break;
-				case MEDIUM: stream.writeByte((byte) 1); break;
-				case LARGE: stream.writeByte((byte) 2); break;
+			switch (Globals.getWorld().getSize()) {
+				case SMALL:
+					stream.writeByte((byte) 0);
+				break;
+				case MEDIUM:
+					stream.writeByte((byte) 1);
+				break;
+				case LARGE:
+					stream.writeByte((byte) 2);
+				break;
 			}
 
-			stream.writeBoolean(Globals.world.flags.isHardmode());
-			stream.writeBoolean(Globals.world.flags.isExpertMode());
-			stream.writeBoolean(Globals.world.flags.evilIsCrimson());
+			stream.writeBoolean(Globals.getWorld().flags.isHardmode());
+			stream.writeBoolean(Globals.getWorld().flags.isExpertMode());
+			stream.writeBoolean(Globals.getWorld().flags.evilIsCrimson());
 
 			stream.writeByte(Globals.environment.time.getHour());
 			stream.writeByte(Globals.environment.time.getMinute());
 
 			stream.close();
 
-			Globals.world.chunks.save();
+			Globals.getWorld().chunks.save();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving world " + Globals.world.getName() + "!");
+		Log.debug("Done saving world " + Globals.getWorld().getName() + "!");
 	}
 
 	public static boolean saveExists(String name) {
@@ -130,6 +137,6 @@ public class WorldIO {
 	}
 
 	private static String getSaveName(String name) {
-		return "worlds/" + name + ".wld";
+		return System.getProperty("user.home") + "/.LastTry/worlds/" + name + ".wld";
 	}
 }

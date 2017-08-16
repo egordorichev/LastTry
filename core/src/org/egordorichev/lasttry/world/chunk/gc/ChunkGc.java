@@ -8,92 +8,95 @@ import java.util.*;
 
 //Logic responsible for carrying out chunk gc
 public class ChunkGc {
-    private ChunkGcCalc.ChunkGCLevel currentChunkGcLevel;
+	private ChunkGcCalc.ChunkGCLevel currentChunkGcLevel;
 
-    ChunkGc(ChunkGcCalc.ChunkGCLevel levelToRunChunkGcAt) {
-        this.currentChunkGcLevel = levelToRunChunkGcAt;
-    }
+	ChunkGc(ChunkGcCalc.ChunkGCLevel levelToRunChunkGcAt) {
+		this.currentChunkGcLevel = levelToRunChunkGcAt;
+	}
 
-    public void onWakeUp(){
-        if (currentChunkGcLevel== ChunkGcCalc.ChunkGCLevel.SLEEP){
-            Globals.chunkGcManager.scheduleChunkGc(currentChunkGcLevel);
-        } else {
-            this.beginChunkGC();
-        }
-    }
+	public void onWakeUp(){
+		if (currentChunkGcLevel== ChunkGcCalc.ChunkGCLevel.SLEEP){
+			Globals.chunkGcManager.scheduleChunkGc(currentChunkGcLevel);
+		} else {
+			this.beginChunkGC();
+		}
+	}
 
-    public void beginChunkGC() {
-        Log.debug("Received request to perform Chunk GC");
+	public void beginChunkGC() {
+		Log.debug("Received request to perform Chunk GC");
 
-        this.startUp();
-        this.performChunkGc();
-        this.finish();
-    }
+		this.startUp();
+		this.performChunkGc();
+		this.finish();
+	}
 
-    private void performChunkGc() {
-        List<Chunk> mutableLoadedChunks = this.retrieveMutableLoadedChunks();
-        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(mutableLoadedChunks);
+	private void performChunkGc() {
+		List<Chunk> mutableLoadedChunks = this.retrieveMutableLoadedChunks();
+		ArrayList<UUID> uniqueIdsOfChunksToBeFreed = this.getUniqueIdsOfChunksToBeFreed(mutableLoadedChunks);
 
-        this.freeChunks(uniqueIdsOfChunksToBeFreed);
-    }
+		this.freeChunks(uniqueIdsOfChunksToBeFreed);
+	}
 
-    private List<Chunk> retrieveMutableLoadedChunks() {
-        List<Chunk> loadedChunks = Globals.world.chunks.getImmutableLoadedChunks();
-        List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
-        Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
+	private List<Chunk> retrieveMutableLoadedChunks() {
+		List<Chunk> loadedChunks = Globals.getWorld().chunks.getImmutableLoadedChunks();
+		List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
+		Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
 
-        return mutableLoadedChunks;
-    }
+		return mutableLoadedChunks;
+	}
 
-    private void setChunkGcInProgressFlag(boolean flag) {
-        Globals.chunkGcManager.setChunkGcInProgress(flag);
-    }
+	private void setChunkGcInProgressFlag(boolean flag) {
+		Globals.chunkGcManager.setChunkGcInProgress(flag);
+	}
 
-    private ArrayList<UUID> getUniqueIdsOfChunksToBeFreed(List<Chunk> loadedChunks) {
-        this.sortBasedOnDate(loadedChunks);
+	private ArrayList<UUID> getUniqueIdsOfChunksToBeFreed(List<Chunk> loadedChunks) {
+		this.sortBasedOnDate(loadedChunks);
 
-        int amountOfChunksToFree = currentChunkGcLevel.getChunksToFree();
-        Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
+		int amountOfChunksToFree = currentChunkGcLevel.getChunksToFree();
+		Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
 
-        ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
+		ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
 
-        //We remove the oldest chunk, which will be the first chunks.
-        for(int i=0; i<amountOfChunksToFree; i++){
-            Chunk chunkToBeFreed = loadedChunks.get(i);
-            uniqueIdsOfChunksToBeFreed.add(chunkToBeFreed.getUniqueChunkId());
-        }
+		//We remove the oldest chunk, which will be the first chunks.
+		for(int i = 0; i < amountOfChunksToFree; i++) {
+			Chunk chunkToBeFreed = loadedChunks.get(i);
 
-        return uniqueIdsOfChunksToBeFreed;
-    }
+			if (chunkToBeFreed.isUnloadable()) {
+				uniqueIdsOfChunksToBeFreed.add(chunkToBeFreed.getUniqueChunkId());
+			}
+		}
 
-    private void freeChunks(List<UUID> idsOfChunksToBeFreed) {
-        //free chunks
-        idsOfChunksToBeFreed.stream().forEach(uniqueIdOfChunkToBeFreed -> {
-            Globals.world.chunks.removeChunk(uniqueIdOfChunkToBeFreed);
-        });
-    }
+		return uniqueIdsOfChunksToBeFreed;
+	}
 
-    private void startUp() {
-        assert Globals.world.chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
+	private void freeChunks(List<UUID> idsOfChunksToBeFreed) {
+		// free chunks
+		idsOfChunksToBeFreed.stream().forEach(uniqueIdOfChunkToBeFreed -> {
+			Globals.getWorld().chunks.removeChunk(uniqueIdOfChunkToBeFreed);
+		});
+	}
 
-        //Set flag in gc manager, signalling a chunk gc is in progress
-        setChunkGcInProgressFlag(true);
-    }
+	private void startUp() {
+		assert Globals.getWorld().chunks.getImmutableLoadedChunks().size()<=ChunkGcCalc.MINIMUMLOADEDCHUNKS : "Chunks currently loaded is less than or equal to minimum loaded chunks";
 
-    private void finish() {
-        setChunkGcInProgressFlag(false);
+		//Set flag in gc manager, signalling a chunk gc is in progress
+		setChunkGcInProgressFlag(true);
+	}
 
-        //Schedule next chunk gc
-        Globals.chunkGcManager.requestFutureChunkGc();
-    }
+	private void finish() {
+		setChunkGcInProgressFlag(false);
 
-    private void sortBasedOnDate(List<Chunk> loadedChunks) {
-        // Sort by local date, most recent date is last and oldest date is first.
-        Collections.sort(loadedChunks, new Comparator<Chunk>() {
-            public int compare(Chunk one, Chunk other) {
-                return one.getLastAccessedTime().compareTo(other.getLastAccessedTime());
-            }
-        });
-    }
+		//Schedule next chunk gc
+		Globals.chunkGcManager.requestFutureChunkGc();
+	}
+
+	private void sortBasedOnDate(List<Chunk> loadedChunks) {
+		// Sort by local date, most recent date is last and oldest date is first.
+		Collections.sort(loadedChunks, new Comparator<Chunk>() {
+			public int compare(Chunk one, Chunk other) {
+				return one.getLastAccessedTime().compareTo(other.getLastAccessedTime());
+			}
+		});
+	}
 
 }

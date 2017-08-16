@@ -44,7 +44,7 @@ public class SpawnUtilComponent {
 
     private static boolean isPointOnMap(int xGridPoint, int yGridPoint) {
 
-        boolean isPointInMap = Globals.world.isInside(xGridPoint, yGridPoint);
+        boolean isPointInMap = Globals.getWorld().isInside(xGridPoint, yGridPoint);
 
         return  isPointInMap;
     }
@@ -86,7 +86,7 @@ public class SpawnUtilComponent {
 
     private static boolean isPointOccupied(final int xGridSpawnPoint, final int yGridSpawnPoint) {
 
-        Block blockAtXyPoint = Globals.world.blocks.get(xGridSpawnPoint, yGridSpawnPoint);
+        Block blockAtXyPoint = Globals.getWorld().blocks.get(xGridSpawnPoint, yGridSpawnPoint);
 
         boolean isPointOccupied = blockAtXyPoint == null ? false : true;
 

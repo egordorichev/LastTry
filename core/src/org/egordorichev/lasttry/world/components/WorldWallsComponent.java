@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemID;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.world.World;
@@ -17,17 +16,17 @@ public class WorldWallsComponent extends WorldComponent {
 		return (Wall) Item.fromID(this.getID(x, y));
 	}
 
-	public short getID(int x, int y) {
+	public String getID(int x, int y) {
 		Chunk chunk = this.getChunk(x, y);
 
 		if (chunk == null) {
-			return ItemID.none;
+			return null;
 		}
 
 		return chunk.getWall(x, y);
 	}
 
-	public void set(short id, int x, int y) {
+	public void set(String id, int x, int y) {
 		Chunk chunk = this.getChunk(x, y);
 
 		if (chunk == null) {
@@ -66,7 +65,7 @@ public class WorldWallsComponent extends WorldComponent {
 		Chunk chunk = this.world.chunks.getFor(x, y);
 
 		if (chunk == null) {
-			Globals.world.chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
+			Globals.getWorld().chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
 			return null;
 		}
 

@@ -1,20 +1,32 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.item.Item;
 
 public class Coin extends Item {
-    public Coin(short id, String name, Texture texture) {
-        super(id, name, texture);
-    }
+	protected int cost;
 
-    @Override
-    public boolean canBeUsed() {
-        return false;
-    }
+	public Coin(String id) {
+		super(id);
+	}
 
-    @Override
-    public int getMaxInStack() {
-        return 100;
-    }
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+		this.cost = root.getInt("cost", 1);
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	@Override
+	public boolean canBeUsed(short x, short y) {
+		return false;
+	}
+
+	@Override
+	public int getMaxInStack() {
+		return 100;
+	}
 }

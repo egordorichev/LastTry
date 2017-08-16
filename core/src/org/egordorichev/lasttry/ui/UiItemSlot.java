@@ -1,235 +1,166 @@
 package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.items.*;
+import org.egordorichev.lasttry.inventory.InventorySlot;
+import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.util.Util;
 
-public class UiItemSlot extends UiComponent {
-    private static Texture inventorySlot5 = Assets.getTexture(Textures.inventorySlot5);
+public class UiItemSlot extends UiComponent implements InventorySlot {
+	private static TextureRegion activeSlotTexture = Assets.getTexture("yellow_inventory_slot");
 	private boolean active;
-    private Texture texture;
-    public ItemHolder itemHolder;
-    private Type type;
-    private TextureRegion back;
+	private int index;
+	private TextureRegion texture;
+	private ItemHolder itemHolder;
+	private Type type;
+	private TextureRegion back;
 
-    public enum Type {
-        ANY,
-        ACCESSORY,
-        VANITY_ACCESSORY,
-        ARMOR,
-        COIN,
-        AMMO,
-        TRASH,
-        VANITY,
-        DYE
-    }
+	public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back, int index) {
+		super(rectangle, origin);
 
-    public UiItemSlot(Rectangle rectangle, Type type, Origin origin, TextureRegion back) {
-        super(rectangle, origin);
+		this.itemHolder = new ItemHolder(null, 0);
+		this.type = type;
+		this.back = back;
 
-        this.itemHolder = new ItemHolder(null, 0);
-        this.type = type;
-        this.back = back;
+		switch (this.type) {
+			case ANY:
+			case AMMO:
+			case COIN:
+			case TRASH:
+				this.texture = Assets.getTexture("blue_inventory_slot");
+				break;
+			case ACCESSORY:
+			case ARMOR:
+				this.texture = Assets.getTexture("green_inventory_slot");
+				break;
+			case VANITY:
+			case VANITY_ACCESSORY:
+				this.texture = Assets.getTexture("lgreen_inventory_slot");
+				break;
+			case DYE:
+				this.texture = Assets.getTexture("cyan_inventory_slot");
+				break;
+		}
 
-        switch (this.type) {
-            case ANY:
-            case AMMO:
-            case COIN:
-            case TRASH:
-                this.texture = Assets.getTexture(Textures.inventorySlot1);
-            break;
-            case ACCESSORY:
-            case ARMOR:
-                this.texture = Assets.getTexture(Textures.inventorySlot2);
-            break;
-            case VANITY:
-            case VANITY_ACCESSORY:
-                this.texture = Assets.getTexture(Textures.inventorySlot3);
-            break;
-            case DYE:
-                this.texture = Assets.getTexture(Textures.inventorySlot4);
-            break;
-        }
+		this.active = false;
+		this.index = index;
+	}
 
-        this.active = false;
-    }
+	public UiItemSlot(Rectangle rectangle, Type type, int index) {
+		this(rectangle, type, Origin.TOP_LEFT, null, index);
+	}
 
-    public UiItemSlot(Rectangle rectangle, Type type) {
-        this(rectangle, type, Origin.TOP_LEFT, null);
-    }
+	@Override
+	public void render() {
+		if (this.hidden) {
+			return;
+		}
 
-    public boolean setItemHolder(ItemHolder holder) {
-        if (!this.canHold(holder)) {
-            return false;
-        }
+		super.render();
 
-        this.itemHolder = holder;
-        return true;
-    }
+		int x = this.getX();
+		int y = this.getY();
+		int width = this.getWidth();
+		int height = this.getHeight();
 
-    @Override
-    public void render() {
-        if (this.hidden) {
-            return;
-        }
+		Graphics.batch.setColor(1, 1, 1, 0.8f);
 
-        super.render();
+		if (this.active) {
+			Graphics.batch.draw(activeSlotTexture, x, y, width, height);
+		} else {
+			Graphics.batch.draw(this.texture, x, y, width, height);
+		}
 
-        int x = this.getX();
-        int y = this.getY();
-        int width = this.getWidth();
-        int height = this.getHeight();
+		if (this.itemHolder.getItem() != null) {
+			Graphics.batch.setColor(1, 1, 1, 1);
+			this.itemHolder.renderAt(x, y, width, height);
+		} else if (this.back != null) {
+			Graphics.batch.setColor(1, 1, 1, 0.7f);
+			Graphics.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2,
+					y + (height - this.back.getRegionHeight()) / 2);
+			Graphics.batch.setColor(1, 1, 1, 1);
+		}
 
-        Graphics.batch.setColor(1, 1, 1, 0.8f);
+		if (this.index < 10) {
+			Util.drawWithShadow(Assets.f18, String.valueOf((this.index == 9) ? 0 : this.index + 1), this.getX() + 6, this.getY() + this.getHeight() - 6);
+		}
+	}
 
-        if (this.active) {
-            Graphics.batch.draw(inventorySlot5, x, y, width, height);
-        } else {
-            Graphics.batch.draw(this.texture, x, y, width, height);
-        }
+	public void swapWithCurrent() {
+		Globals.getPlayer().getInventory().setSelectedItem(this.swapItems(Globals.getPlayer().getInventory().getSelectedItem()));
+	}
 
-        if (this.itemHolder.getItem() != null) {
-            Graphics.batch.setColor(1, 1, 1, 1);
-            this.itemHolder.renderAt(x, y, width, height);
-        } else if (this.back != null) {
-            Graphics.batch.setColor(1, 1, 1, 0.7f);
-            Graphics.batch.draw(this.back, x + (width - this.back.getRegionWidth()) / 2, y + (height
-                - this.back.getRegionHeight()) / 2);
-            Graphics.batch.setColor(1, 1, 1, 1);
-        }
-    }
+	@Override
+	protected void onStateChange() {
+		UiInventory inventory = Globals.getPlayer().getInventory();
+		if (this.state == State.MOUSE_DOWN && inventory.isOpen()) {
+			if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
+				if (InputManager.isKeyDown(Input.Keys.SHIFT_LEFT)) {
+					if (this.isEmpty()) {
+						return;
+					}
 
-    public void setItemCount(int count) {
-        this.itemHolder.setCount(count);
-    }
+					Globals.getPlayer().getInventory().trash(this.itemHolder);
+					this.itemHolder = new ItemHolder(null, 0);
+				} if (this.isEmpty() || inventory.getSelectedItem().isEmpty()) {
+					this.swapWithCurrent();
+				} else if (inventory.getSelectedItem().getItem().getID().equals(this.getItemID())) {
+					int count = inventory.getSelectedItem().getCount() + this.itemHolder.getCount();
+					int max = this.itemHolder.getItem().getMaxInStack();
 
-    public ItemHolder getItemHolder() {
-        return this.itemHolder;
-    }
+					if (count <= max) {
+						this.itemHolder.setCount(count);
+						inventory.setSelectedItem(new ItemHolder(null, 0));
+					} else {
+						this.swapWithCurrent();
+					}
+				} else if (this.type == Type.TRASH) {
+					if (inventory.getSelectedItem().getItem() == null) {
+						inventory.setSelectedItem(this.itemHolder);
+						this.itemHolder = new ItemHolder(null, 0);
+					} else {
+						this.itemHolder = inventory.getSelectedItem();
+						inventory.setSelectedItem(new ItemHolder(null, 0));
+					}
+				} else {
+					this.swapWithCurrent();
+				}
+			} else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
 
-    public boolean isActive() {
-        return this.active;
-    }
+			}
+		}
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	@Override
+	public ItemHolder getItemHolder() {
+		return this.itemHolder;
+	}
 
-    public Item getItem() {
-        return this.itemHolder.getItem();
-    }
+	@Override
+	public boolean setItemHolder(ItemHolder holder) {
+		if (!this.canHold(holder)) {
+			return false;
+		}
 
-    public short getItemID() {
-	    Item item = this.getItem();
+		this.itemHolder = holder;
+		return true;
+	}
 
-	    if (item == null) {
-	    	return 0;
-	    }
+	public boolean isActive() {
+		return this.active;
+	}
 
-	    return item.getID();
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public int getItemCount() {
-	    return this.itemHolder.getCount();
-    }
-
-    public boolean canHold(ItemHolder holder) {
-        switch (this.type) {
-            case ANY:
-            case TRASH:
-            default:
-            break;
-            case ACCESSORY:
-            case VANITY_ACCESSORY:
-                if (!(holder.getItem() instanceof Accessory)) {
-                    return false;
-                }
-            break;
-            case ARMOR:
-            case VANITY:
-                if (!(holder.getItem() instanceof Armor)) {
-                    return false;
-                }
-            break;
-            case COIN:
-                if (!(holder.getItem() instanceof Coin)) {
-                    return false;
-                }
-            break;
-            case AMMO:
-                if (!(holder.getItem() instanceof Ammo)) {
-                    return false;
-                }
-            break;
-            case DYE:
-                if (!(holder.getItem() instanceof Dye)) {
-                    return false;
-                }
-            break;
-        }
-
-        return true;
-    }
-
-    @Override
-    protected void onStateChange() {
-        if (this.state == State.MOUSE_DOWN) {
-            if (Globals.player.inventory.isOpen()) {
-                if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)) {
-                    if (Globals.player.inventory.currentItem != null
-                            && this.itemHolder.getItem() == Globals.player.inventory.currentItem.getItem()) {
-
-                    	if (this.type == Type.TRASH) {
-                    		if (Globals.player.inventory.currentItem.getItem() == null) {
-			                    Globals.player.inventory.currentItem = this.itemHolder;
-			                    this.itemHolder = new ItemHolder(null, 0);
-                    			return;
-		                    }
-
-							this.itemHolder = Globals.player.inventory.currentItem;
-		                    Globals.player.inventory.currentItem = new ItemHolder(null, 0);
-	                    } else if (this.canHold(Globals.player.inventory.currentItem)) {
-                            int count = Globals.player.inventory.currentItem.getCount() + this.itemHolder.getCount();
-                            int max = this.itemHolder.getItem().getMaxInStack();
-
-                            if (count <= max) {
-                                this.itemHolder.setCount(count);
-                                Globals.player.inventory.currentItem = null;
-                            } else {
-                                ItemHolder tmp = this.itemHolder;
-                                this.itemHolder = Globals.player.inventory.currentItem;
-                                Globals.player.inventory.currentItem = tmp;
-                            }
-                        }
-                    } else {
-	                    if (this.type == Type.TRASH) {
-		                    if (Globals.player.inventory.currentItem.getItem() == null) {
-			                    Globals.player.inventory.currentItem = this.itemHolder;
-			                    this.itemHolder = new ItemHolder(null, 0);
-			                    return;
-		                    }
-
-	                    	this.itemHolder = Globals.player.inventory.currentItem;
-		                    Globals.player.inventory.currentItem = new ItemHolder(null, 0);
-	                    } else if (this.canHold(Globals.player.inventory.currentItem)) {
-                            ItemHolder tmp = Globals.player.inventory.currentItem;
-                            Globals.player.inventory.currentItem = this.itemHolder;
-                            this.itemHolder = tmp;
-                        }
-                    }
-                } else if (InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
-                    // TODO
-                }
-            }
-        }
-    }
+	@Override
+	public Type getType() {
+		return type;
+	}
 }

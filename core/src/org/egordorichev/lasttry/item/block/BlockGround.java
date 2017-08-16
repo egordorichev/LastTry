@@ -1,55 +1,14 @@
 package org.egordorichev.lasttry.item.block;
 
-import com.badlogic.gdx.graphics.Texture;
-import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.item.Item;
 
-public class BlockGround extends Block {
-    public BlockGround(short id, String name, ToolPower requiredPower,
-            Texture texture, Texture tiles) {
-
-        super(id, name, true, requiredPower, texture, tiles);
-    }
-
-	@Override
-	public byte calculateBinary(int x, int y) {
-		boolean t = Globals.world.blocks.get(x, y + 1) instanceof BlockGround;
-		boolean r = Globals.world.blocks.get(x + 1, y) instanceof BlockGround;
-		boolean b = Globals.world.blocks.get(x, y - 1) instanceof BlockGround;
-		boolean l = Globals.world.blocks.get(x - 1, y) instanceof BlockGround;
-
-		return calculateBinary(t, r, b, l);
+public class BlockGround extends TileableBlock {
+	public BlockGround(String id) {
+		super(id);
 	}
-
-	/**
-     * Overridden so blocks of the same type merge.
-     */
-    @Override
-    public void renderBlock(int x, int y, byte binary) {
-        short variant = 1; // TODO: FIXME: replace  with var
-
-        if (binary == 15) {
-            // TODO: Replace (binary) with (corner)
-            // It's not getting the right texture for some reason.
-
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), 48 + variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        } else {
-            Graphics.batch.draw(this.tiles, x * Block.SIZE,
-                y * Block.SIZE, Block.SIZE, Block.SIZE,
-                Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-                Block.SIZE, false, false);
-        }
-
-	    if (this.renderCracks()) {
-		    byte hp = Globals.world.blocks.getHP(x, y);
-
-		    if (hp < Block.MAX_HP) {
-			    Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
-		    }
-	    }
-    }
+	
+	@Override
+	protected boolean canConnect(Item other) {
+		return (other instanceof BlockGround);
+	}
 }

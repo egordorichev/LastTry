@@ -1,25 +1,25 @@
 package org.egordorichev.lasttry.ui;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.graphics.Graphics;
 
 public class UiImage extends UiComponent {
-    private Texture texture;
+    private TextureRegion texture;
 
-    public UiImage(Rectangle rectangle, Origin origin, Texture texture) {
+    public UiImage(Rectangle rectangle, Origin origin, TextureRegion texture) {
         super(rectangle, origin);
 
         this.texture = texture;
     }
 
-    public UiImage(Rectangle rectangle, Texture texture) {
+    public UiImage(Rectangle rectangle, TextureRegion texture) {
         super(rectangle);
 
         this.texture = texture;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTextureRegion(TextureRegion texture) {
         this.texture = texture;
     }
 

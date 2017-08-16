@@ -1,10 +1,11 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.Args;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.entity.player.PlayerIO;
+import org.egordorichev.lasttry.player.PlayerIO;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.world.World;
@@ -13,8 +14,14 @@ import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 public class LoadState implements State {
-    private boolean loaded = false;
-    private String loadString = "";
+	/**
+	 * All systems are ready
+	 */
+	private boolean loaded = false;
+	/**
+	 * Displayed label
+	 */
+	private String loadString = "Loading...";
 
     public LoadState() {
         new Thread(new Runnable() {
@@ -28,71 +35,47 @@ public class LoadState implements State {
                         Globals.spawnSystem = new SpawnSystem();
                         loadString = "Loading environment...";
                         Globals.environment = new Environment();
-                        loadString = "Loading world...";
 
-                        if (WorldIO.saveExists("test")) {
-                        	WorldIO.load("test");
-                        } else {
-                        	Globals.world = WorldIO.generate("test", World.Size.SMALL, 0);
-                        }
+	                    loadString = "Loading world...";
 
-                        loadString = "Loading player...";
+	                    if (WorldIO.saveExists(Args.world)) {
+		                    WorldIO.load(Args.world);
+	                    } else {
+		                    int seed = (int) System.currentTimeMillis();
+		                    Globals.setWorld(WorldIO.generate(Args.world, World.Size.SMALL, 0, seed));
+	                    }
 
-                        if (PlayerIO.saveExists("test")) {
-	                        PlayerIO.load("test");
-                        } else {
-	                        Globals.player = PlayerIO.generate("test");
-                        }
+	                    loadString = "Loading player...";
 
-                        loaded = true;
-                    }
-                });
-            }
-        }).start();
-    }
+	                    if (PlayerIO.saveExists(Args.player)) {
+		                    PlayerIO.load(Args.player);
+	                    } else {
+		                    Globals.setPlayer(PlayerIO.generate(Args.player));
+	                    }
 
-    @Override
-    public void show() {
+	                    loaded = true;
 
-    }
+	                    Globals.getWorld().initLights();
+					}
+				});
+			}
+		}).start();
+	}
 
-    @Override
-    public void render(float delta) {
-        if (this.loaded) {
-            LastTry.instance.setScreen(new GamePlayState());
-            return;
-        }
+	@Override
+	public void render(float delta) {
+		if (this.loaded) {
+			LastTry.instance.setScreen(new GamePlayState());
+			return;
+		}
 
-        for (int i = 0; i < Gdx.graphics.getWidth() / 48 + 1; i++) {
-            Graphics.batch.draw(Graphics.skyTexture, i * 48, 0);
-        }
+		int height = Gdx.graphics.getHeight();
 
-        Assets.f22.draw(Graphics.batch, this.loadString, 0, 0);
-        LastTry.ui.render();
-    }
+		for (int i = 0; i < Gdx.graphics.getWidth(); i++) {
+			Graphics.batch.draw(Graphics.skyTexture, i, 0, 1, height, 1000, 0, 1, 1024, false, false);
+		}
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
+		Assets.f22.draw(Graphics.batch, this.loadString, 100, height / 2 - 11);
+		LastTry.ui.render();
+	}
 }

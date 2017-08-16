@@ -2,6 +2,9 @@ package org.egordorichev.lasttry.core;
 
 import org.egordorichev.lasttry.LastTry;
 
+import javax.swing.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.List;
@@ -11,25 +14,48 @@ public class Crash {
 		+ "\nPlease, copy and report the entire text to email egordorichev@gmail.com or\n"
 		+ "submit an issue https://github.com/egordorichev/LastTry/issues\n\n";
 
+	/**
+	 * Handles all exceptions
+	 * @param thread Thread, where exception happened
+	 * @param throwable Throwable
+	 */
 	public static void report(Thread thread, Throwable throwable) {
-		System.err.println("LastTry had crashed!\n-------------------");
-		System.err.println(ERROR_MESSAGE);
+		StringBuilder builder = new StringBuilder();
 
-		System.err.println("--- BEGIN CRASH REPORT ---");
-		System.err.println("LastTry version: " + LastTry.version.toString());
-		System.err.println("OS: " + System.getProperty("os.name") + " (" + System.getProperty("os.arch") + ") version " + System.getProperty("os.version"));
-		System.err.println("Java version: " +  System.getProperty("java.version") + ", " + System.getProperty("java.vendor"));
-		System.err.println("Java VM version: " +  System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor"));
-		System.err.println("Java VM flags: " + getJavaVMFlags());
-		System.err.println("Memory: " + printMemoryUsage());
-		System.err.println("\n--- Exception cause: ---");
-		throwable.printStackTrace();
+		builder.append("LastTry had crashed!\n-------------------\n");
+		builder.append(ERROR_MESSAGE);
 
-		System.err.println("--- END CRASH REPORT ---");
+		builder.append("--- BEGIN CRASH REPORT ---");
+		builder.append("\nLastTry version: ").append(LastTry.version.toString());
+		builder.append("\nOS: ").append(System.getProperty("os.name")).append(" (").append(System.getProperty("os.arch")).append(") version ").append(System.getProperty("os.version"));
+		builder.append("\nJava version: ").append(System.getProperty("java.version")).append(", ").append(System.getProperty("java.vendor"));
+		builder.append("\nJava VM version: ").append(System.getProperty("java.vm.name")).append(" (").append(System.getProperty("java.vm.info")).append("), ").append(System.getProperty("java.vm.vendor"));
+		builder.append("\nJava VM flags: ").append(getJavaVMFlags());
+		builder.append("\nMemory: ").append(getMemoryUsage());
+		builder.append("\n--- Exception cause: ---\n");
+
+		StringWriter writer = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(writer));
+
+		builder.append(writer.toString());
+		builder.append("\n--- END CRASH REPORT ---\n");
+
+		System.err.println(builder.toString());
 		System.err.flush();
+
+		JTextArea text = new JTextArea();
+
+		text.setText(builder.toString());
+		text.setEditable(false);
+
+		JOptionPane.showMessageDialog(null, new JScrollPane(text), "LastTry crash report", JOptionPane.ERROR_MESSAGE);
+		LastTry.abort();
 	}
 
-	private static String printMemoryUsage() {
+	/**
+	 * @return Info about memory usage
+	 */
+	private static String getMemoryUsage() {
 		Runtime runtime = Runtime.getRuntime();
 		
 		long i = runtime.maxMemory();
@@ -42,6 +68,9 @@ public class Crash {
 		return k + " bytes (" + j1 + " MB) / " + j + " bytes (" + i1 + " MB) up to " + i + " bytes (" + l + " MB)";
 	}
 
+	/**
+	 * @return Java flags
+	 */
 	private static String getJavaVMFlags() {
 		RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
 		List<String> list = runtimemxbean.getInputArguments();

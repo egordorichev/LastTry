@@ -2,12 +2,21 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Basic animation frame holder
+ */
 public class AnimationFrame {
-    public TextureRegion region;
-    public int time;
+	/**
+	 * Texture region
+	 */
+	public TextureRegion region;
+	/**
+	 * Frame time
+	 */
+	public int time;
 
-    public AnimationFrame(TextureRegion region, int time) {
-        this.region = region;
-        this.time = time;
-    }
+	public AnimationFrame(TextureRegion region, int time) {
+		this.region = region;
+		this.time = time;
+	}
 }

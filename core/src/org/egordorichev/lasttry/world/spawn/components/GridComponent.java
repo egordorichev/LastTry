@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.world.spawn.components;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.entity.CreatureWithAI;
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.GenericContainer;
@@ -63,11 +63,11 @@ public class GridComponent {
 
         // Checking to make sure y value is not less than 0 - World generated will always start from 0,0 top left.
         circleAreaComponent.setMinYActiveAreaGridPoint(Math.max(0, tcy - 2));
-        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.world.getHeight() - 1, tcy + twh + 3));
+        circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.getWorld().getHeight() - 1, tcy + twh + 3));
 
         // Checking to make y values is not less than 0
         circleAreaComponent.setMinXActiveAreaGridPoint(Math.max(0, tcx - 2));
-        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(Globals.world.getWidth() - 1, tcx + tww + 2));
+        circleAreaComponent.setMaxXActiveAreaGridPoint(Math.min(Globals.getWorld().getWidth() - 1, tcx + tww + 2));
 
         // Active zone is 6 greater
         // TODO Must check that it is not out of bou
@@ -157,8 +157,8 @@ public class GridComponent {
 
     public static GenericContainer.Pair<Integer> retrieveRotatedGridPoints(int distance, int angle) {
 
-        int playerXGridPoint = Globals.player.physics.getGridX();
-        int playerYGridPoint = Globals.player.physics.getGridY();
+        int playerXGridPoint = Globals.getPlayer().physics.getGridX();
+        int playerYGridPoint = Globals.getPlayer().physics.getGridY();
 
         //Move point by distance
         //Source: http://stackoverflow.com/questions/41465581/move-point-in-cartesian-coordinate-through-distance-in-the-given-direction
@@ -171,10 +171,10 @@ public class GridComponent {
         return rotatedXyPoints;
     }
 
-    public static boolean isCreatureInPlayerActiveArea(CreatureWithAI creatureWithAI, CircleAreaComponent area) {
+    public static boolean isCreatureInPlayerActiveArea(Creature creature, CircleAreaComponent area) {
         // Get block co ordinates of enemy
-        int enemyBlockGridX = creatureWithAI.physics.getGridX();
-        int enemyBlockGridY = creatureWithAI.physics.getGridY();
+        int enemyBlockGridX = creature.physics.getGridX();
+        int enemyBlockGridY = creature.physics.getGridY();
 
         boolean isEnemyInCircleSpawnArea = SpawnUtilComponent.arePointsInCircle(enemyBlockGridX, enemyBlockGridY, area);
 

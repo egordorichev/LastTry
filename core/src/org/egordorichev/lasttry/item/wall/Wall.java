@@ -1,70 +1,128 @@
 package org.egordorichev.lasttry.item.wall;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
+import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.ItemHolder;
-import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.Tile;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Rectangle;
+import org.egordorichev.lasttry.item.items.ToolPower;
+import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
+import org.egordorichev.lasttry.util.ByteHelper;
+import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
-public class Wall extends org.egordorichev.lasttry.item.Item {
-	protected Texture tiles;
+public class Wall extends Tile {
+	/**
+	 * Wall tiles (not icons!)
+	 */
+	protected TextureRegion[][] tiles;
+	/**
+	 * Required tool power to break this wall
+	 */
+	protected ToolPower power;
 
-	public Wall(short id, String name, Texture texture, Texture tiles) {
-		super(id, name, texture);
-		this.tiles = tiles;
-	}
+	public Wall(String id) {
+		super(id);
 
-	public static Wall getForBlockID(int id) {
-		switch (id) {
-			case ItemID.none: default: return null;
-			case ItemID.dirtBlock: return (Wall) Items.dirtWall;
-		}
-	}
-
-	public void die(int x, int y) {
-		Globals.entityManager.spawn(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		this.useDelayMax = 30;
+		this.tiles = this.texture.split(Block.SIZE, Block.SIZE);
+		this.texture = Assets.getTexture(this.id + "_icon");
 	}
 
 	/**
-	 * Renders the wall at the given coordinates.
-	 * @param x X-position in the world.
-	 * @param y Y-position in the world.
+	 * Loads fields from given wall root
+	 * @param root Wall root
+	 */
+	@Override
+	protected void loadFields(JsonValue root) {
+		super.loadFields(root);
+
+		short power[] = { 10, 0, 0 };
+
+		if (root.has("requiredPower")) {
+			power = root.get("requiredPower").asShortArray();
+		}
+
+		this.power = new ToolPower(power[0], power[1], power[2]);
+	}
+
+	/**
+	 * Callback, called on wall death
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
+	public void die(int x, int y) {
+		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
+		Globals.getWorld().onWallBreak(x, y);
+	}
+
+	/**
+	 * Creates byte, representing wall neighbors
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 * @return Byte, representing wall neighbors
+	 */
+
+	public byte calculateBinary(int x, int y) {
+		boolean t = this.canConnect(Globals.getWorld().walls.getID(x, y + 1));
+		boolean r = this.canConnect(Globals.getWorld().walls.getID(x + 1, y));
+		boolean b = this.canConnect(Globals.getWorld().walls.getID(x, y - 1));
+		boolean l = this.canConnect(Globals.getWorld().walls.getID(x - 1, y));
+
+		return ByteHelper.create(t, r, b, l, false, false, false, false);
+	}
+
+	/**
+	 * Renders wall at given position
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
 	 */
 	public void renderWall(int x, int y) {
-		boolean t = Globals.world.walls.getID(x, y + 1) == this.id;
-		boolean r = Globals.world.walls.getID(x + 1, y) == this.id;
-		boolean b = Globals.world.walls.getID(x, y - 1) == this.id;
-		boolean l = Globals.world.walls.getID(x - 1, y) == this.id;
+		byte hp = Globals.getWorld().walls.getHP(x, y);
+		byte variant = WallHelper.getVariant(hp);
+		byte binary = calculateBinary(x, y);
 
-		// TODO: FIXME: replace with variable
-		int variant = 1;
-		int binary = Block.calculateBinary(t, r, b, l);
+		
+		float light  = 1f;
+		// Update light leven
+		if (!LastTry.noLight){
+			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
+		}
+		Graphics.batch.setColor(light, light, light, 1f);
+		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
-		Graphics.batch.draw(this.tiles, x * Block.SIZE,
-			y * Block.SIZE, Block.SIZE, Block.SIZE,
-			Block.SIZE * (binary), variant * Block.SIZE, Block.SIZE,
-			Block.SIZE, false, false);
+		hp = WallHelper.getHP(hp);
+
+		if (this.renderCracks() && hp < Block.MAX_HP) {
+			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
+		}
+		
+		Graphics.batch.setColor(1f,1f,1f,1f);
 	}
 
 	@Override
-	public boolean use() {
-		int x = LastTry.getMouseXInWorld() / Block.SIZE;
-		int y = LastTry.getMouseYInWorld() / Block.SIZE;
-
-		System.out.println("use");
-
-		if (this.canBePlaced(x, y) && Globals.world.walls.getID(x, y) == ItemID.none) {
+	public boolean use(short x, short y) {
+		if (Globals.getWorld().walls.getID(x, y) == null) {
 			this.place(x, y);
-
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return Render wall cracks
+	 */
+	protected boolean renderCracks() {
+		return true;
 	}
 
 	@Override
@@ -72,27 +130,36 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		return true;
 	}
 
+	/**
+	 * Places the wall of self type in given position
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
 	public void place(int x, int y) {
-		Globals.world.walls.set(this.id, x, y);
+		Globals.getWorld().walls.set(this.id, x, y);
 	}
 
-	public boolean canBePlaced(int x, int y) {
-		int dx = (int) Globals.player.physics.getCenterX() / Block.SIZE - x;
-		int dy = (int) Globals.player.physics.getCenterY() / Block.SIZE - y;
-
-		double length = Math.abs(Math.sqrt(dx * dx + dy * dy));
-
-		if (length > Globals.player.getItemUseRadius()) {
+	/**
+	 * Returns, if wall can be used
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 * @return If wall can be used
+	 */
+	@Override
+	public boolean canBeUsed(short x, short y) {
+		if (!super.canBeUsed(x, y)) {
 			return false;
 		}
 
-		Wall t = Globals.world.walls.get(x, y + 1);
-		Wall b = Globals.world.walls.get(x, y - 1);
-		Wall l = Globals.world.walls.get(x + 1, y);
-		Wall r = Globals.world.walls.get(x - 1, y);
+		Wall t = Globals.getWorld().walls.get(x, y + 1);
+		Wall b = Globals.getWorld().walls.get(x, y - 1);
+		Wall l = Globals.getWorld().walls.get(x + 1, y);
+		Wall r = Globals.getWorld().walls.get(x - 1, y);
 
 		if (t == null && b == null && r == null && l == null) {
-			Block block = Globals.world.blocks.get(x, y);
+			Block block = Globals.getWorld().blocks.get(x, y);
 
 			if (block == null) {
 				return false;
@@ -100,5 +167,12 @@ public class Wall extends org.egordorichev.lasttry.item.Item {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return Required tool power to break this wall
+	 */
+	public ToolPower getRequiredPower() {
+		return this.power;
 	}
 }

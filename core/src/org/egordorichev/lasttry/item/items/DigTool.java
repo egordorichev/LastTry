@@ -1,17 +1,17 @@
 package org.egordorichev.lasttry.item.items;
 
-import com.badlogic.gdx.graphics.Texture;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.item.ItemID;
-import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.block.MultiTileBlock;
+import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
+import org.egordorichev.lasttry.item.block.plant.Plant;
 import org.egordorichev.lasttry.util.Util;
 
 public class DigTool extends Tool {
-	public DigTool(short id, String name, Rarity rarity, float baseDamage, ToolPower power, int useSpeed, Texture texture) {
-		super(id, name, rarity, baseDamage, power, useSpeed, texture);
+	public DigTool(String id) {
+		super(id);
 		this.autoSwing = true;
 	}
 
@@ -20,7 +20,7 @@ public class DigTool extends Tool {
 		int x = LastTry.getMouseXInWorld() / Block.SIZE;
 		int y = LastTry.getMouseYInWorld() / Block.SIZE;
 
-		Block block = Globals.world.blocks.get(x, y);
+		Block block = Globals.getWorld().blocks.get(x, y);
 
 		if (block == null) {
 			return false;
@@ -29,10 +29,17 @@ public class DigTool extends Tool {
 		ToolPower power = block.getRequiredPower();
 
 		if (this.power.isEnoughFor(power)) {
-			byte hp = Globals.world.blocks.getHP(x, y);
+			byte data = Globals.getWorld().blocks.getHP(x, y);
 
-			if (hp > 0) {
-				Globals.world.blocks.setHP((byte) (hp - 1), x, y);
+			if (block instanceof MultiTileBlock) {
+				byte hp = BlockHelper.mtb.getHP(data);
+				Globals.getWorld().blocks.setHP(BlockHelper.mtb.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
+			} else if (block instanceof Plant) {
+				byte hp = BlockHelper.plant.getHP(data);
+				Globals.getWorld().blocks.setHP(BlockHelper.plant.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
+			} else {
+				byte hp = BlockHelper.plain.getHP(data);
+				Globals.getWorld().blocks.setHP(BlockHelper.plain.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
 			}
 		}
 
@@ -45,18 +52,16 @@ public class DigTool extends Tool {
 			return;
 		}
 
-		float width = this.texture.getWidth();
-		float height = this.texture.getHeight();
-		float angle = Util.map(this.useDelay, 0, this.useSpeed, -70.0f, 45.0f);
+		float width = this.texture.getRegionWidth();
+		float height = this.texture.getRegionHeight();
+		float angle = Util.map(this.useDelay, 0, this.useDelayMax, -70.0f, 45.0f);
 
-		if (Globals.player.physics.isFlipped()) {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX() - width,
-				Globals.player.physics.getCenterY(), width, 0, width, height, 1.0f, 1.0f, -angle, 0, 0, (int) width,
-				(int) height, true, false);
+		if (Globals.getPlayer().physics.isFlipped()) {
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
 		} else {
-			Graphics.batch.draw(this.texture, Globals.player.physics.getCenterX(),
-				Globals.player.physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle, 0, 0, (int) width,
-				(int) height, false, false);
+			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
+				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
 		}
 	}
 }

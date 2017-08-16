@@ -1,12 +1,12 @@
 package org.egordorichev.lasttry.util;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import org.egordorichev.lasttry.LastTry;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.graphics.Graphics;
+
+import java.awt.Rectangle;
 import java.io.File;
+import java.util.Locale;
 import java.util.concurrent.*;
 
 public class Util {
@@ -19,11 +19,15 @@ public class Util {
 	}
 
 	/**
-	 * Runs callable in a thread every time seconds
-	 * @param callable thread to run
-	 * @param time delay, before next run
+	 * Runs the callable in a thread on repeat. The exectuon is delayed each
+	 * time by the given time in seconds.
+	 *
+	 * @param callable
+	 *            thread to run
+	 * @param time
+	 *            delay in seconds, before next run
 	 */
-	public static void runInThread(Callable callable, int time) {
+	public static void runDelayedThreadSeconds(Callable callable, int time) {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
 		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
@@ -32,6 +36,26 @@ public class Util {
 				callable.call();
 			}
 		}, 0, time, TimeUnit.SECONDS);
+	}
+
+	/**
+	 * Runs the callable in a thread on repeat. The exectuon is delayed each
+	 * time by the given time in milliseconds.
+	 *
+	 * @param callable
+	 *            thread to run
+	 * @param time
+	 *            delay in milliseconds, before next run
+	 */
+	public static void runDelayedThreadMillis(Callable callable, int time) {
+		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+
+		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			}
+		}, 0, time, TimeUnit.MILLISECONDS);
 	}
 
 	public static void oneTimeRunInThread(Callable callable) {
@@ -50,16 +74,14 @@ public class Util {
 
 		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-		ScheduledFuture<?> scheduledFuture = scheduledExecutorService
-				.schedule(
-				new Runnable() {
-					@Override
-					public void run() {
-						callable.call();
-					}
-				}, delay, timeUnit)
-				;
+		ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(new Runnable() {
+			@Override
+			public void run() {
+				callable.call();
+			}
+		}, delay, timeUnit);
 
+		// TODO: execute scheduledFuture
 	}
 
 	public static boolean fileExists(String path) {
@@ -74,5 +96,44 @@ public class Util {
 		}
 
 		return true;
+	}
+
+	public static void delete(File file) {
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				for (File child : file.listFiles()) {
+					delete(child);
+				}
+			}
+			file.delete();
+		}
+	}
+
+	public static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win");
+	}
+
+	public static void expand(Rectangle rectangle, int expansion) {
+		rectangle.x -= expansion;
+		rectangle.y -= expansion;
+		rectangle.width += expansion * 2;
+		rectangle.height += expansion * 2;
+	}
+
+	public static boolean inRange(float value, float min, float max) {
+		return value >= min && value <= max;
+	}
+
+	public static void drawWithShadow(BitmapFont font, String text, float x, float y) {
+		font.setColor(0f, 0f, 0f, 1);
+
+		for (int j = -1; j < 2; j++) {
+			for (int i = -1; i < 2; i++) {
+				font.draw(Graphics.batch, text, x + i, y + j);
+			}
+		}
+
+		font.setColor(1, 1, 1, 1);
+		font.draw(Graphics.batch, text, x, y);
 	}
 }

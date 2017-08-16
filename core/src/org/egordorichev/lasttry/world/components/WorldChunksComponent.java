@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.world.components;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
@@ -11,10 +10,8 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
-
-import javax.swing.text.html.Option;
+import java.awt.Rectangle;
 import java.util.*;
-
 
 /**
  * Methods that alter any of the collections that contain Chunks, are synchronized.
@@ -32,12 +29,12 @@ public class WorldChunksComponent extends WorldComponent {
 		this.size = world.getWidth() * world.getHeight();
 		this.chunks = new Chunk[this.size];
 
-		Util.runInThread(new Callable() {
+		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
 				updateLogic();
 			}
-		}, World.UPDATE_DELAY);
+		}, World.UPDATE_DELAY_SECONDS);
 	}
 
 	public void update() {
@@ -51,20 +48,9 @@ public class WorldChunksComponent extends WorldComponent {
 	}
 
 	public void render() {
-		int windowWidth = Gdx.graphics.getWidth();
-		int windowHeight = Gdx.graphics.getHeight();
-		int tww = windowWidth / Block.SIZE;
-		int twh = windowHeight / Block.SIZE;
-		int tcx = (int) (Camera.game.position.x - windowWidth / 2) / Block.SIZE;
-		int tcy = (int) ((Camera.game.position.y - windowHeight / 2) / Block.SIZE);
-
-		int minY = Math.max(0, tcy - 2);
-		int maxY = Math.min(this.world.getHeight() - 1, tcy + twh + 3);
-		int minX = Math.max(0, tcx - 2);
-		int maxX = Math.min(this.world.getWidth() - 1, tcx + tww + 2);
-
-		for (int y = minY; y < maxY; y++) {
-			for (int x = minX; x < maxX; x++) {
+        Rectangle blocksRect = Camera.getBlocksOnScreen();
+		for (int y = blocksRect.y; y < blocksRect.y  +blocksRect.height; y++) {
+			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
 				if (block != null) {
@@ -113,15 +99,6 @@ public class WorldChunksComponent extends WorldComponent {
 		this.chunks[index] = chunk;
 	}
 
-	//todo is this needed? as we seem to handle null whenever we use chunks
-//	public boolean isLoaded(int index) {
-//		if (!this.isInside(index)) {
-//			return false;
-//		}
-//
-//		return this.chunks[index] != null;
-//	}
-
 	public synchronized Chunk get(int x, int y) {
 		int index = this.getIndex(x, y);
 
@@ -154,47 +131,36 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
-	//todo may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	// TODO: may be better to pass entire arraylist, rather than one by one. Therefore no need to lose and regain monitor continuously?
 	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
-
-		loadedChunks.removeIf( loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
-
-		for(int i=0; i<chunks.length; i++){
-
-			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
-
-			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
-			
+		for (Chunk chunk : this.loadedChunks) {
+			if (chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)) {
+				ChunkIO.save(chunk.getGridX(), chunk.getGridY());
+				this.loadedChunks.remove(chunk);
+				break;
+			}
 		}
 	}
 
 	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
-
 		optionalChunk.ifPresent(chunk -> {
-
 			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){
 				chunks[index] = null;
 			}
-
 		});
-
 	}
 
 	private int getIndex(int x, int y) {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
-	//todo return immutable object?
 	public synchronized List<Chunk> getImmutableLoadedChunks() {
-
-		List<Chunk> immutableLoadedChunksList = Collections.unmodifiableList(loadedChunks);
-
-		return immutableLoadedChunksList;
+		return Collections.unmodifiableList(loadedChunks);
 	}
 
 	public void save() {
-		for (int y = 0; y < Globals.world.getHeight() / Chunk.SIZE; y++) {
-			for (int x = 0; x < Globals.world.getWidth() / Chunk.SIZE; x++) {
+		for (int y = 0; y < Globals.getWorld().getHeight() / Chunk.SIZE; y++) {
+			for (int x = 0; x < Globals.getWorld().getWidth() / Chunk.SIZE; x++) {
 				if (this.get(x, y) != null) {
 					ChunkIO.save(x, y);
 				}

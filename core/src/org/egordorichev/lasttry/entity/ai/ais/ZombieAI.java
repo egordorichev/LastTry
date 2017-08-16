@@ -18,7 +18,7 @@ public class ZombieAI extends AI {
 
 	@Override
 	public void update(CreatureWithAI creature, int dt, int currentAi) {
-		creature.physics.move((Float.compare(Globals.player.physics.getCenterX(), creature.physics.getCenterX()) == -1) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
+		creature.physics.move((Float.compare(Globals.getPlayer().physics.getCenterX(), creature.physics.getCenterX()) == -1) ? PhysicsComponent.Direction.LEFT : PhysicsComponent.Direction.RIGHT);
 	}
 
 	@Override

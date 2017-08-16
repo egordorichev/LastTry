@@ -1,8 +1,7 @@
 package org.egordorichev.lasttry.entity.drop;
 
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.ItemHolder;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,7 +28,7 @@ public class Drop {
 	}
 
 	public ItemHolder createHolder() {
-		return new ItemHolder(this.item, ThreadLocalRandom.current().nextInt(this.minAmount, this.maxAmount+ 1), Modifier.random(this.item));
+		return new ItemHolder(this.item, ThreadLocalRandom.current().nextInt(this.minAmount, this.maxAmount+ 1), null);
 	}
 
 	public Item getItem() {

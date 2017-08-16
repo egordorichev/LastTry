@@ -2,38 +2,41 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
+/**
+ * Manages textures and other assets
+ */
 public class Assets {
-	public static AssetManager assetManager = new AssetManager();
+	/**
+	 * Small 18px font
+	 */
 	public static BitmapFont f18;
+	/**
+	 * Normal 22px font
+	 */
 	public static BitmapFont f22;
+	/**
+	 * Large 24px font
+	 */
 	public static BitmapFont f24;
+	/**
+	 * Texture atlas
+	 */
+	public static TextureAtlas textures;
+	/**
+	 * Asset manager
+	 */
+	public static AssetManager assetManager;
 
-	// This font is used for error messages.
-	public static BitmapFont f22Red;
-
-	public static boolean load() {
-		return assetManager.update();
-	}
-
-	public static void dispose() {
-		assetManager.dispose();
-	}
-
-	public static void loadTexture(String fileName) {
-		assetManager.load(fileName, Texture.class);
-	}
-
-	public static Texture getTexture(String fileName) {
-		return assetManager.get(fileName, Texture.class);
-	}
-
-	static {
+	/**
+	 * Loads all assets
+	 */
+	public static void load() {
 		FreetypeFontLoader.FreeTypeFontLoaderParameter fontConfig = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
 		fontConfig.fontFileName = "font.ttf";
 		fontConfig.fontParameters.size = 22;
@@ -47,163 +50,42 @@ public class Assets {
 		f22 = generator.generateFont(parameters);
 		parameters.size = 24;
 		f24 = generator.generateFont(parameters);
-		//Error font specific style.
-		parameters.size = 22;
-		parameters.color = Color.RED;
-		f22Red = generator.generateFont(parameters);
 
 		generator.dispose();
 
-		loadTexture(Textures.greenSlime);
-		loadTexture(Textures.blueSlime);
-		loadTexture(Textures.eyeOfCthulhu);
-		loadTexture(Textures.zombie);
-		loadTexture(Textures.baldZombie);
-		loadTexture(Textures.slimedZombie);
+		assetManager = new AssetManager();
+		assetManager.load("textures.atlas", TextureAtlas.class);
+	}
 
-		loadTexture(Textures.dirt);
-		loadTexture(Textures.dirtIcon);
-		loadTexture(Textures.grass);
-		loadTexture(Textures.grassIcon);
-		loadTexture(Textures.ebonstoneIcon);
-		loadTexture(Textures.ebonstone);
-		loadTexture(Textures.corruptThornyBushes);
-		loadTexture(Textures.purpleIceIcon);
-		loadTexture(Textures.purpleIce);
-		loadTexture(Textures.vileMushroom);
-		loadTexture(Textures.crimstoneIcon);
-		loadTexture(Textures.crimstone);
-		loadTexture(Textures.redIceIcon);
-		loadTexture(Textures.redIce);
-		loadTexture(Textures.viciousMushroom);
-		loadTexture(Textures.sandBlockIcon);
-		loadTexture(Textures.sandBlock);
-		loadTexture(Textures.ebonsandIcon);
-		loadTexture(Textures.ebonsand);
-		loadTexture(Textures.crimsandIcon);
-		loadTexture(Textures.crimsand);
-		loadTexture(Textures.stoneIcon);
-		loadTexture(Textures.stone);
-		loadTexture(Textures.ironPickaxe);
-		loadTexture(Textures.dirtWall);
-		loadTexture(Textures.dirtWallIcon);
-		loadTexture(Textures.copperCoin);
-		loadTexture(Textures.silverCoin);
-		loadTexture(Textures.goldCoin);
-		loadTexture(Textures.platinumCoin);
-		loadTexture(Textures.woodenSword);
-		loadTexture(Textures.gel);
-		loadTexture(Textures.heart);
-		loadTexture(Textures.mana);
-		loadTexture(Textures.hp);
-		loadTexture(Textures.radial);
-		loadTexture(Textures.inventorySlot1);
-		loadTexture(Textures.inventorySlot2);
-		loadTexture(Textures.inventorySlot3);
-		loadTexture(Textures.inventorySlot4);
-		loadTexture(Textures.inventorySlot5);
-		loadTexture(Textures.inventoryBack);
-		loadTexture(Textures.forestBack);
-		loadTexture(Textures.corruptionBack);
-		loadTexture(Textures.crimsonBack);
-		loadTexture(Textures.trash);
-		loadTexture(Textures.ice);
-		loadTexture(Textures.iceIcon);
-		loadTexture(Textures.dayBloom);
-		loadTexture(Textures.dayBloomIcon);
-		loadTexture(Textures.blinkRoot);
-		loadTexture(Textures.blinkRootIcon);
-		loadTexture(Textures.moonGlow);
-		loadTexture(Textures.moonGlowIcon);
-		loadTexture(Textures.deathWeed);
-		loadTexture(Textures.deathWeedIcon);
-		loadTexture(Textures.waterLeaf);
-		loadTexture(Textures.waterLeafIcon);
-		loadTexture(Textures.fireBlossom);
-		loadTexture(Textures.fireBlossomIcon);
-		loadTexture(Textures.silverThorn);
-		loadTexture(Textures.silverThornIcon);
-		loadTexture(Textures.dayBloomSeeds);
-		loadTexture(Textures.blinkRootSeeds);
-		loadTexture(Textures.moonGlowSeeds);
-		loadTexture(Textures.deathWeedSeeds);
-		loadTexture(Textures.waterLeafSeeds);
-		loadTexture(Textures.fireBlossomSeeds);
-		loadTexture(Textures.silverThornSeeds);
-		loadTexture(Textures.mud);
-		loadTexture(Textures.mudIcon);
-		loadTexture(Textures.jungleGrass);
-		loadTexture(Textures.jungleGrassIcon);
-		loadTexture(Textures.jungleGrassSeeds);
-		loadTexture(Textures.ashBlockIcon);
-		loadTexture(Textures.ashBlock);
-		loadTexture(Textures.snowBlockIcon);
-		loadTexture(Textures.snowBlock);
-		loadTexture(Textures.copperShortSword);
-		loadTexture(Textures.copperPickaxe);
-		loadTexture(Textures.copperAxe);
-		loadTexture(Textures.nullItem);
-		loadTexture(Textures.wood);
-		loadTexture(Textures.woodIcon);
-		loadTexture(Textures.livingWood);
-		loadTexture(Textures.tileCracks);
-		loadTexture(Textures.workBench);
+	/**
+	 * Lookups texture
+	 *
+	 * @param name Texture name
+	 * @return Texture or null
+	 */
+	public static TextureRegion getTexture(String name) {
+		return textures.findRegion(name);
+	}
 
-		loadTexture(Textures.ammoReservationBuff);
-		loadTexture(Textures.archeryBuff);
-		loadTexture(Textures.battleBuff);
-		loadTexture(Textures.builderBuff);
-		loadTexture(Textures.calmBuff);
-		loadTexture(Textures.crateBuff);
-		loadTexture(Textures.dangersenseBuff);
-		loadTexture(Textures.enduranceBuff);
-		loadTexture(Textures.featherfallBuff);
-		loadTexture(Textures.fishingBuff);
-		loadTexture(Textures.flipperBuff);
-		loadTexture(Textures.gillsBuff);
-		loadTexture(Textures.gravityBuff);
-		loadTexture(Textures.heartreachBuff);
-		loadTexture(Textures.hunterBuff);
-		loadTexture(Textures.infernoBuff);
-		loadTexture(Textures.invisibilityBuff);
-		loadTexture(Textures.ironskinBuff);
-		loadTexture(Textures.lifeforceBuff);
-		loadTexture(Textures.lovestruckBuff);
-		loadTexture(Textures.magicPowerBuff);
-		loadTexture(Textures.manaRegenerationBuff);
-		loadTexture(Textures.miningBuff);
-		loadTexture(Textures.nightOwlBuff);
-		loadTexture(Textures.obsidianSkinBuff);
-		loadTexture(Textures.rageBuff);
-		loadTexture(Textures.regenerationBuff);
-		loadTexture(Textures.shineBuff);
-		loadTexture(Textures.sonarBuff);
-		loadTexture(Textures.spelunkerBuff);
-		loadTexture(Textures.summoningBuff);
-		loadTexture(Textures.swiftnessBuff);
-		loadTexture(Textures.thornsBuff);
-		loadTexture(Textures.titanBuff);
-		loadTexture(Textures.warmthBuff);
-		loadTexture(Textures.waterWalkingBuff);
-		loadTexture(Textures.wrathBuff);
-		loadTexture(Textures.wellFedBuff);
-		loadTexture(Textures.cozyFireBuff);
-		loadTexture(Textures.dryadsBlessingBuff);
-		loadTexture(Textures.happyBuff);
-		loadTexture(Textures.heartLampBuff);
-		loadTexture(Textures.honeyBuff);
-		loadTexture(Textures.peaceCandleBuff);
-		loadTexture(Textures.starInABottleBuff);
+	/**
+	 * Updates assets
+	 *
+	 * @return Assets are loaded
+	 */
+	public static boolean update() {
+		if (assetManager.update()) {
+			textures = assetManager.get("textures.atlas", TextureAtlas.class);
+			return true;
+		}
 
-		loadTexture(Textures.light);
-		loadTexture(Textures.shadow);
-		loadTexture(Textures.sky);
-		loadTexture(Textures.healthBar);
-		loadTexture(Textures.healthBarFrame);
+		return false;
+	}
 
-		loadTexture(Textures.corruptionWorld);
-		loadTexture(Textures.crimsonWorld);
-		loadTexture(Textures.corruptionHardmodeWorld);
-		loadTexture(Textures.crimsonHardmodeWorld);
+	/**
+	 * Disposes assets
+	 */
+	public static void dispose() {
+		textures.dispose();
+		assetManager.dispose();
 	}
 }
