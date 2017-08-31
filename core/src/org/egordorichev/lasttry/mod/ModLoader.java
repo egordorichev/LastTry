@@ -35,7 +35,6 @@ public class ModLoader {
             Log.info("There's no mods directory so one will be created!");
         }
 
-        File[] mods = modDirectory.listFiles();
         for (File file : modDirectory.listFiles()) {
             if (!file.getName().endsWith(".jar")) {
                 continue;

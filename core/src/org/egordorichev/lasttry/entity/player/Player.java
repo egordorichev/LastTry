@@ -9,7 +9,6 @@ import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
 import org.egordorichev.lasttry.ui.UiItemSlot;
-import org.egordorichev.lasttry.util.Log;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	public static final int INVENTORY_SIZE = 88;
