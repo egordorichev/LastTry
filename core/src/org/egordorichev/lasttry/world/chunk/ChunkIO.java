@@ -3,8 +3,6 @@ package org.egordorichev.lasttry.world.chunk;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Log;
@@ -89,14 +87,16 @@ public class ChunkIO {
 	}
 
 	public static void save(int x, int y) {
-		String fileName = getSaveName(x, y);
-		File file = new File(fileName);
+		Log.debug("Saving...");
+		File file = new File(getSaveDir() + getSaveName(x, y));
 
-		if (!file.exists()) {
+		if (!file.isFile()) {
 			try {
+				file.getParentFile().mkdirs();
 				file.createNewFile();
 			} catch(IOException exception) {
-				Log.error("Could not create a save file for chunk " + x + ":" + y + ".");
+				Log.error("Could not create a save file for chunk " + x + ":" + y + ".\n"
+				+ "Reason: " + exception.getMessage());
 				LastTry.abort();
 			}
 		}
@@ -105,7 +105,7 @@ public class ChunkIO {
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
-			FileWriter stream = new FileWriter(fileName);
+			FileWriter stream = new FileWriter(getSaveDir() + getSaveName(x, y));
 			ChunkData data = chunk.getData();
 
 			stream.writeByte(VERSION);
@@ -130,6 +130,7 @@ public class ChunkIO {
 			LastTry.handleException(exception);
 			LastTry.abort();
 		}
+		Log.debug("File saved!");
 	}
 
 	public static Chunk generate(int x, int y) {
@@ -144,7 +145,22 @@ public class ChunkIO {
 		return new EmptyChunk(new Vector2(x, y));
 	}
 
+	private static String getSaveDir() {
+		return System.getProperty("user.home")
+				+ File.separator
+				+ "Library"
+				+ File.separator
+				+ "Application Support"
+				+ File.separator
+				+ "LastTry"
+				+ File.separator
+				+ "worlds"
+				+ File.separator
+				+ Globals.getWorld().getName()
+				+ File.separator;
+	}
+
 	private static String getSaveName(int x, int y) {
-		return System.getProperty("user.home") +  "/.LastTry/worlds/" + Globals.getWorld().getName() + "/" + x + "." + y + ".cnk";
+		return x + "." + y + ".cnk";
 	}
 }
