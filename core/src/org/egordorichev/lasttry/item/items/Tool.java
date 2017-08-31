@@ -52,12 +52,18 @@ public class Tool extends Item {
 	protected void loadFields(JsonValue root) {
 		super.loadFields(root);
 
-		if (root.has("speed")) {
-			this.useDelayMax = root.getInt("speed");
-		}
 		if (root.has("damage")) {
 			this.baseDamage = root.getInt("damage");
 		}
+
+		if (root.has("auto_swing")) {
+			this.autoSwing = root.getBoolean("auto_swing");
+		}
+
+		if (root.has("crit_chance")) {
+			this.criticalStrikeChance = root.getFloat("crit_chance");
+		}
+
 		if (root.has("power")) {
 			int[] pow = root.get("power").asIntArray();
 			this.power = new ToolPower(pow[0], pow[1], pow[2]);

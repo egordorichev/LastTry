@@ -9,10 +9,23 @@ public class EvilBlock extends BlockGround {
 		super(id);
 	}
 
+	/**
+	 * Returns if block can be infected
+	 *
+	 * @param id Block id
+	 * @return If block can be infected
+	 */
 	public static boolean canBeInfected(String id) {
 		return id.equals("lt:stone") || id.equals("lt:sand") || id.equals("lt:grass");
 	}
 
+	/**
+	 * Returns infected block for given block
+	 *
+	 * @param fromID Block, that is infecting
+	 * @param id Block, that is being infected
+	 * @return Infected block ID
+	 */
 	public static String getInfectIDFor(String fromID, String id) {
 		if (EvilBlock.isCrimsonBlock(fromID)) {
 			switch (id) {
@@ -31,6 +44,12 @@ public class EvilBlock extends BlockGround {
 		return id;
 	}
 
+	/**
+	 * Returns if block belongs to crimson
+	 *
+	 * @param id Block ID
+	 * @return If block belongs to crimson
+	 */
 	public static boolean isCrimsonBlock(String id) {
 		switch (id) {
 			case "lt:crimstone":

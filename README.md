@@ -24,11 +24,21 @@ Compile project:
 
 You should end up with a jar, placed in `desktop/build/libs/`. Run it.
 
-### TODO
+Here is a few options, you can play around:
+
+* Launch app with `-nl` arg, to disable light and load game faster
+* Launch app with `-d` arg, witch enables debug mode. In it you can press `/` and open dev console.
+
+![Console](
+http://i.imgur.com/Q2P7a42.png) 
+
+* + Give your self some items, using console. You just simply type in console: `/give lt:dirt 100`. `lt:dirt` is dirt block id and 100 is count. Full list of items can be found here: https://github.com/egordorichev/LastTry/blob/dev/core/assets/data/items.json
+
+#### TODO List
 
 [TODO list can be found here](https://trello.com/b/MgdX6wA4/game-lasttry).
 
-### Docs
+#### Docs
 
 [Docs can be found here](https://egordorichev.github.io/ltdocs/index.html)
 

@@ -11,7 +11,6 @@ import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.spawn.components.CircleAreaComponent;
 import org.egordorichev.lasttry.world.spawn.components.GridComponent;
-
 import com.badlogic.gdx.math.Vector2;
 
 public class Creature extends Entity {
@@ -205,5 +204,13 @@ public class Creature extends Entity {
 		Vector2 force = diff.scl(knockPower);
 		force.limit(Tool.KNOCKBACK_MAX_POWER);
 		enemy.physics.getVelocity().add(force);
+	}
+
+	/**
+	 * Sets creature spawn weight
+	 * @param spawnWeight How much will creature "eat" from spawn rate
+	 */
+	public void setSpawnWeight(int spawnWeight) {
+		this.spawnWeight = spawnWeight;
 	}
 }

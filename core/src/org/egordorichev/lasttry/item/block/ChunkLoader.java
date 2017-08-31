@@ -7,6 +7,9 @@ import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
+/**
+ * Block, that loads chunk, it witch this block is placed
+ */
 public class ChunkLoader extends Block {
 	public ChunkLoader(String id) {
 		super(id, false);

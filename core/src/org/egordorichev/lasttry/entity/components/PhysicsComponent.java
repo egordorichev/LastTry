@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 
@@ -35,6 +36,15 @@ public class PhysicsComponent extends EntityComponent {
      * jarring.
      */
     private boolean useSmoothMoves = true;
+	/**
+	 * Called on ground hit
+	 */
+	private Callable onGroundHit = new Callable() {
+	    @Override
+	    public void call() {
+
+	    }
+    };
 
     public PhysicsComponent(Entity entity) {
         super(entity);
@@ -48,7 +58,7 @@ public class PhysicsComponent extends EntityComponent {
     public void setEntity(Entity entity) {
         super.setEntity(entity);
 
-        this.size = new Vector2(32, 48); // TODO: get the size
+        this.size = new Vector2(32, 48);
         this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
     }
 
@@ -171,7 +181,6 @@ public class PhysicsComponent extends EntityComponent {
                     } else if (!this.isStepping) {
                         this.velocity.x = 0;
                     }
-                    this.onBlockCollide();
                 } else {
                     // Step will succeed.
                     if (this.useSmoothMoves) {
@@ -208,26 +217,35 @@ public class PhysicsComponent extends EntityComponent {
             // Apply gravity
             this.velocity.y -= 0.4f;
         }
+
+        float lastYVelocity = this.velocity.y;
+
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.y != 0) {
             Rectangle boxO = this.hitbox.copy().offset(this.position);
             boolean falling = this.velocity.y < 0;
             Rectangle boxV = boxO.copy().offset(0, this.velocity.y);
-            // If collides, on reset vertical motion, call onCollide
+            // If collides, on reset vertical motion
             // Else move normally.
             if (collides(boxV)) {
                 if (falling) {
                     // Hits ground
                     float offset = this.velocity.y > 0 ? Block.SIZE : -Block.SIZE;
                     float distToCollision = Globals.getWorld().distToVerticalCollision(boxO, this.velocity.y);
+
+                    if (distToCollision < -0.1f || distToCollision > 0.1f) {
+	                    if (this.velocity.y != -0.4f) {
+		                    this.onGroundHit.call();
+	                    }
+                    }
+
                     if (distToCollision != 0) {
                         // there is some space to move, so move
                         this.velocity.y = distToCollision - offset;
                     } else {
                         // Already colliding, stay on the ground.
-                        this.velocity.y = 0;
+	                    this.velocity.y = 0;
                     }
-                    this.onBlockCollide();
                 } else {
                     // Hits ceiling
                     float speed = -0.5f;
@@ -236,7 +254,6 @@ public class PhysicsComponent extends EntityComponent {
                     } else {
                         this.velocity.y = speed;
                     }
-                    this.onBlockCollide();
                 }
             } else {
                 // Prevent floor clipping with high speeds
@@ -261,10 +278,6 @@ public class PhysicsComponent extends EntityComponent {
      */
     private boolean collides(Rectangle rect) {
         return Globals.getWorld().isColliding(rect);
-    }
-
-    protected void onBlockCollide() {
-        // TODO: callback?
     }
 
     public void setGridPosition(float gridX, float gridY) {
@@ -315,11 +328,11 @@ public class PhysicsComponent extends EntityComponent {
     }
 
     public int getGridX() {
-        return (int) this.position.x / Block.SIZE;
+        return (int) (this.position.x + 0.5) / Block.SIZE;
     }
 
     public int getGridY() {
-        return (int) this.position.y / Block.SIZE;
+        return (int) (this.position.y + 0.5) / Block.SIZE;
     }
 
     public Vector2 getGridPosition() {
@@ -366,4 +379,12 @@ public class PhysicsComponent extends EntityComponent {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
+
+	public void setOnGroundHit(Callable onGroundHit) {
+		this.onGroundHit = onGroundHit;
+	}
 }

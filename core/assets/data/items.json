@@ -62,7 +62,7 @@
 	},
 
 	"lt:stone" : {
-		"type" : "org.egordorichev.lasttry.item.block.Block"
+		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
 	},
 
 	"lt:workbench" : {

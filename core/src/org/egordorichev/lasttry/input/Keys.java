@@ -2,6 +2,10 @@ package org.egordorichev.lasttry.input;
 
 import com.badlogic.gdx.Input;
 
+/**
+ * Key bindings
+ * TODO: store in json?
+ */
 public class Keys {
 	public static final int MOVE_LEFT = Input.Keys.A;
 	public static final int MOVE_RIGHT = Input.Keys.D;

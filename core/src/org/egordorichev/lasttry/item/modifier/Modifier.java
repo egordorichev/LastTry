@@ -42,11 +42,6 @@ public class Modifier {
         this.defense = defense;
     }
 
-    public static Modifier random(Item item) {
-        // TODO: return modifier based on item type
-        return null;
-    }
-
     public int getDamage() {
         return this.damage;
     }

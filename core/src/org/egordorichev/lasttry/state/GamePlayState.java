@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.graphics.Textures;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.block.Block;
@@ -18,36 +17,38 @@ import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 
 public class GamePlayState implements State {
+	/**
+	 * Hp texture
+	 */
 	private final TextureRegion hpTextureRegion;
+	/**
+	 * Game is paused
+	 */
 	private static boolean paused = false;
 
 	public GamePlayState() {
-		this.hpTextureRegion = Assets.getTexture(Textures.hp);
+		this.hpTextureRegion = Assets.getTexture("hp");
 
-		int spawnX = Globals.getWorld().getWidth() / 2 * Block.SIZE;
-		int spawnY = (Globals.getWorld().getHeight() - 10) * Block.SIZE;
-		Globals.getWorld().setSpawn(spawnX, spawnY);
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.getPlayer(), spawnX, spawnY);
+		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getPlayer().getSpawnPoint().x * Block.SIZE), (int)Globals.getPlayer().getSpawnPoint().y * Block.SIZE);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
-
-		// Globals.player.effects.applyEffect(Buffs.honey, 100);
 
 		LastTry.ui.add(Globals.chat);
 	}
 
+	/**
+	 * Resumes games
+	 */
 	public static void play() {
 		paused = false;
 	}
 
+	/**
+	 * Stops game
+	 */
 	public static void stop() {
 		paused = true;
-	}
-
-	@Override
-	public void show() {
-
 	}
 
 	@Override
@@ -78,18 +79,12 @@ public class GamePlayState implements State {
 			Globals.getPlayer().physics.getCenterX());
 
 		Camera.game.position.y = Math.max(0, Globals.getPlayer().physics.getCenterY());
-
 		Camera.game.update();
 		Graphics.batch.setProjectionMatrix(Camera.game.combined);
-
 		Globals.getWorld().render();
 		Globals.entityManager.render();
         Globals.getWorld().renderLights();
-
 		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
-
-		int mouseX = (int) InputManager.getMousePosition().x;
-		int mouseY = (int) InputManager.getMousePosition().y;
 
 		int hp = Globals.getPlayer().stats.getHP();
 		int x = Gdx.graphics.getWidth() - 200;
@@ -109,25 +104,5 @@ public class GamePlayState implements State {
 	@Override
 	public void resize(int width, int height) {
 		Camera.resize(width, height);
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
-	public void dispose() {
-
 	}
 }

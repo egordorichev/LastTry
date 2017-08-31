@@ -17,7 +17,7 @@ public class CreatureStatsComponent extends CreatureComponent {
 
 	public void update(int dt) {
 		// TODO: regen
-		// Decrement invulnrable ticks
+
 		if (invulnTime > 0) {
 			invulnTime--;
 		}

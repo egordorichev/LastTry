@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
@@ -19,7 +20,6 @@ import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
 import org.egordorichev.lasttry.util.Util;
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -89,7 +89,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 						print("Unknown creature");
 					} else {
 						for (int i = 0; i < count; i++) {
-							Globals.entityManager.spawn(creature, (int) Globals.getPlayer().physics.getX(),
+							Globals.entityManager.spawn(Creatures.create(name), (int) Globals.getPlayer().physics.getX(),
 								(int) Globals.getPlayer().physics.getY());
 						}
 					}
@@ -173,6 +173,28 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
 				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
+			}
+		});
+
+		this.commands.register(new Command("setspawn", "Sets spawn point to current position", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().setSpawnPoint(new Vector2(Globals.getPlayer().physics.getGridX(), Globals.getPlayer().physics.getGridY() + 1));
+				print("Spawn point set");
+			}
+		});
+
+		this.commands.register(new Command("tospawn", "TP to spawn", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().tpToSpawn();
+			}
+		});
+
+		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				Globals.getPlayer().stats.setInvulnTime(2147483646);
 			}
 		});
 	}

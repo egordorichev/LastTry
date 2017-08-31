@@ -1,0 +1,7 @@
+{
+	"lt:battle" : {
+		"name" : "Battle",
+		"description" : "Increased enemy spawn rate",
+		"time" : "420"
+	}
+}

@@ -1,8 +1,8 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.entity.EntityManager;
-import org.egordorichev.lasttry.entity.player.Player;
-import org.egordorichev.lasttry.entity.player.PlayerIO;
+import org.egordorichev.lasttry.player.Player;
+import org.egordorichev.lasttry.player.PlayerIO;
 import org.egordorichev.lasttry.ui.UiScreen;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.world.World;

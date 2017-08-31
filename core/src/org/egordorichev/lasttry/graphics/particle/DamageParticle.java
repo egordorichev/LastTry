@@ -5,9 +5,22 @@ import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 
+/**
+ * Damage text handler
+ * TODO: rework it as a text particle
+ */
 public class DamageParticle extends Particle {
+	/**
+	 * Particle text
+	 */
 	private int damage;
+	/**
+	 * Hit was critical
+	 */
 	private boolean crit;
+	/**
+	 * Particle alpha
+	 */
 	private float alpha = 1;
 
 	public DamageParticle(boolean crit, int damage) {

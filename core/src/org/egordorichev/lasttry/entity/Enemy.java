@@ -4,7 +4,7 @@ import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
 import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
-import org.egordorichev.lasttry.entity.player.Player;
+import org.egordorichev.lasttry.player.Player;
 
 public class Enemy extends CreatureWithAI {
 	public Enemy(String id, AI ai) {

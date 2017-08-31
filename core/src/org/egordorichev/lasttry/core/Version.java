@@ -21,7 +21,9 @@ public class Version {
 		this.suffix = suffix;
 	}
 
-	/** Returns version as string */
+	/**
+	 * @return Version as string
+	 */
 	@Override
 	public String toString() {
 		if (this.suffix.isEmpty()) {

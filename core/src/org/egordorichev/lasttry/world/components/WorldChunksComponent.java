@@ -131,13 +131,14 @@ public class WorldChunksComponent extends WorldComponent {
 		return true;
 	}
 
-	// TODO: may be better to pass entire arraylist, rather than one by one.  Therefore no need to lose and regain monitor continuously?
+	// TODO: may be better to pass entire arraylist, rather than one by one. Therefore no need to lose and regain monitor continuously?
 	public synchronized void removeChunk(UUID uniqueIdOfChunkToBeRemoved) {
-		loadedChunks.removeIf(loadedChunk -> loadedChunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved));
-
-		for (int i = 0; i < chunks.length; i++){
-			Optional<Chunk> optionalChunk = Optional.ofNullable(chunks[i]);
-			removeChunkInChunksArray(i,optionalChunk, uniqueIdOfChunkToBeRemoved );
+		for (Chunk chunk : this.loadedChunks) {
+			if (chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)) {
+				ChunkIO.save(chunk.getGridX(), chunk.getGridY());
+				this.loadedChunks.remove(chunk);
+				break;
+			}
 		}
 	}
 
@@ -153,7 +154,6 @@ public class WorldChunksComponent extends WorldComponent {
 		return x + y * this.world.getWidth() / Chunk.SIZE;
 	}
 
-	// TODO: return immutable object?
 	public synchronized List<Chunk> getImmutableLoadedChunks() {
 		return Collections.unmodifiableList(loadedChunks);
 	}
