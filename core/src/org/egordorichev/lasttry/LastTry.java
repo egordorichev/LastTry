@@ -61,6 +61,11 @@ public class LastTry extends Game {
 	 * Light disable
 	 */
 	public static boolean noLight = true;
+	
+	/**
+	 * Store relative to the game jar, instead of in the home directory.
+	 */
+	public static boolean storeRelative = true;
 
 	/**
 	 * Screen dimensions

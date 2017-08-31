@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Log;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class ChunkIO {
 	public static final byte VERSION = 4;
 
 	public static Chunk load(int x, int y) {
-		String fileName = getSaveName(x, y);
+		String fileName = Files.getSaveName(x, y);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -89,9 +90,8 @@ public class ChunkIO {
 	}
 
 	public static void save(int x, int y) {
-		String fileName = getSaveName(x, y);
+		String fileName = Files.getSaveName(x, y);
 		File file = new File(fileName);
-
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -142,9 +142,5 @@ public class ChunkIO {
 			}
 		}).start();
 		return new EmptyChunk(new Vector2(x, y));
-	}
-
-	private static String getSaveName(int x, int y) {
-		return System.getProperty("user.home") +  "/.LastTry/worlds/" + Globals.getWorld().getName() + "/" + x + "." + y + ".cnk";
 	}
 }

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry;
 
 import org.egordorichev.lasttry.util.CallableWithError;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
@@ -36,10 +37,10 @@ public class Args {
 				System.out.println("LastTry " + LastTry.version.toString());
 				System.out.println("Usage:");
 
-				Iterator it = argMap.entrySet().iterator();
+				Iterator<?> it = argMap.entrySet().iterator();
 
 				while (it.hasNext()) {
-					HashMap.Entry pair = (HashMap.Entry) it.next();
+					HashMap.Entry<?,?> pair = (HashMap.Entry<?,?>) it.next();
 					System.out.println("\t" + pair.getKey() + "\t\t" + ((Arg) pair.getValue()).getDescription());
 					it.remove();
 				}
@@ -58,14 +59,14 @@ public class Args {
 		argMap.put("-dw", new Arg("Deletes all worlds", new CallableWithError() {
 			@Override
 			public void call() {
-				Util.delete(new File(System.getProperty("user.home") + "/.LastTry/data/worlds"));
+				Util.delete(new File(Files.getWorldsDir()));
 			}
 		}));
 
 		argMap.put("-dp", new Arg("Deletes all players", new CallableWithError() {
 			@Override
 			public void call() {
-				Util.delete(new File(System.getProperty("user.home") + "/.LastTry/data/players"));
+				Util.delete(new File(Files.getPlayersDir()));
 			}
 		}));
 

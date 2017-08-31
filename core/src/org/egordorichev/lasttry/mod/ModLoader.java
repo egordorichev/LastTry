@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Crash;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Log;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class ModLoader {
 	 * Lookups and loads all mods from "mods" directory
 	 */
 	public void load() {
-		File modDirectory = new File(System.getProperty("user.home") + "/.LastTry/data/mods/");
+		File modDirectory = new File(Files.getModsDir());
 
 		if (!modDirectory.mkdir()) {
 			try {
