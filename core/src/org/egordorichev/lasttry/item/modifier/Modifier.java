@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.item.modifier;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.util.Log;
 
 public class Modifier {

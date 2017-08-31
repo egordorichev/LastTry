@@ -142,6 +142,7 @@ public class WorldChunksComponent extends WorldComponent {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private synchronized void removeChunkInChunksArray(final int index, Optional<Chunk> optionalChunk, UUID uniqueIdOfChunkToBeRemoved) {
 		optionalChunk.ifPresent(chunk -> {
 			if(chunk.getUniqueChunkId().equals(uniqueIdOfChunkToBeRemoved)){

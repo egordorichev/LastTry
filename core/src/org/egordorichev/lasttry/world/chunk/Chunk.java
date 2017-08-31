@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.MultiTileBlock;
-import org.egordorichev.lasttry.item.block.plant.Plant;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
 
