@@ -56,6 +56,14 @@ public class Args {
 			}
 		}));
 
+		
+		argMap.put("-rfs", new Arg("Relative file storage mode", new CallableWithError() {
+			@Override
+			public void call() {
+				LastTry.storeRelative = true;
+			}
+		}));
+
 		argMap.put("-dw", new Arg("Deletes all worlds", new CallableWithError() {
 			@Override
 			public void call() {
