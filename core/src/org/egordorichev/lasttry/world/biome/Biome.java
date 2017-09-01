@@ -3,8 +3,6 @@ package org.egordorichev.lasttry.world.biome;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 
 public class Biome {

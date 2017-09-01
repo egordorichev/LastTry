@@ -15,7 +15,8 @@ public class Grass extends BlockGround {
         // TODO: spread it
     }
 
-    private void spread(int x, int y) {
+    @SuppressWarnings("unused")
+	private void spread(int x, int y) {
         Block block = (Block) Item.fromID(Globals.getWorld().blocks.getID(x, y));
 
         if (block != null && this.canBeGrownAt(block.getID())) {

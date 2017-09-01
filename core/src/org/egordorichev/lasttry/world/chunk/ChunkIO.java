@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Log;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class ChunkIO {
 	public static final byte VERSION = 4;
 
 	public static Chunk load(int x, int y) {
-		String fileName = getSaveName(x, y);
+		String fileName = Files.getSaveName(x, y);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -87,16 +88,13 @@ public class ChunkIO {
 	}
 
 	public static void save(int x, int y) {
-		Log.debug("Saving...");
-		File file = new File(getSaveDir() + getSaveName(x, y));
-
-		if (!file.isFile()) {
+		String fileName = Files.getSaveName(x, y);
+		File file = new File(fileName);
+		if (!file.exists()) {
 			try {
-				file.getParentFile().mkdirs();
 				file.createNewFile();
 			} catch(IOException exception) {
-				Log.error("Could not create a save file for chunk " + x + ":" + y + ".\n"
-				+ "Reason: " + exception.getMessage());
+				Log.error("Could not create a save file for chunk " + x + ":" + y + ".");
 				LastTry.abort();
 			}
 		}
@@ -105,7 +103,7 @@ public class ChunkIO {
 		Log.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
-			FileWriter stream = new FileWriter(getSaveDir() + getSaveName(x, y));
+			FileWriter stream = new FileWriter(fileName);
 			ChunkData data = chunk.getData();
 
 			stream.writeByte(VERSION);
@@ -130,7 +128,6 @@ public class ChunkIO {
 			LastTry.handleException(exception);
 			LastTry.abort();
 		}
-		Log.debug("File saved!");
 	}
 
 	public static Chunk generate(int x, int y) {
@@ -143,24 +140,5 @@ public class ChunkIO {
 			}
 		}).start();
 		return new EmptyChunk(new Vector2(x, y));
-	}
-
-	private static String getSaveDir() {
-		return System.getProperty("user.home")
-				+ File.separator
-				+ "Library"
-				+ File.separator
-				+ "Application Support"
-				+ File.separator
-				+ "LastTry"
-				+ File.separator
-				+ "worlds"
-				+ File.separator
-				+ Globals.getWorld().getName()
-				+ File.separator;
-	}
-
-	private static String getSaveName(int x, int y) {
-		return x + "." + y + ".cnk";
 	}
 }

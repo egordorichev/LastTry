@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.core;
 
 import org.egordorichev.lasttry.effect.Effects;
 import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.Creatures;
 import org.egordorichev.lasttry.world.biome.Biomes;
@@ -30,7 +31,7 @@ public class Bootstrap {
 		}
 
 		try {
-			File file = new File(System.getProperty("user.home") + "/.LastTry/");
+			File file = new File(Files.getDir());
 
 			if (!file.exists() || !file.isDirectory()) {
 				file.createNewFile();

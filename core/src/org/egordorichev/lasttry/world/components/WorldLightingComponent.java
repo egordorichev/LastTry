@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
-import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
 public class WorldLightingComponent implements Component {
 	public static final int MAX_LIGHT = 16;

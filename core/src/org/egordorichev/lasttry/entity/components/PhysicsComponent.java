@@ -218,7 +218,7 @@ public class PhysicsComponent extends EntityComponent {
             this.velocity.y -= 0.4f;
         }
 
-        float lastYVelocity = this.velocity.y;
+       //  float lastYVelocity = this.velocity.y;
 
         // Non-solids skip adjustment and collision checks
         if (this.solid && this.velocity.y != 0) {

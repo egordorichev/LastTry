@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
 import java.util.*;

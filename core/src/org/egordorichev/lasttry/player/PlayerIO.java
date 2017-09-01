@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Log;
 
 import java.io.File;
@@ -19,10 +20,11 @@ public class PlayerIO {
 	/**
 	 * Loads player
 	 *
-	 * @param playerName Player name
+	 * @param playerName
+	 *            Player name
 	 */
 	public static void load(String playerName) {
-		String fileName = getSaveName(playerName);
+		String fileName = Files.getPlayerSave(playerName);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -33,9 +35,9 @@ public class PlayerIO {
 		Log.debug("Loading player " + playerName + "...");
 
 		try {
-			FileReader stream = new FileReader(fileName);
+			FileReader reader = new FileReader(fileName);
 
-			int version = stream.readByte();
+			int version = reader.readByte();
 			boolean isCurrent = version == VERSION;
 			boolean isFuture = version > VERSION;
 
@@ -46,29 +48,29 @@ public class PlayerIO {
 			}
 
 			Globals.setPlayer(new Player(playerName));
-			Globals.getPlayer().stats.set(stream.readInt16(), stream.readInt16(), 0, 0);
-			Globals.getPlayer().setSpawnPoint(new Vector2(stream.readInt16(), stream.readInt16()));
+			Globals.getPlayer().stats.set(reader.readInt16(), reader.readInt16(), 0, 0);
+			Globals.getPlayer().setSpawnPoint(new Vector2(reader.readInt16(), reader.readInt16()));
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
-				String id = stream.readString();
+				String id = reader.readString();
 
 				if (id != null) {
 					ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 					holder.setItem(Item.fromID(id));
-					holder.setCount(stream.readInt16());
+					holder.setCount(reader.readInt16());
 
-					if (stream.readBoolean()) {
-						holder.setModifier(Modifier.fromID(stream.readByte()));
+					if (reader.readBoolean()) {
+						holder.setModifier(Modifier.fromID(reader.readByte()));
 					}
 				}
 			}
 
-			if (!stream.readBoolean()) {
+			if (!reader.readBoolean()) {
 				Log.error("Verification failed");
 				LastTry.abort();
 			}
 
-			stream.close();
+			reader.close();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -80,19 +82,20 @@ public class PlayerIO {
 	 * Saves current player
 	 */
 	public static void save() {
-		File dir = new File(System.getProperty("user.home") + "/.LastTry/players/");
+		File dir = new File(Files.getPlayersDir());
 
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
-		String fileName = getSaveName(Globals.getPlayer().getName());
+		String fileName = Files.getPlayerSave(Globals.getPlayer().getName());
 		File file = new File(fileName);
-
+		
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
+				exception.printStackTrace();
 				Log.error("Failed to create save file for the player " + Globals.getPlayer().getName() + "!");
 				LastTry.abort();
 			}
@@ -101,34 +104,33 @@ public class PlayerIO {
 		Log.debug("Saving player " + Globals.getPlayer().getName() + "...");
 
 		try {
-			FileWriter stream = new FileWriter(fileName);
-
-			stream.writeByte(VERSION);
-			stream.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
-			stream.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
-			stream.writeInt16((short) Globals.getPlayer().getSpawnPoint().x);
-			stream.writeInt16((short) Globals.getPlayer().getSpawnPoint().y);
+			FileWriter writer = new FileWriter(fileName);
+			writer.writeByte(VERSION);
+			writer.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
+			writer.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
+			writer.writeInt16((short) Globals.getPlayer().getSpawnPoint().x);
+			writer.writeInt16((short) Globals.getPlayer().getSpawnPoint().y);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
 
 				if (holder.getItem() == null) {
-					stream.writeString("");
+					writer.writeString("");
 				} else {
-					stream.writeString(holder.getItem().getID());
-					stream.writeInt16((short) holder.getCount());
+					writer.writeString(holder.getItem().getID());
+					writer.writeInt16((short) holder.getCount());
 
 					if (holder.getModifier() != null) {
-						stream.writeBoolean(true);
-						stream.writeByte(holder.getModifier().getID());
+						writer.writeBoolean(true);
+						writer.writeByte(holder.getModifier().getID());
 					} else {
-						stream.writeBoolean(false);
+						writer.writeBoolean(false);
 					}
 				}
 			}
 
-			stream.writeBoolean(true);
-			stream.close();
+			writer.writeBoolean(true);
+			writer.close();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -139,39 +141,27 @@ public class PlayerIO {
 	/**
 	 * Generates new player
 	 *
-	 * @param name Player name
+	 * @param name
+	 *            Player name
 	 * @return New player
 	 */
 	public static Player generate(String name) {
 		Player player = new Player(name);
-
 		player.setSpawnPoint(new Vector2(Globals.getWorld().getWidth() / 2, Globals.getWorld().getHeight() - 10));
-
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
-
 		return player;
 	}
 
 	/**
 	 * Player save exists
 	 *
-	 * @param name Player name
+	 * @param playerName
+	 *            Player name
 	 * @return Save exists
 	 */
-	public static boolean saveExists(String name) {
-		File file = new File(getSaveName(name));
-		return file.exists();
-	}
-
-	/**
-	 * Returns save name
-	 *
-	 * @param playerName Player name
-	 * @return Save name
-	 */
-	private static String getSaveName(String playerName) {
-		return System.getProperty("user.home") + "/.LastTry/players/" + playerName + ".plr";
+	public static boolean saveExists(String playerName) {
+		return new File(Files.getPlayerSave(playerName)).exists();
 	}
 }
