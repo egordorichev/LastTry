@@ -1,9 +1,12 @@
 package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 public class CreatureGraphicsComponent extends GraphicsComponent {
 	protected TextureRegion texture;
@@ -27,6 +30,8 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 
 	@Override
 	public void render() {
+		float light  = getAlpha();
+		Graphics.batch.setColor(light, light, light, 1f);
 		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY(),
 			this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
 	}

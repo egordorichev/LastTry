@@ -106,7 +106,6 @@ public class Creature extends Entity {
 				false, false);
 		Graphics.batch.setColor(1, 1, 1, 1);
 		Graphics.batch.draw(Graphics.healthBarFrameTexture, x, this.physics.getY() - 20);
-
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 

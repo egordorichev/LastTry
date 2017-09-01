@@ -60,7 +60,7 @@ public class LastTry extends Game {
 	/**
 	 * Light disable
 	 */
-	public static boolean noLight = true;
+	public static boolean noLight = false;
 	
 	/**
 	 * Store relative to the game jar, instead of in the home directory.

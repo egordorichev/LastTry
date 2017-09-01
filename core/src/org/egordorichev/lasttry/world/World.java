@@ -11,7 +11,8 @@ import org.egordorichev.lasttry.world.components.*;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
-	public static final int UPDATE_DELAY_SECONDS = 20; // Should be 20 by default
+	 // Should be 20 by default
+	public static final int UPDATE_DELAY_SECONDS = 20;
 	/**
 	 * World flags (hardmode, evil)
 	 */
@@ -74,29 +75,30 @@ public class World {
 		}, UPDATE_DELAY_SECONDS);
 	}
 
-	public void renderLights() {
-		if (!LastTry.noLight) {
-			this.light.render();
-		}
-	}
-
 	public void render() {
 		this.chunks.render();
 	}
 
 	public void updateLight(int dt) {
 		if (!LastTry.noLight) {
-			this.light.update(dt);
+			if (lightDirty || light.distanceCheck(Globals.getPlayer().physics.getGridX(),
+					Globals.getPlayer().physics.getGridY())) {
+				this.light.update(dt);
+			}
 			lightDirty = false;
 		}
 	}
 
 	/**
-	 * Create the light map for the entire world.
+	 * Called when a block is placed.
+	 * 
+	 * @param x
+	 * @param y
 	 */
-	public void initLights() {
-		if (!LastTry.noLight) {
-			this.light.updateNearPlayer();
+	public void onBlockPlace(int x, int y) {
+		// update lighting
+		if (closeToPlayer(x, y)) {
+			lightDirty = true;
 		}
 	}
 
@@ -139,7 +141,7 @@ public class World {
 		if (LastTry.noLight) {
 			return false;
 		}
-		return Globals.getPlayer().physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks());
+		return Globals.getPlayer().physics.getGridPosition().dst(new Vector2(x, y)) < (Camera.getXInBlocks() * 3);
 	}
 
 	/**
@@ -251,6 +253,15 @@ public class World {
 	// GridPoints
 	public boolean isInside(int x, int y) {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
+	}
+
+	public int getHighest(int x) {
+		for (int y = getHeight(); y > 0; y--) {
+			if (this.blocks.getID(x, y) != null) {
+				return y;
+			}
+		}
+		return 0;
 	}
 
 	public enum Size {

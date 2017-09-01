@@ -54,8 +54,6 @@ public class LoadState implements State {
 	                    }
 
 	                    loaded = true;
-
-	                    Globals.getWorld().initLights();
 					}
 				});
 			}
