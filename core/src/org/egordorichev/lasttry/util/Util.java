@@ -74,7 +74,8 @@ public class Util {
 
 		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-		ScheduledFuture<?> scheduledFuture = scheduledExecutorService.schedule(new Runnable() {
+		// ScheduledFuture<?> scheduledFuture = 
+		scheduledExecutorService.schedule(new Runnable() {
 			@Override
 			public void run() {
 				callable.call();

@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
@@ -15,7 +16,7 @@ public class WorldIO {
 	public static final byte VERSION = 3;
 
 	public static void load(String name) {
-		String fileName = getSaveName(name);
+		String fileName = Files.getWorldSave(name);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -67,13 +68,13 @@ public class WorldIO {
 	}
 
 	public static World generate(String name, World.Size size, int flags, int seed) {
-		File dir = new File(System.getProperty("user.home") + "/.LastTry/worlds/");
+		File dir = new File(Files.getWorldsDir());
 
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
-		File file = new File(System.getProperty("user.home") + "/.LastTry/worlds/" + name + "/");
+		File file = new File(Files.getWorldDir(name));
 
 		if (!file.exists()) {
 			file.mkdir();
@@ -83,7 +84,7 @@ public class WorldIO {
 	}
 
 	public static void save() {
-		String fileName = getSaveName(Globals.getWorld().getName());
+		String fileName = Files.getWorldSave(Globals.getWorld().getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -132,11 +133,6 @@ public class WorldIO {
 	}
 
 	public static boolean saveExists(String name) {
-		File file = new File(getSaveName(name));
-		return file.exists();
-	}
-
-	private static String getSaveName(String name) {
-		return System.getProperty("user.home") + "/.LastTry/worlds/" + name + ".wld";
+		return new File(Files.getWorldSave(name)).exists();
 	}
 }

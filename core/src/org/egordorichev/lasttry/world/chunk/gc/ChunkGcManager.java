@@ -51,8 +51,7 @@ public class ChunkGcManager {
 
     public synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
         Log.debug("Level of chunk gc to be scheduled is: "+chunkGCLevel.getLevelDescription());
-
-        int futureTimeSecondsToRunChunkGc = chunkGCLevel.getTimeIntervalBeforeNextAttempt();
+        //int futureTimeSecondsToRunChunkGc = chunkGCLevel.getTimeIntervalBeforeNextAttempt();
         this.scheduleFutureChunkGcThread(chunkGCLevel);
     }
 
