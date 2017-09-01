@@ -42,7 +42,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
 		this.initCommands();
-		this.back = Assets.getTexture("ChatBack");
+		this.back = Assets.getTexture("chat_back");
 	}
 
 	private void initCommands() {
