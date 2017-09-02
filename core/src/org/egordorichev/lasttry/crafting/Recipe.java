@@ -27,12 +27,22 @@ public class Recipe {
 
 	/**
 	 * Loads recipe from json
+	 *
 	 * @param root Json root
 	 * @throws Exception Exception containing parse error
 	 */
-	public void load(JsonValue root) throws Exception {
-		if (root.has("stations")) {
+	public static Recipe load(JsonValue root) throws Exception {
+		Recipe recipe = new Recipe();
 
+		if (root.has("stations")) {
+			JsonValue stations = root.get("stations");
+			recipe.stations = new String[stations.size];
+
+			for (int i = 0; i < stations.size; i++) {
+				recipe.stations[i] = stations.getString(i);
+			}
+		} else {
+			recipe.stations = new String[0];
 		}
 
 		if (!root.has("materials") || !root.has("result")) {
@@ -40,18 +50,20 @@ public class Recipe {
 		}
 
 		JsonValue materials = root.get("materials");
-		this.materials = new Holder[materials.size];
+		recipe.materials = new Holder[materials.size];
 
 		for (int i = 0; i < materials.size; i++) {
-			this.materials[i] = new Holder();
-			this.materials[i].count = root.get(i).getShort("count", (short) 1);
-			this.materials[i].item = root.get(i).getString("id", "lt:dirt"); // ;D
+			recipe.materials[i] = new Holder();
+			recipe.materials[i].count = materials.get(i).getShort("count", (short) 1);
+			recipe.materials[i].item = materials.get(i).getString("id", "lt:dirt"); // ;D
 		}
 
 		JsonValue result = root.get("result");
 
-		this.result = new Holder();
-		this.result.count = result.getShort("count", (short) 1);
-		this.result.item = result.getString("id", "lt:dirt"); // ;D
+		recipe.result = new Holder();
+		recipe.result.count = result.getShort("count", (short) 1);
+		recipe.result.item = result.getString("id", "lt:dirt"); // ;D
+
+		return recipe;
 	}
 }

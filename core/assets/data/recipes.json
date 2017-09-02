@@ -1,19 +1,17 @@
-[
-	{
-		"materials" : [
+{
+	"lt:copper_bar": {
+		"materials": [
 			{
-				"id" : "lt:copper_ore",
-				"count" : 3
+				"id": "lt:copper_ore",
+				"count": 3
 			}
 		],
-
-		"stations" : [
+		"stations": [
 			"lt:furnace"
 		],
-
-		"result" : {
-			"id" : "lt:copper_bar",
-			"count" : 1
+		"result": {
+			"id": "lt:copper_bar",
+			"count": 1
 		}
 	}
-]
+}

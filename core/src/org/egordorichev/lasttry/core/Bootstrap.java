@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.core;
 
+import org.egordorichev.lasttry.crafting.Recipes;
 import org.egordorichev.lasttry.effect.Effects;
 import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Files;
@@ -43,6 +44,7 @@ public class Bootstrap {
 		loaded = true;
 
 		Items.load();
+		Recipes.load();
 		Biomes.load();
 		Effects.load();
 		AIs.load();
