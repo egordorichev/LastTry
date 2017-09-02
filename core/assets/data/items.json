@@ -2,6 +2,10 @@
 	"lt:dirt" : {
 		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
 	},
+	
+	"lt:wood" : {
+		"type" : "org.egordorichev.lasttry.item.block.Wood"
+	},
 
 	"lt:grass" : {
 		"type" : "org.egordorichev.lasttry.item.block.plant.Grass",
