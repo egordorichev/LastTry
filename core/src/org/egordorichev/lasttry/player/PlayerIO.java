@@ -146,8 +146,9 @@ public class PlayerIO {
 	 * @return New player
 	 */
 	public static Player generate(String name) {
+		int x = Globals.getWorld().getWidth() / 2;
 		Player player = new Player(name);
-		player.setSpawnPoint(new Vector2(Globals.getWorld().getWidth() / 2, Globals.getWorld().getHeight() - 10));
+		player.setSpawnPoint(new Vector2(x, Globals.getWorld().getHighest(x)+1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
