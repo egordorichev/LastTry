@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.world.components;
 
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.world.World;
@@ -85,20 +84,7 @@ public class WorldBlocksComponent extends WorldComponent {
 		this.setHP(hp, x, y, false);
 	}
 
-	private Chunk getChunk(int x, int y) {
-		if (!this.world.isInside(x, y)) {
-			return null;
-		}
-
-		Chunk chunk = this.world.chunks.getFor(x, y);
-
-		if (chunk == null) {
-			Globals.getWorld().chunks.load(x / Chunk.SIZE, y / Chunk.SIZE);
-			return null;
-		}
-
-		return chunk;
-	}
+	
 
 	private void updateNeighbors(short x, short y) {
 		for (short by = (short) (y - 1); by < y + 2; by++) {

@@ -12,10 +12,8 @@ public class NullBlockHelper extends BlockHelper {
 	}
 
 	public byte setLiquidType(byte data, byte liquidType) {
-		data = ByteHelper.setBit(data, (byte) 0, ByteHelper.bitIsSet(liquidType, (byte) 0));
-		data = ByteHelper.setBit(data, (byte) 1, ByteHelper.bitIsSet(liquidType, (byte) 1));
-
-		return data;
+		// Liquid type determined by hp.
+		return setHP(data,liquidType);
 	}
 
 	public byte getLiquidLevel(byte data) {
@@ -23,12 +21,9 @@ public class NullBlockHelper extends BlockHelper {
 	}
 
 	public byte setLiquidLevel(byte data, byte level) {
-		data = ByteHelper.setBit(data, (byte) 0, ByteHelper.bitIsSet(level, (byte) 0));
-		data = ByteHelper.setBit(data, (byte) 1, ByteHelper.bitIsSet(level, (byte) 1));
-		data = ByteHelper.setBit(data, (byte) 2, ByteHelper.bitIsSet(level, (byte) 2));
-		data = ByteHelper.setBit(data, (byte) 3, ByteHelper.bitIsSet(level, (byte) 3));
-		data = ByteHelper.setBit(data, (byte) 4, ByteHelper.bitIsSet(level, (byte) 4));
-
+		for (int i = 0; i <= 4; i++) {
+			data = ByteHelper.setBit(data, (byte) i, ByteHelper.bitIsSet(level, (byte) i));
+		}
 		return data;
 	}
 
