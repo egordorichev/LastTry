@@ -109,10 +109,8 @@ public class WorldTime {
         if (use12hoursFormat) {
             String postfix = (this.hour >= 12) ? " pm" : " am";
             int hour = (this.hour > 12) ? this.hour - 12 : this.hour;
-
             return hour + ":" + minuteBuilder + postfix;
-        } else {
-            return this.hour + ":" + minuteBuilder;
         }
+		return this.hour + ":" + minuteBuilder;
     }
 }

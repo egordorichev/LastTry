@@ -60,7 +60,6 @@ public class ModLoader {
 
 			URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
 			Enumeration<JarEntry> enumeration = jarFile.entries();
-
 			while (enumeration.hasMoreElements()) {
 				JarEntry jarEntry = enumeration.nextElement();
 
@@ -80,6 +79,7 @@ public class ModLoader {
 					this.modMap.put(mod.getName(), mod);
 				}
 			}
+			urlClassLoader.close();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 			Log.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");

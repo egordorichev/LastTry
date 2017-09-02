@@ -28,8 +28,7 @@ public class Version {
 	public String toString() {
 		if (this.suffix.isEmpty()) {
 			return "v." + this.major + "." + this.minor;
-		} else {
-			return "v." + this.major + "." + this.minor + "-" + suffix;
 		}
+		return "v." + this.major + "." + this.minor + "-" + suffix;
 	}
 }

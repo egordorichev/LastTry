@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.graphics.Animation;
 
 public class GraphicsComponent extends EntityComponent {
 	public Animation[] animations;
+	private float alpha;
 
 	public GraphicsComponent(Entity entity) {
 		super(entity);
@@ -16,5 +17,13 @@ public class GraphicsComponent extends EntityComponent {
 
 	public void render() {
 
+	}
+
+	public float getAlpha() {
+		return alpha;
+	}
+
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
 	}
 }

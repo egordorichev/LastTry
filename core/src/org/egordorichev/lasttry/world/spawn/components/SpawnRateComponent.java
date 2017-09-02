@@ -44,7 +44,7 @@ public class SpawnRateComponent {
         if (spawnWeightOfCurrentlyActiveEnemies == 0) {
             percentageOfSpawnRateAndActiveMonsters = 1;
         } else {
-            percentageOfSpawnRateAndActiveMonsters = ((float) spawnWeightOfCurrentlyActiveEnemies / (float) maxSpawns) * 100;
+            percentageOfSpawnRateAndActiveMonsters = (spawnWeightOfCurrentlyActiveEnemies / maxSpawns) * 100;
         }
 
         float spawnRateFloat = applyMultiplierToSpawnRate(percentChanceSpawnRate, percentageOfSpawnRateAndActiveMonsters);

@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.item.block.plant;
 
+import java.util.Arrays;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -10,10 +12,17 @@ import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.util.Util;
 
 public class Plant extends Block {
+	private static final String[] DEFAULT_GROUND = new String[] { "lt:dirt" };
 	public static final byte GROW_THRESHOLD = 20;
+	private String[] groundTypes;
 
 	public Plant(String id) {
+		this(id, DEFAULT_GROUND);
+	}
+
+	public Plant(String id, String... groundTypes) {
 		super(id);
+		this.groundTypes = groundTypes;
 	}
 
 	@Override
@@ -28,16 +37,17 @@ public class Plant extends Block {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
 
 		if (BlockHelper.plant.isBlooming(hp)) {
-			Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, Util.random(1, 3))), x * Block.SIZE - Block.SIZE / 2,
-				y * Block.SIZE - Block.SIZE / 2);
+			Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, Util.random(1, 3))),
+					x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 		}
 
 		if (BlockHelper.plant.hasGrown(hp)) {
 			String seeds = getSeedsFor(this.id);
 
 			if (!seeds.isEmpty()) {
-				Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
-					x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
+				Globals.entityManager.spawnBlockDrop(
+						new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
+						x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 			}
 		}
 
@@ -46,14 +56,22 @@ public class Plant extends Block {
 
 	public static String getSeedsFor(String id) {
 		switch (id) {
-			case "lt:day_bloom": return "lt:day_bloom_seeds";
-			case "lt:blink_root": return "lt:blink_root_seeds";
-			case "lt:moon_glow": return "lt:moon_glow_seeds";
-			case "lt:death_weed": return "lt:death_weed_seeds";
-			case "lt:fire_blossom": return "lt:fire_blossom_seeds";
-			case "lt:water_leaf": return "lt:water_leaf_seeds";
-			case "lt:silver_thorn": return "lt:silver_thorn_seeds";
-			default: return null;
+		case "lt:day_bloom":
+			return "lt:day_bloom_seeds";
+		case "lt:blink_root":
+			return "lt:blink_root_seeds";
+		case "lt:moon_glow":
+			return "lt:moon_glow_seeds";
+		case "lt:death_weed":
+			return "lt:death_weed_seeds";
+		case "lt:fire_blossom":
+			return "lt:fire_blossom_seeds";
+		case "lt:water_leaf":
+			return "lt:water_leaf_seeds";
+		case "lt:silver_thorn":
+			return "lt:silver_thorn_seeds";
+		default:
+			return null;
 		}
 	}
 
@@ -85,10 +103,11 @@ public class Plant extends Block {
 			if (this.canBloom()) {
 				Globals.getWorld().blocks.setHP(BlockHelper.plant.setGrowLevel(hp, (byte) (GROW_THRESHOLD + 1)), x, y);
 			} else {
-				Globals.getWorld().blocks.setHP(BlockHelper.plant.setGrowLevel(hp, (byte) GROW_THRESHOLD), x, y);
+				Globals.getWorld().blocks.setHP(BlockHelper.plant.setGrowLevel(hp, GROW_THRESHOLD), x, y);
 			}
 		} else {
-			Globals.getWorld().blocks.setHP(BlockHelper.plant.setGrowLevel(hp, (byte) (BlockHelper.plant.getGrowLevel(hp) + 1)), x, y);
+			Globals.getWorld().blocks
+					.setHP(BlockHelper.plant.setGrowLevel(hp, (byte) (BlockHelper.plant.getGrowLevel(hp) + 1)), x, y);
 		}
 	}
 
@@ -97,7 +116,16 @@ public class Plant extends Block {
 	}
 
 	public boolean canBeGrownAt(int x, int y) {
-		String id = Globals.getWorld().blocks.getID(x, y);
-		return id == null;
+		// Check if space occupied
+		String self = Globals.getWorld().blocks.getID(x, y - 1);
+		if (self != null) {
+			return false;
+		}
+		// Check if valid ground tile.
+		String id = Globals.getWorld().blocks.getID(x, y - 1);
+		if (id == null) {
+			return false;
+		}
+		return Arrays.binarySearch(groundTypes, id) >= 0;
 	}
 }

@@ -36,6 +36,7 @@ public class Crash {
 
 		StringWriter writer = new StringWriter();
 		throwable.printStackTrace(new PrintWriter(writer));
+		throwable.printStackTrace();
 
 		builder.append(writer.toString());
 		builder.append("\n--- END CRASH REPORT ---\n");

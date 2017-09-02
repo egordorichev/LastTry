@@ -30,17 +30,16 @@ public class DigTool extends Tool {
 
 		if (this.power.isEnoughFor(power)) {
 			byte data = Globals.getWorld().blocks.getHP(x, y);
-
+			BlockHelper helper;
 			if (block instanceof MultiTileBlock) {
-				byte hp = BlockHelper.mtb.getHP(data);
-				Globals.getWorld().blocks.setHP(BlockHelper.mtb.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
+				helper = BlockHelper.mtb;
 			} else if (block instanceof Plant) {
-				byte hp = BlockHelper.plant.getHP(data);
-				Globals.getWorld().blocks.setHP(BlockHelper.plant.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
+				helper = BlockHelper.plant;
 			} else {
-				byte hp = BlockHelper.plain.getHP(data);
-				Globals.getWorld().blocks.setHP(BlockHelper.plain.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
+				helper = BlockHelper.plain;
 			}
+			byte hp = helper.getHP(data);
+			Globals.getWorld().blocks.setHP(helper.setHP(data, (byte) (hp - 1)), x, y, (hp == 1));
 		}
 
 		return false;
@@ -58,10 +57,10 @@ public class DigTool extends Tool {
 
 		if (Globals.getPlayer().physics.isFlipped()) {
 			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
-				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
+					Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, -1.0f, 1.0f, -angle);
 		} else {
 			Graphics.batch.draw(this.texture, Globals.getPlayer().physics.getCenterX(),
-				Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
+					Globals.getPlayer().physics.getCenterY(), 0, 0, width, height, 1.0f, 1.0f, angle);
 		}
 	}
 }

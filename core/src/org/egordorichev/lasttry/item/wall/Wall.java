@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.item.wall;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -13,7 +12,6 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.items.ToolPower;
 import org.egordorichev.lasttry.item.wall.helpers.WallHelper;
 import org.egordorichev.lasttry.util.ByteHelper;
-import org.egordorichev.lasttry.world.components.WorldLightingComponent;
 
 public class Wall extends Tile {
 	/**
@@ -90,11 +88,7 @@ public class Wall extends Tile {
 		byte binary = calculateBinary(x, y);
 
 		
-		float light  = 1f;
-		// Update light leven
-		if (!LastTry.noLight){
-			light = (0f + Globals.getWorld().blocks.getLight(x, y)) / ( WorldLightingComponent.MAX_LIGHT );
-		}
+		float light  = Globals.getWorld().light.get(x,y);
 		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 

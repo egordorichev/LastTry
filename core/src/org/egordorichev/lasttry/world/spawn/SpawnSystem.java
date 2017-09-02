@@ -77,9 +77,7 @@ public class SpawnSystem {
 
 		List<String> eligibleCreaturesForSpawn = CreatureSpawnComponent
 				.retrieveEligibleSpawnCreatures(maxSpawns - spawnWeightOfCurrentlyActiveEnemies);
-		if (eligibleCreaturesForSpawn.size() == 0) {
-			return;
-		} else {
+		if (eligibleCreaturesForSpawn.size() > 0) {
 			this.spawnTriggered(eligibleCreaturesForSpawn);
 		}
 	}

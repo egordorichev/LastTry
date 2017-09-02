@@ -30,7 +30,7 @@ public class Ammo extends Item {
      *
      * @return if ammo can damage.
      */
-    public boolean hasDamage() {
+    public boolean willDamage() {
         return this.damage > 0;
     }
 

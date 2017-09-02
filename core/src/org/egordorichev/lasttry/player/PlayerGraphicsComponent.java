@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.*;
 import org.egordorichev.lasttry.player.skin.*;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 
 public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
@@ -24,16 +25,17 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 
 	@Override
 	public void render() {
+		float light  = getAlpha();
+		Graphics.batch.setColor(light, light, light, 1f);
 		ItemHolder holder = Globals.getPlayer().getInventory().getActiveItem();
-
 		if (holder.getItem() != null) {
 			holder.getItem().renderAnimation();
 		}
-
 		this.animations[this.creature.state.get().getID()].render(
 			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
 			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
 			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	/**

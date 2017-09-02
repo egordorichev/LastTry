@@ -37,6 +37,8 @@ public class Entity {
 
 	/** Renders entity */
 	public void render() {
+		float alpha = Globals.getWorld().light.get(this.physics.getGridX(), this.physics.getGridY() + 1);
+		this.graphics.setAlpha(alpha);
 		this.graphics.render();
 	}
 

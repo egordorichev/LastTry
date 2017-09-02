@@ -29,13 +29,7 @@ public class Util {
 	 */
 	public static void runDelayedThreadSeconds(Callable callable, int time) {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-
-		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				callable.call();
-			}
-		}, 0, time, TimeUnit.SECONDS);
+		scheduledExecutor.scheduleAtFixedRate(new Caller(callable), 0, time, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -49,53 +43,29 @@ public class Util {
 	 */
 	public static void runDelayedThreadMillis(Callable callable, int time) {
 		ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-
-		scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				callable.call();
-			}
-		}, 0, time, TimeUnit.MILLISECONDS);
+		scheduledExecutor.scheduleAtFixedRate(new Caller(callable), 0, time, TimeUnit.MILLISECONDS);
 	}
 
 	public static void oneTimeRunInThread(Callable callable) {
-
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-		executorService.submit(new Runnable() {
-			@Override
-			public void run() {
-				callable.call();
-			};
-		});
+		executorService.submit(new Caller(callable));
 	}
 
 	public static void futureOneTimeRunInThread(Callable callable, long delay, TimeUnit timeUnit) {
-
 		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-
-		// ScheduledFuture<?> scheduledFuture = 
-		scheduledExecutorService.schedule(new Runnable() {
-			@Override
-			public void run() {
-				callable.call();
-			}
-		}, delay, timeUnit);
-
+		// ScheduledFuture<?> scheduledFuture =
+		scheduledExecutorService.schedule(new Caller(callable), delay, timeUnit);
 		// TODO: execute scheduledFuture
 	}
 
 	public static boolean fileExists(String path) {
 		File file = new File(path);
-
 		if (!file.exists()) {
 			return false;
 		}
-
 		if (file.length() == 0) {
 			return false;
 		}
-
 		return true;
 	}
 
@@ -136,5 +106,18 @@ public class Util {
 
 		font.setColor(1, 1, 1, 1);
 		font.draw(Graphics.batch, text, x, y);
+	}
+
+	private static class Caller implements Runnable {
+		private final Callable callable;
+
+		public Caller(Callable callable) {
+			this.callable = callable;
+		}
+
+		@Override
+		public void run() {
+			callable.call();
+		};
 	}
 }

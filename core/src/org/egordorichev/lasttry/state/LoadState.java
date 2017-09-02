@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.Args;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
@@ -30,6 +29,7 @@ public class LoadState implements State {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+                    	String world = "test", player = "test";
 	                    Bootstrap.load();
                         loadString = "Loading spawn system...";
                         Globals.spawnSystem = new SpawnSystem();
@@ -38,24 +38,22 @@ public class LoadState implements State {
 
 	                    loadString = "Loading world...";
 
-	                    if (WorldIO.saveExists(Args.world)) {
-		                    WorldIO.load(Args.world);
+	                    if (WorldIO.saveExists(world)) {
+		                    WorldIO.load(world);
 	                    } else {
 		                    int seed = (int) System.currentTimeMillis();
-		                    Globals.setWorld(WorldIO.generate(Args.world, World.Size.SMALL, 0, seed));
+		                    Globals.setWorld(WorldIO.generate(world, World.Size.SMALL, 0, seed));
 	                    }
 
 	                    loadString = "Loading player...";
 
-	                    if (PlayerIO.saveExists(Args.player)) {
-		                    PlayerIO.load(Args.player);
+	                    if (PlayerIO.saveExists(player)) {
+		                    PlayerIO.load(player);
 	                    } else {
-		                    Globals.setPlayer(PlayerIO.generate(Args.player));
+		                    Globals.setPlayer(PlayerIO.generate(player));
 	                    }
 
 	                    loaded = true;
-
-	                    Globals.getWorld().initLights();
 					}
 				});
 			}

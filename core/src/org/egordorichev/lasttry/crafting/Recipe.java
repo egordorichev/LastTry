@@ -16,7 +16,7 @@ public class Recipe {
 	 */
 	private Holder result;
 
-	public static class Holder {
+	private static class Holder {
 		public String item;
 		public short count;
 	}
