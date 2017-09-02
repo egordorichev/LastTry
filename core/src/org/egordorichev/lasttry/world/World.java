@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.world;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
@@ -56,6 +58,8 @@ public class World {
 	 */
 	private boolean lightDirty;
 
+	private final Map<Integer, Integer> heightCache = new HashMap<>();
+
 	public World(String name, Size size, int flags, int seed) {
 		this.size = size;
 		this.name = name;
@@ -66,7 +70,6 @@ public class World {
 		this.blocks = new WorldBlocksComponent(this);
 		this.walls = new WorldWallsComponent(this);
 		this.light = new WorldLightingComponent(this);
-
 		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {
@@ -81,9 +84,15 @@ public class World {
 
 	public void updateLight(int dt) {
 		if (!LastTry.noLight) {
-			if (lightDirty || light.distanceCheck(Globals.getPlayer().physics.getGridX(),
-					Globals.getPlayer().physics.getGridY())) {
+			if (lightDirty) {
 				this.light.update(dt);
+				this.light.clearCache();
+			} else {
+				int x = Globals.getPlayer().physics.getGridX();
+				int y = Globals.getPlayer().physics.getGridY();
+				if (light.distanceCheck(x, y)) {
+					this.light.updateByMove(dt, x, y);
+				}
 			}
 			lightDirty = false;
 		}
@@ -100,6 +109,8 @@ public class World {
 		if (closeToPlayer(x, y)) {
 			lightDirty = true;
 		}
+		// update caches
+		updateHeightCache(x,y);
 	}
 
 	/**
@@ -113,6 +124,8 @@ public class World {
 		if (closeToPlayer(x, y)) {
 			lightDirty = true;
 		}
+		// update caches
+		updateHeightCache(x,y);
 	}
 
 	/**
@@ -137,7 +150,7 @@ public class World {
 	 * @param y
 	 * @return
 	 */
-	private boolean closeToPlayer(int x, int y) {
+	private static boolean closeToPlayer(int x, int y) {
 		if (LastTry.noLight) {
 			return false;
 		}
@@ -265,12 +278,26 @@ public class World {
 	}
 
 	public int getHighest(int x) {
+		int cached = heightCache.getOrDefault(x, -1);
+		if (cached != -1) {
+			return cached;
+		}
 		for (int y = getHeight(); y > 0; y--) {
 			if (this.blocks.getID(x, y) != null) {
+				heightCache.put(x, y);
 				return y;
 			}
 		}
 		return 0;
+	}
+	
+
+	private void updateHeightCache(int x, int y) {
+		int current= heightCache.getOrDefault(x, 0);
+		if (y > current) {
+			heightCache.remove(x);
+			getHighest(x);
+		}
 	}
 
 	public enum Size {

@@ -31,7 +31,7 @@ public class Bootstrap {
 		}
 
 		try {
-			File file = new File(Files.getDir());
+			File file = new File(Files.getRootDir());
 
 			if (!file.exists() || !file.isDirectory()) {
 				file.createNewFile();

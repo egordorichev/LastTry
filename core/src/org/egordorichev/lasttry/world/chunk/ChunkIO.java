@@ -15,7 +15,7 @@ public class ChunkIO {
 	public static final byte VERSION = 4;
 
 	public static Chunk load(int x, int y) {
-		String fileName = Files.getSaveName(x, y);
+		String fileName = Files.getChunkSave(x, y);
 		File file = new File(fileName);
 
 		if (!file.exists()) {
@@ -88,7 +88,7 @@ public class ChunkIO {
 	}
 
 	public static void save(int x, int y) {
-		String fileName = Files.getSaveName(x, y);
+		String fileName = Files.getChunkSave(x, y);
 		File file = new File(fileName);
 		if (!file.exists()) {
 			try {

@@ -52,7 +52,7 @@ public class Files {
 	 * @param y
 	 * @return
 	 */
-	public static String getSaveName(int x, int y) {
+	public static String getChunkSave(int x, int y) {
 		return getWorldDir(Globals.getWorld().getName()) + x + "." + y + ".cnk";
 	}
 
@@ -89,7 +89,7 @@ public class Files {
 	 * @return
 	 */
 	public static String getDataDir() {
-		return getDir() + FS + "data" + FS;
+		return getRootDir() + FS + "data" + FS;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class Files {
 	 * 
 	 * @return
 	 */
-	public static String getDir() {
+	public static String getRootDir() {
 		boolean rel = LastTry.storeRelative;
 		String home = rel ? System.getProperty("user.dir") : System.getProperty("user.home");
 		if (rel) {
