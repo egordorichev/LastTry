@@ -116,9 +116,9 @@ public class WorldLightingComponent implements Component {
 	 * @param y
 	 */
 	private void setLight(int x, int y) {
-		// boolean hasBlock = world.blocks.getID(x, y) == null;
+		boolean hasBlock = world.blocks.getID(x, y) != null;
 		boolean canSeeSky = y >= world.getHighest(x);
-		byte light = canSeeSky ? MAX_LIGHT : (byte) 0;
+		byte light = canSeeSky ? MAX_LIGHT : (byte) (hasBlock ? world.blocks.get(x, y).getBrightness() : 0);
 		world.blocks.setLight(x, y, light);
 		cache.remove(getKey(x, y));
 	}
