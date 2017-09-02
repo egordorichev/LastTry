@@ -12,7 +12,8 @@ public class WorldGenerator {
 	public WorldGenerator(String name, World.Size size, int flags, int seed) {
 		this.world = new World(name, size, flags, seed);
 		Globals.setWorld(this.world);
-		this.tasks.add(new TerrainGeneratorTask());
+		this.tasks.add(new SurfaceGenerationTask());
+		//this.tasks.add(new SurfaceGenerationSimplexTask());
 		this.tasks.add(new CaveGeneratorSimplexTask());
 
 		//this.tasks.add(new TaskBiomeTestGen());
@@ -32,7 +33,9 @@ public class WorldGenerator {
 	}
 
 	public World generate() {
-		this.tasks.forEach(t -> t.run(this));
+		while(this.tasks.size() > 0) {
+			this.tasks.remove(0).run(this);
+		}
 		return this.world;
 	}
 
