@@ -4,17 +4,7 @@ import org.egordorichev.lasttry.Globals;
 
 public class MoonGlow extends Plant {
 	public MoonGlow() {
-		super("lt:moon_glow");
-	}
-
-	@Override
-	public boolean canBeGrownAt(int x, int y) {
-		if (!super.canBeGrownAt(x, y)) {
-			return false;
-		}
-
-		String id = Globals.getWorld().blocks.getID(x, y - 1);
-		return id.equals("lt:mud");
+		super("lt:moon_glow", "lt:mud");
 	}
 
 	@Override

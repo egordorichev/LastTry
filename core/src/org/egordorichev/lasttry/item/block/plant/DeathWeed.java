@@ -1,19 +1,7 @@
 package org.egordorichev.lasttry.item.block.plant;
 
-import org.egordorichev.lasttry.Globals;
-
 public class DeathWeed extends Plant {
 	public DeathWeed(String id) {
-		super(id);
-	}
-
-	@Override
-	public boolean canBeGrownAt(int x, int y) {
-		if (!super.canBeGrownAt(x, y)) {
-			return false;
-		}
-
-		String id = Globals.getWorld().blocks.getID(x, y + 1);
-		return id.equals("lt:ebonstone") || id.equals("lt:crimstone"); // TODO: corrupt grass
+		super(id, "lt:ebonstone", "lt:crimstone");
 	}
 }
