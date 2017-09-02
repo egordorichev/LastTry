@@ -28,4 +28,7 @@ public class Keys {
 	public static final int HOTBAR_SLOT_7 = Input.Keys.NUM_8;
 	public static final int HOTBAR_SLOT_8 = Input.Keys.NUM_9;
 	public static final int HOTBAR_SLOT_9 = Input.Keys.NUM_0;
+	public static final int SCREENSHOT = Input.Keys.F1;
+	public static final int START_GIF = Input.Keys.F2;
+	public static final int STOP_GIF = Input.Keys.F3;
 }

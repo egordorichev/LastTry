@@ -1,8 +1,13 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
@@ -14,7 +19,10 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.util.Camera;
+import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
+
+import java.util.Date;
 
 public class GamePlayState implements State {
 	/**
@@ -98,6 +106,19 @@ public class GamePlayState implements State {
 		LastTry.ui.render();
 		Globals.getPlayer().effects.render();
 		LastTry.debug.render();
+
+
+		if (InputManager.isKeyJustDown(Keys.SCREENSHOT)) {
+			byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+
+			Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+			BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+			FileHandle file = Gdx.files.external("LastTry-" + new Date() + ".png");
+			PixmapIO.writePNG(file, pixmap);
+			pixmap.dispose();
+
+			Log.debug("Saved screenshot to " + Gdx.files.getLocalStoragePath() + file.path());
+		}
 	}
 
 	@Override
