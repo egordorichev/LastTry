@@ -11,7 +11,7 @@ import org.egordorichev.lasttry.world.components.*;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
-	 // Should be 20 by default
+	// Should be 20 by default
 	public static final int UPDATE_DELAY_SECONDS = 20;
 	/**
 	 * World flags (hardmode, evil)
@@ -153,18 +153,7 @@ public class World {
 	 * @return
 	 */
 	public float distToHorizontalCollision(Rectangle hitbox, float velocityX) {
-		Rectangle tmp = hitbox.copy();
-		boolean collision = isColliding(tmp);
-		boolean negativeMotion = velocityX < 0;
-		int direction = negativeMotion ? -1 : 1;
-		float change = direction * Block.SIZE;
-		float distance = 0f;
-		while (!collision) {
-			tmp.x += change;
-			distance += change;
-			collision = isColliding(tmp);
-		}
-		return distance;
+		return dist(hitbox, velocityX, false);
 	}
 
 	/**
@@ -176,14 +165,34 @@ public class World {
 	 * @return
 	 */
 	public float distToVerticalCollision(Rectangle hitbox, float velocityY) {
+		return dist(hitbox, velocityY, true);
+	}
+
+	/**
+	 * Raytraces the distance from the hitbox to the next collision, given the
+	 * velocity and direction.
+	 *
+	 * @param hitbox
+	 *            Hitbox of the moving object.
+	 * @param velocity
+	 *            Velocity of the moving object.
+	 * @param vertical
+	 *            True for vertical distances, false for horizontal.
+	 * @return
+	 */
+	private float dist(Rectangle hitbox, float velocity, boolean vertical) {
 		Rectangle tmp = hitbox.copy();
 		boolean collision = isColliding(tmp);
-		boolean negativeMotion = velocityY < 0;
+		boolean negativeMotion = velocity < 0;
 		int direction = negativeMotion ? -1 : 1;
 		float change = direction * Block.SIZE;
 		float distance = 0f;
 		while (!collision) {
-			tmp.y += change;
+			if (vertical) {
+				tmp.y += change;
+			} else {
+				tmp.x += change;
+			}
 			distance += change;
 			collision = isColliding(tmp);
 		}

@@ -59,7 +59,8 @@ public class CommandHandler {
 		Command com = getCommand(handle);
 
 		if ((com.getCategory() == CMDCategory.DEBUG && LastTry.release)
-				|| (com.getCategory() == CMDCategory.ADMININSTRATION && LastTry.release)) { // todo: admins
+				|| (com.getCategory() == CMDCategory.ADMININSTRATION && LastTry.release)) { // todo:
+																							// admins
 
 			Globals.chat.print("You are not allowed to use this command");
 			return false;
@@ -93,9 +94,8 @@ public class CommandHandler {
 			String handle = split[0];
 			String[] args = Arrays.copyOfRange(split, 1, split.length);
 			return runCommand(handle, args);
-		} else {
-			return runCommand(in, null);
 		}
+		return runCommand(in, null);
 	}
 
 	/**

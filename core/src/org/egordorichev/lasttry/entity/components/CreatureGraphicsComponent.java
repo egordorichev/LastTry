@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;

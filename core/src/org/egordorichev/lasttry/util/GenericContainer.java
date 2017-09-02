@@ -33,7 +33,7 @@ public class GenericContainer<T> {
             public T getSecond(){return b;}
     }
 
-    public static class UniqueTypePair<T, U>{
+    static class UniqueTypePair<T, U>{
 
             private T value1; private U value2;
 

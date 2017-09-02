@@ -41,22 +41,6 @@ public class Chunk {
 		this.updateLastAccessedTime();
 	}
 
-	public void updateGraphics() {
-		for (int y = 0; y < SIZE; y++) {
-			for (int x = 0; x < SIZE; x++) {
-				Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
-
-				if (block != null) {
-					block.updateBlockStyle(x, y);
-				}
-			}
-		}
-	}
-
-	private void updateLastAccessedTime() {
-		this.lastAccessedTime = LocalDateTime.now();
-	}
-
 	public String getBlock(int globalX, int globalY) {
 		return this.getBlockInside(globalX - this.getX(), globalY - this.getY());
 	}
@@ -82,7 +66,7 @@ public class Chunk {
 
 		this.data.blocks[x + y * SIZE] = id;
 		this.data.blocksHealth[x + y * SIZE] = ByteHelper.create(true, true, (n == 1 || n == 3), (n == 2), false, false,
-			false, false);
+				false, false);
 	}
 
 	public byte getBlockHP(int globalX, int globalY) {
@@ -237,6 +221,10 @@ public class Chunk {
 
 	public UUID getUniqueChunkId() {
 		return this.uniqueChunkId;
+	}
+
+	private void updateLastAccessedTime() {
+		this.lastAccessedTime = LocalDateTime.now();
 	}
 
 	public LocalDateTime getLastAccessedTime() {

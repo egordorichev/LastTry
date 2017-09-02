@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class Args {
-	public static String world = "test";
-	public static String player = "test";
-	public static int seed = 512;
+	private static String world = "test";
+	private static String player = "test";
+	private static int seed = 512;
 
 	/**
 	 * Current argument index
@@ -20,7 +20,7 @@ public class Args {
 	/**
 	 * Arguments
 	 */
-	public static String[] arguments;
+	private static String[] arguments;
 	/**
 	 * Argument map
 	 */

@@ -47,7 +47,7 @@ public class WorldLightingComponent implements Component {
 		lastUpdate = new Point(px, py);
 
 		// Range in chunks to load
-		int range = 30;
+		int range = 45;
 		for (int y = py - range; y < py + range; y++) {
 			for (int x = px - range; x < px + range; x++) {
 				boolean hasBlock = world.blocks.getID(x, y) == null;
@@ -61,6 +61,6 @@ public class WorldLightingComponent implements Component {
 	public boolean distanceCheck(int x, int y) {
 		if (lastUpdate == null) return true;
 		Point temp = new Point(x, y);
-		return temp.distance(lastUpdate) < 30;
+		return temp.distance(lastUpdate) > 5;
 	}
 }
