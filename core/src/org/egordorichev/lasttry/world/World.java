@@ -110,7 +110,7 @@ public class World {
 			lightDirty = true;
 		}
 		// update caches
-		updateHeightCache(x,y);
+		updateHeightCache(x, y);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class World {
 			lightDirty = true;
 		}
 		// update caches
-		updateHeightCache(x,y);
+		updateHeightCache(x, y);
 	}
 
 	/**
@@ -277,6 +277,12 @@ public class World {
 		return (x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight());
 	}
 
+	/**
+	 * Get the highest block position at the given x-position.
+	 * 
+	 * @param x
+	 * @return
+	 */
 	public int getHighest(int x) {
 		int cached = heightCache.getOrDefault(x, -1);
 		if (cached != -1) {
@@ -290,11 +296,16 @@ public class World {
 		}
 		return 0;
 	}
-	
 
+	/**
+	 * Updates the cache for the highest block at the given x.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void updateHeightCache(int x, int y) {
-		int current= heightCache.getOrDefault(x, 0);
-		if (y > current) {
+		int current = heightCache.getOrDefault(x, 0);
+		if (y >= current) {
 			heightCache.remove(x);
 			getHighest(x);
 		}
