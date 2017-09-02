@@ -16,7 +16,7 @@ public class Recipe {
 	 */
 	private Holder result;
 
-	private static class Holder {
+	public static class Holder {
 		public String item;
 		public short count;
 	}
@@ -65,5 +65,26 @@ public class Recipe {
 		recipe.result.item = result.getString("id", "lt:dirt"); // ;D
 
 		return recipe;
+	}
+
+	/**
+	 * @return Recipe result
+	 */
+	public Holder getResult() {
+		return this.result;
+	}
+
+	/**
+	 * @return Recipe required materials
+	 */
+	public Holder[] getMaterials() {
+		return this.materials;
+	}
+
+	/**
+	 * @return Recipe required stations
+	 */
+	public String[] getStations() {
+		return this.stations;
 	}
 }

@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.crafting.Recipe;
+import org.egordorichev.lasttry.crafting.Recipes;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -43,6 +45,12 @@ public class GamePlayState implements State {
 		Globals.chat = new UiChat();
 
 		LastTry.ui.add(Globals.chat);
+
+		Recipe[] recipes = Recipes.getAllForMaterial("lt:copper_ore");
+
+		for (Recipe r : recipes) {
+			Log.info(r.getResult().item);
+		}
 	}
 
 	/**
