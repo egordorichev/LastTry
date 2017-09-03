@@ -28,7 +28,7 @@ public class Wall extends Tile {
 
 		this.useDelayMax = 30;
 		this.tiles = this.texture.split(Block.SIZE, Block.SIZE);
-		this.texture = Assets.getTexture(this.id + "_icon");
+		this.texture = Assets.getTexture(this.id.replace(":", "_") + "_icon");
 	}
 
 	/**
