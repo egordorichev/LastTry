@@ -51,38 +51,20 @@ public class WorldChunksComponent extends WorldComponent {
 		}
 	}
 
-	public void render() {
+	public void renderLiquids() {
 		Rectangle blocksRect = Camera.getBlocksOnScreen();
 
 		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
-				if (block != null) {
-					block.updateBlockStyle(x, y);
-
-					byte binary = block.calculateBinary(x, y);
-
-					if (binary != 15) {
-						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
-
-						if (wall != null) {
-							wall.renderWall(x, y);
-						}
-					}
-
-				 	block.renderBlock(x, y, binary);
-				} else {
-					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
-
-					if (wall != null) {
-						wall.renderWall(x, y);
-					}
-
+				if (block == null) {
 					byte hp = this.world.blocks.getHP(x, y);
 					byte liquidLevel = BlockHelper.empty.getLiquidLevel(hp);
 
 					if (liquidLevel > 0) {
+						float light = Globals.getWorld().light.get(x, y);
+						Graphics.batch.setColor(light, light, light, 1f);
 						Graphics.batch.draw(Graphics.waterTexture[0][liquidLevel - 1], x * Block.SIZE, y * Block.SIZE);
 						Block bottom = Globals.getWorld().blocks.get(x, y - 1);
 
@@ -143,6 +125,40 @@ public class WorldChunksComponent extends WorldComponent {
 								Globals.getWorld().blocks.setHP(rightHp, x + 1, y);
 							}
 						}
+					}
+				}
+			}
+		}
+		
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
+	}
+
+	public void render() {
+		Rectangle blocksRect = Camera.getBlocksOnScreen();
+
+		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
+			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
+				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+
+				if (block != null) {
+					block.updateBlockStyle(x, y);
+
+					byte binary = block.calculateBinary(x, y);
+
+					if (binary != 15) {
+						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+
+						if (wall != null) {
+							wall.renderWall(x, y);
+						}
+					}
+
+				 	block.renderBlock(x, y, binary);
+				} else {
+					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+
+					if (wall != null) {
+						wall.renderWall(x, y);
 					}
 				}
 			}
