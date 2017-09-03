@@ -3,7 +3,8 @@ package org.egordorichev.lasttry.item.block.helpers;
 import org.egordorichev.lasttry.util.ByteHelper;
 
 public class NullBlockHelper extends BlockHelper {
-    @Override public byte getHP(byte data) {
+	@Override
+	public byte getHP(byte data) {
 		return 0;
 	}
 
@@ -12,8 +13,11 @@ public class NullBlockHelper extends BlockHelper {
 	}
 
 	public byte setLiquidType(byte data, byte liquidType) {
-		// Liquid type determined by hp.
-		return setHP(data,liquidType);
+		for (int i = 0; i < 2; i++) {
+			data = ByteHelper.setBit(data, (byte) (i), ByteHelper.bitIsSet(liquidType, (byte) i));
+		}
+
+		return data;
 	}
 
 	public byte getLiquidLevel(byte data) {
@@ -21,9 +25,10 @@ public class NullBlockHelper extends BlockHelper {
 	}
 
 	public byte setLiquidLevel(byte data, byte level) {
-		for (int i = 0; i <= 4; i++) {
-			data = ByteHelper.setBit(data, (byte) i, ByteHelper.bitIsSet(level, (byte) i));
+		for (int i = 0; i < 5; i++) {
+			data = ByteHelper.setBit(data, (byte) (i + 2), ByteHelper.bitIsSet(level, (byte) i));
 		}
+
 		return data;
 	}
 

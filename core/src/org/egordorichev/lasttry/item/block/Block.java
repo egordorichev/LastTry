@@ -206,6 +206,7 @@ public class Block extends Tile {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
+
 		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
