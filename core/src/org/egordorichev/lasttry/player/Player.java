@@ -106,9 +106,8 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void onDeath() {
 		super.onDeath();
-
 		Globals.chat.print(this.name + " is dead");
-		// TODO: dead screen
+		// TODO: Also display 'You are dead' on the screen.
 	}
 
 	@Override

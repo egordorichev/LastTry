@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
@@ -110,6 +111,9 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		InputManager.multiplexer.addProcessor(new DefaultInputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
+				if (Globals.chat.isOpen()) {
+					return false;
+				}
 				switch (keycode) {
 				case Keys.HOTBAR_SLOT_0:
 					setHotbarSlot(0);
@@ -210,7 +214,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 
 		if (holder.isEmpty()) {
 			Util.drawWithShadow(Assets.f22, Language.text.get("inventory"), 10, Gdx.graphics.getHeight() - 8);
-		} else  {
+		} else {
 			Util.drawWithShadow(Assets.f22, holder.asInfo(), 10, Gdx.graphics.getHeight() - 8);
 		}
 
