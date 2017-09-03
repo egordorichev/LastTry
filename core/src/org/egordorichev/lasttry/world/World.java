@@ -200,6 +200,8 @@ public class World {
 		int direction = negativeMotion ? -1 : 1;
 		float change = direction * Block.SIZE;
 		float distance = 0f;
+		// TODO: In the future, this should probably have a distance cap to
+		// prevent lag from constant looping.
 		while (!collision) {
 			if (vertical) {
 				tmp.y += change;

@@ -9,6 +9,8 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.util.Direction;
+import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 
@@ -46,12 +48,43 @@ public class WorldLightingComponent implements Component {
 				boolean hasBlock = block != null;
 				boolean canSeeSky = y >= world.getHighest(x);
 				if (hasBlock) {
+					// If block emits light
 					if (block.isEmitter()) {
-						float dist = new Vector2(x+i,y+k).dst(x, y);
-						if (dist <= sampleRadius - 1) {
-							strength = (100f / dist);
+						// Create strength that will cause a strong bleed effect.
+						// Dissapate with distance.
+						float dist =  new Vector2(-i,-k).len();
+						if (dist <= sampleRadius - 0.125f) {
+							strength = (float) Math.pow(10000, 1.75f / dist);
 						}
+						// TODO: If "PT(x,y) <-!-> PT(x+i,y+k)" then lessen bleed effect.
+						// This will in effect create simple shadows
 						
+						/*
+						 * Something like this (As is, does not work) will do a hacky ray-cast.
+						 *
+	public boolean check(Vector2 pt1, Vector2 pt2) {
+		Vector2 vecDiff = pt1.cpy().sub(pt2.cpy()).scl(0.1f);
+		Rectangle tmp = new Rectangle(pt1.x - 1, pt1.y - 1, 2,2);
+		Direction initial = Direction.fromAngle(vecDiff.angle());
+		boolean collision = isColliding(tmp);
+		int i = 0;
+		while (!collision && i < 100) {
+			tmp = tmp.offset(vecDiff);
+			Vector2 totalOffset = tmp.getPosition().cpy().sub(pt2.cpy());
+			Direction current = Direction.fromAngle(totalOffset.angle());
+			// Check if on opposite sides of compas (nearly),
+			// if so has passed without being collided, so we can leave.
+			if (!current.almostSame(initial)) {
+				break;
+			}
+			// If collision, break and return true
+			// this causes a shadow-like effect to occur in WorldLightingComponent.get(x,y)
+			collision = isColliding(tmp);
+			i++;
+		}
+		return collision;
+	}
+						 */
 					}
 				} else {
 					if (canSeeSky) {
