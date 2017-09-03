@@ -7,8 +7,12 @@ import java.util.Map;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.component.Component;
+import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class WorldLightingComponent implements Component {
 	public static final int MAX_LIGHT = 16;
@@ -38,13 +42,22 @@ public class WorldLightingComponent implements Component {
 		for (int i = -sampleRadius; i < sampleRadius; i++) {
 			for (int k = -sampleRadius; k < sampleRadius; k++) {
 				float strength = LastTry.gammaStrength;
-				boolean hasBlock = world.blocks.getID(x + i, y + k) == null;
+				Block block = world.blocks.get(x + i, y + k);
+				boolean hasBlock = block != null;
 				boolean canSeeSky = y >= world.getHighest(x);
-				if (!hasBlock) {
+				if (hasBlock) {
+					if (block.isEmitter()) {
+						float dist = new Vector2(x+i,y+k).dst(x, y);
+						if (dist <= sampleRadius - 1) {
+							strength = (100f / dist);
+						}
+						
+					}
+				} else {
 					if (canSeeSky) {
-						strength *= 1.5f;
+						strength += strength * 0.15f;
 					} else {
-						strength *= 0.5f;
+						strength += -strength * 0.15f;
 					}
 				}
 				average += (world.blocks.getLight(x + i, y + k) * strength / divisor);

@@ -6,6 +6,11 @@
 	"lt:wood" : {
 		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
 	},
+	
+	"lt:torch" : {
+		"type" : "org.egordorichev.lasttry.item.block.LightTest",
+		"solid" : "false"
+	},
 
 	"lt:grass" : {
 		"type" : "org.egordorichev.lasttry.item.block.plant.Grass",

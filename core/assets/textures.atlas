@@ -648,6 +648,13 @@ lt_dirt
   orig: 256, 48
   offset: 0, 0
   index: -1
+lt_torch
+  rotate: false
+  xy: 1276, 1696
+  size: 256, 48
+  orig: 256, 48
+  offset: 0, 0
+  index: -1
 lt_dirt_icon
   rotate: false
   xy: 1174, 1282

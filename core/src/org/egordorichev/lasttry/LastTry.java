@@ -70,7 +70,7 @@ public class LastTry extends Game {
 	/**
 	 * Intensity affects how sharp lighting gradients are.
 	 */
-	public static float gammaStrength = 1.2f;
+	public static float gammaStrength = 1.0f;
 	
 	/**
 	 * The minimum brightness that can be made by lighting.
