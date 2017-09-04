@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/egordorichev/LastTry.svg?branch=master)](https://travis-ci.org/egordorichev/LastTry) [![Join chat](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/last-try/Lobby) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![codebeat badge](https://codebeat.co/badges/92d0acff-0fd0-438b-b7a8-f40390f995df)](https://codebeat.co/projects/github-com-egordorichev-lasttry-dev) [![Code Climate](https://codeclimate.com/github/egordorichev/LastTry.png)](https://codeclimate.com/github/egordorichev/LastTry)
 
-LastTry is open-source Terraria clone in Java, written using LibGDX library.
-Our goal is to recreate original game with better perfomance, and old content.
+LastTry is open-source Terraria clone written in Java, using LibGDX library.
+Our goal is to recreate original game with better perfomance and old content.
 
 ### Building
 
@@ -24,15 +24,15 @@ Compile project:
 
 You should end up with a jar, placed in `desktop/build/libs/`. Run it.
 
-Here is a few options, you can play around:
+Here are a few options, you can play around with:
 
-* Launch app with `-nl` arg, to disable light and load game faster
-* Launch app with `-d` arg, witch enables debug mode. In it you can press `/` and open dev console.
+* Launching the game with `-nl` argument will disable lights and increase performance
+* Launching the game with `-d` argument will enable developer/debug mode. Then you can press `/` to open dev console.
 
 ![Console](
-http://i.imgur.com/Q2P7a42.png) 
+http://i.imgur.com/Q2P7a42.png)
 
-* + Give your self some items, using console. You just simply type in console: `/give lt:dirt 100`. `lt:dirt` is dirt block id and 100 is count. Full list of items can be found here: https://github.com/egordorichev/LastTry/blob/dev/core/assets/data/items.json
+* + To give yourself some items using console, you just need to type: `/give lt:dirt 100`. `lt:dirt` is dirt block id and `100` is the count. Full list of items can be found here: https://github.com/egordorichev/LastTry/blob/dev/core/assets/data/items.json
 
 #### TODO List
 
@@ -42,7 +42,7 @@ http://i.imgur.com/Q2P7a42.png)
 
 [Docs can be found here](https://egordorichev.github.io/ltdocs/index.html)
 
-### Liecense
+### License
 
 ```
 MIT License
