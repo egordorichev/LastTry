@@ -174,5 +174,9 @@
 
 	"lt:chunk_loader" : {
 		"type" : "org.egordorichev.lasttry.item.block.ChunkLoader"
+	},
+
+	"lt:endless_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket"
 	}
 }

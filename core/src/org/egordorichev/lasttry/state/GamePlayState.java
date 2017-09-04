@@ -99,6 +99,7 @@ public class GamePlayState implements State {
 		Graphics.batch.setProjectionMatrix(Camera.game.combined);
 		Globals.getWorld().render();
 		Globals.entityManager.render();
+		Globals.getWorld().chunks.renderLiquids();
 		Graphics.batch.setProjectionMatrix(Camera.ui.combined);
 
 		int hp = Globals.getPlayer().stats.getHP();
@@ -114,7 +115,6 @@ public class GamePlayState implements State {
 		LastTry.ui.render();
 		Globals.getPlayer().effects.render();
 		LastTry.debug.render();
-
 
 		if (InputManager.isKeyJustDown(Keys.SCREENSHOT)) {
 			byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
