@@ -27,8 +27,17 @@ import java.util.ArrayList;
 public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 300;
+	/**
+	 * Chat is open
+	 */
 	private boolean open;
+	/**
+	 * Input ui
+	 */
 	private UiTextInput input;
+	/**
+	 * Used as a background
+	 */
 	private TextureRegion back;
 	/**
 	 * Lines to display in chat.
@@ -164,7 +173,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.getPlayer().getInventory().clear();
 			}
 		});
-		
+
 		this.commands.register(new Command("devset", "Gives you a dev set", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
@@ -288,7 +297,6 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public void onUIOpen() {
 		this.input.setIgnoreInput(false);
 		this.input.type("/");
-
 		GamePlayState.stop();
 	}
 
