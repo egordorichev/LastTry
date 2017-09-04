@@ -15,6 +15,11 @@ import com.badlogic.gdx.math.Vector2;
 public class World {
 	// Should be 20 by default
 	public static final int UPDATE_DELAY_SECONDS = 20;
+	public static final int RESPAWN_DELAY = 360;
+	/**
+	 * Timer before respawn
+	 */
+	private int respawnTime = RESPAWN_DELAY;
 	/**
 	 * World flags (hardmode, evil)
 	 */
@@ -57,6 +62,10 @@ public class World {
 	 * Boolean flag for if light needs to be recalculated near the player.
 	 */
 	private boolean lightDirty;
+	/**
+	 * Player spawn point
+	 */
+	private Vector2 spawnPoint = new Vector2();
 
 	private final Map<Integer, Integer> heightCache = new HashMap<>();
 
@@ -272,6 +281,22 @@ public class World {
 
 	public int getSeed() {
 		return seed;
+	}
+
+	public void setSpawnPoint(Vector2 spawnPoint) {
+		this.spawnPoint = spawnPoint;
+	}
+
+	public Vector2 getSpawnPoint() {
+		return spawnPoint;
+	}
+
+	public void setRespawnWait(int respawnTime) {
+		this.respawnTime = respawnTime;
+	}
+
+	public int getRespawnWait() {
+		return respawnTime;
 	}
 
 	// GridPoints

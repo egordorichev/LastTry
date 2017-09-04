@@ -14,11 +14,6 @@ import org.egordorichev.lasttry.util.Callable;
 
 public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	public static final int INVENTORY_SIZE = 88;
-	public static final int RESPAWN_DELAY = 360;
-	/**
-	 * Timer before respawn
-	 */
-	private int respawnTime = RESPAWN_DELAY;
 	/**
 	 * Inventory
 	 */
@@ -32,9 +27,9 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	 */
 	private String name;
 	/**
-	 * Player spawn point
+	 * Timer before respawn
 	 */
-	private Vector2 spawnPoint = new Vector2();
+	private int respawnTime;
 
 	public Player(String name) {
 		super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
@@ -64,7 +59,8 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	 * Teleports player to spawn
 	 */
 	public void tpToSpawn() {
-		this.physics.setGridPosition((int) this.spawnPoint.x, (int) this.spawnPoint.y);
+		Vector2 spawnPoint = Globals.getWorld().getSpawnPoint();
+		this.physics.setGridPosition((int) spawnPoint.x, (int) spawnPoint.y);
 	}
 
 	@Override
@@ -94,8 +90,6 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 		if (respawnTime > 0) {
 			respawnTime--;
 		} else if (respawnTime == 0) {
-			// Reset respawn time for next death
-			respawnTime = RESPAWN_DELAY;
 			// Reset position and health
 			this.tpToSpawn();
 			this.stats.modifyHP(this.stats.getMaxHP());
@@ -106,6 +100,7 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void onDeath() {
 		super.onDeath();
+		respawnTime = Globals.getWorld().getRespawnWait();
 		Globals.chat.print(this.name + " is dead");
 		// TODO: Also display 'You are dead' on the screen.
 	}
@@ -143,21 +138,5 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	@Override
 	public void setInventory(Inventory<UiItemSlot> inventory) {
 		this.inventory = (UiInventory) inventory;
-	}
-
-	/**
-	 * Sets player spawn point
-	 *
-	 * @param spawnPoint New spawn point
-	 */
-	public void setSpawnPoint(Vector2 spawnPoint) {
-		this.spawnPoint = spawnPoint;
-	}
-
-	/**
-	 * @return Player spawn point
-	 */
-	public Vector2 getSpawnPoint() {
-		return this.spawnPoint;
 	}
 }
