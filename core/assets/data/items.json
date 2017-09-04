@@ -73,6 +73,10 @@
 	"lt:stone" : {
 		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
 	},
+	
+	"lt:stone_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
 
 	"lt:workbench" : {
 		"type" : "org.egordorichev.lasttry.item.block.station.Workbench",

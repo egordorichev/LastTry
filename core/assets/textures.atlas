@@ -1082,6 +1082,13 @@ lt_stone
   orig: 256, 49
   offset: 0, 0
   index: -1
+lt_stone_wall
+  rotate: false
+  xy: 1292, 1580
+  size: 256, 48
+  orig: 256, 48
+  offset: 0, 0
+  index: -1
 lt_stone_icon
   rotate: false
   xy: 1174, 1606
