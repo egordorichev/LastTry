@@ -47,7 +47,13 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
 					if (neighbors <= 3) {
 						generator.world.blocks.set(null, x, y);
 					} else if (neighbors != 8) {
-						generator.world.blocks.set("lt:grass", x, y);
+						// Create cave wall lining based on what tile is being repalced.
+						String id = generator.world.blocks.getID(x, y);
+						if (id.equals("lt:grass") || id.equals("lt:dirt")) {
+							generator.world.blocks.set("lt:grass", x, y);
+						} else {
+							generator.world.blocks.set("lt:stone", x, y);
+						}
 					}
 				}
 			}

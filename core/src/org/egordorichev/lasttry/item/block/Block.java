@@ -239,6 +239,13 @@ public class Block extends Tile {
 	}
 
 	/**
+	 * @return True if block emits light.
+	 */
+	public boolean isEmitter() {
+		return getBrightness() != 0;
+	}
+
+	/**
 	 * @return How much light the block emits.
 	 */
 	public int getBrightness() {

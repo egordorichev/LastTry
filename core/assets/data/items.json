@@ -4,7 +4,12 @@
 	},
 	
 	"lt:wood" : {
-		"type" : "org.egordorichev.lasttry.item.block.Wood"
+		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
+	},
+	
+	"lt:torch" : {
+		"type" : "org.egordorichev.lasttry.item.block.LightTest",
+		"solid" : "false"
 	},
 
 	"lt:grass" : {
@@ -67,6 +72,10 @@
 
 	"lt:stone" : {
 		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
+	},
+	
+	"lt:stone_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
 	},
 
 	"lt:workbench" : {

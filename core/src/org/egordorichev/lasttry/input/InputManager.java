@@ -38,52 +38,66 @@ public class InputManager {
 	/**
 	 * Returns if key is down
 	 *
-	 * @param key Key to check
+	 * @param key
+	 *            Key to check
 	 * @return Key is down
 	 */
 	public static boolean isKeyDown(int key) {
+		if (Globals.chat.isOpen()) {
+			return false;
+		}
+		/*
 		if (key != Keys.DEBUG_MODE && Globals.chat.isOpen()) {
 			return false;
 		}
-
+		*/
 		return Gdx.input.isKeyPressed(key);
 	}
 
 	/**
 	 * Returns if key is up
 	 *
-	 * @param key Key to check
+	 * @param key
+	 *            Key to check
 	 * @return Key is up
 	 */
 	public static boolean isKeyUp(int key) {
 		if (Globals.chat.isOpen()) {
-			return true;
+			return false;
 		}
-
 		return !Gdx.input.isKeyPressed(key);
 	}
 
 	/**
 	 * Returns if key was pressed in this frame
 	 *
-	 * @param key Key to check
+	 * @param key
+	 *            Key to check
 	 * @return Key was pressed in this frame
 	 */
 	public static boolean isKeyJustDown(int key) {
+		if (Globals.chat.isOpen()) {
+			return false;
+		}
+		/*
 		if (key != Keys.DEBUG_MODE && Globals.chat.isOpen()) {
 			return false;
 		}
-
+		 */
 		return Gdx.input.isKeyJustPressed(key);
 	}
 
 	/**
 	 * Checks mouse state
 	 *
-	 * @param button Button to check
+	 * @param button
+	 *            Button to check
 	 * @return Button is down
 	 */
 	public static boolean isMouseButtonPressed(int button) {
+		if (Globals.chat.isOpen()) {
+			return false;
+		}
 		return Gdx.input.isButtonPressed(button);
 	}
 

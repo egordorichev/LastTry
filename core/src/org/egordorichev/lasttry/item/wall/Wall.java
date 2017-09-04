@@ -28,12 +28,14 @@ public class Wall extends Tile {
 
 		this.useDelayMax = 30;
 		this.tiles = this.texture.split(Block.SIZE, Block.SIZE);
-		this.texture = Assets.getTexture(this.id + "_icon");
+		this.texture = Assets.getTexture(this.id.replace(":", "_") + "_icon");
 	}
 
 	/**
 	 * Loads fields from given wall root
-	 * @param root Wall root
+	 * 
+	 * @param root
+	 *            Wall root
 	 */
 	@Override
 	protected void loadFields(JsonValue root) {
@@ -51,8 +53,10 @@ public class Wall extends Tile {
 	/**
 	 * Callback, called on wall death
 	 *
-	 * @param x Wall X
-	 * @param y Wall Y
+	 * @param x
+	 *            Wall X
+	 * @param y
+	 *            Wall Y
 	 */
 	public void die(int x, int y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
@@ -62,8 +66,10 @@ public class Wall extends Tile {
 	/**
 	 * Creates byte, representing wall neighbors
 	 *
-	 * @param x Wall X
-	 * @param y Wall Y
+	 * @param x
+	 *            Wall X
+	 * @param y
+	 *            Wall Y
 	 * @return Byte, representing wall neighbors
 	 */
 
@@ -79,16 +85,17 @@ public class Wall extends Tile {
 	/**
 	 * Renders wall at given position
 	 *
-	 * @param x Wall X
-	 * @param y Wall Y
+	 * @param x
+	 *            Wall X
+	 * @param y
+	 *            Wall Y
 	 */
 	public void renderWall(int x, int y) {
 		byte hp = Globals.getWorld().walls.getHP(x, y);
 		byte variant = WallHelper.getVariant(hp);
 		byte binary = calculateBinary(x, y);
 
-		
-		float light  = Globals.getWorld().light.get(x,y);
+		float light = Globals.getWorld().light.get(x, y);
 		Graphics.batch.setColor(light, light, light, 1f);
 		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
 
@@ -97,8 +104,8 @@ public class Wall extends Tile {
 		if (this.renderCracks() && hp < Block.MAX_HP) {
 			Graphics.batch.draw(Graphics.tileCracks[Block.MAX_HP - hp], x * Block.SIZE, y * Block.SIZE);
 		}
-		
-		Graphics.batch.setColor(1f,1f,1f,1f);
+
+		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
 	@Override
@@ -126,8 +133,10 @@ public class Wall extends Tile {
 	/**
 	 * Places the wall of self type in given position
 	 *
-	 * @param x Wall X
-	 * @param y Wall Y
+	 * @param x
+	 *            Wall X
+	 * @param y
+	 *            Wall Y
 	 */
 	public void place(int x, int y) {
 		Globals.getWorld().walls.set(this.id, x, y);
@@ -136,8 +145,10 @@ public class Wall extends Tile {
 	/**
 	 * Returns, if wall can be used
 	 *
-	 * @param x Wall X
-	 * @param y Wall Y
+	 * @param x
+	 *            Wall X
+	 * @param y
+	 *            Wall Y
 	 * @return If wall can be used
 	 */
 	@Override

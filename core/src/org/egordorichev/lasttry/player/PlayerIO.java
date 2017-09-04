@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
-	public static final byte VERSION = 4;
+	public static final byte VERSION = 5;
 
 	/**
 	 * Loads player
@@ -49,7 +49,6 @@ public class PlayerIO {
 
 			Globals.setPlayer(new Player(playerName));
 			Globals.getPlayer().stats.set(reader.readInt16(), reader.readInt16(), 0, 0);
-			Globals.getPlayer().setSpawnPoint(new Vector2(reader.readInt16(), reader.readInt16()));
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				String id = reader.readString();
@@ -108,8 +107,6 @@ public class PlayerIO {
 			writer.writeByte(VERSION);
 			writer.writeInt16((short) Globals.getPlayer().stats.getMaxHP());
 			writer.writeInt16((short) Globals.getPlayer().stats.getMaxMana());
-			writer.writeInt16((short) Globals.getPlayer().getSpawnPoint().x);
-			writer.writeInt16((short) Globals.getPlayer().getSpawnPoint().y);
 
 			for (int i = 0; i < Player.INVENTORY_SIZE; i++) {
 				ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
@@ -148,7 +145,6 @@ public class PlayerIO {
 	public static Player generate(String name) {
 		int x = Globals.getWorld().getWidth() / 2;
 		Player player = new Player(name);
-		player.setSpawnPoint(new Vector2(x, Globals.getWorld().getHighest(x)+1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
 		player.getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));

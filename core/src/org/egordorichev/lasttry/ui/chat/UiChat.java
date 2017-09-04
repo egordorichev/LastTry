@@ -176,11 +176,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			}
 		});
 
-		this.commands.register(new Command("setspawn", "Sets spawn point to current position", CMDCategory.DEBUG) {
+		this.commands.register(new Command("setspawn", "Sets world spawn point to current position", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().setSpawnPoint(new Vector2(Globals.getPlayer().physics.getGridX(), Globals.getPlayer().physics.getGridY() + 1));
-				print("Spawn point set");
+				Globals.getWorld().setSpawnPoint(new Vector2(Globals.getPlayer().physics.getGridX(), Globals.getPlayer().physics.getGridY() + 1));
+				print("World spawn point set");
 			}
 		});
 
