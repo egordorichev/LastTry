@@ -103,7 +103,8 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 
 	public void drawTooltip() {
 		Vector2 mp = InputManager.getMousePosition();
-		Util.drawWithShadow(Assets.f18, this.itemHolder.getItem().getTooltip(this.itemHolder.getCount()), mp.x + 16, Gdx.graphics.getHeight() - mp.y);
+		Util.drawWithShadow(Assets.f18, this.itemHolder.getItem().getTooltip(this.itemHolder.getCount()) +
+			"\n" + this.itemHolder.getItem().getDescription(), mp.x + 16, Gdx.graphics.getHeight() - mp.y);
 	}
 
 	public void swapWithCurrent() {

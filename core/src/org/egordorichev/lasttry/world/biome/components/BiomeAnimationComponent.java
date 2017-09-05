@@ -50,7 +50,8 @@ public class BiomeAnimationComponent implements Component {
 	}
 
 	public void draw(int offset) {
-		Graphics.batch.setColor(1, 1, 1, this.alpha);
+		float c = Globals.environment.time.isNight() ? 0.2f : 1.f;
+		Graphics.batch.setColor(c, c, c, this.alpha);
 		Graphics.batch.draw(this.backgroundTextureRegion, offset * this.backgroundTextureRegion.getRegionWidth(), 0);
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}

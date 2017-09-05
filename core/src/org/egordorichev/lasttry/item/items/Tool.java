@@ -187,4 +187,9 @@ public class Tool extends Item {
 
 		return false;
 	}
+
+	@Override
+	public String getTooltip(int count) {
+		return super.getTooltip(count) + "\n" + ((int) this.baseDamage) + " damage\n" + Math.round(this.criticalStrikeChance) + "% critical chance";
+	}
 }

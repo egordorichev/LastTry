@@ -181,6 +181,7 @@
 	},
 
 	"lt:endless_bucket" : {
-		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket"
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"description" : "Infinite water is cool..."
 	}
 }

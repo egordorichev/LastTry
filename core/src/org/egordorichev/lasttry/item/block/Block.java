@@ -233,4 +233,9 @@ public class Block extends Tile {
 	public int getBrightness() {
 		return 0;
 	}
+
+	@Override
+	public String getTooltip(int count) {
+		return super.getTooltip(count) + "\nCan be placed";
+	}
 }

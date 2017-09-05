@@ -25,7 +25,7 @@ public class Item {
 	/**
 	 * Item description
 	 */
-	protected String description;
+	protected String description = "";
 	/**
 	 * Item texture.
 	 */
@@ -314,5 +314,12 @@ public class Item {
 		}
 
 		return tooltip;
+	}
+
+	/**
+	 * @return Item description
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 }
