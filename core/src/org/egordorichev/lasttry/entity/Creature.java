@@ -66,15 +66,17 @@ public class Creature extends Entity {
 	 *            HP to remove from health
 	 */
 	public void hit(int damage) {
-		// TODO: crit?
-		Globals.entityManager.spawn(new DamageParticle(false, damage),
+		if (this.stats.getInvulnTime() == 0) {
+			// TODO: crit?
+			Globals.entityManager.spawn(new DamageParticle(false, damage),
 				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
 				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
-		this.stats.modifyHP(-damage);
-		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
-		if (this.stats.getHP() <= 0){
-			this.die();
+			this.stats.modifyHP(-damage);
+			this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+			if (this.stats.getHP() <= 0) {
+				this.die();
+			}
 		}
 	}
 

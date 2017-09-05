@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.Util;
 
 /**
  * Damage text handler
@@ -43,15 +44,11 @@ public class DamageParticle extends Particle {
 			public void render() {
 				alpha -= 0.01;
 
-
 				if (crit) {
-					Assets.f24.setColor(0.92f, 0.58f, 0.29f, alpha);
+					Util.drawWithShadow(Assets.f24, String.valueOf(damage), physics.getX(), physics.getY() + 24, 0.92f, 0.58f, 0.29f);
 				} else {
-					Assets.f24.setColor(0.86f, 0.33f, 0.10f, alpha);
+					Util.drawWithShadow(Assets.f24, String.valueOf(damage), physics.getX(), physics.getY() + 24, 0.86f, 0.33f, 0.10f);
 				}
-
-				Assets.f24.draw(Graphics.batch, String.valueOf(damage), physics.getX(), physics.getY() + 24);
-				Assets.f24.setColor(1, 1, 1, 1);
 
 				if (alpha <= 0) {
 					die();

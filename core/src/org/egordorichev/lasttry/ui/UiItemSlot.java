@@ -1,14 +1,18 @@
 package org.egordorichev.lasttry.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.inventory.InventorySlot;
 import org.egordorichev.lasttry.inventory.ItemHolder;
+import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiItemSlot extends UiComponent implements InventorySlot {
@@ -89,6 +93,18 @@ public class UiItemSlot extends UiComponent implements InventorySlot {
 		if (this.index < 10) {
 			Util.drawWithShadow(Assets.f18, String.valueOf((this.index == 9) ? 0 : this.index + 1), this.getX() + 6, this.getY() + this.getHeight() - 6);
 		}
+
+		Vector2 mp = InputManager.getMousePosition();
+
+		if (!this.itemHolder.isEmpty() && this.rect.contains(mp)) {
+			UiInventory.setSlotToDrawTooltip(this);
+		}
+	}
+
+	public void drawTooltip() {
+		Vector2 mp = InputManager.getMousePosition();
+		Util.drawWithShadow(Assets.f18, this.itemHolder.getItem().getTooltip(this.itemHolder.getCount()) +
+			"\n" + this.itemHolder.getItem().getDescription(), mp.x + 16, Gdx.graphics.getHeight() - mp.y);
 	}
 
 	public void swapWithCurrent() {

@@ -56,12 +56,11 @@ public class Block extends Tile {
 	/**
 	 * Loads block info from root
 	 *
-	 * @param root
-	 *            Block root node
+	 * @param root Block root node
 	 */
 	@Override
 	protected void loadFields(JsonValue root) {
-		short[] power = { 10, 0, 0 };
+		short[] power = {10, 0, 0};
 
 		if (root.has("requiredPower")) {
 			power = root.asShortArray();
@@ -79,10 +78,8 @@ public class Block extends Tile {
 	/**
 	 * Updates block animation
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void updateBlockStyle(int x, int y) {
 		/* TODO: if block has animation, update it */
@@ -91,10 +88,8 @@ public class Block extends Tile {
 	/**
 	 * Updates block (one in World.UPDATE_TIME seconds)
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void updateBlock(int x, int y) {
 
@@ -103,14 +98,10 @@ public class Block extends Tile {
 	/**
 	 * Callback, called on neighbor change
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
-	 * @param nx
-	 *            Neighbor X
-	 * @param ny
-	 *            Neighbor Y
+	 * @param x  Block X
+	 * @param y  Block Y
+	 * @param nx Neighbor X
+	 * @param ny Neighbor Y
 	 */
 	public void onNeighborChange(short x, short y, short nx, short ny) {
 
@@ -119,10 +110,8 @@ public class Block extends Tile {
 	/**
 	 * Callback, called on block destroy
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 */
 	public void die(short x, short y) {
 		Globals.entityManager.spawnBlockDrop(new DroppedItem(new ItemHolder(this, 1)), Block.SIZE * x, Block.SIZE * y);
@@ -132,10 +121,8 @@ public class Block extends Tile {
 	/**
 	 * Returns, if this block can be placed at given position
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 * @return If this block can be placed at given position
 	 */
 	public boolean canBeUsed(short x, short y) {
@@ -153,7 +140,7 @@ public class Block extends Tile {
 		Block r = Globals.getWorld().blocks.get(x - 1, y);
 
 		if ((t == null || !t.isSolid()) && (b == null || !b.isSolid()) && (r == null || !r.isSolid())
-				&& (l == null || !l.isSolid())) {
+			&& (l == null || !l.isSolid())) {
 
 			Wall wall = Globals.getWorld().walls.get(x, y);
 
@@ -168,10 +155,8 @@ public class Block extends Tile {
 	/**
 	 * Creates byte, representing block neighbors
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
+	 * @param x Block X
+	 * @param y Block Y
 	 * @return Byte, representing block neighbors
 	 */
 	public byte calculateBinary(int x, int y) {
@@ -186,12 +171,9 @@ public class Block extends Tile {
 	/**
 	 * Renders this block at given position
 	 *
-	 * @param x
-	 *            Block X
-	 * @param y
-	 *            Block Y
-	 * @param binary
-	 *            Byte, representing block neighbors
+	 * @param x      Block X
+	 * @param y      Block Y
+	 * @param binary Byte, representing block neighbors
 	 */
 	public void renderBlock(int x, int y, byte binary) {
 		byte hp = Globals.getWorld().blocks.getHP(x, y);
@@ -250,5 +232,10 @@ public class Block extends Tile {
 	 */
 	public int getBrightness() {
 		return 0;
+	}
+
+	@Override
+	public String getTooltip(int count) {
+		return super.getTooltip(count) + "\nCan be placed";
 	}
 }

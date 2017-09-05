@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.crafting.Recipe;
-import org.egordorichev.lasttry.crafting.Recipes;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -37,20 +35,15 @@ public class GamePlayState implements State {
 	private static boolean paused = false;
 
 	public GamePlayState() {
+		LastTry.noLight = false; // TMP, it for some reason resets
 		this.hpTextureRegion = Assets.getTexture("hp");
 
 		Globals.entityManager = new EntityManager();
-		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getWorld().getSpawnPoint().x * Block.SIZE), (int)Globals.getWorld().getSpawnPoint().y * Block.SIZE);
+		Globals.entityManager.spawn(Globals.getPlayer(), (int) (Globals.getWorld().getSpawnPoint().x * Block.SIZE), (int) Globals.getWorld().getSpawnPoint().y * Block.SIZE);
 		Globals.chunkGcManager = new ChunkGcManager();
 		Globals.chat = new UiChat();
 
 		LastTry.ui.add(Globals.chat);
-
-		Recipe[] recipes = Recipes.getAllForMaterial("lt:copper_ore");
-
-		for (Recipe r : recipes) {
-			Log.info(r.getResult().item);
-		}
 	}
 
 	/**
@@ -70,7 +63,7 @@ public class GamePlayState implements State {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+			(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
 
 		if (!paused) {
 			// TODO: This is a shitty fix. Delta is usually 0.013f per tick (on average)
@@ -81,7 +74,7 @@ public class GamePlayState implements State {
 			Globals.getWorld().updateLight(dt);
 
 			if (InputManager.isKeyJustDown(Keys.OPEN_CHAT)) {
-			    Globals.chat.toggle();
+				Globals.chat.toggle();
 			}
 		}
 
@@ -106,7 +99,7 @@ public class GamePlayState implements State {
 		int x = Gdx.graphics.getWidth() - 200;
 
 		Assets.f22.draw(Graphics.batch, String.format(Language.text.get("hp") + ": %d/%d", hp, Globals.getPlayer().stats.getMaxHP()), x,
-				Gdx.graphics.getHeight() - 4);
+			Gdx.graphics.getHeight() - 4);
 
 		for (int i = 0; i < hp / 20; i++) {
 			Graphics.batch.draw(this.hpTextureRegion, x + i * 22 + i * 2, Gdx.graphics.getHeight() - 50);

@@ -14,10 +14,7 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.state.GamePlayState;
-import org.egordorichev.lasttry.ui.UiPanel;
-import org.egordorichev.lasttry.ui.UiScreen;
-import org.egordorichev.lasttry.ui.UiTextInput;
-import org.egordorichev.lasttry.ui.UiToggleScreen;
+import org.egordorichev.lasttry.ui.*;
 import org.egordorichev.lasttry.ui.chat.command.*;
 import org.egordorichev.lasttry.util.Util;
 
@@ -34,7 +31,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	/**
 	 * Input ui
 	 */
-	private UiTextInput input;
+	private UiTextInputWithHistory input;
 	/**
 	 * Used as a background
 	 */
@@ -209,10 +206,10 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			}
 		});
 
-		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
+		this.commands.register(new Command("god", "God mode", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().stats.setInvulnTime(2147483646);
+				Globals.getPlayer().stats.setInvulnTime(Integer.MAX_VALUE);
 			}
 		});
 
@@ -230,10 +227,11 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 
 	@Override
 	public void addComponents() {
-		this.input = new UiTextInput(new Rectangle(15, 25, 400, 20), Origin.BOTTOM_LEFT) {
+		this.input = new UiTextInputWithHistory(new Rectangle(15, 25, 400, 20), Origin.BOTTOM_LEFT) {
 			@Override
 			public void onEnter() {
 				String text = getText();
+
 				if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
 					text = text.substring(text.indexOf("/") + 1);
 					commands.runInput(text);
