@@ -23,7 +23,7 @@ public class CommandHandler {
 	private final CommandSorter sorter = new CommandSorter();
 	/**
 	 * Storage for commands:
-	 *
+	 * <p>
 	 * Format &lt;cmd, instance&gt;
 	 */
 	private final Map<String, Command> commands = new HashMap<>();
@@ -31,8 +31,7 @@ public class CommandHandler {
 	/**
 	 * Register command by it's cmd handle.
 	 *
-	 * @param command
-	 *            Command to register.
+	 * @param command Command to register.
 	 */
 	public void register(Command command) {
 		commands.put(command.getHandle(), command);
@@ -43,10 +42,8 @@ public class CommandHandler {
 	 * exists. If a command is not found the method returns false. Otherwise the
 	 * method will return true.
 	 *
-	 * @param handle
-	 *            Command handle <i>(The short-hand alias)</i>
-	 * @param args
-	 *            Arguments for command execution.
+	 * @param handle Command handle <i>(The short-hand alias)</i>
+	 * @param args   Arguments for command execution.
 	 * @return False if command could not be found. True otherwise.
 	 */
 	public boolean runCommand(String handle, String[] args) {
@@ -60,8 +57,8 @@ public class CommandHandler {
 		Command com = getCommand(handle);
 
 		if ((com.getCategory() == CMDCategory.DEBUG && LastTry.release)
-				|| (com.getCategory() == CMDCategory.ADMININSTRATION && LastTry.release)) { // todo:
-																							// admins
+			|| (com.getCategory() == CMDCategory.ADMININSTRATION && LastTry.release)) { // todo:
+			// admins
 
 			Globals.chat.print("You are not allowed to use this command");
 			return false;
@@ -85,8 +82,7 @@ public class CommandHandler {
 	 * executes it. If a valid command cannot be found the method returns false.
 	 * A successful execution will return true.
 	 *
-	 * @param in
-	 *            Handle of the command to run.
+	 * @param in Handle of the command to run.
 	 * @return True if run was successful. False otherwise.
 	 */
 	public boolean runInput(String in) {
@@ -102,8 +98,7 @@ public class CommandHandler {
 	/**
 	 * Returns a command my the given command handle.
 	 *
-	 * @param cmdHandle
-	 *            Handle to search with.
+	 * @param cmdHandle Handle to search with.
 	 * @return Command
 	 */
 	public Command getCommand(String cmdHandle) {
@@ -113,8 +108,7 @@ public class CommandHandler {
 	/**
 	 * Returns true if the given command handle is registered to a Command.
 	 *
-	 * @param cmdHandle
-	 *            Handle to search with.
+	 * @param cmdHandle Handle to search with.
 	 * @return boolean
 	 */
 	public boolean hasCommand(String cmdHandle) {
@@ -143,8 +137,7 @@ public class CommandHandler {
 	/**
 	 * Splits the string but treats quoted text as single words.
 	 *
-	 * @param text
-	 *            Text to split into words.
+	 * @param text Text to split into words.
 	 * @return Array of words.
 	 */
 	private static final String[] split(String text) {

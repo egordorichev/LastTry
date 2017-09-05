@@ -38,10 +38,10 @@ public class UiTextInput extends UiTextLabel {
 					cursorX -= 1;
 					updateLabel();
 				} else if (keycode == Input.Keys.FORWARD_DEL && cursorX < text.length()) {
-						StringBuilder builder = new StringBuilder(text);
-						builder.deleteCharAt(cursorX);
-						text = builder.toString();
-						updateLabel();
+					StringBuilder builder = new StringBuilder(text);
+					builder.deleteCharAt(cursorX);
+					text = builder.toString();
+					updateLabel();
 				} else if (keycode == Input.Keys.ENTER) {
 					onEnter();
 				} else if (keycode == Input.Keys.LEFT) {

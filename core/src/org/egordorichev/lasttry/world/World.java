@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.item.Item;
@@ -109,7 +110,7 @@ public class World {
 
 	/**
 	 * Called when a block is placed.
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */
@@ -194,12 +195,9 @@ public class World {
 	 * Raytraces the distance from the hitbox to the next collision, given the
 	 * velocity and direction.
 	 *
-	 * @param hitbox
-	 *            Hitbox of the moving object.
-	 * @param velocity
-	 *            Velocity of the moving object.
-	 * @param vertical
-	 *            True for vertical distances, false for horizontal.
+	 * @param hitbox   Hitbox of the moving object.
+	 * @param velocity Velocity of the moving object.
+	 * @param vertical True for vertical distances, false for horizontal.
 	 * @return
 	 */
 	private float dist(Rectangle hitbox, float velocity, boolean vertical) {
@@ -306,7 +304,7 @@ public class World {
 
 	/**
 	 * Get the highest block position at the given x-position.
-	 * 
+	 *
 	 * @param x
 	 * @return
 	 */
@@ -326,7 +324,7 @@ public class World {
 
 	/**
 	 * Updates the cache for the highest block at the given x.
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */

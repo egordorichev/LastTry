@@ -22,13 +22,13 @@ public class Debug {
 			return;
 		}
 
-		Util.drawWithShadow(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 60);
-		Util.drawWithShadow(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 90);
+		Util.drawWithShadow(Assets.f18, Gdx.graphics.getFramesPerSecond() + " FPS", 15, 90);
+		Util.drawWithShadow(Assets.f18, "X: " + Globals.getPlayer().physics.getGridX() + " Y: " + Globals.getPlayer().physics.getGridY(), 15, 120);
 		Util.drawWithShadow(Assets.f18, "Chunk: " + (Globals.getPlayer().physics.getGridX() / Chunk.SIZE)
-		   + ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 110);
-		Util.drawWithShadow(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 130);
-		Util.drawWithShadow(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 150);
-		Util.drawWithShadow(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 170);
+			+ ":" + (Globals.getPlayer().physics.getGridY() / Chunk.SIZE), 15, 140);
+		Util.drawWithShadow(Assets.f18, "Total amount of enemies: " + Globals.entityManager.getCreatureEntities().size(), 15, 160);
+		Util.drawWithShadow(Assets.f18, "Current Biome: " + Globals.environment.currentBiome.getID(), 15, 180);
+		Util.drawWithShadow(Assets.f18, "Current world time: " + Globals.environment.time.toString(true), 15, 200);
 
 		if (messagesToBePrinted.keySet().size() == 0) {
 			return;
@@ -45,12 +45,12 @@ public class Debug {
 		int gameTicksCounter = currentMessagePair.getValue2();
 
 		// If game ticks counter equals 0, means no more ticks should be allocated to rendering the message
-		if(gameTicksCounter == 0){
+		if (gameTicksCounter == 0) {
 			messagesToBePrinted.remove(currentMessageKey);
 			return;
 		}
 
-		Util.drawWithShadow(Assets.f18, message, 10, 190);
+		Util.drawWithShadow(Assets.f18, message, 15, 220);
 
 		// Decrement counter as it has been displayed for 1 tick
 		gameTicksCounter--;
@@ -90,7 +90,7 @@ public class Debug {
 	public void print(String message) {
 
 		//If tab debug counter is false, we do not add a print message as then the debug tab will only show old messages
-		if(enabled==false){
+		if (enabled == false) {
 			return;
 		}
 
