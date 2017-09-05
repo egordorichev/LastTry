@@ -42,6 +42,10 @@ public class World {
 	 */
 	public final WorldLightingComponent light;
 	/**
+	 * Chest manager
+	 */
+	public final WorldChestsComponent chests;
+	/**
 	 * Random instance, used for terrain generation. Since it's associated with
 	 * the world seed, it will provide the same results every time if the seed
 	 * is the same.
@@ -80,6 +84,8 @@ public class World {
 		this.blocks = new WorldBlocksComponent(this);
 		this.walls = new WorldWallsComponent(this);
 		this.light = new WorldLightingComponent(this);
+		this.chests = new WorldChestsComponent(this);
+
 		Util.runDelayedThreadSeconds(new Callable() {
 			@Override
 			public void call() {

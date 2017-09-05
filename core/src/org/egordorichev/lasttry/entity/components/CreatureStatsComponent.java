@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.entity.Creature;
+import org.egordorichev.lasttry.util.Log;
 
 public class CreatureStatsComponent extends CreatureComponent {
 	private int hp;
@@ -18,8 +19,8 @@ public class CreatureStatsComponent extends CreatureComponent {
 	public void update(int dt) {
 		// TODO: regen
 
-		if (invulnTime > 0) {
-			invulnTime--;
+		if (this.invulnTime > 0) {
+			this.invulnTime--;
 		}
 	}
 
