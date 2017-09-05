@@ -7,10 +7,7 @@ import java.util.Map;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.component.Component;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.util.Direction;
-import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.World;
 
@@ -52,7 +49,7 @@ public class WorldLightingComponent implements Component {
 					if (block.isEmitter()) {
 						// Create strength that will cause a strong bleed effect.
 						// Dissapate with distance.
-						float dist =  new Vector2(-i,-k).len();
+						float dist = new Vector2(-i, -k).len();
 						if (dist <= sampleRadius - 0.125f) {
 							strength = (float) Math.pow(10000, 1.75f / dist);
 						}
@@ -124,12 +121,10 @@ public class WorldLightingComponent implements Component {
 	/**
 	 * Update blocks only in the direction the player is moving. More optimized
 	 * than refreshing the entire area.
-	 * 
+	 *
 	 * @param dt
-	 * @param px
-	 *            Player x-positon.
-	 * @param py
-	 *            Player y-positon.
+	 * @param px Player x-positon.
+	 * @param py Player y-positon.
 	 */
 	public void updateByMove(int dt, int px, int py) {
 		update(dt);
@@ -157,7 +152,7 @@ public class WorldLightingComponent implements Component {
 
 	/**
 	 * Set light level for the given coordinates.
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */

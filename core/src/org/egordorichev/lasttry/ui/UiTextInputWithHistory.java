@@ -2,28 +2,25 @@ package org.egordorichev.lasttry.ui;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
-
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
+import org.egordorichev.lasttry.util.Log;
 
-public class UiTextInput extends UiTextLabel {
-	/**
-	 * Current text string
-	 */
-	protected String text = "";
-	/**
-	 * Cursor position
-	 */
-	protected int cursorX = 0;
-	/**
-	 * Ignore input
-	 */
-	protected boolean ignoreInput = false;
+import java.util.ArrayList;
 
-	public UiTextInput(Rectangle rectangle, Origin origin) {
-		super(rectangle, origin, "|");
+public class UiTextInputWithHistory extends UiTextInput {
+	/**
+	 * Input history
+	 */
+	private ArrayList<String> history = new ArrayList<>();
+	/**
+	 * History index
+	 */
+	private int historyIndex = 0;
 
+	public UiTextInputWithHistory(Rectangle rectangle, Origin origin) {
+		super(rectangle, origin, null);
 		InputManager.multiplexer.addProcessor(new DefaultInputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
@@ -43,6 +40,11 @@ public class UiTextInput extends UiTextLabel {
 					text = builder.toString();
 					updateLabel();
 				} else if (keycode == Input.Keys.ENTER) {
+					if (history.size() == 0 || (!history.get(history.size() - 1).equals(text))) {
+						history.add(text);
+						historyIndex = history.size();
+					}
+
 					onEnter();
 				} else if (keycode == Input.Keys.LEFT) {
 					cursorX = Math.max(0, cursorX - 1);
@@ -50,6 +52,22 @@ public class UiTextInput extends UiTextLabel {
 				} else if (keycode == Input.Keys.RIGHT) {
 					cursorX = Math.min(text.length(), cursorX + 1);
 					updateLabel();
+				} else if (keycode == Input.Keys.UP) {
+					if (historyIndex > 0) {
+						historyIndex -= 1;
+						text = history.get(historyIndex);
+						System.out.println(text);
+						cursorX = text.length();
+						updateLabel();
+					}
+				} else if (keycode == Input.Keys.DOWN) {
+					if (historyIndex < history.size() - 1) {
+						historyIndex += 1;
+						text = history.get(historyIndex);
+						System.out.println(text);
+						cursorX = text.length();
+						updateLabel();
+					}
 				}
 
 				return false;
@@ -70,49 +88,5 @@ public class UiTextInput extends UiTextLabel {
 				return false;
 			}
 		});
-	}
-
-	public UiTextInput(Rectangle rectangle, Origin origin, DefaultInputProcessor processor) {
-		super(rectangle, origin, "|");
-		if (processor != null) {
-			InputManager.multiplexer.addProcessor(processor);
-		}
-	}
-
-	public String getText() {
-		return this.text;
-	}
-
-	public void onEnter() {
-
-	}
-
-	public void setIgnoreInput(boolean ignoreInput) {
-		this.ignoreInput = ignoreInput;
-	}
-
-	public void type(String text) {
-		StringBuilder builder = new StringBuilder(this.text);
-		builder.insert(cursorX, text);
-		cursorX += 1;
-		this.text = builder.toString();
-
-		updateLabel();
-	}
-
-	public void clear() {
-		this.text = "";
-		this.cursorX = 0;
-		updateLabel();
-	}
-
-	public void setCursorX(int cursorX) {
-		this.cursorX = cursorX;
-	}
-
-	protected void updateLabel() {
-		StringBuilder builder = new StringBuilder(this.text);
-		builder.insert(cursorX, '|');
-		this.setLabel(builder.toString());
 	}
 }

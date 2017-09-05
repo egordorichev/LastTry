@@ -16,7 +16,7 @@ public class LightTest extends Block {
 
 		float light = Globals.getWorld().light.get(x, y);
 		Graphics.batch.setColor(light, light, light, 1f);
-		Graphics.batch.draw(this.tiles[2][0], x * SIZE, y * SIZE);
+		Graphics.batch.draw(this.tiles[0][0], x * SIZE, y * SIZE);
 
 		hp = BlockHelper.plain.getHP(hp);
 
