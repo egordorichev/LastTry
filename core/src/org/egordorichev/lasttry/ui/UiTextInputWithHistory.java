@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
-import org.egordorichev.lasttry.util.Log;
 
 import java.util.ArrayList;
 

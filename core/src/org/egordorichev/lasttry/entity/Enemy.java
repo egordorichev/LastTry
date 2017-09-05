@@ -2,14 +2,11 @@ package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.ai.AI;
-import org.egordorichev.lasttry.entity.components.CreatureGraphicsComponent;
-import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.player.Player;
 
 public class Enemy extends CreatureWithAI {
 	public Enemy(String id, AI ai) {
-		super(id, new CreaturePhysicsComponent(), new CreatureGraphicsComponent(), ai);
-
+		super(id, ai);
 		this.setZIndex(Layers.enemy);
 	}
 

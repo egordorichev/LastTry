@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.util.Log;
 
-public class CreatureStatsComponent extends CreatureComponent {
+public class CreatureStatsComponent extends EntityComponent<Creature> {
 	private int hp;
 	private int maxHp;
 	private int invulnTime;

@@ -61,7 +61,7 @@ public class LastTry extends Game {
 	 * Light disable
 	 */
 	public static boolean noLight = false;
-	
+
 	/**
 	 * Store relative to the game jar, instead of in the home directory.
 	 */
@@ -71,15 +71,22 @@ public class LastTry extends Game {
 	 * Intensity affects how sharp lighting gradients are.
 	 */
 	public static float gammaStrength = 1.0f;
-	
+
 	/**
 	 * The minimum brightness that can be made by lighting.
 	 */
 	public static float gammaMinimum = 0f;
-
-	public static String defaultWorldName = "test";
-	public static String defaultPlayerName = "test";
-
+	
+	/**
+	 * Default name for generated worlds.
+	 */
+	public static String defaultWorldName = "default";
+	
+	/**
+	 * Default name for players.
+	 */
+	public static String defaultPlayerName = "default";
+	
 	/**
 	 * Screen dimensions
 	 */
@@ -107,7 +114,7 @@ public class LastTry extends Game {
 		Language.load(new Locale("en", "US"));
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
-		Gdx.graphics.setTitle(this.getRandomWindowTitle());
+		Gdx.graphics.setTitle(LastTry.getRandomWindowTitle());
 
 		Graphics.batch = new SpriteBatch();
 
@@ -120,8 +127,10 @@ public class LastTry extends Game {
 	/**
 	 * Handles window resize
 	 *
-	 * @param width  new window width
-	 * @param height new window height
+	 * @param width
+	 *            new window width
+	 * @param height
+	 *            new window height
 	 */
 	@Override
 	public void resize(int width, int height) {
@@ -161,7 +170,7 @@ public class LastTry extends Game {
 	 *
 	 * @return random title for game the window
 	 */
-	private String getRandomWindowTitle() {
+	private static String getRandomWindowTitle() {
 		String date = new SimpleDateFormat("MMdd").format(new Date());
 
 		if (date.equals("0629") || date.equals("0610")) {
@@ -195,7 +204,8 @@ public class LastTry extends Game {
 	/**
 	 * Handles exception, if it is critical, exits the game
 	 *
-	 * @param exception exception to handle
+	 * @param exception
+	 *            exception to handle
 	 */
 	public static void handleException(Exception exception) {
 		Crash.report(Thread.currentThread(), exception);
