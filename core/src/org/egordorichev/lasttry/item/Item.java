@@ -302,4 +302,12 @@ public class Item {
 	public int getMaxInStack() {
 		return 999;
 	}
+
+	/**
+	 * @return Item info
+	 */
+	public String getTooltip() {
+		return this.name;
+		// todo: other stats
+	}
 }
