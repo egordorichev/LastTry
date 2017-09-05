@@ -146,7 +146,11 @@ public class Args {
 		}
 
 		if (!LastTry.release && Util.isWindows()) {
-			System.setSecurityManager(new ExitDumper());
+			/*
+			 * THIS IS TEMPORARY
+			 * The issue is that ExitDumper crashes the game on Windows 10
+			 */
+			//System.setSecurityManager(new ExitDumper());
 		}
 	}
 
