@@ -306,8 +306,13 @@ public class Item {
 	/**
 	 * @return Item info
 	 */
-	public String getTooltip() {
-		return this.name;
-		// todo: other stats
+	public String getTooltip(int count) {
+		String tooltip = this.name;
+
+		if (count > 1) {
+			tooltip += " (" + count + ")";
+		}
+
+		return tooltip;
 	}
 }
