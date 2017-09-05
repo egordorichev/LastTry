@@ -20,14 +20,24 @@ import org.egordorichev.lasttry.ui.UiTextInput;
 import org.egordorichev.lasttry.ui.UiToggleScreen;
 import org.egordorichev.lasttry.ui.chat.command.*;
 import org.egordorichev.lasttry.util.Util;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 300;
+	/**
+	 * Chat is open
+	 */
 	private boolean open;
+	/**
+	 * Input ui
+	 */
 	private UiTextInput input;
+	/**
+	 * Used as a background
+	 */
 	private TextureRegion back;
 	/**
 	 * Lines to display in chat.
@@ -46,7 +56,6 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	}
 
 	private void initCommands() {
-		// TODO: Hide commands based on user permissions.
 		this.commands.register(new Command("help", "Shows a list of existing chat commands", CMDCategory.GAME) {
 			@Override
 			public void onRun(String[] args) {
@@ -55,9 +64,10 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				// Streamed sorting + print consumer because it's shorter
 				// than a for loop.
 				commands.getCommands().stream().sorted(commands.getSorter())
-						.forEach((c) -> printf("%-8s - %s\n", c.getHandle(), c.getDescription()));
+					.forEach((c) -> printf("%-8s - %s\n", c.getHandle(), c.getDescription()));
 			}
 		});
+
 		this.commands.register(new Command("give", "Gives the player an item", CMDCategory.GAME) {
 			@Override
 			public void onRun(String[] args) {
@@ -75,6 +85,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				}
 			}
 		});
+
 		this.commands.register(new Command("spawn", "Spawn in an creature", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
@@ -96,6 +107,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				}
 			}
 		});
+
 		this.commands.register(new Command("chunks", "Chunk debug information", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
@@ -106,23 +118,25 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 						case "gc":
 							Globals.chunkGcManager.scheduleCustomIntervalChunkGcThread(0);
 							print("Running instant chunk GC...");
-						break;
+							break;
 						case "list":
 							print(Globals.chunkGcManager.getCurrentlyLoadedChunks() + " chunks is loaded, maximum is: "
 								+ Globals.getWorld().getSize().getMaxChunks());
-						break;
+							break;
 						default:
 							print("/chunks [gc / list]");
 					}
 				}
 			}
 		});
+
 		this.commands.register(new Command("heal", "Heals the player", CMDCategory.ADMININSTRATION) {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().stats.modifyHP(+1000);
 			}
 		});
+
 		this.commands.register(new Command("day", "Sets the time to day", CMDCategory.ADMININSTRATION) {
 			@Override
 			public void onRun(String[] args) {
@@ -130,6 +144,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.environment.time.setMinute((byte) 30);
 			}
 		});
+
 		this.commands.register(new Command("night", "Sets the time to night", CMDCategory.ADMININSTRATION) {
 			@Override
 			public void onRun(String[] args) {
@@ -137,25 +152,28 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.environment.time.setMinute((byte) 30);
 			}
 		});
+
 		this.commands.register(new Command("light", "Toggles lights", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
 				LastTry.noLight = !LastTry.noLight;
-				// TODO: If light has not been setup, do that.
 			}
 		});
+
 		this.commands.register(new Command("kill", "Kills the player", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().die(); // todo: fatal
+				Globals.getPlayer().die();
 			}
 		});
+
 		this.commands.register(new Command("clear", "Clears your inventory", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().getInventory().clear();
 			}
 		});
+
 		this.commands.register(new Command("devset", "Gives you a dev set", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
@@ -197,6 +215,17 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				Globals.getPlayer().stats.setInvulnTime(2147483646);
 			}
 		});
+
+		this.commands.register(new Command("tp", "Teleport to point", CMDCategory.DEBUG) {
+			@Override
+			public void onRun(String[] args) {
+				if (args.length != 2) {
+					print("/tp [x] [y]");
+				} else {
+					Globals.getPlayer().physics.setPosition(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
+				}
+			}
+		});
 	}
 
 	@Override
@@ -205,15 +234,10 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onEnter() {
 				String text = getText();
-				// FIXME: WTF invisible characters
-				//
-				// Something is REALLY weird with invisible characters
 				if (text.length() >= 3 && text.substring(0, 3).contains("/")) {
-					// TODO: Wtf is char(13) doing at the beginning of a string?
-					text = text.substring(text.indexOf("/")+1);
+					text = text.substring(text.indexOf("/") + 1);
 					commands.runInput(text);
 				} else {
-					// TODO: Player chat
 					print("<Player> " + text);
 				}
 
@@ -233,14 +257,14 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			Graphics.batch.draw(this.back, 5, 5);
 			super.render();
 		}
-		
+
 		for (int i = this.lines.size() - 1; i >= 0; i--) {
 			ChatLine line = this.lines.get(i);
 
 			if (line.shouldBeRemoved()) {
 				this.lines.remove(i);
 			}
-			
+
 			Util.drawWithShadow(Assets.f18, line.text, 10, 55 + i * 20);
 		}
 
@@ -252,10 +276,8 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	/**
 	 * Prints the objects to chat in the format given.
 	 *
-	 * @param format
-	 *            Format to use.
-	 * @param args
-	 *            Objects to print.
+	 * @param format Format to use.
+	 * @param args   Objects to print.
 	 */
 	public void printf(String format, Object... args) {
 		String text = String.format(format, args);
@@ -265,8 +287,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	/**
 	 * Prints the text to chat.
 	 *
-	 * @param text
-	 *            Text to print.
+	 * @param text Text to print.
 	 */
 	public void print(String text) {
 		this.lines.add(0, new ChatLine(text));
@@ -276,7 +297,6 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public void onUIOpen() {
 		this.input.setIgnoreInput(false);
 		this.input.type("/");
-
 		GamePlayState.stop();
 	}
 

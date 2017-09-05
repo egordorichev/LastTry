@@ -84,13 +84,13 @@ public class WorldChunksComponent extends WorldComponent {
 						}
 
 						Block left = Globals.getWorld().blocks.get(x - 1, y);
+						Block right = Globals.getWorld().blocks.get(x + 1, y);
 
 						byte leftHp = Globals.getWorld().blocks.getHP(x - 1, y);
 						byte leftLiquidLevel = BlockHelper.empty.getLiquidLevel(leftHp);
 						byte rightHp = Globals.getWorld().blocks.getHP(x + 1, y);
 						byte rightLiquidLevel = BlockHelper.empty.getLiquidLevel(rightHp);
 
-						Block right = Globals.getWorld().blocks.get(x + 1, y);
 						boolean toLeft = left == null && leftLiquidLevel < liquidLevel;
 						boolean toRight = right == null && rightLiquidLevel < liquidLevel;
 
@@ -129,7 +129,7 @@ public class WorldChunksComponent extends WorldComponent {
 				}
 			}
 		}
-		
+
 		Graphics.batch.setColor(1f, 1f, 1f, 1f);
 	}
 
