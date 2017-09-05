@@ -77,8 +77,8 @@ public class LastTry extends Game {
 	 */
 	public static float gammaMinimum = 0f;
 
-	public static String defaultWorldName;
-	public static String defaultPlayerName;
+	public static String defaultWorldName = "test";
+	public static String defaultPlayerName = "test";
 
 	/**
 	 * Screen dimensions
