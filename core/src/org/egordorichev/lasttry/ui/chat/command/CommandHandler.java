@@ -51,6 +51,7 @@ public class CommandHandler {
 	 */
 	public boolean runCommand(String handle, String[] args) {
 		if (!hasCommand(handle)) {
+			Globals.chat.print("Unknown command");
 			return false;
 		}
 
