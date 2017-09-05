@@ -9,11 +9,13 @@ import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
-	public static final byte VERSION = 3;
+	public static final byte VERSION = 4;
 
 	public static void load(String name) {
 		String fileName = Files.getWorldSave(name);
@@ -55,11 +57,16 @@ public class WorldIO {
 				flags |= WorldFlagsComponent.CRIMSON;
 			}
 
+			int spawnX = stream.readInt32();
+			int spawnY = stream.readInt32();
+
 			Globals.environment.time.setHour(stream.readByte());
 			Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
-			Globals.setWorld(new World(name, size, flags, seed));
+			World world = new World(name, size, flags, seed);
+			world.setSpawnPoint(new Vector2(spawnX, spawnY));
+			Globals.setWorld(world);
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
@@ -84,52 +91,57 @@ public class WorldIO {
 	}
 
 	public static void save() {
-		String fileName = Files.getWorldSave(Globals.getWorld().getName());
+		World world = Globals.getWorld();
+
+		String fileName = Files.getWorldSave(world.getName());
 		File file = new File(fileName);
 
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
-				Log.error("Failed to create save file for the world " + Globals.getWorld().getName() + "!");
+				Log.error("Failed to create save file for the world " + world.getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving world " + Globals.getWorld().getName() + "...");
+		Log.debug("Saving world " + world.getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
 			stream.writeByte(VERSION);
-			stream.writeInt32(Globals.getWorld().getSeed());
+			stream.writeInt32(world.getSeed());
 
-			switch (Globals.getWorld().getSize()) {
-				case SMALL:
-					stream.writeByte((byte) 0);
+			switch (world.getSize()) {
+			case SMALL:
+				stream.writeByte((byte) 0);
 				break;
-				case MEDIUM:
-					stream.writeByte((byte) 1);
+			case MEDIUM:
+				stream.writeByte((byte) 1);
 				break;
-				case LARGE:
-					stream.writeByte((byte) 2);
+			case LARGE:
+				stream.writeByte((byte) 2);
 				break;
 			}
 
-			stream.writeBoolean(Globals.getWorld().flags.isHardmode());
-			stream.writeBoolean(Globals.getWorld().flags.isExpertMode());
-			stream.writeBoolean(Globals.getWorld().flags.evilIsCrimson());
+			stream.writeBoolean(world.flags.isHardmode());
+			stream.writeBoolean(world.flags.isExpertMode());
+			stream.writeBoolean(world.flags.evilIsCrimson());
+
+			stream.writeInt32((int) world.getSpawnPoint().x);
+			stream.writeInt32((int) world.getSpawnPoint().y);
 
 			stream.writeByte(Globals.environment.time.getHour());
 			stream.writeByte(Globals.environment.time.getMinute());
 
 			stream.close();
 
-			Globals.getWorld().chunks.save();
+			world.chunks.save();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving world " + Globals.getWorld().getName() + "!");
+		Log.debug("Done saving world " + world.getName() + "!");
 	}
 
 	public static boolean saveExists(String name) {

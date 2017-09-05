@@ -25,7 +25,7 @@ public class SurfaceGenerationSimplexTask extends GeneratorTask {
 			stoneLevel *= stoneHeightVarience / 2.0;
 
 			int yMax = (int) Math.round(total);
-			for (int y = 0; y < yMax; y++) {
+			for (int y = 0; y <= yMax; y++) {
 				if (y == yMax) {
 					generator.world.blocks.set("lt:grass", x, y);
 				} else if (y < yMax - stoneLevel) {
