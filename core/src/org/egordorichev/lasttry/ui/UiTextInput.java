@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
+import org.egordorichev.lasttry.util.Log;
 
 import java.util.Objects;
 
@@ -33,17 +34,17 @@ public class UiTextInput extends UiTextLabel {
 					return false;
 				}
 
-				if (keycode == Keys.ERASE_TEXT && text.length() > 0) {
-					/* StringBuilder builder = new StringBuilder(text); // FIXME: ArrayOutOfBounds sometimes
-					builder.deleteCharAt(cursorX);
+				if (keycode == Keys.ERASE_TEXT && text.length() > 0 && cursorX > 0) {
+					StringBuilder builder = new StringBuilder(text);
+					builder.deleteCharAt(cursorX - 1);
 					text = builder.toString();
 					cursorX -= 1;
 					updateLabel();
-				} else if (keycode == Input.Keys.DEL && cursorX < text.length()) {
+				} else if (keycode == Input.Keys.FORWARD_DEL && cursorX < text.length()) {
 						StringBuilder builder = new StringBuilder(text);
-						builder.deleteCharAt(cursorX + 1);
+						builder.deleteCharAt(cursorX);
 						text = builder.toString();
-						updateLabel(); */
+						updateLabel();
 				} else if (keycode == Input.Keys.ENTER) {
 					onEnter();
 				} else if (keycode == Input.Keys.LEFT) {
