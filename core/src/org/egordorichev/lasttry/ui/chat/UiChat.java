@@ -209,10 +209,10 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			}
 		});
 
-		this.commands.register(new Command("gm", "God mode", CMDCategory.DEBUG) {
+		this.commands.register(new Command("god", "God mode", CMDCategory.DEBUG) {
 			@Override
 			public void onRun(String[] args) {
-				Globals.getPlayer().stats.setInvulnTime(2147483646);
+				Globals.getPlayer().stats.setInvulnTime(Integer.MAX_VALUE);
 			}
 		});
 

@@ -66,6 +66,9 @@ public class Creature extends Entity {
 	 *            HP to remove from health
 	 */
 	public void hit(int damage) {
+		if(stats.isInvuln())
+			return;
+
 		// TODO: crit?
 		Globals.entityManager.spawn(new DamageParticle(false, damage),
 				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
