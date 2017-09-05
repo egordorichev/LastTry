@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class Args {
-	private static String world = "test";
-	private static String player = "test";
 	private static int seed = 512;
 
 	/**
@@ -96,7 +94,7 @@ public class Args {
 			@Override
 			public void call() throws Exception {
 				checkForArgument("Expected world name after -w");
-				world = arguments[++i];
+				LastTry.defaultWorldName = arguments[++i];
 			}
 		}));
 
@@ -104,7 +102,7 @@ public class Args {
 			@Override
 			public void call() throws Exception {
 				checkForArgument("Expected player name after -p");
-				player = arguments[++i];
+				LastTry.defaultPlayerName = arguments[++i];
 			}
 		}));
 

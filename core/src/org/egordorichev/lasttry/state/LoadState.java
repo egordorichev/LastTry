@@ -29,7 +29,7 @@ public class LoadState implements State {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                    	String world = "test", player = "test";
+                    	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
 	                    Bootstrap.load();
                         loadString = "Loading spawn system...";
                         Globals.spawnSystem = new SpawnSystem();
