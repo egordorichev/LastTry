@@ -1,9 +1,12 @@
 package org.egordorichev.lasttry.item.modifier;
 
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Modifier {
+	private static final Logger logger = LoggerFactory.getLogger(Modifier.class);
+
 	protected String name;
 	protected byte id;
 	protected int damage;
@@ -21,7 +24,7 @@ public class Modifier {
 	                int velocity, int knockback, int mana, int movementSpeed, int defense) {
 
 		if (Modifiers.MODIFIER_CACHE[id] != null) {
-			Log.error("Modifier with id " + id + " is already defined!");
+			logger.error("Modifier with id " + id + " is already defined!");
 			LastTry.abort();
 		}
 

@@ -8,12 +8,14 @@ import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class PlayerIO {
+	private static final Logger logger = LoggerFactory.getLogger(PlayerIO.class);
 	public static final byte VERSION = 5;
 
 	/**
@@ -27,11 +29,11 @@ public class PlayerIO {
 		File file = new File(fileName);
 
 		if (!file.exists()) {
-			Log.error("Failed to load player save " + playerName + "!");
+			logger.error("Failed to load player save " + playerName + "!");
 			LastTry.abort();
 		}
 
-		Log.debug("Loading player " + playerName + "...");
+		logger.debug("Loading player " + playerName + "...");
 
 		try {
 			FileReader reader = new FileReader(fileName);
@@ -42,7 +44,7 @@ public class PlayerIO {
 
 			if (!isCurrent) {
 				String tense = isFuture ? "future" : "past";
-				Log.error("Failed loading " + tense + " version: " + version + ", current version is: " + VERSION);
+				logger.error("Failed loading " + tense + " version: " + version + ", current version is: " + VERSION);
 				LastTry.abort();
 			}
 
@@ -64,7 +66,7 @@ public class PlayerIO {
 			}
 
 			if (!reader.readBoolean()) {
-				Log.error("Verification failed");
+				logger.error("Verification failed");
 				LastTry.abort();
 			}
 
@@ -73,7 +75,7 @@ public class PlayerIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done loading player " + playerName + "!");
+		logger.debug("Done loading player " + playerName + "!");
 	}
 
 	/**
@@ -94,12 +96,12 @@ public class PlayerIO {
 				file.createNewFile();
 			} catch (IOException exception) {
 				exception.printStackTrace();
-				Log.error("Failed to create save file for the player " + Globals.getPlayer().getName() + "!");
+				logger.error("Failed to create save file for the player " + Globals.getPlayer().getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving player " + Globals.getPlayer().getName() + "...");
+		logger.debug("Saving player " + Globals.getPlayer().getName() + "...");
 
 		try {
 			FileWriter writer = new FileWriter(fileName);
@@ -131,7 +133,7 @@ public class PlayerIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving player " + Globals.getPlayer().getName() + "!");
+		logger.debug("Done saving player " + Globals.getPlayer().getName() + "!");
 	}
 
 	/**

@@ -5,13 +5,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class Biomes {
+	private static final Logger logger = LoggerFactory.getLogger(Biomes.class);
+
 	/**
 	 * Max temperature
 	 */
@@ -31,7 +34,7 @@ public class Biomes {
 	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to load biomes before bootstrap");
+			logger.error("Trying to load biomes before bootstrap");
 			return;
 		}
 
@@ -43,18 +46,18 @@ public class Biomes {
 				try {
 					Biome biome = new Biome(value.name());
 					biome.loadFields(value);
-					Log.debug("Loaded biome: " + biome.getID() + " - Cached[" + (!biome.ignoreCache) + "]");
+					logger.debug("Loaded biome: " + biome.getID() + " - Cached[" + (!biome.ignoreCache) + "]");
 					if (!biome.ignoreCache) {
 						BIOME_CACHE.add(biome);
 					}
 				} catch (Exception exception) {
-					Log.error("Failed to parse " + value.name());
+					logger.error("Failed to parse " + value.name());
 					exception.printStackTrace();
 				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			Log.error("Failed to load biomes");
+			logger.error("Failed to load biomes");
 		}
 
 		BIOME_CACHE.sort(new Comparator<Biome>() {

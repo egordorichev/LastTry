@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import org.apache.log4j.BasicConfigurator;
 import org.egordorichev.lasttry.Args;
 import org.egordorichev.lasttry.LastTry;
 
@@ -24,6 +25,7 @@ public class DesktopLauncher {
 			exception.printStackTrace();
 			return; // Important!
 		}
+		BasicConfigurator.configure();
 
 		new LwjglApplication(new LastTry(config.width, config.height), config);
 	}

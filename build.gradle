@@ -55,6 +55,10 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+        // Reflection
+        compile group: 'com.google.guava', name: 'guava', version: '19.0'
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
     }
 }
 

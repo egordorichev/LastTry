@@ -19,12 +19,14 @@ import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.ui.chat.UiChat;
 import org.egordorichev.lasttry.util.Camera;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public class GamePlayState implements State {
+	private static final Logger logger = LoggerFactory.getLogger(GamePlayState.class);
 	/**
 	 * Hp texture
 	 */
@@ -118,7 +120,7 @@ public class GamePlayState implements State {
 			PixmapIO.writePNG(file, pixmap);
 			pixmap.dispose();
 
-			Log.debug("Saved screenshot to " + Gdx.files.getLocalStoragePath() + file.path());
+			logger.debug("Saved screenshot to " + Gdx.files.getLocalStoragePath() + file.path());
 		}
 	}
 

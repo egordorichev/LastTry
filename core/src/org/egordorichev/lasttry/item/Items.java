@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
 public class Items {
+	private static final Logger logger = LoggerFactory.getLogger(Items.class);
 	/**
 	 * Items storage
 	 */
@@ -19,7 +21,7 @@ public class Items {
 	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to load items before bootstrap");
+			logger.error("Trying to load items before bootstrap");
 			return;
 		}
 
@@ -31,12 +33,12 @@ public class Items {
 				try {
 					ITEM_CACHE.put(item.name(), Item.load(item));
 				} catch (Exception exception) {
-					Log.error(exception.getMessage());
+					logger.error(exception.getMessage());
 				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			Log.error("Failed to load items");
+			logger.error("Failed to load items");
 		}
 	}
 }
