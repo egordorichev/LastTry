@@ -1,9 +1,10 @@
 package org.egordorichev.lasttry.entity.components;
 
+import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
 import org.egordorichev.lasttry.entity.ai.AI;
 
-public class AiComponent extends CreatureComponent {
+public class AiComponent extends EntityComponent<Creature> {
 	private int currentAi = 0;
 	private int maxAi = 0;
 	private CreatureWithAI creature;

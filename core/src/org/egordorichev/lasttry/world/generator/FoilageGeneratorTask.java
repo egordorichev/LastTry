@@ -1,9 +1,14 @@
 package org.egordorichev.lasttry.world.generator;
 
-public class FoilageGeneratorTask extends GeneratorTask {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class FoilageGeneratorTask extends GeneratorTask {
+    private static final Logger logger = LoggerFactory.getLogger(FoilageGeneratorTask.class);
     @Override
     public void run(WorldGenerator generator) {
+        logger.info("Generating foilage");
+
         // TODO: Replace blocks with trees and plants
         // Small plants
         for (int x = 0; x < generator.getWorldWidth(); x += generator.world.random.nextInt(5)) {

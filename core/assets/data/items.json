@@ -17,6 +17,13 @@
 		"spreads" : [ "lt:dirt" ]
 	},
 
+	
+	"lt:jungle_grass" : {
+		"type" : "org.egordorichev.lasttry.item.block.plant.Grass",
+		"spreads" : [ "lt:jungle_grass" ]
+	},
+
+	
 	"lt:copper_coin" : {
 		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 1

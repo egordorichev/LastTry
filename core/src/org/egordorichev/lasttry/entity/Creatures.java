@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 
 public class Creatures {
+	private static final Logger logger = LoggerFactory.getLogger(Creatures.class);
+
 	public static HashMap<String, CreatureInfo> CREATURE_CACHE = new HashMap<>();
 
 	/**
@@ -15,7 +19,7 @@ public class Creatures {
 	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to load enemies before bootstrap");
+			logger.error("Trying to load enemies before bootstrap");
 			return;
 		}
 
@@ -29,13 +33,13 @@ public class Creatures {
 				try {
 					CREATURE_CACHE.put(creature.name(), new CreatureInfo(creature, creature.name()));
 				} catch (Exception exception) {
-					Log.error("Failed to parse " + creature.name());
+					logger.error("Failed to parse " + creature.name());
 					exception.printStackTrace();
 				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			Log.error("Failed to load creatures");
+			logger.error("Failed to load creatures");
 		}
 	}
 
@@ -49,7 +53,7 @@ public class Creatures {
 		CreatureInfo creature = CREATURE_CACHE.get(name);
 
 		if (creature == null) {
-			Log.warn("Creature with name " + name + " does not exist.");
+			logger.warn("Creature with name " + name + " does not exist.");
 			return null;
 		}
 

@@ -335,11 +335,8 @@ public class World {
 	 * @param y
 	 */
 	private void updateHeightCache(int x, int y) {
-		int current = heightCache.getOrDefault(x, 0);
-		if (y >= current) {
-			heightCache.remove(x);
-			getHighest(x);
-		}
+		heightCache.remove(x);
+		getHighest(x);
 	}
 
 	public enum Size {

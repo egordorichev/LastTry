@@ -3,15 +3,14 @@ package org.egordorichev.lasttry.entity.components;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.Graphics;
 
-public class CreatureGraphicsComponent extends GraphicsComponent {
+public class CreatureGraphicsComponent<T extends Creature> extends GraphicsComponent<T> {
 	protected TextureRegion texture;
-	protected Creature creature;
 
-	public CreatureGraphicsComponent() {
+	public CreatureGraphicsComponent(T entity) {
+		super(entity);
 		int size = CreatureStateComponent.State.values().length;
 
 		this.animations = new Animation[size];
@@ -22,21 +21,17 @@ public class CreatureGraphicsComponent extends GraphicsComponent {
 	}
 
 	@Override
-	public void setEntity(Entity entity) {
-		super.setEntity(entity);
-		this.creature = (Creature) entity;
-	}
-
-	@Override
 	public void render() {
-		float light  = getAlpha();
+		float light = getAlpha();
 		Graphics.batch.setColor(light, light, light, 1f);
-		this.animations[this.creature.state.get().getID()].render(this.creature.physics.getX(), this.creature.physics.getY(),
-			this.creature.physics.getSize().x, this.creature.physics.getSize().y, !this.creature.physics.isFlipped(), false);
+		this.animations[this.entity.state.get().getID()].render(this.entity.physics.getX(),
+				this.entity.physics.getY(), this.entity.physics.getSize().x, this.entity.physics.getSize().y,
+				!this.entity.physics.isFlipped(), false);
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
 	public void update(int dt) {
-		this.animations[this.creature.state.get().getID()].update();
+		this.animations[this.entity.state.get().getID()].update();
 	}
 }

@@ -3,20 +3,12 @@ package org.egordorichev.lasttry.entity.components;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.graphics.Animation;
 
-public class GraphicsComponent extends EntityComponent {
+public class GraphicsComponent<T extends Entity> extends EntityComponent<T> {
 	public Animation[] animations;
 	private float alpha;
 
-	public GraphicsComponent(Entity entity) {
+	public GraphicsComponent(T entity) {
 		super(entity);
-	}
-
-	public GraphicsComponent() {
-		super();
-	}
-
-	public void render() {
-
 	}
 
 	public float getAlpha() {

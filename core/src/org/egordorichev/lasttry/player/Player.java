@@ -5,7 +5,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.Layers;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.components.CreaturePhysicsComponent;
 import org.egordorichev.lasttry.inventory.Inventory;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.ui.UiInventory;
@@ -32,22 +31,23 @@ public class Player extends Creature implements InventoryOwner<UiItemSlot> {
 	private int respawnTime;
 
 	public Player(String name) {
-		super("lt:player", new CreaturePhysicsComponent(), new PlayerGraphicsComponent());
-
-		this.input = new PlayerInputComponent(this);
+		super("lt:player");
 		this.stats.set(100, 20, 0, 0);
 		this.name = name;
 		this.setInventory(new UiInventory(INVENTORY_SIZE, this));
-
 		LastTry.ui.add(this.getInventory());
+		this.setZIndex(Layers.player);		
+	}
 
-		this.setZIndex(Layers.player);
-
+	@Override
+	protected void setupComponents() {
+		super.setupComponents();
+		this.input = new PlayerInputComponent(this);
+		this.graphics = new PlayerGraphicsComponent(this);
 		this.physics.setOnGroundHit(new Callable() {
 			@Override
 			public void call() {
 				int damage = (int) (Math.abs(physics.getVelocity().y) - 10);
-
 				if (damage > 0) {
 					hit(damage);
 				}

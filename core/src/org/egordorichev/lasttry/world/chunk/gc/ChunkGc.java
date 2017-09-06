@@ -1,13 +1,16 @@
 package org.egordorichev.lasttry.world.chunk.gc;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.chunk.Chunk;
+import org.egordorichev.lasttry.world.chunk.ChunkIO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 //Logic responsible for carrying out chunk gc
 public class ChunkGc {
+	private static final Logger logger = LoggerFactory.getLogger(ChunkIO.class);
 	private ChunkGcCalc.ChunkGCLevel currentChunkGcLevel;
 
 	ChunkGc(ChunkGcCalc.ChunkGCLevel levelToRunChunkGcAt) {
@@ -23,7 +26,7 @@ public class ChunkGc {
 	}
 
 	public void beginChunkGC() {
-		Log.debug("Received request to perform Chunk GC");
+		logger.debug("Received request to perform Chunk GC");
 
 		this.startUp();
 		this.performChunkGc();
@@ -40,7 +43,7 @@ public class ChunkGc {
 	private List<Chunk> retrieveMutableLoadedChunks() {
 		List<Chunk> loadedChunks = Globals.getWorld().chunks.getImmutableLoadedChunks();
 		List<Chunk> mutableLoadedChunks = new ArrayList<Chunk>(loadedChunks);
-		Log.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
+		logger.debug("Amount of loaded chunks is: "+mutableLoadedChunks.size());
 
 		return mutableLoadedChunks;
 	}
@@ -53,7 +56,7 @@ public class ChunkGc {
 		this.sortBasedOnDate(loadedChunks);
 
 		int amountOfChunksToFree = currentChunkGcLevel.getChunksToFree();
-		Log.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
+		logger.debug("Amount of loaded chunks to free is: "+amountOfChunksToFree);
 
 		ArrayList<UUID> uniqueIdsOfChunksToBeFreed = new ArrayList<>();
 

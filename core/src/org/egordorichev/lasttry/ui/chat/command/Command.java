@@ -1,11 +1,16 @@
 package org.egordorichev.lasttry.ui.chat.command;
 
-import org.egordorichev.lasttry.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Command with a name and handle. Single method for execution.
  */
 public abstract class Command {
+	private static final Logger logger = LoggerFactory.getLogger(Command.class);
+
+
 	/**
 	 * Single instance for an empty string array. This is optimal compared to
 	 * making a new string array per invocation of {@link #onRun(String[])}.
@@ -80,9 +85,9 @@ public abstract class Command {
 	 */
 	public void onFail(Exception e) {
 		if (e instanceof NumberFormatException) {
-			Log.error("Failed to parse numeric input");
+			logger.error("Failed to parse numeric input");
 		} if (e instanceof IndexOutOfBoundsException) {
-			Log.error("Failed IOOBE");
+			logger.error("Failed IOOBE");
 			e.printStackTrace();
 		} else {
 			e.printStackTrace();

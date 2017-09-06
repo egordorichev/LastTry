@@ -1,6 +1,9 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
+
+import java.security.SecureRandom;
+
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Bootstrap;
@@ -29,7 +32,7 @@ public class LoadState implements State {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                    	String world = "test", player = "test";
+                    	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
 	                    Bootstrap.load();
                         loadString = "Loading spawn system...";
                         Globals.spawnSystem = new SpawnSystem();
@@ -41,7 +44,7 @@ public class LoadState implements State {
 	                    if (WorldIO.saveExists(world)) {
 		                    WorldIO.load(world);
 	                    } else {
-		                    int seed = (int) System.currentTimeMillis();
+		                    int seed = new SecureRandom().nextInt();
 		                    Globals.setWorld(WorldIO.generate(world, World.Size.SMALL, 0, seed));
 	                    }
 
