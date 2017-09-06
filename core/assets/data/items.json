@@ -143,6 +143,10 @@
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
+	"lt:sand_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
+
 	"lt:ebonstone" : {
 		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
 	},

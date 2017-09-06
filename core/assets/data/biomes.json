@@ -44,7 +44,7 @@
 		"materials" : {
 			"topSoil" : "lt:sand",
 			"soil" : "lt:sand",
-			"soilWall" : "lt:dirt_wall",
+			"soilWall" : "lt:sand_wall",
 			"stone" : "lt:stone",
 			"stoneWall" : "lt:stone_wall"
 		},
