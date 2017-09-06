@@ -1,15 +1,33 @@
 package org.egordorichev.lasttry.world.generator;
 
+import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.util.SimplexNoise;
+
 public class CaveGeneratorSimplexTask extends GeneratorTask {
+	/**
+	 * Depth from the surface to weaken cave strength <i>(size)</i>.
+	 */
+	private final int caveBiasDepth = 30;
+	/**
+	 * How rough the cave edges should be.
+	 */
+	private final float roughness = 0.6f;
+	/**
+	 * Recursive rounds for adding details.
+	 */
+	private final int octaves = 4;
+	/**
+	 * Scale of the cave. Larger values result in more open-space caverns. Lower
+	 * values result in tight corridors.
+	 */
+	private final float caveScale = 34f;
 
 	@Override
 	public void run(WorldGenerator generator) {
+		Log.info("Generating caves");
 		// TODO: These numbers shouldn't be hard-coded
 		// TODO: Let the user choose these variables when generating a world.
-		int caveBiasDepth = 30;
-		int octaves = 4;
-		float roughness = 0.6f;
-		float scale = 1f / 20f;
+		float scale = 1f / caveScale;
 		float cut = 0f;
 		boolean[][] solidMap = new boolean[generator.getWorldWidth()][generator.getWorldHeight()];
 		for (int x = 0; x < generator.getWorldWidth(); x++) {
@@ -47,13 +65,16 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
 					if (neighbors <= 3) {
 						generator.world.blocks.set(null, x, y);
 					} else if (neighbors != 8) {
-						// Create cave wall lining based on what tile is being repalced.
+						// Create cave wall lining based on what tile is being
+						// repalced.
 						String id = generator.world.blocks.getID(x, y);
-						if (id.equals("lt:grass") || id.equals("lt:dirt")) {
-							generator.world.blocks.set("lt:grass", x, y);
-						} else {
-							generator.world.blocks.set("lt:stone", x, y);
-						}
+						/*
+						 * if (id.equals("lt:grass") || id.equals("lt:dirt")) {
+						 * generator.world.blocks.set("lt:grass", x, y); } else
+						 * if (id.equals("lt:sand")) {
+						 * generator.world.blocks.set("sand", x, y); } else {
+						 * generator.world.blocks.set("lt:stone", x, y); }
+						 */
 					}
 				}
 			}

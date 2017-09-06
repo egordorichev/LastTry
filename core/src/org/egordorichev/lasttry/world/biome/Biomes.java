@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.util.Log;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -38,14 +39,16 @@ public class Biomes {
 			JsonReader jsonReader = new JsonReader();
 			JsonValue root = jsonReader.parse(Gdx.files.internal("data/biomes.json"));
 
-			for (JsonValue biome : root) {
+			for (JsonValue value : root) {
 				try {
-					Biome b = new Biome(biome.name());
-					b.loadFields(biome);
-
-					BIOME_CACHE.add(b);
+					Biome biome = new Biome(value.name());
+					biome.loadFields(value);
+					Log.debug("Loaded biome: " + biome.getID() + " - Cached[" + (!biome.ignoreCache) + "]");
+					if (!biome.ignoreCache) {
+						BIOME_CACHE.add(biome);
+					}
 				} catch (Exception exception) {
-					Log.error("Failed to parse " + biome.name());
+					Log.error("Failed to parse " + value.name());
 					exception.printStackTrace();
 				}
 			}
@@ -70,6 +73,7 @@ public class Biomes {
 
 	/**
 	 * Returns biomes with given id
+	 * 
 	 * @param id
 	 */
 	public static Biome get(String id) {
