@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.effect.EffectData;
 import org.egordorichev.lasttry.entity.Creature;
 import java.util.ArrayList;
 
-public class CreatureEffectsComponent extends CreatureComponent {
+public class CreatureEffectsComponent extends EntityComponent<Creature> {
     protected ArrayList<EffectData> effects = new ArrayList<>();
 
     public CreatureEffectsComponent(Creature creature) {
@@ -29,7 +29,7 @@ public class CreatureEffectsComponent extends CreatureComponent {
         });
 
         // Else add effect
-        effects.add(new EffectData(this.creature, effect, time));
+        effects.add(new EffectData(this.entity, effect, time));
     }
 
     public void removeEffect(final Effect effect) {

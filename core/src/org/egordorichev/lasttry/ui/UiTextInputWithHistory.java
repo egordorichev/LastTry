@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import org.egordorichev.lasttry.input.DefaultInputProcessor;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
-import org.egordorichev.lasttry.util.Log;
 
 import java.util.ArrayList;
 
@@ -40,11 +39,14 @@ public class UiTextInputWithHistory extends UiTextInput {
 					text = builder.toString();
 					updateLabel();
 				} else if (keycode == Input.Keys.ENTER) {
+					/*
 					if (history.size() == 0 || (!history.get(history.size() - 1).equals(text))) {
 						history.add(text);
 						historyIndex = history.size();
 					}
-
+					*/
+					history.add(text);
+					historyIndex = history.size();
 					onEnter();
 				} else if (keycode == Input.Keys.LEFT) {
 					cursorX = Math.max(0, cursorX - 1);

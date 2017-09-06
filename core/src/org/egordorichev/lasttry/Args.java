@@ -5,12 +5,11 @@ import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.util.Util;
 
 import java.io.File;
+import java.security.Permission;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class Args {
-	private static String world = "test";
-	private static String player = "test";
 	private static int seed = 512;
 
 	/**
@@ -40,7 +39,7 @@ public class Args {
 				Iterator<?> it = argMap.entrySet().iterator();
 
 				while (it.hasNext()) {
-					HashMap.Entry<?,?> pair = (HashMap.Entry<?,?>) it.next();
+					HashMap.Entry<?, ?> pair = (HashMap.Entry<?, ?>) it.next();
 					System.out.println("\t" + pair.getKey() + "\t\t" + ((Arg) pair.getValue()).getDescription());
 					it.remove();
 				}
@@ -56,7 +55,6 @@ public class Args {
 			}
 		}));
 
-		
 		argMap.put("-rfs", new Arg("Relative file storage mode", new CallableWithError() {
 			@Override
 			public void call() {
@@ -96,7 +94,7 @@ public class Args {
 			@Override
 			public void call() throws Exception {
 				checkForArgument("Expected world name after -w");
-				world = arguments[++i];
+				LastTry.defaultWorldName = arguments[++i];
 			}
 		}));
 
@@ -104,7 +102,7 @@ public class Args {
 			@Override
 			public void call() throws Exception {
 				checkForArgument("Expected player name after -p");
-				player = arguments[++i];
+				LastTry.defaultPlayerName = arguments[++i];
 			}
 		}));
 
@@ -126,9 +124,12 @@ public class Args {
 	/**
 	 * Parses given arguments
 	 *
-	 * @param args   arguments, received by main()
-	 * @param config App config
-	 * @throws Exception Exception, containing a parse error
+	 * @param args
+	 *            arguments, received by main()
+	 * @param config
+	 *            App config
+	 * @throws Exception
+	 *             Exception, containing a parse error
 	 */
 	public static void parse(String[] args, Object config) throws Exception {
 		arguments = args;
@@ -147,17 +148,17 @@ public class Args {
 
 		if (!LastTry.release && Util.isWindows()) {
 			/*
-			 * THIS IS TEMPORARY
-			 * The issue is that ExitDumper crashes the game on Windows 10
+			 * THIS IS TEMPORARY The issue is that ExitDumper crashes the game
+			 * on Windows 10
 			 */
-			//System.setSecurityManager(new ExitDumper());
+			System.setSecurityManager(new ExitDumper());
 		}
 	}
 
 	private static void set(Object instance, String field, boolean value) {
 		/*
-		 * THIS IS TEMPORARY
-		 * The issue is AFAIK the core gradle doesn't load the following:
+		 * THIS IS TEMPORARY The issue is AFAIK the core gradle doesn't load the
+		 * following:
 		 *
 		 * com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 		 *
@@ -174,8 +175,10 @@ public class Args {
 	/**
 	 * Checks, that there is one more argument, otherwise, throws an Exception
 	 *
-	 * @param error Error message for the Exception
-	 * @throws Exception Thrown if there is no more arguments
+	 * @param error
+	 *            Error message for the Exception
+	 * @throws Exception
+	 *             Thrown if there is no more arguments
 	 */
 	private static void checkForArgument(String error) throws Exception {
 		if (arguments.length - 1 == i) {
@@ -191,6 +194,12 @@ public class Args {
 		public void checkExit(int status) {
 			Thread.dumpStack();
 		}
+
+		@Override
+		public void checkPermission(Permission perm) {}
+
+		@Override
+		public void checkPermission(Permission perm, Object context) {}
 	}
 
 	private static class Arg {

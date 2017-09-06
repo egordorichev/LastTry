@@ -1070,7 +1070,7 @@ lt_snow_icon
   index: -1
 lt_stone
   rotate: false
-  xy: 2, 17
+  xy: 2, 18
   size: 256, 49
   orig: 256, 49
   offset: 0, 0

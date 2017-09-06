@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.inventory.InventorySlot;
 import org.egordorichev.lasttry.inventory.ItemHolder;
-import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
 
 public class UiItemSlot extends UiComponent implements InventorySlot {

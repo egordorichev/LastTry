@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.player;
 
-import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.inventory.ItemHolder;

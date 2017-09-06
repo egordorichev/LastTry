@@ -8,6 +8,12 @@ import org.egordorichev.lasttry.world.biome.components.BiomeAnimationComponent;
 public class Biome {
 	public BiomeAnimationComponent animation;
 	/**
+	 * Indicates the biome is not naturally occurring and should not be
+	 * accessible via the biome cache.
+	 */
+	public boolean ignoreCache;
+
+	/**
 	 * Biome id
 	 */
 	private String id;
@@ -27,6 +33,10 @@ public class Biome {
 	 * Biome required items
 	 */
 	private Holder[] required;
+	/**
+	 * Tile and wall types used by the biome in generation.
+	 */
+	private BiomeMaterials materials;
 
 	public static class Holder {
 		public String[] items;
@@ -40,15 +50,18 @@ public class Biome {
 
 	/**
 	 * Loads fields from json
-	 * @param root Biome node
+	 * 
+	 * @param root
+	 *            Biome node
 	 */
 	public void loadFields(JsonValue root) {
-		this.spawnInfo = new SpawnInfo(root.getShort("spawnRate", (short) 700),
-			root.getShort("maxSpawns", (short) 5));
-		this.biomeVector = new Vector2(root.getShort("temperature", (short) 20),
-			root.getShort("humidity", (short) 30));
+		this.spawnInfo = new SpawnInfo(root.getShort("spawnRate", (short) 700), root.getShort("maxSpawns", (short) 5));
+		this.biomeVector = new Vector2(root.getShort("temperature", (short) 50), root.getShort("humidity", (short) 50));
 		this.level = root.getByte("level", (byte) 0);
-
+		this.materials = BiomeMaterials.read(root.get("materials"));
+		if (root.has("ignoreCache")) {
+			this.ignoreCache = root.getBoolean("ignoreCache");
+		}
 		if (root.has("required")) {
 			JsonValue required = root.get("required");
 			this.required = new Holder[required.size];
@@ -116,5 +129,13 @@ public class Biome {
 	 */
 	public Holder[] getRequired() {
 		return this.required;
+	}
+
+	/**
+	 * @return Materials used in generation.
+	 * @return
+	 */
+	public BiomeMaterials getMaterials() {
+		return this.materials;
 	}
 }

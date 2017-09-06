@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.biome.Biomes;
 
 import com.badlogic.gdx.math.Vector2;
 

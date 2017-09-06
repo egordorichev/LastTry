@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Rectangle;
 import org.egordorichev.lasttry.util.Util;
 
-public class PhysicsComponent extends EntityComponent {
+public class PhysicsComponent<T extends Entity> extends EntityComponent<T> {
     public enum Direction {
         LEFT, RIGHT
     }
@@ -46,18 +46,8 @@ public class PhysicsComponent extends EntityComponent {
 	    }
     };
 
-    public PhysicsComponent(Entity entity) {
+    public PhysicsComponent(T entity) {
         super(entity);
-    }
-
-    public PhysicsComponent() {
-        this.hitbox = new Rectangle(0, 0, 0, 0);
-    }
-
-    @Override
-    public void setEntity(Entity entity) {
-        super.setEntity(entity);
-
         this.size = new Vector2(32, 48);
         this.hitbox = new Rectangle(3, 3, this.size.x - 6, this.size.y - 3);
     }

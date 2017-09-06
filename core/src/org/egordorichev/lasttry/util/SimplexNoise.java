@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.world.generator;
+package org.egordorichev.lasttry.util;
 
 /**
  * Simplex noise in 2D, 3D and 4D
