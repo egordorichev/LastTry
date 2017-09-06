@@ -39,10 +39,6 @@ http://i.imgur.com/Q2P7a42.png)
 
 [TODO list can be found here](https://trello.com/b/MgdX6wA4/game-lasttry).
 
-#### Docs
-
-[Docs can be found here](https://egordorichev.github.io/ltdocs/index.html)
-
 ### License
 
 ```
