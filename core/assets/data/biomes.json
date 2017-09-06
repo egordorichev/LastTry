@@ -15,15 +15,20 @@
 		"spawnRate" : 800
 	},
 	"lt:jungle" : {
-		"required" : [],
+		"required" : [
+			{
+				"id" : [ "lt:jungle_grass" ],
+				"count" : 80
+			}
+		],
 		"materials" : {
 			"topSoil" : "lt:jungle_grass",
-			"soil" : "lt:jungle_grass",
+			"soil" : "lt:mud",
 			"soilWall" : "lt:dirt_wall",
 			"stone" : "lt:stone",
 			"stoneWall" : "lt:stone_wall"
 		},
-		"level" : 0,
+		"level" : 1,
 		"temperature" : 50,
 		"humidity" : 80,
 		"maxSpawns" : 5,
@@ -33,7 +38,7 @@
 		"required" : [
 			{
 				"id" : [ "lt:sand" ],
-				"count" : 1000
+				"count" : 200
 			}
 		],
 		"materials" : {
@@ -45,6 +50,26 @@
 		},
 		"level" : 1,
 		"temperature" : 90,
+		"humidity" : 10,
+		"maxSpawns" : 7,
+		"spawnRate" : 180
+	},
+	"lt:snow" : {
+		"required" : [
+			{
+				"id" : [ "lt:snow" ],
+				"count" : 200
+			}
+		],
+		"materials" : {
+			"topSoil" : "lt:snow",
+			"soil" : "lt:snow",
+			"soilWall" : "lt:snow_wall",
+			"stone" : "lt:ice",
+			"stoneWall" : "lt:ice_wall"
+		},
+		"level" : 1,
+		"temperature" : 40,
 		"humidity" : 10,
 		"maxSpawns" : 7,
 		"spawnRate" : 180

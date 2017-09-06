@@ -171,8 +171,16 @@
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
+	"lt:snow_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
+
 	"lt:ice" : {
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
+	},
+
+	"lt:ice_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
 	},
 
 	"lt:gel" : {
