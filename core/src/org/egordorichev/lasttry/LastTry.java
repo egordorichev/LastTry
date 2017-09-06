@@ -86,6 +86,7 @@ public class LastTry extends Game {
 	 * Default name for players.
 	 */
 	public static String defaultPlayerName = "default";
+
 	
 	/**
 	 * Screen dimensions

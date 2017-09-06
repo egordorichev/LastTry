@@ -4,13 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Recipes {
+	private static final Logger logger = LoggerFactory.getLogger(Recipes.class);
 	/*
 	 * Recipes storage
 	 */
@@ -42,7 +44,7 @@ public class Recipes {
 	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to load recipes before bootstrap");
+			logger.error("Trying to load recipes before bootstrap");
 			return;
 		}
 
@@ -54,13 +56,13 @@ public class Recipes {
 				try {
 					RECIPE_CACHE.put(recipe.name(), Recipe.load(recipe));
 				} catch (Exception exception) {
-					Log.error(exception.getMessage());
+					logger.error(exception.getMessage());
 					exception.printStackTrace();
 				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			Log.error("Failed to load recipes");
+			logger.error("Failed to load recipes");
 		}
 	}
 }

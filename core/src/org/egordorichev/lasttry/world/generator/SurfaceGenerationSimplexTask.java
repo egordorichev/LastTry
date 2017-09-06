@@ -1,12 +1,14 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.SimplexNoise;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
 import org.egordorichev.lasttry.world.biome.Biomes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SurfaceGenerationSimplexTask extends GeneratorTask {
+	private static final Logger logger = LoggerFactory.getLogger(SurfaceGenerationSimplexTask.class);
 	/**
 	 * Horizontal terrain stretch,
 	 */
@@ -37,7 +39,7 @@ public class SurfaceGenerationSimplexTask extends GeneratorTask {
 
 	@Override
 	public void run(WorldGenerator generator) {
-		Log.info("Generating heightmap");
+		logger.info("Generating heightmap");
 		int width = generator.getWorldWidth();
 		int height = generator.getWorldHeight();
 

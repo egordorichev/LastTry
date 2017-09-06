@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
  * Effect handler
  */
 public class Effects {
+	private static final Logger logger = LoggerFactory.getLogger(Effects.class);
 	/**
 	 * Items storage
 	 */
@@ -22,7 +24,7 @@ public class Effects {
 	 */
 	public static void load() {
 		if (!Bootstrap.isLoaded()) {
-			Log.error("Trying to load effects before bootstrap");
+			logger.error("Trying to load effects before bootstrap");
 			return;
 		}
 
@@ -34,12 +36,12 @@ public class Effects {
 				try {
 					EFFECT_CACHE.put(effect.name(), Effect.load(effect));
 				} catch (Exception exception) {
-					Log.error(exception.getMessage());
+					logger.error(exception.getMessage());
 				}
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			Log.error("Failed to load effects");
+			logger.error("Failed to load effects");
 		}
 	}
 }

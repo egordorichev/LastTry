@@ -2,8 +2,10 @@ package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Crash;
+import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -15,6 +17,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ModLoader {
+	private static final Logger logger = LoggerFactory.getLogger(ModLoader.class);
+
 	/**
 	 * Map of loaded mods.
 	 * <hr>
@@ -36,7 +40,7 @@ public class ModLoader {
 				Crash.report(Thread.currentThread(), exception);
 			}
 		} else {
-			Log.info("There's no mods directory so one will be created!");
+			logger.info("There's no mods directory so one will be created!");
 		}
 
 		for (File file : modDirectory.listFiles()) {
@@ -82,7 +86,7 @@ public class ModLoader {
 			urlClassLoader.close();
 		} catch (Exception exception) {
 			LastTry.handleException(exception);
-			Log.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
+			logger.info("Failed to load " + file.getAbsolutePath().replace('/', '.') + " mod");
 		}
 	}
 
