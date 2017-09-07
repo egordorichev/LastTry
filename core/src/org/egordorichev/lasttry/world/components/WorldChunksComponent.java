@@ -4,8 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
-import org.egordorichev.lasttry.item.liquids.Liquid;
+import org.egordorichev.lasttry.item.liquids.Liquids;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -59,7 +58,7 @@ public class WorldChunksComponent extends WorldComponent {
 				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
 
 				if (block == null) {
-					Liquid.renderLiquid(x, y);
+					Liquids.renderLiquid(x, y);
 				}
 			}
 		}

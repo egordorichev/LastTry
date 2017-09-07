@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.core;
 import org.egordorichev.lasttry.crafting.Recipes;
 import org.egordorichev.lasttry.effect.Effects;
 import org.egordorichev.lasttry.item.Items;
+import org.egordorichev.lasttry.item.liquids.Liquids;
 import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.entity.ai.AIs;
 import org.egordorichev.lasttry.entity.Creatures;
@@ -49,5 +50,6 @@ public class Bootstrap {
 		Effects.load();
 		AIs.load();
 		Creatures.load();
+		Liquids.load();
 	}
 }

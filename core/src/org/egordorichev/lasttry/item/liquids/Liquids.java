@@ -7,13 +7,14 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 
-public class Liquid {
+public class Liquids {
 	/**
-	 * Liquid textures
+	 * Liquids textures
 	 */
 	public static TextureRegion[][][] textures;
 
-	static {
+	public static void load() {
+		textures = new TextureRegion[4][][];
 		textures[0] = Assets.getTexture("lt_water").split(Block.SIZE, Block.SIZE);
 		textures[1] = Assets.getTexture("lt_lava").split(Block.SIZE, Block.SIZE);
 		textures[2] = Assets.getTexture("lt_honey").split(Block.SIZE, Block.SIZE);
@@ -36,13 +37,15 @@ public class Liquid {
 			if (bottom == null) {
 				byte bottomHp = Globals.getWorld().blocks.getHP(x, y - 1);
 				byte bottomLiquidLevel = BlockHelper.empty.getLiquidLevel(bottomHp);
+				byte bottomType = BlockHelper.empty.getLiquidType(bottomHp);
 
-				if (bottomLiquidLevel < 15) { // FIXME: fit 16 somewhere?
+				if (bottomLiquidLevel < 15 && (bottomType == type || bottomLiquidLevel == 0)) { // FIXME: fit 16 somewhere?
 					liquidLevel -= 1;
 					hp = BlockHelper.empty.setLiquidLevel(hp, liquidLevel);
 					Globals.getWorld().blocks.setHP(hp, x, y);
 					bottomLiquidLevel += 1;
 					bottomHp = BlockHelper.empty.setLiquidLevel(bottomHp, bottomLiquidLevel);
+					bottomHp = BlockHelper.empty.setLiquidType(bottomHp, type);
 					Globals.getWorld().blocks.setHP(bottomHp, x, y - 1);
 					return;
 				}
@@ -53,11 +56,13 @@ public class Liquid {
 
 			byte leftHp = Globals.getWorld().blocks.getHP(x - 1, y);
 			byte leftLiquidLevel = BlockHelper.empty.getLiquidLevel(leftHp);
+			byte leftType = BlockHelper.empty.getLiquidType(leftHp);
 			byte rightHp = Globals.getWorld().blocks.getHP(x + 1, y);
 			byte rightLiquidLevel = BlockHelper.empty.getLiquidLevel(rightHp);
+			byte rightType = BlockHelper.empty.getLiquidType(rightHp);
 
-			boolean toLeft = left == null && leftLiquidLevel < liquidLevel;
-			boolean toRight = right == null && rightLiquidLevel < liquidLevel;
+			boolean toLeft = left == null && leftLiquidLevel < liquidLevel && (leftType == type || leftLiquidLevel == 0);
+			boolean toRight = right == null && rightLiquidLevel < liquidLevel && (rightType == type || rightLiquidLevel == 0);
 
 			if (toLeft && toRight) {
 				toLeft = Math.random() > 0.5;
@@ -71,6 +76,7 @@ public class Liquid {
 					Globals.getWorld().blocks.setHP(hp, x, y);
 					leftLiquidLevel += 1;
 					leftHp = BlockHelper.empty.setLiquidLevel(leftHp, leftLiquidLevel);
+					leftHp = BlockHelper.empty.setLiquidType(leftHp, type);
 					Globals.getWorld().blocks.setHP(leftHp, x - 1, y);
 				}
 			}
@@ -87,6 +93,7 @@ public class Liquid {
 					Globals.getWorld().blocks.setHP(hp, x, y);
 					rightLiquidLevel += 1;
 					rightHp = BlockHelper.empty.setLiquidLevel(rightHp, rightLiquidLevel);
+					rightHp = BlockHelper.empty.setLiquidType(rightHp, type);
 					Globals.getWorld().blocks.setHP(rightHp, x + 1, y);
 				}
 			}

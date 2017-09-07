@@ -201,6 +201,25 @@
 
 	"lt:endless_bucket" : {
 		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "water",
 		"description" : "Infinite water is cool..."
+	},
+
+	"lt:endless_lava_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "lava",
+		"description" : "Infinite lava is cool..."
+	},
+
+	"lt:endless_honey_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "honey",
+		"description" : "So sweetaa"
+	},
+
+	"lt:endless_acid_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "acid",
+		"description" : "Death"
 	}
 }
