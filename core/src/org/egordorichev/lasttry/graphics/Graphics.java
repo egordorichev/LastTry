@@ -26,10 +26,6 @@ public class Graphics {
 	 */
 	public static Texture healthBarFrameTexture;
 	/**
-	 * Water texture
-	 */
-	public static TextureRegion[][] waterTexture;
-	/**
 	 * Sprite batch
 	 */
 	public static SpriteBatch batch;
@@ -49,6 +45,5 @@ public class Graphics {
 		skyTexture = new Texture(Gdx.files.internal("sky.png"));
 		healthBarTexture = new Texture(Gdx.files.internal("health_bar.png"));
 		healthBarFrameTexture = new Texture(Gdx.files.internal("health_bar_frame.png"));
-		waterTexture = Assets.getTexture("lt_water").split(16, 16);
 	}
 }
