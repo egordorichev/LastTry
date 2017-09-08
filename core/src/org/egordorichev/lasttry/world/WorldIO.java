@@ -1,20 +1,21 @@
 package org.egordorichev.lasttry.world;
 
+import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.world.components.WorldFlagsComponent;
 import org.egordorichev.lasttry.world.generator.WorldGenerator;
-
-import com.badlogic.gdx.math.Vector2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class WorldIO {
+	private static final Logger logger = LoggerFactory.getLogger(WorldIO.class);
 	public static final byte VERSION = 4;
 
 	public static void load(String name) {
@@ -22,11 +23,11 @@ public class WorldIO {
 		File file = new File(fileName);
 
 		if (!file.exists()) {
-			Log.error("Could not find save file for the world " + name);
+			logger.error("Could not find save file for the world " + name);
 			LastTry.abort();
 		}
 
-		Log.debug("Loading world " + name + "...");
+		logger.debug("Loading world " + name + "...");
 
 		try {
 			FileReader stream = new FileReader(fileName);
@@ -35,10 +36,10 @@ public class WorldIO {
 			int seed = stream.readInt32();
 
 			if (version > VERSION) {
-				Log.error("Trying to load unknown world.");
+				logger.error("Trying to load unknown world.");
 				LastTry.abort();
 			} else if (version < VERSION) {
-				Log.error("Trying to load an old world.");
+				logger.error("Trying to load an old world.");
 				LastTry.abort();
 			}
 
@@ -71,7 +72,7 @@ public class WorldIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done loading world " + name + "!");
+		logger.debug("Done loading world " + name + "!");
 	}
 
 	public static World generate(String name, World.Size size, int flags, int seed) {
@@ -100,12 +101,12 @@ public class WorldIO {
 			try {
 				file.createNewFile();
 			} catch (IOException exception) {
-				Log.error("Failed to create save file for the world " + world.getName() + "!");
+				logger.error("Failed to create save file for the world " + world.getName() + "!");
 				LastTry.abort();
 			}
 		}
 
-		Log.debug("Saving world " + world.getName() + "...");
+		logger.debug("Saving world " + world.getName() + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
@@ -141,7 +142,7 @@ public class WorldIO {
 			LastTry.handleException(exception);
 		}
 
-		Log.debug("Done saving world " + world.getName() + "!");
+		logger.debug("Done saving world " + world.getName() + "!");
 	}
 
 	public static boolean saveExists(String name) {

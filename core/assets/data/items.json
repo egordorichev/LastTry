@@ -17,6 +17,13 @@
 		"spreads" : [ "lt:dirt" ]
 	},
 
+	
+	"lt:jungle_grass" : {
+		"type" : "org.egordorichev.lasttry.item.block.plant.Grass",
+		"spreads" : [ "lt:jungle_grass" ]
+	},
+
+	
 	"lt:copper_coin" : {
 		"type" : "org.egordorichev.lasttry.item.items.Coin",
 		"cost" : 1
@@ -140,6 +147,10 @@
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
+	"lt:sand_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
+
 	"lt:ebonstone" : {
 		"type" : "org.egordorichev.lasttry.item.block.EvilBlock"
 	},
@@ -168,8 +179,16 @@
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
 	},
 
+	"lt:snow_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
+	},
+
 	"lt:ice" : {
 		"type" : "org.egordorichev.lasttry.item.block.TileableBlock"
+	},
+
+	"lt:ice_wall" : {
+		"type" : "org.egordorichev.lasttry.item.wall.Wall"
 	},
 
 	"lt:gel" : {
@@ -184,9 +203,33 @@
 		"type" : "org.egordorichev.lasttry.item.block.ChunkLoader"
 	},
 	"lt:endless_bucket" : {
+<<<<<<< HEAD
 		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket"
 	},
 	"lt:speed_modifier": {
 		"type": "org.egordorichev.lasttry.item.items.modifiers.Modifier"
+=======
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "water",
+		"description" : "Infinite water is cool..."
+	},
+
+	"lt:endless_lava_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "lava",
+		"description" : "Infinite lava is cool..."
+	},
+
+	"lt:endless_honey_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "honey",
+		"description" : "So sweetaa"
+	},
+
+	"lt:endless_acid_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "acid",
+		"description" : "Death"
+>>>>>>> be898a55f45a38c929947702b4a1bc64169fd8e4
 	}
 }

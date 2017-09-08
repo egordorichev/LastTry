@@ -36,6 +36,7 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 	public int activeSlot = 0;
 	public UiItemSlot[] slots;
 	private boolean open;
+	private static UiItemSlot slotToDrawTooltip;
 
 	public UiInventory(int size, InventoryOwner<UiItemSlot> owner) {
 		super(new Rectangle(0, 0, 0, 0));
@@ -174,6 +175,10 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		});
 	}
 
+	public static void setSlotToDrawTooltip(UiItemSlot slotToDrawTooltip) {
+		UiInventory.slotToDrawTooltip = slotToDrawTooltip;
+	}
+
 	private void updateItems() {
 		if (InputManager.isMouseButtonPressed(Input.Buttons.LEFT)
 				|| InputManager.isMouseButtonPressed(Input.Buttons.RIGHT)) {
@@ -182,15 +187,15 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 				return;
 			}
 
+			short x = (short) (LastTry.getMouseXInWorld() / Block.SIZE);
+			short y = (short) (LastTry.getMouseYInWorld() / Block.SIZE);
+
 			ItemHolder holder = getActiveItem();
 
 			if (holder != null) {
 				Item item = holder.getItem();
 
 				if (item != null && item.isReady() && (item.isAutoUse() || InputManager.mouseButtonJustPressed())) {
-					short x = (short) (LastTry.getMouseXInWorld() / Block.SIZE);
-					short y = (short) (LastTry.getMouseYInWorld() / Block.SIZE);
-
 					if (item.canBeUsed(x, y) && item.use(x, y)) {
 						int count = holder.getCount();
 
@@ -231,6 +236,11 @@ public class UiInventory extends UiComponent implements UiScreen, UiToggleScreen
 		if (getSelectedItem() != null) {
 			getSelectedItem().renderAt((int) InputManager.getMousePosition().x + 16,
 					Gdx.graphics.getHeight() - (int) InputManager.getMousePosition().y - 16);
+		}
+
+		if (slotToDrawTooltip != null) {
+			slotToDrawTooltip.drawTooltip();
+			slotToDrawTooltip = null;
 		}
 	}
 

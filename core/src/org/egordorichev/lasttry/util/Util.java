@@ -95,7 +95,7 @@ public class Util {
 		return value >= min && value <= max;
 	}
 
-	public static void drawWithShadow(BitmapFont font, String text, float x, float y) {
+	public static void drawWithShadow(BitmapFont font, String text, float x, float y, float r, float g, float b) {
 		font.setColor(0f, 0f, 0f, 1);
 
 		for (int j = -1; j < 2; j++) {
@@ -104,8 +104,12 @@ public class Util {
 			}
 		}
 
-		font.setColor(1, 1, 1, 1);
+		font.setColor(r, g, b, 1);
 		font.draw(Graphics.batch, text, x, y);
+	}
+
+	public static void drawWithShadow(BitmapFont font, String text, float x, float y) {
+		drawWithShadow(font, text, x, y, 1, 1, 1);
 	}
 
 	private static class Caller implements Runnable {

@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.biome.Biomes;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,12 +16,8 @@ public class WorldGenerator {
 	public WorldGenerator(String name, World.Size size, int flags, int seed) {
 		this.world = new World(name, size, flags, seed);
 		Globals.setWorld(this.world);
-		// this.tasks.add(new SurfaceGenerationTask());
 		this.tasks.add(new SurfaceGenerationSimplexTask());
 		this.tasks.add(new CaveGeneratorSimplexTask());
-
-		// this.tasks.add(new TaskBiomeTestGen());
-		// this.tasks.add(new FoilageGeneratorTask());
 	}
 
 	public void addTask(GeneratorTask task) {

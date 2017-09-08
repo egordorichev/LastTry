@@ -2,10 +2,14 @@ package org.egordorichev.lasttry.entity.ai;
 
 import org.egordorichev.lasttry.core.Bootstrap;
 import org.egordorichev.lasttry.entity.CreatureWithAI;
-import org.egordorichev.lasttry.entity.ai.ais.*;
-import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.entity.ai.ais.SlimeAI;
+import org.egordorichev.lasttry.entity.ai.ais.ZombieAI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AIs {
+    private static final Logger logger = LoggerFactory.getLogger(AIs.class);
+
     public static final AI[] AI_CACHE = new AI[AIID.count];
 
     public static AI none;
@@ -14,7 +18,7 @@ public class AIs {
 
     static {
         if (!Bootstrap.isLoaded()) {
-            Log.error("Trying to access ais class before bootstrap");
+            logger.error("Trying to access ais class before bootstrap");
         }
 
         none = new AI(AIID.none) {

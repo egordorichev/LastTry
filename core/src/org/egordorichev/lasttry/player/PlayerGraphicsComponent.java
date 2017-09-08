@@ -9,13 +9,14 @@ import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 
-public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
+public class PlayerGraphicsComponent extends CreatureGraphicsComponent<Player> {
 	/**
 	 * Player texture
 	 */
 	private TextureRegion texture;
 
-	public PlayerGraphicsComponent() {
+	public PlayerGraphicsComponent(Player entity) {
+		super(entity);
 		PlayerRenderInfo info = new PlayerRenderInfo(1, new Color(1, 0, 1, 1),
 			new Color(1, 0, 1, 1), new Color(1, 1, 0, 1), 1, true); // TODO: load it from file
 
@@ -30,11 +31,12 @@ public class PlayerGraphicsComponent extends CreatureGraphicsComponent {
 		ItemHolder holder = Globals.getPlayer().getInventory().getActiveItem();
 		if (holder.getItem() != null) {
 			holder.getItem().renderAnimation();
-		}
-		this.animations[this.creature.state.get().getID()].render(
-			this.creature.physics.getPosition().x, this.creature.physics.getPosition().y,
-			this.creature.physics.getSize().x, this.creature.physics.getSize().y,
-			(this.creature.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
+		};
+		Graphics.batch.setColor(light, light, light, 1f);
+		this.animations[this.entity.state.get().getID()].render(
+			this.entity.physics.getPosition().x, this.entity.physics.getPosition().y,
+			this.entity.physics.getSize().x, this.entity.physics.getSize().y,
+			(this.entity.physics.getDirection() == PhysicsComponent.Direction.LEFT), false);
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 

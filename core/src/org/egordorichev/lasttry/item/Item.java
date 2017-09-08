@@ -1,19 +1,21 @@
 package org.egordorichev.lasttry.item;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.MissingResourceException;
 
 public class Item {
+	private static final Logger logger = LoggerFactory.getLogger(Item.class);
 	/**
 	 * Item identifier.
 	 */
@@ -25,7 +27,7 @@ public class Item {
 	/**
 	 * Item description
 	 */
-	protected String description;
+	protected String description = "";
 	/**
 	 * Item texture.
 	 */
@@ -74,7 +76,7 @@ public class Item {
 		try {
 			return createInstance(root, className);
 		} catch (Exception exception) {
-			Log.error(exception.getMessage());
+			logger.error(exception.getMessage());
 			throw new Exception("Failed to parse " + root.name());
 		}
 	}
@@ -297,5 +299,25 @@ public class Item {
 	 */
 	public int getMaxInStack() {
 		return 999;
+	}
+
+	/**
+	 * @return Item info
+	 */
+	public String getTooltip(int count) {
+		String tooltip = this.name;
+
+		if (count > 1) {
+			tooltip += " (" + count + ")";
+		}
+
+		return tooltip;
+	}
+
+	/**
+	 * @return Item description
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 }

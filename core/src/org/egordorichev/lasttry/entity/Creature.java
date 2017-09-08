@@ -30,7 +30,7 @@ public class Creature extends Entity {
 	/**
 	 * State handler
 	 */
-	public CreatureStateComponent state;
+	public CreatureStateComponent<Creature> state;
 	/**
 	 * Effects handler
 	 */
@@ -44,19 +44,18 @@ public class Creature extends Entity {
 	 */
 	protected String name;
 
-	public Creature(String id, CreaturePhysicsComponent physics, CreatureGraphicsComponent graphics) {
-		super(physics, graphics);
-
+	public Creature(String id) {
 		this.id = id;
 		this.name = Language.text.get(this.id);
-
-		this.stats = new CreatureStatsComponent(this);
-		this.state = new CreatureStateComponent(this);
-		this.effects = new CreatureEffectsComponent(this);
 	}
 
-	public Creature(String id) {
-		this(id, new CreaturePhysicsComponent(), new CreatureGraphicsComponent());
+	@Override
+	protected void setupComponents() {
+		this.physics = new CreaturePhysicsComponent(this);
+		this.graphics  = new CreatureGraphicsComponent<>(this);
+		this.stats = new CreatureStatsComponent(this);
+		this.state = new CreatureStateComponent<>(this);
+		this.effects = new CreatureEffectsComponent(this);
 	}
 
 	/**
@@ -66,18 +65,17 @@ public class Creature extends Entity {
 	 *            HP to remove from health
 	 */
 	public void hit(int damage) {
-		if(stats.isInvuln())
-			return;
+		if (this.stats.getInvulnTime() == 0) {
+			// TODO: crit?
+			Globals.entityManager.spawn(new DamageParticle(false, damage),
+					(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
+					(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
 
-		// TODO: crit?
-		Globals.entityManager.spawn(new DamageParticle(false, damage),
-				(int) this.physics.getCenterX() + LastTry.random.nextInt(32) - 32,
-				(int) this.physics.getCenterY() + LastTry.random.nextInt(32) - 32);
-
-		this.stats.modifyHP(-damage);
-		this.stats.setInvulnTime(ATTACK_INVULN_TIME);
-		if (this.stats.getHP() <= 0){
-			this.die();
+			this.stats.modifyHP(-damage);
+			this.stats.setInvulnTime(ATTACK_INVULN_TIME);
+			if (this.stats.getHP() <= 0) {
+				this.die();
+			}
 		}
 	}
 
@@ -210,7 +208,9 @@ public class Creature extends Entity {
 
 	/**
 	 * Sets creature spawn weight
-	 * @param spawnWeight How much will creature "eat" from spawn rate
+	 * 
+	 * @param spawnWeight
+	 *            How much will creature "eat" from spawn rate
 	 */
 	public void setSpawnWeight(int spawnWeight) {
 		this.spawnWeight = spawnWeight;

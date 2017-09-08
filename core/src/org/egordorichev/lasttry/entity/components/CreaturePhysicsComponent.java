@@ -1,23 +1,10 @@
 package org.egordorichev.lasttry.entity.components;
 
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Entity;
 
-public class CreaturePhysicsComponent extends PhysicsComponent {
-	private Creature creature;
-
+public class CreaturePhysicsComponent extends PhysicsComponent<Creature> {
 	public CreaturePhysicsComponent(Creature creature) {
 		super(creature);
-	}
-
-	public CreaturePhysicsComponent() {
-		super();
-	}
-
-	@Override
-	public void setEntity(Entity entity) {
-		super.setEntity(entity);
-		this.creature = (Creature) entity;
 	}
 
 	@Override
@@ -26,7 +13,7 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 			return;
 		}
 
-		this.creature.state.set(CreatureStateComponent.State.JUMPING);
+		this.entity.state.set(CreatureStateComponent.State.JUMPING);
 		this.velocity.y += 10f;
 	}
 
@@ -35,11 +22,11 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 		this.velocity.x += (direction == Direction.LEFT) ? -this.speed : this.speed;
 		this.direction = direction;
 
-		if (this.creature.state.get() != CreatureStateComponent.State.JUMPING
-				&& this.creature.state.get() != CreatureStateComponent.State.FALLING
-				&& this.creature.state.get() != CreatureStateComponent.State.FLYING) {
+		if (this.entity.state.get() != CreatureStateComponent.State.JUMPING
+				&& this.entity.state.get() != CreatureStateComponent.State.FALLING
+				&& this.entity.state.get() != CreatureStateComponent.State.FLYING) {
 
-			this.creature.state.set(CreatureStateComponent.State.MOVING);
+			this.entity.state.set(CreatureStateComponent.State.MOVING);
 		}
 	}
 
@@ -48,16 +35,16 @@ public class CreaturePhysicsComponent extends PhysicsComponent {
 		super.update(dt);
 
 		if (this.velocity.y < -1.6) {
-			this.creature.state.set(CreatureStateComponent.State.FALLING);
-		} else if (this.velocity.y == 0 && (this.creature.state.get() == CreatureStateComponent.State.FALLING || this.creature.state.get() == CreatureStateComponent.State.JUMPING)) {
-			this.creature.state.set(CreatureStateComponent.State.IDLE);
+			this.entity.state.set(CreatureStateComponent.State.FALLING);
+		} else if (this.velocity.y == 0 && (this.entity.state.get() == CreatureStateComponent.State.FALLING || this.entity.state.get() == CreatureStateComponent.State.JUMPING)) {
+			this.entity.state.set(CreatureStateComponent.State.IDLE);
 		}
 
-		if (this.velocity.x == 0 && this.creature.state.get() != CreatureStateComponent.State.IDLE
-				&& this.creature.state.get() != CreatureStateComponent.State.FALLING
-				&& this.creature.state.get() != CreatureStateComponent.State.JUMPING) {
+		if (this.velocity.x == 0 && this.entity.state.get() != CreatureStateComponent.State.IDLE
+				&& this.entity.state.get() != CreatureStateComponent.State.FALLING
+				&& this.entity.state.get() != CreatureStateComponent.State.JUMPING) {
 
-			this.creature.state.set(CreatureStateComponent.State.IDLE);
+			this.entity.state.set(CreatureStateComponent.State.IDLE);
 		}
 	}
 }
