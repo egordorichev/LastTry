@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.Rarity;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.items.modifiers.Modifier;
 import org.egordorichev.lasttry.util.Rectangle;
 
 import java.util.List;
@@ -44,6 +45,8 @@ public class Tool extends Item {
 	 */
 	public ToolPower power = ToolPower.DEFAULT;
 
+	public int maxModifiers;
+
 	public Tool(String id) {
 		super(id);
 	}
@@ -67,6 +70,10 @@ public class Tool extends Item {
 		if (root.has("power")) {
 			int[] pow = root.get("power").asIntArray();
 			this.power = new ToolPower(pow[0], pow[1], pow[2]);
+		}
+
+		if(root.has("max_modifiers")) {
+			this.maxModifiers = root.getInt("max_modifiers");
 		}
 	}
 
@@ -114,6 +121,10 @@ public class Tool extends Item {
 		return this.power.axe;
 	}
 
+	public Modifier[] getApplicableModifiers() {
+		return null;
+	}
+
 	@Override
 	public boolean isAutoUse() {
 		return this.autoSwing;
@@ -149,6 +160,7 @@ public class Tool extends Item {
 			}
 		});
 	}
+
 
 	private Rectangle generateToolHitbox() {
 		// Distance to offset from the player

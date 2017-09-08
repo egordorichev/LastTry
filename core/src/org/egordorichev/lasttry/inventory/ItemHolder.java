@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.modifier.Modifier;
+import org.egordorichev.lasttry.item.items.modifiers.Modifier;
 import org.egordorichev.lasttry.util.Util;
 
 /**
