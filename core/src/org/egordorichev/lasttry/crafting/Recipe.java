@@ -84,16 +84,13 @@ public class Recipe {
 
 		for (int i = 0; i < materials.size; i++) {
 			recipe.materials[i] = new Holder(materials.get(i).getString("id", "lt:dirt"), materials.get(i).getShort("count", (short) 1));
-			//recipe.materials[i].count = materials.get(i).getShort("count", (short) 1);
-			//recipe.materials[i].item = materials.get(i).getString("id", "lt:dirt"); // ;D Reconstruction
+			
 		}
 
 		JsonValue result = root.get("result");
 
 		recipe.result = new Holder(result.getString("id", "lt:dirt"), result.getShort("count", (short) 1));
-		//recipe.result.count = result.getShort("count", (short) 1);
-		//recipe.result.item = result.getString("id", "lt:dirt"); // ;D Reconstruction
-
+		
 		return recipe;
 	}
 
