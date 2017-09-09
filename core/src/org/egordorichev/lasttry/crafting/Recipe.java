@@ -1,42 +1,52 @@
 package org.egordorichev.lasttry.crafting;
 
 import com.badlogic.gdx.utils.JsonValue;
-ddddddd
+
 public class Recipe {
+	
 	/**
-	 * Required crafting stations
+	 * Required crafting stations.
 	 */
 	private String[] stations;
+	
 	/**
-	 * Required materials
+	 * Required materials.
 	 */
 	private Holder[] materials;
+	
 	/**
-	 * Result of crafting
+	 * Result of crafting.
 	 */
 	private Holder result;
 
-	public static class Holder {
+	private static class Holder {
 
+		/**
+		 * Item name.
+		 */
+		private String item;
+
+		/**
+		 * Amount required.
+		 */
+		private short count;
+
+		/**
+		 * Class constructor.
+		 * @param item 
+		 * @param count 
+		 */
 		Holder(String item, short count) {
 			this.item = item;
 			this.count = count;
 		}
 
-		private String item;
-
-		private short count;
-
-		/**
-		*	Getters.
-		*
-		*/
-		public static String getItem(){
-			return this.item;
+		public String getItem() {
+			return item;
 		}
 
-		public static short getCount(){
-			return this.count;
+		public short getCount() {
+			return count;
 		}
 	}
 
