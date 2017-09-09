@@ -1,6 +1,7 @@
-package org.egordorichev.lasttry.item.modifier;
+package org.egordorichev.lasttry.item.items.modifiers;
 
 import org.egordorichev.lasttry.LastTry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +9,7 @@ public class Modifier {
 	private static final Logger logger = LoggerFactory.getLogger(Modifier.class);
 
 	protected String name;
-	protected byte id;
+	protected String id;
 	protected int damage;
 	protected int speed;
 	protected int criticalStrikeChance;
@@ -20,17 +21,17 @@ public class Modifier {
 	protected int movementSpeed;
 	protected int defense;
 
-	public Modifier(int id, String name, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
+	public Modifier(String id, String name, int damage, int speed, int criticalStrikeChance, int manaCost, int size,
 	                int velocity, int knockback, int mana, int movementSpeed, int defense) {
 
-		if (Modifiers.MODIFIER_CACHE[id] != null) {
+		if (Modifiers.MODIFIER_CACHE.get(id) != null) {
 			logger.error("Modifier with id " + id + " is already defined!");
 			LastTry.abort();
 		}
 
-		Modifiers.MODIFIER_CACHE[id] = this;
+		Modifiers.MODIFIER_CACHE.put(id, this);
 
-		this.id = (byte) id;
+		this.id = id;
 		this.name = name;
 		this.damage = damage;
 		this.speed = speed;
@@ -84,7 +85,7 @@ public class Modifier {
 		return this.defense;
 	}
 
-	public byte getID() {
+	public String getID() {
 		return this.id;
 	}
 
@@ -92,11 +93,11 @@ public class Modifier {
 		return this.name;
 	}
 
-	public static Modifier fromID(byte id) {
-		if (id == 0) {
+	public static Modifier fromID(String id) {
+		if (id == null || id == "") {
 			return null;
 		}
 
-		return Modifiers.MODIFIER_CACHE[id];
+		return Modifiers.MODIFIER_CACHE.get(id);
 	}
 }

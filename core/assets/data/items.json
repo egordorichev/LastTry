@@ -48,7 +48,8 @@
 		"type" : "org.egordorichev.lasttry.item.items.Pickaxe",
 		"speed" : 22,
 		"damage" : 4,
-		"power" : [ 35, 0, 0 ]
+		"power" : [ 35, 0, 0 ],
+		"max_modifiers": 2
 	},
 
 	"lt:superpick" : {
@@ -56,20 +57,23 @@
 		"speed" : 4,
 		"damage" : 100,
 		"unobtainable" : true,
-		"power" : [ 255, 255, 255 ]
+		"power" : [ 255, 255, 255 ],
+		"max_modifiers": 100
 	},
 
 	"lt:copper_axe" : {
 		"type" : "org.egordorichev.lasttry.item.items.Axe",
 		"speed" : 22,
 		"damage" : 3,
-		"power" : [ 0, 35, 0 ]
+		"power" : [ 0, 35, 0 ],
+		"max_modifiers": 2
 	},
 
 	"lt:copper_shortsword" : {
 		"type" : "org.egordorichev.lasttry.item.items.ShortSword",
 		"speed" : 22,
-		"damage" : 5
+		"damage" : 5,
+		"max_modifiers": 2
 	},
 
 	"lt:magic_mirrow" : {
@@ -198,9 +202,25 @@
 	"lt:chunk_loader" : {
 		"type" : "org.egordorichev.lasttry.item.block.ChunkLoader"
 	},
-
 	"lt:endless_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket"
+	},
+
+	"lt:endless_lava_bucket" : {
 		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
-		"description" : "Infinite water is cool..."
+		"liquid" : "lava",
+		"description" : "Infinite lava is cool..."
+	},
+
+	"lt:endless_honey_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "honey",
+		"description" : "So sweetaa"
+	},
+
+	"lt:endless_acid_bucket" : {
+		"type" : "org.egordorichev.lasttry.item.items.EndlessBucket",
+		"liquid" : "acid",
+		"description" : "Death"
 	}
 }
