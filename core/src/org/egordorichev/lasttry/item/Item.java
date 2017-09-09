@@ -61,10 +61,6 @@ public class Item {
 		this.id = id;
 		this.name = Language.text.get(this.id);
 		this.texture = Assets.getTexture(this.id.replace(':', '_'));
-
-		if (this.texture == null) {
-			throw new RuntimeException("Texture for item " + id + " is not found.");
-		}
 	}
 
 	/**

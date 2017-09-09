@@ -4,7 +4,6 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
-import org.egordorichev.lasttry.item.modifier.Modifier;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Files;
@@ -59,11 +58,12 @@ public class PlayerIO {
 					holder.setItem(Item.fromID(id));
 					holder.setCount(reader.readInt16());
 
-					if (reader.readBoolean()) {
-						holder.setModifier(Modifier.fromID(reader.readByte()));
-					}
+					//if (reader.readBoolean()) {
+						//holder.setModifier(Modifier.fromID(reader.readByte()));
+					//}
 				}
 			}
+
 
 			if (!reader.readBoolean()) {
 				logger.error("Verification failed");
@@ -118,12 +118,12 @@ public class PlayerIO {
 					writer.writeString(holder.getItem().getID());
 					writer.writeInt16((short) holder.getCount());
 
-					if (holder.getModifier() != null) {
+					/*if (holder.getModifier() != null) {
 						writer.writeBoolean(true);
 						writer.writeByte(holder.getModifier().getID());
-					} else {
+					} else {*/
 						writer.writeBoolean(false);
-					}
+					//}
 				}
 			}
 
