@@ -3,7 +3,8 @@ package org.egordorichev.lasttry.world.spawn.components;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,11 @@ public class CreatureSpawnComponent {
     public static List<String> retrieveEligibleSpawnCreatures(final int availableMaxSpawn) {
         final List<String> eligibleCreaturesForSpawn = new ArrayList<>();
 
-        Creatures.CREATURE_CACHE.keySet().stream().forEach(creatureKey -> {
-	        if(Creatures.canSpawn(creatureKey, availableMaxSpawn)){
+        CreatureManager creatureManager = InjectionHelper.getInstance(CreatureManager.class);
+
+
+        creatureManager.keys().stream().forEach(creatureKey -> {
+	        if(creatureManager.canSpawn(creatureKey, availableMaxSpawn)){
 	            eligibleCreaturesForSpawn.add(creatureKey);
             }
         });

@@ -1,19 +1,35 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-
-import java.security.SecureRandom;
-
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
-import org.egordorichev.lasttry.core.Bootstrap;
-import org.egordorichev.lasttry.player.PlayerIO;
+import org.egordorichev.lasttry.crafting.RecipeManager;
+import org.egordorichev.lasttry.crafting.RecipeManagerImpl;
+import org.egordorichev.lasttry.effect.EffectManager;
+import org.egordorichev.lasttry.effect.EffectManagerImpl;
+import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.entity.CreatureManagerImpl;
+import org.egordorichev.lasttry.entity.ai.AIManager;
+import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.item.ItemManager;
+import org.egordorichev.lasttry.item.ItemManagerImpl;
+import org.egordorichev.lasttry.item.liquids.LiquidManager;
+import org.egordorichev.lasttry.item.liquids.LiquidManagerImpl;
+import org.egordorichev.lasttry.player.PlayerIO;
+import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
+import org.egordorichev.lasttry.world.biome.BiomeManager;
+import org.egordorichev.lasttry.world.biome.BiomeManagerImpl;
 import org.egordorichev.lasttry.world.environment.Environment;
 import org.egordorichev.lasttry.world.spawn.SpawnSystem;
+
+import java.io.File;
+import java.security.SecureRandom;
 
 public class LoadState implements State {
 	/**
@@ -32,8 +48,32 @@ public class LoadState implements State {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+
                     	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
-	                    Bootstrap.load();
+
+
+						Context context = new Context();
+						CoreRegistry.setContext(context);
+						context.bindInstance(ItemManager.class, new ItemManagerImpl()).load();
+						context.bindInstance(RecipeManager.class, new RecipeManagerImpl()).load();
+						context.bindInstance(BiomeManager.class,new BiomeManagerImpl()).load();
+						context.bindInstance(EffectManager.class,new EffectManagerImpl()).load();
+						context.bindInstance(AIManager.class,new AIManagerImpl()).load();
+						context.bindInstance(CreatureManager.class, new CreatureManagerImpl()).load();
+						context.bindInstance(LiquidManager.class, new LiquidManagerImpl()).load();
+
+
+						//TODO: figure out loading scheme
+						try {
+							File file = new File(Files.getRootDir());
+
+							if (!file.exists() || !file.isDirectory()) {
+								file.createNewFile();
+							}
+						} catch (Exception exception) {
+							throw new RuntimeException("Couldn't open save directory. Aborting.");
+						}
+
                         loadString = "Loading spawn system...";
                         Globals.spawnSystem = new SpawnSystem();
                         loadString = "Loading environment...";

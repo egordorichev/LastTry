@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.mod;
 
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.Crash;
-import org.egordorichev.lasttry.item.Items;
 import org.egordorichev.lasttry.util.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

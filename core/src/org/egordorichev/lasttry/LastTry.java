@@ -6,21 +6,37 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.Crash;
-import org.egordorichev.lasttry.graphics.*;
+import org.egordorichev.lasttry.core.Version;
+import org.egordorichev.lasttry.crafting.RecipeManager;
+import org.egordorichev.lasttry.crafting.RecipeManagerImpl;
+import org.egordorichev.lasttry.effect.EffectManager;
+import org.egordorichev.lasttry.effect.EffectManagerImpl;
+import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.entity.CreatureManagerImpl;
+import org.egordorichev.lasttry.entity.ai.AIManager;
+import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
+import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.input.InputManager;
+import org.egordorichev.lasttry.item.ItemManager;
+import org.egordorichev.lasttry.item.ItemManagerImpl;
+import org.egordorichev.lasttry.item.liquids.LiquidManager;
+import org.egordorichev.lasttry.item.liquids.LiquidManagerImpl;
+import org.egordorichev.lasttry.language.Language;
 import org.egordorichev.lasttry.state.SplashState;
 import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Debug;
-import org.egordorichev.lasttry.language.Language;
+import org.egordorichev.lasttry.world.biome.BiomeManager;
+import org.egordorichev.lasttry.world.biome.BiomeManagerImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * Main game class
@@ -96,6 +112,7 @@ public class LastTry extends Game {
 	private final int height;
 
 	public LastTry(int width, int height) {
+
 		this.width = width;
 		this.height = height;
 	}
@@ -121,6 +138,7 @@ public class LastTry extends Game {
 
 		debug = new Debug();
 		ui = new UiManager();
+
 
 		this.setScreen(new SplashState());
 	}
