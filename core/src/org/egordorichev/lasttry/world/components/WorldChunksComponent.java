@@ -2,8 +2,11 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
+import org.egordorichev.lasttry.item.liquids.LiquidManager;
 import org.egordorichev.lasttry.item.liquids.Liquids;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
@@ -26,8 +29,13 @@ public class WorldChunksComponent extends WorldComponent {
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
 	private int size;
 
+	private final LiquidManager liquidManager;
+	private final ItemManager itemManager;
 	public WorldChunksComponent(World world) {
 		super(world);
+
+		liquidManager = InjectionHelper.getInstance(LiquidManager.class);
+		itemManager = InjectionHelper.getInstance(ItemManager.class);
 
 		this.size = world.getWidth() * world.getHeight();
 		this.chunks = new Chunk[this.size];
@@ -55,10 +63,10 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+				Block block = (Block) itemManager.getItem(this.world.blocks.getID(x, y));
 
 				if (block == null) {
-					Liquids.renderLiquid(x, y);
+					liquidManager.renderLiquid(x, y);
 				}
 			}
 		}
@@ -71,7 +79,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+				Block block = (Block) itemManager.getItem(this.world.blocks.getID(x, y));
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);
@@ -79,7 +87,7 @@ public class WorldChunksComponent extends WorldComponent {
 					byte binary = block.calculateBinary(x, y);
 
 					if (binary != 15) {
-						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+						Wall wall = (Wall) itemManager.getItem(this.world.walls.getID(x, y));
 
 						if (wall != null) {
 							wall.renderWall(x, y);
@@ -88,7 +96,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 					block.renderBlock(x, y, binary);
 				} else {
-					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+					Wall wall = (Wall) itemManager.getItem(this.world.walls.getID(x, y));
 
 					if (wall != null) {
 						wall.renderWall(x, y);

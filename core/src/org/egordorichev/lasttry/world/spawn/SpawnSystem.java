@@ -3,7 +3,8 @@ package org.egordorichev.lasttry.world.spawn;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.GenericContainer;
 import org.egordorichev.lasttry.world.biome.Biome;
@@ -25,6 +26,8 @@ public class SpawnSystem {
 	private CircleAreaComponent playerActiveArea;
 	private int enemiesInActiveAreaCount;
 
+	private final CreatureManager creatureManager;
+
 	public void update() {
 		if (Globals.environment.currentBiome == null) {
 			return;
@@ -32,6 +35,11 @@ public class SpawnSystem {
 
 		this.biome = Globals.environment.currentBiome; // Get user biome
 		this.refreshTriggered();
+	}
+
+	public SpawnSystem(){
+		creatureManager = InjectionHelper.getInstance(CreatureManager.class);
+
 	}
 
 	// The following three methods are exposed for the debugger.
@@ -87,8 +95,7 @@ public class SpawnSystem {
 				.generateEligibleEnemySpawnPoint(playerActiveArea);
 
 		if (optionalSuitableXySpawnPoint.isPresent()) {
-			Creature creatureToBeSpawned = Creatures
-					.create(CreatureSpawnComponent.retrieveRandomCreature(eligibleCreaturesForSpawn));
+			Creature creatureToBeSpawned = creatureManager.create(CreatureSpawnComponent.retrieveRandomCreature(eligibleCreaturesForSpawn));
 			int xEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getFirst();
 			int yEnemySpawnPoint = optionalSuitableXySpawnPoint.get().getSecond();
 			Globals.entityManager.spawn(creatureToBeSpawned, xEnemySpawnPoint * Block.SIZE,

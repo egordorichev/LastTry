@@ -6,10 +6,13 @@ import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.ai.AIID;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
-import org.egordorichev.lasttry.world.biome.Biomes;
+import org.egordorichev.lasttry.injection.InjectionHelper;
+import org.egordorichev.lasttry.world.biome.BiomeManager;
 
 public class SlimeAI extends AI {
 	private static final int MAX = 360;
+
+	private BiomeManager biomeManager;
 
     public SlimeAI() {
         super(AIID.slime);
@@ -18,6 +21,8 @@ public class SlimeAI extends AI {
 	@Override
 	public void init(CreatureWithAI creature) {
     	creature.ai.setMax(MAX);
+		this.biomeManager = InjectionHelper.getInstance(BiomeManager.class);
+
 	}
 
 	@Override
@@ -45,6 +50,6 @@ public class SlimeAI extends AI {
 
 	@Override
 	public boolean canSpawn() {
-		return Globals.environment.time.isDay() && Globals.environment.currentBiome == Biomes.get("lt:forest");
+		return Globals.environment.time.isDay() && Globals.environment.currentBiome == biomeManager.get("lt:forest");
 	}
 }

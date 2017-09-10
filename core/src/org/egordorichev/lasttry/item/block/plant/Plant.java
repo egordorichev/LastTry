@@ -5,8 +5,10 @@ import java.util.Arrays;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
 import org.egordorichev.lasttry.util.Util;
@@ -44,9 +46,11 @@ public class Plant extends Block {
 		if (BlockHelper.plant.hasGrown(hp)) {
 			String seeds = getSeedsFor(this.id);
 
+			ItemManager itemManager = InjectionHelper.getInstance(ItemManager.class);
+
 			if (!seeds.isEmpty()) {
 				Globals.entityManager.spawnBlockDrop(
-						new DroppedItem(new ItemHolder(Item.fromID(seeds), Util.random(1, 3))),
+						new DroppedItem(new ItemHolder(itemManager.getItem(seeds), Util.random(1, 3))),
 						x * Block.SIZE - Block.SIZE / 2, y * Block.SIZE - Block.SIZE / 2);
 			}
 		}

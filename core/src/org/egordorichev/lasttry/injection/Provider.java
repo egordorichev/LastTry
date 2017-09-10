@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.registry;
+package org.egordorichev.lasttry.injection;
 
 @FunctionalInterface
 public interface Provider<T>  {

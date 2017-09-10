@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
@@ -51,12 +52,15 @@ public class Item {
 	 */
 	protected boolean unobtainable;
 
+	private final ItemManager itemManager;
+
 	public Item(String id) {
-		if (Items.ITEM_CACHE.containsKey(id)) {
+		itemManager =  InjectionHelper.getInstance(ItemManager.class);
+
+		if (itemManager.hasItem(id)) {
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
-
-		Items.ITEM_CACHE.put(id, this);
+		itemManager.addItem(id,this);
 
 		this.id = id;
 		this.name = Language.text.get(this.id);
@@ -286,12 +290,12 @@ public class Item {
 	 * @param id Item id
 	 * @return Item with given id or null, if it is not found
 	 */
-	public static Item fromID(String id) {
+	public Item fromID(String id) {
 		if (id == null) {
 			return null;
 		}
 
-		return Items.ITEM_CACHE.get(id);
+		return itemManager.getItem(id);
 	}
 
 	/**
