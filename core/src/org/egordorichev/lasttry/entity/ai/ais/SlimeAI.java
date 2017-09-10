@@ -16,12 +16,14 @@ public class SlimeAI extends AI {
 
     public SlimeAI() {
         super(AIID.slime);
+		this.biomeManager = InjectionHelper.getInstance(BiomeManager.class);
     }
+
+
 
 	@Override
 	public void init(CreatureWithAI creature) {
     	creature.ai.setMax(MAX);
-		this.biomeManager = InjectionHelper.getInstance(BiomeManager.class);
 
 	}
 

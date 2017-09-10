@@ -52,16 +52,6 @@ public class LoadState implements State {
                     	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
 
 
-						//TODO: figure out loading scheme
-						try {
-							File file = new File(Files.getRootDir());
-
-							if (!file.exists() || !file.isDirectory()) {
-								file.createNewFile();
-							}
-						} catch (Exception exception) {
-							throw new RuntimeException("Couldn't open save directory. Aborting.");
-						}
 						Context context = new Context();
 						CoreRegistry.setContext(context);
 						context.bindInstance(ItemManager.class, new ItemManagerImpl()).load();
@@ -72,6 +62,17 @@ public class LoadState implements State {
 						context.bindInstance(CreatureManager.class, new CreatureManagerImpl()).load();
 						context.bindInstance(LiquidManager.class, new LiquidManagerImpl()).load();
 
+
+						//TODO: figure out loading scheme
+						try {
+							File file = new File(Files.getRootDir());
+
+							if (!file.exists() || !file.isDirectory()) {
+								file.createNewFile();
+							}
+						} catch (Exception exception) {
+							throw new RuntimeException("Couldn't open save directory. Aborting.");
+						}
 
                         loadString = "Loading spawn system...";
                         Globals.spawnSystem = new SpawnSystem();

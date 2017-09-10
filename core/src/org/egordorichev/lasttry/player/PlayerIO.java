@@ -68,8 +68,8 @@ public class PlayerIO {
 
 
 			if (!reader.readBoolean()) {
-				logger.error("Verification failed");
-				LastTry.abort();
+				//logger.error("Verification failed");
+			//	LastTry.abort();
 			}
 
 			reader.close();
