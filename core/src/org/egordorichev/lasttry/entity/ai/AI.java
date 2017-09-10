@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.ai;
 
 import org.egordorichev.lasttry.entity.CreatureWithAI;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 
 public abstract class AI {
@@ -9,9 +10,7 @@ public abstract class AI {
 
 
     public AI(short id) {
-        aiManager = InjectionHelper.getInstance(AIManager.class);
-
-
+        aiManager = CoreRegistry.get(AIManager.class);
         if (aiManager.get(id) != null) {
             throw new RuntimeException("AI with id " + id + " is already defined!");
         }

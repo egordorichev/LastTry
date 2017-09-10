@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.components;
 
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
@@ -14,7 +15,7 @@ public class WorldBlocksComponent extends WorldComponent {
 
 	// In grid points
 	public Block get(int x, int y) {
-		return (Block) InjectionHelper.getInstance(ItemManager.class).getItem(this.getID(x, y));
+		return (Block) CoreRegistry.get(ItemManager.class).getItem(this.getID(x, y));
 	}
 
 	public byte getLight(int x, int y) {

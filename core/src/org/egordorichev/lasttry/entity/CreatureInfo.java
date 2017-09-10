@@ -121,7 +121,7 @@ public class CreatureInfo {
 		this.copied = true;
 
 
-		CreatureInfo info = InjectionHelper.getInstance(CreatureManager.class).getCreatureInfo(from);
+		CreatureInfo info = CoreRegistry.get(CreatureManager.class).getCreatureInfo(from);
 
 		if (info == null) {
 			throw new Exception("Creature for copy " + from + " is not found");
@@ -182,7 +182,7 @@ public class CreatureInfo {
 		}
 
 
-		this.ai = InjectionHelper.getInstance(AIManager.class).get(ai);
+		this.ai = CoreRegistry.get(AIManager.class).get(ai);
 
 		if (this.ai == null) {
 			throw new Exception("AI with id " + ai + " is not found");
@@ -223,7 +223,7 @@ public class CreatureInfo {
 
 			for (JsonValue drop : drops) {
 
-				Item item = InjectionHelper.getInstance(ItemManager.class).getItem(drop.getString("id"));
+				Item item = CoreRegistry.get(ItemManager.class).getItem(drop.getString("id"));
 
 				if (item == null) {
 					throw new Exception("Item with id " + drop.getString("id") + " is not found");

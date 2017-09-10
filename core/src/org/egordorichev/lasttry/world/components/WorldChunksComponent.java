@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
@@ -34,8 +35,8 @@ public class WorldChunksComponent extends WorldComponent {
 	public WorldChunksComponent(World world) {
 		super(world);
 
-		liquidManager = InjectionHelper.getInstance(LiquidManager.class);
-		itemManager = InjectionHelper.getInstance(ItemManager.class);
+		liquidManager = CoreRegistry.get(LiquidManager.class);
+		itemManager = CoreRegistry.get(ItemManager.class);
 
 		this.size = world.getWidth() * world.getHeight();
 		this.chunks = new Chunk[this.size];

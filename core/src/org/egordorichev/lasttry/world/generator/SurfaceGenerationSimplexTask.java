@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.generator;
 
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.util.SimplexNoise;
 import org.egordorichev.lasttry.util.Util;
@@ -41,7 +42,7 @@ public class SurfaceGenerationSimplexTask extends GeneratorTask {
 	private final BiomeManager biomeManager;
 
 	SurfaceGenerationSimplexTask(){
-		biomeManager = InjectionHelper.getInstance(BiomeManager.class);
+		biomeManager = CoreRegistry.get(BiomeManager.class);
 	}
 
 	@Override

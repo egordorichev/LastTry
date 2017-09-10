@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.world.environment;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
@@ -26,7 +27,7 @@ public class Environment {
 
 	public final BiomeManager biomeManager;
 	public Environment() {
-		 biomeManager = InjectionHelper.getInstance(BiomeManager.class);
+		 biomeManager = CoreRegistry.get(BiomeManager.class);
 
 		this.currentBiome = biomeManager.get("lt:forest");
 		this.currentBiome.animation.fadeInFast();

@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.CreatureManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
@@ -58,8 +59,8 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
-		itemManager = InjectionHelper.getInstance(ItemManager.class);
-		creatureManager = InjectionHelper.getInstance(CreatureManager.class);
+		itemManager = CoreRegistry.get(ItemManager.class);
+		creatureManager = CoreRegistry.get(CreatureManager.class);
 
 		this.initCommands();
 		this.back = Assets.getTexture("chat_back");

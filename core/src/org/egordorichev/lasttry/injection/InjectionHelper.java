@@ -12,11 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class InjectionHelper {
-    private static final Logger logger = LoggerFactory.getLogger(Context.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContextImpl.class);
+
+    public static  <T> T inject(T object){
+        return inject(object,CoreRegistry.getContext());
+    }
 
     public static  <T> T inject(T object,Context context){
         for (Field field : ReflectionUtils.getAllFields(object.getClass(), ReflectionUtils.withAnnotation(In.class))) {
-            Object value = InjectionHelper.getInstance(field.getType(),context);
+            Object value = context.get(field.getType());
             if (value != null) {
                 try {
                     field.setAccessible(true);
@@ -29,30 +33,6 @@ public class InjectionHelper {
         return object;
     }
 
-    public static  <T> T getInstance(Class<T> requestType){
-        return InjectionHelper.getInstance(requestType,CoreRegistry.context);
-    }
-    public static  <T> T getInstance(Class<T> requestType,Context context){
-        Class<T> type = requestType;
-
-        if(type.isInterface())
-        {
-            if(context.interfaceMapping.containsKey(requestType)){
-                type = context.interfaceMapping.get(requestType);
-            } else  if(context.providers.containsKey(requestType)) {
-                return (T) context.providers.get(requestType).get();
-            } else {
-                logger.error("Can't find mapping for interface of {}", type);
-                return null;
-            }
-        }
-
-        if(context.providers.containsKey(requestType)){
-            return (T) context.providers.get(type);
-        }
-        return createWithConstructorInjection(requestType,context);
-
-    }
 
     public static <T> T createWithConstructorInjection(Class<T> requestType, Context context) {
         try {
@@ -65,7 +45,7 @@ public class InjectionHelper {
 
             Object[] params = new Object[constructor.getParameterCount()];
             for (int i = 0; i < constructor.getParameterCount(); i++) {
-                params[i] = getInstance(constructor.getParameterTypes()[i],context);
+                params[i] = CoreRegistry.get(constructor.getParameterTypes()[i]);
             }
             return  constructor.newInstance(params);
 

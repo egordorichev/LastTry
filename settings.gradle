@@ -1,1 +1,13 @@
-include 'desktop', 'core'
+import groovy.io.FileType
+
+include 'desktop', 'core', 'mods'
+
+// Handy little snippet found online that'll "fake" having nested settings.gradle files under /modules, /libs, etc
+rootDir.eachDir { possibleSubprojectDir ->
+
+    // First scan through all subdirs that has a subprojects.gradle in it and apply that script (recursive search!)
+    possibleSubprojectDir.eachFileMatch FileType.FILES, ~/subprojects\.gradle/, { subprojectsSpecificationScript ->
+        //println "Magic is happening, applying from " + subprojectsSpecificationScript
+        apply from: subprojectsSpecificationScript
+    }
+}

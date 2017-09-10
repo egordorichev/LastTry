@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.world.components;
 
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
@@ -14,7 +15,7 @@ public class WorldWallsComponent extends WorldComponent {
 	}
 
 	public Wall get(int x, int y) {
-		return (Wall) InjectionHelper.getInstance(ItemManager.class).getItem(this.getID(x, y));
+		return (Wall) CoreRegistry.get(ItemManager.class).getItem(this.getID(x, y));
 	}
 
 	public String getID(int x, int y) {

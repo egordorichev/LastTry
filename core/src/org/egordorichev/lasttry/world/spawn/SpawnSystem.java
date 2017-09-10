@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.GenericContainer;
@@ -38,7 +39,7 @@ public class SpawnSystem {
 	}
 
 	public SpawnSystem(){
-		creatureManager = InjectionHelper.getInstance(CreatureManager.class);
+		creatureManager = CoreRegistry.get(CreatureManager.class);
 
 	}
 
