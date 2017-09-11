@@ -6,6 +6,10 @@ buildscript {
         jcenter()
     }
     dependencies {
+
+        // Git plugin for Gradle
+        classpath 'org.ajoberstar:gradle-git:0.6.3'
+
     }
 }
 
@@ -44,6 +48,7 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
 }
+
 
 project(":core") {
     apply plugin: "java"

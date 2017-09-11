@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.item;
 
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 
 public class Tile extends Item {
@@ -34,7 +35,7 @@ public class Tile extends Item {
 			return false;
 		}
 
-		Item i1 = InjectionHelper.getInstance(ItemManager.class).getItem(itemID);
+		Item i1 = CoreRegistry.get(ItemManager.class).getItem(itemID);
 
 		if (i1 == null) {
 			return false;

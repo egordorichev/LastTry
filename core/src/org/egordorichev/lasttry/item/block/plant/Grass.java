@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.item.block.plant;
 
 import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
@@ -19,7 +20,7 @@ public class Grass extends BlockGround {
 
     @SuppressWarnings("unused")
 	private void spread(int x, int y) {
-        ItemManager itemManager = InjectionHelper.getInstance(ItemManager.class);
+        ItemManager itemManager = CoreRegistry.get(ItemManager.class);
 
         Block block = (Block) itemManager.getItem(Globals.getWorld().blocks.getID(x, y));
 

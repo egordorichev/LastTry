@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
 import org.egordorichev.lasttry.item.block.Block;
@@ -55,7 +56,7 @@ public class Item {
 	private final ItemManager itemManager;
 
 	public Item(String id) {
-		itemManager =  InjectionHelper.getInstance(ItemManager.class);
+		itemManager =  CoreRegistry.get(ItemManager.class);
 
 		if (itemManager.hasItem(id)) {
 			throw new RuntimeException("Item with id " + id + " already exists.");

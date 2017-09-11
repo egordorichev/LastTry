@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.drop.DroppedItem;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
@@ -46,7 +47,7 @@ public class Plant extends Block {
 		if (BlockHelper.plant.hasGrown(hp)) {
 			String seeds = getSeedsFor(this.id);
 
-			ItemManager itemManager = InjectionHelper.getInstance(ItemManager.class);
+			ItemManager itemManager = CoreRegistry.get(ItemManager.class);
 
 			if (!seeds.isEmpty()) {
 				Globals.entityManager.spawnBlockDrop(

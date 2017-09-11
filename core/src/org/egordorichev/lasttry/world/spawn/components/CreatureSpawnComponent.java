@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
 import org.egordorichev.lasttry.entity.CreatureManager;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class CreatureSpawnComponent {
     public static List<String> retrieveEligibleSpawnCreatures(final int availableMaxSpawn) {
         final List<String> eligibleCreaturesForSpawn = new ArrayList<>();
 
-        CreatureManager creatureManager = InjectionHelper.getInstance(CreatureManager.class);
+        CreatureManager creatureManager = CoreRegistry.get(CreatureManager.class);
 
 
         creatureManager.keys().stream().forEach(creatureKey -> {

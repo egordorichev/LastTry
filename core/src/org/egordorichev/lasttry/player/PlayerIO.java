@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.player;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
@@ -57,7 +58,7 @@ public class PlayerIO {
 
 				if (id != null) {
 					ItemHolder holder = Globals.getPlayer().getInventory().getItemInSlot(i);
-					holder.setItem(InjectionHelper.getInstance(ItemManager.class).getItem(id));
+					holder.setItem(CoreRegistry.get(ItemManager.class).getItem(id));
 					holder.setCount(reader.readInt16());
 
 					//if (reader.readBoolean()) {
@@ -148,7 +149,7 @@ public class PlayerIO {
 	public static Player generate(String name) {
 		int x = Globals.getWorld().getWidth() / 2;
 		Player player = new Player(name);
-		ItemManager itemManager = InjectionHelper.getInstance(ItemManager.class);
+		ItemManager itemManager = CoreRegistry.get(ItemManager.class);
 
 		player.getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_shortsword"), 1));
 		player.getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_pickaxe"), 1));

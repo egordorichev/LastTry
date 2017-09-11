@@ -13,7 +13,7 @@ import org.egordorichev.lasttry.entity.ai.AIManager;
 import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.injection.Context;
+import org.egordorichev.lasttry.injection.ContextImpl;
 import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.ItemManagerImpl;
@@ -52,7 +52,7 @@ public class LoadState implements State {
                     	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
 
 
-						Context context = new Context();
+						ContextImpl context = new ContextImpl();
 						CoreRegistry.setContext(context);
 						context.bindInstance(ItemManager.class, new ItemManagerImpl()).load();
 						context.bindInstance(RecipeManager.class, new RecipeManagerImpl()).load();

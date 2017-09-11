@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.ai.AI;
 import org.egordorichev.lasttry.entity.ai.AIID;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.world.biome.BiomeManager;
 
@@ -16,7 +17,7 @@ public class SlimeAI extends AI {
 
     public SlimeAI() {
         super(AIID.slime);
-		this.biomeManager = InjectionHelper.getInstance(BiomeManager.class);
+		this.biomeManager = CoreRegistry.get(BiomeManager.class);
     }
 
 

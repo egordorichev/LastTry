@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
@@ -26,7 +27,7 @@ public class Chunk {
 	private final ItemManager itemManager;
 
 	public Chunk(ChunkData data, Vector2 position) {
-		itemManager = InjectionHelper.getInstance(ItemManager.class);
+		itemManager = CoreRegistry.get(ItemManager.class);
 
 		this.updateLastAccessedTime();
 		this.data = data;
