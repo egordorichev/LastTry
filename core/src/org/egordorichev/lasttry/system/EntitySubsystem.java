@@ -7,7 +7,7 @@ import org.egordorichev.lasttry.injection.Context;
 import org.terasology.entitysystem.core.EntityManager;
 import org.terasology.valuetype.TypeLibrary;
 
-public class EntitySystem implements Subsystem{
+public class EntitySubsystem implements Subsystem{
     @Override
     public String name() {
         return "Entity System";
