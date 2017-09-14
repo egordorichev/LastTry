@@ -13,11 +13,7 @@ public class ComponentSubsystem implements Subsystem {
 
     @Override
     public void load(Context context) {
-        //todo: reflection
-        Reflections reflections = new Reflections("com.mycompany");
-        for(Class<? extends ComponentSystem> componentSystem : reflections.getSubTypesOf(ComponentSystem.class)){
-             InjectionHelper.createWithConstructorInjection(componentSystem,context);
-        }
+
 
     }
 }
