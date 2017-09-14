@@ -97,7 +97,12 @@ public class Wall extends Tile {
 
 		float light = Globals.getWorld().light.get(x, y);
 		Graphics.batch.setColor(light, light, light, 1f);
-		Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
+		try {
+			Graphics.batch.draw(this.tiles[variant][binary], x * Block.SIZE, y * Block.SIZE);
+		} catch (RuntimeException exception) {
+			System.out.print("Crash wall id: " + this.id);
+			throw exception;
+		}
 
 		hp = WallHelper.getHP(hp);
 

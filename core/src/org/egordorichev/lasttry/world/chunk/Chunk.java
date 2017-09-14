@@ -2,7 +2,10 @@ package org.egordorichev.lasttry.world.chunk;
 
 import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.ByteHelper;
@@ -20,7 +23,12 @@ public class Chunk {
 	private UUID uniqueChunkId;
 	private boolean unloadable = true;
 
+
+	private final ItemManager itemManager;
+
 	public Chunk(ChunkData data, Vector2 position) {
+		itemManager = CoreRegistry.get(ItemManager.class);
+
 		this.updateLastAccessedTime();
 		this.data = data;
 		this.position = position;
@@ -30,7 +38,7 @@ public class Chunk {
 	public void update() {
 		for (int y = 0; y < SIZE; y++) {
 			for (int x = 0; x < SIZE; x++) {
-				Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
+				Block block = (Block) itemManager.getItem(this.data.blocks[x + y * SIZE]);
 
 				if (block != null) {
 					block.updateBlock(x, y);
@@ -93,7 +101,7 @@ public class Chunk {
 		this.updateLastAccessedTime();
 
 		if (die) {
-			Block block = (Block) Item.fromID(this.data.blocks[x + y * SIZE]);
+			Block block = (Block) itemManager.getItem(this.data.blocks[x + y * SIZE]);
 
 			this.data.blocksHealth[x + y * SIZE] = hp;
 			this.setBlockInside(null, x, y);
@@ -157,7 +165,7 @@ public class Chunk {
 		this.updateLastAccessedTime();
 
 		if (ByteHelper.getBitValue(hp, (byte) 0) == 0 && ByteHelper.getBitValue(hp, (byte) 1) == 0) {
-			Wall wall = (Wall) Item.fromID(this.data.blocks[x + y * SIZE]);
+			Wall wall = (Wall)itemManager.getItem(this.data.blocks[x + y * SIZE]);
 
 			if (wall != null) {
 				wall.die(x + this.getX(), y + this.getY());

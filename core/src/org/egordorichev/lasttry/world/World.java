@@ -6,7 +6,10 @@ import java.util.Random;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.*;
 import org.egordorichev.lasttry.world.chunk.Chunk;
@@ -246,7 +249,7 @@ public class World {
 					return true;
 				}
 
-				Block block = (Block) Item.fromID(this.blocks.getID(x, y));
+				Block block = (Block) CoreRegistry.get(ItemManager.class).getItem(this.blocks.getID(x, y));
 
 				if (block == null || !block.isSolid()) {
 					continue;

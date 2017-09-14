@@ -6,12 +6,15 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ChunkIO {
+	private static final Logger logger = LoggerFactory.getLogger(ChunkIO.class);
 	public static final byte VERSION = 4;
 
 	public static Chunk load(int x, int y) {
@@ -22,7 +25,7 @@ public class ChunkIO {
 			return generate(x, y);
 		}
 
-		Log.debug("Loading chunk " + x + ":" + y + "...");
+		logger.debug("Loading chunk " + x + ":" + y + "...");
 
 		try {
 			FileReader stream = new FileReader(fileName);
@@ -30,10 +33,10 @@ public class ChunkIO {
 			byte version = stream.readByte();
 
 			if (version > VERSION) {
-				Log.error("Trying to load unknown chunk.");
+				logger.error("Trying to load unknown chunk.");
 				LastTry.abort();
 			} else if (version < VERSION) {
-				Log.error("Trying to load old chunk.");
+				logger.error("Trying to load old chunk.");
 				LastTry.abort();
 			}
 
@@ -69,12 +72,12 @@ public class ChunkIO {
 			boolean unloadable = stream.readBoolean();
 
 			if (!stream.readBoolean()) {
-				Log.error("Verification failed!");
+				logger.error("Verification failed!");
 				LastTry.abort();
 			}
 
 			stream.close();
-			Log.debug("Done loading chunk " + x + ":" + y + "!");
+			logger.debug("Done loading chunk " + x + ":" + y + "!");
 
 			Chunk chunk = new Chunk(data, new Vector2(x, y));
 			chunk.setUnloadable(unloadable);
@@ -94,13 +97,13 @@ public class ChunkIO {
 			try {
 				file.createNewFile();
 			} catch(IOException exception) {
-				Log.error("Could not create a save file for chunk " + x + ":" + y + ".");
+				logger.error("Could not create a save file for chunk " + x + ":" + y + ".");
 				LastTry.abort();
 			}
 		}
 
 		Chunk chunk = Globals.getWorld().chunks.get(x, y);
-		Log.debug("Saving chunk " + x + ":" + y + "...");
+		logger.debug("Saving chunk " + x + ":" + y + "...");
 
 		try {
 			FileWriter stream = new FileWriter(fileName);
@@ -134,9 +137,9 @@ public class ChunkIO {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Log.debug("Generating chunk " + x + ":" + y + "...");
+				logger.debug("Generating chunk " + x + ":" + y + "...");
 				Globals.getWorld().chunks.set(new Chunk(new ChunkData(), new Vector2(x, y)), x, y);
-				Log.debug("Done generating chunk " + x + ":" + y + "!");
+				logger.debug("Done generating chunk " + x + ":" + y + "!");
 			}
 		}).start();
 		return new EmptyChunk(new Vector2(x, y));

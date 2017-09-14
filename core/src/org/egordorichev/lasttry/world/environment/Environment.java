@@ -3,16 +3,19 @@ package org.egordorichev.lasttry.world.environment;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.WorldTime;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.biome.Biomes;
+import org.egordorichev.lasttry.world.biome.BiomeManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Environment {
@@ -22,10 +25,13 @@ public class Environment {
 	public Biome currentBiome;
 	public Biome lastBiome;
 
+	public final BiomeManager biomeManager;
 	public Environment() {
-		this.currentBiome = Biomes.get("lt:forest");
+		 biomeManager = CoreRegistry.get(BiomeManager.class);
+
+		this.currentBiome = biomeManager.get("lt:forest");
 		this.currentBiome.animation.fadeInFast();
-		this.lastBiome = Biomes.get("lt:forest");
+		this.lastBiome = biomeManager.get("lt:forest");
 		this.blockCount = new HashMap<>();
 		this.time = new WorldTime((byte) 8, (byte) 15);
 
@@ -144,7 +150,8 @@ public class Environment {
 
 		this.lastBiome = this.currentBiome;
 
-		for (Biome biome : Biomes.BIOME_CACHE) {
+		for (Iterator<Biome> it = biomeManager.iterator(); it.hasNext(); ) {
+			Biome biome = it.next();
 			boolean canBeSet = true;
 
 			for (Biome.Holder holder : biome.getRequired()) {

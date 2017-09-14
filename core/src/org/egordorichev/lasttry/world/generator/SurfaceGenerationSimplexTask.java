@@ -1,12 +1,16 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.util.Log;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.util.SimplexNoise;
 import org.egordorichev.lasttry.util.Util;
 import org.egordorichev.lasttry.world.biome.Biome;
-import org.egordorichev.lasttry.world.biome.Biomes;
+import org.egordorichev.lasttry.world.biome.BiomeManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SurfaceGenerationSimplexTask extends GeneratorTask {
+	private static final Logger logger = LoggerFactory.getLogger(SurfaceGenerationSimplexTask.class);
 	/**
 	 * Horizontal terrain stretch,
 	 */
@@ -35,9 +39,15 @@ public class SurfaceGenerationSimplexTask extends GeneratorTask {
 	 */
 	private final float biomeScale = 200f;
 
+	private final BiomeManager biomeManager;
+
+	SurfaceGenerationSimplexTask(){
+		biomeManager = CoreRegistry.get(BiomeManager.class);
+	}
+
 	@Override
 	public void run(WorldGenerator generator) {
-		Log.info("Generating heightmap");
+		logger.info("Generating heightmap");
 		int width = generator.getWorldWidth();
 		int height = generator.getWorldHeight();
 
@@ -75,7 +85,7 @@ public class SurfaceGenerationSimplexTask extends GeneratorTask {
 		int yh = -y - (seed % 10_000);
 		int temperature = scaleHeight(SimplexNoise.octavedNoise(xt, yt, 3, biomeRoughness, 0.1f / biomeScale));
 		int humidity = scaleHeight(SimplexNoise.octavedNoise(xh, yh, 3, biomeRoughness, 0.1f / biomeScale));
-		return Biomes.getClosest(temperature, humidity);
+		return biomeManager.getClosest(temperature, humidity);
 	}
 
 	private static int scaleHeight(float input) {

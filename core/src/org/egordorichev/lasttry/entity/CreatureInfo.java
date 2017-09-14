@@ -4,12 +4,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.ai.AI;
+import org.egordorichev.lasttry.entity.ai.AIManager;
 import org.egordorichev.lasttry.entity.components.CreatureStateComponent;
 import org.egordorichev.lasttry.entity.drop.Drop;
 import org.egordorichev.lasttry.graphics.Animation;
 import org.egordorichev.lasttry.graphics.AnimationFrame;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.util.Rectangle;
 import java.util.ArrayList;
 
@@ -116,7 +120,8 @@ public class CreatureInfo {
 	private void copy(String from) throws Exception {
 		this.copied = true;
 
-		CreatureInfo info = Creatures.CREATURE_CACHE.get(from);
+
+		CreatureInfo info = CoreRegistry.get(CreatureManager.class).getCreatureInfo(from);
 
 		if (info == null) {
 			throw new Exception("Creature for copy " + from + " is not found");
@@ -176,7 +181,8 @@ public class CreatureInfo {
 			ai = root.get("ai").asShort();
 		}
 
-		this.ai = AI.fromID(ai);
+
+		this.ai = CoreRegistry.get(AIManager.class).get(ai);
 
 		if (this.ai == null) {
 			throw new Exception("AI with id " + ai + " is not found");
@@ -216,7 +222,8 @@ public class CreatureInfo {
 			JsonValue drops = root.get("drop");
 
 			for (JsonValue drop : drops) {
-				Item item = Item.fromID(drop.getString("id"));
+
+				Item item = CoreRegistry.get(ItemManager.class).getItem(drop.getString("id"));
 
 				if (item == null) {
 					throw new Exception("Item with id " + drop.getString("id") + " is not found");

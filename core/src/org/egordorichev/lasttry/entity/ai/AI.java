@@ -1,16 +1,21 @@
 package org.egordorichev.lasttry.entity.ai;
 
 import org.egordorichev.lasttry.entity.CreatureWithAI;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 
 public abstract class AI {
     private short id;
+    private final AIManager aiManager;
+
 
     public AI(short id) {
-        if (AIs.AI_CACHE[id] != null) {
+        aiManager = CoreRegistry.get(AIManager.class);
+        if (aiManager.get(id) != null) {
             throw new RuntimeException("AI with id " + id + " is already defined!");
         }
 
-        AIs.AI_CACHE[id] = this;
+        aiManager.set(id,this);
         this.id = id;
     }
 
@@ -21,8 +26,8 @@ public abstract class AI {
         return this.id;
     }
 
-    public static AI fromID(short id) {
-        return AIs.AI_CACHE[id];
+    public AI fromID(short id) {
+        return aiManager.get(id);
     }
 
     public boolean canSpawn() {

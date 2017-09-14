@@ -17,7 +17,6 @@ public class WorldGenerator {
 		Globals.setWorld(this.world);
 		this.tasks.add(new SurfaceGenerationSimplexTask());
 		this.tasks.add(new CaveGeneratorSimplexTask());
-		// this.tasks.add(new FoilageGeneratorTask());
 	}
 
 	public void addTask(GeneratorTask task) {

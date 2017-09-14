@@ -2,8 +2,8 @@ package org.egordorichev.lasttry.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -64,7 +64,13 @@ public class Assets {
 	 * @return Texture or null
 	 */
 	public static TextureRegion getTexture(String name) {
-		return textures.findRegion(name);
+		TextureRegion texture = textures.findRegion(name);
+
+		if (texture == null) {
+			return textures.findRegion("null");
+		} else {
+			return texture;
+		}
 	}
 
 	/**

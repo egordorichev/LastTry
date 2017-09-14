@@ -1,19 +1,23 @@
 package org.egordorichev.lasttry.item;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.InventoryOwner;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.MissingResourceException;
 
 public class Item {
+	private static final Logger logger = LoggerFactory.getLogger(Item.class);
 	/**
 	 * Item identifier.
 	 */
@@ -49,20 +53,19 @@ public class Item {
 	 */
 	protected boolean unobtainable;
 
+	private final ItemManager itemManager;
+
 	public Item(String id) {
-		if (Items.ITEM_CACHE.containsKey(id)) {
+		itemManager =  CoreRegistry.get(ItemManager.class);
+
+		if (itemManager.hasItem(id)) {
 			throw new RuntimeException("Item with id " + id + " already exists.");
 		}
-
-		Items.ITEM_CACHE.put(id, this);
+		itemManager.addItem(id,this);
 
 		this.id = id;
 		this.name = Language.text.get(this.id);
 		this.texture = Assets.getTexture(this.id.replace(':', '_'));
-
-		if (this.texture == null) {
-			throw new RuntimeException("Texture for item " + id + " is not found.");
-		}
 	}
 
 	/**
@@ -78,7 +81,7 @@ public class Item {
 		try {
 			return createInstance(root, className);
 		} catch (Exception exception) {
-			Log.error(exception.getMessage());
+			logger.error(exception.getMessage());
 			throw new Exception("Failed to parse " + root.name());
 		}
 	}
@@ -288,12 +291,12 @@ public class Item {
 	 * @param id Item id
 	 * @return Item with given id or null, if it is not found
 	 */
-	public static Item fromID(String id) {
+	public Item fromID(String id) {
 		if (id == null) {
 			return null;
 		}
 
-		return Items.ITEM_CACHE.get(id);
+		return itemManager.getItem(id);
 	}
 
 	/**

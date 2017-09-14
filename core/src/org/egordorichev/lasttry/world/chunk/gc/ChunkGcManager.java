@@ -2,8 +2,9 @@ package org.egordorichev.lasttry.world.chunk.gc;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.util.Callable;
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 // todo use synchronized block
 
 public class ChunkGcManager {
+	private static final Logger logger = LoggerFactory.getLogger(ChunkGcManager.class);
 	boolean chunkGcInProgress = false;
 
 	public ChunkGcManager() {
@@ -25,16 +27,16 @@ public class ChunkGcManager {
 
 	public synchronized void requestFutureChunkGc() {
 		if (!isChunkGcInProgress()) {
-			Log.debug("Chunk GC is not in progress");
+			logger.debug("Chunk GC is not in progress");
 			int currentlyLoadedChunks = this.getCurrentlyLoadedChunks();
-			Log.debug("Loaded chunks is: " + currentlyLoadedChunks);
+			logger.debug("Loaded chunks is: " + currentlyLoadedChunks);
 			ChunkGcCalc.ChunkGCLevel chunkGCLevel = ChunkGcCalc.calcGcLevel(currentlyLoadedChunks);
 			this.scheduleChunkGc(chunkGCLevel);
 		}
 	}
 
 	public synchronized void scheduleChunkGc(ChunkGcCalc.ChunkGCLevel chunkGCLevel) {
-		Log.debug("Level of chunk gc to be scheduled is: " + chunkGCLevel.getLevelDescription());
+		logger.debug("Level of chunk gc to be scheduled is: " + chunkGCLevel.getLevelDescription());
 		// int futureTimeSecondsToRunChunkGc =
 		// chunkGCLevel.getTimeIntervalBeforeNextAttempt();
 		this.scheduleFutureChunkGcThread(chunkGCLevel);
@@ -63,7 +65,7 @@ public class ChunkGcManager {
 	private static class GCTask extends Callable {
 		@Override
 		public void call() {
-			Log.debug("Chunk GC thread has started, time limit has expired");
+			logger.debug("Chunk GC thread has started, time limit has expired");
 			// On wakeup, we run a chunk gc immediately based on a ChunkGC level
 			// we receive based on the current loaded chunks level
 			ChunkGcCalc.ChunkGCLevel chunkGCLevelForCurrentGc = ChunkGcCalc

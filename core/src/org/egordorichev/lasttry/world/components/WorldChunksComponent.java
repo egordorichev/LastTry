@@ -2,9 +2,13 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
-import org.egordorichev.lasttry.item.block.helpers.BlockHelper;
+import org.egordorichev.lasttry.item.liquids.LiquidManager;
+import org.egordorichev.lasttry.item.liquids.Liquids;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
@@ -26,8 +30,13 @@ public class WorldChunksComponent extends WorldComponent {
 	private ArrayList<Chunk> loadedChunks = new ArrayList<>();
 	private int size;
 
+	private final LiquidManager liquidManager;
+	private final ItemManager itemManager;
 	public WorldChunksComponent(World world) {
 		super(world);
+
+		liquidManager = CoreRegistry.get(LiquidManager.class);
+		itemManager = CoreRegistry.get(ItemManager.class);
 
 		this.size = world.getWidth() * world.getHeight();
 		this.chunks = new Chunk[this.size];
@@ -55,76 +64,10 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+				Block block = (Block) itemManager.getItem(this.world.blocks.getID(x, y));
 
 				if (block == null) {
-					byte hp = this.world.blocks.getHP(x, y);
-					byte liquidLevel = BlockHelper.empty.getLiquidLevel(hp);
-
-					if (liquidLevel > 0) {
-						float light = Globals.getWorld().light.get(x, y);
-						Graphics.batch.setColor(light, light, light, 1f);
-						Graphics.batch.draw(Graphics.waterTexture[0][liquidLevel - 1], x * Block.SIZE, y * Block.SIZE);
-						Block bottom = Globals.getWorld().blocks.get(x, y - 1);
-
-						if (bottom == null) {
-							byte bottomHp = Globals.getWorld().blocks.getHP(x, y - 1);
-							byte bottomLiquidLevel = BlockHelper.empty.getLiquidLevel(bottomHp);
-
-							if (bottomLiquidLevel < 15) { // FIXME: fit 16 somewhere?
-								liquidLevel -= 1;
-								hp = BlockHelper.empty.setLiquidLevel(hp, liquidLevel);
-								Globals.getWorld().blocks.setHP(hp, x, y);
-								bottomLiquidLevel += 1;
-								bottomHp = BlockHelper.empty.setLiquidLevel(bottomHp, bottomLiquidLevel);
-								Globals.getWorld().blocks.setHP(bottomHp, x, y - 1);
-								continue;
-							}
-						}
-
-						Block left = Globals.getWorld().blocks.get(x - 1, y);
-						Block right = Globals.getWorld().blocks.get(x + 1, y);
-
-						byte leftHp = Globals.getWorld().blocks.getHP(x - 1, y);
-						byte leftLiquidLevel = BlockHelper.empty.getLiquidLevel(leftHp);
-						byte rightHp = Globals.getWorld().blocks.getHP(x + 1, y);
-						byte rightLiquidLevel = BlockHelper.empty.getLiquidLevel(rightHp);
-
-						boolean toLeft = left == null && leftLiquidLevel < liquidLevel;
-						boolean toRight = right == null && rightLiquidLevel < liquidLevel;
-
-						if (toLeft && toRight) {
-							toLeft = Math.random() > 0.5;
-							toRight = !toLeft;
-						}
-
-						if (left == null && toLeft) {
-							if (leftLiquidLevel < 15) { // FIXME: fit 16 somewhere?
-								liquidLevel -= 1;
-								hp = BlockHelper.empty.setLiquidLevel(hp, liquidLevel);
-								Globals.getWorld().blocks.setHP(hp, x, y);
-								leftLiquidLevel += 1;
-								leftHp = BlockHelper.empty.setLiquidLevel(leftHp, leftLiquidLevel);
-								Globals.getWorld().blocks.setHP(leftHp, x - 1, y);
-							}
-						}
-
-						if (right == null && toRight) {
-							if (rightLiquidLevel < 15) { // FIXME: fit 16 somewhere?
-								liquidLevel -= 1;
-
-								if (liquidLevel < 0) {
-									liquidLevel = 0;
-								}
-
-								hp = BlockHelper.empty.setLiquidLevel(hp, liquidLevel);
-								Globals.getWorld().blocks.setHP(hp, x, y);
-								rightLiquidLevel += 1;
-								rightHp = BlockHelper.empty.setLiquidLevel(rightHp, rightLiquidLevel);
-								Globals.getWorld().blocks.setHP(rightHp, x + 1, y);
-							}
-						}
-					}
+					liquidManager.renderLiquid(x, y);
 				}
 			}
 		}
@@ -137,7 +80,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 		for (int y = blocksRect.y; y < blocksRect.y + blocksRect.height; y++) {
 			for (int x = blocksRect.x; x < blocksRect.x + blocksRect.width; x++) {
-				Block block = (Block) Item.fromID(this.world.blocks.getID(x, y));
+				Block block = (Block) itemManager.getItem(this.world.blocks.getID(x, y));
 
 				if (block != null) {
 					block.updateBlockStyle(x, y);
@@ -145,7 +88,7 @@ public class WorldChunksComponent extends WorldComponent {
 					byte binary = block.calculateBinary(x, y);
 
 					if (binary != 15) {
-						Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+						Wall wall = (Wall) itemManager.getItem(this.world.walls.getID(x, y));
 
 						if (wall != null) {
 							wall.renderWall(x, y);
@@ -154,7 +97,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 					block.renderBlock(x, y, binary);
 				} else {
-					Wall wall = (Wall) Item.fromID(this.world.walls.getID(x, y));
+					Wall wall = (Wall) itemManager.getItem(this.world.walls.getID(x, y));
 
 					if (wall != null) {
 						wall.renderWall(x, y);

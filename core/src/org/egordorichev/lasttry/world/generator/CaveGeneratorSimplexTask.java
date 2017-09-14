@@ -1,9 +1,11 @@
 package org.egordorichev.lasttry.world.generator;
 
-import org.egordorichev.lasttry.util.Log;
 import org.egordorichev.lasttry.util.SimplexNoise;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CaveGeneratorSimplexTask extends GeneratorTask {
+	private static final Logger logger = LoggerFactory.getLogger(CaveGeneratorSimplexTask.class);
 	/**
 	 * Depth from the surface to weaken cave strength <i>(size)</i>.
 	 */
@@ -24,7 +26,7 @@ public class CaveGeneratorSimplexTask extends GeneratorTask {
 
 	@Override
 	public void run(WorldGenerator generator) {
-		Log.info("Generating caves");
+		logger.info("Generating caves");
 		// TODO: These numbers shouldn't be hard-coded
 		// TODO: Let the user choose these variables when generating a world.
 		float scale = 1f / caveScale;

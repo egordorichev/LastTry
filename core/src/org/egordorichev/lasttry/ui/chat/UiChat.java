@@ -8,18 +8,26 @@ import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.Creature;
-import org.egordorichev.lasttry.entity.Creatures;
+import org.egordorichev.lasttry.entity.CreatureManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.CoreRegistry;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.inventory.ItemHolder;
 import org.egordorichev.lasttry.item.Item;
+import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.state.GamePlayState;
-import org.egordorichev.lasttry.ui.*;
-import org.egordorichev.lasttry.ui.chat.command.*;
+import org.egordorichev.lasttry.ui.UiPanel;
+import org.egordorichev.lasttry.ui.UiScreen;
+import org.egordorichev.lasttry.ui.UiTextInputWithHistory;
+import org.egordorichev.lasttry.ui.UiToggleScreen;
+import org.egordorichev.lasttry.ui.chat.command.CMDCategory;
+import org.egordorichev.lasttry.ui.chat.command.Command;
+import org.egordorichev.lasttry.ui.chat.command.CommandHandler;
 import org.egordorichev.lasttry.util.Util;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	public static final int WIDTH = 400;
@@ -46,8 +54,14 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 	 */
 	private final CommandHandler commands = new CommandHandler();
 
+	private final ItemManager itemManager;
+	private final CreatureManager creatureManager;
+
 	public UiChat() {
 		super(new Rectangle(10, 0, WIDTH, HEIGHT), Origin.BOTTOM_LEFT);
+		itemManager = CoreRegistry.get(ItemManager.class);
+		creatureManager = CoreRegistry.get(CreatureManager.class);
+
 		this.initCommands();
 		this.back = Assets.getTexture("chat_back");
 	}
@@ -71,7 +85,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 				if (args.length != 1 && args.length != 2) {
 					print("/give [item id] (count)");
 				} else {
-					Item item = Item.fromID(args[0]);
+					Item item = itemManager.getItem(args[0]);
 					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
 					if (item == null) {
@@ -90,14 +104,14 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 					print("/spawn [creature name] (count)");
 				} else {
 					String name = args[0].replace("\"", "");
-					Creature creature = Creatures.create(name);
+					Creature creature = creatureManager.create(name);
 					int count = args.length == 1 ? 1 : Integer.valueOf(args[1]);
 
 					if (creature == null) {
 						print("Unknown creature");
 					} else {
 						for (int i = 0; i < count; i++) {
-							Globals.entityManager.spawn(Creatures.create(name), (int) Globals.getPlayer().physics.getX(),
+							Globals.entityManager.spawn(creatureManager.create(name), (int) Globals.getPlayer().physics.getX(),
 								(int) Globals.getPlayer().physics.getY());
 						}
 					}
@@ -175,9 +189,9 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().getInventory().clear();
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:superpick"), 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:superpick"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_shortsword"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_axe"), 1));
 			}
 		});
 
@@ -185,9 +199,9 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getPlayer().getInventory().clear();
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_shortsword"), 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_pickaxe"), 1));
-				Globals.getPlayer().getInventory().add(new ItemHolder(Item.fromID("lt:copper_axe"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_shortsword"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_pickaxe"), 1));
+				Globals.getPlayer().getInventory().add(new ItemHolder(itemManager.getItem("lt:copper_axe"), 1));
 			}
 		});
 
