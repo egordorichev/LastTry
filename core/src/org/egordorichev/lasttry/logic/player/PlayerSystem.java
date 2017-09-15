@@ -14,7 +14,7 @@ public class PlayerSystem extends BaseComponentSystem implements UpdatableSystem
 
 
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
        for(EntityRef player: entitySystem.getEntitiesFilterByComponent(PlayerComponent.class)){
 
        }
