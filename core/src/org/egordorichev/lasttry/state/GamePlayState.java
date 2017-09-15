@@ -13,6 +13,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.input.Keys;
 import org.egordorichev.lasttry.item.block.Block;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
-public class GamePlayState implements State {
+public class GamePlayState implements GameState {
 	private static final Logger logger = LoggerFactory.getLogger(GamePlayState.class);
 	/**
 	 * Hp texture
@@ -60,6 +61,16 @@ public class GamePlayState implements State {
 	 */
 	public static void stop() {
 		paused = true;
+	}
+
+	@Override
+	public void load(Context rootContext) {
+
+	}
+
+	@Override
+	public void update() {
+
 	}
 
 	@Override

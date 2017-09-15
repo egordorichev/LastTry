@@ -1,18 +1,8 @@
 package org.egordorichev.lasttry.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface UiManager {
 
-public class UiManager {
-    private List<UiComponent> components = new ArrayList<>();
+    void add(UiComponent component);
+    void render();
 
-    public void render() {
-        for (int i = this.components.size() - 1; i >= 0; i--) {
-            this.components.get(i).render();
-        }
-    }
-
-    public void add(UiComponent component) {
-        this.components.add(component);
-    }
 }

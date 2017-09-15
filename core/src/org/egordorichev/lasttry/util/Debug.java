@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.world.chunk.Chunk;
 import java.util.*;
 
 public class Debug {
-	private boolean enabled;
+	/*private boolean enabled;
 	private int uniqueCounter;
 	private Map<Integer, GenericContainer.UniqueTypePair<String, Integer>> messagesToBePrinted = new LinkedHashMap<>();
 
@@ -99,5 +99,5 @@ public class Debug {
 
 		//Counter is used as a unique Id
 		messagesToBePrinted.put(uniqueCounter++, messagePairDetails);
-	}
+	}*/
 }

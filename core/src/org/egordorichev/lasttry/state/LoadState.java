@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.Globals;
+import org.egordorichev.lasttry.Engine;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.crafting.RecipeManager;
 import org.egordorichev.lasttry.crafting.RecipeManagerImpl;
@@ -13,25 +13,23 @@ import org.egordorichev.lasttry.entity.ai.AIManager;
 import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
 import org.egordorichev.lasttry.injection.ContextImpl;
-import org.egordorichev.lasttry.injection.CoreRegistry;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.ItemManagerImpl;
 import org.egordorichev.lasttry.item.liquids.LiquidManager;
 import org.egordorichev.lasttry.item.liquids.LiquidManagerImpl;
 import org.egordorichev.lasttry.player.PlayerIO;
+import org.egordorichev.lasttry.ui.UiManager;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.world.World;
 import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.biome.BiomeManager;
 import org.egordorichev.lasttry.world.biome.BiomeManagerImpl;
-import org.egordorichev.lasttry.world.environment.Environment;
-import org.egordorichev.lasttry.world.spawn.SpawnSystem;
 
 import java.io.File;
 import java.security.SecureRandom;
 
-public class LoadState implements State {
+public class LoadState implements GameState{
 	/**
 	 * All systems are ready
 	 */
@@ -41,19 +39,20 @@ public class LoadState implements State {
 	 */
 	private String loadString = "Loading...";
 
-    public LoadState() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
+	private  Context context;
 
-                    	String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
+	@Override
+	public void load(Context rootContext) {
+		this.context = new ContextImpl(rootContext);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Gdx.app.postRunnable(new Runnable() {
+					@Override
+					public void run() {
 
+						String world = LastTry.defaultWorldName, player = LastTry.defaultPlayerName;
 
-						ContextImpl context = new ContextImpl();
-						CoreRegistry.setContext(context);
 						context.bindInstance(ItemManager.class, new ItemManagerImpl()).load();
 						context.bindInstance(RecipeManager.class, new RecipeManagerImpl()).load();
 						context.bindInstance(BiomeManager.class,new BiomeManagerImpl()).load();
@@ -74,41 +73,50 @@ public class LoadState implements State {
 							throw new RuntimeException("Couldn't open save directory. Aborting.");
 						}
 
-                        loadString = "Loading spawn system...";
-                        Globals.spawnSystem = new SpawnSystem();
-                        loadString = "Loading environment...";
-                        Globals.environment = new Environment();
+						loadString = "Loading spawn system...";
+						//Globals.spawnSystem = new SpawnSystem();
+						loadString = "Loading environment...";
+						//Globals.environment = new Environment();
 
-	                    loadString = "Loading world...";
+						loadString = "Loading world...";
 
-	                    if (WorldIO.saveExists(world)) {
-		                    WorldIO.load(world);
-	                    } else {
-		                    int seed = new SecureRandom().nextInt();
-		                    Globals.setWorld(WorldIO.generate(world, World.Size.SMALL, 0, seed));
-	                    }
+						if (WorldIO.saveExists(world)) {
+							WorldIO.load(world);
+						} else {
+							int seed = new SecureRandom().nextInt();
+						//	Globals.setWorld(WorldIO.generate(world, World.Size.SMALL, 0, seed));
+						}
 
-	                    loadString = "Loading player...";
+						loadString = "Loading player...";
 
-	                    if (PlayerIO.saveExists(player)) {
-		                    PlayerIO.load(player);
-	                    } else {
-		                    Globals.setPlayer(PlayerIO.generate(player));
-	                    }
+						if (PlayerIO.saveExists(player)) {
+							PlayerIO.load(player);
+						} else {
+						//	Globals.setPlayer(PlayerIO.generate(player));
+						}
 
-	                    loaded = true;
+						loaded = true;
 					}
 				});
 			}
 		}).start();
 	}
 
+
+
 	@Override
-	public void render(float delta) {
+	public void update() {
 		if (this.loaded) {
-			LastTry.instance.setScreen(new GamePlayState());
+			Engine engine = context.get(Engine.class);
+			engine.setContext(context);
+			engine.setGameState(new GamePlayState());
 			return;
 		}
+	}
+
+	@Override
+	public void render(float delta) {
+
 
 		int height = Gdx.graphics.getHeight();
 
@@ -117,6 +125,6 @@ public class LoadState implements State {
 		}
 
 		Assets.f22.draw(Graphics.batch, this.loadString, 100, height / 2 - 11);
-		LastTry.ui.render();
+		context.get(UiManager.class).render();
 	}
 }

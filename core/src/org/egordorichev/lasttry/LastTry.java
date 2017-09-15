@@ -1,21 +1,23 @@
 package org.egordorichev.lasttry;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
+import org.egordorichev.lasttry.injection.ContextImpl;
 import org.egordorichev.lasttry.input.InputManager;
 import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.state.SplashState;
+import org.egordorichev.lasttry.state.GameState;
 import org.egordorichev.lasttry.ui.UiManager;
+import org.egordorichev.lasttry.ui.UiManagerImpl;
 import org.egordorichev.lasttry.util.Camera;
-import org.egordorichev.lasttry.util.Debug;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,80 +27,26 @@ import java.util.Random;
 /**
  * Main game class
  */
-public class LastTry extends Game {
-	/**
-	 * LastTry version
-	 */
+public class LastTry implements ApplicationListener, Engine {
 	public static final Version version = new Version(0.0, 18, "alpha");
-
-	/**
-	 * Random instance. This is not to be used in repeatable systems such as
-	 * world generation
-	 */
 	public static final Random random = new Random();
-
-	/**
-	 * Last Try instance
-	 */
-	public static LastTry instance;
-
-	/**
-	 * Ui manager
-	 */
-	public static UiManager ui;
-
-	/**
-	 * Debug helper
-	 */
-	public static Debug debug;
-
-	/**
-	 * Shows, if this is a release
-	 */
 	public static boolean release = true;
-
-	/**
-	 * Light disable
-	 */
 	public static boolean noLight = false;
-
-	/**
-	 * Store relative to the game jar, instead of in the home directory.
-	 */
 	public static boolean storeRelative = true;
-
-	/**
-	 * Intensity affects how sharp lighting gradients are.
-	 */
 	public static float gammaStrength = 1.0f;
-
-	/**
-	 * The minimum brightness that can be made by lighting.
-	 */
 	public static float gammaMinimum = 0f;
-	
-	/**
-	 * Default name for generated worlds.
-	 */
 	public static String defaultWorldName = "default";
-	
-	/**
-	 * Default name for players.
-	 */
 	public static String defaultPlayerName = "default";
 
-	
-	/**
-	 * Screen dimensions
-	 */
-	public final int width;
+	private GameState state = null;
 
-	private final int height;
 
-	public LastTry(int width, int height) {
+	private Context rootContext = new ContextImpl();
 
-		this.width = width;
-		this.height = height;
+
+	public LastTry(GameState state){
+		this.state = state;
+
 	}
 
 	/**
@@ -106,25 +54,21 @@ public class LastTry extends Game {
 	 */
 	@Override
 	public void create() {
+		rootContext.bindInstance(Engine.class,this);
+
+		//binds UIManager
+		rootContext.bindInstance(UiManager.class,new UiManagerImpl());
+
 		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
-		Globals.resolution = new Vector2(width, height);
-		instance = this;
 
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 0, 0));
 
-		Camera.create(width, height);
 		Language.load(new Locale("en", "US"));
 
 		Gdx.input.setInputProcessor(InputManager.multiplexer);
 		Gdx.graphics.setTitle(LastTry.getRandomWindowTitle());
 
 		Graphics.batch = new SpriteBatch();
-
-		debug = new Debug();
-		ui = new UiManager();
-
-
-		this.setScreen(new SplashState());
 	}
 
 	/**
@@ -137,10 +81,7 @@ public class LastTry extends Game {
 	 */
 	@Override
 	public void resize(int width, int height) {
-		super.resize(width, height);
 		Camera.resize(width, height);
-		Globals.resolution.x = width;
-		Globals.resolution.y = height;
 	}
 
 	/**
@@ -154,9 +95,24 @@ public class LastTry extends Game {
 		Graphics.batch.enableBlending();
 		Graphics.batch.begin();
 
-		super.render();
+		this.state.update();
+
+		//don't render if in headless mode
+		if(Gdx.app.getType() != Application.ApplicationType.HeadlessDesktop) {
+			this.state.render(Gdx.graphics.getDeltaTime());
+		}
 
 		Graphics.batch.end();
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
 	}
 
 	/**
@@ -164,7 +120,6 @@ public class LastTry extends Game {
 	 */
 	@Override
 	public void dispose() {
-		Globals.dispose();
 		Assets.dispose();
 	}
 
@@ -184,25 +139,25 @@ public class LastTry extends Game {
 		return split[random.nextInt(split.length)] + " " + version.toString();
 	}
 
-	/**
-	 * Returns mouse X coordinate, under the world
-	 *
-	 * @return mouse X coordinate, under the world
-	 */
-	public static int getMouseXInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
-				+ InputManager.getMousePosition().x);
-	}
+//	/**
+//	 * Returns mouse X coordinate, under the world
+//	 *
+//	 * @return mouse X coordinate, under the world
+//	 */
+//	public static int getMouseXInWorld() {
+//		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
+//				+ InputManager.getMousePosition().x);
+//	}
 
-	/**
-	 * Returns mouse Y coordinate, under the world
-	 *
-	 * @return mouse Y coordinate, under the world
-	 */
-	public static int getMouseYInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
-				- InputManager.getMousePosition().y);
-	}
+//	/**
+//	 * Returns mouse Y coordinate, under the world
+//	 *
+//	 * @return mouse Y coordinate, under the world
+//	 */
+//	public static int getMouseYInWorld() {
+//		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
+//				- InputManager.getMousePosition().y);
+//	}
 
 	/**
 	 * Handles exception, if it is critical, exits the game
@@ -220,4 +175,21 @@ public class LastTry extends Game {
 	public static void abort() {
 		System.exit(1);
 	}
+
+	@Override
+	public void setGameState(GameState state) {
+		if(state  != null)
+			this.state.hide();
+		this.state = state;
+		if(this.state != null){
+			this.state.load(rootContext);
+			this.state.show();
+		}
+	}
+
+	@Override
+	public void setContext(Context context) {
+		this.rootContext = context;
+	}
+
 }

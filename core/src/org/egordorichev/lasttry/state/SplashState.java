@@ -2,11 +2,13 @@ package org.egordorichev.lasttry.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import org.egordorichev.lasttry.Engine;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.injection.Context;
 
-public class SplashState implements State {
+public class SplashState implements GameState {
 	/**
 	 * Splash texture
 	 */
@@ -20,9 +22,19 @@ public class SplashState implements State {
 	 */
 	private float alpha = 0;
 
-	public SplashState() {
+	private Context context;
+
+
+	@Override
+	public void load(Context rootContext) {
 		this.splash = new Texture(Gdx.files.internal("splash.png"));
+		this.context = rootContext;
 		Assets.load();
+	}
+
+	@Override
+	public void update() {
+
 	}
 
 	@Override
@@ -39,7 +51,7 @@ public class SplashState implements State {
 			this.state = 2;
 
 			Graphics.load();
-			LastTry.instance.setScreen(new LoadState());
+			context.get(Engine.class).setGameState(new LoadState());
 			return;
 		}
 
@@ -58,7 +70,7 @@ public class SplashState implements State {
 				this.state = 2;
 
 				Graphics.load();
-				LastTry.instance.setScreen(new LoadState());
+				context.get(Engine.class).setGameState(new LoadState());
 			}
 		}
 	}

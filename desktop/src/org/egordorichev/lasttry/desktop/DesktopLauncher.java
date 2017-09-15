@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.apache.log4j.BasicConfigurator;
 import org.egordorichev.lasttry.Args;
 import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.state.SplashState;
 
 /** LastTry launcher */
 public class DesktopLauncher {
@@ -27,6 +28,6 @@ public class DesktopLauncher {
 		}
 		BasicConfigurator.configure();
 
-		new LwjglApplication(new LastTry(config.width, config.height), config);
+		new LwjglApplication(new LastTry(new SplashState()), config);
 	}
 }
