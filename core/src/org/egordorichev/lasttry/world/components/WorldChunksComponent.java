@@ -3,17 +3,14 @@ package org.egordorichev.lasttry.world.components;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.injection.CoreRegistry;
-import org.egordorichev.lasttry.injection.InjectionHelper;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.liquids.LiquidManager;
-import org.egordorichev.lasttry.item.liquids.Liquids;
 import org.egordorichev.lasttry.item.wall.Wall;
 import org.egordorichev.lasttry.util.Callable;
 import org.egordorichev.lasttry.util.Camera;
 import org.egordorichev.lasttry.util.Util;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.chunk.ChunkIO;
 
@@ -32,7 +29,7 @@ public class WorldChunksComponent extends WorldComponent {
 
 	private final LiquidManager liquidManager;
 	private final ItemManager itemManager;
-	public WorldChunksComponent(World world) {
+	public WorldChunksComponent(WorldProvderImpl world) {
 		super(world);
 
 		liquidManager = CoreRegistry.get(LiquidManager.class);
@@ -46,7 +43,7 @@ public class WorldChunksComponent extends WorldComponent {
 			public void call() {
 				updateLogic();
 			}
-		}, World.UPDATE_DELAY_SECONDS);
+		}, WorldProvderImpl.UPDATE_DELAY_SECONDS);
 	}
 
 	public void update() {

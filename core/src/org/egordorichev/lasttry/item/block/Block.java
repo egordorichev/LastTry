@@ -86,7 +86,7 @@ public class Block extends Tile {
 	}
 
 	/**
-	 * Updates block (one in World.UPDATE_TIME seconds)
+	 * Updates block (one in WorldProvderImpl.UPDATE_TIME seconds)
 	 *
 	 * @param x Block X
 	 * @param y Block Y

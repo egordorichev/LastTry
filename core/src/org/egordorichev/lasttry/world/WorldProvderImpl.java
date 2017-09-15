@@ -16,7 +16,7 @@ import org.egordorichev.lasttry.world.chunk.Chunk;
 import org.egordorichev.lasttry.world.components.*;
 import com.badlogic.gdx.math.Vector2;
 
-public class World {
+public class WorldProvderImpl implements WorldProvider{
 	// Should be 20 by default
 	public static final int UPDATE_DELAY_SECONDS = 20;
 	public static final int RESPAWN_DELAY = 360;
@@ -25,7 +25,7 @@ public class World {
 	 */
 	private int respawnTime = RESPAWN_DELAY;
 	/**
-	 * World flags (hardmode, evil)
+	 * WorldProvderImpl flags (hardmode, evil)
 	 */
 	public final WorldFlagsComponent flags;
 	/**
@@ -55,15 +55,15 @@ public class World {
 	 */
 	public final Random random;
 	/**
-	 * World size.
+	 * WorldProvderImpl size.
 	 */
 	private final Size size;
 	/**
-	 * World name.
+	 * WorldProvderImpl name.
 	 */
 	private final String name;
 	/**
-	 * World seed, used for terrain generation.
+	 * WorldProvderImpl seed, used for terrain generation.
 	 */
 	private final int seed;
 	/**
@@ -77,7 +77,8 @@ public class World {
 
 	private final Map<Integer, Integer> heightCache = new HashMap<>();
 
-	public World(String name, Size size, int flags, int seed) {
+
+	public WorldProvderImpl(String name, Size size, int flags, int seed) {
 		this.size = size;
 		this.name = name;
 		this.seed = seed;

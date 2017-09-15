@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.player;
 
-import org.egordorichev.lasttry.entitySystem.BaseComponentSystem;
-import org.egordorichev.lasttry.entitySystem.ComponentSystem;
+import org.egordorichev.lasttry.entitySystem.componentSystem.BaseComponentSystem;
 
 public class PlayerSystem extends BaseComponentSystem{
 }

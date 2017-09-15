@@ -67,7 +67,7 @@ public class GridComponent {
 		// be LastTry.camera.position.y+windowheight/2
 		int tcy = (int) (Camera.game.position.y - windowHeight / 2) / Block.SIZE;
 
-		// Checking to make sure y value is not less than 0 - World generated
+		// Checking to make sure y value is not less than 0 - WorldProvderImpl generated
 		// will always start from 0,0 top left.
 		circleAreaComponent.setMinYActiveAreaGridPoint(Math.max(0, tcy - 2));
 		circleAreaComponent.setMaxYActiveAreaGridPoint(Math.min(Globals.getWorld().getHeight() - 1, tcy + twh + 3));

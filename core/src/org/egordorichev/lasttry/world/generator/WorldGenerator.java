@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.generator;
 
 import org.egordorichev.lasttry.Globals;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldGenerator {
-	public World world;
+	public WorldProvderImpl world;
 	private List<GeneratorTask> tasks = new ArrayList<>();
 
-	public WorldGenerator(String name, World.Size size, int flags, int seed) {
-		this.world = new World(name, size, flags, seed);
+	public WorldGenerator(String name, WorldProvderImpl.Size size, int flags, int seed) {
+		this.world = new WorldProvderImpl(name, size, flags, seed);
 		Globals.setWorld(this.world);
 		this.tasks.add(new SurfaceGenerationSimplexTask());
 		this.tasks.add(new CaveGeneratorSimplexTask());
@@ -31,7 +31,7 @@ public class WorldGenerator {
 		this.tasks.remove(index);
 	}
 
-	public World generate() {
+	public WorldProvderImpl generate() {
 		while (this.tasks.size() > 0) {
 			this.tasks.remove(0).run(this);
 		}

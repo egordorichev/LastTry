@@ -1,16 +1,14 @@
 package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.injection.CoreRegistry;
-import org.egordorichev.lasttry.injection.InjectionHelper;
-import org.egordorichev.lasttry.item.Item;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.item.wall.Wall;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
 public class WorldWallsComponent extends WorldComponent {
-	public WorldWallsComponent(World world) {
+	public WorldWallsComponent(WorldProvderImpl world) {
 		super(world);
 	}
 

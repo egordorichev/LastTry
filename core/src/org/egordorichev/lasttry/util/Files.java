@@ -37,7 +37,7 @@ public class Files {
 	 * Gets the save directory for a world by the given name.
 	 * 
 	 * @param worldName
-	 *            World save folder.
+	 *            WorldProvderImpl save folder.
 	 * @return
 	 */
 	public static String getWorldDir(String worldName) {

@@ -11,10 +11,16 @@ import org.egordorichev.lasttry.entity.CreatureManager;
 import org.egordorichev.lasttry.entity.CreatureManagerImpl;
 import org.egordorichev.lasttry.entity.ai.AIManager;
 import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
+import org.egordorichev.lasttry.entitySystem.ComponentProvider;
+import org.egordorichev.lasttry.entitySystem.EntitySystem;
+import org.egordorichev.lasttry.entitySystem.EntitySystemImpl;
+import org.egordorichev.lasttry.entitySystem.componentSystem.ComponentSystem;
+import org.egordorichev.lasttry.entitySystem.EntityProvider;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.injection.Context;
 import org.egordorichev.lasttry.injection.ContextImpl;
+import org.egordorichev.lasttry.injection.InjectionHelper;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.ItemManagerImpl;
 import org.egordorichev.lasttry.item.liquids.LiquidManager;
@@ -25,6 +31,13 @@ import org.egordorichev.lasttry.util.Files;
 import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.biome.BiomeManager;
 import org.egordorichev.lasttry.world.biome.BiomeManagerImpl;
+import org.reflections.Reflections;
+import org.terasology.entitysystem.core.EntityRef;
+import org.terasology.entitysystem.transaction.Transaction;
+import org.terasology.entitysystem.transaction.TransactionManager;
+import org.terasology.valuetype.ImmutableCopy;
+import org.terasology.valuetype.TypeHandler;
+import org.terasology.valuetype.TypeLibrary;
 
 import java.io.File;
 import java.security.SecureRandom;
@@ -60,7 +73,7 @@ public class LoadState implements GameState{
 						context.bindInstance(AIManager.class,new AIManagerImpl()).load();
 						context.bindInstance(CreatureManager.class, new CreatureManagerImpl()).load();
 						context.bindInstance(LiquidManager.class, new LiquidManagerImpl()).load();
-
+						context.bindInstance(EntitySystem.class,new EntitySystemImpl(context));
 
 						//TODO: figure out loading scheme
 						try {
@@ -84,7 +97,7 @@ public class LoadState implements GameState{
 							WorldIO.load(world);
 						} else {
 							int seed = new SecureRandom().nextInt();
-						//	Globals.setWorld(WorldIO.generate(world, World.Size.SMALL, 0, seed));
+						//	Globals.setWorld(WorldIO.generate(world, WorldProvderImpl.Size.SMALL, 0, seed));
 						}
 
 						loadString = "Loading player...";
@@ -107,6 +120,7 @@ public class LoadState implements GameState{
 	@Override
 	public void update() {
 		if (this.loaded) {
+			//move context forward
 			Engine engine = context.get(Engine.class);
 			engine.setContext(context);
 			engine.setGameState(new GamePlayState());

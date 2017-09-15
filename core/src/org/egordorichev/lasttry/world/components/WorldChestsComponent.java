@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.world.ChestRegistry;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class WorldChestsComponent extends WorldComponent {
 	 */
 	private ArrayList<ChestRegistry> chests = new ArrayList<>();
 
-	public WorldChestsComponent(World world) {
+	public WorldChestsComponent(WorldProvderImpl world) {
 		super(world);
 	}
 

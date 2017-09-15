@@ -209,7 +209,7 @@ public class UiChat extends UiPanel implements UiScreen, UiToggleScreen {
 			@Override
 			public void onRun(String[] args) {
 				Globals.getWorld().setSpawnPoint(new Vector2(Globals.getPlayer().physics.getGridX(), Globals.getPlayer().physics.getGridY() + 1));
-				print("World spawn point set");
+				print("WorldProvderImpl spawn point set");
 			}
 		});
 

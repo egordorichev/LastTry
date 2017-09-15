@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.world.components;
 
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
     
 public class WorldFlagsComponent extends WorldComponent {
 	public static final int CRIMSON = 1;
@@ -9,7 +9,7 @@ public class WorldFlagsComponent extends WorldComponent {
 
 	private int flags;
 
-	public WorldFlagsComponent(World world, int flags) {
+	public WorldFlagsComponent(WorldProvderImpl world, int flags) {
 		super(world);
 		this.flags = flags;
 	}

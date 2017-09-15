@@ -1,4 +1,8 @@
 package org.egordorichev.lasttry.logic;
 
-public class CameraSystem {
+import org.egordorichev.lasttry.entitySystem.componentSystem.BaseComponentSystem;
+
+public class CameraSystem extends BaseComponentSystem {
+
+
 }

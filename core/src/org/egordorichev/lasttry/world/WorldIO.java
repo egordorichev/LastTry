@@ -43,7 +43,7 @@ public class WorldIO {
 				LastTry.abort();
 			}
 
-			World.Size size = World.Size.values()[stream.readByte()];
+			WorldProvderImpl.Size size = WorldProvderImpl.Size.values()[stream.readByte()];
 			int flags = 0;
 
 			if (stream.readBoolean()) {
@@ -61,11 +61,11 @@ public class WorldIO {
 			int spawnX = stream.readInt32();
 			int spawnY = stream.readInt32();
 
-			Globals.environment.time.setHour(stream.readByte());
-			Globals.environment.time.setMinute(stream.readByte());
+			//Globals.environment.time.setHour(stream.readByte());
+			//Globals.environment.time.setMinute(stream.readByte());
 
 			stream.close();
-			World world = new World(name, size, flags, seed);
+			WorldProvderImpl world = new WorldProvderImpl(name, size, flags, seed);
 			world.setSpawnPoint(new Vector2(spawnX, spawnY));
 			Globals.setWorld(world);
 		} catch (Exception exception) {
@@ -75,7 +75,7 @@ public class WorldIO {
 		logger.debug("Done loading world " + name + "!");
 	}
 
-	public static World generate(String name, World.Size size, int flags, int seed) {
+	public static WorldProvderImpl generate(String name, WorldProvderImpl.Size size, int flags, int seed) {
 		File dir = new File(Files.getWorldsDir());
 
 		if (!dir.exists()) {
@@ -92,7 +92,7 @@ public class WorldIO {
 	}
 
 	public static void save() {
-		World world = Globals.getWorld();
+		WorldProvderImpl world = Globals.getWorld();
 
 		String fileName = Files.getWorldSave(world.getName());
 		File file = new File(fileName);

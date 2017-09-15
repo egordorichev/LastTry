@@ -2,13 +2,13 @@ package org.egordorichev.lasttry.world.components;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.component.Component;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 import org.egordorichev.lasttry.world.chunk.Chunk;
 
 public class WorldComponent implements Component {
-	protected World world;
+	protected WorldProvderImpl world;
 
-	public WorldComponent(World world) {
+	public WorldComponent(WorldProvderImpl world) {
 		this.world = world;
 	}
 	

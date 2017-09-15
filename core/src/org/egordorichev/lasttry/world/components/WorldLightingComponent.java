@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.component.Component;
 import org.egordorichev.lasttry.item.block.Block;
 import org.egordorichev.lasttry.util.Util;
-import org.egordorichev.lasttry.world.World;
+import org.egordorichev.lasttry.world.WorldProvderImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,10 +17,10 @@ public class WorldLightingComponent implements Component {
 	public static final int MAX_LIGHT = 16;
 	public static final int MOVE_TO_UPDATE = 10;
 	private Point lastUpdate;
-	private final World world;
+	private final WorldProvderImpl world;
 	private final Map<Integer, Float> cache = new HashMap<>();
 
-	public WorldLightingComponent(World world) {
+	public WorldLightingComponent(WorldProvderImpl world) {
 		this.world = world;
 	}
 
