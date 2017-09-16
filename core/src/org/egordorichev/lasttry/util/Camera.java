@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import org.egordorichev.lasttry.entitySystem.component.LocationComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.terasology.entitysystem.core.EntityRef;
 
@@ -16,8 +17,8 @@ public class Camera {
 		if (this.toFollow != null) {
 			LocationComponent pos = this.toFollow.getComponent(LocationComponent.class);
 
-			this.view.position.x = pos.x;
-			this.view.position.y = pos.y;
+			this.view.position.x = pos.location.x;
+			this.view.position.y = pos.location.y;
 		}
 	}
 
