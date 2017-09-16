@@ -1,6 +1,4 @@
 package org.egordorichev.lasttry.entity;
-
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.components.GraphicsComponent;
 import org.egordorichev.lasttry.entity.components.PhysicsComponent;
 
