@@ -4,5 +4,4 @@ import org.egordorichev.lasttry.entitySystem.componentSystem.BaseComponentSystem
 
 public class CameraSystem extends BaseComponentSystem {
 
-
 }
