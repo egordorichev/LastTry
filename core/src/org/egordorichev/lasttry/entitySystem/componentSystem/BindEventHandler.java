@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD})
 public @interface BindEventHandler {
-    Class<? extends Component>[] filter();
+    Class<? extends Component>[] filter() default {};
 }

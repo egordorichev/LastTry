@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.entity.EntityManager;
+import org.egordorichev.lasttry.entitySystem.ComponentSystemRegistry;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.injection.Context;
@@ -36,6 +37,8 @@ public class GamePlayState implements GameState {
 	 * Game is paused
 	 */
 	private static boolean paused = false;
+	private ComponentSystemRegistry componentSystemRegistry;
+
 
 	public GamePlayState() {
 		LastTry.noLight = false; // TMP, it for some reason resets
@@ -65,12 +68,12 @@ public class GamePlayState implements GameState {
 
 	@Override
 	public void load(Context rootContext) {
-
+		this.componentSystemRegistry = rootContext.get(ComponentSystemRegistry.class);
 	}
 
 	@Override
 	public void update() {
-
+		componentSystemRegistry.update();
 	}
 
 	@Override

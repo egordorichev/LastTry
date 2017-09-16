@@ -16,7 +16,7 @@ public class PlayerSystem extends BaseComponentSystem implements UpdatableSystem
     EntitySystem entitySystem;
 
 
-    @BindEventHandler(filter = {PlayerComponent.class})
+    @BindEventHandler()
     public void handleCollisionEvent(CollisionEvent event, EntityRef target){
 
     }

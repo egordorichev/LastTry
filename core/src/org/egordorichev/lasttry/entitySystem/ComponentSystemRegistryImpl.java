@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.entitySystem.componentSystem.UpdatableSystem;
 
 import java.util.Set;
 
+//TODO: figure out a better way to manage components Systems this single use class does nothing more then update the associated system
 public class ComponentSystemRegistryImpl implements ComponentSystemRegistry {
     private Set<UpdatableSystem> updatableSystem = Sets.newHashSet();
 
