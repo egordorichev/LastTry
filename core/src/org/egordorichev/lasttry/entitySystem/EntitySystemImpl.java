@@ -24,13 +24,6 @@ public class EntitySystemImpl implements EntitySystem{
     private final TransactionManager transactionManager;
 
     public EntitySystemImpl(Context context){
-        //todo: reflection
-        //inject component system
-        Reflections reflections = new Reflections("org.egordorichev.lasttry");
-        for(Class<? extends ComponentSystem> componentSystem : reflections.getSubTypesOf(ComponentSystem.class)){
-            InjectionHelper.createWithConstructorInjection(componentSystem,context);
-        }
-
         TypeLibrary types = new TypeLibrary();
 
         types.addHandler(new TypeHandler<>(String.class, ImmutableCopy.create()));

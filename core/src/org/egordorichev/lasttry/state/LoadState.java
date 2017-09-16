@@ -11,16 +11,13 @@ import org.egordorichev.lasttry.entity.CreatureManager;
 import org.egordorichev.lasttry.entity.CreatureManagerImpl;
 import org.egordorichev.lasttry.entity.ai.AIManager;
 import org.egordorichev.lasttry.entity.ai.AIManagerImpl;
-import org.egordorichev.lasttry.entitySystem.ComponentProvider;
-import org.egordorichev.lasttry.entitySystem.EntitySystem;
-import org.egordorichev.lasttry.entitySystem.EntitySystemImpl;
+import org.egordorichev.lasttry.entitySystem.*;
 import org.egordorichev.lasttry.entitySystem.componentSystem.ComponentSystem;
-import org.egordorichev.lasttry.entitySystem.EntityProvider;
 import org.egordorichev.lasttry.graphics.Assets;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.injection.Context;
 import org.egordorichev.lasttry.injection.ContextImpl;
-import org.egordorichev.lasttry.injection.InjectionHelper;
+import org.egordorichev.lasttry.injection.Provider;
 import org.egordorichev.lasttry.item.ItemManager;
 import org.egordorichev.lasttry.item.ItemManagerImpl;
 import org.egordorichev.lasttry.item.liquids.LiquidManager;
@@ -32,12 +29,6 @@ import org.egordorichev.lasttry.world.WorldIO;
 import org.egordorichev.lasttry.world.biome.BiomeManager;
 import org.egordorichev.lasttry.world.biome.BiomeManagerImpl;
 import org.reflections.Reflections;
-import org.terasology.entitysystem.core.EntityRef;
-import org.terasology.entitysystem.transaction.Transaction;
-import org.terasology.entitysystem.transaction.TransactionManager;
-import org.terasology.valuetype.ImmutableCopy;
-import org.terasology.valuetype.TypeHandler;
-import org.terasology.valuetype.TypeLibrary;
 
 import java.io.File;
 import java.security.SecureRandom;
@@ -75,6 +66,7 @@ public class LoadState implements GameState{
 						context.bindInstance(LiquidManager.class, new LiquidManagerImpl()).load();
 						context.bindInstance(EntitySystem.class,new EntitySystemImpl(context));
 
+						//TODO: need to refactor this out
 						//TODO: figure out loading scheme
 						try {
 							File file = new File(Files.getRootDir());
@@ -85,6 +77,23 @@ public class LoadState implements GameState{
 						} catch (Exception exception) {
 							throw new RuntimeException("Couldn't open save directory. Aborting.");
 						}
+
+						//todo: reflection
+						//inject component system
+						ComponentSystemRegistry componentSystemRegistry = new ComponentSystemRegistryImpl();
+						EventProviderBuilder eventProviderFactory = new EventProviderBuilder();
+						Reflections reflections = new Reflections("org.egordorichev.lasttry");
+						for(Class<? extends ComponentSystem> componentSystem : reflections.getSubTypesOf(ComponentSystem.class)){
+							ComponentSystem system =  eventProviderFactory.addSystem(context,componentSystem);
+							context.bindProvider(system.getClass(), () -> system);
+							componentSystemRegistry.registerComponentSystem(system);
+						}
+
+						context.bindInstance(ComponentSystemRegistry.class,componentSystemRegistry);
+
+						//create an eventProvider
+						context.bindInstance(EventProvider.class,eventProviderFactory.build());
+
 
 						loadString = "Loading spawn system...";
 						//Globals.spawnSystem = new SpawnSystem();
