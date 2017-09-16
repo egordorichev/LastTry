@@ -6,7 +6,6 @@ import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.util.FileReader;
 import org.egordorichev.lasttry.util.FileWriter;
 import org.egordorichev.lasttry.util.Files;
-import org.egordorichev.lasttry.world.chunk.gc.ChunkGcManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

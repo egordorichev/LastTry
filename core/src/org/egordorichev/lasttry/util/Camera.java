@@ -1,8 +1,11 @@
 package org.egordorichev.lasttry.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import org.egordorichev.lasttry.entitySystem.component.LocationComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.terasology.entitysystem.core.EntityRef;
+
+import java.util.Optional;
 
 public class Camera {
 	private OrthographicCamera view;
@@ -14,10 +17,12 @@ public class Camera {
 
 	public void update(float dt) {
 		if (this.toFollow != null) {
-			LocationComponent pos = this.toFollow.getComponent(LocationComponent.class);
+			Optional<LocationComponent> pos = this.toFollow.getComponent(LocationComponent.class);
 
-			this.view.position.x = pos.x;
-			this.view.position.y = pos.y;
+			if(pos.isPresent()) {
+				this.view.position.x = pos.get().location.x;
+				this.view.position.y = pos.get().location.y;
+			}
 		}
 	}
 
