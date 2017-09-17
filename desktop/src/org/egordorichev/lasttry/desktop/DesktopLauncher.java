@@ -4,9 +4,9 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.apache.log4j.BasicConfigurator;
-import org.egordorichev.lasttry.Args;
+import org.egordorichev.lasttry.core.context.Context;
 import org.egordorichev.lasttry.game.LastTry;
-import org.egordorichev.lasttry.state.SplashState;
+import org.egordorichev.lasttry.game.state.GameState;
 
 /** LastTry launcher */
 public class DesktopLauncher {
@@ -19,15 +19,28 @@ public class DesktopLauncher {
 		config.fullscreen = false;
 		config.resizable = false;
 		config.addIcon("icon.png", Files.FileType.Internal);
-
-		try {
-			Args.parse(args, config);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			return; // Important!
-		}
 		BasicConfigurator.configure();
 
-		new LwjglApplication(new LastTry(new SplashState()), config);
+		new LwjglApplication(new LastTry(new GameState() {
+			@Override
+			public void load(Context rootContext) {
+
+			}
+
+			@Override
+			public void update() {
+
+			}
+
+			@Override
+			public void render(float deltaT) {
+
+			}
+
+			@Override
+			public void dispose() {
+
+			}
+		}));
 	}
 }
