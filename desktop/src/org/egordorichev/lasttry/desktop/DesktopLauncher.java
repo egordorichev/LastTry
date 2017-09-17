@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.apache.log4j.BasicConfigurator;
 import org.egordorichev.lasttry.Args;
-import org.egordorichev.lasttry.LastTry;
+import org.egordorichev.lasttry.game.LastTry;
 import org.egordorichev.lasttry.state.SplashState;
 
 /** LastTry launcher */

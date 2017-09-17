@@ -1,0 +1,30 @@
+package org.egordorichev.lasttry.game.state;
+
+import com.badlogic.gdx.Screen;
+import org.egordorichev.lasttry.core.context.Context;
+
+public interface GameState extends Screen {
+	/** Called when this screen becomes the current screen for a {@link Game}. */
+	default void show (){}
+
+	/** Called when this screen is no longer the current screen for a {@link Game}. */
+	default void hide (){}
+
+	void load(Context rootContext);
+
+	/* update with the game context */
+	void update();
+
+	/** Called when the screen should render itself.
+	 * @param context the context. */
+	void render (float deltaT);
+
+	/** @see ApplicationListener#resize(int, int) */
+	default void resize (int width, int height){}
+
+	/** @see ApplicationListener#pause() */
+	default void pause (){}
+
+	/** @see ApplicationListener#resume() */
+	default void resume (){}
+}
