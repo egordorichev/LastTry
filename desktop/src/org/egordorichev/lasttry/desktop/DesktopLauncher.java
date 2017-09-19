@@ -7,6 +7,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.egordorichev.lasttry.core.context.Context;
 import org.egordorichev.lasttry.game.LastTry;
 import org.egordorichev.lasttry.game.state.GameState;
+import org.egordorichev.lasttry.game.state.LoadState;
 
 /** LastTry launcher */
 public class DesktopLauncher {
@@ -21,26 +22,6 @@ public class DesktopLauncher {
 		config.addIcon("icon.png", Files.FileType.Internal);
 		BasicConfigurator.configure();
 
-		new LwjglApplication(new LastTry(new GameState() {
-			@Override
-			public void load(Context rootContext) {
-
-			}
-
-			@Override
-			public void update() {
-
-			}
-
-			@Override
-			public void render(float deltaT) {
-
-			}
-
-			@Override
-			public void dispose() {
-
-			}
-		}));
+		new LwjglApplication(new LastTry(new LoadState()));
 	}
 }

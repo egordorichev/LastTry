@@ -1,9 +1,8 @@
 package org.egordorichev.lasttry.game.state;
 
-import com.badlogic.gdx.Screen;
 import org.egordorichev.lasttry.core.context.Context;
 
-public interface GameState extends Screen {
+public interface GameState {
 	/** Called when this screen becomes the current screen for a {@link Game}. */
 	default void show (){}
 
