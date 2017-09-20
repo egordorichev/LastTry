@@ -11,8 +11,8 @@ import java.util.Set;
 public class EventProviderImpl implements EventProvider{
     private final EventProcessor eventProcessor;
 
-    public EventProviderImpl(EventProcessor processor){
-        this.eventProcessor = processor;
+    public EventProviderImpl(ComponentSystemManager componentSystemManager){
+        this.eventProcessor = componentSystemManager.buildEventProcessor();
     }
 
     @Override
