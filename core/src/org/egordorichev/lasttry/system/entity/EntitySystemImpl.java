@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entitySystem;
+package org.egordorichev.lasttry.system.entity;
 
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;

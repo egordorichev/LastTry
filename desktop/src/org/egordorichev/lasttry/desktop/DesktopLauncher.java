@@ -4,9 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.apache.log4j.BasicConfigurator;
-import org.egordorichev.lasttry.core.context.Context;
 import org.egordorichev.lasttry.game.LastTry;
-import org.egordorichev.lasttry.game.state.GameState;
 import org.egordorichev.lasttry.game.state.LoadState;
 
 /** LastTry launcher */

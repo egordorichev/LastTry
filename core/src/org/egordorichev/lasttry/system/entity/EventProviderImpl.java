@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entitySystem;
+package org.egordorichev.lasttry.system.entity;
 
 import org.terasology.entitysystem.core.Component;
 import org.terasology.entitysystem.core.EntityRef;

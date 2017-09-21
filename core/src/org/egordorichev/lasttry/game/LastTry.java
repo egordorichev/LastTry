@@ -15,7 +15,6 @@ public class LastTry implements ApplicationListener, Engine {
 	private GameState state;
 	private Context rootContext = new ContextImpl();
 
-
 	public LastTry(GameState state) {
 		this.state = state;
 	}
@@ -81,5 +80,4 @@ public class LastTry implements ApplicationListener, Engine {
 	public void setContext(Context context) {
 		this.rootContext = context;
 	}
-
 }

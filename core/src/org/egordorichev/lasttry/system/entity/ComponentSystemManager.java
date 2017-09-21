@@ -1,14 +1,11 @@
-package org.egordorichev.lasttry.entitySystem;
+package org.egordorichev.lasttry.system.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.google.common.collect.Lists;
 import org.egordorichev.lasttry.core.context.Context;
 import org.egordorichev.lasttry.core.context.InjectionHelper;
-import org.egordorichev.lasttry.entitySystem.componentSystem.BindEventHandler;
-import org.egordorichev.lasttry.entitySystem.componentSystem.ComponentSystem;
-import org.egordorichev.lasttry.entitySystem.componentSystem.UpdatableSystem;
-import org.reflections.Reflections;
+import org.egordorichev.lasttry.system.entity.componentSystem.BindEventHandler;
+import org.egordorichev.lasttry.system.entity.componentSystem.ComponentSystem;
+import org.egordorichev.lasttry.system.entity.componentSystem.UpdatableSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.entitysystem.event.Event;
