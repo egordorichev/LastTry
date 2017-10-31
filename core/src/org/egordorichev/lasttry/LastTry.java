@@ -2,7 +2,8 @@ package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.game.state.InGameState;
+import com.badlogic.gdx.graphics.GL20;
+import org.egordorichev.lasttry.game.state.LoadState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -22,13 +23,18 @@ public class LastTry extends Game {
 	@Override
 	public void create() {
 		Globals.init();
-		this.setState(new InGameState());
+		this.setState(new LoadState());
 	}
 
 	@Override
 	public void render() {
 		this.state.update(Gdx.graphics.getDeltaTime());
+
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		Globals.batch.begin();
 		this.state.render();
+		Globals.batch.end();
 	}
 
 	/**
