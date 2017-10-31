@@ -1,11 +1,8 @@
 package org.egordorichev.lasttry.desktop;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import org.apache.log4j.BasicConfigurator;
-import org.egordorichev.lasttry.game.LastTry;
-import org.egordorichev.lasttry.game.state.LoadState;
+import org.egordorichev.lasttry.LastTry;
 
 /** LastTry launcher */
 public class DesktopLauncher {
@@ -16,10 +13,10 @@ public class DesktopLauncher {
 		config.height = 600;
 		config.vSyncEnabled = true;
 		config.fullscreen = false;
-		config.resizable = false;
-		config.addIcon("icon.png", Files.FileType.Internal);
-		BasicConfigurator.configure();
+		config.resizable = true;
 
-		new LwjglApplication(new LastTry(new LoadState()));
+		// config.addIcon("icon.png", Files.FileType.Internal);
+
+		new LwjglApplication(new LastTry());
 	}
 }
