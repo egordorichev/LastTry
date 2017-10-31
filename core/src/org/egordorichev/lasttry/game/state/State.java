@@ -39,8 +39,19 @@ public class State implements Screen {
 
 	}
 
+	/**
+	 * Not used!
+	 */
 	@Override
 	public void render(float delta) {
+
+	}
+
+	public void update(float delta) {
+
+	}
+
+	public void render() {
 
 	}
 

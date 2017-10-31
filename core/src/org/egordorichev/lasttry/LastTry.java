@@ -1,7 +1,8 @@
 package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.Game;
-import org.egordorichev.lasttry.game.state.LoadState;
+import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -11,11 +12,23 @@ import org.egordorichev.lasttry.util.log.Log;
  */
 public class LastTry extends Game {
 	/**
+	 * Current game state
+	 */
+	private State state;
+
+	/**
 	 * All init happens here
 	 */
 	@Override
 	public void create() {
-		this.setState(new LoadState());
+		Globals.init();
+		this.setState(new InGameState());
+	}
+
+	@Override
+	public void render() {
+		this.state.update(Gdx.graphics.getDeltaTime());
+		this.state.render();
 	}
 
 	/**
@@ -24,6 +37,7 @@ public class LastTry extends Game {
 	 */
 	public void setState(State state) {
 		this.setScreen(state);
+		this.state = state;
 
 		// Here goes all state changing stuff
 		// Like logging and saving
