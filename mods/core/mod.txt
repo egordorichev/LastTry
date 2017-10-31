@@ -1,8 +1,0 @@
-// Change the output dir of each module
-sourceSets {
-    main {
-        java {
-            output.classesDir 'build/classes'
-        }
-    }
-}
