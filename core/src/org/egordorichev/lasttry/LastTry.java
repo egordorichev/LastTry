@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.game.state.LoadState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.util.log.Log;
@@ -23,6 +24,15 @@ public class LastTry extends Game {
 	@Override
 	public void create() {
 		Globals.init();
+
+		try {
+			ArgumentParser.parse();
+		} catch (RuntimeException exception) {
+			Log.error(exception.getMessage());
+			Log.error("Failed to parse arguments aborting");
+			return;
+		}
+
 		this.setState(new LoadState());
 	}
 

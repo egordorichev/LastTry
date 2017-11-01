@@ -4,7 +4,7 @@ size: 32,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-icons/lt_dirt
+blocks/lt_dirt
   rotate: false
   xy: 2, 2
   size: 16, 16

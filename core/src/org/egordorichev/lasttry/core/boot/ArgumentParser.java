@@ -10,7 +10,7 @@ public class ArgumentParser {
 	/**
 	 * Command line arguments
 	 */
-	private String[] args;
+	private static String[] args;
 	/**
 	 * Commands list
 	 */
@@ -22,13 +22,23 @@ public class ArgumentParser {
 		commands.add(new PackTexturesCommand());
 	}
 
-	public ArgumentParser(String[] args) {
-		this.args = args;
+	/**
+	 * Sets args
+	 *
+	 * @param args New args
+	 */
+	public static void setArgs(String[] args) {
+		ArgumentParser.args = args;
 	}
 
-	public void parse() throws RuntimeException {
-		for (int i = 0; i < this.args.length; i++) {
-			String arg = this.args[i];
+	/**
+	 * Parses arguments
+	 *
+	 * @throws RuntimeException If something went wrong
+	 */
+	public static void parse() throws RuntimeException {
+		for (int i = 0; i < args.length; i++) {
+			String arg = args[i];
 			boolean found = false;
 
 			for (Command command : commands) {
@@ -36,7 +46,7 @@ public class ArgumentParser {
 				String shortName = command.getShortName();
 
 				if (arg.equals("--" + name)	|| arg.equals("-" + shortName)) {
-					command.call(this.args);
+					command.call(args);
 					found = true;
 					break;
 				}

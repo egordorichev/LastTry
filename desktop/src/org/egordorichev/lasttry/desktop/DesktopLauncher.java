@@ -19,14 +19,7 @@ public class DesktopLauncher {
 
 		// config.addIcon("icon.png", Files.FileType.Internal);
 
-		try {
-			ArgumentParser parser = new ArgumentParser(args);
-			parser.parse();
-		} catch (RuntimeException exception) {
-			Log.error(exception.getMessage());
-			Log.error("Failed to parse arguments aborting");
-			return;
-		}
+		ArgumentParser.setArgs(args);
 
 		new LwjglApplication(new LastTry());
 	}
