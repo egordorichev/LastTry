@@ -4,6 +4,9 @@ import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.core.boot.Command;
 import org.egordorichev.lasttry.util.log.Log;
 
+/**
+ * Enables debug mode
+ */
 public class DebugCommand extends Command {
 	public DebugCommand() {
 		super("debug", "d");
@@ -17,7 +20,7 @@ public class DebugCommand extends Command {
 	 */
 	@Override
 	public boolean call(String[] args) {
-		Globals.debug = true;
+		Globals.enableDebug();
 		Log.debug("Debug mode is enabled");
 
 		return false;

@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.egordorichev.lasttry.entity.camera.Camera;
 import org.egordorichev.lasttry.entity.system.EntitySystem;
+import org.egordorichev.lasttry.util.log.Log;
 
 public class Globals {
 	/**
@@ -20,7 +21,7 @@ public class Globals {
 	/**
 	 * Shows, if debug info should be shown
 	 */
-	public static boolean debug = false;
+	private static boolean debug = false;
 
 	public static void init() {
 		entitySystem = new EntitySystem();
@@ -28,5 +29,13 @@ public class Globals {
 		camera = new Camera();
 
 		entitySystem.add(camera);
+	}
+
+	/**
+	 * Enables debug mode and log
+	 */
+	public static void enableDebug() {
+		debug = true;
+		Log.levels[1].enable(); // Enable debug log
 	}
 }

@@ -7,12 +7,12 @@ public class Log {
 	/**
 	 * Set of logging levels
 	 */
-	private static LogLevel[] levels;
+	public static LogLevel[] levels;
 
 	static {
 		levels = new LogLevel[4];
 		levels[0] = new LogLevel("INFO", AsciiColors.GREEN, true);
-		levels[1] = new LogLevel("DEBUG", AsciiColors.BLUE, true);
+		levels[1] = new LogLevel("DEBUG", AsciiColors.BLUE, false);
 		levels[2] = new LogLevel("ERROR", AsciiColors.RED, true);
 		levels[3] = new LogLevel("WARNING", AsciiColors.PURPLE, true);
 	}

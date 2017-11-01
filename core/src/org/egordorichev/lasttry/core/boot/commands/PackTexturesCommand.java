@@ -1,15 +1,15 @@
 package org.egordorichev.lasttry.core.boot.commands;
 
-import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.boot.Command;
+import org.egordorichev.lasttry.entity.asset.AssetPacker;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
- * Simple help command
+ * Packs all textures to the texture atlas
  */
-public class HelpCommand extends Command {
-	public HelpCommand() {
-		super("help", "h");
+public class PackTexturesCommand extends Command {
+	public PackTexturesCommand() {
+		super("pack", "pt");
 	}
 
 	/**
@@ -20,8 +20,9 @@ public class HelpCommand extends Command {
 	 */
 	@Override
 	public boolean call(String[] args) {
-		Log.info("LastTry " + Version.STRING);
-		Log.info("For more help, please, visit https://github.com/LastTryR/LastTry");
+		Log.debug("Packing textures...");
+		AssetPacker.pack();
+		Log.debug("Done");
 		return false;
 	}
 }

@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.core.boot;
 
 import org.egordorichev.lasttry.core.boot.commands.*;
-
 import java.util.ArrayList;
 
 /**
@@ -20,6 +19,7 @@ public class ArgumentParser {
 	static {
 		commands.add(new HelpCommand());
 		commands.add(new DebugCommand());
+		commands.add(new PackTexturesCommand());
 	}
 
 	public ArgumentParser(String[] args) {
