@@ -18,5 +18,7 @@ public interface System {
 	 *
 	 * @param message Message from the engine
 	 */
-	void handleMessage(String message);
+	default void handleMessage(String message) {
+
+	}
 }

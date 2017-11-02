@@ -36,26 +36,6 @@ public class EntitySystem {
 	}
 
 	/**
-	 * Updates all entities
-	 *
-	 * @param delta Time, since the last frame
-	 */
-	public void update(float delta) {
-		for (Entity entity : this.entities) {
-			entity.update(delta);
-		}
-	}
-
-	/**
-	 * Draws all entities
-	 */
-	public void render() {
-		for (Entity entity : this.entities) {
-			entity.render();
-		}
-	}
-
-	/**
 	 * @return All entities
 	 */
 	public ArrayList<Entity> getEntities() {

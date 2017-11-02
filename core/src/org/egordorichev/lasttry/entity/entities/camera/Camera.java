@@ -18,7 +18,6 @@ public class Camera extends Entity {
 	 */
 	private OrthographicCamera camera;
 
-
 	public Camera(Entity target) {
 		if (target != null) {
 			this.target = target;

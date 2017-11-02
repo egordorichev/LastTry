@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.world.chunk;
+package org.egordorichev.lasttry.entity.entities.world.chunk;
 
 import org.egordorichev.lasttry.entity.Entity;
 

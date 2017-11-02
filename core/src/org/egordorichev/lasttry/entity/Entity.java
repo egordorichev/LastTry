@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.util.log.Log;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
 /**
@@ -41,9 +42,12 @@ public class Entity {
 	 */
 	public void addComponent(Class<? extends Component> component) {
 		Component instance = null;
+
 		try {
-			instance = component.newInstance();
+			Constructor<?> constructor = component.getConstructor(Entity.class);
+			instance = (Component) constructor.newInstance(this);
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			Log.error("Failed to create a component " + component.getName());
 		}
 

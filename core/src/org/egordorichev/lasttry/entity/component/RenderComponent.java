@@ -11,6 +11,6 @@ public class RenderComponent extends Component {
 	 * Renders the entity
 	 */
 	public void render() {
-
+		this.entity.render();
 	}
 }

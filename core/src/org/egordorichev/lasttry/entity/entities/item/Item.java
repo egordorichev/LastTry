@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.item;
+package org.egordorichev.lasttry.entity.entities.item;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;

@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity.asset.factories;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
-import org.egordorichev.lasttry.entity.item.Item;
+import org.egordorichev.lasttry.entity.entities.item.Item;
 
 /**
  * Parses items
