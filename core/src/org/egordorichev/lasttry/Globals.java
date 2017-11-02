@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.egordorichev.lasttry.entity.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.system.EntitySystem;
 import org.egordorichev.lasttry.util.log.Log;
 

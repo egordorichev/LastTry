@@ -4,8 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
-import org.egordorichev.lasttry.game.state.LoadState;
-import org.egordorichev.lasttry.game.state.State;
+import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -14,16 +14,13 @@ import org.egordorichev.lasttry.util.log.Log;
  */
 public class LastTry extends Game {
 	/**
-	 * Current game state
-	 */
-	private State state;
-
-	/**
 	 * All init happens here
 	 */
 	@Override
 	public void create() {
 		Globals.init();
+		Assets.load();
+		Engine.init();
 
 		try {
 			ArgumentParser.parse();
@@ -32,32 +29,18 @@ public class LastTry extends Game {
 			Log.error("Failed to parse arguments aborting");
 			return;
 		}
-
-		this.setState(new LoadState());
 	}
 
 	@Override
 	public void render() {
-		this.state.update(Gdx.graphics.getDeltaTime());
+		float delta = Gdx.graphics.getDeltaTime();
+
+		Engine.update(delta);
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Globals.batch.begin();
-		this.state.render();
+		Engine.sendMessage("render");
 		Globals.batch.end();
-	}
-
-	/**
-	 * Wrapper around setting state
-	 * @param state New state
-	 */
-	public void setState(State state) {
-		this.setScreen(state);
-		this.state = state;
-
-		// Here goes all state changing stuff
-		// Like logging and saving
-
-		Log.info("LT state is now " + state.getName() + " state");
 	}
 }

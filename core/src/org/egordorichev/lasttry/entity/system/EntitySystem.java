@@ -1,9 +1,12 @@
 package org.egordorichev.lasttry.entity.system;
 
 import org.egordorichev.lasttry.entity.Entity;
-
 import java.util.ArrayList;
 
+/**
+ * Handles all entities
+ * Not a subclass of System!
+ */
 public class EntitySystem {
 	/**
 	 * The entity list

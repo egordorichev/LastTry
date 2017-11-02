@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.egordorichev.lasttry.LastTry;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
-import org.egordorichev.lasttry.util.log.Log;
 
 /** LastTry launcher */
 public class DesktopLauncher {
