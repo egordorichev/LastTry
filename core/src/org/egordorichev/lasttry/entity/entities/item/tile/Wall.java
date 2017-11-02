@@ -1,20 +1,16 @@
-package org.egordorichev.lasttry.entity.entities.item;
+package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.entity.entities.item.Item;
 
-public class Block extends Item {
-	public static short SIZE = 16;
+public class Wall extends Item {
 	/**
-	 * Block is collidable
-	 */
-	protected boolean solid = true;
-	/**
-	 * Block textures
+	 * Wall textures
 	 */
 	protected TextureRegion tiles;
 
-	public Block(String id) {
+	public Wall(String id) {
 		super(id);
 	}
 
@@ -27,6 +23,6 @@ public class Block extends Item {
 	public void loadFields(JsonValue asset) {
 		super.loadFields(asset);
 
-		this.solid = asset.getBoolean("solid", true);
+		// TODO
 	}
 }

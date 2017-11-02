@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.entity.entities.world.WorldInfo;
 import org.egordorichev.lasttry.entity.system.EntitySystem;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -32,7 +33,7 @@ public class Globals {
 		entitySystem = new EntitySystem();
 		batch = new SpriteBatch();
 		camera = new Camera();
-		world = new World();
+		world = new World(new WorldInfo(4, 4));
 
 		entitySystem.add(camera);
 		entitySystem.add(world);

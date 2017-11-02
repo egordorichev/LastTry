@@ -55,6 +55,7 @@ public class LastTry extends Game {
 		Engine.update(delta);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		Globals.camera.set();
 		Globals.batch.begin();
 		Engine.sendMessage("render");
 		Globals.batch.end();

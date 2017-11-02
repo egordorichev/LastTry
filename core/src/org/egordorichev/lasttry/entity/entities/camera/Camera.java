@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
+import org.egordorichev.lasttry.entity.component.UpdateComponent;
 
 /**
  * In-game camera
@@ -24,6 +25,7 @@ public class Camera extends Entity {
 		}
 
 		this.camera = new OrthographicCamera();
+		this.addComponent(UpdateComponent.class);
 	}
 
 	public Camera() {
@@ -59,5 +61,19 @@ public class Camera extends Entity {
 	 */
 	public void set() {
 		Globals.batch.setProjectionMatrix(this.camera.combined);
+	}
+
+	/**
+	 * @return Camera X
+	 */
+	public int getX() {
+		return (int) this.camera.position.x;
+	}
+
+	/**
+	 * @return Camera Y in pixels
+	 */
+	public int getY() {
+		return (int) this.camera.position.y;
 	}
 }
