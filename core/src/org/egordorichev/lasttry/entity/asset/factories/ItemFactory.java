@@ -4,6 +4,9 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.entities.item.Item;
+import org.egordorichev.lasttry.util.log.Log;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Parses items
@@ -16,8 +19,20 @@ public class ItemFactory implements AssetFactory {
 	 */
 	@Override
 	public void parse(JsonValue asset) {
-		Item item = new Item(asset.name());
+		String type = "org.egordorichev.lasttry.entity.entities.item." + asset.getString("type", "Item");
 
-		Assets.items.add(asset.name(), item);
+		try {
+			Class<?> clazz = Class.forName(type);
+			Constructor<?> constructor = clazz.getConstructor(String.class);
+
+			Item item = (Item) constructor.newInstance(asset.name);
+			item.loadFields(asset);
+
+			Assets.items.add(asset.name(), item);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			Log.error("Failed to create item " + asset.name);
+		}
+
 	}
 }

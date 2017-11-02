@@ -58,7 +58,7 @@ public class World extends Entity {
 
 				if (id != null) {
 					Block block = (Block) Assets.items.get(id);
-					block.render();
+					block.render(x, y);
 				}
 			}
 		}

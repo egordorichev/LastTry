@@ -1,5 +1,5 @@
 {
 	"lt:dirt" : {
-		"type" : "org.egordorichev.lasttry.item.block.BlockGround"
+		"type" : "tile.Block"
 	}
 }

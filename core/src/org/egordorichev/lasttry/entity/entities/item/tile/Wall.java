@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 
 /**
@@ -11,7 +12,7 @@ public class Wall extends Item {
 	/**
 	 * Wall textures
 	 */
-	protected TextureRegion tiles;
+	protected TextureRegion[][] tiles;
 
 	public Wall(String id) {
 		super(id);
@@ -26,6 +27,6 @@ public class Wall extends Item {
 	public void loadFields(JsonValue asset) {
 		super.loadFields(asset);
 
-		// TODO
+		this.tiles = Assets.getTexture("lt_" + this.id).split(Block.SIZE, Block.SIZE);
 	}
 }
