@@ -2,6 +2,7 @@ package org.egordorichev.lasttry.entity.entities.world.chunk;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
+import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles blocks

@@ -34,6 +34,8 @@ public class LastTry extends Game {
 			return;
 		}
 
+		Gdx.graphics.setWindowedMode(800, 600);
+
 		this.title = "LastTry " + Version.STRING;
 
 		Assets.load();
@@ -53,9 +55,9 @@ public class LastTry extends Game {
 		float delta = Gdx.graphics.getDeltaTime();
 
 		Engine.update(delta);
+		Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		Globals.camera.set();
 		Globals.batch.begin();
 		Engine.sendMessage("render");
 		Globals.batch.end();

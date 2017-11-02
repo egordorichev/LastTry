@@ -1,8 +1,9 @@
-package org.egordorichev.lasttry.entity.system;
+package org.egordorichev.lasttry.entity.system.systems;
 
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.RenderComponent;
+import org.egordorichev.lasttry.entity.system.System;
 
 import java.util.Objects;
 

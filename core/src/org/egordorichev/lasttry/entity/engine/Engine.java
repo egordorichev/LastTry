@@ -1,6 +1,6 @@
 package org.egordorichev.lasttry.entity.engine;
 
-import org.egordorichev.lasttry.entity.system.RenderSystem;
+import org.egordorichev.lasttry.entity.system.systems.*;
 import org.egordorichev.lasttry.entity.system.System;
 
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ public class Engine {
 	 * Adds all needed systems
 	 */
 	public static void init() {
+		add(new CameraSystem());
 		add(new RenderSystem());
 	}
 

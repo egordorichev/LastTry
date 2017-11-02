@@ -24,6 +24,6 @@ public class ChunkIO extends IO<Chunk> {
 	public static Chunk load(short x, short y) {
 		// TODO
 
-		return new EmptyChunk(x, y);
+		return new Chunk(x, y);
 	}
 }

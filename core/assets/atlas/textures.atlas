@@ -1,10 +1,23 @@
 
 textures.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blocks/lt_dirt_tiles
+  rotate: false
+  xy: 2, 2
+  size: 256, 48
+  orig: 256, 48
+  offset: 0, 0
+  index: -1
+
+textures2.png
 size: 32,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-blocks/lt_dirt
+icons/lt_dirt
   rotate: false
   xy: 2, 2
   size: 16, 16

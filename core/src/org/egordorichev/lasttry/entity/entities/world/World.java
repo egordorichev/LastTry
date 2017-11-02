@@ -29,6 +29,14 @@ public class World extends Entity {
 		this.info = info;
 		this.chunks = new Chunk[info.getWidth() * info.getHeight()];
 
+		for (int x = 0; x < 100; x++) {
+			for (int y = 0; y < 100; y++) {
+				if (Math.random() > 0.5) {
+					this.setBlock("lt:dirt", (short) x, (short) y);
+				}
+			}
+		}
+
 		this.addComponent(UpdateComponent.class);
 		this.addComponent(RenderComponent.class);
 	}

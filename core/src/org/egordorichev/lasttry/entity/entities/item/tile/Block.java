@@ -44,7 +44,7 @@ public class Block extends Item {
 	public void loadFields(JsonValue asset) {
 		super.loadFields(asset);
 
-		this.tiles = Assets.getTexture("blocks/" + this.id.replace(':', '_')).split(SIZE, SIZE);
+		this.tiles = Assets.getTexture("blocks/" + this.id.replace(':', '_') + "_tiles").split(SIZE, SIZE);
 		this.solid = asset.getBoolean("solid", true);
 	}
 }
