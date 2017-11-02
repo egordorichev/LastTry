@@ -69,7 +69,7 @@ public class EmptyChunk extends Chunk {
 	 * @return Data at given position
 	 */
 	@Override
-	public int getData(short x, short y) {
+	public short getData(short x, short y) {
 		return 0;
 	}
 
@@ -82,7 +82,7 @@ public class EmptyChunk extends Chunk {
 	 * @param y Data Y
 	 */
 	@Override
-	public void setData(int value, short x, short y) {
+	public void setData(short value, short x, short y) {
 
 	}
 }
