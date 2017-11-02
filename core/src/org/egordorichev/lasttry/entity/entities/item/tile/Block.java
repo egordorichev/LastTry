@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 
+/**
+ * The main part of the world
+ */
 public class Block extends Item {
 	public static short SIZE = 16;
 	/**

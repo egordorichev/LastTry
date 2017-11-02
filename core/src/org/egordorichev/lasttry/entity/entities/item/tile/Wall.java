@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 
+/**
+ * Block, but in the BG
+ */
 public class Wall extends Item {
 	/**
 	 * Wall textures

@@ -9,7 +9,7 @@ import org.egordorichev.lasttry.entity.component.UpdateComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
-import org.egordorichev.lasttry.entity.entities.world.chunk.EmptyChunk;
+import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -214,12 +214,10 @@ public class World extends Entity {
 			short cx = (short) Math.floor(x / Chunk.SIZE);
 			short cy = (short) Math.floor(y / Chunk.SIZE);
 
-			Chunk chunk = new EmptyChunk(cx, cy);
-			Log.debug("Missing chunk " + cx + ":" + cy);
+			Log.debug("Loading chunk " + cx + ":" + cy);
+			this.loadChunk(cx, cy);
 
-			this.chunks[index] = chunk;
-
-			return chunk;
+			return this.chunks[index];
 		}
 
 		return this.chunks[index];
@@ -234,5 +232,9 @@ public class World extends Entity {
 	 */
 	private boolean isOut(short x, short y) {
 		return x < 0 || y < 0 || x > this.info.getWidth() * Chunk.SIZE - 1 || y > this.info.getHeight() * Chunk.SIZE -1;
+	}
+
+	private void loadChunk(short x, short y) {
+		this.chunks[this.getChunkIndex(x, y)] = ChunkIO.load(x, y);
 	}
 }
