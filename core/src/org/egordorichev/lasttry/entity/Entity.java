@@ -59,8 +59,15 @@ public class Entity {
 	 *
 	 * @param component Component class to remove
 	 */
-	public void deleteComponent(Class<? extends Component> component) {
+	public void removeComponent(Class<? extends Component> component) {
 		this.components.remove(component);
+	}
+
+	/**
+	 * Removes all components from entity
+	 */
+	public void removeAll() {
+		this.components.clear();
 	}
 
 	/**

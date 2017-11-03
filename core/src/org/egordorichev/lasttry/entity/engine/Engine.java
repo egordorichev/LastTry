@@ -19,6 +19,7 @@ public class Engine {
 	 */
 	public static void init() {
 		add(new CameraSystem());
+		add(new UpdateSystem());
 		add(new RenderSystem());
 	}
 

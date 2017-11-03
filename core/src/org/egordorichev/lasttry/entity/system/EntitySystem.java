@@ -1,6 +1,9 @@
 package org.egordorichev.lasttry.entity.system;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.component.Component;
+import org.egordorichev.lasttry.entity.engine.Engine;
+
 import java.util.ArrayList;
 
 /**
@@ -18,12 +21,40 @@ public class EntitySystem {
 	}
 
 	/**
+	 * Returns all entities with given components
+	 *
+	 * @param types Component types
+	 * @return Entities list
+	 */
+	public ArrayList<Entity> getEntitiesFor(Class<? extends Component>... types) {
+		ArrayList<Entity> list = new ArrayList<>();
+
+		for (Entity entity : this.entities) {
+			boolean has = true;
+
+			for (Class<? extends Component> type : types) {
+				if (!entity.hasComponent(type)) {
+					has = false;
+					break;
+				}
+			}
+
+			if (has) {
+				list.add(entity);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Adds an entity
 	 *
 	 * @param entity Entity to add
 	 */
 	public void add(Entity entity) {
 		this.entities.add(entity);
+		Engine.sendMessage("entity_added");
 	}
 
 	/**

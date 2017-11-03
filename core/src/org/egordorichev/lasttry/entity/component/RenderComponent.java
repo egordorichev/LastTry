@@ -6,11 +6,4 @@ public class RenderComponent extends Component {
 	public RenderComponent(Entity entity) {
 		super(entity);
 	}
-
-	/**
-	 * Renders the entity
-	 */
-	public void render() {
-		this.entity.render();
-	}
 }
