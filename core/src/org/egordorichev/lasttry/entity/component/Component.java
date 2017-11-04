@@ -11,7 +11,19 @@ public class Component {
 	 */
 	protected Entity entity;
 
-	public Component(Entity entity) {
+	/**
+	 * Inits the component
+	 */
+	public void init() {
+
+	}
+
+	/**
+	 * Sets entity
+	 *
+	 * @param entity New entity
+	 */
+	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
 

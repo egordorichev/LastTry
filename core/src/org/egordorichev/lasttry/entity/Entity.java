@@ -37,8 +37,10 @@ public class Entity {
 			Component instance = null;
 
 			try {
-				Constructor<?> constructor = c.getConstructor(Entity.class);
-				instance = (Component) constructor.newInstance(this);
+				Constructor<?> constructor = c.getConstructor();
+				instance = (Component) constructor.newInstance();
+				instance.setEntity(this);
+				instance.init();
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to create a component " + c.getName());

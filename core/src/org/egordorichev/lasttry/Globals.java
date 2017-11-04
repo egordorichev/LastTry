@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.world.World;
-import org.egordorichev.lasttry.entity.entities.world.WorldInfo;
 import org.egordorichev.lasttry.util.log.Log;
 
 public class Globals {
@@ -28,7 +27,7 @@ public class Globals {
 	public static void init() {
 		batch = new SpriteBatch();
 		camera = new Camera();
-		world = new World(new WorldInfo(4, 4));
+		world = new World();
 
 		Engine.addEntity(camera);
 		Engine.addEntity(world);

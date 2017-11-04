@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
@@ -15,18 +16,15 @@ import org.egordorichev.lasttry.util.log.Log;
  * Handles chunks
  */
 public class World extends Entity {
-	/**
-	 * Stores info about world type and size
-	 */
-	public WorldInfo info;
-	/**
-	 * Handles chunks
-	 */
-	private Chunk[] chunks;
+	public World() {
+		this.addComponent(SizeComponent.class);
 
-	public World(WorldInfo info) {
-		this.info = info;
-		this.chunks = new Chunk[info.getWidth() * info.getHeight()];
+		SizeComponent size = this.getComponent(SizeComponent.class);
+
+		size.width = 4;
+		size.height = 4;
+
+		this.addComponent(WorldChunksComponent.class);
 
 		for (int x = 0; x < 100; x++) {
 			for (int y = 0; y < 100; y++) {
@@ -191,7 +189,7 @@ public class World extends Entity {
 	 * @return Chunk array index, containing given block (unsafe!)
 	 */
 	private int getChunkIndex(int x, int y) {
-		return x + y * this.info.getWidth();
+		return x + y * this.getComponent(SizeComponent.class).width;
 	}
 
 	/**
@@ -204,21 +202,23 @@ public class World extends Entity {
 	private Chunk getChunkFor(int x, int y) {
 		int index = this.getChunkIndex((int) Math.floor(x / Chunk.SIZE), (int) Math.floor(y / Chunk.SIZE));
 
-		if (index < 0 || index > this.chunks.length - 1) {
+		WorldChunksComponent chunks = this.getComponent(WorldChunksComponent.class);
+
+		if (index < 0 || index > chunks.chunks.length - 1) {
 			return null;
 		}
 
-		if (this.chunks[index] == null) {
+		if (chunks.chunks[index] == null) {
 			short cx = (short) Math.floor(x / Chunk.SIZE);
 			short cy = (short) Math.floor(y / Chunk.SIZE);
 
 			Log.debug("Loading chunk " + cx + ":" + cy);
 			this.loadChunk(cx, cy);
 
-			return this.chunks[index];
+			return chunks.chunks[index];
 		}
 
-		return this.chunks[index];
+		return chunks.chunks[index];
 	}
 
 	/**
@@ -229,10 +229,11 @@ public class World extends Entity {
 	 * @return True, if given position is outside of block array
 	 */
 	private boolean isOut(short x, short y) {
-		return x < 0 || y < 0 || x > this.info.getWidth() * Chunk.SIZE - 1 || y > this.info.getHeight() * Chunk.SIZE -1;
+		SizeComponent size = this.getComponent(SizeComponent.class);
+		return x < 0 || y < 0 || x > size.width * Chunk.SIZE - 1 || y > size.height * Chunk.SIZE -1;
 	}
 
 	private void loadChunk(short x, short y) {
-		this.chunks[this.getChunkIndex(x, y)] = ChunkIO.load(x, y);
+		this.getComponent(WorldChunksComponent.class).chunks[this.getChunkIndex(x, y)] = ChunkIO.load(x, y);
 	}
 }
