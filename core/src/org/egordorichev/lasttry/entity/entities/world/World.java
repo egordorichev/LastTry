@@ -35,6 +35,10 @@ public class World extends Entity {
 		}
 	}
 
+	/**
+	 * Renders the world
+	 */
+	@Override
 	public void render() {
 		short xStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.x / Block.SIZE);
 		short yStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.y / Block.SIZE);

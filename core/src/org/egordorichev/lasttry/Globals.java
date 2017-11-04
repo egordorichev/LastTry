@@ -3,6 +3,7 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.creature.player.Player;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -20,6 +21,10 @@ public class Globals {
 	 */
 	public static World world;
 	/**
+	 * The player
+	 */
+	public static Player player;
+	/**
 	 * Shows, if debug info should be shown
 	 */
 	private static boolean debug = false;
@@ -28,9 +33,11 @@ public class Globals {
 		batch = new SpriteBatch();
 		camera = new Camera();
 		world = new World();
+		player = new Player();
 
 		Engine.addEntity(camera);
 		Engine.addEntity(world);
+		Engine.addEntity(player);
 	}
 
 	/**

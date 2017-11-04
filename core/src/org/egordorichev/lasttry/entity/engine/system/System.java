@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.system;
+package org.egordorichev.lasttry.entity.engine.system;
 
 /**
  * Handles one kind of action

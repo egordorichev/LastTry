@@ -28,6 +28,13 @@ public class Entity {
 	}
 
 	/**
+	 * Renders the entity
+	 */
+	public void render() {
+
+	}
+
+	/**
 	 * Registers a component
 	 *
 	 * @param component Component class to register

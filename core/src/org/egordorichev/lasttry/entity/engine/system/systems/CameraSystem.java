@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.system.systems;
+package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.entity.component.TargetComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.system.System;
+import org.egordorichev.lasttry.entity.engine.system.System;
 
 import java.util.ArrayList;
 import java.util.Objects;

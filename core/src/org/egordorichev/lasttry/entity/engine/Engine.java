@@ -2,8 +2,8 @@ package org.egordorichev.lasttry.entity.engine;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.Component;
-import org.egordorichev.lasttry.entity.system.systems.*;
-import org.egordorichev.lasttry.entity.system.System;
+import org.egordorichev.lasttry.entity.engine.system.systems.*;
+import org.egordorichev.lasttry.entity.engine.system.System;
 
 import java.util.ArrayList;
 
