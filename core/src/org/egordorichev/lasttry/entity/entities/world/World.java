@@ -26,8 +26,8 @@ public class World extends Entity {
 
 		this.addComponent(WorldChunksComponent.class);
 
-		for (int x = 0; x < 100; x++) {
-			for (int y = 0; y < 100; y++) {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
 				if (Math.random() > 0.5) {
 					this.setBlock("lt:dirt", (short) x, (short) y);
 				}
@@ -216,7 +216,6 @@ public class World extends Entity {
 			short cx = (short) Math.floor(x / Chunk.SIZE);
 			short cy = (short) Math.floor(y / Chunk.SIZE);
 
-			Log.debug("Loading chunk " + cx + ":" + cy);
 			this.loadChunk(cx, cy);
 
 			return chunks.chunks[index];
