@@ -9,29 +9,13 @@ public class PositionComponent extends Component {
 	/**
 	 * X coordinate
 	 */
-	private float x;
+	public float x;
 	/**
 	 * Y coordinate
 	 */
-	private float y;
+	public float y;
 
 	public PositionComponent(Entity entity) {
 		super(entity);
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getX() {
-		return this.x;
-	}
-
-	public float getY() {
-		return this.y;
 	}
 }

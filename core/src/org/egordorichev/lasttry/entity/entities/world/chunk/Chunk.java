@@ -31,30 +31,20 @@ public class Chunk extends Entity {
 	 * Data: 8 bits for blocks, 8 bit for walls, 16 bits general use
 	 */
 	private short[] data;
-	/**
-	 * Chunk X in chunks
-	 */
-	private short x;
-	/**
-	 * Chunk Y in chunks
-	 */
-	private short y;
 
 	public Chunk(short x, short y) {
-		this.addComponent(PositionComponent.class);
+		super(PositionComponent.class);
+
 		PositionComponent position = (PositionComponent) this.getComponent(PositionComponent.class);
 
-		position.setX(x);
-		position.setY(y);
+		position.x = x;
+		position.y = y;
 
 		int size = SIZE * SIZE;
 
 		this.blocks = new String[size];
 		this.walls = new String[size];
 		this.data = new short[size];
-
-		this.x = x;
-		this.y = y;
 	}
 
 	/**
@@ -160,7 +150,7 @@ public class Chunk extends Entity {
 	 * @return Related X
 	 */
 	public short toRelativeX(short x) {
-		return (short) (x - this.x * SIZE);
+		return (short) (x - this.getX() * SIZE);
 	}
 
 	/**
@@ -170,7 +160,7 @@ public class Chunk extends Entity {
 	 * @return Related Y
 	 */
 	public short toRelativeY(short y) {
-		return (short) (y - this.y * SIZE);
+		return (short) (y - this.getY() * SIZE);
 	}
 
 
@@ -178,14 +168,14 @@ public class Chunk extends Entity {
 	 * @return Chunk X
 	 */
 	public short getX() {
-		return this.x;
+		return (short) ((PositionComponent) this.getComponent(PositionComponent.class)).x;
 	}
 
 	/**
 	 * @return Chunk Y
 	 */
 	public short getY() {
-		return this.y;
+		return (short) ((PositionComponent) this.getComponent(PositionComponent.class)).y;
 	}
 
 	/**

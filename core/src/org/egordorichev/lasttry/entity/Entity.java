@@ -15,24 +15,16 @@ public class Entity {
 	 */
 	protected HashMap<Class<? extends Component>, Component> components;
 
+	public Entity(Class<? extends Component> ... components) {
+		this.components = new HashMap<>();
+
+		for (Class<? extends Component> type : components) {
+			this.addComponent(type);
+		}
+	}
+
 	public Entity() {
 		this.components = new HashMap<>();
-	}
-
-	/**
-	 * Updates the entity
-	 *
-	 * @param delta Time since the last frame
-	 */
-	public void update(float delta) {
-
-	}
-
-	/**
-	 * Renders the entity
-	 */
-	public void render() {
-
 	}
 
 	/**
@@ -40,18 +32,20 @@ public class Entity {
 	 *
 	 * @param component Component class to register
 	 */
-	public void addComponent(Class<? extends Component> component) {
-		Component instance = null;
+	public void addComponent(Class<? extends Component> ... component) {
+		for (Class<? extends Component> c : component) {
+			Component instance = null;
 
-		try {
-			Constructor<?> constructor = component.getConstructor(Entity.class);
-			instance = (Component) constructor.newInstance(this);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			Log.error("Failed to create a component " + component.getName());
+			try {
+				Constructor<?> constructor = c.getConstructor(Entity.class);
+				instance = (Component) constructor.newInstance(this);
+			} catch (Exception exception) {
+				exception.printStackTrace();
+				Log.error("Failed to create a component " + c.getName());
+			}
+
+			this.components.put(c, instance);
 		}
-
-		this.components.put(component, instance);
 	}
 
 	/**
@@ -86,7 +80,7 @@ public class Entity {
 	 * @param component Component class to find
 	 * @return Component or null
 	 */
-	public Component getComponent(Class<? extends Component> component) {
-		return this.components.get(component);
+	public <T extends Component> T getComponent(Class<T> component) {
+		return (T) this.components.get(component);
 	}
 }

@@ -7,6 +7,8 @@ import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.game.state.InGameState;
+import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -18,6 +20,10 @@ public class LastTry extends Game {
 	 * The default window title
 	 */
 	private String title;
+	/**
+	 * The current game state
+	 */
+	private State state;
 
 	/**
 	 * All init happens here
@@ -37,11 +43,26 @@ public class LastTry extends Game {
 		Gdx.graphics.setWindowedMode(800, 600);
 
 		this.title = "LastTry " + Version.STRING;
+		this.setState(new InGameState());
 
 		Assets.load();
 		Engine.init();
 
 		Globals.init();
+	}
+
+	/**
+	 * Sets LT state
+	 *
+	 * @param state New state
+	 */
+	public void setState(State state) {
+		this.state = state;
+		this.setScreen(state);
+
+		Log.info("Set LT state to " + state.getClass());
+
+		// Here you can save/load stuff
 	}
 
 	@Override
@@ -53,13 +74,13 @@ public class LastTry extends Game {
 	@Override
 	public void render() {
 		float delta = Gdx.graphics.getDeltaTime();
+		this.state.update(delta);
 
-		Engine.update(delta);
 		Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Globals.batch.begin();
-		Engine.sendMessage("render");
+		this.state.render();
 		Globals.batch.end();
 
 		Gdx.graphics.setTitle(this.title + " " + Gdx.graphics.getFramesPerSecond() + " FPS");

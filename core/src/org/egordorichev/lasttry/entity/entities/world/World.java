@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
-import org.egordorichev.lasttry.entity.component.RenderComponent;
-import org.egordorichev.lasttry.entity.component.UpdateComponent;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
@@ -36,37 +35,28 @@ public class World extends Entity {
 				}
 			}
 		}
-
-		this.addComponent(UpdateComponent.class);
-		this.addComponent(RenderComponent.class);
 	}
 
-	@Override
-	public void update(float delta) {
-		// TODO
-	}
-
-	@Override
 	public void render() {
-		short xStart = (short) Math.floor(Globals.camera.getX() / Block.SIZE);
-		short yStart = (short) Math.floor(Globals.camera.getY() / Block.SIZE);
+		short xStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.x / Block.SIZE);
+		short yStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.y / Block.SIZE);
 		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 1);
 		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 1);
 
 		for (short x = xStart; x < xStart + width; x++) {
 			for (short y = yStart; y < yStart + height; y++) {
-				String id = this.getWall(x, y);
+				String blockId = this.getBlock(x, y);
 
-				if (id != null) {
-					Wall wall = (Wall) Assets.items.get(id);
-					wall.render();
-				}
-
-				id = this.getBlock(x, y);
-
-				if (id != null) {
-					Block block = (Block) Assets.items.get(id);
+				if (blockId != null) {
+					Block block = (Block) Assets.items.get(blockId);
 					block.render(x, y);
+				} else {
+					String wallId = this.getWall(x, y);
+
+					if (wallId != null) {
+						Wall wall = (Wall) Assets.items.get(wallId);
+						wall.render(x, y);
+					}
 				}
 			}
 		}

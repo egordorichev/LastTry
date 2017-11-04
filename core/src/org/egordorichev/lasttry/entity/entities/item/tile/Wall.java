@@ -1,21 +1,30 @@
 package org.egordorichev.lasttry.entity.entities.item.tile;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
+import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 
 /**
  * Block, but in the BG
  */
 public class Wall extends Item {
-	/**
-	 * Wall textures
-	 */
-	protected TextureRegion[][] tiles;
-
 	public Wall(String id) {
 		super(id);
+
+		this.addComponent(TileComponent.class);
+	}
+
+	/**
+	 * Renders the wall
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 */
+	public void render(short x, short y) {
+		Globals.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * Block.SIZE, y * Block.SIZE);
 	}
 
 	/**
@@ -27,6 +36,7 @@ public class Wall extends Item {
 	public void loadFields(JsonValue asset) {
 		super.loadFields(asset);
 
-		this.tiles = Assets.getTexture("lt_" + this.id).split(Block.SIZE, Block.SIZE);
+		this.getComponent(TileComponent.class).tiles =
+			Assets.getTexture("lt_" + this.getComponent(IdComponent.class).id).split(Block.SIZE, Block.SIZE);
 	}
 }

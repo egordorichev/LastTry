@@ -1,10 +1,10 @@
 package org.egordorichev.lasttry;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.WorldInfo;
-import org.egordorichev.lasttry.entity.system.EntitySystem;
 import org.egordorichev.lasttry.util.log.Log;
 
 public class Globals {
@@ -12,10 +12,6 @@ public class Globals {
 	 * In-game camera
 	 */
 	public static Camera camera;
-	/**
-	 * Entity manager
-	 */
-	public static EntitySystem entitySystem;
 	/**
 	 * Sprite renderer
 	 */
@@ -30,13 +26,12 @@ public class Globals {
 	private static boolean debug = false;
 
 	public static void init() {
-		entitySystem = new EntitySystem();
 		batch = new SpriteBatch();
 		camera = new Camera();
 		world = new World(new WorldInfo(4, 4));
 
-		entitySystem.add(camera);
-		entitySystem.add(world);
+		Engine.addEntity(camera);
+		Engine.addEntity(world);
 	}
 
 	/**
