@@ -6,7 +6,11 @@ import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SolidComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.binary.BinaryPacker;
+
+import java.util.Objects;
 
 /**
  * The main part of the world
@@ -27,7 +31,16 @@ public class Block extends Item {
 	 * @param y Block Y
 	 */
 	public void render(short x, short y) {
-		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * SIZE, y * SIZE);
+		String id = this.getComponent(IdComponent.class).id;
+
+		boolean top = Objects.equals(World.instance.getBlock(x, (short) (y + 1)), id);
+		boolean right = Objects.equals(World.instance.getBlock((short) (x + 1), y), id);
+		boolean bottom = Objects.equals(World.instance.getBlock(x, (short) (y - 1)), id);
+		boolean left = Objects.equals(World.instance.getBlock((short) (x - 1), y), id);
+
+		int neighbors = BinaryPacker.pack(top, right, bottom, left);
+
+		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
 	}
 
 	/**
