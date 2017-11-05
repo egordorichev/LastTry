@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity.entities.world;
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
@@ -20,7 +21,7 @@ public class World extends Entity {
 	 */
 	public static World instance;
 
-	public World() {
+	public World(String name, String type) {
 		instance = this;
 
 		this.addComponent(SizeComponent.class);
@@ -31,6 +32,9 @@ public class World extends Entity {
 		size.height = 4;
 
 		this.addComponent(WorldChunksComponent.class);
+
+		IdComponent id = (IdComponent) this.addComponent(IdComponent.class);
+		id.id = name + ":" + type;
 
 		for (int x = 0; x < 10; x++) {
 			for (int y = 0; y < 10; y++) {
@@ -243,6 +247,7 @@ public class World extends Entity {
 	}
 
 	private void loadChunk(short x, short y) {
-		this.getComponent(WorldChunksComponent.class).chunks[this.getChunkIndex(x, y)] = ChunkIO.load(x, y);
+		String id = "data/worlds/" + this.getComponent(IdComponent.class).id.replace(':', '/');
+		this.getComponent(WorldChunksComponent.class).chunks[this.getChunkIndex(x, y)] = ChunkIO.load(id, x, y);
 	}
 }

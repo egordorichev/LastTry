@@ -14,18 +14,19 @@ public class ChunkIO extends IO<Chunk> {
 	public static byte VERSION = 0;
 
 	/**
-	 * Saves entity
+	 * Saves chunk
 	 *
-	 * @param chunk Entity to save
+	 * @param folder Chunk folder
+	 * @param chunk Chunk to save
 	 */
-	public static void write(Chunk chunk) {
+	public static void write(String folder, Chunk chunk) {
 		short x = chunk.getX();
 		short y = chunk.getY();
 
 		Log.debug("Saving chunk " + x + ":" + y);
 
 		try {
-			FileWriter writer = new FileWriter("chunks/" + x + ":" + y + ".cnk"); // TODO: world folders
+			FileWriter writer = new FileWriter(folder + "/" + x + ":" + y + ".cnk"); // TODO: world folders
 
 			writer.writeByte(VERSION); // Chunk file version
 
@@ -33,7 +34,7 @@ public class ChunkIO extends IO<Chunk> {
 				for (short bx = 0; x < Chunk.SIZE; x++) {
 					writer.writeString(chunk.getBlock(bx, by));
 					writer.writeString(chunk.getWall(bx, by));
-					writer.writeInt32(chunk.getData(bx, by));
+					writer.writeInt16(chunk.getData(bx, by));
 				}
 			}
 
@@ -47,16 +48,17 @@ public class ChunkIO extends IO<Chunk> {
 	 * Loads chunk with coords
 	 * (used for chunks)
 	 *
+	 * @param folder Chunk folder
 	 * @param x Chunk X
 	 * @param y Chunk Y
 	 *
 	 * @return Loaded chunk
 	 */
-	public static Chunk load(short x, short y) {
+	public static Chunk load(String folder, short x, short y) {
 		Log.debug("Loading chunk " + x + ":" + y);
 
 		try {
-			FileReader reader = new FileReader("chunks/" + x + ":" + y + ".cnk"); // TODO: world folders
+			FileReader reader = new FileReader( folder + "/" + x + ":" + y + ".cnk"); // TODO: world folders
 			Chunk chunk = new Chunk(x, y);
 
 			byte version = reader.readByte();
@@ -79,15 +81,12 @@ public class ChunkIO extends IO<Chunk> {
 
 			return chunk;
 		} catch (FileNotFoundException exception) {
-			Chunk chunk = new Chunk(x, y);
-
-			write(chunk);
-
-			return chunk; // TODO: generate it
+			return new Chunk(x, y);
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			Log.error("Failed to load chunk " + x + ":" + y);
 		}
 
-		return null;
+		return new Chunk(x, y);
 	}
 }

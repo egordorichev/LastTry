@@ -38,8 +38,11 @@ public class Entity {
 	 * Registers a component
 	 *
 	 * @param component Component class to register
+	 * @return First added component
 	 */
-	public void addComponent(Class<? extends Component> ... component) {
+	public Component addComponent(Class<? extends Component> ... component) {
+		Component first = null;
+
 		for (Class<? extends Component> c : component) {
 			Component instance = null;
 
@@ -48,6 +51,10 @@ public class Entity {
 				instance = (Component) constructor.newInstance();
 				instance.setEntity(this);
 				instance.init();
+
+				if (first == null) {
+					first = instance;
+				}
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to create a component " + c.getName());
@@ -55,6 +62,8 @@ public class Entity {
 
 			this.components.put(c, instance);
 		}
+
+		return first;
 	}
 
 	/**

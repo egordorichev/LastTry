@@ -7,6 +7,8 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.creature.player.Player;
 import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.entity.entities.world.WorldIO;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 
@@ -29,9 +31,10 @@ public class Engine {
 	 */
 	public static void init() {
 		addSystem(new CameraSystem());
+		addSystem(new SaveSystem());
 
 		addEntity(new Camera());
-		addEntity(new World());
+		addEntity(WorldIO.load("test", "forest"));
 		addEntity(new Player());
 	}
 

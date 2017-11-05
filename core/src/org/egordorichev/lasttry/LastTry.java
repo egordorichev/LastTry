@@ -64,12 +64,21 @@ public class LastTry extends Game {
 		// Here you can save/load stuff
 	}
 
+	/**
+	 * Handles window resizing
+	 *
+	 * @param width New window width
+	 * @param height New window height
+	 */
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		Engine.sendMessage("resize");
 	}
 
+	/**
+	 * Renders the game
+	 */
 	@Override
 	public void render() {
 		float delta = Gdx.graphics.getDeltaTime();
@@ -83,5 +92,14 @@ public class LastTry extends Game {
 		Graphics.batch.end();
 
 		Gdx.graphics.setTitle(this.title + " " + Gdx.graphics.getFramesPerSecond() + " FPS");
+	}
+
+	/**
+	 * Saves the game
+	 */
+	@Override
+	public void dispose() {
+		super.dispose();
+		Engine.sendMessage("save");
 	}
 }
