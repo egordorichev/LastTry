@@ -30,8 +30,8 @@ public class ChunkIO extends IO<Chunk> {
 
 			writer.writeByte(VERSION); // Chunk file version
 
-			for (short by = 0; y < Chunk.SIZE; y++) {
-				for (short bx = 0; x < Chunk.SIZE; x++) {
+			for (short by = 0; by < Chunk.SIZE; by++) {
+				for (short bx = 0; bx < Chunk.SIZE; bx++) {
 					writer.writeString(chunk.getBlock(bx, by));
 					writer.writeString(chunk.getWall(bx, by));
 					writer.writeInt16(chunk.getData(bx, by));
@@ -40,6 +40,7 @@ public class ChunkIO extends IO<Chunk> {
 
 			writer.close();
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			Log.error("Failed to save chunk " + x + ":" + y);
 		}
 	}
@@ -68,19 +69,18 @@ public class ChunkIO extends IO<Chunk> {
 				return null;
 			}
 
-			for (short by = 0; y < Chunk.SIZE; y++) {
-				for (short bx = 0; x < Chunk.SIZE; x++) {
-					String block = reader.readString();
-					String wall = reader.readString();
-
-					chunk.setBlock(block, bx, by);
-					chunk.setWall(wall, bx, by);
+			for (short by = 0; by < Chunk.SIZE; by++) {
+				for (short bx = 0; bx < Chunk.SIZE; bx++) {
+					chunk.setBlock(reader.readString(), bx, by);
+					chunk.setWall(reader.readString(), bx, by);
 					chunk.setData(reader.readInt16(), bx, by);
 				}
 			}
 
+			reader.close();
 			return chunk;
 		} catch (FileNotFoundException exception) {
+			Log.debug("Chunk " + x + ":" + y + " is not found");
 			return new Chunk(x, y);
 		} catch (Exception exception) {
 			exception.printStackTrace();

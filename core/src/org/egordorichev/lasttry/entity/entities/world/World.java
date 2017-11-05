@@ -35,14 +35,6 @@ public class World extends Entity {
 
 		IdComponent id = (IdComponent) this.addComponent(IdComponent.class);
 		id.id = name + ":" + type;
-
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 10; y++) {
-				if (Math.random() > 0.5) {
-					this.setBlock("lt:dirt", (short) x, (short) y);
-				}
-			}
-		}
 	}
 
 	/**
