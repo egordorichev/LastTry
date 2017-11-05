@@ -1,22 +1,28 @@
 package org.egordorichev.lasttry.entity.entities.world;
 
 import com.badlogic.gdx.Gdx;
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
+import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
-import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles chunks
  */
 public class World extends Entity {
+	/**
+	 * Static instance
+	 */
+	public static World instance;
+
 	public World() {
+		instance = this;
+
 		this.addComponent(SizeComponent.class);
 
 		SizeComponent size = this.getComponent(SizeComponent.class);
@@ -40,8 +46,8 @@ public class World extends Entity {
 	 */
 	@Override
 	public void render() {
-		short xStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.x / Block.SIZE);
-		short yStart = (short) Math.floor(Globals.camera.getComponent(CameraComponent.class).camera.position.y / Block.SIZE);
+		short xStart = (short) Math.floor(Camera.instance.getComponent(CameraComponent.class).camera.position.x / Block.SIZE);
+		short yStart = (short) Math.floor(Camera.instance.getComponent(CameraComponent.class).camera.position.y / Block.SIZE);
 		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 1);
 		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 1);
 

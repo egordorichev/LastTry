@@ -1,12 +1,12 @@
 package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.utils.JsonValue;
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SolidComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 /**
  * The main part of the world
@@ -27,7 +27,7 @@ public class Block extends Item {
 	 * @param y Block Y
 	 */
 	public void render(short x, short y) {
-		Globals.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * SIZE, y * SIZE);
+		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * SIZE, y * SIZE);
 	}
 
 	/**

@@ -4,6 +4,9 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.entities.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.creature.player.Player;
+import org.egordorichev.lasttry.entity.entities.world.World;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,10 @@ public class Engine {
 	 */
 	public static void init() {
 		addSystem(new CameraSystem());
+
+		addEntity(new Camera());
+		addEntity(new World());
+		addEntity(new Player());
 	}
 
 	/**

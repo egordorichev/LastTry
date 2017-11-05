@@ -7,9 +7,13 @@ import org.egordorichev.lasttry.entity.entities.creature.Creature;
  * The player
  */
 public class Player extends Creature {
+	/**
+	 * Static instance
+	 */
+	public static Player instance;
+
 	public Player() {
 		super(InputComponent.class);
-
-		// InputComponent input = this.getComponent(InputComponent.class);
+		instance = this;
 	}
 }

@@ -1,11 +1,11 @@
 package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.utils.JsonValue;
-import org.egordorichev.lasttry.Globals;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.graphics.Graphics;
 
 /**
  * Block, but in the BG
@@ -24,7 +24,7 @@ public class Wall extends Item {
 	 * @param y Wall Y
 	 */
 	public void render(short x, short y) {
-		Globals.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * Block.SIZE, y * Block.SIZE);
+		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * Block.SIZE, y * Block.SIZE);
 	}
 
 	/**
