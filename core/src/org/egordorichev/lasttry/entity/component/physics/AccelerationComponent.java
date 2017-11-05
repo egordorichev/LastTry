@@ -1,17 +1,10 @@
 package org.egordorichev.lasttry.entity.component.physics;
 
-import org.egordorichev.lasttry.entity.component.Component;
+import org.egordorichev.lasttry.entity.component.PositionComponent;
 
 /**
  * Handles acceleration
  */
-public class AccelerationComponent extends Component {
-	/**
-	 * Accel X
-	 */
-	public float x;
-	/**
-	 * Accel Y
-	 */
-	public float y;
+public class AccelerationComponent extends PositionComponent {
+
 }
