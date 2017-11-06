@@ -1,11 +1,13 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.physics.AccelerationComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -27,6 +29,7 @@ public class MovementSystem implements System {
 	@Override
 	public void update(float delta) {
 		for (Entity entity : this.entities) {
+			PositionComponent position = entity.getComponent(PositionComponent.class);
 			VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
 			AccelerationComponent acceleration = entity.getComponent(AccelerationComponent.class);
 			CollisionComponent collision = entity.getComponent(CollisionComponent.class);
@@ -36,6 +39,9 @@ public class MovementSystem implements System {
 
 			velocity.x *= 0.9;
 			velocity.y *= 0.9;
+
+			position.x += velocity.x;
+			position.y += velocity.y;
 
 			acceleration.x = 0;
 			acceleration.y = 0;

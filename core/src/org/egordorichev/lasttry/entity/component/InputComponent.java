@@ -13,7 +13,7 @@ public class InputComponent extends Component {
 	/**
 	 * Move left button
 	 */
-	public int moveLeft = Input.Keys.S;
+	public int moveLeft = Input.Keys.A;
 	/**
 	 * Move right button
 	 */

@@ -31,6 +31,8 @@ public class Engine {
 		addSystem(new CameraSystem());
 		addSystem(new SaveSystem());
 		addSystem(new AnimationSystem());
+		addSystem(new InputSystem());
+		addSystem(new MovementSystem());
 
 		addEntity(new Camera());
 		addEntity(WorldIO.load("test", "forest"));

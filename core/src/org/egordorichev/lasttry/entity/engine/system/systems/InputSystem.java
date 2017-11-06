@@ -1,11 +1,13 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.physics.AccelerationComponent;
 import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -30,16 +32,18 @@ public class InputSystem implements System {
 			InputComponent input = entity.getComponent(InputComponent.class);
 			AccelerationComponent acceleration = entity.getComponent(AccelerationComponent.class);
 
-			if (Gdx.input.isButtonPressed(input.moveLeft)) {
+			if (Gdx.input.isKeyPressed(input.moveLeft)) {
 				acceleration.x -= 1;
 			}
 
-			if (Gdx.input.isButtonPressed(input.moveRight)) {
+			if (Gdx.input.isKeyPressed(input.moveRight)) {
 				acceleration.x += 1;
 			}
 
-			if (Gdx.input.isButtonPressed(input.jump)) {
-				acceleration.y += 1;
+			acceleration.y = -1f;
+
+			if (Gdx.input.isKeyPressed(input.jump)) {
+				acceleration.y += 2;
 			}
 		}
 	}
