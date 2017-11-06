@@ -3,7 +3,10 @@ package org.egordorichev.lasttry.entity.asset;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import org.egordorichev.lasttry.entity.asset.factories.CreatureFactory;
+import org.egordorichev.lasttry.entity.asset.factories.CreaturesDataFactory;
 import org.egordorichev.lasttry.entity.asset.factories.ItemFactory;
+import org.egordorichev.lasttry.entity.asset.storages.CreaturesData;
 import org.egordorichev.lasttry.entity.asset.storages.Items;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -12,6 +15,14 @@ public class Assets {
 	 * Item holder
 	 */
 	public static Items items = new Items();
+	/**
+	 * Creatures data holder
+	 */
+	public static CreaturesData creaturesData = new CreaturesData();
+	/**
+	 * Creates creatures
+	 */
+	public static CreatureFactory creatures = new CreatureFactory();
 	/**
 	 * The manager for the textures
 	 */
@@ -50,5 +61,6 @@ public class Assets {
 	 */
 	private static void loadJSON() {
 		AssetLoader.load("items", new ItemFactory());
+		AssetLoader.load("creatures", new CreaturesDataFactory());
 	}
 }

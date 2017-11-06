@@ -11,14 +11,14 @@ import java.lang.reflect.Constructor;
 /**
  * Parses items
  */
-public class ItemFactory implements AssetFactory {
+public class ItemFactory extends AssetFactory<Item> {
 	/**
 	 * Parses an asset
 	 *
 	 * @param asset Asset to parse
 	 */
 	@Override
-	public void parse(JsonValue asset) {
+	public Item parse(JsonValue asset) {
 		String type = "org.egordorichev.lasttry.entity.entities.item." + asset.getString("type", "Item");
 
 		try {
@@ -29,10 +29,13 @@ public class ItemFactory implements AssetFactory {
 			item.loadFields(asset);
 
 			Assets.items.add(asset.name(), item);
+
+			return item;
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			Log.error("Failed to create item " + asset.name);
 		}
 
+		return null;
 	}
 }

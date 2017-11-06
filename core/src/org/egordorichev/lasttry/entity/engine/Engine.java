@@ -1,14 +1,12 @@
 package org.egordorichev.lasttry.entity.engine;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
-import org.egordorichev.lasttry.entity.entities.creature.player.Player;
-import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 
@@ -35,7 +33,7 @@ public class Engine {
 
 		addEntity(new Camera());
 		addEntity(WorldIO.load("test", "forest"));
-		addEntity(new Player());
+		addEntity(Assets.creatures.create("lt:player"));
 	}
 
 	/**

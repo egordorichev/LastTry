@@ -12,10 +12,8 @@ import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 public class Creature extends Entity {
 	public Creature(Class<? extends Component> ... types) {
 		super(HealthComponent.class, AccelerationComponent.class,
-			VelocityComponent.class, TextureComponent.class);
+			VelocityComponent.class, TextureComponent.class, AnimationComponent.class);
 
 		this.addComponent(types);
-
-		// TODO: animation component and other, load from JSON
 	}
 }

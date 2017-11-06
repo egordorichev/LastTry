@@ -1,24 +1,30 @@
 {
-	"player" : {
+	"lt:player" : {
+		"components" : [
+			"entity.component.InputComponent"
+		],
 		"health" : 100,
 		"mana" : 10,
-
 		"animation" : {
-			"main" : {
-				"frames" : {
+			"main" : [
+				{
+					"x" : 0,
+					"y" : 0,
+					"w" : 32,
+					"h" : 48,
+					"delta" : 1
+				}
+			],
 
-				},
-
-				"delta" : 1
-			},
-
-			"moving" : {
-				"frames" : {
-
-				},
-
-				"delta" : 0.1
-			}
+			"moving" : [
+				{
+					"x" : 0,
+					"y" : 0,
+					"w" : 32,
+					"h" : 48,
+					"delta" : 1
+				}
+			]
 		}
 	}
 }
