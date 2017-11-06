@@ -3,9 +3,12 @@ package org.egordorichev.lasttry.entity.engine;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
+import org.egordorichev.lasttry.entity.component.PositionComponent;
+import org.egordorichev.lasttry.entity.component.TargetComponent;
 import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 
 import java.util.ArrayList;
@@ -34,9 +37,21 @@ public class Engine {
 		addSystem(new InputSystem());
 		addSystem(new MovementSystem());
 
-		addEntity(new Camera());
+		Entity camera = new Camera();
+		TargetComponent target = camera.getComponent(TargetComponent.class);
+
+		addEntity(camera);
 		addEntity(WorldIO.load("test", "forest"));
-		addEntity(Assets.creatures.create("lt:player"));
+
+		Creature player = Assets.creatures.create("lt:player");
+		PositionComponent position = player.getComponent(PositionComponent.class);
+
+		position.x = 256;
+		position.y = 256;
+
+		target.target = player;
+
+		addEntity(player);
 	}
 
 	/**

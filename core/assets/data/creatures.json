@@ -3,6 +3,8 @@
 		"components" : [
 			"entity.component.InputComponent"
 		],
+		"w" : 32,
+		"h" : 48,
 		"health" : 100,
 		"mana" : 10,
 		"animation" : {

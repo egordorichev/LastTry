@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;

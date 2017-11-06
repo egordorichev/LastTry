@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.entities.creature.AnimationComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.creature.HealthComponent;
@@ -36,6 +37,11 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		if (asset.has("animation")) {
 			this.parseAnimations(creature, asset);
 		}
+
+		SizeComponent size = creature.getComponent(SizeComponent.class);
+
+		size.width = asset.getShort("w", (short) 16);
+		size.height = asset.getShort("h", (short) 16);
 
 		// TODO: other stuff, like mana
 

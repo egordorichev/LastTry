@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.core.io.IO;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
+import org.egordorichev.lasttry.entity.entities.world.generator.WorldGenerator;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
@@ -85,8 +86,7 @@ public class WorldIO extends IO<World> {
 	 */
 	public static World generate(String name, String type) {
 		Log.info("Generating world " + name + ":" + type);
-		// TODO
-		return new World(name, type);
+		return WorldGenerator.forType(name, type).generate();
 	}
 
 	/**

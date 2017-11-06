@@ -7,6 +7,8 @@ import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.entities.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -83,6 +85,11 @@ public class LastTry extends Game {
 	public void render() {
 		float delta = Gdx.graphics.getDeltaTime();
 		this.state.update(delta);
+
+		CameraComponent camera = Camera.instance.getComponent(CameraComponent.class);
+		camera.camera.update();
+
+		Graphics.batch.setProjectionMatrix(camera.camera.combined);
 
 		Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

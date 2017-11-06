@@ -2,7 +2,10 @@ package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.component.PositionComponent;
+import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.TargetComponent;
+import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
@@ -30,9 +33,22 @@ public class CameraSystem implements System {
 		for (Entity entity : this.cameras) {
 			Camera camera = (Camera) entity;
 			TargetComponent component = camera.getComponent(TargetComponent.class);
+			CameraComponent cam = camera.getComponent(CameraComponent.class);
 
 			if (component.target != null) {
-				// TODO: move the camera
+				Entity target = component.target;
+				PositionComponent position = target.getComponent(PositionComponent.class);
+				SizeComponent size = target.getComponent(SizeComponent.class);
+
+				float x = position.x + size.width / 2;
+				float y = position.y + size.height / 2;
+				float dx = x - cam.camera.position.x;
+				float dy = y - cam.camera.position.y;
+
+				if (Math.abs(dx) + Math.abs(dy) > 20) {
+					cam.camera.position.x += dx * 4f * delta;
+					cam.camera.position.y += dy * 4f * delta;
+				}
 			}
 		}
 	}

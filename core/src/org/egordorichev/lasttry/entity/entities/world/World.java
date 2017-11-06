@@ -42,10 +42,10 @@ public class World extends Entity {
 	 */
 	@Override
 	public void render() {
-		short xStart = (short) Math.floor(Camera.instance.getComponent(CameraComponent.class).camera.position.x / Block.SIZE);
-		short yStart = (short) Math.floor(Camera.instance.getComponent(CameraComponent.class).camera.position.y / Block.SIZE);
-		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 1);
-		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 1);
+		short xStart = (short) Math.floor((Camera.instance.getComponent(CameraComponent.class).camera.position.x - Gdx.graphics.getWidth() / 2) / Block.SIZE);
+		short yStart = (short) Math.floor((Camera.instance.getComponent(CameraComponent.class).camera.position.y - Gdx.graphics.getHeight() / 2) / Block.SIZE);
+		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 2);
+		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 2);
 
 		for (short x = xStart; x < xStart + width; x++) {
 			for (short y = yStart; y < yStart + height; y++) {
