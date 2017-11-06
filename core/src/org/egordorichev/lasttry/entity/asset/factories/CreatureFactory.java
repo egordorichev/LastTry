@@ -102,7 +102,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 			for (JsonValue frameData : data) {
 				AnimationFrame frame = new AnimationFrame();
 
-				frame.texture = region;
+				frame.texture = new TextureRegion(region.getTexture(), region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
 
 				if (frame.texture != null) {
 					frame.texture.setRegionX(frame.texture.getRegionX() + frameData.getInt("x", 0));

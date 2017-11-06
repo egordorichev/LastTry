@@ -34,7 +34,7 @@ public class Animation {
 	 */
 	public void render(float x, float y) {
 		AnimationFrame frame = this.frames.get(this.frame);
-
+		
 		if (frame != null) {
 			Graphics.batch.draw(frame.texture, x, y);
 		}
