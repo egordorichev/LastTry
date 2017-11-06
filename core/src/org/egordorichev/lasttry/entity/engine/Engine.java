@@ -30,6 +30,7 @@ public class Engine {
 	public static void init() {
 		addSystem(new CameraSystem());
 		addSystem(new SaveSystem());
+		addSystem(new AnimationSystem());
 
 		addEntity(new Camera());
 		addEntity(WorldIO.load("test", "forest"));

@@ -37,6 +37,8 @@ public class CreatureFactory extends AssetFactory<Creature> {
 			this.parseAnimations(creature, asset);
 		}
 
+		// TODO: other stuff, like mana
+
 		return creature;
 	}
 
@@ -88,7 +90,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 	private void parseAnimations(Creature creature, JsonValue asset) {
 		AnimationComponent animation = creature.getComponent(AnimationComponent.class);
 		JsonValue root = asset.get("animation");
-		TextureRegion region = Assets.getTexture("creatures/" + asset.name());
+		TextureRegion region = Assets.getTexture("creatures/" + asset.name().replace(':', '_'));
 
 		if (region == null) {
 			Log.error("Did not find texture for " + asset.name());
@@ -105,8 +107,8 @@ public class CreatureFactory extends AssetFactory<Creature> {
 				if (frame.texture != null) {
 					frame.texture.setRegionX(frame.texture.getRegionX() + frameData.getInt("x", 0));
 					frame.texture.setRegionY(frame.texture.getRegionY() + frameData.getInt("y", 0));
-					frame.texture.setRegionWidth(frameData.getInt("width", 16));
-					frame.texture.setRegionHeight(frameData.getInt("height", 16));
+					frame.texture.setRegionWidth(frameData.getInt("w", 16));
+					frame.texture.setRegionHeight(frameData.getInt("h", 16));
 				}
 
 				frame.delta = frameData.getFloat("delta", 1.0f);
@@ -115,5 +117,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 
 			animation.animations.put(data.name(), anim);
 		}
+
+		animation.current = animation.animations.get("main");
 	}
 }

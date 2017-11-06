@@ -24,3 +24,16 @@ icons/lt_dirt
   orig: 16, 16
   offset: 0, 0
   index: -1
+
+textures3.png
+size: 64,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+creatures/lt_player
+  rotate: false
+  xy: 2, 2
+  size: 32, 480
+  orig: 32, 480
+  offset: 0, 0
+  index: -1
