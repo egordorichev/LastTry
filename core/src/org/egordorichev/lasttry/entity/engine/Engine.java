@@ -4,10 +4,12 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
+import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.TargetComponent;
 import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 
@@ -39,17 +41,22 @@ public class Engine {
 
 		Entity camera = new Camera();
 		TargetComponent target = camera.getComponent(TargetComponent.class);
+		CameraComponent cam = camera.getComponent(CameraComponent.class);
 
 		addEntity(camera);
 		addEntity(WorldIO.load("test", "forest"));
 
 		Creature player = Assets.creatures.create("lt:player");
 		PositionComponent position = player.getComponent(PositionComponent.class);
+		SizeComponent size = player.getComponent(SizeComponent.class);
 
-		position.x = 256;
-		position.y = 256;
+		position.x = 1256;
+		position.y = 2256;
 
 		target.target = player;
+
+		cam.camera.position.x = position.x + size.width / 2;
+		cam.camera.position.y = position.y + size.height / 2;
 
 		addEntity(player);
 	}

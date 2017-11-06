@@ -27,7 +27,7 @@ public class ForestGenerator extends WorldGenerator {
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (y < groundLevel) {
+				if (y < groundLevel + Math.cos(x / 4) * 4) {
 					this.world.setBlock("lt:dirt", (short) x, (short) y);
 				}
 			}

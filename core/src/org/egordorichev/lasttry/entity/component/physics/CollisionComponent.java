@@ -9,7 +9,7 @@ public class CollisionComponent extends Component {
 	/**
 	 * Shows, if the entity is solid
 	 */
-	public boolean solid;
+	public boolean solid = true;
 
 	// TODO: bounding box?
 }

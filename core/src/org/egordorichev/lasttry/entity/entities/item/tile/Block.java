@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SolidComponent;
+import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.world.World;
@@ -21,6 +22,7 @@ public class Block extends Item {
 	public Block(String id) {
 		super(id);
 
+		this.addComponent(CollisionComponent.class);
 		this.addComponent(TileComponent.class, SolidComponent.class);
 	}
 
