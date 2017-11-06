@@ -110,6 +110,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 				}
 
 				frame.delta = frameData.getFloat("delta", 1.0f);
+				anim.addFrame(frame);
 			}
 
 			animation.animations.put(data.name(), anim);
