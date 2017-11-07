@@ -1,7 +1,8 @@
 {
 	"lt:player" : {
 		"components" : [
-			"entity.component.InputComponent"
+			"entity.component.InputComponent",
+			"entity.entities.item.inventory.InventoryComponent"
 		],
 		"w" : 32,
 		"h" : 48,

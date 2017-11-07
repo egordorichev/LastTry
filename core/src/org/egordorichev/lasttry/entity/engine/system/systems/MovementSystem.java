@@ -14,6 +14,7 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.collision.Collider;
 import org.egordorichev.lasttry.util.log.Log;
 import sun.security.provider.SHA;
 
@@ -87,7 +88,7 @@ public class MovementSystem implements System {
 	 * Checks for collision with world
 	 *
 	 * @param entity Entity to check
-	 * @return
+	 * @return If entity collides with world
 	 */
 	private boolean collidesWithWorld(Entity entity) {
 		PositionComponent position = entity.getComponent(PositionComponent.class);
@@ -103,7 +104,9 @@ public class MovementSystem implements System {
 				if (id != null) {
 					Block block = (Block) Assets.items.get(id);
 
-					if (block.getComponent(CollisionComponent.class).solid && this.collideWithBlock(position, size, x, y)) {
+					if (block.getComponent(CollisionComponent.class).solid &&
+						Collider.testAABB(position.x, position.y, size.width, size.height,
+							x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE)) {
 						return true;
 					}
 				}
@@ -111,23 +114,5 @@ public class MovementSystem implements System {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Checks for collision with block
-	 *
-	 * @param position Entity position
-	 * @param size Entity size
-	 * @param x Block X
-	 * @param y Block Y
-	 * @return Is entity colliding with the world
-	 */
-	private boolean collideWithBlock(PositionComponent position, SizeComponent size, short x, short y) {
-		short ex = (short) (position.x / Block.SIZE);
-		short ey = (short) (position.y / Block.SIZE);
-		short w = (short) (size.width / Block.SIZE + 1);
-		short h = (short) (size.height / Block.SIZE + 1);
-
-		return (ex < x + Block.SIZE && ex + w > x && ey < y + Block.SIZE && ey + h > y);
 	}
 }
