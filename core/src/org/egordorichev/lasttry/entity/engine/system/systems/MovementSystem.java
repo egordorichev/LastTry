@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
@@ -11,7 +13,9 @@ import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.log.Log;
+import sun.security.provider.SHA;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -121,8 +125,8 @@ public class MovementSystem implements System {
 	private boolean collideWithBlock(PositionComponent position, SizeComponent size, short x, short y) {
 		short ex = (short) (position.x / Block.SIZE);
 		short ey = (short) (position.y / Block.SIZE);
-		short w = (short) (size.width / Block.SIZE);
-		short h = (short) (size.height / Block.SIZE);
+		short w = (short) (size.width / Block.SIZE + 1);
+		short h = (short) (size.height / Block.SIZE + 1);
 
 		return (ex < x + Block.SIZE && ex + w > x && ey < y + Block.SIZE && ey + h > y);
 	}
