@@ -21,7 +21,7 @@ public class ForestGenerator extends WorldGenerator {
 		SizeComponent size = this.world.getComponent(SizeComponent.class);
 
 		int width = (int) (size.width * Chunk.SIZE);
-		int height = (int) (size.height * Chunk.SIZE)x;
+		int height = (int) (size.height * Chunk.SIZE);
 
 		int groundLevel = height / 4 * 3;
 
