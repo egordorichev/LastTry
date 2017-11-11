@@ -1,39 +1,52 @@
 
 textures.png
-size: 512,64
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 blocks/lt_dirt_tiles
   rotate: false
-  xy: 2, 2
+  xy: 1, 209
   size: 256, 48
   orig: 256, 48
   offset: 0, 0
   index: -1
 
 textures2.png
-size: 32,32
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 icons/lt_dirt
   rotate: false
-  xy: 2, 2
+  xy: 1, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 
 textures3.png
-size: 64,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 creatures/lt_player
   rotate: false
-  xy: 2, 2
+  xy: 1, 1
   size: 32, 480
   orig: 32, 480
+  offset: 0, 0
+  index: -1
+
+textures4.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+walls/lt_dirt_wall_tiles
+  rotate: false
+  xy: 1, 209
+  size: 256, 48
+  orig: 256, 48
   offset: 0, 0
   index: -1

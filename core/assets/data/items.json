@@ -1,5 +1,9 @@
 {
 	"lt:dirt" : {
 		"type" : "tile.TileableBlock"
+	},
+
+	"lt:dirt_wall" : {
+		"type" : "tile.Wall"
 	}
 }

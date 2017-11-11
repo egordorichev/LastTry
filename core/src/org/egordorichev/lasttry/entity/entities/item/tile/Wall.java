@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.entities.item.tile;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
-import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -15,7 +14,6 @@ public class Wall extends Item {
 	public Wall(String id) {
 		super(id);
 
-		this.addComponent(CollisionComponent.class);
 		this.addComponent(TileComponent.class);
 	}
 
@@ -39,6 +37,7 @@ public class Wall extends Item {
 		super.loadFields(asset);
 
 		this.getComponent(TileComponent.class).tiles =
-			Assets.getTexture("lt_" + this.getComponent(IdComponent.class).id).split(Block.SIZE, Block.SIZE);
+			Assets.getTexture("walls/" + this.getComponent(IdComponent.class).id.replace(':', '_')
+				+ "_tiles").split(Block.SIZE, Block.SIZE);
 	}
 }
