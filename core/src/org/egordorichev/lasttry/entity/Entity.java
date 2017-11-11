@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.entity.component.Component;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.lang.reflect.Constructor;
@@ -14,6 +15,10 @@ public class Entity {
 	 * Registered components
 	 */
 	protected HashMap<Class<? extends Component>, Component> components;
+	/**
+	 * Entity on-screen-z coordinate
+	 */
+	protected byte zIndex = 0;
 
 	public Entity(Class<? extends Component> ... components) {
 		this.components = new HashMap<>();
@@ -100,5 +105,22 @@ public class Entity {
 	 */
 	public <T extends Component> T getComponent(Class<T> component) {
 		return (T) this.components.get(component);
+	}
+
+	/**
+	 * Sets entity z-index
+	 * @param zIndex New z-index
+	 */
+	public void setZIndex(byte zIndex) {
+		this.zIndex = zIndex;
+		// Engine.recalculateZIndexes();
+		// TODO: calc only if not called in a constructor
+	}
+
+	/**
+	 * @return Entity Z-index
+	 */
+	public byte getZIndex() {
+		return this.zIndex;
 	}
 }

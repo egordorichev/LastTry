@@ -10,6 +10,8 @@ public class CollisionComponent extends Component {
 	 * Shows, if the entity is solid
 	 */
 	public boolean solid = true;
-
-	// TODO: bounding box?
+	/**
+	 * Shows, if entity is on the ground
+	 */
+	public boolean onGround = true;
 }

@@ -1,7 +1,5 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
@@ -13,10 +11,7 @@ import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.collision.Collider;
-import org.egordorichev.lasttry.util.log.Log;
-import sun.security.provider.SHA;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -46,8 +41,8 @@ public class MovementSystem implements System {
 			velocity.x += acceleration.x;
 			velocity.y += acceleration.y;
 
-			velocity.x *= 0.9;
-			velocity.y *= 0.9;
+			velocity.x *= 0.98;
+			velocity.y *= 0.98;
 
 			position.x += velocity.x;
 
@@ -60,10 +55,16 @@ public class MovementSystem implements System {
 
 			position.y += velocity.y;
 
-			if (collision != null && collision.solid) {
-				if (this.collidesWithWorld(entity)) {
-					position.y -= velocity.y;
-					velocity.y = 0;
+			if (collision != null) {
+				collision.onGround = false;
+
+				if (collision.solid) {
+					if (this.collidesWithWorld(entity)) {
+						position.y -= velocity.y;
+						velocity.y = 0;
+
+						collision.onGround = true;
+					}
 				}
 			}
 

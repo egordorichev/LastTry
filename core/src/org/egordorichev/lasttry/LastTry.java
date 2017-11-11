@@ -9,9 +9,11 @@ import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
+import org.egordorichev.lasttry.entity.entities.ui.UiElement;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.geometry.Rectangle;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -50,6 +52,8 @@ public class LastTry extends Game {
 
 		Assets.load();
 		Engine.init();
+
+		Engine.addEntity(new UiElement(new Rectangle(10, 10, 32, 32)));
 	}
 
 	/**

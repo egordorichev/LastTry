@@ -18,6 +18,6 @@ public class WorldChunksComponent extends Component {
 	 */
 	public void init() {
 		SizeComponent info = this.entity.getComponent(SizeComponent.class);
-		this.chunks = new Chunk[info.width * info.height];
+		this.chunks = new Chunk[(int) (info.width * info.height)];
 	}
 }

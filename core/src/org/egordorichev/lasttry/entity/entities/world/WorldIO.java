@@ -36,6 +36,8 @@ public class WorldIO extends IO<World> {
 		try {
 			FileWriter writer = new FileWriter(root + "/world.wld");
 
+			// TODO: save some info here
+
 			writer.close();
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -63,6 +65,8 @@ public class WorldIO extends IO<World> {
 		try {
 			FileReader reader = new FileReader("data/worlds/" + name + "/" + type + "/world.wld");
 			World world = new World(name, type);
+
+			// TODO: load some info here
 
 			reader.close();
 			return world;

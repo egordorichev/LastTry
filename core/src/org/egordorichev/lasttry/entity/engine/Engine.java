@@ -14,6 +14,7 @@ import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Handles systems
@@ -28,7 +29,6 @@ public class Engine {
 	 */
 	private static ArrayList<Entity> entities = new ArrayList<>();
 
-
 	/**
 	 * Adds all needed systems
 	 */
@@ -38,6 +38,7 @@ public class Engine {
 		addSystem(new AnimationSystem());
 		addSystem(new InputSystem());
 		addSystem(new MovementSystem());
+		addSystem(new CollisionSystem());
 
 		Entity camera = new Camera();
 		TargetComponent target = camera.getComponent(TargetComponent.class);
@@ -51,7 +52,7 @@ public class Engine {
 		SizeComponent size = player.getComponent(SizeComponent.class);
 
 		position.x = 1256;
-		position.y = 2256;
+		position.y = 2056;
 
 		target.target = player;
 
@@ -127,6 +128,7 @@ public class Engine {
 	public static void addEntity(Entity entity) {
 		entities.add(entity);
 		Engine.sendMessage("entity_added");
+		Engine.recalculateZIndexes();
 	}
 
 	/**
@@ -136,6 +138,27 @@ public class Engine {
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
+	}
+
+	/**
+	 * Sorts entities by z-index
+	 */
+	public static void recalculateZIndexes() {
+		entities.sort(new Comparator<Entity>() {
+			@Override
+			public int compare(Entity entity1, Entity entity2) {
+				byte z1 = entity1.getZIndex();
+				byte z2 = entity2.getZIndex();
+
+				if (z1 > z2) {
+					return 1;
+				} else if (z1 < z2) {
+					return -1;
+				}
+
+				return 0;
+			}
+		});
 	}
 
 	/**

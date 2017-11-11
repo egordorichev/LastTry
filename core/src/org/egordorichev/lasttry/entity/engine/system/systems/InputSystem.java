@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.physics.AccelerationComponent;
 import org.egordorichev.lasttry.entity.component.InputComponent;
+import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
 
@@ -29,19 +30,20 @@ public class InputSystem implements System {
 		for (Entity entity : this.entities) {
 			InputComponent input = entity.getComponent(InputComponent.class);
 			AccelerationComponent acceleration = entity.getComponent(AccelerationComponent.class);
+			CollisionComponent collision = entity.getComponent(CollisionComponent.class);
 
 			if (Gdx.input.isKeyPressed(input.moveLeft)) {
-				acceleration.x -= 1;
+				acceleration.x -= 0.3;
 			}
 
 			if (Gdx.input.isKeyPressed(input.moveRight)) {
-				acceleration.x += 1;
+				acceleration.x += 0.3;
 			}
 
-			acceleration.y = -1f;
+			acceleration.y = -0.2f;
 
-			if (Gdx.input.isKeyPressed(input.jump)) {
-				acceleration.y += 2;
+			if (collision.onGround && Gdx.input.isKeyPressed(input.jump)) {
+				acceleration.y += 10;
 			}
 		}
 	}

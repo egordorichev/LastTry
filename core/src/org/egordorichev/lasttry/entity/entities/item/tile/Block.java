@@ -33,14 +33,7 @@ public class Block extends Item {
 	 * @param y Block Y
 	 */
 	public void render(short x, short y) {
-		String id = this.getComponent(IdComponent.class).id;
-
-		boolean top = Objects.equals(World.instance.getBlock(x, (short) (y + 1)), id);
-		boolean right = Objects.equals(World.instance.getBlock((short) (x + 1), y), id);
-		boolean bottom = Objects.equals(World.instance.getBlock(x, (short) (y - 1)), id);
-		boolean left = Objects.equals(World.instance.getBlock((short) (x - 1), y), id);
-
-		int neighbors = BinaryPacker.pack(top, right, bottom, left);
+		int neighbors = this.getNeighbors(x, y);
 
 		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
 	}
@@ -56,9 +49,38 @@ public class Block extends Item {
 
 		this.getComponent(TileComponent.class).tiles =
 			Assets.getTexture("blocks/" + this.getComponent(IdComponent.class).id.replace(':', '_')
-			+ "_tiles").split(SIZE, SIZE);
+				+ "_tiles").split(SIZE, SIZE);
 
 		this.getComponent(SolidComponent.class).solid =
 			asset.getBoolean("solid", true);
+	}
+
+	/**
+	 * Returns amount of tileable neighbors
+	 *
+	 * @param x Block X
+	 * @param y Block Y
+	 * @return Packed binary
+	 */
+	protected int getNeighbors(short x, short y) {
+		String id = this.getComponent(IdComponent.class).id;
+
+		boolean top = this.shouldTile(World.instance.getBlock(x, (short) (y + 1)), id);
+		boolean right = this.shouldTile(World.instance.getBlock((short) (x + 1), y), id);
+		boolean bottom = this.shouldTile(World.instance.getBlock(x, (short) (y - 1)), id);
+		boolean left = this.shouldTile(World.instance.getBlock((short) (x - 1), y), id);
+
+		return BinaryPacker.pack(top, right, bottom, left);
+	}
+
+	/**
+	 * Returns, if blocks should tile
+	 *
+	 * @param neighbor Block type
+	 * @param self Self type
+	 * @return Should tile
+	 */
+	protected boolean shouldTile(String neighbor, String self) {
+		return Objects.equals(neighbor, self);
 	}
 }

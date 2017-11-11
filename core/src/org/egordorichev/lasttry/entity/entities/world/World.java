@@ -195,7 +195,7 @@ public class World extends Entity {
 	 * @return Chunk array index, containing given block (unsafe!)
 	 */
 	private int getChunkIndex(int x, int y) {
-		return x + y * this.getComponent(SizeComponent.class).width;
+		return (int) (x + y * this.getComponent(SizeComponent.class).width);
 	}
 
 	/**

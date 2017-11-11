@@ -7,9 +7,9 @@ public class SizeComponent extends Component {
 	/**
 	 * The width
 	 */
-	public int width;
+	public float width;
 	/**
 	 * The height
 	 */
-	public int height;
+	public float height;
 }

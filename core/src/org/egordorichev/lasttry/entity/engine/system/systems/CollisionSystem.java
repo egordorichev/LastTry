@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.util.collision.Collider;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,6 +27,11 @@ public class CollisionSystem implements System {
 				PositionComponent secondPosition = second.getComponent(PositionComponent.class);
 				SizeComponent secondSize = second.getComponent(SizeComponent.class);
 
+				if (Collider.testAABB(position.x, position.y, size.width, size.height,
+					secondPosition.x, secondPosition.y, secondSize.width, secondSize.height)) {
+
+					// TODO: react here
+				}
 			}
 		}
 	}

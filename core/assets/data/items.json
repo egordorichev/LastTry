@@ -1,5 +1,5 @@
 {
 	"lt:dirt" : {
-		"type" : "tile.Block"
+		"type" : "tile.TileableBlock"
 	}
 }

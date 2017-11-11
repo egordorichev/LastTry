@@ -19,6 +19,7 @@ public class Creature extends Entity {
 			CollisionComponent.class);
 
 		this.addComponent(types);
+		this.zIndex = 1;
 	}
 
 	/**
