@@ -4,13 +4,17 @@ import com.badlogic.gdx.files.FileHandle;
 import org.egordorichev.lasttry.core.io.FileReader;
 import org.egordorichev.lasttry.core.io.FileWriter;
 import org.egordorichev.lasttry.core.io.IO;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
+import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.entities.creature.CreatureSaveComponent;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 import org.egordorichev.lasttry.entity.entities.world.generator.WorldGenerator;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class WorldIO extends IO<World> {
 	/**
@@ -35,8 +39,12 @@ public class WorldIO extends IO<World> {
 
 		try {
 			FileWriter writer = new FileWriter(root + "/world.wld");
+			ArrayList<Entity> entities = Engine.getEntitiesFor(CreatureSaveComponent.class);
 
-			// TODO: save some info here
+			for (Entity entity : entities) {
+				// writer.writeString(entity.getComponent(IdComponent.class).id);
+				// TODO
+			}
 
 			writer.close();
 		} catch (Exception exception) {

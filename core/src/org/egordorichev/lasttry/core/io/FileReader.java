@@ -84,6 +84,17 @@ public class FileReader implements AutoCloseable {
 		return this.stream.readDouble();
 	}
 
+	/**
+	 * Reads a float from file
+	 *
+	 * @return A float
+	 * @throws IOException If something went wrong
+	 */
+	public float readFloat() throws IOException {
+		return this.stream.readFloat();
+	}
+
+
 	@Override
 	public void close() throws IOException {
 		this.stream.close();

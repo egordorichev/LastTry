@@ -80,6 +80,16 @@ public class FileWriter implements AutoCloseable {
 		this.stream.writeDouble(value);
 	}
 
+	/**
+	 * Writes given float to file
+	 *
+	 * @param value Float to write
+	 * @throws IOException If something went wrong
+	 */
+	public void writeFloat(float value) throws IOException {
+		this.stream.writeFloat(value);
+	}
+
 	@Override
 	public void close() throws IOException {
 		this.stream.close();

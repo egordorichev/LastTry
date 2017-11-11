@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.entity.component;
 
+import org.egordorichev.lasttry.core.io.FileReader;
+import org.egordorichev.lasttry.core.io.FileWriter;
 import org.egordorichev.lasttry.entity.Entity;
 
 /**
@@ -32,5 +34,23 @@ public class Component {
 	 */
 	public Entity getEntity() {
 		return this.entity;
+	}
+
+	/**
+	 * Writes component to file
+	 *
+	 * @param writer File, to write
+	 */
+	public void write(FileWriter writer) {
+
+	}
+
+	/**
+	 * Loads component from a file
+	 *
+	 * @param reader File with component
+	 */
+	public void load(FileReader reader) {
+
 	}
 }
