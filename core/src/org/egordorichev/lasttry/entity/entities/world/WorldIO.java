@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.core.io.FileReader;
 import org.egordorichev.lasttry.core.io.FileWriter;
 import org.egordorichev.lasttry.core.io.IO;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.CreatureSaveComponent;
@@ -15,6 +16,8 @@ import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class WorldIO extends IO<World> {
 	/**
@@ -41,9 +44,17 @@ public class WorldIO extends IO<World> {
 			FileWriter writer = new FileWriter(root + "/world.wld");
 			ArrayList<Entity> entities = Engine.getEntitiesFor(CreatureSaveComponent.class);
 
+			writer.writeInt32(entities.size());
+
+			// Save entities and components
 			for (Entity entity : entities) {
-				// writer.writeString(entity.getComponent(IdComponent.class).id);
-				// TODO
+				writer.writeString(entity.getComponent(IdComponent.class).id);
+				Iterator iterator = entity.getComponents().entrySet().iterator();
+
+				while (iterator.hasNext()) {
+					Map.Entry pair = (Map.Entry) iterator.next();
+					((Component) pair.getValue()).write(writer);
+				}
 			}
 
 			writer.close();

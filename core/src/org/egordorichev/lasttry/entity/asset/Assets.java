@@ -1,8 +1,11 @@
 package org.egordorichev.lasttry.entity.asset;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import org.egordorichev.lasttry.entity.asset.factories.CreatureFactory;
 import org.egordorichev.lasttry.entity.asset.factories.CreaturesDataFactory;
 import org.egordorichev.lasttry.entity.asset.factories.ItemFactory;
@@ -24,6 +27,14 @@ public class Assets {
 	 */
 	public static CreatureFactory creatures = new CreatureFactory();
 	/**
+	 * Small font
+	 */
+	public static BitmapFont f14;
+	/**
+	 * Big font
+	 */
+	public static BitmapFont f24;
+	/**
 	 * The manager for the textures
 	 */
 	private static AssetManager manager = new AssetManager();
@@ -34,6 +45,7 @@ public class Assets {
 	public static void load() {
 		Log.debug("Loading assets");
 
+		loadFonts();
 		loadTextures();
 		loadJSON();
 	}
@@ -46,6 +58,20 @@ public class Assets {
 	 */
 	public static TextureRegion getTexture(String name) {
 		return manager.get("atlas/textures.atlas", TextureAtlas.class).findRegion(name);
+	}
+
+	/**
+	 * Loads fonts
+	 */
+	private static void loadFonts() {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("stark.otf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+		parameters.size = 14;
+		f14 = generator.generateFont(parameters);
+
+		parameters.size = 24;
+		f24 = generator.generateFont(parameters);
 	}
 
 	/**

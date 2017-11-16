@@ -9,5 +9,9 @@ public class InventoryComponent extends Component {
 	/**
 	 * The actual inventory
 	 */
-	public static ItemComponent[] inventory = new ItemComponent[40];
+	public ItemComponent[] inventory = new ItemComponent[40];
+	/**
+	 * Shows, if the inventory is open
+	 */
+	public boolean open = false;
 }

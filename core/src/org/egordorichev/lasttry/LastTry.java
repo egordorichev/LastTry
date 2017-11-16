@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
+import org.egordorichev.lasttry.entity.entities.creature.Creature;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.ui.UiElement;
+import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -53,7 +57,13 @@ public class LastTry extends Game {
 		Assets.load();
 		Engine.init();
 
-		Engine.addEntity(new UiElement(new Rectangle(10, 10, 32, 32)));
+		Creature player = (Creature) Engine.getEntitiesFor(InputComponent.class).get(0);
+
+		if (player != null) {
+			Engine.addEntity(new UiInventory(new Rectangle(10, 10, 300, 100), player.getComponent(InventoryComponent.class))); // Share the inventory
+		} else {
+			Log.warning("Failed to create UI inventory for the player");
+		}
 	}
 
 	/**

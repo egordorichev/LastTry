@@ -40,6 +40,13 @@ public class Entity {
 	}
 
 	/**
+	 * Renders UI
+	 */
+	public void renderUi() {
+
+	}
+
+	/**
 	 * Registers a component
 	 *
 	 * @param component Component class to register
@@ -115,6 +122,13 @@ public class Entity {
 		this.zIndex = zIndex;
 		// Engine.recalculateZIndexes();
 		// TODO: calc only if not called in a constructor
+	}
+
+	/**
+	 * @return All components
+	 */
+	public HashMap<Class<? extends Component>, Component> getComponents() {
+		return this.components;
 	}
 
 	/**

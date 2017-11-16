@@ -4,6 +4,19 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+ui/inventory_slot
+  rotate: false
+  xy: 1, 1
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+
+textures2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 blocks/lt_dirt_tiles
   rotate: false
   xy: 1, 209
@@ -12,7 +25,7 @@ blocks/lt_dirt_tiles
   offset: 0, 0
   index: -1
 
-textures2.png
+textures3.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -25,7 +38,7 @@ icons/lt_dirt
   offset: 0, 0
   index: -1
 
-textures3.png
+textures4.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -38,7 +51,7 @@ creatures/lt_player
   offset: 0, 0
   index: -1
 
-textures4.png
+textures5.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
