@@ -18,4 +18,8 @@ public class InputComponent extends Component {
 	 * Move right button
 	 */
 	public int moveRight = Input.Keys.D;
+	/**
+	 * Open inventory button
+	 */
+	public int openInventory = Input.Keys.E;
 }

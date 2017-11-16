@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class InputSystem implements System {
 			InputComponent input = entity.getComponent(InputComponent.class);
 			AccelerationComponent acceleration = entity.getComponent(AccelerationComponent.class);
 			CollisionComponent collision = entity.getComponent(CollisionComponent.class);
+			InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
 
 			if (Gdx.input.isKeyPressed(input.moveLeft)) {
 				acceleration.x -= 0.3;
@@ -38,6 +40,11 @@ public class InputSystem implements System {
 
 			if (Gdx.input.isKeyPressed(input.moveRight)) {
 				acceleration.x += 0.3;
+			}
+
+			if (inventory != null && Gdx.input.isKeyJustPressed(input.openInventory)) {
+				inventory.open = !inventory.open;
+				// TODO: sfx here
 			}
 
 			acceleration.y = -0.2f;

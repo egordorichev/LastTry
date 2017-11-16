@@ -11,6 +11,8 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 
 import java.util.ArrayList;
@@ -50,6 +52,14 @@ public class Engine {
 		Creature player = Assets.creatures.create("lt:player");
 		PositionComponent position = player.getComponent(PositionComponent.class);
 		SizeComponent size = player.getComponent(SizeComponent.class);
+		InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+
+		inventory.inventory[0].item = Assets.items.get("lt:dirt");
+		inventory.inventory[1].item = Assets.items.get("lt:dirt");
+		inventory.inventory[2].item = Assets.items.get("lt:dirt");
+
+		inventory.inventory[1].count = 10;
+		inventory.inventory[2].count = 100;
 
 		position.x = 1256;
 		position.y = 2056;
