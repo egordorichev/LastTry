@@ -47,8 +47,6 @@ public class InputSystem implements System {
 				// TODO: sfx here
 			}
 
-			acceleration.y = -0.2f;
-
 			if (collision.onGround && Gdx.input.isKeyPressed(input.jump)) {
 				acceleration.y += 10;
 			}

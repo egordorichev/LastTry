@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -37,6 +38,8 @@ public class MovementSystem implements System {
 			VelocityComponent velocity = entity.getComponent(VelocityComponent.class);
 			AccelerationComponent acceleration = entity.getComponent(AccelerationComponent.class);
 			CollisionComponent collision = entity.getComponent(CollisionComponent.class);
+
+			acceleration.y -= 0.2f;
 
 			velocity.x += acceleration.x;
 			velocity.y += acceleration.y;
