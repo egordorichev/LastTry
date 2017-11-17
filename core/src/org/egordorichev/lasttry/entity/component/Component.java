@@ -12,7 +12,6 @@ public class Component {
 	 * Entity, that has this component
 	 */
 	protected Entity entity;
-
 	/**
 	 * Inits the component
 	 */

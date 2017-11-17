@@ -2,7 +2,8 @@
 	"lt:player" : {
 		"components" : [
 			"entity.component.InputComponent",
-			"entity.entities.item.inventory.InventoryComponent"
+			"entity.entities.item.inventory.InventoryComponent",
+			"entity.entities.creature.CreatureSaveComponent"
 		],
 		"w" : 32,
 		"h" : 48,

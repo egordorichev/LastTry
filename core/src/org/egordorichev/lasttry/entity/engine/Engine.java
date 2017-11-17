@@ -2,10 +2,7 @@ package org.egordorichev.lasttry.entity.engine;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
-import org.egordorichev.lasttry.entity.component.Component;
-import org.egordorichev.lasttry.entity.component.PositionComponent;
-import org.egordorichev.lasttry.entity.component.SizeComponent;
-import org.egordorichev.lasttry.entity.component.TargetComponent;
+import org.egordorichev.lasttry.entity.component.*;
 import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
@@ -15,6 +12,7 @@ import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -50,23 +48,30 @@ public class Engine {
 		addEntity(camera);
 		addEntity(WorldIO.load("test", "forest"));
 
-		Creature player = Assets.creatures.create("lt:player");
-		PositionComponent position = player.getComponent(PositionComponent.class);
-		SizeComponent size = player.getComponent(SizeComponent.class);
-		InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+		ArrayList<Entity> players = Engine.getEntitiesFor(InputComponent.class);
+		Creature player;
 
-		position.x = 1256;
-		position.y = 2056;
+		if (players.size() == 0) {
+			player = Assets.creatures.create("lt:player");
 
-		addEntity(new ItemEntity(Assets.items.get("lt:dirt"), 10).setPosition(position.x, position.y));
-		addEntity(new ItemEntity(Assets.items.get("lt:dirt"), 100).setPosition(position.x, position.y));
+			PositionComponent position = player.getComponent(PositionComponent.class);
+
+			position.x = 1256;
+			position.y = 2056;
+
+			Engine.addEntity(player);
+		} else {
+			Log.info("Loaded player");
+			player = (Creature) players.get(0);
+		}
 
 		target.target = player;
 
+		PositionComponent position = player.getComponent(PositionComponent.class);
+		SizeComponent size = player.getComponent(SizeComponent.class);
+
 		cam.camera.position.x = position.x + size.width / 2;
 		cam.camera.position.y = position.y + size.height / 2;
-
-		addEntity(player);
 	}
 
 	/**

@@ -12,7 +12,6 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;

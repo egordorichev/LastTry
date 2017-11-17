@@ -14,7 +14,7 @@ public class PositionComponent extends Component {
 	 */
 	public float x;
 	/**
-	 * Y coordinate
+	 * Y coordinatez
 	 */
 	public float y;
 
@@ -40,6 +40,11 @@ public class PositionComponent extends Component {
 	 */
 	@Override
 	public void load(FileReader reader) {
-
+		try {
+			this.x = reader.readFloat();
+			this.y = reader.readFloat();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
 	}
 }

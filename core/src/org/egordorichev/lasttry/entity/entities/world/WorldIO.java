@@ -5,7 +5,9 @@ import org.egordorichev.lasttry.core.io.FileReader;
 import org.egordorichev.lasttry.core.io.FileWriter;
 import org.egordorichev.lasttry.core.io.IO;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
+import org.egordorichev.lasttry.entity.component.SaveableComponents;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.CreatureSaveComponent;
@@ -48,12 +50,16 @@ public class WorldIO extends IO<World> {
 
 			// Save entities and components
 			for (Entity entity : entities) {
-				writer.writeString(entity.getComponent(IdComponent.class).id);
-				Iterator iterator = entity.getComponents().entrySet().iterator();
+				IdComponent idComponent = entity.getComponent(IdComponent.class);
 
-				while (iterator.hasNext()) {
-					Map.Entry pair = (Map.Entry) iterator.next();
-					((Component) pair.getValue()).write(writer);
+				writer.writeString(idComponent.id);
+
+				for (String saveable : SaveableComponents.list) {
+					Component component = entity.getComponent(SaveableComponents.map.get(saveable));
+
+					if (component != null) {
+						component.write(writer);
+					}
 				}
 			}
 
@@ -85,7 +91,22 @@ public class WorldIO extends IO<World> {
 			FileReader reader = new FileReader("data/worlds/" + name + "/" + type + "/world.wld");
 			World world = new World(name, type);
 
-			// TODO: load some info here
+			int count = reader.readInt32();
+
+			for (int i = 0; i < count; i++) {
+				String id = reader.readString();
+				Entity entity = Assets.creatures.create(id);
+
+				for (String saveable : SaveableComponents.list) {
+					Component component = entity.getComponent(SaveableComponents.map.get(saveable));
+
+					if (component != null) {
+						component.load(reader);
+					}
+				}
+
+				Engine.addEntity(entity);
+			}
 
 			reader.close();
 			return world;
@@ -95,6 +116,7 @@ public class WorldIO extends IO<World> {
 
 			return world;
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			Log.error("Failed to load world");
 			return new World(name, type);
 		}

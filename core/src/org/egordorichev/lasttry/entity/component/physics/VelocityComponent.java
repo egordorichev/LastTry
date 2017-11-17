@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.component.physics;
 
-import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 
 /**
