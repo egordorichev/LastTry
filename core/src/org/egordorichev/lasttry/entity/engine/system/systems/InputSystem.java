@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.physics.AccelerationComponent;
 import org.egordorichev.lasttry.entity.component.InputComponent;
@@ -8,6 +9,7 @@ import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -15,11 +17,15 @@ import java.util.Objects;
 /**
  * Handles in-game input
  */
-public class InputSystem implements System {
+public class InputSystem implements System, InputProcessor {
 	/**
 	 * List of entities, that react on input
 	 */
 	private ArrayList<Entity> entities;
+
+	public InputSystem() {
+		Gdx.input.setInputProcessor(this);
+	}
 
 	/**
 	 * Handles input
@@ -42,9 +48,11 @@ public class InputSystem implements System {
 				acceleration.x += 0.3;
 			}
 
-			if (inventory != null && Gdx.input.isKeyJustPressed(input.openInventory)) {
-				inventory.open = !inventory.open;
-				// TODO: sfx here
+			if (inventory != null) {
+				if (Gdx.input.isKeyJustPressed(input.openInventory)) {
+					inventory.open = !inventory.open;
+					// TODO: sfx here
+				}
 			}
 
 			if (collision.onGround && Gdx.input.isKeyPressed(input.jump)) {
@@ -63,5 +71,75 @@ public class InputSystem implements System {
 		if (Objects.equals(message, "entity_added")) {
 			this.entities = Engine.getEntitiesFor(InputComponent.class, AccelerationComponent.class);
 		}
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		for (Entity entity : this.entities) {
+			InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+
+			if (inventory != null) {
+				ItemComponent slot = inventory.inventory[inventory.selectedSlot];
+
+				if (!slot.isEmpty()) {
+					if (slot.item.use(entity)) {
+						slot.count -= 1;
+
+						if (slot.count == 0) {
+							slot.item = null;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		for (Entity entity : this.entities) {
+			InventoryComponent inventory = entity.getComponent(InventoryComponent.class);
+
+			if (inventory != null) {
+				inventory.selectedSlot = (short) ((inventory.selectedSlot + amount) % 10);
+
+				if (inventory.selectedSlot < 0) {
+					inventory.selectedSlot += 10;
+				}
+			}
+		}
+
+		return false;
 	}
 }

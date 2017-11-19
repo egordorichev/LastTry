@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.utils.JsonValue;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SolidComponent;
@@ -24,6 +25,19 @@ public class Block extends Item {
 
 		this.addComponent(CollisionComponent.class);
 		this.addComponent(TileComponent.class, SolidComponent.class);
+	}
+
+	/**
+	 * Places a block
+	 *
+	 * @param entity Item owner
+	 * @return Should the item be removed from inventory
+	 */
+	@Override
+	protected boolean onUse(Entity entity) {
+
+
+		return true;
 	}
 
 	/**

@@ -25,6 +25,10 @@ public class InventoryComponent extends Component {
 	 * Shows, if the inventory is open
 	 */
 	public boolean open = false;
+	/**
+	 * Current selected slot
+	 */
+	public short selectedSlot = 0;
 
 	public InventoryComponent() {
 		this.initSlots();
@@ -88,5 +92,12 @@ public class InventoryComponent extends Component {
 		for (int i = 0; i < this.size; i++) {
 			this.inventory[i] = new ItemComponent();
 		}
+	}
+
+	/**
+	 * @return Inventory size
+	 */
+	public short getSize() {
+		return this.size;
 	}
 }

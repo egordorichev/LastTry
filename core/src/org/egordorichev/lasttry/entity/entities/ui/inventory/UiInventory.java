@@ -44,12 +44,20 @@ public class UiInventory extends UiElement {
 		InventoryComponent inventory = this.getComponent(InventoryComponent.class);
 
 		for (int i = 0; i < (inventory.open ? inventory.inventory.length : Math.min(inventory.inventory.length, 10)); i++) {
-			this.renderSlot(position.x + i % 10 * 50, (float) (position.y + Math.floor(i / 10) * 50), i, inventory.inventory[i]);
+			this.renderSlot(inventory, position.x + i % 10 * 50, (float) (position.y + Math.floor(i / 10) * 50), i, inventory.inventory[i]);
 		}
 	}
 
-	private void renderSlot(float x, float y, int index, ItemComponent item) {
+	private void renderSlot(InventoryComponent inventory, float x, float y, int index, ItemComponent item) {
+		if (inventory.selectedSlot == index) {
+			Graphics.batch.setColor(1.0f, 1.0f, 0.7f, 1.0f);
+		}
+
 		Graphics.batch.draw(slotTexture, x, y);
+
+		if (inventory.selectedSlot == index) {
+			Graphics.batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		}
 
 		if (!item.isEmpty()) {
 			TextureComponent texture = item.item.getComponent(TextureComponent.class);

@@ -1,23 +1,14 @@
 package org.egordorichev.lasttry.game.state;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
 
 public class InGameState extends State {
-	/**
-	 * Used for resetting view
-	 */
-	private OrthographicCamera uiCamera;
-
 	public InGameState() {
-		this.uiCamera = new OrthographicCamera(800, 600);
 
-		this.uiCamera.position.x = Gdx.graphics.getWidth() / 2;
-		this.uiCamera.position.y = Gdx.graphics.getHeight() / 2;
-		this.uiCamera.update();
 	}
 
 	/**
@@ -39,7 +30,7 @@ public class InGameState extends State {
 			entity.render();
 		}
 
-		Graphics.batch.setProjectionMatrix(this.uiCamera.combined);
+		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("ui").getComponent(CameraComponent.class).camera.combined);
 
 		for (Entity entity : Engine.getEntities()) {
 			entity.renderUi();

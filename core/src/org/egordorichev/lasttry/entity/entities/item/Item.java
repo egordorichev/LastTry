@@ -53,14 +53,15 @@ public class Item extends Entity {
 	/**
 	 * Uses the item
 	 *
+	 * @param entity Item owner
 	 * @return Item should be removed from inventory
 	 */
-	public boolean use() {
+	public boolean use(Entity entity) {
 		ItemUseComponent data = this.getComponent(ItemUseComponent.class);
 
 		if (data.currentTime == 0.0f) {
 			data.currentTime = data.useTime;
-			return this.onUse();
+			return this.onUse(entity);
 		}
 
 		return false;
@@ -69,9 +70,10 @@ public class Item extends Entity {
 	/**
 	 * The actual item use function
 	 *
+	 * @param entity Item owner
 	 * @return Item should be removed from inventory
 	 */
-	protected boolean onUse() {
+	protected boolean onUse(Entity entity) {
 		return false;
 	}
 }

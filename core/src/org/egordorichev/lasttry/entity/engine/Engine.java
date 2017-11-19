@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.engine;
 
+import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.*;
@@ -8,10 +9,8 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
-import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
-import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
-import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
+import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
@@ -44,8 +43,20 @@ public class Engine {
 		Entity camera = new Camera();
 		TargetComponent target = camera.getComponent(TargetComponent.class);
 		CameraComponent cam = camera.getComponent(CameraComponent.class);
+		IdComponent id = camera.getComponent(IdComponent.class);
+
+		id.id = "main";
+
+		Entity uiCamera = new Camera();
+		CameraComponent uiCam = uiCamera.getComponent(CameraComponent.class);
+		IdComponent uiId = uiCamera.getComponent(IdComponent.class);
+
+		uiCam.camera.position.x = Gdx.graphics.getWidth() / 2;
+		uiCam.camera.position.y = Gdx.graphics.getHeight() / 2;
+		uiId.id = "ui";
 
 		addEntity(camera);
+		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
 
 		ArrayList<Entity> players = Engine.getEntitiesFor(InputComponent.class);

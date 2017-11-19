@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
+import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
@@ -42,8 +43,8 @@ public class World extends Entity {
 	 */
 	@Override
 	public void render() {
-		short xStart = (short) Math.floor((Camera.instance.getComponent(CameraComponent.class).camera.position.x - Gdx.graphics.getWidth() / 2) / Block.SIZE);
-		short yStart = (short) Math.floor((Camera.instance.getComponent(CameraComponent.class).camera.position.y - Gdx.graphics.getHeight() / 2) / Block.SIZE);
+		short xStart = (short) Math.floor((CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.position.x - Gdx.graphics.getWidth() / 2) / Block.SIZE);
+		short yStart = (short) Math.floor((CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.position.y - Gdx.graphics.getHeight() / 2) / Block.SIZE);
 		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 2);
 		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 2);
 

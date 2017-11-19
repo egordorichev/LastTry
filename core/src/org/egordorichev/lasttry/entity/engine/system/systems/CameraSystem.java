@@ -2,16 +2,19 @@ package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.TargetComponent;
-import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,9 +22,18 @@ import java.util.Objects;
  */
 public class CameraSystem implements System {
 	/**
+	 * The main instance
+	 */
+	public static CameraSystem instance;
+
+	/**
 	 * All in-game cameras
 	 */
-	private ArrayList<Entity> cameras;
+	private HashMap<String, Entity> cameras = new HashMap<>();
+
+	public CameraSystem() {
+		instance = this;
+	}
 
 	/**
 	 * Updates the cameras position
@@ -30,8 +42,8 @@ public class CameraSystem implements System {
 	 */
 	@Override
 	public void update(float delta) {
-		for (Entity entity : this.cameras) {
-			Camera camera = (Camera) entity;
+		for (Map.Entry<String, Entity> pair : this.cameras.entrySet()) {
+			Camera camera = (Camera) pair.getValue();
 			TargetComponent component = camera.getComponent(TargetComponent.class);
 			CameraComponent cam = camera.getComponent(CameraComponent.class);
 
@@ -50,6 +62,8 @@ public class CameraSystem implements System {
 					cam.camera.position.y += dy * 4f * delta;
 				}
 			}
+
+			cam.camera.update();
 		}
 	}
 
@@ -71,15 +85,30 @@ public class CameraSystem implements System {
 				Gdx.graphics.setWindowedMode(width, height);
 			}
 
-			for (Entity entity : this.cameras) {
-				Camera camera = (Camera) entity;
+			for (Map.Entry<String, Entity> pair : this.cameras.entrySet()) {
+				Camera camera = (Camera) pair.getValue();
 				CameraComponent component = camera.getComponent(CameraComponent.class);
 
 				// TODO: resize the view
 				component.camera.update();
 			}
 		} else if (Objects.equals(message, "entity_added")) {
-			this.cameras = Engine.getEntitiesFor(TargetComponent.class, CameraComponent.class);
+			ArrayList<Entity> entities = Engine.getEntitiesFor(TargetComponent.class, CameraComponent.class, IdComponent.class);
+			this.cameras.clear();
+
+			for (Entity entity : entities) {
+				this.cameras.put(entity.getComponent(IdComponent.class).id, entity);
+			}
 		}
+	}
+
+	/**
+	 * Returns camera with that id
+	 *
+	 * @param id Camera id
+	 * @return Camera with that id
+	 */
+	public Camera get(String id) {
+		return (Camera) this.cameras.get(id);
 	}
 }

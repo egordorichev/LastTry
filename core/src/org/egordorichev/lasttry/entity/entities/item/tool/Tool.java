@@ -10,12 +10,5 @@ public class Tool extends Item {
 		super(id);
 	}
 
-	/**
-	 * Destroys block / wall
-	 * @return Item should be removed from inventory
-	 */
-	@Override
-	protected boolean onUse() {
-		return false;
-	}
+	// TODO
 }
