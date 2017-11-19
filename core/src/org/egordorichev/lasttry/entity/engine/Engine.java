@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.log.Log;
@@ -33,12 +34,7 @@ public class Engine {
 	 * Adds all needed systems
 	 */
 	public static void init() {
-		addSystem(new CameraSystem());
-		addSystem(new SaveSystem());
-		addSystem(new AnimationSystem());
-		addSystem(new InputSystem());
-		addSystem(new MovementSystem());
-		addSystem(new CollisionSystem());
+		initSystems();
 
 		Entity camera = new Camera();
 		TargetComponent target = camera.getComponent(TargetComponent.class);
@@ -58,6 +54,8 @@ public class Engine {
 		addEntity(camera);
 		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
+
+		sendMessage("resize"); // DO NOT REMOVE! d
 
 		ArrayList<Entity> players = Engine.getEntitiesFor(InputComponent.class);
 		Creature player;
@@ -81,8 +79,22 @@ public class Engine {
 		PositionComponent position = player.getComponent(PositionComponent.class);
 		SizeComponent size = player.getComponent(SizeComponent.class);
 
+		InventoryComponent inventory = player.getComponent(InventoryComponent.class);
+		inventory.inventory[0].item = Assets.items.get("lt:dirt");
+		inventory.inventory[0].count = 999;
+
 		cam.camera.position.x = position.x + size.width / 2;
 		cam.camera.position.y = position.y + size.height / 2;
+	}
+
+	private static void initSystems() {
+		addSystem(new CameraSystem());
+		addSystem(new SaveSystem());
+		addSystem(new AnimationSystem());
+		addSystem(new InputSystem());
+		addSystem(new MovementSystem());
+		addSystem(new CollisionSystem());
+		addSystem(new InventorySystem());
 	}
 
 	/**

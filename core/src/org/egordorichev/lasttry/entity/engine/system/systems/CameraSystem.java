@@ -10,6 +10,9 @@ import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
@@ -60,6 +63,16 @@ public class CameraSystem implements System {
 				if (Math.abs(dx) + Math.abs(dy) > 20) {
 					cam.camera.position.x += dx * 4f * delta;
 					cam.camera.position.y += dy * 4f * delta;
+
+					SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
+
+					float width = worldSize.width * Chunk.SIZE * Block.SIZE;
+					float height = worldSize.height * Chunk.SIZE * Block.SIZE;
+					float halfDisplayWidth = Gdx.graphics.getWidth() / 2;
+					float halfDisplayHeight = Gdx.graphics.getHeight() / 2;
+
+					cam.camera.position.x = Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
+					cam.camera.position.y = Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
 				}
 			}
 

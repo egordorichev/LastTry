@@ -1,12 +1,17 @@
 package org.egordorichev.lasttry.entity.entities.item.tile;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SolidComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
+import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
+import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
@@ -25,6 +30,8 @@ public class Block extends Item {
 
 		this.addComponent(CollisionComponent.class);
 		this.addComponent(TileComponent.class, SolidComponent.class);
+
+		this.getComponent(ItemUseComponent.class).autoUse = true;
 	}
 
 	/**
@@ -35,9 +42,33 @@ public class Block extends Item {
 	 */
 	@Override
 	protected boolean onUse(Entity entity) {
+		CameraComponent camera = CameraSystem.instance.get("main").getComponent(CameraComponent.class);
+		Vector3 mouse = camera.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+		mouse.x /= SIZE;
+		mouse.y /= SIZE;
+
+		World.instance.setBlock(this.getComponent(IdComponent.class).id, (short) mouse.x, (short) mouse.y);
 
 		return true;
+	}
+
+	/**
+	 * @return Can be block used
+	 */
+	@Override
+	protected boolean canBeUsed() {
+		CameraComponent camera = CameraSystem.instance.get("main").getComponent(CameraComponent.class);
+		Vector3 mouse = camera.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+		mouse.x /= SIZE;
+		mouse.y /= SIZE;
+
+		return (World.instance.getBlock((short) mouse.x, (short) mouse.y) == null
+			&& (World.instance.getBlock((short) (mouse.x - 1), (short) mouse.y) != null
+			|| World.instance.getBlock((short) (mouse.x + 1), (short) mouse.y) != null
+			|| World.instance.getBlock((short) mouse.x, (short) (mouse.y - 1)) != null
+			|| World.instance.getBlock((short) mouse.x, (short) (mouse.y + 1)) != null));
 	}
 
 	/**

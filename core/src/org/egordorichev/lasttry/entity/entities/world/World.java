@@ -6,7 +6,6 @@ import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
-import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
+import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
 
@@ -15,6 +16,8 @@ public class Wall extends Item {
 		super(id);
 
 		this.addComponent(TileComponent.class);
+
+		this.getComponent(ItemUseComponent.class).autoUse = true;
 	}
 
 	/**

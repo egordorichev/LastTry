@@ -15,7 +15,7 @@ public class AnimationSystem implements System {
 	/**
 	 * List of entities, that have animations
 	 */
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities = new ArrayList<>();
 
 	/**
 	 * Handles input

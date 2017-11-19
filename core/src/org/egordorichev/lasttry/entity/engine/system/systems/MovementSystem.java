@@ -23,7 +23,7 @@ public class MovementSystem implements System {
 	/**
 	 * List of the entities, that move
 	 */
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities = new ArrayList<>();
 
 	/**
 	 * Handles entity movement
@@ -108,7 +108,7 @@ public class MovementSystem implements System {
 					Block block = (Block) Assets.items.get(id);
 
 					if (block.getComponent(CollisionComponent.class).solid &&
-						Collider.testAABB(position.x, position.y, size.width, size.height,
+						Collider.testAABB(position.x, position.y, size.width - 1, size.height - 1,
 							x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE)) {
 						return true;
 					}

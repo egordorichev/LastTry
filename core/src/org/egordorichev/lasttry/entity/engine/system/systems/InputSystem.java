@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 
@@ -21,7 +22,7 @@ public class InputSystem implements System, InputProcessor {
 	/**
 	 * List of entities, that react on input
 	 */
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities = new ArrayList<>();
 
 	public InputSystem() {
 		Gdx.input.setInputProcessor(this);
@@ -52,6 +53,22 @@ public class InputSystem implements System, InputProcessor {
 				if (Gdx.input.isKeyJustPressed(input.openInventory)) {
 					inventory.open = !inventory.open;
 					// TODO: sfx here
+				}
+
+				if (Gdx.input.isButtonPressed(0)) {
+					ItemComponent slot = inventory.inventory[inventory.selectedSlot];
+
+					if (!slot.isEmpty()) {
+						ItemUseComponent use = slot.item.getComponent(ItemUseComponent.class);
+
+						if (use.autoUse && slot.item.use(entity)) {
+							slot.count -= 1;
+
+							if (slot.count == 0) {
+								slot.item = null;
+							}
+						}
+					}
 				}
 			}
 
@@ -97,7 +114,9 @@ public class InputSystem implements System, InputProcessor {
 				ItemComponent slot = inventory.inventory[inventory.selectedSlot];
 
 				if (!slot.isEmpty()) {
-					if (slot.item.use(entity)) {
+					ItemUseComponent use = slot.item.getComponent(ItemUseComponent.class);
+
+					if (!use.autoUse && slot.item.use(entity)) {
 						slot.count -= 1;
 
 						if (slot.count == 0) {

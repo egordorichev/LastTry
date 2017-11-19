@@ -59,12 +59,19 @@ public class Item extends Entity {
 	public boolean use(Entity entity) {
 		ItemUseComponent data = this.getComponent(ItemUseComponent.class);
 
-		if (data.currentTime == 0.0f) {
+		if (data.currentTime == 0.0f && this.canBeUsed()) {
 			data.currentTime = data.useTime;
 			return this.onUse(entity);
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return Item can be used
+	 */
+	protected boolean canBeUsed() {
+		return true;
 	}
 
 	/**
