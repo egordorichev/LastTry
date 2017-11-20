@@ -80,8 +80,8 @@ public class Engine {
 		SizeComponent size = player.getComponent(SizeComponent.class);
 
 		InventoryComponent inventory = player.getComponent(InventoryComponent.class);
-		inventory.inventory[0].item = Assets.items.get("lt:dirt");
-		inventory.inventory[0].count = 999;
+		inventory.inventory[0].item = Assets.items.get("lt:stone_pickaxe");
+		inventory.inventory[0].count = 1;
 
 		cam.camera.position.x = position.x + size.width / 2;
 		cam.camera.position.y = position.y + size.height / 2;

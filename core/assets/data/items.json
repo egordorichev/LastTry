@@ -5,5 +5,9 @@
 
 	"lt:dirt_wall" : {
 		"type" : "tile.Wall"
+	},
+
+	"lt:stone_pickaxe" : {
+		"type" : "tool.Pickaxe"
 	}
 }

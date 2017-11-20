@@ -76,10 +76,9 @@ public class Block extends Item {
 	 *
 	 * @param x Block X
 	 * @param y Block Y
+	 * @param neighbors Byte packed with neighbors
 	 */
-	public void render(short x, short y) {
-		int neighbors = this.getNeighbors(x, y);
-
+	public void render(short x, short y, int neighbors) {
 		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
 	}
 
@@ -107,7 +106,7 @@ public class Block extends Item {
 	 * @param y Block Y
 	 * @return Packed binary
 	 */
-	protected int getNeighbors(short x, short y) {
+	public int getNeighbors(short x, short y) {
 		String id = this.getComponent(IdComponent.class).id;
 
 		boolean top = this.shouldTile(World.instance.getBlock(x, (short) (y + 1)), id);

@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import org.egordorichev.lasttry.entity.asset.factories.CreatureFactory;
 import org.egordorichev.lasttry.entity.asset.factories.CreaturesDataFactory;
 import org.egordorichev.lasttry.entity.asset.factories.ItemFactory;
+import org.egordorichev.lasttry.entity.asset.factories.KeyFactory;
 import org.egordorichev.lasttry.entity.asset.storages.CreaturesData;
 import org.egordorichev.lasttry.entity.asset.storages.Items;
+import org.egordorichev.lasttry.entity.asset.storages.KeyBindings;
 import org.egordorichev.lasttry.util.log.Log;
 
 public class Assets {
@@ -26,6 +28,10 @@ public class Assets {
 	 * Creates creatures
 	 */
 	public static CreatureFactory creatures = new CreatureFactory();
+	/**
+	 * Handles keys
+	 */
+	public static KeyBindings keys = new KeyBindings();
 	/**
 	 * Small font
 	 */
@@ -86,6 +92,7 @@ public class Assets {
 	 * Loads all json based data
 	 */
 	private static void loadJSON() {
+		AssetLoader.load("keys", new KeyFactory());
 		AssetLoader.load("items", new ItemFactory());
 		AssetLoader.load("creatures", new CreaturesDataFactory());
 	}

@@ -50,17 +50,25 @@ public class World extends Entity {
 		for (short x = xStart; x < xStart + width; x++) {
 			for (short y = yStart; y < yStart + height; y++) {
 				String blockId = this.getBlock(x, y);
+				Block block = null;
+				int neighbors = 15;
 
 				if (blockId != null) {
-					Block block = (Block) Assets.items.get(blockId);
-					block.render(x, y);
-				} else {
+					block = (Block) Assets.items.get(blockId);
+					neighbors = block.getNeighbors(x, y);
+				}
+
+				if (blockId == null || neighbors != 15) {
 					String wallId = this.getWall(x, y);
 
 					if (wallId != null) {
 						Wall wall = (Wall) Assets.items.get(wallId);
 						wall.render(x, y);
 					}
+				}
+
+				if (block != null) {
+					block.render(x, y, neighbors);
 				}
 			}
 		}

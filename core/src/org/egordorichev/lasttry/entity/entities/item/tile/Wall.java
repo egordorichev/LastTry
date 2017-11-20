@@ -6,7 +6,11 @@ import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
+import org.egordorichev.lasttry.util.binary.BinaryPacker;
+
+import java.util.Objects;
 
 /**
  * Block, but in the BG
@@ -27,7 +31,8 @@ public class Wall extends Item {
 	 * @param y Wall Y
 	 */
 	public void render(short x, short y) {
-		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][0], x * Block.SIZE, y * Block.SIZE);
+		int neighbors = this.getNeighbors(x, y);
+		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * Block.SIZE, y * Block.SIZE);
 	}
 
 	/**
@@ -42,5 +47,34 @@ public class Wall extends Item {
 		this.getComponent(TileComponent.class).tiles =
 			Assets.getTexture("walls/" + this.getComponent(IdComponent.class).id.replace(':', '_')
 				+ "_tiles").split(Block.SIZE, Block.SIZE);
+	}
+
+	/**
+	 * Returns amount of tileable neighbors
+	 *
+	 * @param x Wall X
+	 * @param y Wall Y
+	 * @return Packed binary
+	 */
+	public int getNeighbors(short x, short y) {
+		String id = this.getComponent(IdComponent.class).id;
+
+		boolean top = this.shouldTile(World.instance.getWall(x, (short) (y + 1)), id);
+		boolean right = this.shouldTile(World.instance.getWall((short) (x + 1), y), id);
+		boolean bottom = this.shouldTile(World.instance.getWall(x, (short) (y - 1)), id);
+		boolean left = this.shouldTile(World.instance.getWall((short) (x - 1), y), id);
+
+		return BinaryPacker.pack(top, right, bottom, left);
+	}
+
+	/**
+	 * Returns, if wall should tile to given wall
+	 *
+	 * @param neighbor Wall
+	 * @param self Self
+	 * @return Should tile
+	 */
+	protected boolean shouldTile(String neighbor, String self) {
+		return Objects.equals(neighbor, self);
 	}
 }

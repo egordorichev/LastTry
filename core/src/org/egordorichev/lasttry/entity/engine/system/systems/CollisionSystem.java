@@ -1,14 +1,11 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
-import org.egordorichev.lasttry.entity.entities.camera.Camera;
-import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
@@ -30,14 +27,12 @@ public class CollisionSystem implements System {
 		float width = worldSize.width * Chunk.SIZE * Block.SIZE;
 		float height = worldSize.height * Chunk.SIZE * Block.SIZE;
 
-
 		for (Entity entity : this.entities) {
 			PositionComponent position = entity.getComponent(PositionComponent.class);
 			SizeComponent size = entity.getComponent(SizeComponent.class);
 
-
-			position.x = Math.max(Math.min(position.x, width - Block.SIZE * 3), Block.SIZE);
-			position.y = Math.max(Math.min(position.y, height - Block.SIZE * 4), Block.SIZE);
+			position.x = Math.max(Math.min(position.x, width - Block.SIZE - size.width), Block.SIZE);
+			position.y = Math.max(Math.min(position.y, height - Block.SIZE - size.height), Block.SIZE);
 
 			for (Entity second : this.entities) {
 				PositionComponent secondPosition = second.getComponent(PositionComponent.class);

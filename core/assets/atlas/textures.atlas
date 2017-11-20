@@ -50,6 +50,13 @@ icons/lt_dirt
   orig: 16, 16
   offset: 0, 0
   index: -1
+icons/lt_stone_pickaxe
+  rotate: false
+  xy: 1, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 
 textures5.png
 size: 1024,1024

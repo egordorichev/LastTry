@@ -18,7 +18,8 @@ public class AssetLoader {
 			for (JsonValue asset : root) {
 				factory.parse(asset);
 			}
-		} catch (Exception e) {
+		} catch (Exception exception) {
+			exception.printStackTrace();
 			Log.error("Failed to load " + file + " assets");
 		}
 	}

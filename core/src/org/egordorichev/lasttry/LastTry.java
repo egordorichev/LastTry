@@ -12,11 +12,13 @@ import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
+import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -48,6 +50,7 @@ public class LastTry extends Game {
 			return;
 		}
 
+		Gdx.input.setInputProcessor(Input.multiplexer);
 		Gdx.graphics.setWindowedMode(800, 600);
 
 		this.title = "LastTry " + Version.STRING;
@@ -60,6 +63,7 @@ public class LastTry extends Game {
 
 		if (player != null) {
 			Engine.addEntity(new UiInventory(new Rectangle(10, 10, 300, 100), player.getComponent(InventoryComponent.class))); // Share the inventory
+			Engine.addEntity(new UiConsole(new Rectangle(10, 60, 300, 32)));
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}
