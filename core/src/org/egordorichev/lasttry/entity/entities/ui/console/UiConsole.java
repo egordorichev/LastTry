@@ -1,13 +1,15 @@
 package org.egordorichev.lasttry.entity.entities.ui.console;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.entities.ui.UiElement;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
-import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
 
+import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 /**
@@ -15,9 +17,10 @@ import java.util.Objects;
  */
 public class UiConsole extends UiElement implements SimpleInputProcessor {
 	public UiConsole(Rectangle rect) {
-		super(rect, ConsoleCommandsComponent.class, ConsoleStateComponent.class);
+		super(rect, ConsoleCommandsComponent.class, ConsoleStateComponent.class,
+			ConsoleLinesComponent.class);
 
-		Input.multiplexer.addProcessor(this);
+		org.egordorichev.lasttry.util.input.Input.multiplexer.addProcessor(this);
 	}
 
 	/**
@@ -29,8 +32,30 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 
 		if (state.open) {
 			PositionComponent position = this.getComponent(PositionComponent.class);
-			Assets.f14.draw(Graphics.batch, state.input, position.x, position.y + 14);
+			Assets.f14.draw(Graphics.batch, "> " + state.input, position.x, position.y + 14);
+
+			ConsoleLinesComponent lines = this.getComponent(ConsoleLinesComponent.class);
+			float delta = Gdx.graphics.getDeltaTime();
+
+			for (int i = lines.lines.size() - 1; i >= 0; i--) {
+				ConsoleLine line = lines.lines.get(i);
+				Assets.f14.draw(Graphics.batch, line.line, position.x, position.y + (i + 2) * 14);
+
+				line.time += delta;
+
+				if (line.time > ConsoleLine.EXPIRE_TIME) {
+					lines.lines.remove(i);
+				}
+			}
 		}
+	}
+
+	public void print(String string) {
+		ConsoleLinesComponent lines = this.getComponent(ConsoleLinesComponent.class);
+		ConsoleLine line = new ConsoleLine();
+
+		line.line = string;
+		lines.lines.add(line);
 	}
 
 	/**
@@ -42,6 +67,11 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 		input = input.trim();
 
 		if (Objects.equals(input, "")) {
+			return;
+		}
+
+		if (!input.startsWith("/")) {
+			this.print(input);
 			return;
 		}
 
@@ -58,7 +88,7 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 		}
 
 		if (cmd == null) {
-			// TODO: error
+			this.print("Unknown command");
 			return;
 		}
 
@@ -72,12 +102,45 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
-		if (keycode == Assets.keys.get("toggle_console")) {
-			ConsoleStateComponent state = this.getComponent(ConsoleStateComponent.class);
-			state.open = !state.open;
+	public boolean keyDown(int key) {
+		ConsoleStateComponent state = this.getComponent(ConsoleStateComponent.class);
+
+		if (key == Assets.keys.get("open_console")) {
+			state.open = true;
+			org.egordorichev.lasttry.util.input.Input.blocked = true;
+		} else if (key == Assets.keys.get("close_console")) {
+			state.open = false;
+			org.egordorichev.lasttry.util.input.Input.blocked = false;
+		} else if (key == Input.Keys.ENTER) {
+			this.runCommand(state.input);
+			state.input = "";
+		} else if (key == Input.Keys.BACKSPACE) {
+			if (state.input.length() > 0) {
+				state.input = state.input.substring(0, state.input.length() - 1);
+			}
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		ConsoleStateComponent state = this.getComponent(ConsoleStateComponent.class);
+
+		if (state.open && this.isPrintableChar(character)) {
+			state.input += character;
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isPrintableChar(char c) {
+		Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
+
+		return (!Character.isISOControl(c)) &&
+			c != KeyEvent.CHAR_UNDEFINED &&
+			block != null &&
+			block != Character.UnicodeBlock.SPECIALS;
 	}
 }

@@ -8,9 +8,6 @@ import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
-import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
-import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
-import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
 
@@ -37,6 +34,10 @@ public class InputSystem implements System, SimpleInputProcessor {
 	 */
 	@Override
 	public void update(float delta) {
+		if (Input.blocked) {
+			return;
+		}
+
 		for (Entity entity : this.entities) {
 			InputComponent input = entity.getComponent(InputComponent.class);
 

@@ -11,4 +11,8 @@ public class Input {
 	 * Helps with binding multiple input sources
 	 */
 	public static InputMultiplexer multiplexer = new InputMultiplexer();
+	/**
+	 * Shows, if the input should be ignored
+	 */
+	public static boolean blocked = false;
 }

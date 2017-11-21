@@ -103,7 +103,7 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Assets.keys.get("toggle_inventory")) {
+		if (!Input.blocked && keycode == Assets.keys.get("toggle_inventory")) {
 			InventoryComponent inventory = this.getComponent(InventoryComponent.class);
 			inventory.open = !inventory.open;
 		}

@@ -9,7 +9,7 @@ public class ConsoleStateComponent extends Component {
 	/**
 	 * The input
 	 */
-	public String input = "> test";
+	public String input = "";
 	/**
 	 * If the console is open
 	 */

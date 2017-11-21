@@ -1,11 +1,8 @@
 package org.egordorichev.lasttry.entity.asset.factories;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
-
-import java.util.Objects;
 
 /**
  * Handles key bindings in json
@@ -13,13 +10,19 @@ import java.util.Objects;
 public class KeyFactory extends AssetFactory<Integer> {
 	@Override
 	public Integer parse(JsonValue asset) {
-		String id = asset.asString().toUpperCase();
-
-		// Here is a lil bug, It doesn't recognize SPACE key
-		int key = (Objects.equals(id, "SPACE") ? Input.Keys.SPACE : Input.Keys.valueOf(id));
-
+		int key = asset.asInt();
 		Assets.keys.add(asset.name(), key);
 
 		return key;
+	}
+
+	private <T extends Enum<?>> T searchEnum(Class<T> enumeration, String search) {
+		for (T each : enumeration.getEnumConstants()) {
+			if (each.name().compareToIgnoreCase(search) == 0) {
+				return each;
+			}
+		}
+
+		return null;
 	}
 }
