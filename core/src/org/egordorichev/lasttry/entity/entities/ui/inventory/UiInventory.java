@@ -14,7 +14,6 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
-import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles inventory

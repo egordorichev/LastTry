@@ -2,5 +2,6 @@
 	"move_left" : "a",
 	"move_right" : "d",
 	"jump" : "space",
-	"toggle_inventory" : "e"
+	"toggle_inventory" : "e",
+	"toggle_console" : "c"
 }
