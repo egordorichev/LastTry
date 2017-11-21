@@ -55,8 +55,6 @@ public class Engine {
 		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
 
-		sendMessage("resize"); // DO NOT REMOVE! d
-
 		ArrayList<Entity> players = Engine.getEntitiesFor(InputComponent.class);
 		Creature player;
 

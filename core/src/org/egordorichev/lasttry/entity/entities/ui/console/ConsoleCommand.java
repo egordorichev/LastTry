@@ -8,9 +8,14 @@ public class ConsoleCommand {
 	 * The name of the command
 	 */
 	private String name;
+	/**
+	 * The hint for the command
+	 */
+	private String description;
 
-	public ConsoleCommand(String name) {
+	public ConsoleCommand(String name, String description) {
 		this.name = name;
+		this.description = description;
 	}
 
 	/**
@@ -28,5 +33,12 @@ public class ConsoleCommand {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * @return Command hint
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 }

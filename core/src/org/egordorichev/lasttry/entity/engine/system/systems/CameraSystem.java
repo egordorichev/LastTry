@@ -63,17 +63,17 @@ public class CameraSystem implements System {
 				if (Math.abs(dx) + Math.abs(dy) > 20) {
 					cam.camera.position.x += dx * 4f * delta;
 					cam.camera.position.y += dy * 4f * delta;
-
-					SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
-
-					float width = worldSize.width * Chunk.SIZE * Block.SIZE;
-					float height = worldSize.height * Chunk.SIZE * Block.SIZE;
-					float halfDisplayWidth = Gdx.graphics.getWidth() / 2;
-					float halfDisplayHeight = Gdx.graphics.getHeight() / 2;
-
-					cam.camera.position.x = Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
-					cam.camera.position.y = Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
 				}
+
+				SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
+
+				float width = worldSize.width * Chunk.SIZE * Block.SIZE;
+				float height = worldSize.height * Chunk.SIZE * Block.SIZE;
+				float halfDisplayWidth = Gdx.graphics.getWidth() / 2;
+				float halfDisplayHeight = Gdx.graphics.getHeight() / 2;
+
+				cam.camera.position.x = Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
+				cam.camera.position.y = Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
 			}
 
 			cam.camera.update();

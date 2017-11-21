@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.entity.entities.ui.UiElement;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.awt.event.KeyEvent;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 		ConsoleLine line = new ConsoleLine();
 
 		line.line = string;
-		lines.lines.add(line);
+		lines.lines.add(0, line);
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 		ConsoleCommand cmd = null;
 
 		for (ConsoleCommand command : commands.commands) {
-			if (Objects.equals(command.getName(), name)) {
+			if (Objects.equals("/" + command.getName(), name)) {
 				cmd = command;
 				break;
 			}
