@@ -11,7 +11,6 @@ import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
@@ -47,8 +46,8 @@ public class Engine {
 		CameraComponent uiCam = uiCamera.getComponent(CameraComponent.class);
 		IdComponent uiId = uiCamera.getComponent(IdComponent.class);
 
-		uiCam.camera.position.x = Gdx.graphics.getWidth() / 2;
-		uiCam.camera.position.y = Gdx.graphics.getHeight() / 2;
+		uiCam.camera.position.x = uiCam.camera.viewportWidth / 2;
+		uiCam.camera.position.y = uiCam.camera.viewportHeight / 2;
 		uiId.id = "ui";
 
 		addEntity(camera);

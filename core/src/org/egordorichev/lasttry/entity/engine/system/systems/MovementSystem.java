@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -108,7 +109,7 @@ public class MovementSystem implements System {
 					Block block = (Block) Assets.items.get(id);
 
 					if (block.getComponent(CollisionComponent.class).solid &&
-						Collider.testAABB(position.x, position.y, size.width - 1, size.height - 1,
+						Collider.testAABB(position.x, position.y, size.width - 0.5f, size.height - 0.5f,
 							x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE)) {
 						return true;
 					}

@@ -23,7 +23,7 @@ import java.util.Objects;
  * The main part of the world
  */
 public class Block extends Item {
-	public static short SIZE = 16;
+	public static short SIZE = 8;
 
 	public Block(String id) {
 		super(id);

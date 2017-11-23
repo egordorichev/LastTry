@@ -35,11 +35,11 @@ public class Assets {
 	/**
 	 * Small font
 	 */
-	public static BitmapFont f14;
+	public static BitmapFont f7;
 	/**
 	 * Big font
 	 */
-	public static BitmapFont f24;
+	public static BitmapFont f12;
 	/**
 	 * The manager for the textures
 	 */
@@ -73,11 +73,11 @@ public class Assets {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("stark.otf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-		parameters.size = 14;
-		f14 = generator.generateFont(parameters);
+		parameters.size = 7;
+		f7 = generator.generateFont(parameters);
 
-		parameters.size = 24;
-		f24 = generator.generateFont(parameters);
+		parameters.size = 12;
+		f12 = generator.generateFont(parameters);
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class DesktopLauncher {
 
 		config.title = "LastTry " + Version.STRING;
 		config.width = 800;
-		config.height = 600;
+		config.height = 450;
 		config.vSyncEnabled = true;
 		config.fullscreen = false;
 		config.resizable = true;

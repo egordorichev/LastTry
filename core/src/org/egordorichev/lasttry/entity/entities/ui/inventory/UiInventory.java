@@ -66,7 +66,7 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 		InventoryComponent inventory = this.getComponent(InventoryComponent.class);
 
 		for (int i = 0; i < (inventory.open ? inventory.inventory.length : Math.min(inventory.inventory.length, 10)); i++) {
-			this.renderSlot(inventory, position.x + i % 10 * 50, (float) (position.y + Math.floor(i / 10) * 50), i, inventory.inventory[i]);
+			this.renderSlot(inventory, position.x + i % 10 * 25, (float) (position.y + Math.floor(i / 10) * 25), i, inventory.inventory[i]);
 		}
 	}
 
@@ -86,18 +86,18 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 			TextureRegion region = texture.texture;
 
 			// Draw the texture at the center of the slot
-			Graphics.batch.draw(region, x + (48 - region.getRegionWidth()) / 2, y + (48 - region.getRegionHeight()) / 2);
+			Graphics.batch.draw(region, x + (24 - region.getRegionWidth()) / 2, y + (24 - region.getRegionHeight()) / 2);
 
 			if (item.count > 1) {
 				String str = String.valueOf(item.count);
-				layout.setText(Assets.f14, str);
+				layout.setText(Assets.f7, str);
 
-				Assets.f14.draw(Graphics.batch, str, x + 44 - layout.width, y + 16);
+				Assets.f7.draw(Graphics.batch, str, x + 11 - layout.width, y + 16);
 			}
 		}
 
 		if (index < 10) {
-			Assets.f14.draw(Graphics.batch, String.valueOf(index < 9 ? index + 1 : 0), x + 6, y + 42);
+			Assets.f7.draw(Graphics.batch, String.valueOf(index < 9 ? index + 1 : 0), x + 3, y + 21);
 		}
 	}
 

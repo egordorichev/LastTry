@@ -51,7 +51,7 @@ public class LastTry extends Game {
 		}
 
 		Gdx.input.setInputProcessor(Input.multiplexer);
-		Gdx.graphics.setWindowedMode(800, 600);
+		Gdx.graphics.setWindowedMode(800, 450);
 
 		this.title = "LastTry " + Version.STRING;
 		this.setState(new InGameState());
@@ -62,8 +62,8 @@ public class LastTry extends Game {
 		Creature player = (Creature) Engine.getEntitiesFor(InputComponent.class).get(0);
 
 		if (player != null) {
-			Engine.addEntity(new UiInventory(new Rectangle(10, 10, 300, 100), player.getComponent(InventoryComponent.class))); // Share the inventory
-			Engine.addEntity(new UiConsole(new Rectangle(10, 60, 300, 32)));
+			Engine.addEntity(new UiInventory(new Rectangle(5, 5, 150, 50), player.getComponent(InventoryComponent.class))); // Share the inventory
+			Engine.addEntity(new UiConsole(new Rectangle(5, 30, 150, 16)));
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}

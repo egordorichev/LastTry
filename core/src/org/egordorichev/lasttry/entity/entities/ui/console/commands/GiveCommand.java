@@ -9,7 +9,6 @@ import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
 import org.egordorichev.lasttry.entity.entities.ui.console.ConsoleCommand;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
-import org.egordorichev.lasttry.util.log.Log;
 
 public class GiveCommand extends ConsoleCommand {
 	public GiveCommand() {
@@ -35,7 +34,7 @@ public class GiveCommand extends ConsoleCommand {
 				return;
 			}
 		}
-		
+
 		Item item = Assets.items.get(id);
 
 		if (item == null) {

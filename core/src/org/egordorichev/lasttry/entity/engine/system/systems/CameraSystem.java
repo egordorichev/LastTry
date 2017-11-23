@@ -69,8 +69,8 @@ public class CameraSystem implements System {
 
 				float width = worldSize.width * Chunk.SIZE * Block.SIZE;
 				float height = worldSize.height * Chunk.SIZE * Block.SIZE;
-				float halfDisplayWidth = Gdx.graphics.getWidth() / 2;
-				float halfDisplayHeight = Gdx.graphics.getHeight() / 2;
+				float halfDisplayWidth = cam.camera.viewportWidth / 2;
+				float halfDisplayHeight = cam.camera.viewportHeight / 2;
 
 				cam.camera.position.x = Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
 				cam.camera.position.y = Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
@@ -91,9 +91,9 @@ public class CameraSystem implements System {
 			int width = Gdx.graphics.getWidth();
 			int height = Gdx.graphics.getHeight();
 
-			if (width < 800 || height < 600) {
+			if (width < 800 || height < 450) {
 				width = 800;
-				height = 600;
+				height = 450;
 
 				Gdx.graphics.setWindowedMode(width, height);
 			}

@@ -7,8 +7,8 @@ repeat: none
 missing_texture
   rotate: false
   xy: 1, 1
-  size: 32, 32
-  orig: 32, 32
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 
@@ -20,8 +20,8 @@ repeat: none
 ui/inventory_slot
   rotate: false
   xy: 1, 1
-  size: 48, 48
-  orig: 48, 48
+  size: 24, 24
+  orig: 24, 24
   offset: 0, 0
   index: -1
 
@@ -32,9 +32,9 @@ filter: Nearest,Nearest
 repeat: none
 blocks/lt_dirt_tiles
   rotate: false
-  xy: 1, 209
-  size: 256, 48
-  orig: 256, 48
+  xy: 1, 105
+  size: 128, 24
+  orig: 128, 24
   offset: 0, 0
   index: -1
 
@@ -46,15 +46,15 @@ repeat: none
 icons/lt_dirt
   rotate: false
   xy: 1, 1
-  size: 16, 16
-  orig: 16, 16
+  size: 8, 8
+  orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_stone_pickaxe
   rotate: false
-  xy: 1, 18
-  size: 32, 32
-  orig: 32, 32
+  xy: 1, 10
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 
@@ -66,8 +66,8 @@ repeat: none
 creatures/lt_player
   rotate: false
   xy: 1, 1
-  size: 32, 480
-  orig: 32, 480
+  size: 16, 240
+  orig: 16, 240
   offset: 0, 0
   index: -1
 
@@ -78,8 +78,8 @@ filter: Nearest,Nearest
 repeat: none
 walls/lt_dirt_wall_tiles
   rotate: false
-  xy: 1, 209
-  size: 256, 48
-  orig: 256, 48
+  xy: 1, 105
+  size: 128, 24
+  orig: 128, 24
   offset: 0, 0
   index: -1
