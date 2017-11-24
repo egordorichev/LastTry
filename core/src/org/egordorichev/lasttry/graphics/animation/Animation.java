@@ -20,7 +20,7 @@ public class Animation {
 	/**
 	 * Current animation frame;
 	 */
-	private int frame = 0;
+	private int frame;
 
 	public Animation() {
 
@@ -64,5 +64,13 @@ public class Animation {
 	 */
 	public void addFrame(AnimationFrame frame) {
 		this.frames.add(frame);
+	}
+
+	/**
+	 * Resets the animation
+	 */
+	public void reset() {
+		this.frame = 0;
+		this.time = 0;
 	}
 }

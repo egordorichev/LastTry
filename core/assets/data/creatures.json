@@ -1,7 +1,7 @@
 {
 	"lt:player" : {
 		"components" : [
-			"entity.component.InputComponent",
+			"entity.entities.creature.player.PlayerInputComponent",
 			"entity.entities.item.inventory.InventoryComponent",
 			"entity.entities.creature.CreatureSaveComponent"
 		],
@@ -10,20 +10,20 @@
 		"health" : 100,
 		"mana" : 10,
 		"animation" : {
-			"main" : [
+			"idle" : [
 				{
 					"x" : 0,
 					"y" : 0,
 					"w" : 16,
 					"h" : 24,
-					"delta" : 1
+					"delta" : 0.7
 				},
 				{
 					"x" : 0,
 					"y" : 24,
 					"w" : 16,
 					"h" : 24,
-					"delta" : 1
+					"delta" : 0.7
 				}
 			],
 

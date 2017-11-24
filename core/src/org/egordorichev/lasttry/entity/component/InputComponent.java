@@ -8,4 +8,11 @@ public class InputComponent extends Component {
 	 * Shows, if input should be processed
 	 */
 	public boolean handleInput = true;
+
+	/**
+	 * The input handler
+	 */
+	public void processInput() {
+
+	}
 }

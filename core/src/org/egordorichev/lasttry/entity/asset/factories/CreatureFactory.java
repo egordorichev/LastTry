@@ -128,6 +128,6 @@ public class CreatureFactory extends AssetFactory<Creature> {
 			animation.animations.put(data.name(), anim);
 		}
 
-		animation.current = animation.animations.get("main");
+		animation.current = animation.animations.get("idle");
 	}
 }

@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.entity;
 
 import org.egordorichev.lasttry.entity.component.Component;
-import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.lang.reflect.Constructor;
