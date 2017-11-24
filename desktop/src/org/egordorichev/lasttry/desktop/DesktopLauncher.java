@@ -12,8 +12,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "LastTry " + Version.STRING;
-		config.width = 800;
-		config.height = 450;
+		config.width = 320;
+		config.height = 180;
 		config.vSyncEnabled = true;
 		config.fullscreen = false;
 		config.resizable = true;

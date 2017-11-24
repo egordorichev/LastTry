@@ -51,7 +51,7 @@ public class LastTry extends Game {
 		}
 
 		Gdx.input.setInputProcessor(Input.multiplexer);
-		Gdx.graphics.setWindowedMode(800, 450);
+		Gdx.graphics.setWindowedMode(960, 540);
 
 		this.title = "LastTry " + Version.STRING;
 		this.setState(new InGameState());

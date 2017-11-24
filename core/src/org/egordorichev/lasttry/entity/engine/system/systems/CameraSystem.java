@@ -91,9 +91,9 @@ public class CameraSystem implements System {
 			int width = Gdx.graphics.getWidth();
 			int height = Gdx.graphics.getHeight();
 
-			if (width < 800 || height < 450) {
-				width = 800;
-				height = 450;
+			if (width < 320 || height < 180) {
+				width = 320;
+				height = 180;
 
 				Gdx.graphics.setWindowedMode(width, height);
 			}
