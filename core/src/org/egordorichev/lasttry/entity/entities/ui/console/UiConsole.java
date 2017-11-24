@@ -33,14 +33,14 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 
 		if (state.open) {
 			PositionComponent position = this.getComponent(PositionComponent.class);
-			Assets.f7.draw(Graphics.batch, "> " + state.input, position.x, position.y + 14);
+			Assets.f7.draw(Graphics.batch, "> " + state.input, position.x, position.y + 7);
 
 			ConsoleLinesComponent lines = this.getComponent(ConsoleLinesComponent.class);
 			float delta = Gdx.graphics.getDeltaTime();
 
 			for (int i = lines.lines.size() - 1; i >= 0; i--) {
 				ConsoleLine line = lines.lines.get(i);
-				Assets.f7.draw(Graphics.batch, line.line, position.x, position.y + (i + 2) * 14);
+				Assets.f7.draw(Graphics.batch, line.line, position.x, position.y + (i + 2) * 7);
 
 				line.time += delta;
 

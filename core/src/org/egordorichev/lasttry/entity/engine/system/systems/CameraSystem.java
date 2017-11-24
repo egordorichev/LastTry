@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
@@ -13,7 +14,7 @@ import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
-import org.egordorichev.lasttry.util.log.Log;
+import org.egordorichev.lasttry.graphics.PerfectViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,14 +29,19 @@ public class CameraSystem implements System {
 	 * The main instance
 	 */
 	public static CameraSystem instance;
-
 	/**
 	 * All in-game cameras
 	 */
-	private HashMap<String, Entity> cameras = new HashMap<>();
+	private HashMap<String, Entity> cameras;
+	/**
+	 * The viewport
+	 */
+	private PerfectViewport viewport;
 
 	public CameraSystem() {
 		instance = this;
+		this.cameras = new HashMap<>();
+		this.viewport = new PerfectViewport();
 	}
 
 	/**
@@ -72,8 +78,9 @@ public class CameraSystem implements System {
 				float halfDisplayWidth = cam.camera.viewportWidth / 2;
 				float halfDisplayHeight = cam.camera.viewportHeight / 2;
 
-				cam.camera.position.x = Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
-				cam.camera.position.y = Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
+				// Auto floor it:
+				cam.camera.position.x = (int) Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
+				cam.camera.position.y = (int) Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
 			}
 
 			cam.camera.update();
@@ -105,12 +112,19 @@ public class CameraSystem implements System {
 				// TODO: resize the view
 				component.camera.update();
 			}
+
+			this.viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		} else if (Objects.equals(message, "entity_added")) {
 			ArrayList<Entity> entities = Engine.getEntitiesFor(TargetComponent.class, CameraComponent.class, IdComponent.class);
 			this.cameras.clear();
 
 			for (Entity entity : entities) {
 				this.cameras.put(entity.getComponent(IdComponent.class).id, entity);
+			}
+
+			if (this.cameras.size() > 0) {
+				CameraComponent camera = this.get("main").getComponent(CameraComponent.class);
+				this.viewport.setCamera(camera.camera);
 			}
 		}
 	}

@@ -15,7 +15,7 @@ public class PackTexturesCommand extends Command {
 	/**
 	 * Set to true, to update textures every run
 	 */
-	private static boolean FORCE = true;
+	private static boolean FORCE = false;
 
 	public PackTexturesCommand() {
 		super("pack", "pt");

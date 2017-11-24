@@ -16,6 +16,7 @@ import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
+import org.egordorichev.lasttry.graphics.Display;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
 import org.egordorichev.lasttry.util.input.Input;
@@ -51,7 +52,7 @@ public class LastTry extends Game {
 		}
 
 		Gdx.input.setInputProcessor(Input.multiplexer);
-		Gdx.graphics.setWindowedMode(960, 540);
+		Gdx.graphics.setWindowedMode(Display.WIDTH * 3, Display.HEIGHT * 3);
 
 		this.title = "LastTry " + Version.STRING;
 		this.setState(new InGameState());
