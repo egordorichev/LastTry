@@ -67,6 +67,8 @@ public class LastTry extends Game {
 		ArrayList<Entity> players = Engine.getEntitiesFor(PlayerInputComponent.class);
 
 		if (players.size() > 0) {
+
+			Log.info("ok");
 			Entity player = players.get(0);
 
 			Engine.addEntity(new UiInventory(new Rectangle(5, 5, 150, 50), player.getComponent(InventoryComponent.class))); // Share the inventory
