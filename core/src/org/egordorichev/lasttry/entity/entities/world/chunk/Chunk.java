@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.entities.world.chunk;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
-import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles blocks
@@ -28,6 +27,10 @@ public class Chunk extends Entity {
 	 */
 	private String[] walls;
 	/**
+	 * Lights
+	 */
+	private byte[] light;
+	/**
 	 * Data: 8 bits for blocks, 8 bit for walls, 16 bits general use
 	 */
 	private short[] data;
@@ -35,7 +38,7 @@ public class Chunk extends Entity {
 	public Chunk(short x, short y) {
 		super(PositionComponent.class);
 
-		PositionComponent position = (PositionComponent) this.getComponent(PositionComponent.class);
+		PositionComponent position = this.getComponent(PositionComponent.class);
 
 		position.x = x;
 		position.y = y;
@@ -44,7 +47,12 @@ public class Chunk extends Entity {
 
 		this.blocks = new String[size];
 		this.walls = new String[size];
+		this.light = new byte[size];
 		this.data = new short[size];
+
+		for (int i = 0; i < size; i++) {
+			this.light[i] = (byte) 255;
+		}
 	}
 
 	/**
@@ -109,6 +117,38 @@ public class Chunk extends Entity {
 		}
 
 		this.walls[this.getIndex(x, y)] = value;
+	}
+
+	/**
+	 * Returns light ID at given position in chunk
+	 * Coordinates MUST be relative, or null will be returned
+	 *
+	 * @param x Light X
+	 * @param y Light Y
+	 * @return Light at given position
+	 */
+	public byte getLight(short x, short y) {
+		if (this.isOut(x, y)) {
+			return (byte) 255;
+		}
+
+		return this.light[this.getIndex(x, y)];
+	}
+
+	/**
+	 * Sets light ID at given position in chunk
+	 * Coordinates MUST be relative
+	 *
+	 * @param value New light value
+	 * @param x Light X
+	 * @param y Light Y
+	 */
+	public void setLight(byte value, short x, short y) {
+		if (this.isOut(x, y)) {
+			return;
+		}
+
+		this.light[this.getIndex(x, y)] = value;
 	}
 
 	/**

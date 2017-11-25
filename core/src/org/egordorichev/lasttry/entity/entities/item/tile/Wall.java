@@ -29,10 +29,16 @@ public class Wall extends Item {
 	 *
 	 * @param x Wall X
 	 * @param y Wall Y
+	 * @param light How light the wall is
 	 */
-	public void render(short x, short y) {
+	public void render(short x, short y, byte light) {
+		float value = -((float) light);
+		Graphics.batch.setColor(value, value, value, 1);
+
 		int neighbors = this.getNeighbors(x, y);
+
 		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * Block.SIZE, y * Block.SIZE);
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	/**

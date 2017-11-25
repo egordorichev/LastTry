@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
+import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles chunks
@@ -52,6 +53,7 @@ public class World extends Entity {
 				String blockId = this.getBlock(x, y);
 				Block block = null;
 				int neighbors = 15;
+				byte light = this.getLight(x, y);
 
 				if (blockId != null) {
 					block = (Block) Assets.items.get(blockId);
@@ -63,12 +65,12 @@ public class World extends Entity {
 
 					if (wallId != null) {
 						Wall wall = (Wall) Assets.items.get(wallId);
-						wall.render(x, y);
+						wall.render(x, y, light);
 					}
 				}
 
 				if (block != null) {
-					block.render(x, y, neighbors);
+					block.render(x, y, neighbors, light);
 				}
 			}
 		}
@@ -151,6 +153,46 @@ public class World extends Entity {
 
 		if (chunk != null) {
 			chunk.setWall(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
+		}
+	}
+
+	/**
+	 * Returns light at given position in world
+	 *
+	 * @param x Light X
+	 * @param y Light Y
+	 * @return Light at given position
+	 */
+	public byte getLight(short x, short y) {
+		if (this.isOut(x, y)) {
+			return (byte) 255;
+		}
+
+		Chunk chunk = this.getChunkFor(x, y);
+
+		if (chunk == null) {
+			return (byte) 255;
+		} else {
+			return chunk.getLight(chunk.toRelativeX(x), chunk.toRelativeY(y));
+		}
+	}
+
+	/**
+	 * Sets light ID at given position in world
+	 *
+	 * @param value New light value
+	 * @param x Light X
+	 * @param y Light Y
+	 */
+	public void setLight(byte value, short x, short y) {
+		if (this.isOut(x, y)) {
+			return;
+		}
+
+		Chunk chunk = this.getChunkFor(x, y);
+
+		if (chunk != null) {
+			chunk.setLight(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
 	}
 

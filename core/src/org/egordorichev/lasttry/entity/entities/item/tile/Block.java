@@ -77,9 +77,15 @@ public class Block extends Item {
 	 * @param x Block X
 	 * @param y Block Y
 	 * @param neighbors Byte packed with neighbors
+	 * @param light How light this block is
 	 */
-	public void render(short x, short y, int neighbors) {
+	public void render(short x, short y, int neighbors, byte light) {
+		float value = -((float) light);
+		Graphics.batch.setColor(value, value, value, 1.0f);
+
 		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
+
+		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
 	/**
