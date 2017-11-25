@@ -35,11 +35,11 @@ public class Assets {
 	/**
 	 * Small font
 	 */
-	public static BitmapFont f7;
+	public static BitmapFont f4;
 	/**
 	 * Big font
 	 */
-	public static BitmapFont f12;
+	public static BitmapFont f8;
 	/**
 	 * The manager for the textures
 	 */
@@ -70,14 +70,14 @@ public class Assets {
 	 * Loads fonts
 	 */
 	private static void loadFonts() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("stark.otf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("pico8.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-		parameters.size = 7;
-		f7 = generator.generateFont(parameters);
+		parameters.size = 4;
+		f4 = generator.generateFont(parameters);
 
-		parameters.size = 12;
-		f12 = generator.generateFont(parameters);
+		parameters.size = 8;
+		f8 = generator.generateFont(parameters);
 	}
 
 	/**

@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
 import org.egordorichev.lasttry.entity.entities.ui.console.ConsoleCommand;
@@ -46,7 +47,7 @@ public class GiveCommand extends ConsoleCommand {
 			return;
 		}
 
-		Entity player = Engine.getEntitiesFor(InputComponent.class).get(0);
+		Entity player = Engine.getEntitiesFor(PlayerInputComponent.class).get(0);
 
 		if (player != null) {
 			PositionComponent position = player.getComponent(PositionComponent.class);

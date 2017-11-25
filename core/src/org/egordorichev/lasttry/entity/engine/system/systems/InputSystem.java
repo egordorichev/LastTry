@@ -64,7 +64,7 @@ public class InputSystem implements System, SimpleInputProcessor {
 			ArrayList<Entity> players = Engine.getEntitiesFor(PlayerInputComponent.class, AccelerationComponent.class);
 
 			if (!players.isEmpty()) {
-				// this.entities.addAll(players);
+				this.entities.addAll(players);
 			}
 		}
 	}

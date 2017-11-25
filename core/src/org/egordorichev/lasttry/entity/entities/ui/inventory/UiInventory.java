@@ -90,14 +90,14 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 
 			if (item.count > 1) {
 				String str = String.valueOf(item.count);
-				layout.setText(Assets.f7, str);
+				layout.setText(Assets.f4, str);
 
-				Assets.f7.draw(Graphics.batch, str, x + 11 - layout.width, y + 16);
+				Assets.f4.draw(Graphics.batch, str, x + 11 - layout.width, y + 16);
 			}
 		}
 
 		if (index < 10) {
-			Assets.f7.draw(Graphics.batch, String.valueOf(index < 9 ? index + 1 : 0), x + 3, y + 21);
+			Assets.f4.draw(Graphics.batch, String.valueOf(index < 9 ? index + 1 : 0), x + 3, y + 21);
 		}
 	}
 
