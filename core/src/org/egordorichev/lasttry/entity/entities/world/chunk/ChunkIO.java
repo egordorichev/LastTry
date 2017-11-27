@@ -78,6 +78,7 @@ public class ChunkIO extends IO<Chunk> {
 			}
 
 			reader.close();
+
 			return chunk;
 		} catch (FileNotFoundException exception) {
 			Log.debug("Chunk " + x + ":" + y + " is not found");

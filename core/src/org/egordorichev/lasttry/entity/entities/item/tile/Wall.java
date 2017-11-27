@@ -31,9 +31,8 @@ public class Wall extends Item {
 	 * @param y Wall Y
 	 * @param light How light the wall is
 	 */
-	public void render(short x, short y, byte light) {
-		float value = -((float) light);
-		Graphics.batch.setColor(value, value, value, 1);
+	public void render(short x, short y, float light) {
+		Graphics.batch.setColor(light, light, light, 1.0f);
 
 		int neighbors = this.getNeighbors(x, y);
 

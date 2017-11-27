@@ -23,7 +23,14 @@ import java.util.Objects;
  * The main part of the world
  */
 public class Block extends Item {
+	/**
+	 * Block size
+	 */
 	public static short SIZE = 8;
+	/**
+	 * Max light level
+	 */
+	public static short MAX_LIGHT = 16;
 
 	public Block(String id) {
 		super(id);
@@ -79,12 +86,9 @@ public class Block extends Item {
 	 * @param neighbors Byte packed with neighbors
 	 * @param light How light this block is
 	 */
-	public void render(short x, short y, int neighbors, byte light) {
-		float value = -((float) light);
-		Graphics.batch.setColor(value, value, value, 1.0f);
-
+	public void render(short x, short y, int neighbors, float light) {
+		Graphics.batch.setColor(light, light, light, 1.0f);
 		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
-
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
@@ -121,6 +125,13 @@ public class Block extends Item {
 		boolean left = this.shouldTile(World.instance.getBlock((short) (x - 1), y), id);
 
 		return BinaryPacker.pack(top, right, bottom, left);
+	}
+
+	/**
+	 * @return Block emits light
+	 */
+	public boolean isEmitter() {
+		return false;
 	}
 
 	/**
