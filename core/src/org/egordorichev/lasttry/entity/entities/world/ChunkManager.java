@@ -10,6 +10,17 @@ import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
  * Handles chunks
  */
 public class ChunkManager extends Entity {
+	public ChunkManager() {
+		this.addComponent(SizeComponent.class);
+
+		SizeComponent size = this.getComponent(SizeComponent.class);
+
+		size.width = 4;
+		size.height = 4;
+
+		this.addComponent(WorldChunksComponent.class);
+	}
+
 	/**
 	 * Returns block ID at given position in world
 	 *
@@ -203,7 +214,7 @@ public class ChunkManager extends Entity {
 			short cy = (short) Math.floor(y / Chunk.SIZE);
 
 			this.loadChunk(cx, cy);
-			chunks.chunks[index].calculateLighting();
+			// chunks.chunks[index].calculateLighting();
 
 			return chunks.chunks[index];
 		}
@@ -225,6 +236,11 @@ public class ChunkManager extends Entity {
 
 	protected void loadChunk(short x, short y) {
 		String id = "data/worlds/" + this.getComponent(IdComponent.class).id.replace(':', '/');
-		this.getComponent(WorldChunksComponent.class).chunks[this.getChunkIndex(x, y)] = ChunkIO.load(id, x, y);
+
+		WorldChunksComponent chunks = this.getComponent(WorldChunksComponent.class);
+		Chunk chunk = ChunkIO.load(id, x, y);
+
+		chunks.loaded.add(chunk);
+		chunks.chunks[this.getChunkIndex(x, y)] = chunk;
 	}
 }

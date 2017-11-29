@@ -17,5 +17,6 @@ public class ConsoleCommandsComponent extends Component {
 	public ConsoleCommandsComponent() {
 		this.commands.add(new HelpCommand());
 		this.commands.add(new GiveCommand());
+		this.commands.add(new ChunksCommand());
 	}
 }

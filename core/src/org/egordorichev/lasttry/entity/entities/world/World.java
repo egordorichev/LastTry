@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
+import org.egordorichev.lasttry.graphics.Display;
 import org.egordorichev.lasttry.util.log.Log;
 
 /**
@@ -21,17 +22,9 @@ public class World extends ChunkManager {
 	public static World instance;
 
 	public World(String name, String type) {
+		super();
+
 		instance = this;
-
-		this.addComponent(SizeComponent.class);
-
-		SizeComponent size = this.getComponent(SizeComponent.class);
-
-		size.width = 4;
-		size.height = 4;
-
-		this.addComponent(WorldChunksComponent.class);
-
 		IdComponent id = (IdComponent) this.addComponent(IdComponent.class);
 		id.id = name + ":" + type;
 	}
@@ -41,17 +34,19 @@ public class World extends ChunkManager {
 	 */
 	@Override
 	public void render() {
-		short xStart = (short) Math.floor((CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.position.x - Gdx.graphics.getWidth() / 2) / Block.SIZE);
-		short yStart = (short) Math.floor((CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.position.y - Gdx.graphics.getHeight() / 2) / Block.SIZE);
-		short width = (short) (Math.floor(Gdx.graphics.getWidth() / Block.SIZE) + 2);
-		short height = (short) (Math.floor(Gdx.graphics.getHeight() / Block.SIZE) + 2);
+		CameraComponent cam = CameraSystem.instance.get("main").getComponent(CameraComponent.class);
+
+		short xStart = (short) Math.floor((cam.camera.position.x - Display.WIDTH / 2) / Block.SIZE);
+		short yStart = (short) Math.floor((cam.camera.position.y - Display.HEIGHT / 2) / Block.SIZE);
+		short width = (short) (Math.floor(Display.WIDTH / Block.SIZE) + 2);
+		short height = (short) (Math.floor(Display.HEIGHT / Block.SIZE) + 2);
 
 		for (short x = xStart; x < xStart + width; x++) {
 			for (short y = yStart; y < yStart + height; y++) {
 				String blockId = this.getBlock(x, y);
 				Block block = null;
 				int neighbors = 15;
-				float light = ((float) this.getLight(x, y) + 128) / 255;
+				float light = 1.0f;
 
 				if (blockId != null) {
 					block = (Block) Assets.items.get(blockId);

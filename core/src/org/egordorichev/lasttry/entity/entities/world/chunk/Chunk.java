@@ -227,6 +227,8 @@ public class Chunk extends Entity {
 	 * Calculates light in a chunk
 	 */
 	public void calculateLighting() {
+		Log.debug("Calculating lighting...");
+
 		for (short x = 0; x < SIZE; x++) {
 			for (short y = 0; y < SIZE; y++) {
 				this.calculateLightingForBlock(x, y);
@@ -245,6 +247,7 @@ public class Chunk extends Entity {
 		int sampleRadius = 6;
 		float max = Block.MAX_LIGHT;
 		float average = 0;
+		short high = World.instance.getHighest(x);
 
 		float divisor = (float) (Math.pow(sampleRadius * 2, 2));
 
@@ -254,7 +257,7 @@ public class Chunk extends Entity {
 
 				float strength = 1.0f;
 				boolean hasBlock = (id != null);
-				boolean canSeeSky = true;//y >= World.instance.getHighest(x);
+				boolean canSeeSky = y >= high;
 
 				if (hasBlock) {
 					Block block = (Block) Assets.items.get(id);
