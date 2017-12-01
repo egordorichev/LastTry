@@ -3,6 +3,7 @@ package org.egordorichev.lasttry.entity.entities.world;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 
@@ -57,6 +58,7 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
+			Engine.sendMessage("set_block_" + x + "_" + y);
 			chunk.setBlock(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
 	}
@@ -97,6 +99,7 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
+			Engine.sendMessage("set_wall_" + x + "_" + y);
 			chunk.setWall(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
 	}
@@ -108,15 +111,15 @@ public class ChunkManager extends Entity {
 	 * @param y Light Y
 	 * @return Light at given position
 	 */
-	public byte getLight(short x, short y) {
+	public float getLight(short x, short y) {
 		if (this.isOut(x, y)) {
-			return (byte) 255;
+			return 1.0f;
 		}
 
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk == null) {
-			return (byte) 255;
+			return 1.0f;
 		} else {
 			return chunk.getLight(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
@@ -129,7 +132,7 @@ public class ChunkManager extends Entity {
 	 * @param x Light X
 	 * @param y Light Y
 	 */
-	public void setLight(byte value, short x, short y) {
+	public void setLight(float value, short x, short y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -200,7 +203,7 @@ public class ChunkManager extends Entity {
 	 * @param y Block Y
 	 * @return The chunk
 	 */
-	protected Chunk getChunkFor(int x, int y) {
+	public Chunk getChunkFor(int x, int y) {
 		int index = this.getChunkIndex((int) Math.floor(x / Chunk.SIZE), (int) Math.floor(y / Chunk.SIZE));
 
 		WorldChunksComponent chunks = this.getComponent(WorldChunksComponent.class);
@@ -215,6 +218,8 @@ public class ChunkManager extends Entity {
 
 			this.loadChunk(cx, cy);
 			// chunks.chunks[index].calculateLighting();
+
+			Engine.sendMessage("load_chunk_" + cx + "_" + cy);
 
 			return chunks.chunks[index];
 		}

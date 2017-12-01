@@ -46,7 +46,7 @@ public class World extends ChunkManager {
 				String blockId = this.getBlock(x, y);
 				Block block = null;
 				int neighbors = 15;
-				float light = 1.0f;
+				float light = this.getLight(x, y);
 
 				if (blockId != null) {
 					block = (Block) Assets.items.get(blockId);

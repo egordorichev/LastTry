@@ -34,7 +34,7 @@ public class Chunk extends Entity {
 	/**
 	 * Lights
 	 */
-	private byte[] light;
+	private float[] light;
 	/**
 	 * Data: 8 bits for blocks, 8 bit for walls, 16 bits general use
 	 */
@@ -52,11 +52,11 @@ public class Chunk extends Entity {
 
 		this.blocks = new String[size];
 		this.walls = new String[size];
-		this.light = new byte[size];
+		this.light = new float[size];
 		this.data = new short[size];
 
 		for (int i = 0; i < size; i++) {
-			this.light[i] = (byte) 255;
+			this.light[i] = 1.0f;
 		}
 	}
 
@@ -132,9 +132,9 @@ public class Chunk extends Entity {
 	 * @param y Light Y
 	 * @return Light at given position
 	 */
-	public byte getLight(short x, short y) {
+	public float getLight(short x, short y) {
 		if (this.isOut(x, y)) {
-			return (byte) 255;
+			return 1.0f;
 		}
 
 		return this.light[this.getIndex(x, y)];
@@ -148,7 +148,7 @@ public class Chunk extends Entity {
 	 * @param x Light X
 	 * @param y Light Y
 	 */
-	public void setLight(byte value, short x, short y) {
+	public void setLight(float value, short x, short y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -213,14 +213,14 @@ public class Chunk extends Entity {
 	 * @return Chunk X
 	 */
 	public short getX() {
-		return (short) ((PositionComponent) this.getComponent(PositionComponent.class)).x;
+		return (short) this.getComponent(PositionComponent.class).x;
 	}
 
 	/**
 	 * @return Chunk Y
 	 */
 	public short getY() {
-		return (short) ((PositionComponent) this.getComponent(PositionComponent.class)).y;
+		return (short) this.getComponent(PositionComponent.class).y;
 	}
 
 	/**
@@ -244,18 +244,19 @@ public class Chunk extends Entity {
 	 * @param y Block Y
 	 */
 	public void calculateLightingForBlock(short x, short y) {
-		int sampleRadius = 6;
+		short sampleRadius = 6;
 		float max = Block.MAX_LIGHT;
 		float average = 0;
-		short high = World.instance.getHighest(x);
 
 		float divisor = (float) (Math.pow(sampleRadius * 2, 2));
 
-		for (int i = -sampleRadius; i < sampleRadius; i++) {
-			for (int k = -sampleRadius; k < sampleRadius; k++) {
+		for (short i = (short) -sampleRadius; i < sampleRadius; i++) {
+			short high = World.instance.getHighest((short) (x + i));
+
+			for (short k = (short) -sampleRadius; k < sampleRadius; k++) {
 				String id = World.instance.getBlock((short) (x + i), (short) (y + k));
 
-				float strength = 1.0f;
+				float strength = 8.0f;
 				boolean hasBlock = (id != null);
 				boolean canSeeSky = y >= high;
 
@@ -271,19 +272,21 @@ public class Chunk extends Entity {
 					}
 				} else {
 					if (canSeeSky) {
-						strength += strength * 0.15f;
+						strength += strength * 1f;
 					} else {
-						strength += -strength * 0.15f;
+						strength += -strength * 5f;
 					}
 				}
 
-				float value = (((float) World.instance.getLight((short) (x + i), (short) (y + k)) + 128) / 255);
+				float value = World.instance.getLight((short) (x + i), (short) (y + k));
 				average += (value * strength / divisor);
 			}
 		}
 
-		float output = Math.min(Math.max(average / max, 0), 1);
-		this.setLight((byte) (output * 255), x, y);
+		// Log.info(average / max + " : " + average);
+
+		float output = Math.min(Math.max(average / ((float) max), 0), 1);
+		this.setLight(output, x, y);
 	}
 
 	/**

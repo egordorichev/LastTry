@@ -93,6 +93,7 @@ public class Engine {
 		addSystem(new MovementSystem());
 		addSystem(new CollisionSystem());
 		addSystem(new InventorySystem());
+		addSystem(new LightSystem());
 	}
 
 	/**
