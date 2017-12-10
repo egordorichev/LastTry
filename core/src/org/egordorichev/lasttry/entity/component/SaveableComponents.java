@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.entity.component;
 
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.HashMap;
 
@@ -14,7 +16,8 @@ public class SaveableComponents {
 	public static String[] list = {
 		"PositionComponent",
 		"SizeComponent",
-		"InventoryComponent"
+		"InventoryComponent",
+		"ClockComponent"
 	};
 
 	public static HashMap<String, Class<? extends Component>> map = new HashMap<>();
@@ -23,5 +26,6 @@ public class SaveableComponents {
 		map.put("PositionComponent", PositionComponent.class);
 		map.put("SizeComponent", SizeComponent.class);
 		map.put("InventoryComponent", InventoryComponent.class);
+		map.put("ClockComponent", ClockComponent.class);
 	}
 }

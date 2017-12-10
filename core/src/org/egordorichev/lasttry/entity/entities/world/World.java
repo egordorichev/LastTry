@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.entities.world;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
@@ -10,7 +9,6 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.graphics.Display;
-import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Handles chunk rendering
@@ -22,11 +20,15 @@ public class World extends ChunkManager {
 	public static World instance;
 
 	public World(String name, String type) {
-		super();
-
 		instance = this;
 		IdComponent id = (IdComponent) this.addComponent(IdComponent.class);
 		id.id = name + ":" + type;
+
+		/*
+		 * Setup clock
+		 */
+		ClockComponent clock = (ClockComponent) this.addComponent(ClockComponent.class);
+		clock.speed = 60.0f;
 	}
 
 	/**

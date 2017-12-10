@@ -83,3 +83,16 @@ walls/lt_dirt_wall_tiles
   orig: 128, 24
   offset: 0, 0
   index: -1
+
+textures7.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg/sky
+  rotate: false
+  xy: 1, 845
+  size: 1024, 180
+  orig: 1024, 180
+  offset: 0, 0
+  index: -1

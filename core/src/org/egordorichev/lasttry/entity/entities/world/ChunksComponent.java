@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Handles chunks for world
  */
-public class WorldChunksComponent extends Component {
+public class ChunksComponent extends Component {
 	/**
 	 * Handles chunks
 	 */

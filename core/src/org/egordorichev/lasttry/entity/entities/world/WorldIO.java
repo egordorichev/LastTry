@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.SaveableComponents;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
-import org.egordorichev.lasttry.entity.entities.creature.CreatureSaveComponent;
+import org.egordorichev.lasttry.entity.entities.creature.SaveComponent;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 import org.egordorichev.lasttry.entity.entities.world.generator.WorldGenerator;
@@ -18,8 +18,6 @@ import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 public class WorldIO extends IO<World> {
 	/**
@@ -44,15 +42,17 @@ public class WorldIO extends IO<World> {
 
 		try {
 			FileWriter writer = new FileWriter(root + "/world.wld");
-			ArrayList<Entity> entities = Engine.getEntitiesFor(CreatureSaveComponent.class);
+			ArrayList<Entity> entities = Engine.getEntitiesFor(SaveComponent.class);
 
 			writer.writeInt32(entities.size());
+			entities.add(world);
 
 			// Save entities and components
 			for (Entity entity : entities) {
-				IdComponent idComponent = entity.getComponent(IdComponent.class);
-
-				writer.writeString(idComponent.id);
+				if (entity != world) {
+					IdComponent idComponent = entity.getComponent(IdComponent.class);
+					writer.writeString(idComponent.id);
+				}
 
 				for (String saveable : SaveableComponents.list) {
 					Component component = entity.getComponent(SaveableComponents.map.get(saveable));
@@ -69,7 +69,7 @@ public class WorldIO extends IO<World> {
 			Log.error("Failed to write world " + name + ":" + type);
 		}
 
-		for (Chunk chunk : world.getComponent(WorldChunksComponent.class).chunks) {
+		for (Chunk chunk : world.getComponent(ChunksComponent.class).chunks) {
 			if (chunk != null) {
 				ChunkIO.write(root, chunk);
 			}
@@ -93,9 +93,15 @@ public class WorldIO extends IO<World> {
 
 			int count = reader.readInt32();
 
-			for (int i = 0; i < count; i++) {
-				String id = reader.readString();
-				Entity entity = Assets.creatures.create(id);
+			for (int i = 0; i < count + 1; i++) {
+				Entity entity = null;
+
+				if (i < count) {
+					String id = reader.readString();
+					entity = Assets.creatures.create(id);
+				} else {
+					entity = world;
+				}
 
 				for (String saveable : SaveableComponents.list) {
 					Component component = entity.getComponent(SaveableComponents.map.get(saveable));
@@ -105,7 +111,9 @@ public class WorldIO extends IO<World> {
 					}
 				}
 
-				Engine.addEntity(entity);
+				if (entity != world) {
+					Engine.addEntity(entity);
+				}
 			}
 
 			reader.close();
@@ -131,7 +139,11 @@ public class WorldIO extends IO<World> {
 	 */
 	public static World generate(String name, String type) {
 		Log.info("Generating world " + name + ":" + type);
-		return WorldGenerator.forType(name, type).generate();
+		World world = WorldGenerator.forType(name, type).generate();
+
+		// Manipulations, if needed
+
+		return world;
 	}
 
 	/**

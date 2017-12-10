@@ -16,6 +16,8 @@ import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputCompo
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
+import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
+import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.game.state.InGameState;
 import org.egordorichev.lasttry.game.state.State;
 import org.egordorichev.lasttry.graphics.Display;
@@ -56,7 +58,7 @@ public class LastTry extends Game {
 		}
 
 		Gdx.input.setInputProcessor(Input.multiplexer);
-		Gdx.graphics.setWindowedMode(Display.WIDTH * 3, Display.HEIGHT * 3);
+		Gdx.graphics.setWindowedMode(Display.WIDTH * 2, Display.HEIGHT * 2);
 
 		this.title = "LastTry " + Version.STRING;
 		this.setState(new InGameState());
@@ -111,15 +113,21 @@ public class LastTry extends Game {
 		this.state.update(delta);
 
 		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.combined);
-
-		Gdx.gl.glClearColor( 0.3f, 0.3f, 0.4f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Graphics.batch.begin();
 		this.state.render();
 		Graphics.batch.end();
 
-		Gdx.graphics.setTitle(this.title + " " + Gdx.graphics.getFramesPerSecond() + " FPS");
+		String title = this.title + " " + Gdx.graphics.getFramesPerSecond() + " FPS";
+
+		if (World.instance != null) {
+			ClockComponent clock = World.instance.getComponent(ClockComponent.class);
+
+			title += ", " + String.format("%02d", clock.hour) + ":" + String.format("%02d", (int) (clock.minute)) + ":" + String.format("%02d", (int) clock.second);
+		}
+
+		Gdx.graphics.setTitle(title);
 	}
 
 	/**

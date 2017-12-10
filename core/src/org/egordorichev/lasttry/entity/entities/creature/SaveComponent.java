@@ -5,6 +5,6 @@ import org.egordorichev.lasttry.entity.component.Component;
 /**
  * Handles creature saving
  */
-public class CreatureSaveComponent extends Component {
+public class SaveComponent extends Component {
 	// TODO: data here?
 }

@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.world.Sky;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 import org.egordorichev.lasttry.util.log.Log;
 
@@ -83,6 +84,8 @@ public class Engine {
 
 		cam.camera.position.x = position.x + size.width / 2;
 		cam.camera.position.y = position.y + size.height / 2;
+
+		addEntity(new Sky());
 	}
 
 	private static void initSystems() {
@@ -94,6 +97,7 @@ public class Engine {
 		addSystem(new CollisionSystem());
 		addSystem(new InventorySystem());
 		addSystem(new LightSystem());
+		addSystem(new ClockSystem());
 	}
 
 	/**

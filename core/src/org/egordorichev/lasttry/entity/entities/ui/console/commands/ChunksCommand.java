@@ -3,7 +3,7 @@ package org.egordorichev.lasttry.entity.entities.ui.console.commands;
 import org.egordorichev.lasttry.entity.entities.ui.console.ConsoleCommand;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.world.World;
-import org.egordorichev.lasttry.entity.entities.world.WorldChunksComponent;
+import org.egordorichev.lasttry.entity.entities.world.ChunksComponent;
 
 public class ChunksCommand extends ConsoleCommand {
 	public ChunksCommand() {
@@ -12,7 +12,7 @@ public class ChunksCommand extends ConsoleCommand {
 
 	@Override
 	public void run(UiConsole console, String[] args) {
-		WorldChunksComponent chunks = World.instance.getComponent(WorldChunksComponent.class);
+		ChunksComponent chunks = World.instance.getComponent(ChunksComponent.class);
 		console.print(chunks.loaded.size() + "/" + chunks.chunks.length + " chunks are loaded");
 	}
 }

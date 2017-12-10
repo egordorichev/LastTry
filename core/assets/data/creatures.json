@@ -3,7 +3,7 @@
 		"components" : [
 			"entity.entities.creature.player.PlayerInputComponent",
 			"entity.entities.item.inventory.InventoryComponent",
-			"entity.entities.creature.CreatureSaveComponent"
+			"entity.entities.creature.SaveComponent"
 		],
 		"w" : 16,
 		"h" : 24,

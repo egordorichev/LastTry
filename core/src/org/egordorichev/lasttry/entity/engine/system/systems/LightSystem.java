@@ -20,7 +20,7 @@ public class LightSystem implements System {
 				short y = Short.valueOf(parts[3]);
 
 				Chunk chunk = World.instance.getChunkFor(x, y);
-				chunk.calculateLighting();
+				// chunk.calculateLighting();
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to recalculate light");
