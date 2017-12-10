@@ -40,9 +40,8 @@ public class Sky extends Entity {
 
 		TextureComponent texture = this.getComponent(TextureComponent.class);
 		ClockComponent clock = World.instance.getComponent(ClockComponent.class);
-		clock.speed = 600;
 
-		int x = (int) (clock.second + clock.minute * 2.8 + clock.hour * 42.6);
+		int x = (int) (Math.min(1439, clock.minute + clock.hour * 60));
 
 		texture.texture.setRegionX(this.startX + x);
 		// Render the slice O_o
