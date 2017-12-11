@@ -98,6 +98,7 @@ public class Engine {
 		addSystem(new InventorySystem());
 		addSystem(new LightSystem());
 		addSystem(new ClockSystem());
+		addSystem(new InteractionSystem());
 	}
 
 	/**
