@@ -166,8 +166,8 @@ public class Engine {
 	 */
 	public static void addEntity(Entity entity) {
 		entities.add(entity);
-		Engine.sendMessage("entity_added");
-		Engine.recalculateZIndexes();
+		sendMessage(SystemMessages.ENTITIES_UPDATED);
+		recalculateZIndexes();
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class Engine {
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
-		Engine.sendMessage("entity_added");
+		sendMessage(SystemMessages.ENTITIES_UPDATED);
 	}
 
 	/**

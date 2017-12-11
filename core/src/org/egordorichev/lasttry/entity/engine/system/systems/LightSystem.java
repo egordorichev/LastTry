@@ -21,6 +21,8 @@ public class LightSystem implements System {
 
 				Chunk chunk = World.instance.getChunkFor(x, y);
 				// chunk.calculateLighting();
+				// TODO: place back
+				// REALLY SLOW!
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to recalculate light");

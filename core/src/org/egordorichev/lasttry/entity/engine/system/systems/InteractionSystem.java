@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
@@ -38,7 +39,7 @@ public class InteractionSystem implements System, SimpleInputProcessor {
 	 */
 	@Override
 	public void handleMessage(String message) {
-		if (Objects.equals(message, "entity_added")) {
+		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
 			this.entities = Engine.getEntitiesFor(InteractionComponent.class);
 		}
 	}

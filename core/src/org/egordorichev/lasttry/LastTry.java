@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
@@ -104,7 +105,7 @@ public class LastTry extends Game {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		Engine.sendMessage("resize");
+		Engine.sendMessage(SystemMessages.WINDOW_RESIZED);
 	}
 
 	/**

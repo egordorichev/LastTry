@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.TargetComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
@@ -93,7 +94,7 @@ public class CameraSystem implements System {
 	 */
 	@Override
 	public void handleMessage(String message) {
-		if (Objects.equals(message, "resize")) {
+		if (Objects.equals(message, SystemMessages.WINDOW_RESIZED)) {
 			int width = Gdx.graphics.getWidth();
 			int height = Gdx.graphics.getHeight();
 
@@ -107,13 +108,11 @@ public class CameraSystem implements System {
 			for (Map.Entry<String, Entity> pair : this.cameras.entrySet()) {
 				Camera camera = (Camera) pair.getValue();
 				CameraComponent component = camera.getComponent(CameraComponent.class);
-
-				// TODO: resize the view
 				component.camera.update();
 			}
 
 			this.viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		} else if (Objects.equals(message, "entity_added")) {
+		} else if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
 			ArrayList<Entity> entities = Engine.getEntitiesFor(TargetComponent.class, CameraComponent.class, IdComponent.class);
 			this.cameras.clear();
 
