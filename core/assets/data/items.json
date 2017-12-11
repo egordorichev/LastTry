@@ -9,5 +9,9 @@
 
 	"lt:stone_pickaxe" : {
 		"type" : "tool.Pickaxe"
+	},
+
+	"lt:fc_main" : {
+		"type" : "tile.interactable.fc.FC"
 	}
 }

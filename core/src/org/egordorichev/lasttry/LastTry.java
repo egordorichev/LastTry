@@ -14,6 +14,7 @@ import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
 import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
@@ -73,6 +74,11 @@ public class LastTry extends Game {
 
 			Engine.addEntity(new UiInventory(new Rectangle(5, 5, 150, 50), player.getComponent(InventoryComponent.class))); // Share the inventory
 			Engine.addEntity(new UiConsole(new Rectangle(5, 30, 150, 16)));
+
+			/* TMP: For @PibePlayer */
+			InventoryComponent inv = player.getComponent(InventoryComponent.class);
+			inv.inventory[0].item = Assets.items.get("lt:fc_main");
+			inv.inventory[0].count = 10;
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}

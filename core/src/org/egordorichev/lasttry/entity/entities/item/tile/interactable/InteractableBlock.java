@@ -14,27 +14,4 @@ public class InteractableBlock extends Block implements Interactable {
 		this.addComponent(InteractionComponent.class);
 		Engine.addEntity(this);
 	}
-
-	/**
-	 * Handles mouse click
-	 *
-	 * @param x Mouse X
-	 * @param y Mouse Y
-	 */
-	@Override
-	public void onClick(int x, int y) {
-
-	}
-
-	/**
-	 * Checks overlap with mouse
-	 *
-	 * @param x Mouse X
-	 * @param y Mouse Y
-	 * @return If object overlaps
-	 */
-	@Override
-	public boolean checkOverlap(int x, int y) {
-		return false;
-	}
 }

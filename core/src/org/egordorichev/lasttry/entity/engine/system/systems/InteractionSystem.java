@@ -3,13 +3,16 @@ package org.egordorichev.lasttry.entity.engine.system.systems;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
+import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.Interactable;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.InteractionComponent;
+import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
@@ -74,6 +77,20 @@ public class InteractionSystem implements System, SimpleInputProcessor {
 					interactable.onClick((int) mouse.x, (int) mouse.y);
 					return true;
 				}
+			}
+		}
+
+		short x = (short) Math.floor(mouse.x / Block.SIZE);
+		short y = (short) Math.floor(mouse.y / Block.SIZE);
+
+		String id = World.instance.getBlock(x, y);
+
+		if (id != null) {
+			Block block = (Block) Assets.items.get(id);
+
+			if (block instanceof Interactable) {
+				Interactable interactable = (Interactable) block;
+				interactable.onClick((int) mouse.x, (int) mouse.y);
 			}
 		}
 

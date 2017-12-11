@@ -31,17 +31,21 @@ public class CollisionSystem implements System {
 			PositionComponent position = entity.getComponent(PositionComponent.class);
 			SizeComponent size = entity.getComponent(SizeComponent.class);
 
-			position.x = Math.max(Math.min(position.x, width - Block.SIZE - size.width), Block.SIZE);
-			position.y = Math.max(Math.min(position.y, height - Block.SIZE - size.height), Block.SIZE);
+			if (position != null && size != null) {
+				position.x = Math.max(Math.min(position.x, width - Block.SIZE - size.width), Block.SIZE);
+				position.y = Math.max(Math.min(position.y, height - Block.SIZE - size.height), Block.SIZE);
 
-			for (Entity second : this.entities) {
-				PositionComponent secondPosition = second.getComponent(PositionComponent.class);
-				SizeComponent secondSize = second.getComponent(SizeComponent.class);
+				for (Entity second : this.entities) {
+					PositionComponent secondPosition = second.getComponent(PositionComponent.class);
+					SizeComponent secondSize = second.getComponent(SizeComponent.class);
 
-				if (Collider.testAABB(position.x, position.y, size.width, size.height,
-					secondPosition.x, secondPosition.y, secondSize.width, secondSize.height)) {
+					if (secondPosition != null && secondSize != null) {
+						if (Collider.testAABB(position.x, position.y, size.width, size.height,
+							secondPosition.x, secondPosition.y, secondSize.width, secondSize.height)) {
 
-					// TODO: react here
+							// TODO: react here
+						}
+					}
 				}
 			}
 		}

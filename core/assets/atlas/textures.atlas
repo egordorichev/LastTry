@@ -37,6 +37,13 @@ blocks/lt_dirt_tiles
   orig: 128, 24
   offset: 0, 0
   index: -1
+blocks/lt_fc_main_tiles
+  rotate: false
+  xy: 1, 96
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
 
 textures4.png
 size: 1024,1024
@@ -46,6 +53,13 @@ repeat: none
 icons/lt_dirt
   rotate: false
   xy: 1, 1
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_fc_main
+  rotate: false
+  xy: 18, 18
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
