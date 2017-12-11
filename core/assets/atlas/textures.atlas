@@ -17,6 +17,13 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+ui/bg
+  rotate: false
+  xy: 1, 26
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 ui/inventory_slot
   rotate: false
   xy: 1, 1

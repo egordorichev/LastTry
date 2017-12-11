@@ -1,8 +1,9 @@
 package org.egordorichev.lasttry.entity.entities.item.tile.interactable.fc;
 
-import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.InteractableBlock;
-import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.entity.entities.ui.window.UiWindow;
+import org.egordorichev.lasttry.util.geometry.Rectangle;
 
 public class FC extends InteractableBlock {
 	public FC(String id) {
@@ -29,6 +30,9 @@ public class FC extends InteractableBlock {
 	 */
 	@Override
 	public void onClick(int x, int y) {
-		World.instance.setBlock("lt:dirt", (short) Math.floor(x / Block.SIZE), (short) Math.floor(y / Block.SIZE));
+		// TODO: keep track of the windows
+		// Close the current one, if one is open
+		// (they should have id, something like fc_x_y) (x and y in blocks!)
+		Engine.addEntity(new UiWindow(new Rectangle(96, 26, 128, 128))); // TMP
 	}
 }
