@@ -1,11 +1,10 @@
 package org.egordorichev.lasttry.entity.engine;
 
-import com.badlogic.gdx.Gdx;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.*;
-import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
@@ -99,6 +98,7 @@ public class Engine {
 		addSystem(new LightSystem());
 		addSystem(new ClockSystem());
 		addSystem(new InteractionSystem());
+		addSystem(new UiSystem());
 	}
 
 	/**
@@ -177,6 +177,7 @@ public class Engine {
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
+		Engine.sendMessage("entity_added");
 	}
 
 	/**

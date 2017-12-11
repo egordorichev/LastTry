@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity.entities.world.generator;
 
 import org.egordorichev.lasttry.entity.entities.world.World;
-import org.egordorichev.lasttry.entity.entities.world.generator.generators.*;
+import org.egordorichev.lasttry.entity.entities.world.generator.generators.ForestGenerator;
 
 import java.util.Objects;
 

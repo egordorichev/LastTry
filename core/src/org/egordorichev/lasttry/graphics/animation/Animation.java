@@ -1,7 +1,6 @@
 package org.egordorichev.lasttry.graphics.animation;
 
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 

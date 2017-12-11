@@ -13,7 +13,7 @@ import org.egordorichev.lasttry.util.geometry.Rectangle;
  */
 public class UiElement extends Entity {
 	public UiElement(Rectangle rect, Class<? extends Component> ... components) {
-		super(PositionComponent.class, SizeComponent.class);
+		super(PositionComponent.class, SizeComponent.class, UiComponent.class);
 
 		this.setZIndex((byte) 10);
 		this.addComponent(components);

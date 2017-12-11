@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.component;
 
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.HashMap;
 

@@ -1,6 +1,8 @@
 package org.egordorichev.lasttry.entity.entities.item.tile.interactable.fc;
 
+import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.system.systems.UiSystem;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.InteractableBlock;
 import org.egordorichev.lasttry.entity.entities.ui.window.UiWindow;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
@@ -31,8 +33,26 @@ public class FC extends InteractableBlock {
 	@Override
 	public void onClick(int x, int y) {
 		// TODO: keep track of the windows
-		// Close the current one, if one is open
+		// If you click on another FC, open window for that FC, and do not close current
 		// (they should have id, something like fc_x_y) (x and y in blocks!)
-		Engine.addEntity(new UiWindow(new Rectangle(96, 26, 128, 128))); // TMP
+		UiWindow window = (UiWindow) UiSystem.instance.get("fc");
+
+		if (window != null) {
+			Engine.removeEntity(window);
+		} else {
+			window = new UiWindow(new Rectangle(96, 26, 128, 128));
+			window.getComponent(IdComponent.class).id = "fc";
+
+			Engine.addEntity(window);
+		}
+	}
+
+	/**
+	 * Renders the FC
+	 */
+	@Override
+	public void renderUi() {
+		super.renderUi(); // Render bg
+		// TODO: render VRAM
 	}
 }

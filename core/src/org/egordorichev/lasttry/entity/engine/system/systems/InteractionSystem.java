@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
@@ -16,7 +15,6 @@ import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Objects;

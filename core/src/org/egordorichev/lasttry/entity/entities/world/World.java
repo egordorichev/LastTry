@@ -3,12 +3,9 @@ package org.egordorichev.lasttry.entity.entities.world;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
-import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
-import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
-import org.egordorichev.lasttry.graphics.Display;
 import org.egordorichev.lasttry.util.camera.CameraHelper;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
 

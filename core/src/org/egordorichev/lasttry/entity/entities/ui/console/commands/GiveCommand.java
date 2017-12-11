@@ -2,7 +2,6 @@ package org.egordorichev.lasttry.entity.entities.ui.console.commands;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
-import org.egordorichev.lasttry.entity.component.InputComponent;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;

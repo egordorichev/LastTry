@@ -1,16 +1,15 @@
 package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.component.TargetComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;

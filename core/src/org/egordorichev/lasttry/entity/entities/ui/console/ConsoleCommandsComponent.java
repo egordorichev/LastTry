@@ -1,7 +1,9 @@
 package org.egordorichev.lasttry.entity.entities.ui.console;
 
 import org.egordorichev.lasttry.entity.component.Component;
-import org.egordorichev.lasttry.entity.entities.ui.console.commands.*;
+import org.egordorichev.lasttry.entity.entities.ui.console.commands.ChunksCommand;
+import org.egordorichev.lasttry.entity.entities.ui.console.commands.GiveCommand;
+import org.egordorichev.lasttry.entity.entities.ui.console.commands.HelpCommand;
 
 import java.util.ArrayList;
 

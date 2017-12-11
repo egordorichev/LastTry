@@ -1,6 +1,9 @@
 package org.egordorichev.lasttry.core.boot;
 
-import org.egordorichev.lasttry.core.boot.commands.*;
+import org.egordorichev.lasttry.core.boot.commands.DebugCommand;
+import org.egordorichev.lasttry.core.boot.commands.HelpCommand;
+import org.egordorichev.lasttry.core.boot.commands.PackTexturesCommand;
+
 import java.util.ArrayList;
 
 /**

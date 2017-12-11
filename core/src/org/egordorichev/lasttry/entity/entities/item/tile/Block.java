@@ -16,7 +16,6 @@ import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.binary.BinaryPacker;
-import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.Objects;
 
