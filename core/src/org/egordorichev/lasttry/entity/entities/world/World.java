@@ -9,6 +9,8 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.Wall;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.graphics.Display;
+import org.egordorichev.lasttry.util.camera.CameraHelper;
+import org.egordorichev.lasttry.util.geometry.Rectangle;
 
 /**
  * Handles chunk rendering
@@ -36,15 +38,10 @@ public class World extends ChunkManager {
 	 */
 	@Override
 	public void render() {
-		CameraComponent cam = CameraSystem.instance.get("main").getComponent(CameraComponent.class);
+		Rectangle rect = CameraHelper.getCameraRectInBlocks();
 
-		short xStart = (short) Math.floor((cam.camera.position.x - Display.WIDTH / 2) / Block.SIZE);
-		short yStart = (short) Math.floor((cam.camera.position.y - Display.HEIGHT / 2) / Block.SIZE);
-		short width = (short) (Math.floor(Display.WIDTH / Block.SIZE) + 2);
-		short height = (short) (Math.floor(Display.HEIGHT / Block.SIZE) + 2);
-
-		for (short x = xStart; x < xStart + width; x++) {
-			for (short y = yStart; y < yStart + height; y++) {
+		for (short x = (short) rect.x; x < (short) (rect.x + rect.w); x++) {
+			for (short y = (short) rect.y; y < (short) (rect.y + rect.h); y++) {
 				String blockId = this.getBlock(x, y);
 				Block block = null;
 				int neighbors = 15;
