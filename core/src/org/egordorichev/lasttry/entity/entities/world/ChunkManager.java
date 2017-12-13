@@ -151,7 +151,7 @@ public class ChunkManager extends Entity {
 	 * @param y Data Y
 	 * @return Data at given position
 	 */
-	public short getData(short x, short y) {
+	public int getData(short x, short y) {
 		if (this.isOut(x, y)) {
 			return 0;
 		}
@@ -172,7 +172,7 @@ public class ChunkManager extends Entity {
 	 * @param x Data X
 	 * @param y Data Y
 	 */
-	public void setData(short value, short x, short y) {
+	public void setData(int value, short x, short y) {
 		if (this.isOut(x, y)) {
 			return;
 		}

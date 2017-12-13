@@ -38,7 +38,7 @@ public class Chunk extends Entity {
 	/**
 	 * Data: 8 bits for blocks, 8 bit for walls, 16 bits general use
 	 */
-	private short[] data;
+	private int[] data;
 
 	public Chunk(short x, short y) {
 		super(PositionComponent.class);
@@ -53,7 +53,7 @@ public class Chunk extends Entity {
 		this.blocks = new String[size];
 		this.walls = new String[size];
 		this.light = new float[size];
-		this.data = new short[size];
+		this.data = new int[size];
 
 		for (int i = 0; i < size; i++) {
 			this.light[i] = 1.0f;
@@ -164,7 +164,7 @@ public class Chunk extends Entity {
 	 * @param y Data Y
 	 * @return Data at given position
 	 */
-	public short getData(short x, short y) {
+	public int getData(short x, short y) {
 		if (this.isOut(x, y)) {
 			return 0;
 		}
@@ -180,7 +180,7 @@ public class Chunk extends Entity {
 	 * @param x Data X
 	 * @param y Data Y
 	 */
-	public void setData(short value, short x, short y) {
+	public void setData(int value, short x, short y) {
 		if (this.isOut(x, y)) {
 			return;
 		}

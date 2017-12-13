@@ -34,7 +34,7 @@ public class ChunkIO extends IO<Chunk> {
 				for (short bx = 0; bx < Chunk.SIZE; bx++) {
 					writer.writeString(chunk.getBlock(bx, by));
 					writer.writeString(chunk.getWall(bx, by));
-					writer.writeInt16(chunk.getData(bx, by));
+					writer.writeInt32(chunk.getData(bx, by));
 				}
 			}
 
@@ -73,7 +73,7 @@ public class ChunkIO extends IO<Chunk> {
 				for (short bx = 0; bx < Chunk.SIZE; bx++) {
 					chunk.setBlock(reader.readString(), bx, by);
 					chunk.setWall(reader.readString(), bx, by);
-					chunk.setData(reader.readInt16(), bx, by);
+					chunk.setData(reader.readInt32(), bx, by);
 				}
 			}
 
