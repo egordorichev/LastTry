@@ -13,7 +13,7 @@ public class SystemMessages {
 	 */
 	public static String WINDOW_RESIZED = "window_resized";
 	/**
-	 * Being passed to systems if the game needs to be saved
+	 * Being passed to systems if the game needs to save
 	 */
 	public static String SAVE = "save";
 }
