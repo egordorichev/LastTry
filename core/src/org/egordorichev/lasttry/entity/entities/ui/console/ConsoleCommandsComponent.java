@@ -1,9 +1,7 @@
 package org.egordorichev.lasttry.entity.entities.ui.console;
 
 import org.egordorichev.lasttry.entity.component.Component;
-import org.egordorichev.lasttry.entity.entities.ui.console.commands.ChunksCommand;
-import org.egordorichev.lasttry.entity.entities.ui.console.commands.GiveCommand;
-import org.egordorichev.lasttry.entity.entities.ui.console.commands.HelpCommand;
+import org.egordorichev.lasttry.entity.entities.ui.console.commands.*;
 
 import java.util.ArrayList;
 
@@ -20,5 +18,7 @@ public class ConsoleCommandsComponent extends Component {
 		this.commands.add(new HelpCommand());
 		this.commands.add(new GiveCommand());
 		this.commands.add(new ChunksCommand());
+		this.commands.add(new DayCommand());
+		this.commands.add(new NightCommand());
 	}
 }
