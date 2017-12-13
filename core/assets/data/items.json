@@ -7,6 +7,14 @@
 		"type" : "tile.Wall"
 	},
 
+	"lt:grass" : {
+		"type" : "tile.TileableBlock"
+	},
+
+	"lt:grass_wall" : {
+		"type" : "tile.Wall"
+	},
+
 	"lt:stone_pickaxe" : {
 		"type" : "tool.Pickaxe"
 	},
