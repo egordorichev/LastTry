@@ -75,8 +75,8 @@ public class LastTry extends Game {
 
 			/* TMP: For @PibePlayer */
 			InventoryComponent inv = player.getComponent(InventoryComponent.class);
-			inv.inventory[0].item = Assets.items.get("lt:fc_main");
-			inv.inventory[0].count = 10;
+			inv.inventory[1].item = Assets.items.get("lt:fc_main");
+			inv.inventory[1].count = 10;
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}

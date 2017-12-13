@@ -59,21 +59,28 @@ filter: Nearest,Nearest
 repeat: none
 icons/lt_dirt
   rotate: false
-  xy: 1, 1
+  xy: 1, 10
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_dirt_wall
+  rotate: false
+  xy: 18, 27
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_fc_main
   rotate: false
-  xy: 18, 18
+  xy: 1, 1
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_stone_pickaxe
   rotate: false
-  xy: 1, 10
+  xy: 1, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

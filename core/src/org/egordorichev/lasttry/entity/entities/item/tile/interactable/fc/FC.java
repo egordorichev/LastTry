@@ -25,6 +25,17 @@ public class FC extends InteractableBlock {
 	}
 
 	/**
+	 * Returns block pattern
+	 *
+	 * @param data Info about the block
+	 * @return The pattern
+	 */
+	public int getVariant(int data) {
+		// ALWAYS THE SAME
+		return 0;
+	}
+
+	/**
 	 * Handle click!
 	 *
 	 * @param x Mouse X

@@ -13,6 +13,7 @@ import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.binary.BinaryPacker;
@@ -56,6 +57,7 @@ public class Block extends Item {
 		mouse.y /= SIZE;
 
 		World.instance.setBlock(this.getComponent(IdComponent.class).id, (short) mouse.x, (short) mouse.y);
+		World.instance.setData(TileHelper.create(), (short) mouse.x, (short) mouse.y);
 
 		return true;
 	}
@@ -84,11 +86,14 @@ public class Block extends Item {
 	 * @param x Block X
 	 * @param y Block Y
 	 * @param neighbors Byte packed with neighbors
+	 * @param data Block data
 	 * @param light How light this block is
 	 */
-	public void render(short x, short y, int neighbors, float light) {
+	public void render(short x, short y, int neighbors, int data, float light) {
+		int variant = this.getVariant(data);
+
 		Graphics.batch.setColor(light, light, light, 1.0f);
-		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[0][neighbors], x * SIZE, y * SIZE);
+		Graphics.batch.draw(this.getComponent(TileComponent.class).tiles[variant][neighbors], x * SIZE, y * SIZE);
 		Graphics.batch.setColor(1, 1, 1, 1);
 	}
 
@@ -125,6 +130,16 @@ public class Block extends Item {
 		boolean left = this.shouldTile(World.instance.getBlock((short) (x - 1), y), id);
 
 		return BinaryPacker.pack(top, right, bottom, left);
+	}
+
+	/**
+	 * Returns block pattern
+	 *
+	 * @param data Info about the block
+	 * @return The pattern
+	 */
+	public int getVariant(int data) {
+		return TileHelper.getVariant(data);
 	}
 
 	/**

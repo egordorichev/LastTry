@@ -43,6 +43,7 @@ public class World extends ChunkManager {
 				Block block = null;
 				int neighbors = 15;
 				float light = this.getLight(x, y);
+				int data = this.getData(x, y);
 
 				if (blockId != null) {
 					block = (Block) Assets.items.get(blockId);
@@ -54,12 +55,12 @@ public class World extends ChunkManager {
 
 					if (wallId != null) {
 						Wall wall = (Wall) Assets.items.get(wallId);
-						wall.render(x, y, light);
+						wall.render(x, y, data, light);
 					}
 				}
 
 				if (block != null) {
-					block.render(x, y, neighbors, light);
+					block.render(x, y, neighbors, data, light);
 				}
 			}
 		}
