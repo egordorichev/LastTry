@@ -3,221 +3,143 @@ package org.egordorichev.lasttry;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import org.egordorichev.lasttry.core.Crash;
 import org.egordorichev.lasttry.core.Version;
-import org.egordorichev.lasttry.graphics.Assets;
+import org.egordorichev.lasttry.core.boot.ArgumentParser;
+import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessages;
+import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
+import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
+import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
+import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
+import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
+import org.egordorichev.lasttry.entity.entities.world.World;
+import org.egordorichev.lasttry.game.state.InGameState;
+import org.egordorichev.lasttry.game.state.State;
+import org.egordorichev.lasttry.graphics.Display;
 import org.egordorichev.lasttry.graphics.Graphics;
-import org.egordorichev.lasttry.input.InputManager;
-import org.egordorichev.lasttry.language.Language;
-import org.egordorichev.lasttry.state.SplashState;
-import org.egordorichev.lasttry.ui.UiManager;
-import org.egordorichev.lasttry.util.Camera;
-import org.egordorichev.lasttry.util.Debug;
+import org.egordorichev.lasttry.util.geometry.Rectangle;
+import org.egordorichev.lasttry.util.input.Input;
+import org.egordorichev.lasttry.util.log.Log;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
- * Main game class
+ * The main class of the game
+ * Be careful with changing it ;)
  */
 public class LastTry extends Game {
 	/**
-	 * LastTry version
+	 * The default window title
 	 */
-	public static final Version version = new Version(0.0, 18, "alpha");
+	private String title;
+	/**
+	 * The current game state
+	 */
+	private State state;
 
 	/**
-	 * Random instance. This is not to be used in repeatable systems such as
-	 * world generation
-	 */
-	public static final Random random = new Random();
-
-	/**
-	 * Last Try instance
-	 */
-	public static LastTry instance;
-
-	/**
-	 * Ui manager
-	 */
-	public static UiManager ui;
-
-	/**
-	 * Debug helper
-	 */
-	public static Debug debug;
-
-	/**
-	 * Shows, if this is a release
-	 */
-	public static boolean release = true;
-
-	/**
-	 * Light disable
-	 */
-	public static boolean noLight = false;
-
-	/**
-	 * Store relative to the game jar, instead of in the home directory.
-	 */
-	public static boolean storeRelative = true;
-
-	/**
-	 * Intensity affects how sharp lighting gradients are.
-	 */
-	public static float gammaStrength = 1.0f;
-
-	/**
-	 * The minimum brightness that can be made by lighting.
-	 */
-	public static float gammaMinimum = 0f;
-	
-	/**
-	 * Default name for generated worlds.
-	 */
-	public static String defaultWorldName = "default";
-	
-	/**
-	 * Default name for players.
-	 */
-	public static String defaultPlayerName = "default";
-
-	
-	/**
-	 * Screen dimensions
-	 */
-	public final int width;
-
-	private final int height;
-
-	public LastTry(int width, int height) {
-
-		this.width = width;
-		this.height = height;
-	}
-
-	/**
-	 * Creates first-priority instances
+	 * All init happens here
 	 */
 	@Override
 	public void create() {
-		Thread.currentThread().setUncaughtExceptionHandler(Crash::report);
-		Globals.resolution = new Vector2(width, height);
-		instance = this;
+		try {
+			ArgumentParser.parse();
+		} catch (RuntimeException exception) {
+			Log.error(exception.getMessage());
+			Log.error("Failed to parse arguments aborting");
 
-		Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 0, 0));
+			Gdx.app.exit();
+			return;
+		}
 
-		Camera.create(width, height);
-		Language.load(new Locale("en", "US"));
+		Gdx.input.setInputProcessor(Input.multiplexer);
+		Gdx.graphics.setWindowedMode(Display.WIDTH * 2, Display.HEIGHT * 2);
 
-		Gdx.input.setInputProcessor(InputManager.multiplexer);
-		Gdx.graphics.setTitle(LastTry.getRandomWindowTitle());
+		this.title = "LastTry " + Version.STRING;
+		this.setState(new InGameState());
 
-		Graphics.batch = new SpriteBatch();
+		Assets.load();
+		Engine.init();
 
-		debug = new Debug();
-		ui = new UiManager();
+		ArrayList<Entity> players = Engine.getEntitiesFor(PlayerInputComponent.class);
 
+		if (players.size() > 0) {
+			Entity player = players.get(0);
 
-		this.setScreen(new SplashState());
+			Engine.addEntity(new UiInventory(new Rectangle(5, 5, 150, 50), player.getComponent(InventoryComponent.class))); // Share the inventory
+			Engine.addEntity(new UiConsole(new Rectangle(5, 30, 150, 16)));
+
+			/* TMP: For @PibePlayer */
+			InventoryComponent inv = player.getComponent(InventoryComponent.class);
+			inv.inventory[1].item = Assets.items.get("lt:fc_main");
+			inv.inventory[1].count = 10;
+		} else {
+			Log.warning("Failed to create UI inventory for the player");
+		}
 	}
 
 	/**
-	 * Handles window resize
+	 * Sets LT state
 	 *
-	 * @param width
-	 *            new window width
-	 * @param height
-	 *            new window height
+	 * @param state New state
+	 */
+	public void setState(State state) {
+		this.state = state;
+		this.setScreen(state);
+
+		Log.info("Set LT state to " + state.getClass());
+
+		// Here you can save/load stuff
+	}
+
+	/**
+	 * Handles window resizing
+	 *
+	 * @param width New window width
+	 * @param height New window height
 	 */
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		Camera.resize(width, height);
-		Globals.resolution.x = width;
-		Globals.resolution.y = height;
+		Engine.sendMessage(SystemMessages.WINDOW_RESIZED);
 	}
 
 	/**
-	 * Renders and updates the game
+	 * Renders the game
 	 */
 	@Override
 	public void render() {
+		float delta = Gdx.graphics.getDeltaTime();
+		this.state.update(delta);
+
+		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.combined);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
 
-		Graphics.batch.enableBlending();
 		Graphics.batch.begin();
-
-		super.render();
-
+		this.state.render();
 		Graphics.batch.end();
+
+		String title = this.title + " " + Gdx.graphics.getFramesPerSecond() + " FPS";
+
+		if (World.instance != null) {
+			ClockComponent clock = World.instance.getComponent(ClockComponent.class);
+
+			title += ", " + String.format("%02d", clock.hour) + ":" + String.format("%02d", (int) (clock.minute)) + ":" + String.format("%02d", (int) clock.second);
+		}
+
+		Gdx.graphics.setTitle(title);
 	}
 
 	/**
-	 * Handles game exit
+	 * Saves the game
 	 */
 	@Override
 	public void dispose() {
-		Globals.dispose();
-		Assets.dispose();
-	}
-
-	/**
-	 * Returns random title for game the window
-	 *
-	 * @return random title for game the window
-	 */
-	private static String getRandomWindowTitle() {
-		String date = new SimpleDateFormat("MMdd").format(new Date());
-
-		if (date.equals("0629") || date.equals("0610")) {
-			return "Happy Birthday!" + " " + version.toString();
-		}
-
-		String[] split = Language.text.get("windowTitles").split("//");
-		return split[random.nextInt(split.length)] + " " + version.toString();
-	}
-
-	/**
-	 * Returns mouse X coordinate, under the world
-	 *
-	 * @return mouse X coordinate, under the world
-	 */
-	public static int getMouseXInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterX() - Gdx.graphics.getWidth() / 2
-				+ InputManager.getMousePosition().x);
-	}
-
-	/**
-	 * Returns mouse Y coordinate, under the world
-	 *
-	 * @return mouse Y coordinate, under the world
-	 */
-	public static int getMouseYInWorld() {
-		return (int) (Globals.getPlayer().physics.getCenterY() + Gdx.graphics.getHeight() / 2
-				- InputManager.getMousePosition().y);
-	}
-
-	/**
-	 * Handles exception, if it is critical, exits the game
-	 *
-	 * @param exception
-	 *            exception to handle
-	 */
-	public static void handleException(Exception exception) {
-		Crash.report(Thread.currentThread(), exception);
-	}
-
-	/**
-	 * Aborts the process
-	 */
-	public static void abort() {
-		System.exit(1);
+		super.dispose();
+		Engine.sendMessage("save");
 	}
 }

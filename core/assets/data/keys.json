@@ -1,0 +1,8 @@
+{
+	"move_left" : 29,
+	"move_right" : 32,
+	"jump" : 62,
+	"toggle_inventory" : 33,
+	"open_console" : 76,
+	"close_console" : 131
+}

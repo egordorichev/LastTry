@@ -1,49 +1,19 @@
 package org.egordorichev.lasttry.graphics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
- * Helper class for different effects
+ * Handles some graphics stuff
  */
 public class Graphics {
 	/**
-	 * Tile cracks textures
+	 * The batch
 	 */
-	public static TextureRegion[] tileCracks;
-	/**
-	 * Skybox texture
-	 */
-	public static Texture skyTexture;
-	/**
-	 * Health bar texture
-	 */
-	public static Texture healthBarTexture;
-	/**
-	 * Health bar frame texture
-	 */
-	public static Texture healthBarFrameTexture;
-	/**
-	 * Sprite batch
-	 */
-	public static SpriteBatch batch;
+	public static SpriteBatch batch = new SpriteBatch();
 
 	/**
-	 * Loads textures
+	 * The shape renderer
 	 */
-	public static void load() {
-		tileCracks = new TextureRegion[24];
-
-		for (int x = 0; x < 6; x++) {
-			for (int y = 0; y < 4; y++) {
-				tileCracks[x * 4 + y] = new TextureRegion(new Texture(Gdx.files.internal("tile_cracks.png")), x * 16, y * 16, 16, 16);
-			}
-		}
-
-		skyTexture = new Texture(Gdx.files.internal("sky.png"));
-		healthBarTexture = new Texture(Gdx.files.internal("health_bar.png"));
-		healthBarFrameTexture = new Texture(Gdx.files.internal("health_bar_frame.png"));
-	}
+	public static ShapeRenderer shapeRenderer = new ShapeRenderer();
 }

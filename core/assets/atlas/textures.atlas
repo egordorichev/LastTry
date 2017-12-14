@@ -1,0 +1,168 @@
+
+textures.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+missing_texture
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+
+textures2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui/bg
+  rotate: false
+  xy: 1, 26
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+ui/inventory_slot
+  rotate: false
+  xy: 1, 1
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+
+textures3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blocks/lt_dirt_tiles
+  rotate: false
+  xy: 1, 234
+  size: 128, 24
+  orig: 128, 24
+  offset: 0, 0
+  index: -1
+blocks/lt_fc_main_tiles
+  rotate: false
+  xy: 1, 200
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+blocks/lt_grass_tiles
+  rotate: false
+  xy: 1, 209
+  size: 128, 24
+  orig: 128, 24
+  offset: 0, 0
+  index: -1
+blocks/lt_template_tiles
+  rotate: false
+  xy: 130, 234
+  size: 128, 24
+  orig: 128, 24
+  offset: 0, 0
+  index: -1
+
+textures4.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+icons/lt_dirt
+  rotate: false
+  xy: 1, 19
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_dirt_wall
+  rotate: false
+  xy: 18, 36
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_fc_main
+  rotate: false
+  xy: 1, 10
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_grass
+  rotate: false
+  xy: 27, 36
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_grass_wall
+  rotate: false
+  xy: 1, 1
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+icons/lt_stone_pickaxe
+  rotate: false
+  xy: 1, 28
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+icons/lt_template
+  rotate: false
+  xy: 36, 36
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+
+textures5.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+creatures/lt_player
+  rotate: false
+  xy: 1, 1
+  size: 16, 240
+  orig: 16, 240
+  offset: 0, 0
+  index: -1
+
+textures6.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+walls/lt_dirt_wall_tiles
+  rotate: false
+  xy: 1, 105
+  size: 128, 24
+  orig: 128, 24
+  offset: 0, 0
+  index: -1
+walls/lt_grass_wall_tiles
+  rotate: false
+  xy: 1, 80
+  size: 128, 24
+  orig: 128, 24
+  offset: 0, 0
+  index: -1
+
+textures7.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg/sky
+  rotate: false
+  xy: 1, 1261
+  size: 1440, 180
+  orig: 1440, 180
+  offset: 0, 0
+  index: -1
