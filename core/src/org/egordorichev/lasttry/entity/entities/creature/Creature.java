@@ -58,6 +58,6 @@ public class Creature extends Entity {
 			animationComponent.current = animation;
 		}
 
-		animation.reset();
+		animationComponent.current.reset();
 	}
 }

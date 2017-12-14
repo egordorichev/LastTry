@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.creature.StateComponent;
 import org.egordorichev.lasttry.util.log.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -26,6 +27,9 @@ public class Ai {
 		if (method != null) {
 			try {
 				method.invoke(this, (Creature) entity, state.time);
+			} catch (InvocationTargetException exception) {
+				exception.getCause().printStackTrace();
+				Log.error("Failed to call " + state.state + " state");
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to call " + state.state + " state");

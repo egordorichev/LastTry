@@ -91,7 +91,6 @@ public class Engine {
 		addSystem(new CameraSystem());
 		addSystem(new SaveSystem());
 		addSystem(new AnimationSystem());
-		addSystem(new InputSystem());
 		addSystem(new MovementSystem());
 		addSystem(new CollisionSystem());
 		addSystem(new InventorySystem());
