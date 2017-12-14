@@ -15,6 +15,10 @@
 		"type" : "tile.TileableWall"
 	},
 
+	"lt:stone" : {
+		"type" : "tile.TileableBlock"
+	},
+
 	"lt:stone_pickaxe" : {
 		"type" : "tool.Pickaxe"
 	},

@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.entities.ui.UiElement;
-import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
+import org.egordorichev.lasttry.util.graphics.OutlinePrinter;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
 
 import java.awt.event.KeyEvent;
@@ -32,14 +32,14 @@ public class UiConsole extends UiElement implements SimpleInputProcessor {
 
 		if (state.open) {
 			PositionComponent position = this.getComponent(PositionComponent.class);
-			Assets.f4.draw(Graphics.batch, "> " + state.input, position.x, position.y + 7);
+			OutlinePrinter.print(Assets.f4, "> " + state.input, (int) position.x, (int) (position.y + 7));
 
 			ConsoleLinesComponent lines = this.getComponent(ConsoleLinesComponent.class);
 			float delta = Gdx.graphics.getDeltaTime();
 
 			for (int i = lines.lines.size() - 1; i >= 0; i--) {
 				ConsoleLine line = lines.lines.get(i);
-				Assets.f4.draw(Graphics.batch, line.line, position.x, position.y + (i + 2) * 7);
+				OutlinePrinter.print(Assets.f4, line.line, (int) position.x, (int) (position.y + (i + 2) * 7));
 
 				line.time += delta;
 

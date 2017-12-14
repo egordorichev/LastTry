@@ -76,6 +76,8 @@ public class LastTry extends Game {
 			InventoryComponent inv = player.getComponent(InventoryComponent.class);
 			inv.inventory[1].item = Assets.items.get("lt:fc_main");
 			inv.inventory[1].count = 10;
+			inv.inventory[2].item = Assets.items.get("lt:stone");
+			inv.inventory[2].count = 999;
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}

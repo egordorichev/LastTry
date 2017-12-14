@@ -8,6 +8,9 @@ import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.util.math.NumberUtil;
 
+/**
+ * Player AI
+ */
 public class PlayerAi extends Ai {
 	public static float JUMP_ACCELERATION = 7f;
 	public static float FLY_ACCELERATION = 0.2f;
