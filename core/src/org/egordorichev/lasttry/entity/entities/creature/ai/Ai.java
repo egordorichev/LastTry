@@ -25,8 +25,9 @@ public class Ai {
 
 		if (method != null) {
 			try {
-				method.invoke((Creature) entity, state.time);
+				method.invoke(this, (Creature) entity, state.time);
 			} catch (Exception exception) {
+				exception.printStackTrace();
 				Log.error("Failed to call " + state.state + " state");
 			}
 		}
@@ -41,7 +42,7 @@ public class Ai {
 	 */
 	protected void register(String state) {
 		try {
-			this.methods.put(state, this.getClass().getMethod(state, Creature.class, Integer.class));
+			this.methods.put(state, this.getClass().getMethod(state, Creature.class, int.class));
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			Log.error("Failed to register " + state + " state");
