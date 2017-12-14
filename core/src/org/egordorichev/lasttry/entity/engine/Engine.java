@@ -99,6 +99,7 @@ public class Engine {
 		addSystem(new ClockSystem());
 		addSystem(new InteractionSystem());
 		addSystem(new UiSystem());
+		addSystem(new AiSystem());
 	}
 
 	/**

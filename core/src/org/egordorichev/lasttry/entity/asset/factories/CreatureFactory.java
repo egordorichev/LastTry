@@ -6,9 +6,11 @@ import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
+import org.egordorichev.lasttry.entity.entities.creature.AiComponent;
 import org.egordorichev.lasttry.entity.entities.creature.AnimationComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.creature.HealthComponent;
+import org.egordorichev.lasttry.entity.entities.creature.ai.Ai;
 import org.egordorichev.lasttry.graphics.animation.Animation;
 import org.egordorichev.lasttry.graphics.animation.AnimationFrame;
 import org.egordorichev.lasttry.util.log.Log;
@@ -47,7 +49,17 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		IdComponent id = creature.getComponent(IdComponent.class);
 		id.id = asset.name();
 
-		// TODO: other stuff, like mana
+		AiComponent ai = creature.getComponent(AiComponent.class);
+		String aiId = asset.getString("ai", "PlaceholderAi");
+
+		try {
+			Class type = Class.forName("org.egordorichev.lasttry.entity.entities.creature.ai." + aiId);
+			ai.ai = (Ai) type.newInstance();
+		} catch (ClassNotFoundException exception) {
+			Log.error("Class " + aiId + " is not found");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
 		return creature;
 	}
