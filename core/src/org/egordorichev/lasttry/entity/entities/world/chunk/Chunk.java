@@ -1,6 +1,5 @@
 package org.egordorichev.lasttry.entity.entities.world.chunk;
 
-import com.badlogic.gdx.math.Vector2;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
@@ -19,6 +18,11 @@ import org.egordorichev.lasttry.util.log.Log;
  * @Col-E, this is a good place for optimization
  */
 public class Chunk extends Entity {
+	
+	private static int iterations = 7;
+	private static float lightFade = 1f / iterations;
+	private static float sqrt2 = 1.41421356237f;
+	
 	/**
 	 * Chunk size in blocks
 	 */
@@ -40,7 +44,7 @@ public class Chunk extends Entity {
 	 */
 	private int[] data;
 
-	public Chunk(short x, short y) {
+	public Chunk(int x, int y) {
 		super(PositionComponent.class);
 
 		PositionComponent position = this.getComponent(PositionComponent.class);
@@ -54,10 +58,6 @@ public class Chunk extends Entity {
 		this.walls = new String[size];
 		this.light = new float[size];
 		this.data = new int[size];
-
-		for (int i = 0; i < size; i++) {
-			this.light[i] = 1.0f;
-		}
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class Chunk extends Entity {
 	 * @param y Block Y
 	 * @return Block ID at given position
 	 */
-	public String getBlock(short x, short y) {
+	public String getBlock(int x, int y) {
 		if (this.isOut(x, y)) {
 			return null;
 		}
@@ -84,7 +84,7 @@ public class Chunk extends Entity {
 	 * @param x Block X
 	 * @param y Block Y
 	 */
-	public void setBlock(String value, short x, short y) {
+	public void setBlock(String value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -100,7 +100,7 @@ public class Chunk extends Entity {
 	 * @param y Wall Y
 	 * @return Wall ID at given position
 	 */
-	public String getWall(short x, short y) {
+	public String getWall(int x, int y) {
 		if (this.isOut(x, y)) {
 			return null;
 		}
@@ -116,7 +116,7 @@ public class Chunk extends Entity {
 	 * @param x Wall X
 	 * @param y Wall Y
 	 */
-	public void setWall(String value, short x, short y) {
+	public void setWall(String value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -132,9 +132,9 @@ public class Chunk extends Entity {
 	 * @param y Light Y
 	 * @return Light at given position
 	 */
-	public float getLight(short x, short y) {
+	public float getLight(int x, int y) {
 		if (this.isOut(x, y)) {
-			return 1.0f;
+			return 0.0f;
 		}
 
 		return this.light[this.getIndex(x, y)];
@@ -148,7 +148,7 @@ public class Chunk extends Entity {
 	 * @param x Light X
 	 * @param y Light Y
 	 */
-	public void setLight(float value, short x, short y) {
+	public void setLight(float value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -164,7 +164,7 @@ public class Chunk extends Entity {
 	 * @param y Data Y
 	 * @return Data at given position
 	 */
-	public int getData(short x, short y) {
+	public int getData(int x, int y) {
 		if (this.isOut(x, y)) {
 			return 0;
 		}
@@ -180,7 +180,7 @@ public class Chunk extends Entity {
 	 * @param x Data X
 	 * @param y Data Y
 	 */
-	public void setData(int value, short x, short y) {
+	public void setData(int value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -194,8 +194,8 @@ public class Chunk extends Entity {
 	 * @param x X
 	 * @return Related X
 	 */
-	public short toRelativeX(short x) {
-		return (short) (x - this.getX() * SIZE);
+	public int toRelativeX(int x) {
+		return x - this.getX() * SIZE;
 	}
 
 	/**
@@ -204,89 +204,84 @@ public class Chunk extends Entity {
 	 * @param y Y
 	 * @return Related Y
 	 */
-	public short toRelativeY(short y) {
-		return (short) (y - this.getY() * SIZE);
+	public int toRelativeY(int y) {
+		return y - this.getY() * SIZE;
 	}
 
 
 	/**
 	 * @return Chunk X
 	 */
-	public short getX() {
-		return (short) this.getComponent(PositionComponent.class).x;
+	public int getX() {
+		return (int) this.getComponent(PositionComponent.class).x;
 	}
 
 	/**
 	 * @return Chunk Y
 	 */
-	public short getY() {
-		return (short) this.getComponent(PositionComponent.class).y;
+	public int getY() {
+		return (int) this.getComponent(PositionComponent.class).y;
 	}
 
 	/**
 	 * Calculates light in a chunk
 	 */
-	public void calculateLighting() {
-		Log.debug("Calculating lighting...");
-
-		for (short x = 0; x < SIZE; x++) {
-			for (short y = 0; y < SIZE; y++) {
-				this.calculateLightingForBlock(x, y);
+	public void calculateLighting(float globalLight) {
+		PositionComponent pos = this.getComponent(PositionComponent.class);
+		Log.debug("Calculating lighting for chunk (" + pos.x + ", " + pos.y + ")");
+		
+		final int chunkX = (int)(pos.x * SIZE);
+		final int chunkY = (int)(pos.y * SIZE);
+		
+		//Calculate global light.
+		for(int x = 0; x < SIZE; x++){
+			int top = World.instance.getHighest((short)(chunkX + x)) - chunkY;
+			
+			for(int y = SIZE - 1; y >= 0; y--){
+				if(y >= top)setLight(globalLight, x, y);
+				else setLight(0f, x, y);
+			}
+		}
+		
+		//Grab all emitters in the area.
+		for (int x = 0; x < SIZE; x++) {
+			for (int y = 0; y < SIZE; y++) {
+				String id = World.instance.getBlock((short)(x + chunkX), (short)(y + chunkY));
+				if(id != null){
+					Block block = Assets.items.getUnsafe(id);
+					if(block.isEmitter()){
+						//For when blocks get brightness
+						//setLight(block.getBrightness(), x, y);
+						setLight(1.0f, x, y);
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < iterations; i++){
+			for(int x = chunkX; x < chunkX + SIZE; x++){
+				for(int y = chunkY; y < chunkY + SIZE; y++){
+					float light = getLight(x - chunkX, y - chunkY);
+					float lightFade = Chunk.lightFade;
+					light = Math.max(light, lightCandidate(x - 1, y, lightFade));//Left
+					light = Math.max(light, lightCandidate(x + 1, y, lightFade));//Right
+					light = Math.max(light, lightCandidate(x, y - 1, lightFade));//Bottom
+					light = Math.max(light, lightCandidate(x, y + 1, lightFade));//Top
+					
+					lightFade *= sqrt2;
+					light = Math.max(light, lightCandidate(x - 1, y + 1, lightFade));//Top-Left
+					light = Math.max(light, lightCandidate(x + 1, y + 1, lightFade));//Top-Right
+					light = Math.max(light, lightCandidate(x - 1, y - 1, lightFade));//Bottom-Left
+					light = Math.max(light, lightCandidate(x + 1, y - 1, lightFade));//Bottom-Right
+					setLight(light, x - chunkX, y - chunkY);
+				}
 			}
 		}
 	}
-
-	/**
-	 * Calculates light for block
-	 * Coordinates MUST be relative
-	 *
-	 * @param x Block X
-	 * @param y Block Y
-	 */
-	public void calculateLightingForBlock(short x, short y) {
-		short sampleRadius = 6;
-		float max = Block.MAX_LIGHT;
-		float average = 0;
-
-		float divisor = (float) (Math.pow(sampleRadius * 2, 2));
-
-		for (short i = (short) -sampleRadius; i < sampleRadius; i++) {
-			short high = World.instance.getHighest((short) (x + i));
-
-			for (short k = (short) -sampleRadius; k < sampleRadius; k++) {
-				String id = World.instance.getBlock((short) (x + i), (short) (y + k));
-
-				float strength = 8.0f;
-				boolean hasBlock = (id != null);
-				boolean canSeeSky = y >= high;
-
-				if (hasBlock) {
-					Block block = (Block) Assets.items.get(id);
-
-					if (block.isEmitter()) {
-						float dist = new Vector2(-i, -k).len();
-
-						if (dist <= sampleRadius - 0.125f) {
-							strength = (float) Math.pow(10000, 1.75f / dist);
-						}
-					}
-				} else {
-					if (canSeeSky) {
-						strength += strength * 1f;
-					} else {
-						strength += -strength * 5f;
-					}
-				}
-
-				float value = World.instance.getLight((short) (x + i), (short) (y + k));
-				average += (value * strength / divisor);
-			}
-		}
-
-		// Log.info(average / max + " : " + average);
-
-		float output = Math.min(Math.max(average / ((float) max), 0), 1);
-		this.setLight(output, x, y);
+	
+	private float lightCandidate(int x, int y, float lightFade){
+		//if(World.instance.getBlock(x, y) != null)lightFade *= 1.5;
+		return World.instance.getLight(x, y) - lightFade;
 	}
 
 	/**
@@ -296,7 +291,7 @@ public class Chunk extends Entity {
 	 * @param y Block Y
 	 * @return Array index (non-safe!)
 	 */
-	private int getIndex(short x, short y) {
+	private int getIndex(int x, int y) {
 		return x + y * SIZE;
 	}
 
@@ -307,7 +302,7 @@ public class Chunk extends Entity {
 	 * @param y Block Y
 	 * @return True, if given position is outside of block array
 	 */
-	private boolean isOut(short x, short y) {
+	private boolean isOut(int x, int y) {
 		return x < 0 || y < 0 || x > SIZE - 1 || y > SIZE -1;
 	}
 }

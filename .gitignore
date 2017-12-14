@@ -124,3 +124,6 @@ core/assets/players/\.plr
 
 *.wld
 /.nb-gradle/
+
+## Game Data
+data/

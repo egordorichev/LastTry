@@ -18,8 +18,8 @@ public class ChunkManager extends Entity {
 
 		size.width = 4;
 		size.height = 4;
-
-		this.addComponent(ChunksComponent.class);
+		
+		addComponent(ChunksComponent.class);
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class ChunkManager extends Entity {
 	 * @param y Block Y
 	 * @return Block ID at given position
 	 */
-	public String getBlock(short x, short y) {
+	public String getBlock(int x, int y) {
 		if (this.isOut(x, y)) {
 			return null;
 		}
@@ -111,15 +111,15 @@ public class ChunkManager extends Entity {
 	 * @param y Light Y
 	 * @return Light at given position
 	 */
-	public float getLight(short x, short y) {
+	public float getLight(int x, int y) {
 		if (this.isOut(x, y)) {
-			return 1.0f;
+			return 0.0f;
 		}
 
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk == null) {
-			return 1.0f;
+			return 0.0f;
 		} else {
 			return chunk.getLight(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
@@ -132,7 +132,7 @@ public class ChunkManager extends Entity {
 	 * @param x Light X
 	 * @param y Light Y
 	 */
-	public void setLight(float value, short x, short y) {
+	public void setLight(float value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -172,7 +172,7 @@ public class ChunkManager extends Entity {
 	 * @param x Data X
 	 * @param y Data Y
 	 */
-	public void setData(int value, short x, short y) {
+	public void setData(int value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -193,7 +193,7 @@ public class ChunkManager extends Entity {
 	 * @return Chunk array index, containing given block (unsafe!)
 	 */
 	private int getChunkIndex(int x, int y) {
-		return (int) (x + y * this.getComponent(SizeComponent.class).width);
+		return x + y * (int)this.getComponent(SizeComponent.class).width;
 	}
 
 	/**
@@ -204,26 +204,26 @@ public class ChunkManager extends Entity {
 	 * @return The chunk
 	 */
 	public Chunk getChunkFor(int x, int y) {
-		int index = this.getChunkIndex((int) Math.floor(x / Chunk.SIZE), (int) Math.floor(y / Chunk.SIZE));
-
+		return getChunk(x / Chunk.SIZE, y / Chunk.SIZE);
+	}
+	
+	public Chunk getChunk(int x, int y){
+		int index = this.getChunkIndex(x, y);
+		
 		ChunksComponent chunks = this.getComponent(ChunksComponent.class);
-
+		
 		if (index < 0 || index > chunks.chunks.length - 1) {
 			return null;
 		}
-
+		
 		if (chunks.chunks[index] == null) {
-			short cx = (short) Math.floor(x / Chunk.SIZE);
-			short cy = (short) Math.floor(y / Chunk.SIZE);
+			this.loadChunk(x, y);
 
-			this.loadChunk(cx, cy);
-			// chunks.chunks[index].calculateLighting();
-
-			Engine.sendMessage("load_chunk_" + cx + "_" + cy);
+			Engine.sendMessage("load_chunk_" + x + "_" + y);
 
 			return chunks.chunks[index];
 		}
-
+		
 		return chunks.chunks[index];
 	}
 
@@ -234,12 +234,12 @@ public class ChunkManager extends Entity {
 	 * @param y Block Y
 	 * @return True, if given position is outside of block array
 	 */
-	protected boolean isOut(short x, short y) {
+	protected boolean isOut(int x, int y) {
 		SizeComponent size = this.getComponent(SizeComponent.class);
 		return x < 0 || y < 0 || x > size.width * Chunk.SIZE - 1 || y > size.height * Chunk.SIZE -1;
 	}
 
-	protected void loadChunk(short x, short y) {
+	protected void loadChunk(int x, int y) {
 		String id = "data/worlds/" + this.getComponent(IdComponent.class).id.replace(':', '/');
 
 		ChunksComponent chunks = this.getComponent(ChunksComponent.class);
