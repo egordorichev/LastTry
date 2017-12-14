@@ -13,22 +13,16 @@ public class Entity {
 	/**
 	 * Registered components
 	 */
-	protected HashMap<Class<? extends Component>, Component> components;
+	protected HashMap<Class<? extends Component>, Component> components = new HashMap<>();
 	/**
 	 * Entity on-screen-z coordinate
 	 */
 	protected byte zIndex = 0;
 
 	public Entity(Class<? extends Component> ... components) {
-		this.components = new HashMap<>();
-
 		for (Class<? extends Component> type : components) {
 			this.addComponent(type);
 		}
-	}
-
-	public Entity() {
-		this.components = new HashMap<>();
 	}
 
 	/**

@@ -4,7 +4,7 @@
 	},
 
 	"lt:dirt_wall" : {
-		"type" : "tile.Wall"
+		"type" : "tile.TileableWall"
 	},
 
 	"lt:grass" : {
@@ -12,7 +12,7 @@
 	},
 
 	"lt:grass_wall" : {
-		"type" : "tile.Wall"
+		"type" : "tile.TileableWall"
 	},
 
 	"lt:stone_pickaxe" : {
