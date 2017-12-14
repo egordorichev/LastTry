@@ -14,4 +14,8 @@ public class CollisionComponent extends Component {
 	 * Shows, if entity is on the ground
 	 */
 	public boolean onGround = true;
+	/**
+	 * How fast the entity falls
+	 */
+	public float weight = 0.2f;
 }

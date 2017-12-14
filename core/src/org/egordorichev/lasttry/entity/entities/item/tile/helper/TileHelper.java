@@ -1,7 +1,7 @@
 package org.egordorichev.lasttry.entity.entities.item.tile.helper;
 
 import org.egordorichev.lasttry.util.binary.BitHelper;
-import org.egordorichev.lasttry.util.random.RandomGenerator;
+import org.egordorichev.lasttry.util.math.RandomGenerator;
 
 /**
  * Helps with tile data

@@ -6,6 +6,7 @@ import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
+import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.entities.creature.AiComponent;
 import org.egordorichev.lasttry.entity.entities.creature.AnimationComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
@@ -60,6 +61,9 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
+
+		CollisionComponent collision = creature.getComponent(CollisionComponent.class);
+		collision.weight = asset.getFloat("weight", 0.2f);
 
 		return creature;
 	}

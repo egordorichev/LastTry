@@ -8,7 +8,6 @@ import org.egordorichev.lasttry.entity.engine.system.systems.*;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
-import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.world.Sky;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
@@ -55,7 +54,7 @@ public class Engine {
 		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
 
-		ArrayList<Entity> players = Engine.getEntitiesFor(PlayerInputComponent.class);
+		ArrayList<Entity> players = Engine.getEntitiesFor(InventoryComponent.class);
 		Creature player;
 
 		if (players.size() == 0) {

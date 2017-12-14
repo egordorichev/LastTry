@@ -1,12 +1,12 @@
 {
 	"lt:player" : {
 		"components" : [
-			"entity.entities.creature.player.PlayerInputComponent",
 			"entity.entities.item.inventory.InventoryComponent",
 			"entity.entities.creature.SaveComponent"
 		],
 		"w" : 16,
 		"h" : 24,
+		"weight" : 0.3,
 		"health" : 100,
 		"mana" : 10,
 		"ai" : "PlayerAi",
