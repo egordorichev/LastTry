@@ -58,8 +58,8 @@ public class ChunkIO extends IO<Chunk> {
 	public static Chunk load(String folder, short x, short y) {
 		Log.debug("Loading chunk " + x + ":" + y);
 
-		try {
-			FileReader reader = new FileReader( folder + "/" + x + ":" + y + ".cnk"); // TODO: world folders
+		// TODO: world folders
+		try (FileReader reader = new FileReader( folder + "/" + x + ":" + y + ".cnk")){
 			Chunk chunk = new Chunk(x, y);
 
 			byte version = reader.readByte();

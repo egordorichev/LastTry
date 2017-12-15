@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.util.log.Log;
  * Handles assets
  */
 public class AssetLoader {
+	@SuppressWarnings("rawtypes")
 	public static void load(String file, AssetFactory factory) {
 		JsonReader reader = new JsonReader();
 

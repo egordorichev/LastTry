@@ -10,9 +10,5 @@ public class CameraComponent extends Component {
 	/**
 	 * The camera
 	 */
-	public OrthographicCamera camera;
-
-	public CameraComponent() {
-		 this.camera = new OrthographicCamera(320, 180);
-	}
+	public final OrthographicCamera camera = new OrthographicCamera(320, 180);
 }

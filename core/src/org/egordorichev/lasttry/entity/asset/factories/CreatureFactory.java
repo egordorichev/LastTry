@@ -25,7 +25,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		Creature creature = new Creature();
 
 		if (asset.has("components")) {
-			this.parseComponents(creature, asset);
+			CreatureFactory.parseComponents(creature, asset);
 		}
 
 		if (asset.has("health")) {
@@ -36,7 +36,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		}
 
 		if (asset.has("animation")) {
-			this.parseAnimations(creature, asset);
+			CreatureFactory.parseAnimations(creature, asset);
 		}
 
 		SizeComponent size = creature.getComponent(SizeComponent.class);
@@ -74,7 +74,8 @@ public class CreatureFactory extends AssetFactory<Creature> {
 	 * @param creature Creature to modify
 	 * @param asset Data
 	 */
-	private void parseComponents(Creature creature, JsonValue asset) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static void parseComponents(Creature creature, JsonValue asset) {
 		for (JsonValue component : asset.get("components")) {
 			if (component.isString()) {
 				try {
@@ -97,7 +98,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 	 * @param creature Creature to modify
 	 * @param asset Data
 	 */
-	private void parseAnimations(Creature creature, JsonValue asset) {
+	private static void parseAnimations(Creature creature, JsonValue asset) {
 		AnimationComponent animation = creature.getComponent(AnimationComponent.class);
 		JsonValue root = asset.get("animation");
 		TextureRegion region = Assets.getTexture("creatures/" + asset.name().replace(':', '_'));

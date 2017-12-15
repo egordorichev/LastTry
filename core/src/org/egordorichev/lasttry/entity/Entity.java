@@ -13,24 +13,18 @@ public class Entity {
 	/**
 	 * Registered components
 	 */
-	protected HashMap<Class<? extends Component>, Component> components;
+	protected final HashMap<Class<? extends Component>, Component> components = new HashMap<>();
 	/**
 	 * Entity on-screen-z coordinate
 	 */
 	protected byte zIndex = 0;
 
+	@SuppressWarnings("all")
 	public Entity(Class<? extends Component> ... components) {
-		this.components = new HashMap<>();
-
 		for (Class<? extends Component> type : components) {
 			this.addComponent(type);
 		}
 	}
-
-	public Entity() {
-		this.components = new HashMap<>();
-	}
-
 	/**
 	 * Renders the entity
 	 */
@@ -51,7 +45,7 @@ public class Entity {
 	 * @param component Component class to register
 	 * @return First added component
 	 */
-	public Component addComponent(Class<? extends Component> ... component) {
+	public final Component addComponent(Class<? extends Component> ... component) {
 		Component first = null;
 
 		for (Class<? extends Component> c : component) {
