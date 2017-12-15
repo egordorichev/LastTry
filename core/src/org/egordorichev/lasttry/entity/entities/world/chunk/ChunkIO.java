@@ -25,11 +25,9 @@ public class ChunkIO extends IO<Chunk> {
 
 		Log.debug("Saving chunk " + x + ":" + y);
 
-		try {
-			FileWriter writer = new FileWriter(folder + "/" + x + ":" + y + ".cnk"); // TODO: world folders
-
+		 // TODO: world folders
+		try (FileWriter writer = new FileWriter(folder + "/" + x + ":" + y + ".cnk")) {
 			writer.writeByte(VERSION); // Chunk file version
-
 			for (short by = 0; by < Chunk.SIZE; by++) {
 				for (short bx = 0; bx < Chunk.SIZE; bx++) {
 					writer.writeString(chunk.getBlock(bx, by));
@@ -37,7 +35,6 @@ public class ChunkIO extends IO<Chunk> {
 					writer.writeInt32(chunk.getData(bx, by));
 				}
 			}
-
 			writer.close();
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -61,14 +58,11 @@ public class ChunkIO extends IO<Chunk> {
 		// TODO: world folders
 		try (FileReader reader = new FileReader( folder + "/" + x + ":" + y + ".cnk")){
 			Chunk chunk = new Chunk(x, y);
-
 			byte version = reader.readByte();
-
 			if (version != VERSION) {
 				Log.error("Chunk version " + version + " is not supported");
 				return null;
 			}
-
 			for (short by = 0; by < Chunk.SIZE; by++) {
 				for (short bx = 0; bx < Chunk.SIZE; bx++) {
 					chunk.setBlock(reader.readString(), bx, by);
@@ -76,9 +70,6 @@ public class ChunkIO extends IO<Chunk> {
 					chunk.setData(reader.readInt32(), bx, by);
 				}
 			}
-
-			reader.close();
-
 			return chunk;
 		} catch (FileNotFoundException exception) {
 			Log.debug("Chunk " + x + ":" + y + " is not found");

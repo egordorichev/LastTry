@@ -25,7 +25,7 @@ public class Sky extends Entity {
 		texture.texture = Assets.getTexture("bg/sky");
 
 		this.startX = texture.texture.getRegionX();
-		this.setZIndex((byte) -1);
+		this.setZIndex((byte) -1, true);
 	}
 
 	/**

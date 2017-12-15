@@ -166,7 +166,7 @@ public class Engine {
 	public static void addEntity(Entity entity) {
 		entities.add(entity);
 		sendMessage(SystemMessages.ENTITIES_UPDATED);
-		recalculateZIndexes();
+		recalculateZIndices();
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class Engine {
 	/**
 	 * Sorts entities by z-index
 	 */
-	public static void recalculateZIndexes() {
+	public static void recalculateZIndices() {
 		entities.sort(new Comparator<Entity>() {
 			@Override
 			public int compare(Entity entity1, Entity entity2) {

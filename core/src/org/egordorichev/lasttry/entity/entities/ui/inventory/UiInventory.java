@@ -67,11 +67,11 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 		InventoryComponent inventory = this.getComponent(InventoryComponent.class);
 
 		for (int i = 0; i < (inventory.open ? inventory.inventory.length : Math.min(inventory.inventory.length, 10)); i++) {
-			this.renderSlot(inventory, position.x + i % 10 * 25, (float) (position.y + Math.floor(i / 10) * 25), i, inventory.inventory[i]);
+			UiInventory.renderSlot(inventory, position.x + i % 10 * 25, (float) (position.y + Math.floor(i / 10) * 25), i, inventory.inventory[i]);
 		}
 	}
 
-	private void renderSlot(InventoryComponent inventory, float x, float y, int index, ItemComponent item) {
+	private static void renderSlot(InventoryComponent inventory, float x, float y, int index, ItemComponent item) {
 		if (inventory.selectedSlot == index) {
 			Graphics.batch.setColor(1.0f, 1.0f, 0.7f, 1.0f);
 		}

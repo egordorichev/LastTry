@@ -24,10 +24,9 @@ public class InteractionSystem implements System, SimpleInputProcessor {
 	/**
 	 * List of interactable things
 	 */
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entities = new ArrayList<>();
 
 	public InteractionSystem() {
-		this.entities = new ArrayList<>();
 		// Don't forget to add self to input processors
 		Input.multiplexer.addProcessor(this);
 	}
