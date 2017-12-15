@@ -12,6 +12,7 @@ import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.entity.entities.ui.UiElement;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
+import org.egordorichev.lasttry.util.graphics.OutlinePrinter;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
 
@@ -92,12 +93,12 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 				String str = String.valueOf(item.count);
 				layout.setText(Assets.f4, str);
 
-				Assets.f4.draw(Graphics.batch, str, x + 11 - layout.width, y + 16);
+				OutlinePrinter.print(Assets.f4, str, (int) (x + 22 - layout.width), (int) (y + 8));
 			}
 		}
 
 		if (index < 10) {
-			Assets.f4.draw(Graphics.batch, String.valueOf(index < 9 ? index + 1 : 0), x + 3, y + 21);
+			OutlinePrinter.print(Assets.f4, String.valueOf(index < 9 ? index + 1 : 0), (int) (x + 3), (int) (y + 21));
 		}
 	}
 

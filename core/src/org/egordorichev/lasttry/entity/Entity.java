@@ -25,6 +25,7 @@ public class Entity {
 			this.addComponent(type);
 		}
 	}
+	
 	/**
 	 * Renders the entity
 	 */

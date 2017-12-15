@@ -11,7 +11,6 @@ import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.entities.creature.player.PlayerInputComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 import org.egordorichev.lasttry.entity.entities.ui.inventory.UiInventory;
@@ -65,7 +64,7 @@ public class LastTry extends Game {
 		Assets.load();
 		Engine.init();
 
-		ArrayList<Entity> players = Engine.getEntitiesFor(PlayerInputComponent.class);
+		ArrayList<Entity> players = Engine.getEntitiesFor(InventoryComponent.class);
 
 		if (players.size() > 0) {
 			Entity player = players.get(0);
@@ -77,6 +76,8 @@ public class LastTry extends Game {
 			InventoryComponent inv = player.getComponent(InventoryComponent.class);
 			inv.inventory[1].item = Assets.items.get("lt:fc_main");
 			inv.inventory[1].count = 10;
+			inv.inventory[2].item = Assets.items.get("lt:stone");
+			inv.inventory[2].count = 999;
 		} else {
 			Log.warning("Failed to create UI inventory for the player");
 		}

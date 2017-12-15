@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.util.random;
+package org.egordorichev.lasttry.util.math;
 
 import java.util.concurrent.ThreadLocalRandom;
 

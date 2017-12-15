@@ -1,14 +1,15 @@
 {
 	"lt:player" : {
 		"components" : [
-			"entity.entities.creature.player.PlayerInputComponent",
 			"entity.entities.item.inventory.InventoryComponent",
 			"entity.entities.creature.SaveComponent"
 		],
 		"w" : 16,
 		"h" : 24,
+		"weight" : 0.3,
 		"health" : 100,
 		"mana" : 10,
+		"ai" : "PlayerAi",
 		"animation" : {
 			"idle" : [
 				{
@@ -27,7 +28,17 @@
 				}
 			],
 
-			"moving" : [
+			"walking" : [
+				{
+					"x" : 0,
+					"y" : 0,
+					"w" : 16,
+					"h" : 24,
+					"delta" : 1
+				}
+			],
+
+			"flying" : [
 				{
 					"x" : 0,
 					"y" : 0,

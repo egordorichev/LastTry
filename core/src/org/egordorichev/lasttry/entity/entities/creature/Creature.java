@@ -16,7 +16,7 @@ public class Creature extends Entity {
 	public Creature(Class<? extends Component> ... types) {
 		super(HealthComponent.class, PositionComponent.class, AccelerationComponent.class,
 			VelocityComponent.class, TextureComponent.class, AnimationComponent.class, SizeComponent.class,
-			CollisionComponent.class, IdComponent.class, StateComponent.class);
+			CollisionComponent.class, IdComponent.class, StateComponent.class, AiComponent.class);
 
 		this.addComponent(types);
 		this.zIndex = 1;
@@ -35,7 +35,12 @@ public class Creature extends Entity {
 		}
 	}
 
-	public void changeState(String state) {
+	/**
+	 * Updates creature state
+	 *
+	 * @param state New state
+	 */
+	public void become(String state) {
 		StateComponent stateComponent = this.getComponent(StateComponent.class);
 
 		if (Objects.equals(state, stateComponent.state)) {
@@ -48,10 +53,11 @@ public class Creature extends Entity {
 		Animation animation = animationComponent.animations.get(state);
 
 		if (animation == null) {
-			animation = animationComponent.animations.get("main");
+			animationComponent.current = animationComponent.animations.get("idle");
 		} else {
 			animationComponent.current = animation;
-			animation.reset();
 		}
+
+		animationComponent.current.reset();
 	}
 }

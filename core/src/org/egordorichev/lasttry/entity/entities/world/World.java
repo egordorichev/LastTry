@@ -60,7 +60,7 @@ public class World extends ChunkManager {
 				}
 
 				if (block != null) {
-					block.render(x, y, neighbors, data, light);
+					block.render(x, y, data, light, neighbors);
 				}
 			}
 		}
