@@ -17,14 +17,14 @@ import org.egordorichev.lasttry.util.collision.Collider;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.input.SimpleInputProcessor;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class InteractionSystem implements System, SimpleInputProcessor {
 	/**
 	 * List of interactable things
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	public InteractionSystem() {
 		// Don't forget to add self to input processors
@@ -39,7 +39,7 @@ public class InteractionSystem implements System, SimpleInputProcessor {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(InteractionComponent.class);
+			this.entities = Engine.getWithAllTypes(InteractionComponent.class);
 		}
 	}
 

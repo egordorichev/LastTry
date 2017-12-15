@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -18,7 +18,7 @@ public class InventorySystem implements System {
 	/**
 	 * Entities with inventories
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	/**
 	 * Updates inventories
@@ -47,7 +47,7 @@ public class InventorySystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(InventoryComponent.class);
+			this.entities = Engine.getWithAllTypes(InventoryComponent.class);
 		}
 	}
 }

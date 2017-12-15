@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import org.egordorichev.lasttry.core.Version;
 import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
@@ -24,7 +25,7 @@ import org.egordorichev.lasttry.util.geometry.Rectangle;
 import org.egordorichev.lasttry.util.input.Input;
 import org.egordorichev.lasttry.util.log.Log;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * The main class of the game
@@ -64,10 +65,10 @@ public class LastTry extends Game {
 		Assets.load();
 		Engine.init();
 
-		ArrayList<Entity> players = Engine.getEntitiesFor(InventoryComponent.class);
+		HashSet<Entity> players = Engine.getWithAllTypes(InventoryComponent.class);
 
 		if (players.size() > 0) {
-			Entity player = players.get(0);
+			Entity player = Players.clientPlayer;
 
 			Engine.addEntity(new UiInventory(new Rectangle(5, 5, 150, 50), player.getComponent(InventoryComponent.class))); // Share the inventory
 			Engine.addEntity(new UiConsole(new Rectangle(5, 30, 150, 16)));

@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.engine;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
@@ -15,13 +16,9 @@ import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * Handles systems
@@ -35,7 +32,7 @@ public class Engine {
 	 * All entities in the game
 	 */
 	private static final ArrayList<Entity> entities = new ArrayList<>();
-	private static final Map<Class<?>, ArrayList<Entity>> entityCaches = new HashMap<>();
+	private static final Map<Class<?>, HashSet<Entity>> componentToEntity = new HashMap<>();
 
 	/**
 	 * Adds all needed systems
@@ -62,10 +59,10 @@ public class Engine {
 		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
 
-		ArrayList<Entity> players = Engine.getEntitiesFor(InventoryComponent.class);
+		Players.players = Engine.getWithAllTypes(InventoryComponent.class);
 		Creature player;
 
-		if (players.size() == 0) {
+		if (Players.players.size() == 0) {
 			player = Assets.creatures.create("lt:player");
 
 			PositionComponent position = player.getComponent(PositionComponent.class);
@@ -74,10 +71,12 @@ public class Engine {
 			position.y = 2056;
 
 			Engine.addEntity(player);
+			Players.players.add(player);
 		} else {
 			Log.info("Loaded player");
-			player = (Creature) players.get(0);
+			player = (Creature) Players.players.stream().findFirst().get();
 		}
+		Players.clientPlayer = player;
 
 		target.target = player;
 
@@ -143,31 +142,45 @@ public class Engine {
 	}
 
 	/**
-	 * Returns all entities with given components
+	 * Returns all entities with all of the given components.
 	 *
 	 * @param types
 	 *            Component types
 	 * @return Entities list
 	 */
-	public static ArrayList<Entity> getEntitiesFor(Class<? extends Component>... types) {
-		ArrayList<Entity> list = new ArrayList<>();
-
+	public static HashSet<Entity> getWithAllTypes(Class<? extends Component>... types) {
+		HashSet<Entity> list = new HashSet<>();
 		for (Entity entity : entities) {
 			boolean has = true;
-
 			for (Class<? extends Component> type : types) {
 				if (!entity.hasComponent(type)) {
 					has = false;
 					break;
 				}
 			}
-
 			if (has) {
 				list.add(entity);
 			}
 		}
-
 		return list;
+	}
+
+	/**
+	 * Returns all entities with any of the given components.
+	 *
+	 * @param types
+	 *            Component types
+	 * @return Entities list
+	 */
+	public static HashSet<Entity> getWithAnyTypes(Class<? extends Component>... types) {
+		HashSet<Entity> set = new HashSet<>();
+		for (Class<? extends Component> type : types) {
+			HashSet<Entity> compSet = componentToEntity.get(type);
+			if (compSet != null) {
+				set.addAll(componentToEntity.get(type));
+			}
+		}
+		return set;
 	}
 
 	/**
@@ -177,14 +190,20 @@ public class Engine {
 	 *            Entity to add
 	 */
 	public static void addEntity(Entity entity) {
-		// Find position to insert entity at. Searches where to insert by comparing entity z-indices
+		// Find position to insert entity at. Searches where to insert by
+		// comparing entity z-indices
 		int pos = Collections.binarySearch(entities, entity);
+		// Adjust for correct insertion point if necessary
 		if (pos < 0) {
-			// Adjust for correct insertion point
-			entities.add(-pos - 1, entity);
-		} else {
-			// Insert at position
-			entities.add(pos, entity);
+			pos = -pos - 1;
+		}
+		// Insert at position
+		entities.add(pos, entity);
+		// Update caches
+		for (Class<? extends Component> componentClass : entity.getComponents().keySet()) {
+			HashSet<Entity> set = componentToEntity.getOrDefault(componentClass, new HashSet<>());
+			set.add(entity);
+			componentToEntity.putIfAbsent(componentClass, set);
 		}
 		sendMessage(SystemMessages.ENTITIES_UPDATED);
 	}
@@ -197,6 +216,12 @@ public class Engine {
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
+		// Remove from caches
+		for (Class<?> componentClass : entity.getComponents().keySet()) {
+			HashSet<Entity> set = componentToEntity.getOrDefault(componentClass, new HashSet<>());
+			set.remove(entity);
+			componentToEntity.putIfAbsent(componentClass, set);
+		}
 		sendMessage(SystemMessages.ENTITIES_UPDATED);
 	}
 

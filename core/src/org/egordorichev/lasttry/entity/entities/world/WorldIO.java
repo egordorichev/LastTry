@@ -17,7 +17,7 @@ import org.egordorichev.lasttry.entity.entities.world.generator.WorldGenerator;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class WorldIO extends IO<World> {
 	/**
@@ -42,7 +42,7 @@ public class WorldIO extends IO<World> {
 
 		try {
 			FileWriter writer = new FileWriter(root + "/world.wld");
-			ArrayList<Entity> entities = Engine.getEntitiesFor(SaveComponent.class);
+			HashSet<Entity> entities = Engine.getWithAllTypes(SaveComponent.class);
 
 			writer.writeInt32(entities.size());
 			entities.add(world);

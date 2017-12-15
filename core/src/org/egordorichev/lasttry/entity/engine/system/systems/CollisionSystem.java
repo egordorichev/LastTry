@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.util.collision.Collider;
 import org.egordorichev.lasttry.util.struct.Pair;
 import org.egordorichev.lasttry.util.struct.Pairs;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +22,7 @@ public class CollisionSystem implements System {
 	/**
 	 * The list of collidable entities
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	@Override
 	public void update(float delta) {
@@ -70,7 +70,7 @@ public class CollisionSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(CollisionComponent.class);
+			this.entities = Engine.getWithAllTypes(CollisionComponent.class);
 		}
 	}
 }

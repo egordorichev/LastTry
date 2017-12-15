@@ -7,8 +7,8 @@ import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.ui.UiElement;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -37,7 +37,7 @@ public class UiSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			ArrayList<Entity> entities = Engine.getEntitiesFor(IdComponent.class);
+			HashSet<Entity> entities = Engine.getWithAllTypes(IdComponent.class);
 			this.elements.clear();
 
 			for (Entity entity : entities) {
