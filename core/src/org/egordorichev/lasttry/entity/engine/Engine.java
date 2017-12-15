@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.engine;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.*;
 import org.egordorichev.lasttry.entity.engine.system.System;
@@ -14,7 +15,10 @@ import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Handles systems
@@ -23,11 +27,12 @@ public class Engine {
 	/**
 	 * All systems in the engine
 	 */
-	private static ArrayList<System> systems = new ArrayList<>();
+	private static final ArrayList<System> systems = new ArrayList<>();
 	/**
 	 * All entities in the game
 	 */
-	private static ArrayList<Entity> entities = new ArrayList<>();
+	private static final ArrayList<Entity> entities = new ArrayList<>();
+	private static final Map<Class<?>, HashSet<Entity>> componentToEntity = new HashMap<>();
 
 	/**
 	 * Adds all needed systems
@@ -54,10 +59,10 @@ public class Engine {
 		addEntity(uiCamera);
 		addEntity(WorldIO.load("test", "forest"));
 
-		ArrayList<Entity> players = Engine.getEntitiesFor(InventoryComponent.class);
+		Players.players = Engine.getWithAllTypes(InventoryComponent.class);
 		Creature player;
 
-		if (players.size() == 0) {
+		if (Players.players.size() == 0) {
 			player = Assets.creatures.create("lt:player");
 
 			PositionComponent position = player.getComponent(PositionComponent.class);
@@ -66,10 +71,12 @@ public class Engine {
 			position.y = 2056;
 
 			Engine.addEntity(player);
+			Players.players.add(player);
 		} else {
 			Log.info("Loaded player");
-			player = (Creature) players.get(0);
+			player = (Creature) Players.players.stream().findFirst().get();
 		}
+		Players.clientPlayer = player;
 
 		target.target = player;
 
@@ -103,7 +110,8 @@ public class Engine {
 	/**
 	 * Sends a message, that any system can handle
 	 *
-	 * @param message Message, to send
+	 * @param message
+	 *            Message, to send
 	 */
 	public static void sendMessage(String message) {
 		for (System system : systems) {
@@ -114,7 +122,8 @@ public class Engine {
 	/**
 	 * Updates all systems
 	 *
-	 * @param delta Time, since the last frame
+	 * @param delta
+	 *            Time, since the last frame
 	 */
 	public static void update(float delta) {
 		for (System system : systems) {
@@ -125,79 +134,95 @@ public class Engine {
 	/**
 	 * Adds a system to the engine
 	 *
-	 * @param system System to add
+	 * @param system
+	 *            System to add
 	 */
 	public static void addSystem(System system) {
 		systems.add(system);
 	}
 
 	/**
-	 * Returns all entities with given components
+	 * Returns all entities with all of the given components.
 	 *
-	 * @param types Component types
+	 * @param types
+	 *            Component types
 	 * @return Entities list
 	 */
-	public static ArrayList<Entity> getEntitiesFor(Class<? extends Component>... types) {
-		ArrayList<Entity> list = new ArrayList<>();
-
+	public static HashSet<Entity> getWithAllTypes(Class<? extends Component>... types) {
+		HashSet<Entity> list = new HashSet<>();
 		for (Entity entity : entities) {
 			boolean has = true;
-
 			for (Class<? extends Component> type : types) {
 				if (!entity.hasComponent(type)) {
 					has = false;
 					break;
 				}
 			}
-
 			if (has) {
 				list.add(entity);
 			}
 		}
-
 		return list;
+	}
+
+	/**
+	 * Returns all entities with any of the given components.
+	 *
+	 * @param types
+	 *            Component types
+	 * @return Entities list
+	 */
+	public static HashSet<Entity> getWithAnyTypes(Class<? extends Component>... types) {
+		HashSet<Entity> set = new HashSet<>();
+		for (Class<? extends Component> type : types) {
+			HashSet<Entity> compSet = componentToEntity.get(type);
+			if (compSet != null) {
+				set.addAll(componentToEntity.get(type));
+			}
+		}
+		return set;
 	}
 
 	/**
 	 * Adds an entity
 	 *
-	 * @param entity Entity to add
+	 * @param entity
+	 *            Entity to add
 	 */
 	public static void addEntity(Entity entity) {
-		entities.add(entity);
+		// Find position to insert entity at. Searches where to insert by
+		// comparing entity z-indices
+		int pos = Collections.binarySearch(entities, entity);
+		// Adjust for correct insertion point if necessary
+		if (pos < 0) {
+			pos = -pos - 1;
+		}
+		// Insert at position
+		entities.add(pos, entity);
+		// Update caches
+		for (Class<? extends Component> componentClass : entity.getComponents().keySet()) {
+			HashSet<Entity> set = componentToEntity.getOrDefault(componentClass, new HashSet<>());
+			set.add(entity);
+			componentToEntity.putIfAbsent(componentClass, set);
+		}
 		sendMessage(SystemMessages.ENTITIES_UPDATED);
-		recalculateZIndexes();
 	}
 
 	/**
 	 * Removes an entity
 	 *
-	 * @param entity Entity to remove
+	 * @param entity
+	 *            Entity to remove
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
+		// Remove from caches
+		for (Class<?> componentClass : entity.getComponents().keySet()) {
+			HashSet<Entity> set = componentToEntity.getOrDefault(componentClass, new HashSet<>());
+			set.remove(entity);
+			componentToEntity.putIfAbsent(componentClass, set);
+		}
 		sendMessage(SystemMessages.ENTITIES_UPDATED);
-	}
-
-	/**
-	 * Sorts entities by z-index
-	 */
-	public static void recalculateZIndexes() {
-		entities.sort(new Comparator<Entity>() {
-			@Override
-			public int compare(Entity entity1, Entity entity2) {
-				byte z1 = entity1.getZIndex();
-				byte z2 = entity2.getZIndex();
-
-				if (z1 > z2) {
-					return 1;
-				} else if (z1 < z2) {
-					return -1;
-				}
-
-				return 0;
-			}
-		});
 	}
 
 	/**

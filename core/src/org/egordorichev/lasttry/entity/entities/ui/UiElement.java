@@ -44,7 +44,7 @@ public class UiElement extends Entity {
 		PositionComponent position = this.getComponent(PositionComponent.class);
 		SizeComponent size = this.getComponent(SizeComponent.class);
 
-		// TODO
+		// TODO: sliced sprites
 		// For hint look up this: https://docs.unity3d.com/Manual/9SliceSprites.html
 
 		Graphics.batch.draw(texture.texture, position.x, position.y, size.width, size.height);

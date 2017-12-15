@@ -6,18 +6,14 @@ import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class ClockSystem implements System {
 	/**
 	 * List of clocks
 	 */
-	private ArrayList<Entity> entities;
-
-	public ClockSystem() {
-		this.entities = new ArrayList<>();
-	}
+	private HashSet<Entity> entities  = new HashSet<>();
 
 	/**
 	 * Handles clock logic
@@ -58,7 +54,7 @@ public class ClockSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(ClockComponent.class);
+			this.entities = Engine.getWithAllTypes(ClockComponent.class);
 		}
 	}
 }

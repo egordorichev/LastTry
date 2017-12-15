@@ -16,8 +16,8 @@ import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.graphics.PerfectViewport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,16 +32,14 @@ public class CameraSystem implements System {
 	/**
 	 * All in-game cameras
 	 */
-	private HashMap<String, Entity> cameras;
+	private HashMap<String, Entity> cameras = new HashMap<>();
 	/**
 	 * The viewport
 	 */
-	private PerfectViewport viewport;
+	private PerfectViewport viewport = new PerfectViewport();
 
 	public CameraSystem() {
 		instance = this;
-		this.cameras = new HashMap<>();
-		this.viewport = new PerfectViewport();
 	}
 
 	/**
@@ -113,7 +111,7 @@ public class CameraSystem implements System {
 
 			this.viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		} else if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			ArrayList<Entity> entities = Engine.getEntitiesFor(TargetComponent.class, CameraComponent.class, IdComponent.class);
+			HashSet<Entity> entities = Engine.getWithAllTypes(TargetComponent.class, CameraComponent.class, IdComponent.class);
 			this.cameras.clear();
 
 			for (Entity entity : entities) {

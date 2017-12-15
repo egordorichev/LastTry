@@ -14,7 +14,7 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -24,7 +24,7 @@ public class MovementSystem implements System {
 	/**
 	 * List of the entities, that move
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	/**
 	 * Handles entity movement
@@ -81,7 +81,7 @@ public class MovementSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(VelocityComponent.class, AccelerationComponent.class);
+			this.entities = Engine.getWithAllTypes(VelocityComponent.class, AccelerationComponent.class);
 		}
 	}
 

@@ -11,46 +11,56 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.util.collision.Collider;
+import org.egordorichev.lasttry.util.struct.Pair;
+import org.egordorichev.lasttry.util.struct.Pairs;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class CollisionSystem implements System {
 	/**
 	 * The list of collidable entities
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	@Override
 	public void update(float delta) {
 		SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
-
 		float width = worldSize.width * Chunk.SIZE * Block.SIZE;
 		float height = worldSize.height * Chunk.SIZE * Block.SIZE;
-
-		for (Entity entity : this.entities) {
-			PositionComponent position = entity.getComponent(PositionComponent.class);
-			SizeComponent size = entity.getComponent(SizeComponent.class);
-
-			if (position != null && size != null) {
-				position.x = Math.max(Math.min(position.x, width - Block.SIZE - size.width), Block.SIZE);
-				position.y = Math.max(Math.min(position.y, height - Block.SIZE - size.height), Block.SIZE);
-
-				for (Entity second : this.entities) {
-					PositionComponent secondPosition = second.getComponent(PositionComponent.class);
-					SizeComponent secondSize = second.getComponent(SizeComponent.class);
-
-					if (secondPosition != null && secondSize != null) {
-						if (Collider.testAABB(position.x, position.y, size.width, size.height,
-							secondPosition.x, secondPosition.y, secondSize.width, secondSize.height)) {
-
-							// TODO: react here
-						}
-					}
-				}
+		Set<Pair<Entity>> pairs = Pairs.setOf(this.entities);
+		for (Pair<Entity> pair : pairs) {
+			// Skip comparison to self
+			if (pair.same()) {
+				continue;
+			}
+			// Retrieve first entity information
+			Entity first = pair.left;
+			PositionComponent pos1 = first.getComponent(PositionComponent.class);
+			SizeComponent size1 = first.getComponent(SizeComponent.class);
+			// Skip comparison if missing the required components
+			if (pos1 == null && size1 == null) {
+				continue;
+			}
+			pos1.x = Math.max(Math.min(pos1.x, width - Block.SIZE - size1.width), Block.SIZE);
+			pos1.y = Math.max(Math.min(pos1.y, height - Block.SIZE - size1.height), Block.SIZE);
+			// Retrieve second entity information
+			Entity second = pair.right;
+			PositionComponent pos2 = second.getComponent(PositionComponent.class);
+			SizeComponent size2 = second.getComponent(SizeComponent.class);
+			// Skip comparison if missing the required components
+			if (pos2 == null || size2 == null) {
+				continue;
+			}
+			if (Collider.testAABB(pos1.x, pos1.y, size1.width, size1.height, pos2.x, pos2.y, size2.width,
+					size2.height)) {
+				// TODO: react here
 			}
 		}
 	}
+	
+	
 
 	/**
 	 * Handles adding new enemies
@@ -60,7 +70,7 @@ public class CollisionSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(CollisionComponent.class);
+			this.entities = Engine.getWithAllTypes(CollisionComponent.class);
 		}
 	}
 }

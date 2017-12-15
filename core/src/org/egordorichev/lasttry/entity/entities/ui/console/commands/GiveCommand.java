@@ -1,6 +1,7 @@
 package org.egordorichev.lasttry.entity.entities.ui.console.commands;
 
 import org.egordorichev.lasttry.entity.Entity;
+import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
@@ -46,7 +47,7 @@ public class GiveCommand extends ConsoleCommand {
 			return;
 		}
 
-		Entity player = Engine.getEntitiesFor(InventoryComponent.class).get(0);
+		Entity player = Players.clientPlayer;
 
 		if (player != null) {
 			PositionComponent position = player.getComponent(PositionComponent.class);

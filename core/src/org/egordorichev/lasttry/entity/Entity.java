@@ -9,17 +9,18 @@ import java.util.HashMap;
 /**
  * The base class for in-game entities
  */
-public class Entity {
+public class Entity implements Comparable<Entity> {
 	/**
 	 * Registered components
 	 */
-	protected HashMap<Class<? extends Component>, Component> components = new HashMap<>();
+	protected final HashMap<Class<? extends Component>, Component> components = new HashMap<>();
 	/**
 	 * Entity on-screen-z coordinate
 	 */
 	protected byte zIndex = 0;
 
-	public Entity(Class<? extends Component> ... components) {
+	@SuppressWarnings("all")
+	public Entity(Class<? extends Component>... components) {
 		for (Class<? extends Component> type : components) {
 			this.addComponent(type);
 		}
@@ -42,10 +43,11 @@ public class Entity {
 	/**
 	 * Registers a component
 	 *
-	 * @param component Component class to register
+	 * @param component
+	 *            Component class to register
 	 * @return First added component
 	 */
-	public Component addComponent(Class<? extends Component> ... component) {
+	public final Component addComponent(Class<? extends Component>... component) {
 		Component first = null;
 
 		for (Class<? extends Component> c : component) {
@@ -74,7 +76,8 @@ public class Entity {
 	/**
 	 * Removes a component
 	 *
-	 * @param component Component class to remove
+	 * @param component
+	 *            Component class to remove
 	 */
 	public void removeComponent(Class<? extends Component> component) {
 		this.components.remove(component);
@@ -90,7 +93,8 @@ public class Entity {
 	/**
 	 * Searches for a component
 	 *
-	 * @param component Component class to find
+	 * @param component
+	 *            Component class to find
 	 * @return Entity has a component
 	 */
 	public boolean hasComponent(Class<? extends Component> component) {
@@ -100,7 +104,8 @@ public class Entity {
 	/**
 	 * Searches for a component and returns it
 	 *
-	 * @param component Component class to find
+	 * @param component
+	 *            Component class to find
 	 * @return Component or null
 	 */
 	public <T extends Component> T getComponent(Class<T> component) {
@@ -108,13 +113,13 @@ public class Entity {
 	}
 
 	/**
-	 * Sets entity z-index
-	 * @param zIndex New z-index
+	 * Sets entity z-index. Does not update engine's Z-indices.
+	 * 
+	 * @param zIndex
+	 *            New z-index
 	 */
 	public void setZIndex(byte zIndex) {
 		this.zIndex = zIndex;
-		// Engine.recalculateZIndexes();
-		// TODO: calc only if not called in a constructor
 	}
 
 	/**
@@ -129,5 +134,17 @@ public class Entity {
 	 */
 	public byte getZIndex() {
 		return this.zIndex;
+	}
+
+	@Override
+	public int compareTo(Entity other) {
+		byte z1 = this.getZIndex();
+		byte z2 = other.getZIndex();
+		if (z1 > z2) {
+			return 1;
+		} else if (z1 < z2) {
+			return -1;
+		}
+		return 0;
 	}
 }

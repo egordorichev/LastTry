@@ -6,7 +6,7 @@ import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.creature.AnimationComponent;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -16,7 +16,7 @@ public class AnimationSystem implements System {
 	/**
 	 * List of entities, that have animations
 	 */
-	private ArrayList<Entity> entities = new ArrayList<>();
+	private HashSet<Entity> entities = new HashSet<>();
 
 	/**
 	 * Handles input
@@ -42,7 +42,7 @@ public class AnimationSystem implements System {
 	@Override
 	public void handleMessage(String message) {
 		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
-			this.entities = Engine.getEntitiesFor(AnimationComponent.class);
+			this.entities = Engine.getWithAllTypes(AnimationComponent.class);
 		}
 	}
 }

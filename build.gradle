@@ -62,6 +62,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 
         // Reflection
         compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
@@ -79,7 +80,6 @@ project(":core") {
 
         // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
         compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.3.0'
-        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
 
