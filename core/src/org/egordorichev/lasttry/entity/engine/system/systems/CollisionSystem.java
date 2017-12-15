@@ -50,7 +50,7 @@ public class CollisionSystem implements System {
 			PositionComponent pos2 = second.getComponent(PositionComponent.class);
 			SizeComponent size2 = second.getComponent(SizeComponent.class);
 			// Skip comparison if missing the required components
-			if (pos1 == null || size1 == null) {
+			if (pos2 == null || size2 == null) {
 				continue;
 			}
 			if (Collider.testAABB(pos1.x, pos1.y, size1.width, size1.height, pos2.x, pos2.y, size2.width,

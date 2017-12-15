@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * The base class for in-game entities
  */
-public class Entity {
+public class Entity implements Comparable<Entity> {
 	/**
 	 * Registered components
 	 */
@@ -120,23 +120,7 @@ public class Entity {
 	 *            New z-index
 	 */
 	public void setZIndex(byte zIndex) {
-		setZIndex(zIndex, false);
-	}
-
-	/**
-	 * Set entity z-index and have the engine recalculate Z-indices after the
-	 * update if desired.
-	 * 
-	 * @param zIndex
-	 *            New z-index
-	 * @param refreshZIndices
-	 *            Option to recalculate engine Z-indices
-	 */
-	public void setZIndex(byte zIndex, boolean refreshZIndices) {
 		this.zIndex = zIndex;
-		if (refreshZIndices) {
-			Engine.recalculateZIndices();
-		}
 	}
 
 	/**
@@ -151,5 +135,17 @@ public class Entity {
 	 */
 	public byte getZIndex() {
 		return this.zIndex;
+	}
+
+	@Override
+	public int compareTo(Entity other) {
+		byte z1 = this.getZIndex();
+		byte z2 = other.getZIndex();
+		if (z1 > z2) {
+			return 1;
+		} else if (z1 < z2) {
+			return -1;
+		}
+		return 0;
 	}
 }
