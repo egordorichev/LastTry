@@ -17,6 +17,19 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+util/tile_cracks
+  rotate: false
+  xy: 1, 9
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+
+textures3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 ui/bg
   rotate: false
   xy: 1, 26
@@ -32,7 +45,7 @@ ui/inventory_slot
   offset: 0, 0
   index: -1
 
-textures3.png
+textures4.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -73,7 +86,7 @@ blocks/lt_template_tiles
   offset: 0, 0
   index: -1
 
-textures4.png
+textures5.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -135,7 +148,7 @@ icons/lt_template
   offset: 0, 0
   index: -1
 
-textures5.png
+textures6.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -148,7 +161,7 @@ creatures/lt_player
   offset: 0, 0
   index: -1
 
-textures6.png
+textures7.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
@@ -168,7 +181,7 @@ walls/lt_grass_wall_tiles
   offset: 0, 0
   index: -1
 
-textures7.png
+textures8.png
 size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest

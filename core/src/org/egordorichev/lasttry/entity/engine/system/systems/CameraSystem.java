@@ -11,7 +11,7 @@ import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.Camera;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.item.tile.Tile;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.graphics.PerfectViewport;
@@ -71,14 +71,14 @@ public class CameraSystem implements System {
 
 				SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
 
-				float width = worldSize.width * Chunk.SIZE * Block.SIZE;
-				float height = worldSize.height * Chunk.SIZE * Block.SIZE;
+				float width = worldSize.width * Chunk.SIZE * Tile.SIZE;
+				float height = worldSize.height * Chunk.SIZE * Tile.SIZE;
 				float halfDisplayWidth = cam.camera.viewportWidth / 2;
 				float halfDisplayHeight = cam.camera.viewportHeight / 2;
 
 				// Auto floor it:
-				cam.camera.position.x = (int) Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Block.SIZE), halfDisplayWidth + Block.SIZE);
-				cam.camera.position.y = (int) Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Block.SIZE), halfDisplayHeight + Block.SIZE);
+				cam.camera.position.x = (int) Math.max(Math.min(cam.camera.position.x, width - halfDisplayWidth - Tile.SIZE), halfDisplayWidth + Tile.SIZE);
+				cam.camera.position.y = (int) Math.max(Math.min(cam.camera.position.y, height - halfDisplayHeight - Tile.SIZE), halfDisplayHeight + Tile.SIZE);
 			}
 
 			cam.camera.update();

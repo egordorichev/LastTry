@@ -17,10 +17,6 @@ import org.egordorichev.lasttry.entity.entities.world.World;
  */
 public class Block extends Tile {
 	/**
-	 * Block size
-	 */
-	public static short SIZE = 8;
-	/**
 	 * Max light level
 	 */
 	public static short MAX_LIGHT = 16;
@@ -61,7 +57,7 @@ public class Block extends Tile {
 
 		this.getComponent(TileComponent.class).tiles =
 			Assets.getTexture("blocks/" + this.getComponent(IdComponent.class).id.replace(':', '_')
-				+ "_tiles").split(Block.SIZE, Block.SIZE);
+				+ "_tiles").split(Tile.SIZE, Tile.SIZE);
 
 		this.getComponent(SolidComponent.class).solid =
 			asset.getBoolean("solid", true);
@@ -83,7 +79,7 @@ public class Block extends Tile {
 	@Override
 	protected void place(short x, short y) {
 		World.instance.setBlock(this.getComponent(IdComponent.class).id, x, y);
-		World.instance.setData(TileHelper.create(), x, y);
+		World.instance.setData(TileHelper.main.create(), x, y);
 	}
 
 	/**
