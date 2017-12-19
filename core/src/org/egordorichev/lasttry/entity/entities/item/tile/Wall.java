@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.entities.item.tile;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
-import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.entity.entities.world.World;
 

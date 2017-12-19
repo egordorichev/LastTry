@@ -216,6 +216,7 @@ public class Engine {
 	 */
 	public static void removeEntity(Entity entity) {
 		entities.remove(entity);
+
 		// Remove from caches
 		for (Class<?> componentClass : entity.getComponents().keySet()) {
 			HashSet<Entity> set = componentToEntity.getOrDefault(componentClass, new HashSet<>());

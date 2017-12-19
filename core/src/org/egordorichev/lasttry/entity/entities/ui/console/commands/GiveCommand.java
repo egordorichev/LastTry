@@ -7,7 +7,6 @@ import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
-import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
 import org.egordorichev.lasttry.entity.entities.ui.console.ConsoleCommand;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 

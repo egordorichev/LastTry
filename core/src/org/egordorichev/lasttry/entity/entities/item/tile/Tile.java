@@ -8,7 +8,7 @@ import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.Item;
 import org.egordorichev.lasttry.entity.entities.item.ItemUseComponent;
-import org.egordorichev.lasttry.entity.entities.item.TileComponent;
+import org.egordorichev.lasttry.entity.entities.item.StackComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.graphics.Graphics;
 import org.egordorichev.lasttry.util.binary.BinaryPacker;
@@ -24,6 +24,7 @@ public class Tile extends Item {
 
 		this.addComponent(TileComponent.class);
 		this.getComponent(ItemUseComponent.class).autoUse = true;
+		this.getComponent(StackComponent.class).max = 999;
 	}
 
 	/**

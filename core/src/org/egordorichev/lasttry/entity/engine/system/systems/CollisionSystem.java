@@ -7,6 +7,7 @@ import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
+import org.egordorichev.lasttry.entity.entities.creature.AiComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
@@ -53,14 +54,28 @@ public class CollisionSystem implements System {
 			if (pos2 == null || size2 == null) {
 				continue;
 			}
+
 			if (Collider.testAABB(pos1.x, pos1.y, size1.width, size1.height, pos2.x, pos2.y, size2.width,
-					size2.height)) {
-				// TODO: react here
+				size2.height)) {
+
+				AiComponent ai1 = first.getComponent(AiComponent.class);
+				AiComponent ai2 = second.getComponent(AiComponent.class);
+
+				if (ai1 != null) {
+					ai1.ai.collide(first, second);
+				}
+
+				if (ai2 != null) {
+					ai2.ai.collide(second, first);
+				}
+
+				if (ai1 != null || ai2 != null) {
+					return; // So we don't check not updated list
+				}
 			}
 		}
 	}
-	
-	
+
 
 	/**
 	 * Handles adding new enemies
