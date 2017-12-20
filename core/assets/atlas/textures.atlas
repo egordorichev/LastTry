@@ -155,9 +155,16 @@ filter: Nearest,Nearest
 repeat: none
 creatures/lt_player
   rotate: false
-  xy: 1, 1
+  xy: 1, 10
   size: 16, 240
   orig: 16, 240
+  offset: 0, 0
+  index: -1
+creatures/lt_zombie
+  rotate: false
+  xy: 1, 1
+  size: 8, 8
+  orig: 8, 8
   offset: 0, 0
   index: -1
 

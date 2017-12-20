@@ -20,5 +20,6 @@ public class ConsoleCommandsComponent extends Component {
 		this.commands.add(new ChunksCommand());
 		this.commands.add(new DayCommand());
 		this.commands.add(new NightCommand());
+		this.commands.add(new SpawnCommand());
 	}
 }
