@@ -53,8 +53,8 @@ public class Tile extends Item {
 	/**
 	 * Renders the tile
 	 *
-	 * @param x     Wall X
-	 * @param y     Wall Y
+	 * @param x     Tile X
+	 * @param y     Tile Y
 	 * @param data  Tile data
 	 * @param light How light the wall is
 	 */
@@ -65,10 +65,10 @@ public class Tile extends Item {
 	/**
 	 * Renders the tile
 	 *
-	 * @param x     Wall X
-	 * @param y     Wall Y
+	 * @param x     Tile X
+	 * @param y     Tile Y
 	 * @param data  Tile data
-	 * @param light How light the wall is
+	 * @param light How light the tile is
 	 * @param neighbors Packed binary representing neighbors
 	 */
 	public void render(short x, short y, int data, float light, int neighbors) {

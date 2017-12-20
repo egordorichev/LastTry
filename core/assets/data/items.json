@@ -25,5 +25,9 @@
 
 	"lt:fc_main" : {
 		"type" : "tile.interactable.fc.FC"
+	},
+
+	"lt:chest" : {
+		"type" : "tile.multitile.MultitileBlock"
 	}
 }

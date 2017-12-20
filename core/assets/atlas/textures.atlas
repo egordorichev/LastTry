@@ -50,37 +50,44 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+blocks/lt_chest_tiles
+  rotate: false
+  xy: 130, 226
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 blocks/lt_dirt_tiles
   rotate: false
-  xy: 1, 234
+  xy: 1, 243
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 blocks/lt_fc_main_tiles
   rotate: false
-  xy: 130, 225
+  xy: 259, 259
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 blocks/lt_grass_tiles
   rotate: false
-  xy: 1, 209
+  xy: 1, 218
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 blocks/lt_stone_tiles
   rotate: false
-  xy: 130, 234
+  xy: 130, 243
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 blocks/lt_template_tiles
   rotate: false
-  xy: 1, 184
+  xy: 1, 193
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
@@ -91,58 +98,65 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+icons/lt_chest
+  rotate: false
+  xy: 1, 36
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 icons/lt_dirt
   rotate: false
-  xy: 1, 28
+  xy: 18, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_dirt_wall
   rotate: false
-  xy: 18, 45
+  xy: 1, 10
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_fc_main
   rotate: false
-  xy: 1, 19
+  xy: 18, 35
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_grass
   rotate: false
-  xy: 27, 45
+  xy: 27, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_grass_wall
   rotate: false
-  xy: 1, 10
+  xy: 1, 1
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_stone
   rotate: false
-  xy: 36, 45
+  xy: 18, 26
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 icons/lt_stone_pickaxe
   rotate: false
-  xy: 1, 37
+  xy: 1, 19
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 icons/lt_template
   rotate: false
-  xy: 1, 1
+  xy: 27, 35
   size: 8, 8
   orig: 8, 8
   offset: 0, 0

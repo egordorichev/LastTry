@@ -11,6 +11,10 @@ public class TileHelper {
 	 * The default tile helper
 	 */
 	public static TileHelper main = new TileHelper();
+	/**
+	 * Multitile helper
+	 */
+	public static MultitileHelper multitile = new MultitileHelper();
 
 	/**
 	 * @return New random tile data
@@ -18,9 +22,9 @@ public class TileHelper {
 	public int create() {
 		int data = 0;
 
-		data = setVariant(data, RandomGenerator.random(0, 2));
-		data = setBlockHealth(data, 3);
-		data = setWallHealth(data, 3);
+		data = this.setVariant(data, RandomGenerator.random(0, 2));
+		data = this.setBlockHealth(data, 3);
+		data = this.setWallHealth(data, 3);
 
 		return data;
 	}
