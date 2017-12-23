@@ -2,6 +2,7 @@
 	"lt:player" : {
 		"components" : [
 			"entity.entities.item.inventory.InventoryComponent",
+			"entity.entities.item.inventory.ItemComponent",
 			"entity.entities.creature.SaveComponent"
 		],
 		"w" : 16,
