@@ -114,7 +114,7 @@ public class Engine {
 	 * @param message
 	 *            Message, to send
 	 */
-	public static void sendMessage(String message) {
+	public static void sendMessage(SystemMessage message) {
 		for (System system : systems) {
 			system.handleMessage(message);
 		}
@@ -206,7 +206,7 @@ public class Engine {
 			set.add(entity);
 			componentToEntity.putIfAbsent(componentClass, set);
 		}
-		sendMessage(SystemMessages.ENTITIES_UPDATED);
+		sendMessage(SystemMessage.Type.ENTITIES_UPDATED.create());
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class Engine {
 			set.remove(entity);
 			componentToEntity.putIfAbsent(componentClass, set);
 		}
-		sendMessage(SystemMessages.ENTITIES_UPDATED);
+		sendMessage(SystemMessage.Type.ENTITIES_UPDATED.create());
 	}
 
 	/**
