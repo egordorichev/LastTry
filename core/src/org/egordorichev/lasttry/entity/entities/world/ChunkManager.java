@@ -58,8 +58,8 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
-			Engine.sendMessage("set_block_" + x + "_" + y);
 			chunk.setBlock(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
+			Engine.sendMessage("set_block_" + x + "_" + y);
 		}
 	}
 
@@ -99,8 +99,8 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
-			Engine.sendMessage("set_wall_" + x + "_" + y);
 			chunk.setWall(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
+			Engine.sendMessage("set_wall_" + x + "_" + y);
 		}
 	}
 
@@ -208,7 +208,7 @@ public class ChunkManager extends Entity {
 	}
 	
 	public Chunk getChunk(int x, int y){
-		int index = this.getChunkIndex(x, y);
+		int index = getChunkIndex(x, y);
 		
 		ChunksComponent chunks = this.getComponent(ChunksComponent.class);
 		

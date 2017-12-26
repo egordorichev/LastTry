@@ -120,8 +120,7 @@ public class LastTry extends Game {
 	public void render() {
 		float delta = Gdx.graphics.getDeltaTime();
 		this.state.update(delta);
-
-		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.combined);
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Graphics.batch.begin();
