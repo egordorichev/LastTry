@@ -16,7 +16,7 @@ public class InventoryComponent extends Component {
 	/**
 	 * Inventory size
 	 */
-	private short size = 40;
+	protected short size = 40;
 
 	/**
 	 * The actual inventory

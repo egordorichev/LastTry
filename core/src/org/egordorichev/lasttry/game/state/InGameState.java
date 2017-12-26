@@ -6,6 +6,8 @@ import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.graphics.Graphics;
 
+import java.util.ArrayList;
+
 public class InGameState extends State {
 	public InGameState() {
 
@@ -31,9 +33,10 @@ public class InGameState extends State {
 		}
 
 		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("ui").getComponent(CameraComponent.class).camera.combined);
+		ArrayList<Entity> entities = Engine.getEntities();
 
-		for (Entity entity : Engine.getEntities()) {
-			entity.renderUi();
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).renderUi();
 		}
 	}
 }

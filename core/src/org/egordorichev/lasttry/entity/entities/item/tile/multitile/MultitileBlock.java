@@ -10,7 +10,6 @@ import org.egordorichev.lasttry.entity.entities.item.tile.Block;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.MultitileHelper;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.entity.entities.world.World;
-import org.egordorichev.lasttry.util.log.Log;
 
 /**
  * Represents block larger, then one tile
@@ -69,6 +68,14 @@ public class MultitileBlock extends Block {
 		short y = (short) mouse.y;
 
 		MultitileSizeComponent size = this.getComponent(MultitileSizeComponent.class);
+
+		for (short xx = x; xx < x + size.width; xx++) {
+			for (short yy = y; yy < y + size.height; yy++) {
+				if (World.instance.getBlock(xx, yy) != null) {
+					return false;
+				}
+			}
+		}
 
 		return true;
 	}

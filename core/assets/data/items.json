@@ -28,6 +28,6 @@
 	},
 
 	"lt:chest" : {
-		"type" : "tile.multitile.MultitileBlock"
+		"type" : "tile.multitile.chest.Chest"
 	}
 }

@@ -105,6 +105,7 @@ public class Engine {
 		addSystem(new InteractionSystem());
 		addSystem(new UiSystem());
 		addSystem(new AiSystem());
+		addSystem(new ChestSystem());
 	}
 
 	/**
