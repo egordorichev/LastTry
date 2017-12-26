@@ -148,21 +148,21 @@ public class Engine {
 	 *            Component types
 	 * @return Entities list
 	 */
+	@SuppressWarnings("unchecked")
 	public static HashSet<Entity> getWithAllTypes(Class<? extends Component>... types) {
-		HashSet<Entity> list = new HashSet<>();
-		for (Entity entity : entities) {
-			boolean has = true;
-			for (Class<? extends Component> type : types) {
-				if (!entity.hasComponent(type)) {
-					has = false;
-					break;
-				}
-			}
-			if (has) {
-				list.add(entity);
+		HashSet<Entity> intersection = null;
+		for (Class<? extends Component> type : types) {
+			HashSet<Entity> compEntities = getWithAnyTypes(type);
+			if (intersection == null) {
+				// Set return set to the current temp set. Will be used as a
+				// base-line for future operations.
+				intersection = compEntities;
+			} else {
+				// Intersection of return set and temp set.
+				intersection.retainAll(compEntities);
 			}
 		}
-		return list;
+		return intersection;
 	}
 
 	/**
