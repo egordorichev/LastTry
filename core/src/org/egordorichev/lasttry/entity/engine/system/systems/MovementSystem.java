@@ -11,8 +11,10 @@ import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.item.tile.Tile;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.util.collision.Collider;
+import org.egordorichev.lasttry.util.log.Log;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -95,11 +97,11 @@ public class MovementSystem implements System {
 		PositionComponent position = entity.getComponent(PositionComponent.class);
 		SizeComponent size = entity.getComponent(SizeComponent.class);
 
-		short xStart = (short) (position.x / Block.SIZE);
-		short yStart = (short) (position.y / Block.SIZE);
+		short xStart = (short) (position.x / Tile.SIZE);
+		short yStart = (short) (position.y / Tile.SIZE);
 
-		for (short y = yStart; y < yStart + size.height / Block.SIZE + 1; y++) {
-			for (short x = xStart; x < xStart + size.width / Block.SIZE + 1; x++) {
+		for (short y = yStart; y < yStart + size.height / Tile.SIZE + 1; y++) {
+			for (short x = xStart; x < xStart + size.width / Tile.SIZE + 1; x++) {
 				String id = World.instance.getBlock(x, y);
 
 				if (id != null) {
@@ -107,7 +109,7 @@ public class MovementSystem implements System {
 
 					if (block.getComponent(CollisionComponent.class).solid &&
 						Collider.testAABB(position.x, position.y, size.width - 0.5f, size.height - 0.5f,
-							x * Block.SIZE, y * Block.SIZE, Block.SIZE, Block.SIZE)) {
+							x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE)) {
 						return true;
 					}
 				}

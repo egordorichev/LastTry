@@ -10,6 +10,7 @@ import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.item.tile.Tile;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.Interactable;
 import org.egordorichev.lasttry.entity.entities.item.tile.interactable.InteractionComponent;
 import org.egordorichev.lasttry.entity.entities.world.World;
@@ -79,8 +80,8 @@ public class InteractionSystem implements System, SimpleInputProcessor {
 			}
 		}
 
-		short x = (short) Math.floor(mouse.x / Block.SIZE);
-		short y = (short) Math.floor(mouse.y / Block.SIZE);
+		short x = (short) Math.floor(mouse.x / Tile.SIZE);
+		short y = (short) Math.floor(mouse.y / Tile.SIZE);
 
 		String id = World.instance.getBlock(x, y);
 

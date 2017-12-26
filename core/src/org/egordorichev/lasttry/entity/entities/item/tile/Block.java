@@ -9,7 +9,6 @@ import org.egordorichev.lasttry.entity.component.SolidComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.entity.entities.world.World;
 
@@ -17,10 +16,6 @@ import org.egordorichev.lasttry.entity.entities.world.World;
  * The main part of the world
  */
 public class Block extends Tile {
-	/**
-	 * Block size
-	 */
-	public static short SIZE = 8;
 	/**
 	 * Max light level
 	 */
@@ -62,7 +57,7 @@ public class Block extends Tile {
 
 		this.getComponent(TileComponent.class).tiles =
 			Assets.getTexture("blocks/" + this.getComponent(IdComponent.class).id.replace(':', '_')
-				+ "_tiles").split(Block.SIZE, Block.SIZE);
+				+ "_tiles").split(Tile.SIZE, Tile.SIZE);
 
 		this.getComponent(SolidComponent.class).solid =
 			asset.getBoolean("solid", true);
@@ -84,7 +79,7 @@ public class Block extends Tile {
 	@Override
 	protected void place(short x, short y) {
 		World.instance.setBlock(this.getComponent(IdComponent.class).id, x, y);
-		World.instance.setData(TileHelper.create(), x, y);
+		World.instance.setData(TileHelper.main.create(), x, y);
 	}
 
 	/**

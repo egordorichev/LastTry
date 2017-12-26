@@ -1,4 +1,4 @@
-package org.egordorichev.lasttry.entity.entities.item;
+package org.egordorichev.lasttry.entity.entities.item.tile;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.egordorichev.lasttry.entity.component.Component;

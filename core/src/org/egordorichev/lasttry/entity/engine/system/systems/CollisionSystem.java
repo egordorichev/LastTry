@@ -7,7 +7,8 @@ import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.System;
-import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.creature.AiComponent;
+import org.egordorichev.lasttry.entity.entities.item.tile.Tile;
 import org.egordorichev.lasttry.entity.entities.world.World;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.util.collision.Collider;
@@ -27,8 +28,8 @@ public class CollisionSystem implements System {
 	@Override
 	public void update(float delta) {
 		SizeComponent worldSize = World.instance.getComponent(SizeComponent.class);
-		float width = worldSize.width * Chunk.SIZE * Block.SIZE;
-		float height = worldSize.height * Chunk.SIZE * Block.SIZE;
+		float width = worldSize.width * Chunk.SIZE * Tile.SIZE;
+		float height = worldSize.height * Chunk.SIZE * Tile.SIZE;
 		Set<Pair<Entity>> pairs = Pairs.setOf(this.entities);
 		for (Pair<Entity> pair : pairs) {
 			// Skip comparison to self
@@ -43,8 +44,8 @@ public class CollisionSystem implements System {
 			if (pos1 == null && size1 == null) {
 				continue;
 			}
-			pos1.x = Math.max(Math.min(pos1.x, width - Block.SIZE - size1.width), Block.SIZE);
-			pos1.y = Math.max(Math.min(pos1.y, height - Block.SIZE - size1.height), Block.SIZE);
+			pos1.x = Math.max(Math.min(pos1.x, width - Tile.SIZE - size1.width), Tile.SIZE);
+			pos1.y = Math.max(Math.min(pos1.y, height - Tile.SIZE - size1.height), Tile.SIZE);
 			// Retrieve second entity information
 			Entity second = pair.right;
 			PositionComponent pos2 = second.getComponent(PositionComponent.class);
@@ -53,14 +54,28 @@ public class CollisionSystem implements System {
 			if (pos2 == null || size2 == null) {
 				continue;
 			}
+
 			if (Collider.testAABB(pos1.x, pos1.y, size1.width, size1.height, pos2.x, pos2.y, size2.width,
-					size2.height)) {
-				// TODO: react here
+				size2.height)) {
+
+				AiComponent ai1 = first.getComponent(AiComponent.class);
+				AiComponent ai2 = second.getComponent(AiComponent.class);
+
+				if (ai1 != null) {
+					ai1.ai.collide(first, second);
+				}
+
+				if (ai2 != null) {
+					ai2.ai.collide(second, first);
+				}
+
+				if (ai1 != null || ai2 != null) {
+					return; // So we don't check not updated list
+				}
 			}
 		}
 	}
-	
-	
+
 
 	/**
 	 * Handles adding new enemies

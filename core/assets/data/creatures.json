@@ -2,6 +2,7 @@
 	"lt:player" : {
 		"components" : [
 			"entity.entities.item.inventory.InventoryComponent",
+			"entity.entities.item.inventory.ItemComponent",
 			"entity.entities.creature.SaveComponent"
 		],
 		"w" : 16,
@@ -44,6 +45,24 @@
 					"y" : 0,
 					"w" : 16,
 					"h" : 24,
+					"delta" : 1
+				}
+			]
+		}
+	},
+
+	"lt:zombie" : {
+		"w" : 8,
+		"h" : 8,
+		"weight" : 0.3,
+		"health" : 50,
+		"animation" : {
+			"idle" : [
+				{
+					"x" : 0,
+					"y" : 0,
+					"w" : 8,
+					"h" : 8,
 					"delta" : 1
 				}
 			]

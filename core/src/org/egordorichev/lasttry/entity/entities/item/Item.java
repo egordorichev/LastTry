@@ -13,7 +13,8 @@ import org.egordorichev.lasttry.util.log.Log;
  */
 public class Item extends Entity {
 	public Item(String id) {
-		super(IdComponent.class, DescriptionComponent.class, TextureComponent.class, ItemUseComponent.class);
+		super(IdComponent.class, DescriptionComponent.class, TextureComponent.class, ItemUseComponent.class,
+			StackComponent.class);
 
 		this.getComponent(IdComponent.class).id = id;
 	}

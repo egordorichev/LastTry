@@ -8,6 +8,7 @@ import org.egordorichev.lasttry.core.boot.ArgumentParser;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.SaveableComponents;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.engine.SystemMessages;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
@@ -46,6 +47,8 @@ public class LastTry extends Game {
 	 */
 	@Override
 	public void create() {
+		SaveableComponents.init();
+
 		try {
 			ArgumentParser.parse();
 		} catch (RuntimeException exception) {

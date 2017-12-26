@@ -78,6 +78,7 @@ public class CreatureFactory extends AssetFactory<Creature> {
 		JsonValue data = Assets.creaturesData.get(id);
 
 		if (data == null) {
+			Log.error("Failed to find creature with id " + id);
 			return null;
 		}
 

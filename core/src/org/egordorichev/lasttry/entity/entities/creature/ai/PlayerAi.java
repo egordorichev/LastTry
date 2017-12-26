@@ -1,11 +1,16 @@
 package org.egordorichev.lasttry.entity.entities.creature.ai;
 
 import com.badlogic.gdx.Gdx;
+import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.physics.AccelerationComponent;
 import org.egordorichev.lasttry.entity.component.physics.CollisionComponent;
 import org.egordorichev.lasttry.entity.component.physics.VelocityComponent;
+import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.Creature;
+import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
+import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
+import org.egordorichev.lasttry.entity.entities.item.inventory.ItemComponent;
 import org.egordorichev.lasttry.util.math.NumberUtil;
 
 /**
@@ -93,5 +98,17 @@ public class PlayerAi extends Ai {
 		velocity.y *= 0.93;
 
 		velocity.y = NumberUtil.clamp(velocity.y, -10, 10);
+	}
+
+	@Override
+	public void collide(Entity self, Entity entity) {
+		if (entity instanceof ItemEntity) {
+			InventoryComponent inventory = self.getComponent(InventoryComponent.class);
+			ItemEntity item = (ItemEntity) entity;
+
+			if (inventory.add(item.getComponent(ItemComponent.class))) {
+				Engine.removeEntity(entity);
+			}
+		}
 	}
 }

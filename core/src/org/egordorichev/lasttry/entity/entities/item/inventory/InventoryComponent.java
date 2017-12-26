@@ -5,6 +5,7 @@ import org.egordorichev.lasttry.core.io.FileWriter;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.IdComponent;
+import org.egordorichev.lasttry.entity.entities.item.StackComponent;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class InventoryComponent extends Component {
 	/**
 	 * Inventory size
 	 */
-	private short size = 40;
+	protected short size = 40;
 
 	/**
 	 * The actual inventory
@@ -32,6 +33,46 @@ public class InventoryComponent extends Component {
 
 	public InventoryComponent() {
 		this.initSlots();
+	}
+
+	/**
+	 * Tries to add an item to the inventory
+	 *
+	 * @param item The item
+	 * @return Was it added or no
+	 */
+	public boolean add(ItemComponent item) {
+		if (item == null) {
+			return false;
+		}
+
+		// Check for existing stack
+		for (ItemComponent slot : this.inventory) {
+			// The items match
+			if (slot.item == item.item) {
+				StackComponent slotMax = slot.item.getComponent(StackComponent.class);
+
+				// If we have enough space
+				if (slotMax.max >= slot.count + item.count) {
+					slot.count += item.count;
+					return true;
+				}
+			}
+		}
+
+		// Did not find it, check for an empty one
+		for (ItemComponent slot : this.inventory) {
+			if (slot.isEmpty()) {
+				slot.item = item.item;
+				// Cap the value
+				StackComponent slotMax = slot.item.getComponent(StackComponent.class);
+				slot.count = (short) Math.min(slotMax.max, item.count);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

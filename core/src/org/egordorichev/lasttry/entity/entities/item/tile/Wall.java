@@ -3,7 +3,6 @@ package org.egordorichev.lasttry.entity.entities.item.tile;
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
-import org.egordorichev.lasttry.entity.entities.item.TileComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.helper.TileHelper;
 import org.egordorichev.lasttry.entity.entities.world.World;
 
@@ -26,7 +25,7 @@ public class Wall extends Tile {
 
 		this.getComponent(TileComponent.class).tiles =
 			Assets.getTexture("walls/" + this.getComponent(IdComponent.class).id.replace(':', '_')
-				+ "_tiles").split(Block.SIZE, Block.SIZE);
+				+ "_tiles").split(Tile.SIZE, Tile.SIZE);
 	}
 
 	/**
@@ -38,7 +37,7 @@ public class Wall extends Tile {
 	@Override
 	protected void place(short x, short y) {
 		World.instance.setWall(this.getComponent(IdComponent.class).id, x, y);
-		World.instance.setData(TileHelper.create(), x, y);
+		World.instance.setData(TileHelper.main.create(), x, y);
 	}
 
 	/**

@@ -38,7 +38,7 @@ public class ForestGenerator extends WorldGenerator {
 					this.world.setWall("lt:grass_wall", (short) x, (short) y);
 				}
 
-				this.world.setData(TileHelper.create(), (short) x, (short) y);
+				this.world.setData(TileHelper.main.create(), (short) x, (short) y);
 			}
 		}
 

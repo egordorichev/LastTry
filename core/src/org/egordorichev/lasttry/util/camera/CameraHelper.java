@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.util.camera;
 
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
-import org.egordorichev.lasttry.entity.entities.item.tile.Block;
+import org.egordorichev.lasttry.entity.entities.item.tile.Tile;
 import org.egordorichev.lasttry.graphics.Display;
 import org.egordorichev.lasttry.util.geometry.Rectangle;
 
@@ -28,10 +28,10 @@ public class CameraHelper {
 	public static Rectangle getCameraRectInBlocks() {
 		Rectangle rect = getCameraRect();
 
-		rect.x = (float) Math.floor(rect.x / Block.SIZE) - 1;
-		rect.y = (float) Math.floor(rect.y / Block.SIZE) - 1;
-		rect.w = (float) Math.ceil(rect.w / Block.SIZE) + 2;
-		rect.h = (float) Math.ceil(rect.h / Block.SIZE) + 2;
+		rect.x = (float) Math.floor(rect.x / Tile.SIZE) - 1;
+		rect.y = (float) Math.floor(rect.y / Tile.SIZE) - 1;
+		rect.w = (float) Math.ceil(rect.w / Tile.SIZE) + 2;
+		rect.h = (float) Math.ceil(rect.h / Tile.SIZE) + 2;
 
 		return rect;
 	}

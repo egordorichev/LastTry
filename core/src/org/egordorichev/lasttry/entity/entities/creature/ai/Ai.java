@@ -40,6 +40,16 @@ public class Ai {
 	}
 
 	/**
+	 * Reacts on a collision with second entity
+	 *
+	 * @param self Self
+	 * @param entity Second entity
+	 */
+	public void collide(Entity self, Entity entity) {
+
+	}
+
+	/**
 	 * Registers new state
 	 *
 	 * @param state New state

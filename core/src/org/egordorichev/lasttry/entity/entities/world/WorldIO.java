@@ -11,6 +11,7 @@ import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SaveableComponents;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.SaveComponent;
+import org.egordorichev.lasttry.entity.entities.item.tile.multitile.chest.ChestRegistry;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 import org.egordorichev.lasttry.entity.entities.world.generator.WorldGenerator;
@@ -18,6 +19,7 @@ import org.egordorichev.lasttry.util.log.Log;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class WorldIO extends IO<World> {
 	/**
@@ -43,15 +45,17 @@ public class WorldIO extends IO<World> {
 		try {
 			FileWriter writer = new FileWriter(root + "/world.wld");
 			HashSet<Entity> entities = Engine.getWithAllTypes(SaveComponent.class);
+			entities.add(world);
 
 			writer.writeInt32(entities.size());
-			entities.add(world);
 
 			// Save entities and components
 			for (Entity entity : entities) {
 				if (entity != world) {
 					IdComponent idComponent = entity.getComponent(IdComponent.class);
 					writer.writeString(idComponent.id);
+				} else {
+					writer.writeString("lt:world");
 				}
 
 				for (String saveable : SaveableComponents.list) {
@@ -93,14 +97,16 @@ public class WorldIO extends IO<World> {
 
 			int count = reader.readInt32();
 
-			for (int i = 0; i < count + 1; i++) {
+			for (int i = 0; i < count; i++) {
 				Entity entity = null;
+				String id = reader.readString();
 
-				if (i < count) {
-					String id = reader.readString();
-					entity = Assets.creatures.create(id);
-				} else {
+				if (Objects.equals(id, "lt:world")) {
 					entity = world;
+				} else if (Objects.equals(id, "lt:chest_registry")) {
+					entity = new ChestRegistry();
+				} else {
+					entity = Assets.creatures.create(id);
 				}
 
 				for (String saveable : SaveableComponents.list) {

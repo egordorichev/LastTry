@@ -5,14 +5,16 @@ import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.PositionComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
-import org.egordorichev.lasttry.entity.entities.item.Item;
-import org.egordorichev.lasttry.entity.entities.item.ItemEntity;
+import org.egordorichev.lasttry.entity.entities.creature.Creature;
 import org.egordorichev.lasttry.entity.entities.ui.console.ConsoleCommand;
 import org.egordorichev.lasttry.entity.entities.ui.console.UiConsole;
 
-public class GiveCommand extends ConsoleCommand {
-	public GiveCommand() {
-		super("give", "Gives player an item [item] (count)");
+/**
+ * Spawns mob
+ */
+public class SpawnCommand extends ConsoleCommand {
+	public SpawnCommand() {
+		super("spawn", "Spawns a creature [id] (count)");
 	}
 
 	@Override
@@ -35,10 +37,10 @@ public class GiveCommand extends ConsoleCommand {
 			}
 		}
 
-		Item item = Assets.items.get(id);
+		Creature creature = Assets.creatures.create(id);
 
-		if (item == null) {
-			console.print("Unknown item");
+		if (creature == null) {
+			console.print("Unknown creature");
 			return;
 		}
 
@@ -50,13 +52,12 @@ public class GiveCommand extends ConsoleCommand {
 
 		if (player != null) {
 			PositionComponent position = player.getComponent(PositionComponent.class);
-			Entity entity = new ItemEntity(item, count);
-			PositionComponent entityPosition = entity.getComponent(PositionComponent.class);
+			PositionComponent entityPosition = creature.getComponent(PositionComponent.class);
 
 			entityPosition.x = position.x;
 			entityPosition.y = position.y;
 
-			Engine.addEntity(entity);
+			Engine.addEntity(creature);
 		}
 	}
 }
