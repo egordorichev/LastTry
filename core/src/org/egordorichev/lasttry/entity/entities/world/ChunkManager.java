@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessage;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 
@@ -38,9 +39,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return null;
-		} else {
-			return chunk.getBlock(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getBlock(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -50,16 +50,20 @@ public class ChunkManager extends Entity {
 	 * @param x Block X
 	 * @param y Block Y
 	 */
-	public void setBlock(String value, short x, short y) {
+	public void setBlock(String value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
-
+		
 		Chunk chunk = this.getChunkFor(x, y);
-
+		
 		if (chunk != null) {
 			chunk.setBlock(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
-			Engine.sendMessage("set_block_" + x + "_" + y);
+			Engine.sendMessage(SystemMessage.Type.TILE_UPDATE.create()
+					.with("action", "set")
+					.with("value", value)
+					.with("x", x)
+					.with("y", y));
 		}
 	}
 
@@ -70,7 +74,7 @@ public class ChunkManager extends Entity {
 	 * @param y Wall Y
 	 * @return Wall ID at given position
 	 */
-	public String getWall(short x, short y) {
+	public String getWall(int x, int y) {
 		if (this.isOut(x, y)) {
 			return null;
 		}
@@ -79,9 +83,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return null;
-		} else {
-			return chunk.getWall(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getWall(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -91,7 +94,7 @@ public class ChunkManager extends Entity {
 	 * @param x Wall X
 	 * @param y Wall Y
 	 */
-	public void setWall(String value, short x, short y) {
+	public void setWall(String value, int x, int y) {
 		if (this.isOut(x, y)) {
 			return;
 		}
@@ -100,7 +103,11 @@ public class ChunkManager extends Entity {
 
 		if (chunk != null) {
 			chunk.setWall(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
-			Engine.sendMessage("set_wall_" + x + "_" + y);
+			Engine.sendMessage(SystemMessage.Type.WALL_UPDATE.create()
+					.with("action", "set")
+					.with("value", value)
+					.with("x", x)
+					.with("y", y));
 		}
 	}
 
@@ -112,7 +119,7 @@ public class ChunkManager extends Entity {
 	 * @return Light at given position
 	 */
 	public float getLight(int x, int y) {
-		if (this.isOut(x, y)) {
+		if (isOut(x, y)) {
 			return 0.0f;
 		}
 
@@ -133,7 +140,7 @@ public class ChunkManager extends Entity {
 	 * @param y Light Y
 	 */
 	public void setLight(float value, int x, int y) {
-		if (this.isOut(x, y)) {
+		if (isOut(x, y)) {
 			return;
 		}
 
@@ -151,7 +158,7 @@ public class ChunkManager extends Entity {
 	 * @param y Data Y
 	 * @return Data at given position
 	 */
-	public int getData(short x, short y) {
+	public int getData(int x, int y) {
 		if (this.isOut(x, y)) {
 			return 0;
 		}
@@ -160,9 +167,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return 0;
-		} else {
-			return chunk.getData(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getData(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -208,20 +214,20 @@ public class ChunkManager extends Entity {
 	}
 	
 	public Chunk getChunk(int x, int y){
-		int index = getChunkIndex(x, y);
+		SizeComponent size = getComponent(SizeComponent.class);
+		if(x < 0 || y < 0 || x >= size.width || y >= size.height)return null;
 		
+		int index = getChunkIndex(x, y);
 		ChunksComponent chunks = this.getComponent(ChunksComponent.class);
 		
-		if (index < 0 || index > chunks.chunks.length - 1) {
-			return null;
-		}
-		
 		if (chunks.chunks[index] == null) {
-			this.loadChunk(x, y);
-
-			Engine.sendMessage("load_chunk_" + x + "_" + y);
-
-			return chunks.chunks[index];
+			loadChunk(x, y);
+			Chunk chunk = chunks.chunks[index];
+			Engine.sendMessage(SystemMessage.Type.LOAD_CHUNK.create()
+					.with("chunk", chunk)
+					.with("x", x)
+					.with("y", y));
+			return chunk;
 		}
 		
 		return chunks.chunks[index];

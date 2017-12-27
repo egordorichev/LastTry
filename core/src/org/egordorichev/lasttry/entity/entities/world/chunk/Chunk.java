@@ -26,7 +26,9 @@ public class Chunk extends Entity {
 	/**
 	 * Chunk size in blocks
 	 */
-	public static short SIZE = 32;
+	//THEORETICALLY decreasing the size of a chunk to, let's say, 16, would increase the speed of the lighting
+	//algorithm since lighting is calculated IN CHUNKS. Although, I have not tested this yet.
+	public static int SIZE = 32;
 	/**
 	 * Block ID's
 	 */
@@ -228,7 +230,7 @@ public class Chunk extends Entity {
 	 */
 	public void calculateLighting(float globalLight) {
 		PositionComponent pos = this.getComponent(PositionComponent.class);
-		Log.debug("Calculating lighting for chunk (" + pos.x + ", " + pos.y + ")");
+		Log.debug("Calculating lighting for chunk (" + (int)pos.x + ", " + (int)pos.y + ")");
 		
 		final int chunkX = (int)(pos.x * SIZE);
 		final int chunkY = (int)(pos.y * SIZE);
