@@ -280,7 +280,7 @@ public class Chunk extends Entity {
 	}
 	
 	private float lightCandidate(int x, int y, float lightFade){
-		//if(World.instance.getBlock(x, y) != null)lightFade *= 1.5;
+		if(World.instance.getBlock(x, y) != null)lightFade *= 1.5;
 		return World.instance.getLight(x, y) - lightFade;
 	}
 
