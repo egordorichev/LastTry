@@ -34,7 +34,6 @@ public class ChunkIO extends IO<Chunk> {
 					writer.writeString(chunk.getBlock(bx, by));
 					writer.writeString(chunk.getWall(bx, by));
 					writer.writeInt32(chunk.getData(bx, by));
-					writer.writeFloat(chunk.getLight(bx, by));
 				}
 			}
 
@@ -74,7 +73,6 @@ public class ChunkIO extends IO<Chunk> {
 					chunk.setBlock(reader.readString(), bx, by);
 					chunk.setWall(reader.readString(), bx, by);
 					chunk.setData(reader.readInt32(), bx, by);
-					chunk.setLight(reader.readFloat(), bx, by);
 				}
 			}
 			return chunk;
