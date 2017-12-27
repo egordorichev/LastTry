@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.entities.world;
 
+import org.egordorichev.lasttry.core.Debug;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
@@ -42,7 +43,7 @@ public class World extends ChunkManager {
 				String blockId = this.getBlock(x, y);
 				Block block = null;
 				int neighbors = 15;
-				float light = this.getLight(x, y);
+				float light = Debug.lightEnabled ? this.getLight(x, y) : 1f;
 				int data = this.getData(x, y);
 
 				if (blockId != null) {

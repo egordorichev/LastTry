@@ -9,10 +9,6 @@ import org.egordorichev.lasttry.graphics.Graphics;
 import java.util.ArrayList;
 
 public class InGameState extends State {
-	public InGameState() {
-
-	}
-
 	/**
 	 * Updates the game
 	 *
@@ -29,6 +25,7 @@ public class InGameState extends State {
 	@Override
 	public void render() {
 		ArrayList<Entity> entities = Engine.getEntities();
+		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.combined);
 
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render();

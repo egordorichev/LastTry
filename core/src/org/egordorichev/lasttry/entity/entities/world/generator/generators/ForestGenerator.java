@@ -19,26 +19,30 @@ public class ForestGenerator extends WorldGenerator {
 	@Override
 	public World generate() {
 		this.world = new World(this.name, "forest");
-		SizeComponent size = this.world.getComponent(SizeComponent.class);
+		
+		SizeComponent size = World.instance.getComponent(SizeComponent.class);
+		int width = (int) size.width;
+		int height = (int) size.height;
+		
+		int groundLevel = height * Chunk.SIZE / 4 * 3;
+		
+		for(int chunkX = 0; chunkX < width; chunkX++){
+			for(int chunkY = 0; chunkY < height; chunkY++){
+				Chunk chunk = World.instance.getChunk(chunkX, chunkY);
+				for(int x = 0; x < Chunk.SIZE; x++){
+					int gy = groundLevel + (int)(Math.cos((chunkX * Chunk.SIZE + x) / 4.0) * 4) - chunkY * Chunk.SIZE;
+					for(int y = 0; y < Chunk.SIZE; y++){
+						if (y < gy) {
+							chunk.setBlock("lt:dirt", x, y);
+							chunk.setWall("lt:dirt_wall", x, y);
+						} else if (y == gy) {
+							chunk.setBlock("lt:grass", x, y);
+							chunk.setWall("lt:grass_wall", x, y);
+						}
 
-		int width = (int) (size.width * Chunk.SIZE);
-		int height = (int) (size.height * Chunk.SIZE);
-
-		int groundLevel = height / 4 * 3;
-
-		for (int x = 0; x < width; x++) {
-			int gy = (int) (groundLevel + Math.cos(x / 4) * 4);
-
-			for (int y = 0; y < height; y++) {
-				if (y < gy) {
-					this.world.setBlock("lt:dirt", (short) x, (short) y);
-					this.world.setWall("lt:dirt_wall", (short) x, (short) y);
-				} else if (y == gy) {
-					this.world.setBlock("lt:grass", (short) x, (short) y);
-					this.world.setWall("lt:grass_wall", (short) x, (short) y);
+						this.world.setData(TileHelper.main.create(), x, y);
+					}
 				}
-
-				this.world.setData(TileHelper.main.create(), (short) x, (short) y);
 			}
 		}
 

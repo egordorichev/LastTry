@@ -10,7 +10,7 @@ import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.SaveableComponents;
 import org.egordorichev.lasttry.entity.engine.Engine;
-import org.egordorichev.lasttry.entity.engine.SystemMessages;
+import org.egordorichev.lasttry.entity.engine.SystemMessage;
 import org.egordorichev.lasttry.entity.engine.system.systems.CameraSystem;
 import org.egordorichev.lasttry.entity.entities.camera.CameraComponent;
 import org.egordorichev.lasttry.entity.entities.item.inventory.InventoryComponent;
@@ -110,7 +110,7 @@ public class LastTry extends Game {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		Engine.sendMessage(SystemMessages.WINDOW_RESIZED);
+		Engine.sendMessage(SystemMessage.Type.WINDOW_RESIZED.create());
 	}
 
 	/**
@@ -120,8 +120,7 @@ public class LastTry extends Game {
 	public void render() {
 		float delta = Gdx.graphics.getDeltaTime();
 		this.state.update(delta);
-
-		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("main").getComponent(CameraComponent.class).camera.combined);
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Graphics.batch.begin();
@@ -145,6 +144,6 @@ public class LastTry extends Game {
 	@Override
 	public void dispose() {
 		super.dispose();
-		Engine.sendMessage("save");
+		Engine.sendMessage(SystemMessage.Type.SAVE.create());
 	}
 }
