@@ -18,13 +18,18 @@ public class LightSystem implements System {
 	public void handleMessage(SystemMessage message) {
 		if (Objects.equal(message.getOr("action", null), "set")) {
 			try {
-				short x = message.get("x");
-				short y =  message.get("y");
-
-				Chunk chunk = World.instance.getChunkFor(x, y);
-				// chunk.calculateLighting();
-				// TODO: place back
-				// REALLY SLOW!
+				int x = (int)message.get("x") / Chunk.SIZE;
+				int y = (int)message.get("y") / Chunk.SIZE;
+				
+				World.instance.getChunk(x, y).calculateLighting(1f);
+				for(int chunkX = -1; chunkX <= 1; chunkX++){
+					for(int chunkY = -1; chunkY <= 1; chunkY++){
+						if(chunkX != 0 || chunkY != 0){
+							Chunk chunk = World.instance.getChunk(x + chunkX, y + chunkY);
+							if(chunk != null)chunk.calculateLighting(1f);
+						}
+					}
+				}
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				Log.error("Failed to recalculate light");

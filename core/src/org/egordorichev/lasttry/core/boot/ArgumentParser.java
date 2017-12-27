@@ -1,10 +1,11 @@
 package org.egordorichev.lasttry.core.boot;
 
+import java.util.ArrayList;
+
 import org.egordorichev.lasttry.core.boot.commands.DebugCommand;
 import org.egordorichev.lasttry.core.boot.commands.HelpCommand;
+import org.egordorichev.lasttry.core.boot.commands.LightCommand;
 import org.egordorichev.lasttry.core.boot.commands.PackTexturesCommand;
-
-import java.util.ArrayList;
 
 /**
  * Handles arguments
@@ -23,6 +24,7 @@ public class ArgumentParser {
 		commands.add(new HelpCommand());
 		commands.add(new DebugCommand());
 		commands.add(new PackTexturesCommand());
+		commands.add(new LightCommand());
 	}
 
 	/**

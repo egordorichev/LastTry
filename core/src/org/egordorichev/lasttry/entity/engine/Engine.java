@@ -1,5 +1,6 @@
 package org.egordorichev.lasttry.entity.engine;
 
+import org.egordorichev.lasttry.core.Debug;
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.Players;
 import org.egordorichev.lasttry.entity.asset.Assets;
@@ -100,7 +101,7 @@ public class Engine {
 		addSystem(new MovementSystem());
 		addSystem(new CollisionSystem());
 		addSystem(new InventorySystem());
-		addSystem(new LightSystem());
+		if(Debug.lightEnabled)addSystem(new LightSystem());
 		addSystem(new ClockSystem());
 		addSystem(new InteractionSystem());
 		addSystem(new UiSystem());

@@ -9,6 +9,7 @@ import org.egordorichev.lasttry.entity.asset.Assets;
 import org.egordorichev.lasttry.entity.component.Component;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SaveableComponents;
+import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
 import org.egordorichev.lasttry.entity.entities.creature.SaveComponent;
 import org.egordorichev.lasttry.entity.entities.item.tile.multitile.chest.ChestRegistry;
@@ -146,9 +147,17 @@ public class WorldIO extends IO<World> {
 	public static World generate(String name, String type) {
 		Log.info("Generating world " + name + ":" + type);
 		World world = WorldGenerator.forType(name, type).generate();
-
-		// Manipulations, if needed
-
+		
+		SizeComponent size = World.instance.getComponent(SizeComponent.class);
+		int width = (int) size.width;
+		int height = (int) size.height;
+		
+		for(int chunkX = 0; chunkX < width; chunkX++){
+			for(int chunkY = height - 1; chunkY >= 0; chunkY--){
+				World.instance.getChunk(chunkX, chunkY).calculateLighting(1f);
+			}
+		}
+		
 		return world;
 	}
 

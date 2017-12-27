@@ -20,8 +20,8 @@ public class ChunkIO extends IO<Chunk> {
 	 * @param chunk Chunk to save
 	 */
 	public static void write(String folder, Chunk chunk) {
-		short x = chunk.getX();
-		short y = chunk.getY();
+		int x = chunk.getX();
+		int y = chunk.getY();
 
 		Log.debug("Saving chunk " + x + ":" + y);
 
@@ -34,6 +34,7 @@ public class ChunkIO extends IO<Chunk> {
 					writer.writeString(chunk.getBlock(bx, by));
 					writer.writeString(chunk.getWall(bx, by));
 					writer.writeInt32(chunk.getData(bx, by));
+					writer.writeFloat(chunk.getLight(bx, by));
 				}
 			}
 
@@ -54,7 +55,7 @@ public class ChunkIO extends IO<Chunk> {
 	 *
 	 * @return Loaded chunk
 	 */
-	public static Chunk load(String folder, short x, short y) {
+	public static Chunk load(String folder, int x, int y) {
 		Log.debug("Loading chunk " + x + ":" + y);
 
 		// TODO: world folders
@@ -64,14 +65,16 @@ public class ChunkIO extends IO<Chunk> {
 
 			if (version != VERSION) {
 				Log.error("Chunk version " + version + " is not supported");
+				reader.close();
 				return null;
 			}
 
-			for (short by = 0; by < Chunk.SIZE; by++) {
-				for (short bx = 0; bx < Chunk.SIZE; bx++) {
+			for (int by = 0; by < Chunk.SIZE; by++) {
+				for (int bx = 0; bx < Chunk.SIZE; bx++) {
 					chunk.setBlock(reader.readString(), bx, by);
 					chunk.setWall(reader.readString(), bx, by);
 					chunk.setData(reader.readInt32(), bx, by);
+					chunk.setLight(reader.readFloat(), bx, by);
 				}
 			}
 			return chunk;

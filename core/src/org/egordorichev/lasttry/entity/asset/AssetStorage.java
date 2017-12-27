@@ -27,4 +27,9 @@ public class AssetStorage<T> {
 	public T get(String id) {
 		return this.storage.get(id);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <R> R getUnsafe(String id) {
+		return (R) this.storage.get(id);
+	}
 }
