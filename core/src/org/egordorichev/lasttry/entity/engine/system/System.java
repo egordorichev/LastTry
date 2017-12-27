@@ -1,5 +1,7 @@
 package org.egordorichev.lasttry.entity.engine.system;
 
+import org.egordorichev.lasttry.entity.engine.SystemMessage;
+
 /**
  * Handles one kind of action
  */
@@ -18,7 +20,7 @@ public interface System {
 	 *
 	 * @param message Message from the engine
 	 */
-	default void handleMessage(String message) {
+	default void handleMessage(SystemMessage message) {
 
 	}
 }

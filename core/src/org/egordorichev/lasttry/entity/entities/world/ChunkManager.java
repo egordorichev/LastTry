@@ -4,6 +4,7 @@ import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.component.SizeComponent;
 import org.egordorichev.lasttry.entity.engine.Engine;
+import org.egordorichev.lasttry.entity.engine.SystemMessage;
 import org.egordorichev.lasttry.entity.entities.world.chunk.Chunk;
 import org.egordorichev.lasttry.entity.entities.world.chunk.ChunkIO;
 
@@ -38,9 +39,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return null;
-		} else {
-			return chunk.getBlock(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getBlock(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -58,7 +58,11 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
-			Engine.sendMessage("set_block_" + x + "_" + y);
+			Engine.sendMessage(SystemMessage.Type.TILE_UPDATE.create()
+					.with("action", "set")
+					.with("value", value)
+					.with("x", x)
+					.with("y", y));
 			chunk.setBlock(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
 	}
@@ -79,9 +83,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return null;
-		} else {
-			return chunk.getWall(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getWall(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -99,7 +102,11 @@ public class ChunkManager extends Entity {
 		Chunk chunk = this.getChunkFor(x, y);
 
 		if (chunk != null) {
-			Engine.sendMessage("set_wall_" + x + "_" + y);
+			Engine.sendMessage(SystemMessage.Type.WALL_UPDATE.create()
+					.with("action", "set")
+					.with("value", value)
+					.with("x", x)
+					.with("y", y));
 			chunk.setWall(value, chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
 	}
@@ -120,9 +127,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return 1.0f;
-		} else {
-			return chunk.getLight(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getLight(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -160,9 +166,8 @@ public class ChunkManager extends Entity {
 
 		if (chunk == null) {
 			return 0;
-		} else {
-			return chunk.getData(chunk.toRelativeX(x), chunk.toRelativeY(y));
 		}
+		return chunk.getData(chunk.toRelativeX(x), chunk.toRelativeY(y));
 	}
 
 	/**
@@ -218,10 +223,12 @@ public class ChunkManager extends Entity {
 
 			this.loadChunk(cx, cy);
 			// chunks.chunks[index].calculateLighting();
-
-			Engine.sendMessage("load_chunk_" + cx + "_" + cy);
-
-			return chunks.chunks[index];
+			Chunk chunk = chunks.chunks[index];
+			Engine.sendMessage(SystemMessage.Type.LOAD_CHUNK.create()
+					.with("chunk", chunk)
+					.with("x", x)
+					.with("y", y));
+			return chunk;
 		}
 
 		return chunks.chunks[index];

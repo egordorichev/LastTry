@@ -2,7 +2,7 @@ package org.egordorichev.lasttry.entity.engine.system.systems;
 
 import org.egordorichev.lasttry.entity.Entity;
 import org.egordorichev.lasttry.entity.engine.Engine;
-import org.egordorichev.lasttry.entity.engine.SystemMessages;
+import org.egordorichev.lasttry.entity.engine.SystemMessage;
 import org.egordorichev.lasttry.entity.engine.system.System;
 import org.egordorichev.lasttry.entity.entities.world.ClockComponent;
 
@@ -52,8 +52,8 @@ public class ClockSystem implements System {
 	 * @param message Message from the engine
 	 */
 	@Override
-	public void handleMessage(String message) {
-		if (Objects.equals(message, SystemMessages.ENTITIES_UPDATED)) {
+	public void handleMessage(SystemMessage message) {
+		if (Objects.equals(message.getType(), SystemMessage.Type.ENTITIES_UPDATED)) {
 			this.entities = Engine.getWithAllTypes(ClockComponent.class);
 		}
 	}
