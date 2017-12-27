@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import org.egordorichev.lasttry.entity.asset.factories.CreatureFactory;
-import org.egordorichev.lasttry.entity.asset.factories.CreaturesDataFactory;
-import org.egordorichev.lasttry.entity.asset.factories.ItemFactory;
-import org.egordorichev.lasttry.entity.asset.factories.KeyFactory;
+import org.egordorichev.lasttry.entity.asset.factories.*;
+import org.egordorichev.lasttry.entity.asset.storages.Biomes;
 import org.egordorichev.lasttry.entity.asset.storages.CreaturesData;
 import org.egordorichev.lasttry.entity.asset.storages.Items;
 import org.egordorichev.lasttry.entity.asset.storages.KeyBindings;
@@ -32,6 +30,10 @@ public class Assets {
 	 * Handles keys
 	 */
 	public static KeyBindings keys = new KeyBindings();
+	/**
+	 * Handles biomes
+	 */
+	public static Biomes biomes = new Biomes();
 	/**
 	 * Small font
 	 */
@@ -95,5 +97,6 @@ public class Assets {
 		AssetLoader.load("keys", new KeyFactory());
 		AssetLoader.load("items", new ItemFactory());
 		AssetLoader.load("creatures", new CreaturesDataFactory());
+		AssetLoader.load("biomes", new BiomeFactory());
 	}
 }

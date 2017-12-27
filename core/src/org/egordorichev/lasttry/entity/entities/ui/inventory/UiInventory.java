@@ -28,11 +28,11 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 	/**
 	 * The item slot texture
 	 */
-	private static TextureRegion slotTexture;
+	protected static TextureRegion slotTexture;
 	/**
 	 * Used for calculating string width
 	 */
-	private static GlyphLayout layout;
+	protected static GlyphLayout layout;
 
 	public UiInventory(Rectangle rect, InventoryComponent inventory) {
 		super(rect);
@@ -72,7 +72,7 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 		InventoryComponent inventory = this.getComponent(InventoryComponent.class);
 
 		for (int i = 0; i < (inventory.open ? inventory.inventory.length : Math.min(inventory.inventory.length, 10)); i++) {
-			UiInventory.renderSlot(inventory, position.x + i % 10 * 25, (float) (position.y + Math.floor(i / 10) * 25), i, inventory.inventory[i]);
+			this.renderSlot(inventory, position.x + i % 10 * 25, (float) (position.y + Math.floor(i / 10) * 25), i, inventory.inventory[i]);
 		}
 
 		ItemComponent item = Players.clientPlayer.getComponent(ItemComponent.class);
@@ -91,7 +91,7 @@ public class UiInventory extends UiElement implements SimpleInputProcessor {
 		}
 	}
 
-	private static void renderSlot(InventoryComponent inventory, float x, float y, int index, ItemComponent item) {
+	protected void renderSlot(InventoryComponent inventory, float x, float y, int index, ItemComponent item) {
 		if (inventory.selectedSlot == index) {
 			Graphics.batch.setColor(1.0f, 1.0f, 0.7f, 1.0f);
 		}

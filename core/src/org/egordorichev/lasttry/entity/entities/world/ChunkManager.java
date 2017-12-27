@@ -247,5 +247,7 @@ public class ChunkManager extends Entity {
 
 		chunks.loaded.add(chunk);
 		chunks.chunks[this.getChunkIndex(x, y)] = chunk;
+
+		Engine.addEntity(chunk);
 	}
 }

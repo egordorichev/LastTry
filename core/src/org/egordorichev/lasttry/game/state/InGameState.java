@@ -28,12 +28,13 @@ public class InGameState extends State {
 	 */
 	@Override
 	public void render() {
-		for (Entity entity : Engine.getEntities()) {
-			entity.render();
+		ArrayList<Entity> entities = Engine.getEntities();
+
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).render();
 		}
 
 		Graphics.batch.setProjectionMatrix(CameraSystem.instance.get("ui").getComponent(CameraComponent.class).camera.combined);
-		ArrayList<Entity> entities = Engine.getEntities();
 
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).renderUi();
