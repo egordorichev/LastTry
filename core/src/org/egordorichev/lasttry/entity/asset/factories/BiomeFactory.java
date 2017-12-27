@@ -4,8 +4,10 @@ import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
 import org.egordorichev.lasttry.entity.entities.world.biome.Biome;
 import org.egordorichev.lasttry.entity.entities.world.biome.BiomeGeneratorDataComponent;
+import org.egordorichev.lasttry.entity.entities.world.biome.BiomeIndexComponent;
 import org.egordorichev.lasttry.entity.entities.world.biome.BiomeSpawnComponent;
-import org.egordorichev.lasttry.util.log.Log;
+
+import java.util.Objects;
 
 /**
  * Loads biomes
@@ -51,6 +53,25 @@ public class BiomeFactory extends AssetFactory<Biome> {
 				}
 			} else {
 				spawns.spawnRate.put("any", 1.0f);
+			}
+		}
+
+		if (asset.has("index")) {
+			BiomeIndexComponent index = biome.getComponent(BiomeIndexComponent.class);
+			JsonValue root = asset.get("index");
+
+			for (JsonValue type : root) {
+				if (Objects.equals(type.name, "any")) {
+					String[] types = new String[type.size];
+
+					for (int i = 0; i < type.size; i++) {
+						types[i] = type.getString(i);
+					}
+
+					index.needed.put(types, (int) type.getFloat("count"));
+				} else {
+					index.needed.put(new String[] { type.name() }, (int) type.asFloat());
+				}
 			}
 		}
 

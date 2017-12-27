@@ -15,11 +15,7 @@ import org.egordorichev.lasttry.entity.entities.world.Sky;
 import org.egordorichev.lasttry.entity.entities.world.WorldIO;
 import org.egordorichev.lasttry.util.log.Log;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Handles systems
@@ -101,12 +97,16 @@ public class Engine {
 		addSystem(new MovementSystem());
 		addSystem(new CollisionSystem());
 		addSystem(new InventorySystem());
-		if(Debug.lightEnabled)addSystem(new LightSystem());
 		addSystem(new ClockSystem());
 		addSystem(new InteractionSystem());
 		addSystem(new UiSystem());
 		addSystem(new AiSystem());
 		addSystem(new ChestSystem());
+		addSystem(new BiomeSystem());
+
+		if (Debug.lightEnabled) {
+			addSystem(new LightSystem());
+		}
 	}
 
 	/**

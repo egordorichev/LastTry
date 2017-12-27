@@ -10,6 +10,10 @@
 			"soil_wall": "lt:dirt_wall",
 			"grass": "lt:grass",
 			"grass_wall": "lt:grass_wall"
+		},
+
+		"index" : {
+			"lt:dirt" : 100
 		}
 	}
 }

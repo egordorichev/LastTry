@@ -8,6 +8,6 @@ import org.egordorichev.lasttry.entity.component.IdComponent;
  */
 public class Biome extends Entity {
 	public Biome() {
-		super(IdComponent.class, BiomeGeneratorDataComponent.class, BiomeSpawnComponent.class);
+		super(IdComponent.class, BiomeGeneratorDataComponent.class, BiomeSpawnComponent.class, BiomeIndexComponent.class);
 	}
 }
