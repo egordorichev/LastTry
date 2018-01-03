@@ -2,6 +2,8 @@ package org.egordorichev.lasttry.entity.asset.factories;
 
 import com.badlogic.gdx.utils.JsonValue;
 import org.egordorichev.lasttry.entity.asset.AssetFactory;
+import org.egordorichev.lasttry.entity.asset.Assets;
+import org.egordorichev.lasttry.entity.component.IdComponent;
 import org.egordorichev.lasttry.entity.entities.world.biome.Biome;
 import org.egordorichev.lasttry.entity.entities.world.biome.BiomeGeneratorDataComponent;
 import org.egordorichev.lasttry.entity.entities.world.biome.BiomeIndexComponent;
@@ -22,6 +24,9 @@ public class BiomeFactory extends AssetFactory<Biome> {
 	@Override
 	public Biome parse(JsonValue asset) {
 		Biome biome = new Biome();
+
+		IdComponent id = biome.getComponent(IdComponent.class);
+		id.id = asset.name();
 
 		if (asset.has("generation")) {
 			BiomeGeneratorDataComponent generator = biome.getComponent(BiomeGeneratorDataComponent.class);
@@ -74,6 +79,8 @@ public class BiomeFactory extends AssetFactory<Biome> {
 				}
 			}
 		}
+
+		Assets.biomes.add(asset.name(), biome);
 
 		return biome;
 	}

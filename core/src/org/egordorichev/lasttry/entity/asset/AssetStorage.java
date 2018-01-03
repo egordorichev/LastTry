@@ -27,9 +27,22 @@ public class AssetStorage<T> {
 	public T get(String id) {
 		return this.storage.get(id);
 	}
-	
+
+	/**
+	 * Searches for asset with given ID and casts it
+	 *
+	 * @param id Asset ID
+	 * @return Asset
+	 */
 	@SuppressWarnings("unchecked")
 	public <R> R getUnsafe(String id) {
 		return (R) this.storage.get(id);
+	}
+
+	/**
+	 * @return The storage
+	 */
+	public HashMap<String, T> getAll() {
+		return this.storage;
 	}
 }
